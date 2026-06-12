@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "win11-image-kit service manifest",
+  "type": "object",
+  "required": ["services"],
+  "properties": {
+    "services": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "displayName", "install", "start", "stop", "delete"],
+        "properties": {
+          "name": { "type": "string" },
+          "displayName": { "type": "string" },
+          "install": { "type": "string" },
+          "start": { "type": "string" },
+          "stop": { "type": "string" },
+          "delete": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

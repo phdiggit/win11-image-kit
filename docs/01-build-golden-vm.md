@@ -1,0 +1,46 @@
+# Golden VM 构建流程
+
+## 目标
+
+在 VMware Win11 虚拟机中构建一份可 Sysprep 的基础系统，尽量固化稳定、跨机器可复用的部分。
+
+## VM 建议
+
+- UEFI
+- TPM
+- SATA AHCI 虚拟磁盘，避免使用 NVMe 虚拟磁盘作为封装源
+- 8 vCPU / 16GB RAM / 150GB+ disk
+- 桥接网络
+- 安装完成后立即拍 VMware 快照
+
+## 固化到镜像里的内容
+
+- Windows Update
+- VC++ 运行库
+- 字体，尤其是 JetBrains Mono，安装为所有用户
+- `C:\tools` 下的便携/解压工具
+- `C:\Program Files` 下的稳定安装版软件
+- 系统级环境变量：`JAVA_HOME`、`MAVEN_HOME`、`PATH`
+- HKLM/HKCR 级右键菜单
+- 默认工具目录结构
+
+## 尽量不要固化的内容
+
+- 机器绑定授权
+- 个人账号登录状态
+- VPN 设备认证
+- VMware Workstation、Visual Studio、Adobe 系列
+- 硬件厂商驱动
+- 大量用户态缓存
+
+## 推荐执行顺序
+
+1. 安装系统并更新。
+2. 安装运行库、字体、压缩工具。
+3. 执行 `scripts/build/Install-PortableApps.ps1`。
+4. 执行 `scripts/build/Install-DevRuntime.ps1`。
+5. 执行 `scripts/build/Install-Middleware.ps1`。
+6. 执行 `scripts/build/Set-SystemTweaks.ps1`。
+7. 手动安装无法稳定静默安装的软件。
+8. 执行开发环境冒烟测试。
+9. 拍 VMware 快照。

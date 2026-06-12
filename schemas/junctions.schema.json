@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "win11-image-kit junction manifest",
+  "type": "object",
+  "required": ["junctions"],
+  "properties": {
+    "junctions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["description", "source", "target"],
+        "properties": {
+          "description": { "type": "string" },
+          "source": { "type": "string" },
+          "target": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

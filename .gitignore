@@ -1,0 +1,30 @@
+# Large image/package artifacts
+*.wim
+*.esd
+*.iso
+*.vmdk
+*.vhd
+*.vhdx
+*.zip
+*.7z
+*.rar
+*.exe
+*.msi
+
+# Logs and temp output
+logs/*
+!logs/.gitkeep
+*.log
+*.tmp
+
+# Secrets / licenses
+*.key
+*.lic
+*.pfx
+*.pem
+*.ppk
+secrets/
+
+# Editor
+.idea/
+.vscode/

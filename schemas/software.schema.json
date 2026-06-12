@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "win11-image-kit software manifest",
+  "type": "object",
+  "required": ["packages"],
+  "properties": {
+    "packages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "type", "source", "destination"],
+        "properties": {
+          "name": { "type": "string" },
+          "type": { "type": "string", "enum": ["zip", "installer", "manual"] },
+          "source": { "type": "string" },
+          "destination": { "type": "string" },
+          "env": { "type": "object", "additionalProperties": { "type": "string" } },
+          "path": { "type": "array", "items": { "type": "string" } },
+          "postInstall": { "type": "array", "items": { "type": "string" } },
+          "test": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
