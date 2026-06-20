@@ -1,6 +1,6 @@
 ﻿#Requires -RunAsAdministrator
 
-[CmdletBinding(SupportsShouldProcess)]
+[CmdletBinding(SupportsShouldProcess, ConfirmImpact = "High")]
 param(
     [string]$ManifestPath = "$PSScriptRoot\..\..\manifests\defender-exclusions.json",
     [string]$PathsManifestPath = "$PSScriptRoot\..\..\manifests\paths.json"

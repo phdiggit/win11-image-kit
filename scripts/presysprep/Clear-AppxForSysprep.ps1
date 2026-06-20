@@ -1,6 +1,6 @@
 ﻿#Requires -RunAsAdministrator
 
-[CmdletBinding(SupportsShouldProcess)]
+[CmdletBinding(SupportsShouldProcess, ConfirmImpact = "High")]
 param(
     [string]$ManifestPath = "$PSScriptRoot\..\..\manifests\appx-cleanup.json"
 )

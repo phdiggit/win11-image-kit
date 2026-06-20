@@ -1,6 +1,6 @@
-#Requires -RunAsAdministrator
+﻿#Requires -RunAsAdministrator
 
-[CmdletBinding(SupportsShouldProcess)]
+[CmdletBinding(SupportsShouldProcess, ConfirmImpact = "High")]
 param(
     [string]$ManifestPath = "$PSScriptRoot\..\..\manifests\junctions.json",
     [string]$PathsManifestPath = "$PSScriptRoot\..\..\manifests\paths.json"
@@ -25,7 +25,7 @@ function Test-DriveRoot {
 }
 
 function Set-DataJunction {
-    [CmdletBinding(SupportsShouldProcess)]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = "High")]
     param(
         [Parameter(Mandatory)]
         [string]$Source,

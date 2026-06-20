@@ -1,6 +1,6 @@
 ﻿#Requires -RunAsAdministrator
 
-[CmdletBinding(SupportsShouldProcess)]
+[CmdletBinding(SupportsShouldProcess, ConfirmImpact = "High")]
 param(
     [string]$ManifestPath = "$PSScriptRoot\..\..\manifests\software.json",
     [string]$PathsManifestPath = "$PSScriptRoot\..\..\manifests\paths.json"
@@ -12,7 +12,7 @@ $ErrorActionPreference = "Stop"
 . "$PSScriptRoot\..\common\Test-KitPackageHash.ps1"
 
 function Invoke-KitInstallerPackage {
-    [CmdletBinding(SupportsShouldProcess)]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = "High")]
     param(
         [Parameter(Mandatory)]
         $Package,
