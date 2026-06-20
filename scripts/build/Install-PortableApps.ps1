@@ -1,8 +1,11 @@
-#Requires -RunAsAdministrator
+﻿#Requires -RunAsAdministrator
 
+[CmdletBinding(SupportsShouldProcess)]
 param(
     [string]$ManifestPath = "$PSScriptRoot\..\..\manifests\software.json",
-    [string]$PathsManifestPath = "$PSScriptRoot\..\..\manifests\paths.json"
+    [string]$PathsManifestPath = "$PSScriptRoot\..\..\manifests\paths.json",
+    [ValidateSet("golden-image", "post-deploy", "manual", "all")]
+    [string]$Stage = "golden-image"
 )
 
 $ErrorActionPreference = "Stop"
@@ -10,6 +13,7 @@ $ErrorActionPreference = "Stop"
 . "$PSScriptRoot\..\common\Resolve-KitPath.ps1"
 
 function Expand-KitArchive {
+    [CmdletBinding(SupportsShouldProcess)]
     param(
         [Parameter(Mandatory)]
         [string]$Source,
@@ -20,20 +24,26 @@ function Expand-KitArchive {
         [string]$ArchiveFormat = "zip"
     )
 
-    New-Item -ItemType Directory -Path $Destination -Force | Out-Null
+    if ($PSCmdlet.ShouldProcess($Destination, "创建归档包目标目录")) {
+        New-Item -ItemType Directory -Path $Destination -Force | Out-Null
+    }
 
     switch ($ArchiveFormat) {
         "zip" {
-            Expand-Archive -LiteralPath $Source -DestinationPath $Destination -Force
+            if ($PSCmdlet.ShouldProcess("$Source -> $Destination", "解压 zip 归档")) {
+                Expand-Archive -LiteralPath $Source -DestinationPath $Destination -Force
+            }
         }
         "tar.gz" {
             if (-not (Get-Command tar.exe -ErrorAction SilentlyContinue)) {
                 throw "当前系统找不到 tar.exe，无法解压 tar.gz：$Source"
             }
 
-            & tar.exe -xzf $Source -C $Destination --strip-components 1
-            if ($LASTEXITCODE -ne 0) {
-                throw "tar.gz 解压失败：$Source"
+            if ($PSCmdlet.ShouldProcess("$Source -> $Destination", "解压 tar.gz 归档")) {
+                & tar.exe -xzf $Source -C $Destination --strip-components 1
+                if ($LASTEXITCODE -ne 0) {
+                    throw "tar.gz 解压失败：$Source"
+                }
             }
         }
         default {
@@ -43,6 +53,7 @@ function Expand-KitArchive {
 }
 
 function Invoke-KitPostInstall {
+    [CmdletBinding(SupportsShouldProcess)]
     param(
         [Parameter(Mandatory)]
         $Step,
@@ -58,8 +69,10 @@ function Invoke-KitPostInstall {
                 throw "ensure-directory 缺少 path"
             }
 
-            New-Item -ItemType Directory -Path $path -Force | Out-Null
-            Write-KitLog "确认目录存在：$path"
+            if ($PSCmdlet.ShouldProcess($path, "确认目录存在")) {
+                New-Item -ItemType Directory -Path $path -Force | Out-Null
+                Write-KitLog "确认目录存在：$path"
+            }
         }
         default {
             throw "不支持的 postInstall 动作：$($Step.action)"
@@ -74,6 +87,16 @@ $pathMap = Get-KitPathMap -ManifestPath $PathsManifestPath
 foreach ($package in $manifest.packages) {
     if ($null -ne $package.enabled -and -not $package.enabled) {
         Write-KitLog "软件包已停用，跳过：$($package.name)"
+        continue
+    }
+
+    $packageStage = [string]$package.stage
+    if ([string]::IsNullOrWhiteSpace($packageStage)) {
+        $packageStage = "golden-image"
+    }
+
+    if ($Stage -ne "all" -and $packageStage -ne $Stage) {
+        Write-KitLog "软件包阶段不匹配，跳过：$($package.name) ($packageStage)"
         continue
     }
 
@@ -96,34 +119,42 @@ foreach ($package in $manifest.packages) {
         continue
     }
 
-    Expand-KitArchive -Source $source -Destination $destination -ArchiveFormat $archiveFormat
+    Expand-KitArchive -Source $source -Destination $destination -ArchiveFormat $archiveFormat -WhatIf:$WhatIfPreference
 
     if ($package.env) {
         $package.env.PSObject.Properties | ForEach-Object {
             $value = Resolve-KitPath -Path $_.Value -PathMap $pathMap
-            [Environment]::SetEnvironmentVariable($_.Name, $value, "Machine")
-            Write-KitLog "写入系统环境变量：$($_.Name)"
+            if ($PSCmdlet.ShouldProcess($_.Name, "写入系统环境变量")) {
+                [Environment]::SetEnvironmentVariable($_.Name, $value, "Machine")
+                Write-KitLog "写入系统环境变量：$($_.Name)"
+            }
         }
     }
 
     if ($package.path) {
         $machinePath = [Environment]::GetEnvironmentVariable("Path", "Machine")
         $pathItems = @($machinePath -split ';' | Where-Object { -not [string]::IsNullOrWhiteSpace($_) })
+        $pendingPathItems = @()
 
         foreach ($pathEntry in @($package.path)) {
             $resolvedPathEntry = Resolve-KitPath -Path $pathEntry -PathMap $pathMap
             if ($pathItems -notcontains $resolvedPathEntry) {
                 $pathItems += $resolvedPathEntry
-                Write-KitLog "追加系统 PATH：$resolvedPathEntry"
+                $pendingPathItems += $resolvedPathEntry
             }
         }
 
-        [Environment]::SetEnvironmentVariable("Path", ($pathItems -join ';'), "Machine")
+        if ($pendingPathItems.Count -gt 0 -and $PSCmdlet.ShouldProcess("Machine PATH", "追加 $($pendingPathItems -join ';')")) {
+            [Environment]::SetEnvironmentVariable("Path", ($pathItems -join ';'), "Machine")
+            foreach ($pendingPathItem in $pendingPathItems) {
+                Write-KitLog "追加系统 PATH：$pendingPathItem"
+            }
+        }
     }
 
     if ($package.postInstall) {
         foreach ($step in @($package.postInstall)) {
-            Invoke-KitPostInstall -Step $step -PathMap $pathMap
+            Invoke-KitPostInstall -Step $step -PathMap $pathMap -WhatIf:$WhatIfPreference
         }
     }
 }

@@ -35,6 +35,7 @@ scripts/config/Show-CustomizationScope.ps1
 
 ```powershell
 scripts/config/Show-CustomizationScope.ps1
+scripts/build/Invoke-GoldenImageBuild.ps1
 scripts/presysprep/Invoke-PreSysprepCheck.ps1
 scripts/postdeploy/Invoke-PostDeploy.ps1
 scripts/tests/Test-PostDeploy.ps1

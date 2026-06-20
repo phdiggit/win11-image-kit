@@ -36,7 +36,7 @@ logs/                 仅保留 .gitkeep，本地日志不提交
 2. 阅读 [定制范围与配置入口](docs/07-定制范围与配置入口.md)
 3. 先改 `manifests/paths.json` 和 `manifests/customization-scope.json`
 4. 执行 `scripts/config/Show-CustomizationScope.ps1` 检查当前定制范围
-5. 在金镜像 VM 中执行 `scripts/build`
+5. 在金镜像 VM 中执行 `scripts/build/Invoke-GoldenImageBuild.ps1`
 6. Sysprep 前执行 `scripts/presysprep/Invoke-PreSysprepCheck.ps1`
 7. 在 WinPE 中执行 `scripts/winpe`
 8. 新机进入桌面后执行 `scripts/postdeploy/Invoke-PostDeploy.ps1`
