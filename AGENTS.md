@@ -131,6 +131,8 @@ secrets/
 纯文档改动通常只需检查内容和 `git diff`。涉及 manifest、schema 或脚本时，优先运行对应的轻量验证：
 
 ```powershell
+scripts/validate/Test-ProjectConfig.ps1
+
 Get-ChildItem -Path manifests,schemas -Recurse -Filter *.json | ForEach-Object {
     Get-Content -LiteralPath $_.FullName -Raw -Encoding UTF8 | ConvertFrom-Json | Out-Null
 }

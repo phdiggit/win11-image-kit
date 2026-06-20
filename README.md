@@ -43,6 +43,12 @@ logs/                 仅保留 .gitkeep，本地日志不提交
 9. 执行 `scripts/tests/Test-PostDeploy.ps1` 验证
 10. 遇到封装/还原异常时，记录到 [已知问题与决策](docs/06-已知问题与决策.md)
 
+常规配置验证：
+
+```powershell
+scripts/validate/Test-ProjectConfig.ps1
+```
+
 ## 安全约定
 
 - 不提交授权文件、账号令牌、私钥、商业软件安装包。
