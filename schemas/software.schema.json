@@ -8,9 +8,10 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["name", "type", "source", "destination"],
+        "required": ["name", "version", "stage", "type"],
         "properties": {
           "name": { "type": "string" },
+          "version": { "type": "string" },
           "enabled": { "type": "boolean" },
           "category": { "type": "string" },
           "stage": {
@@ -26,7 +27,27 @@
             "enum": ["zip", "tar.gz"]
           },
           "source": { "type": "string" },
+          "sha256": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[A-Fa-f0-9]{64}$"
+              },
+              { "type": "null" }
+            ]
+          },
           "destination": { "type": "string" },
+          "installArgs": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "silentInstall": { "type": "boolean" },
+          "uninstall": {
+            "anyOf": [
+              { "type": "string" },
+              { "type": "null" }
+            ]
+          },
           "env": {
             "type": "object",
             "additionalProperties": { "type": "string" }
@@ -52,6 +73,35 @@
           },
           "test": { "type": "string" }
         },
+        "allOf": [
+          {
+            "if": {
+              "properties": { "type": { "const": "archive" } },
+              "required": ["type"]
+            },
+            "then": {
+              "required": ["source", "destination", "archiveFormat"]
+            }
+          },
+          {
+            "if": {
+              "properties": { "type": { "const": "zip" } },
+              "required": ["type"]
+            },
+            "then": {
+              "required": ["source", "destination"]
+            }
+          },
+          {
+            "if": {
+              "properties": { "type": { "const": "installer" } },
+              "required": ["type"]
+            },
+            "then": {
+              "required": ["source", "destination", "silentInstall"]
+            }
+          }
+        ],
         "additionalProperties": false
       }
     }

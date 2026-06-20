@@ -80,6 +80,31 @@ function Invoke-KitPostInstall {
     }
 }
 
+function Test-KitPackageHash {
+    param(
+        [Parameter(Mandatory)]
+        [string]$Source,
+
+        [AllowEmptyString()]
+        [string]$ExpectedHash
+    )
+
+    if ([string]::IsNullOrWhiteSpace($ExpectedHash)) {
+        return
+    }
+
+    if ($ExpectedHash -notmatch '^[A-Fa-f0-9]{64}$') {
+        throw "SHA256 格式无效：$Source"
+    }
+
+    $actualHash = (Get-FileHash -LiteralPath $Source -Algorithm SHA256).Hash.ToLowerInvariant()
+    if ($actualHash -ne $ExpectedHash.ToLowerInvariant()) {
+        throw "SHA256 校验失败：$Source"
+    }
+
+    Write-KitLog "SHA256 校验通过：$Source" "OK"
+}
+
 Write-KitLog "读取软件清单：$ManifestPath"
 $manifest = Get-Content -LiteralPath $ManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
 $pathMap = Get-KitPathMap -ManifestPath $PathsManifestPath
@@ -92,7 +117,7 @@ foreach ($package in $manifest.packages) {
 
     $packageStage = [string]$package.stage
     if ([string]::IsNullOrWhiteSpace($packageStage)) {
-        $packageStage = "golden-image"
+        throw "软件包缺少 stage：$($package.name)"
     }
 
     if ($Stage -ne "all" -and $packageStage -ne $Stage) {
@@ -101,13 +126,13 @@ foreach ($package in $manifest.packages) {
     }
 
     if ($package.type -notin @("archive", "zip")) {
-        Write-KitLog "当前脚本只处理归档包，跳过：$($package.name)"
+        Write-KitLog "当前脚本只处理归档包，跳过：$($package.name) ($($package.type))"
         continue
     }
 
     $archiveFormat = [string]$package.archiveFormat
     if ([string]::IsNullOrWhiteSpace($archiveFormat)) {
-        $archiveFormat = "zip"
+        throw "归档包缺少 archiveFormat：$($package.name)"
     }
 
     Write-KitLog "安装归档包：$($package.name)"
@@ -119,6 +144,7 @@ foreach ($package in $manifest.packages) {
         continue
     }
 
+    Test-KitPackageHash -Source $source -ExpectedHash ([string]$package.sha256)
     Expand-KitArchive -Source $source -Destination $destination -ArchiveFormat $archiveFormat -WhatIf:$WhatIfPreference
 
     if ($package.env) {

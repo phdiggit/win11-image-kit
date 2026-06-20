@@ -200,19 +200,73 @@ function Test-SoftwareManifest {
         [hashtable]$PathMap
     )
 
+    $allowedStages = @("golden-image", "post-deploy", "manual")
+    $allowedTypes = @("archive", "zip", "installer", "manual")
+    $allowedArchiveFormats = @("zip", "tar.gz")
+
     foreach ($package in $SoftwareManifest.packages) {
+        if ([string]::IsNullOrWhiteSpace([string]$package.name)) {
+            Write-CheckResult -Level ERROR -Message "软件包缺少 name"
+            continue
+        }
+
+        if ([string]::IsNullOrWhiteSpace([string]$package.version)) {
+            Write-CheckResult -Level ERROR -Message ("软件包缺少 version：{0}" -f $package.name)
+        }
+
+        if ([string]::IsNullOrWhiteSpace([string]$package.stage)) {
+            Write-CheckResult -Level ERROR -Message ("软件包缺少 stage：{0}" -f $package.name)
+        } elseif ($allowedStages -notcontains [string]$package.stage) {
+            Write-CheckResult -Level ERROR -Message ("软件包 stage 无效：{0} -> {1}" -f $package.name, $package.stage)
+        }
+
+        if ([string]::IsNullOrWhiteSpace([string]$package.type)) {
+            Write-CheckResult -Level ERROR -Message ("软件包缺少 type：{0}" -f $package.name)
+        } elseif ($allowedTypes -notcontains [string]$package.type) {
+            Write-CheckResult -Level ERROR -Message ("软件包 type 无效：{0} -> {1}" -f $package.name, $package.type)
+        }
+
         if ($package.type -eq "archive" -and [string]::IsNullOrWhiteSpace([string]$package.archiveFormat)) {
             Write-CheckResult -Level ERROR -Message ("归档包缺少 archiveFormat：{0}" -f $package.name)
+        } elseif ($package.archiveFormat -and $allowedArchiveFormats -notcontains [string]$package.archiveFormat) {
+            Write-CheckResult -Level ERROR -Message ("归档格式无效：{0} -> {1}" -f $package.name, $package.archiveFormat)
         }
 
         if ($package.type -eq "zip") {
             Write-CheckResult -Level WARN -Message ("软件包仍使用旧 type=zip，建议改为 type=archive + archiveFormat=zip：{0}" -f $package.name)
         }
 
+        if ($package.type -in @("archive", "zip", "installer")) {
+            if ([string]::IsNullOrWhiteSpace([string]$package.source)) {
+                Write-CheckResult -Level ERROR -Message ("软件包缺少 source：{0}" -f $package.name)
+            }
+
+            if ([string]::IsNullOrWhiteSpace([string]$package.destination)) {
+                Write-CheckResult -Level ERROR -Message ("软件包缺少 destination：{0}" -f $package.name)
+            }
+        }
+
+        if ($package.type -eq "installer" -and $null -eq $package.silentInstall) {
+            Write-CheckResult -Level ERROR -Message ("安装器缺少 silentInstall：{0}" -f $package.name)
+        }
+
+        $expectedHash = [string]$package.sha256
+        if (-not [string]::IsNullOrWhiteSpace($expectedHash) -and $expectedHash -notmatch '^[A-Fa-f0-9]{64}$') {
+            Write-CheckResult -Level ERROR -Message ("SHA256 格式无效：{0}" -f $package.name)
+        }
+
         if ($CheckPackageFiles) {
             $source = Resolve-KitPath -Path $package.source -PathMap $PathMap
             if (Test-Path -LiteralPath $source) {
                 Write-CheckResult -Level OK -Message ("安装介质存在：{0}" -f $package.name)
+                if (-not [string]::IsNullOrWhiteSpace($expectedHash)) {
+                    $actualHash = (Get-FileHash -LiteralPath $source -Algorithm SHA256).Hash.ToLowerInvariant()
+                    if ($actualHash -eq $expectedHash.ToLowerInvariant()) {
+                        Write-CheckResult -Level OK -Message ("SHA256 匹配：{0}" -f $package.name)
+                    } else {
+                        Write-CheckResult -Level ERROR -Message ("SHA256 不匹配：{0}" -f $package.name)
+                    }
+                }
             } else {
                 Write-CheckResult -Level WARN -Message ("安装介质不存在或 NAS 不可达：{0} -> {1}" -f $package.name, $source)
             }
