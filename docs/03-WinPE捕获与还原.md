@@ -2,6 +2,12 @@
 
 ## 捕获镜像
 
+仓库里的 `scripts\winpe\Capture-Win11Image.cmd` 只打印建议命令，不会执行 DISM：
+
+```cmd
+scripts\winpe\Capture-Win11Image.cmd C:\ Z:\golden win11-dev-YYYYMMDD
+```
+
 在 WinPE 中确认盘符：
 
 ```cmd
@@ -24,7 +30,17 @@ DISM /Capture-Image /ImageFile:Z:\golden\win11-dev-YYYYMMDD.wim /CaptureDir:C:\ 
 
 ## 还原镜像
 
-警告：分区脚本会清空目标磁盘。
+警告：真正执行 `diskpart clean` 会清空目标磁盘。仓库里的 `scripts\winpe\Partition-GPT-UEFI.cmd` 只生成 diskpart 计划文件，不会执行分区：
+
+```cmd
+scripts\winpe\Partition-GPT-UEFI.cmd 0 X:\partition-disk0.txt
+```
+
+人工核对目标磁盘无误后，再手动执行：
+
+```cmd
+diskpart /s X:\partition-disk0.txt
+```
 
 推荐 GPT/UEFI 分区：
 
@@ -34,6 +50,12 @@ DISM /Capture-Image /ImageFile:Z:\golden\win11-dev-YYYYMMDD.wim /CaptureDir:C:\ 
 - Recovery：1024MB
 
 然后：
+
+`scripts\winpe\Apply-Win11Image.cmd` 只打印建议命令，不会执行 DISM 或 `bcdboot`：
+
+```cmd
+scripts\winpe\Apply-Win11Image.cmd Z:\golden\win11-dev-YYYYMMDD.wim W:\ S:
+```
 
 ```cmd
 DISM /Apply-Image /ImageFile:Z:\golden\win11-dev-YYYYMMDD.wim /Index:1 /ApplyDir:W:\
