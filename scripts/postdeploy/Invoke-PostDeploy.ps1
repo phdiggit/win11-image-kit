@@ -55,6 +55,17 @@ Invoke-KitStep `
     }
 
 Invoke-KitStep `
+    -Name "部署后软件" `
+    -ScriptPath "$PSScriptRoot\Install-PostDeploySoftware.ps1" `
+    -SupportsWhatIf $true `
+    -ForwardWhatIf $WhatIfPreference `
+    -StepKind "部署步骤" `
+    -Arguments @{
+        ManifestPath = Resolve-KitRepoPath -RepoRoot $repoRoot -Path $scopeConfig.applications.softwareManifest
+        PathsManifestPath = $PathsManifestPath
+    }
+
+Invoke-KitStep `
     -Name "中间件服务注册" `
     -ScriptPath "$PSScriptRoot\Register-MiddlewareServices.ps1" `
     -SupportsWhatIf $true `

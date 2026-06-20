@@ -11,6 +11,7 @@ param(
 $ErrorActionPreference = "Stop"
 . "$PSScriptRoot\..\common\Write-Log.ps1"
 . "$PSScriptRoot\..\common\Resolve-KitPath.ps1"
+. "$PSScriptRoot\..\common\Test-KitPackageHash.ps1"
 
 function Expand-KitArchive {
     [CmdletBinding(SupportsShouldProcess)]
@@ -78,31 +79,6 @@ function Invoke-KitPostInstall {
             throw "不支持的 postInstall 动作：$($Step.action)"
         }
     }
-}
-
-function Test-KitPackageHash {
-    param(
-        [Parameter(Mandatory)]
-        [string]$Source,
-
-        [AllowEmptyString()]
-        [string]$ExpectedHash
-    )
-
-    if ([string]::IsNullOrWhiteSpace($ExpectedHash)) {
-        return
-    }
-
-    if ($ExpectedHash -notmatch '^[A-Fa-f0-9]{64}$') {
-        throw "SHA256 格式无效：$Source"
-    }
-
-    $actualHash = (Get-FileHash -LiteralPath $Source -Algorithm SHA256).Hash.ToLowerInvariant()
-    if ($actualHash -ne $ExpectedHash.ToLowerInvariant()) {
-        throw "SHA256 校验失败：$Source"
-    }
-
-    Write-KitLog "SHA256 校验通过：$Source" "OK"
 }
 
 Write-KitLog "读取软件清单：$ManifestPath"
