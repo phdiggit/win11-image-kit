@@ -47,6 +47,7 @@ logs/                 仅保留 .gitkeep，本地日志不提交
 
 ```powershell
 scripts/validate/Test-ProjectConfig.ps1
+scripts/tests/Test-PostDeploy.ps1 -SkipCommandTests -SkipServiceStatus
 ```
 
 ## 安全约定
