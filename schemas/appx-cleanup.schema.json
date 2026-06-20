@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "win11-image-kit AppX cleanup policy",
+  "type": "object",
+  "required": ["policy", "removeNamePatterns", "keepNamePatterns"],
+  "properties": {
+    "policy": {
+      "type": "string",
+      "enum": ["audit-only", "remove-listed-microsoft-apps"]
+    },
+    "removeNamePatterns": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "keepNamePatterns": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "additionalProperties": false
+}

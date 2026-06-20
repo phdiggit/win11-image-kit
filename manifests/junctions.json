@@ -4,32 +4,32 @@
     {
       "description": "Maven 本地仓库",
       "source": "%USERPROFILE%\\.m2\\repository",
-      "target": "D:\\Data\\maven\\repository"
+      "target": "${DataRoot}\\maven\\repository"
     },
     {
       "description": "JetBrains 缓存索引",
       "source": "%LOCALAPPDATA%\\JetBrains",
-      "target": "D:\\Data\\JetBrains\\cache"
+      "target": "${DataRoot}\\JetBrains\\cache"
     },
     {
       "description": "MySQL 数据目录",
-      "source": "C:\\tools\\mysql\\data",
-      "target": "D:\\Data\\mysql\\data"
+      "source": "${ToolRoot}\\mysql\\data",
+      "target": "${DataRoot}\\mysql\\data"
     },
     {
       "description": "MongoDB 数据目录",
-      "source": "C:\\tools\\mongodb\\data",
-      "target": "D:\\Data\\mongodb\\data"
+      "source": "${ToolRoot}\\mongodb\\data",
+      "target": "${DataRoot}\\mongodb\\data"
     },
     {
       "description": "npm 全局模块",
-      "source": "C:\\tools\\npm-global",
-      "target": "D:\\Data\\npm\\global"
+      "source": "${ToolRoot}\\npm-global",
+      "target": "${DataRoot}\\npm\\global"
     },
     {
       "description": "Conda 虚拟环境",
-      "source": "C:\\tools\\miniconda3\\envs",
-      "target": "D:\\Data\\conda\\envs"
+      "source": "${ToolRoot}\\miniconda3\\envs",
+      "target": "${DataRoot}\\conda\\envs"
     }
   ]
 }

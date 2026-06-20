@@ -3,26 +3,47 @@
   "packages": [
     {
       "name": "maven",
-      "type": "zip",
-      "source": "\\\\192.168.1.37\\backups\\win11-image-kit\\packages\\maven\\apache-maven-3.9.16-bin.tar.gz",
-      "destination": "C:\\tools\\apache-maven-3.9.16",
+      "enabled": true,
+      "category": "dev-runtime",
+      "stage": "golden-image",
+      "type": "archive",
+      "archiveFormat": "tar.gz",
+      "source": "${PackageRoot}\\maven\\apache-maven-3.9.16-bin.tar.gz",
+      "destination": "${ToolRoot}\\apache-maven-3.9.16",
       "env": {
-        "MAVEN_HOME": "C:\\tools\\apache-maven-3.9.16"
+        "MAVEN_HOME": "${ToolRoot}\\apache-maven-3.9.16"
       },
       "path": [
-        "C:\\tools\\apache-maven-3.9.16\\bin"
+        "${ToolRoot}\\apache-maven-3.9.16\\bin"
       ],
       "test": "mvn -v"
     },
     {
       "name": "vscode-portable",
-      "type": "zip",
-      "source": "\\\\192.168.1.37\\backups\\win11-image-kit\\packages\\vscode\\VSCode-win32-x64-1.124.0.zip",
-      "destination": "C:\\tools\\vscode-portable",
+      "enabled": true,
+      "category": "editor",
+      "stage": "golden-image",
+      "type": "archive",
+      "archiveFormat": "zip",
+      "source": "${PackageRoot}\\vscode\\VSCode-win32-x64-1.124.0.zip",
+      "destination": "${ToolRoot}\\vscode-portable",
       "postInstall": [
-        "New-Item -ItemType Directory -Path 'C:\\tools\\vscode-portable\\data' -Force"
+        {
+          "action": "ensure-directory",
+          "path": "${ToolRoot}\\vscode-portable\\data"
+        }
       ],
-      "test": "C:\\tools\\vscode-portable\\Code.exe --version"
+      "test": "${ToolRoot}\\vscode-portable\\Code.exe --version"
+    },
+    {
+      "name": "codex",
+      "enabled": true,
+      "category": "ai-tools",
+      "stage": "post-deploy",
+      "type": "installer",
+      "source": "${PackageRoot}\\ai-tools\\Codex Installer.exe",
+      "destination": "C:\\Program Files\\Codex",
+      "test": "where codex"
     }
   ]
 }

@@ -1,20 +1,47 @@
-#Requires -RunAsAdministrator
+﻿#Requires -RunAsAdministrator
 
 [CmdletBinding(SupportsShouldProcess)]
-param()
+param(
+    [string]$ManifestPath = "$PSScriptRoot\..\..\manifests\appx-cleanup.json"
+)
 
 $ErrorActionPreference = "Continue"
 . "$PSScriptRoot\..\common\Write-Log.ps1"
 
-$patterns = "Microsoft\.(LockApp|Xbox|Bing|Zune|OfficeHub|Skype|Spotify|Solitaire|Minecraft|OneConnect|MixedReality|People|Wallet|Alarms|Camera|Maps|Paint|Sticky|SoundRecorder|Feedback|GetHelp|Tips|News|Weather|Clipchamp|DevHome|OutlookForWindows|PowerAutomate|Teams|Family|Todos|ScreenSketch|Whiteboard)"
+$manifest = Get-Content -LiteralPath $ManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
+$removePatterns = @($manifest.removeNamePatterns)
+$keepPatterns = @($manifest.keepNamePatterns)
 
-$packages = Get-AppxPackage -AllUsers | Where-Object { $_.PackageFullName -match $patterns }
+$packages = Get-AppxPackage -AllUsers | Where-Object {
+    $packageName = $_.Name
+    $shouldRemove = $false
+    foreach ($pattern in $removePatterns) {
+        if ($packageName -match [regex]::Escape($pattern)) {
+            $shouldRemove = $true
+            break
+        }
+    }
+
+    foreach ($pattern in $keepPatterns) {
+        if ($packageName -match $pattern -or $_.PackageFullName -match $pattern) {
+            $shouldRemove = $false
+            break
+        }
+    }
+
+    $shouldRemove
+}
 
 foreach ($package in $packages) {
-    if ($PSCmdlet.ShouldProcess($package.PackageFullName, "Remove AppX package")) {
-        Write-KitLog "Removing $($package.PackageFullName)" "WARN"
+    if ($manifest.policy -eq "audit-only") {
+        Write-KitLog "仅审计，不删除 AppX 包：$($package.PackageFullName)" "WARN"
+        continue
+    }
+
+    if ($PSCmdlet.ShouldProcess($package.PackageFullName, "删除 AppX 包")) {
+        Write-KitLog "删除 AppX 包：$($package.PackageFullName)" "WARN"
         Remove-AppxPackage -Package $package.PackageFullName -AllUsers -ErrorAction SilentlyContinue
     }
 }
 
-Write-KitLog "AppX cleanup pass finished" "OK"
+Write-KitLog "AppX 清理完成" "OK"

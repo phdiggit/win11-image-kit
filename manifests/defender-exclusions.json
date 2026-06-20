@@ -1,0 +1,31 @@
+{
+  "$schema": "../schemas/defender-exclusions.schema.json",
+  "paths": [
+    {
+      "description": "便携工具根目录",
+      "path": "${ToolRoot}"
+    },
+    {
+      "description": "D 盘开发数据目录",
+      "path": "${DataRoot}"
+    }
+  ],
+  "processes": [
+    {
+      "description": "VSCode 便携版",
+      "path": "${ToolRoot}\\vscode-portable\\Code.exe"
+    },
+    {
+      "description": "Cmder",
+      "path": "${ToolRoot}\\cmder\\Cmder.exe"
+    },
+    {
+      "description": "LocalSend",
+      "path": "${ToolRoot}\\localsend\\LocalSend.exe"
+    },
+    {
+      "description": "FlClash",
+      "path": "${ToolRoot}\\flclash\\FlClash.exe"
+    }
+  ]
+}

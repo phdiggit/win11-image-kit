@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "win11-image-kit path configuration",
+  "type": "object",
+  "required": ["paths"],
+  "properties": {
+    "paths": {
+      "type": "object",
+      "required": [
+        "NasProjectRoot",
+        "ConfigRoot",
+        "PackageRoot",
+        "ImageRoot",
+        "DeployRoot",
+        "WorkRoot",
+        "DownloadPool",
+        "ToolRoot",
+        "DataRoot"
+      ],
+      "additionalProperties": { "type": "string" }
+    }
+  },
+  "additionalProperties": false
+}

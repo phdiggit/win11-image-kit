@@ -28,3 +28,4 @@ secrets/
 # Editor
 .idea/
 .vscode/
+.codex/

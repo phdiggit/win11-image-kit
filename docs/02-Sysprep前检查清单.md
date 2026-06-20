@@ -4,7 +4,7 @@ Sysprep 是不可逆步骤。所有检查通过后再执行通用化。
 
 ## 必查项
 
-- 当前运行在 golden VM，而不是主力机真实系统。
+- 当前运行在金镜像 VM，而不是主力机真实系统。
 - 已拍 VMware 快照。
 - 无 Windows Update pending reboot。
 - 未运行系统代理或已退出代理软件。

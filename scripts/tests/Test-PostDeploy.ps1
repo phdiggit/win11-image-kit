@@ -1,12 +1,12 @@
-$ErrorActionPreference = "Continue"
+﻿$ErrorActionPreference = "Continue"
 . "$PSScriptRoot\..\common\Write-Log.ps1"
 
-Write-KitLog "Testing post-deploy essentials"
+Write-KitLog "测试部署后关键项"
 
 if (Test-Path "D:\") {
-    Write-KitLog "D: exists" "OK"
+    Write-KitLog "D: 存在" "OK"
 } else {
-    Write-KitLog "D: missing" "WARN"
+    Write-KitLog "D: 不存在" "WARN"
 }
 
 & "$PSScriptRoot\Test-DevEnvironment.ps1"

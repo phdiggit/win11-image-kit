@@ -1,0 +1,14 @@
+{
+  "$schema": "../schemas/paths.schema.json",
+  "paths": {
+    "NasProjectRoot": "\\\\192.168.1.37\\backups\\win11-image-kit",
+    "ConfigRoot": "${NasProjectRoot}\\configs",
+    "PackageRoot": "${NasProjectRoot}\\packages",
+    "ImageRoot": "${NasProjectRoot}\\images\\win11",
+    "DeployRoot": "${NasProjectRoot}\\deploy",
+    "WorkRoot": "\\\\192.168.1.37\\data1\\work\\win11-image-kit",
+    "DownloadPool": "\\\\192.168.1.37\\data1\\下载",
+    "ToolRoot": "C:\\tools",
+    "DataRoot": "D:\\Data"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "win11-image-kit Defender 排除项清单",
+  "type": "object",
+  "required": ["paths", "processes"],
+  "properties": {
+    "paths": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["description", "path"],
+        "properties": {
+          "description": { "type": "string" },
+          "path": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "processes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["description", "path"],
+        "properties": {
+          "description": { "type": "string" },
+          "path": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

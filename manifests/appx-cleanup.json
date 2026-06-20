@@ -1,0 +1,43 @@
+{
+  "$schema": "../schemas/appx-cleanup.schema.json",
+  "policy": "remove-listed-microsoft-apps",
+  "removeNamePatterns": [
+    "Microsoft.LockApp",
+    "Microsoft.Xbox",
+    "Microsoft.Bing",
+    "Microsoft.Zune",
+    "Microsoft.OfficeHub",
+    "Microsoft.Skype",
+    "Microsoft.Spotify",
+    "Microsoft.Solitaire",
+    "Microsoft.Minecraft",
+    "Microsoft.OneConnect",
+    "Microsoft.MixedReality",
+    "Microsoft.People",
+    "Microsoft.Wallet",
+    "Microsoft.Alarms",
+    "Microsoft.Camera",
+    "Microsoft.Maps",
+    "Microsoft.Paint",
+    "Microsoft.Sticky",
+    "Microsoft.SoundRecorder",
+    "Microsoft.Feedback",
+    "Microsoft.GetHelp",
+    "Microsoft.Tips",
+    "Microsoft.News",
+    "Microsoft.Weather",
+    "Microsoft.Clipchamp",
+    "Microsoft.DevHome",
+    "Microsoft.OutlookForWindows",
+    "Microsoft.PowerAutomate",
+    "Microsoft.Teams",
+    "Microsoft.Family",
+    "Microsoft.Todos",
+    "Microsoft.ScreenSketch",
+    "Microsoft.Whiteboard"
+  ],
+  "keepNamePatterns": [
+    "Baidu",
+    "Netdisk"
+  ]
+}

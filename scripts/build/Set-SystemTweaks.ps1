@@ -1,16 +1,31 @@
 #Requires -RunAsAdministrator
 
+[CmdletBinding(SupportsShouldProcess)]
+param(
+    [string]$PathsManifestPath = "$PSScriptRoot\..\..\manifests\paths.json"
+)
+
 $ErrorActionPreference = "Stop"
 . "$PSScriptRoot\..\common\Write-Log.ps1"
+. "$PSScriptRoot\..\common\Resolve-KitPath.ps1"
 
-Write-KitLog "Applying system-level tweaks"
+$pathMap = Get-KitPathMap -ManifestPath $PathsManifestPath
+$codePath = Resolve-KitPath -Path '${ToolRoot}\vscode-portable\Code.exe' -PathMap $pathMap
+$directoryCommand = '"{0}" "%V"' -f $codePath
+$fileCommand = '"{0}" "%1"' -f $codePath
 
-reg add "HKCR\Directory\shell\VSCode" /ve /d "通过 Code 打开" /f | Out-Null
-reg add "HKCR\Directory\shell\VSCode" /v Icon /d "C:\tools\vscode-portable\Code.exe" /f | Out-Null
-reg add "HKCR\Directory\shell\VSCode\command" /ve /d '"C:\tools\vscode-portable\Code.exe" "%V"' /f | Out-Null
+Write-KitLog "应用系统级配置"
 
-reg add "HKCR\*\shell\VSCode" /ve /d "通过 Code 打开" /f | Out-Null
-reg add "HKCR\*\shell\VSCode" /v Icon /d "C:\tools\vscode-portable\Code.exe" /f | Out-Null
-reg add "HKCR\*\shell\VSCode\command" /ve /d '"C:\tools\vscode-portable\Code.exe" "%1"' /f | Out-Null
+if ($PSCmdlet.ShouldProcess("HKCR\Directory\shell\VSCode", "添加 VSCode 目录右键菜单")) {
+    reg.exe add "HKCR\Directory\shell\VSCode" /ve /d "通过 Code 打开" /f | Out-Null
+    reg.exe add "HKCR\Directory\shell\VSCode" /v Icon /d $codePath /f | Out-Null
+    reg.exe add "HKCR\Directory\shell\VSCode\command" /ve /d $directoryCommand /f | Out-Null
+}
 
-Write-KitLog "System tweaks finished" "OK"
+if ($PSCmdlet.ShouldProcess("HKCR\*\shell\VSCode", "添加 VSCode 文件右键菜单")) {
+    reg.exe add "HKCR\*\shell\VSCode" /ve /d "通过 Code 打开" /f | Out-Null
+    reg.exe add "HKCR\*\shell\VSCode" /v Icon /d $codePath /f | Out-Null
+    reg.exe add "HKCR\*\shell\VSCode\command" /ve /d $fileCommand /f | Out-Null
+}
+
+Write-KitLog "系统级配置完成" "OK"

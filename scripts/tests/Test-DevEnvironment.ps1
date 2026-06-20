@@ -1,4 +1,4 @@
-$ErrorActionPreference = "Continue"
+﻿$ErrorActionPreference = "Continue"
 . "$PSScriptRoot\..\common\Write-Log.ps1"
 
 $commands = @(
@@ -11,6 +11,6 @@ $commands = @(
 )
 
 foreach ($command in $commands) {
-    Write-KitLog "Testing: $command"
+    Write-KitLog "测试命令：$command"
     cmd.exe /c $command
 }

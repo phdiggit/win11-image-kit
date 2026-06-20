@@ -4,7 +4,7 @@
     {
       "name": "MySQL",
       "displayName": "MySQL",
-      "install": "C:\\tools\\mysql\\bin\\mysqld --install MySQL --defaults-file=C:/tools/mysql/my.ini",
+      "install": "\"${ToolRoot}\\mysql\\bin\\mysqld.exe\" --install MySQL --defaults-file=\"${ToolRoot}\\mysql\\my.ini\"",
       "start": "net start MySQL",
       "stop": "net stop MySQL",
       "delete": "sc delete MySQL"
@@ -12,7 +12,7 @@
     {
       "name": "MongoDB",
       "displayName": "MongoDB",
-      "install": "C:\\tools\\mongodb\\bin\\mongod.exe --config C:\\tools\\mongodb\\mongod.cfg --install",
+      "install": "\"${ToolRoot}\\mongodb\\bin\\mongod.exe\" --config \"${ToolRoot}\\mongodb\\mongod.cfg\" --install",
       "start": "net start MongoDB",
       "stop": "net stop MongoDB",
       "delete": "sc delete MongoDB"

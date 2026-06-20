@@ -13,13 +13,13 @@ exit
 映射 NAS：
 
 ```cmd
-net use Z: \\192.168.1.37\images
+net use Z: \\192.168.1.37\backups\win11-image-kit\images\win11
 ```
 
 捕获：
 
 ```cmd
-DISM /Capture-Image /ImageFile:Z:\win11\golden\win11-dev-YYYYMMDD.wim /CaptureDir:C:\ /Name:"win11-dev-YYYYMMDD" /Compress:max /CheckIntegrity
+DISM /Capture-Image /ImageFile:Z:\golden\win11-dev-YYYYMMDD.wim /CaptureDir:C:\ /Name:"win11-dev-YYYYMMDD" /Compress:max /CheckIntegrity
 ```
 
 ## 还原镜像
@@ -36,6 +36,6 @@ DISM /Capture-Image /ImageFile:Z:\win11\golden\win11-dev-YYYYMMDD.wim /CaptureDi
 然后：
 
 ```cmd
-DISM /Apply-Image /ImageFile:Z:\win11\golden\win11-dev-YYYYMMDD.wim /Index:1 /ApplyDir:W:\
+DISM /Apply-Image /ImageFile:Z:\golden\win11-dev-YYYYMMDD.wim /Index:1 /ApplyDir:W:\
 bcdboot W:\Windows /s S: /f UEFI
 ```

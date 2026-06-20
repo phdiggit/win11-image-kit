@@ -11,12 +11,45 @@
         "required": ["name", "type", "source", "destination"],
         "properties": {
           "name": { "type": "string" },
-          "type": { "type": "string", "enum": ["zip", "installer", "manual"] },
+          "enabled": { "type": "boolean" },
+          "category": { "type": "string" },
+          "stage": {
+            "type": "string",
+            "enum": ["golden-image", "post-deploy", "manual"]
+          },
+          "type": {
+            "type": "string",
+            "enum": ["archive", "zip", "installer", "manual"]
+          },
+          "archiveFormat": {
+            "type": "string",
+            "enum": ["zip", "tar.gz"]
+          },
           "source": { "type": "string" },
           "destination": { "type": "string" },
-          "env": { "type": "object", "additionalProperties": { "type": "string" } },
-          "path": { "type": "array", "items": { "type": "string" } },
-          "postInstall": { "type": "array", "items": { "type": "string" } },
+          "env": {
+            "type": "object",
+            "additionalProperties": { "type": "string" }
+          },
+          "path": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "postInstall": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["action"],
+              "properties": {
+                "action": {
+                  "type": "string",
+                  "enum": ["ensure-directory"]
+                },
+                "path": { "type": "string" }
+              },
+              "additionalProperties": false
+            }
+          },
           "test": { "type": "string" }
         },
         "additionalProperties": false

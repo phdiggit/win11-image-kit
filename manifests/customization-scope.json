@@ -1,0 +1,58 @@
+{
+  "$schema": "../schemas/customization-scope.schema.json",
+  "profile": "default",
+  "goal": "还原到新机后，只保留账号登录、授权激活和硬件相关确认等少量手工操作。",
+  "pathsManifest": "manifests/paths.json",
+  "system": {
+    "contextMenu": {
+      "enabled": true,
+      "items": [
+        "vscode-open-here"
+      ]
+    },
+    "startMenu": {
+      "enabled": true,
+      "config": "${ConfigRoot}\\start-menu"
+    },
+    "explorerOptions": {
+      "enabled": true,
+      "showFileExtensions": true,
+      "showHiddenFiles": true
+    },
+    "defaultApps": {
+      "enabled": true,
+      "associationFile": "${ConfigRoot}\\default-apps\\DefaultAppAssoc.xml"
+    },
+    "windowsDefender": {
+      "mode": "enabled-with-exclusions",
+      "exclusionsManifest": "manifests/defender-exclusions.json"
+    },
+    "huorong": {
+      "install": false,
+      "packageName": "huorong"
+    }
+  },
+  "appx": {
+    "policy": "remove-listed-microsoft-apps",
+    "removeManifest": "manifests/appx-cleanup.json",
+    "keepPatterns": [
+      "Baidu",
+      "Netdisk"
+    ]
+  },
+  "applications": {
+    "softwareManifest": "manifests/software.json",
+    "servicesManifest": "manifests/services.json",
+    "junctionsManifest": "manifests/junctions.json"
+  },
+  "userInteraction": {
+    "editableBeforeRun": true,
+    "allowedChanges": [
+      "修改 paths.json 中的 NAS、本机工具目录和数据目录",
+      "在 software.json 中增删安装包或便携包",
+      "在 customization-scope.json 中启用或停用系统定制项",
+      "在 defender-exclusions.json 中增删可信目录或进程排除项",
+      "在 junctions.json 中增删需要迁移到数据盘的目录"
+    ]
+  }
+}

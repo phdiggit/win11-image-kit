@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "win11-image-kit customization scope",
+  "type": "object",
+  "required": ["profile", "goal", "pathsManifest", "system", "appx", "applications", "userInteraction"],
+  "properties": {
+    "profile": { "type": "string" },
+    "goal": { "type": "string" },
+    "pathsManifest": { "type": "string" },
+    "system": {
+      "type": "object",
+      "required": ["contextMenu", "startMenu", "explorerOptions", "defaultApps", "windowsDefender", "huorong"],
+      "properties": {
+        "contextMenu": { "$ref": "#/$defs/enabledBlock" },
+        "startMenu": { "$ref": "#/$defs/enabledBlock" },
+        "explorerOptions": { "$ref": "#/$defs/enabledBlock" },
+        "defaultApps": { "$ref": "#/$defs/enabledBlock" },
+        "windowsDefender": {
+          "type": "object",
+          "required": ["mode"],
+          "properties": {
+            "mode": {
+              "type": "string",
+              "enum": ["enabled", "enabled-with-exclusions", "disabled"]
+            },
+            "exclusionsManifest": { "type": "string" }
+          },
+          "additionalProperties": true
+        },
+        "huorong": {
+          "type": "object",
+          "required": ["install"],
+          "properties": {
+            "install": { "type": "boolean" },
+            "packageName": { "type": "string" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "appx": {
+      "type": "object",
+      "required": ["policy", "removeManifest", "keepPatterns"],
+      "properties": {
+        "policy": {
+          "type": "string",
+          "enum": ["audit-only", "remove-listed-microsoft-apps"]
+        },
+        "removeManifest": { "type": "string" },
+        "keepPatterns": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "applications": {
+      "type": "object",
+      "required": ["softwareManifest", "servicesManifest", "junctionsManifest"],
+      "properties": {
+        "softwareManifest": { "type": "string" },
+        "servicesManifest": { "type": "string" },
+        "junctionsManifest": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "userInteraction": {
+      "type": "object",
+      "required": ["editableBeforeRun", "allowedChanges"],
+      "properties": {
+        "editableBeforeRun": { "type": "boolean" },
+        "allowedChanges": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "enabledBlock": {
+      "type": "object",
+      "required": ["enabled"],
+      "properties": {
+        "enabled": { "type": "boolean" }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

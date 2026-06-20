@@ -1,6 +1,6 @@
 @echo off
-echo WARNING: this script cleans the selected disk.
-echo Edit the disk number before using in production.
+echo 警告：此脚本会清空所选磁盘。
+echo 正式使用前请先修改目标磁盘编号。
 exit /b 1
 
 rem Example diskpart layout:

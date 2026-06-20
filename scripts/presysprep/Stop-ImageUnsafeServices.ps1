@@ -1,4 +1,4 @@
-#Requires -RunAsAdministrator
+﻿#Requires -RunAsAdministrator
 
 [CmdletBinding(SupportsShouldProcess)]
 param(
@@ -13,15 +13,15 @@ $manifest = Get-Content -LiteralPath $ManifestPath -Raw -Encoding UTF8 | Convert
 foreach ($service in $manifest.services) {
     $existing = Get-Service -Name $service.name -ErrorAction SilentlyContinue
     if (-not $existing) {
-        Write-KitLog "Service not found: $($service.name)"
+        Write-KitLog "服务不存在：$($service.name)"
         continue
     }
 
-    if ($PSCmdlet.ShouldProcess($service.name, "Stop and delete service")) {
-        Write-KitLog "Stopping service $($service.name)" "WARN"
+    if ($PSCmdlet.ShouldProcess($service.name, "停止并删除服务")) {
+        Write-KitLog "停止服务：$($service.name)" "WARN"
         sc.exe stop $service.name | Out-Null
         Start-Sleep -Seconds 2
-        Write-KitLog "Deleting service $($service.name)" "WARN"
+        Write-KitLog "删除服务：$($service.name)" "WARN"
         sc.exe delete $service.name | Out-Null
     }
 }

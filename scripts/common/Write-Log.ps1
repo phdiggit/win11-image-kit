@@ -1,4 +1,4 @@
-function Write-KitLog {
+﻿function Write-KitLog {
     param(
         [Parameter(Mandatory)]
         [string]$Message,
