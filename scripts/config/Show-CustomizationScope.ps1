@@ -47,6 +47,22 @@ Write-KitLog ("  服务清单：{0}" -f $scopeConfig.applications.servicesManife
 Write-KitLog ("  Junction 清单：{0}" -f $scopeConfig.applications.junctionsManifest)
 Write-KitLog ("  AppX 策略：{0}" -f $scopeConfig.appx.policy)
 
+if ($scopeConfig.PSObject.Properties.Name -contains "reporting") {
+    Write-KitLog "归档输出："
+    foreach ($sectionName in @("build", "postDeploy", "validation")) {
+        if ($scopeConfig.reporting.PSObject.Properties.Name -notcontains $sectionName) {
+            continue
+        }
+
+        $section = $scopeConfig.reporting.$sectionName
+        Write-KitLog ("  {0}：{1}" -f $sectionName, $section.enabled)
+        if ($section.enabled) {
+            Write-KitLog ("    日志目录：{0}" -f (Resolve-KitPath -Path $section.logDirectory -PathMap $pathMap))
+            Write-KitLog ("    报告目录：{0}" -f (Resolve-KitPath -Path $section.reportDirectory -PathMap $pathMap))
+        }
+    }
+}
+
 Write-KitLog "用户可改项："
 foreach ($item in $scopeConfig.userInteraction.allowedChanges) {
     Write-KitLog ("  {0}" -f $item)

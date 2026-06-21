@@ -68,6 +68,15 @@
       },
       "additionalProperties": false
     },
+    "reporting": {
+      "type": "object",
+      "properties": {
+        "build": { "$ref": "#/$defs/reportingBlock" },
+        "postDeploy": { "$ref": "#/$defs/reportingBlock" },
+        "validation": { "$ref": "#/$defs/reportingBlock" }
+      },
+      "additionalProperties": false
+    },
     "userInteraction": {
       "type": "object",
       "required": ["editableBeforeRun", "allowedChanges"],
@@ -89,6 +98,16 @@
         "enabled": { "type": "boolean" }
       },
       "additionalProperties": true
+    },
+    "reportingBlock": {
+      "type": "object",
+      "required": ["enabled", "logDirectory", "reportDirectory"],
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "logDirectory": { "type": "string" },
+        "reportDirectory": { "type": "string" }
+      },
+      "additionalProperties": false
     }
   },
   "additionalProperties": false

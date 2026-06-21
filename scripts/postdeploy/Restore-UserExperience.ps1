@@ -1,20 +1,22 @@
-﻿#Requires -RunAsAdministrator
-
-[CmdletBinding(SupportsShouldProcess)]
+﻿[CmdletBinding(SupportsShouldProcess)]
 param(
-    [string]$ScopeManifestPath = "$PSScriptRoot\..\..\manifests\customization-scope.json",
+    [string]$ScopeManifestPath = "manifests/customization-scope.json",
     [string]$PathsManifestPath,
     [switch]$Strict,
-    [string]$ReportPath
+    [string]$ReportPath,
+    [switch]$ReportRequired
 )
 
 $ErrorActionPreference = "Stop"
 . "$PSScriptRoot\..\common\Write-Log.ps1"
+. "$PSScriptRoot\..\common\Assert-KitElevation.ps1"
 . "$PSScriptRoot\..\common\Resolve-KitPath.ps1"
 . "$PSScriptRoot\..\common\Invoke-KitStep.ps1"
 
 $repoRoot = (Resolve-Path -LiteralPath "$PSScriptRoot\..\..").Path
 $script:UserExperienceReportItems = @()
+
+Assert-KitElevation -Operation "用户体验恢复" -AllowWhatIfPreview
 
 function Add-KitUserExperienceReportItem {
     param(
@@ -47,7 +49,9 @@ function Add-KitUserExperienceReportItem {
 function Write-KitUserExperienceReport {
     param(
         [AllowEmptyString()]
-        [string]$Path
+        [string]$Path,
+
+        [switch]$Required
     )
 
     if ([string]::IsNullOrWhiteSpace($Path)) {
@@ -101,12 +105,14 @@ function Write-KitUserExperienceReport {
             $lines += "| $name | $status | $reason | $source | $destination | $advice |"
         }
 
-        Set-Content -LiteralPath $resolvedPath -Value $lines -Encoding UTF8 -WhatIf:$false
+        $written = Write-KitTextFile -Path $resolvedPath -Content $lines -Description "用户体验恢复报告" -Required:$Required
     } else {
-        $report | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $resolvedPath -Encoding UTF8 -WhatIf:$false
+        $written = Write-KitTextFile -Path $resolvedPath -Content ($report | ConvertTo-Json -Depth 8) -Description "用户体验恢复报告" -Required:$Required
     }
 
-    Write-KitLog "用户体验恢复报告已写入：$resolvedPath" "OK"
+    if ($written) {
+        Write-KitLog "用户体验恢复报告已写入：$resolvedPath" "OK"
+    }
 }
 
 function Test-KitDirectoryHasContent {
@@ -480,7 +486,7 @@ try {
         Add-KitUserExperienceReportItem -Name "VSCode 便携版 data 配置目录" -Status "skipped" -Reason "disabled"
     }
 } finally {
-    Write-KitUserExperienceReport -Path $ReportPath
+    Write-KitUserExperienceReport -Path $ReportPath -Required:$ReportRequired
 }
 
 Write-KitLog "用户体验配置恢复完成" "OK"

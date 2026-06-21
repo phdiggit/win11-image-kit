@@ -50,6 +50,24 @@ scripts/validate/Test-ProjectConfig.ps1
 scripts/tests/Test-PostDeploy.ps1 -SkipCommandTests -SkipServiceStatus
 ```
 
+按需归档日志和轻量报告时：
+
+```powershell
+scripts/build/Invoke-GoldenImageBuild.ps1 `
+  -LogPath .\logs\golden-image-build.log `
+  -ReportPath .\logs\golden-image-build.md
+
+scripts/postdeploy/Invoke-PostDeploy.ps1 `
+  -LogPath .\logs\postdeploy.log `
+  -SummaryReportPath .\logs\postdeploy-summary.md
+
+scripts/validate/Test-ProjectConfig.ps1 `
+  -LogPath .\logs\project-config.log `
+  -ReportPath .\logs\project-config.md
+```
+
+如需统一归档到 `${DeployRoot}`，可在 `manifests/customization-scope.json` 的 `reporting` 段按模块启用；默认关闭，因此普通验证不会强制写 NAS。
+
 ## 安全约定
 
 - 不提交授权文件、账号令牌、私钥、商业软件安装包。

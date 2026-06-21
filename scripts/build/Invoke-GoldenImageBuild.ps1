@@ -5,16 +5,211 @@ param(
     [switch]$SkipPortableApps,
     [switch]$SkipSystemTweaks,
     [switch]$SkipDevRuntime,
-    [switch]$SkipMiddleware
+    [switch]$SkipMiddleware,
+    [string]$LogPath,
+    [string]$ReportPath
 )
 
 $ErrorActionPreference = "Stop"
 . "$PSScriptRoot\..\common\Write-Log.ps1"
 . "$PSScriptRoot\..\common\Assert-KitElevation.ps1"
 . "$PSScriptRoot\..\common\Resolve-KitPath.ps1"
+. "$PSScriptRoot\..\common\Resolve-KitOutputPath.ps1"
 . "$PSScriptRoot\..\common\Invoke-KitStep.ps1"
 
 $repoRoot = (Resolve-Path -LiteralPath "$PSScriptRoot\..\..").Path
+$script:BuildReportItems = @()
+$script:BuildStartedAt = Get-Date
+$script:BuildRunStamp = $script:BuildStartedAt.ToString("yyyyMMdd-HHmmss")
+$script:BuildLogPath = $null
+$script:BuildStatus = "running"
+
+function Add-KitBuildReportItem {
+    param(
+        [Parameter(Mandatory)]
+        [string]$Name,
+
+        [Parameter(Mandatory)]
+        [string]$Status,
+
+        [string]$ScriptPath,
+        [string]$Reason
+    )
+
+    $script:BuildReportItems += [pscustomobject]@{
+        name = $Name
+        status = $Status
+        scriptPath = $ScriptPath
+        reason = $Reason
+    }
+}
+
+function Get-KitReportingSection {
+    param(
+        [Parameter(Mandatory)]
+        $ScopeConfig,
+
+        [Parameter(Mandatory)]
+        [string]$Name
+    )
+
+    if ($ScopeConfig.PSObject.Properties.Name -notcontains "reporting") {
+        return $null
+    }
+
+    if ($ScopeConfig.reporting.PSObject.Properties.Name -notcontains $Name) {
+        return $null
+    }
+
+    $section = $ScopeConfig.reporting.$Name
+    if ($null -eq $section -or -not $section.enabled) {
+        return $null
+    }
+
+    return $section
+}
+
+function Resolve-KitArtifactSpec {
+    param(
+        [AllowEmptyString()]
+        [string]$ExplicitPath,
+
+        [AllowEmptyString()]
+        [string]$AutoDirectory,
+
+        [Parameter(Mandatory)]
+        [string]$FileName,
+
+        [hashtable]$PathMap
+    )
+
+    if (-not [string]::IsNullOrWhiteSpace($ExplicitPath)) {
+        return [pscustomobject]@{
+            path = Resolve-KitOutputPath -Path $ExplicitPath -PathMap $PathMap -RepoRoot $repoRoot
+            required = $true
+            source = "explicit"
+        }
+    }
+
+    if (-not [string]::IsNullOrWhiteSpace($AutoDirectory)) {
+        $directory = Resolve-KitOutputPath -Path $AutoDirectory -PathMap $PathMap -RepoRoot $repoRoot
+        return [pscustomobject]@{
+            path = Join-Path -Path $directory -ChildPath $FileName
+            required = $false
+            source = "profile"
+        }
+    }
+
+    return [pscustomobject]@{
+        path = $null
+        required = $false
+        source = "none"
+    }
+}
+
+function Invoke-KitTrackedStep {
+    param(
+        [Parameter(Mandatory)]
+        [string]$Name,
+
+        [Parameter(Mandatory)]
+        [string]$ScriptPath,
+
+        [hashtable]$Arguments = @{},
+
+        [bool]$Enabled = $true,
+
+        [bool]$SupportsWhatIf = $false,
+
+        [bool]$ForwardWhatIf = $false,
+
+        [string]$StepKind = "步骤"
+    )
+
+    if (-not $Enabled) {
+        Invoke-KitStep -Name $Name -ScriptPath $ScriptPath -Arguments $Arguments -Enabled $false -SupportsWhatIf $SupportsWhatIf -ForwardWhatIf $ForwardWhatIf -StepKind $StepKind
+        Add-KitBuildReportItem -Name $Name -Status "skipped" -ScriptPath $ScriptPath -Reason "disabled"
+        return
+    }
+
+    try {
+        Invoke-KitStep -Name $Name -ScriptPath $ScriptPath -Arguments $Arguments -Enabled $true -SupportsWhatIf $SupportsWhatIf -ForwardWhatIf $ForwardWhatIf -StepKind $StepKind
+        $status = if ($WhatIfPreference) { "whatif" } else { "completed" }
+        $reason = if ($WhatIfPreference) { "whatif-preview" } else { "completed" }
+        Add-KitBuildReportItem -Name $Name -Status $status -ScriptPath $ScriptPath -Reason $reason
+    } catch {
+        Add-KitBuildReportItem -Name $Name -Status "failed" -ScriptPath $ScriptPath -Reason $_.Exception.Message
+        throw
+    }
+}
+
+function Write-KitBuildReport {
+    param(
+        [AllowEmptyString()]
+        [string]$Path,
+
+        [bool]$Required
+    )
+
+    if ([string]::IsNullOrWhiteSpace($Path)) {
+        return
+    }
+
+    $finishedAt = Get-Date
+    $summary = [pscustomobject]@{
+        completed = @($script:BuildReportItems | Where-Object { $_.status -eq "completed" }).Count
+        whatIf = @($script:BuildReportItems | Where-Object { $_.status -eq "whatif" }).Count
+        skipped = @($script:BuildReportItems | Where-Object { $_.status -eq "skipped" }).Count
+        failed = @($script:BuildReportItems | Where-Object { $_.status -eq "failed" }).Count
+    }
+
+    $report = [pscustomobject]@{
+        generatedAt = $finishedAt.ToString("s")
+        startedAt = $script:BuildStartedAt.ToString("s")
+        finishedAt = $finishedAt.ToString("s")
+        profile = $scopeConfig.profile
+        status = $script:BuildStatus
+        whatIf = [bool]$WhatIfPreference
+        logPath = $script:BuildLogPath
+        reportType = "golden-image-build-summary"
+        summary = $summary
+        steps = $script:BuildReportItems
+    }
+
+    $written = $false
+    if ([IO.Path]::GetExtension($Path).ToLowerInvariant() -eq ".md") {
+        $lines = @(
+            "# 金镜像构建报告",
+            "",
+            "- 生成时间：$($report.generatedAt)",
+            "- 开始时间：$($report.startedAt)",
+            "- 结束时间：$($report.finishedAt)",
+            "- Profile：$($report.profile)",
+            "- 状态：$($report.status)",
+            "- WhatIf：$($report.whatIf)",
+            "- 日志文件：$($report.logPath)",
+            "- 完成：$($summary.completed)",
+            "- 预演：$($summary.whatIf)",
+            "- 跳过：$($summary.skipped)",
+            "- 失败：$($summary.failed)",
+            "",
+            "| 步骤 | 状态 | 脚本 | 备注 |",
+            "|---|---|---|---|"
+        )
+
+        foreach ($step in $script:BuildReportItems) {
+            $lines += "| $($step.name) | $($step.status) | $($step.scriptPath) | $($step.reason) |"
+        }
+
+        $written = Write-KitTextFile -Path $Path -Content $lines -Description "构建报告" -Required:$Required
+    } else {
+        $written = Write-KitTextFile -Path $Path -Content ($report | ConvertTo-Json -Depth 8) -Description "构建报告" -Required:$Required
+    }
+
+    if ($written) {
+        Write-KitLog "构建报告已写入：$Path" "OK"
+    }
+}
 
 Write-KitLog "开始执行金镜像构建编排"
 Assert-KitElevation -Operation "金镜像构建编排" -AllowWhatIfPreview
@@ -28,62 +223,93 @@ if (-not $PathsManifestPath) {
 }
 
 $pathMap = Get-KitPathMap -ManifestPath $PathsManifestPath
+$reportingConfig = Get-KitReportingSection -ScopeConfig $scopeConfig -Name "build"
+
+$logSpec = Resolve-KitArtifactSpec `
+    -ExplicitPath $LogPath `
+    -AutoDirectory $(if ($null -ne $reportingConfig) { [string]$reportingConfig.logDirectory } else { $null }) `
+    -FileName ("golden-image-build-{0}.log" -f $script:BuildRunStamp) `
+    -PathMap $pathMap
+
+$reportSpec = Resolve-KitArtifactSpec `
+    -ExplicitPath $ReportPath `
+    -AutoDirectory $(if ($null -ne $reportingConfig) { [string]$reportingConfig.reportDirectory } else { $null }) `
+    -FileName ("golden-image-build-{0}.md" -f $script:BuildRunStamp) `
+    -PathMap $pathMap
+
+if (-not [string]::IsNullOrWhiteSpace($logSpec.path)) {
+    Set-KitLogPath -Path $logSpec.path -Required:$logSpec.required
+    $script:BuildLogPath = Get-KitLogPath
+    if (-not [string]::IsNullOrWhiteSpace($script:BuildLogPath)) {
+        Write-KitLog "已启用构建日志文件：$script:BuildLogPath" "OK"
+    }
+}
+
 Write-KitLog ("当前构建 profile：{0}" -f $scopeConfig.profile)
 Write-KitLog ("工具根目录：{0}" -f $pathMap["ToolRoot"])
 Write-KitLog ("安装包根目录：{0}" -f $pathMap["PackageRoot"])
 
-Invoke-KitStep `
-    -Name "golden-image 通用归档软件包" `
-    -ScriptPath "$PSScriptRoot\Install-PortableApps.ps1" `
-    -Enabled (-not $SkipPortableApps) `
-    -SupportsWhatIf $true `
-    -ForwardWhatIf $WhatIfPreference `
-    -StepKind "构建步骤" `
-    -Arguments @{
-        ManifestPath = Resolve-KitRepoPath -RepoRoot $repoRoot -Path $scopeConfig.applications.softwareManifest
-        PathsManifestPath = $PathsManifestPath
-        Stage = "golden-image"
-    }
+try {
+    Invoke-KitTrackedStep `
+        -Name "golden-image 通用归档软件包" `
+        -ScriptPath "$PSScriptRoot\Install-PortableApps.ps1" `
+        -Enabled (-not $SkipPortableApps) `
+        -SupportsWhatIf $true `
+        -ForwardWhatIf $WhatIfPreference `
+        -StepKind "构建步骤" `
+        -Arguments @{
+            ManifestPath = Resolve-KitRepoPath -RepoRoot $repoRoot -Path $scopeConfig.applications.softwareManifest
+            PathsManifestPath = $PathsManifestPath
+            Stage = "golden-image"
+        }
 
-Invoke-KitStep `
-    -Name "golden-image 开发运行时" `
-    -ScriptPath "$PSScriptRoot\Install-DevRuntime.ps1" `
-    -Enabled (-not $SkipDevRuntime) `
-    -SupportsWhatIf $true `
-    -ForwardWhatIf $WhatIfPreference `
-    -StepKind "构建步骤" `
-    -Arguments @{
-        ManifestPath = Resolve-KitRepoPath -RepoRoot $repoRoot -Path $scopeConfig.applications.softwareManifest
-        PathsManifestPath = $PathsManifestPath
-        Stage = "golden-image"
-    }
+    Invoke-KitTrackedStep `
+        -Name "golden-image 开发运行时" `
+        -ScriptPath "$PSScriptRoot\Install-DevRuntime.ps1" `
+        -Enabled (-not $SkipDevRuntime) `
+        -SupportsWhatIf $true `
+        -ForwardWhatIf $WhatIfPreference `
+        -StepKind "构建步骤" `
+        -Arguments @{
+            ManifestPath = Resolve-KitRepoPath -RepoRoot $repoRoot -Path $scopeConfig.applications.softwareManifest
+            PathsManifestPath = $PathsManifestPath
+            Stage = "golden-image"
+        }
 
-Invoke-KitStep `
-    -Name "golden-image 中间件准备" `
-    -ScriptPath "$PSScriptRoot\Install-Middleware.ps1" `
-    -Enabled (-not $SkipMiddleware) `
-    -SupportsWhatIf $true `
-    -ForwardWhatIf $WhatIfPreference `
-    -StepKind "构建步骤" `
-    -Arguments @{
-        ManifestPath = Resolve-KitRepoPath -RepoRoot $repoRoot -Path $scopeConfig.applications.softwareManifest
-        PathsManifestPath = $PathsManifestPath
-        Stage = "golden-image"
-    }
+    Invoke-KitTrackedStep `
+        -Name "golden-image 中间件准备" `
+        -ScriptPath "$PSScriptRoot\Install-Middleware.ps1" `
+        -Enabled (-not $SkipMiddleware) `
+        -SupportsWhatIf $true `
+        -ForwardWhatIf $WhatIfPreference `
+        -StepKind "构建步骤" `
+        -Arguments @{
+            ManifestPath = Resolve-KitRepoPath -RepoRoot $repoRoot -Path $scopeConfig.applications.softwareManifest
+            PathsManifestPath = $PathsManifestPath
+            Stage = "golden-image"
+        }
 
-$systemTweaksEnabled = (
-    $scopeConfig.system.contextMenu.enabled -or
-    $scopeConfig.system.explorerOptions.enabled
-)
-Invoke-KitStep `
-    -Name "系统级配置" `
-    -ScriptPath "$PSScriptRoot\Set-SystemTweaks.ps1" `
-    -Enabled ($systemTweaksEnabled -and -not $SkipSystemTweaks) `
-    -SupportsWhatIf $true `
-    -ForwardWhatIf $WhatIfPreference `
-    -StepKind "构建步骤" `
-    -Arguments @{
-        PathsManifestPath = $PathsManifestPath
-    }
+    $systemTweaksEnabled = (
+        $scopeConfig.system.contextMenu.enabled -or
+        $scopeConfig.system.explorerOptions.enabled
+    )
+    Invoke-KitTrackedStep `
+        -Name "系统级配置" `
+        -ScriptPath "$PSScriptRoot\Set-SystemTweaks.ps1" `
+        -Enabled ($systemTweaksEnabled -and -not $SkipSystemTweaks) `
+        -SupportsWhatIf $true `
+        -ForwardWhatIf $WhatIfPreference `
+        -StepKind "构建步骤" `
+        -Arguments @{
+            PathsManifestPath = $PathsManifestPath
+        }
 
-Write-KitLog "金镜像构建编排完成" "OK"
+    $script:BuildStatus = "completed"
+    Write-KitLog "金镜像构建编排完成" "OK"
+} catch {
+    $script:BuildStatus = "failed"
+    throw
+} finally {
+    Write-KitBuildReport -Path $reportSpec.path -Required:$reportSpec.required
+    Clear-KitLogPath
+}

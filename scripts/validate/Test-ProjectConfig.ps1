@@ -1,16 +1,25 @@
 ﻿param(
-    [string]$ScopeManifestPath = "$PSScriptRoot\..\..\manifests\customization-scope.json",
+    [string]$ScopeManifestPath = "manifests/customization-scope.json",
     [switch]$CheckPackageFiles,
-    [string]$ReportPath
+    [string]$ReportPath,
+    [string]$LogPath
 )
 
 $ErrorActionPreference = "Stop"
+. "$PSScriptRoot\..\common\Write-Log.ps1"
 . "$PSScriptRoot\..\common\Resolve-KitPath.ps1"
+. "$PSScriptRoot\..\common\Resolve-KitOutputPath.ps1"
 
 $script:Failed = 0
 $script:Warnings = 0
 $script:Results = @()
 $RepoRoot = (Resolve-Path -LiteralPath "$PSScriptRoot\..\..").Path
+$script:ValidationStartedAt = Get-Date
+$script:ValidationRunStamp = $script:ValidationStartedAt.ToString("yyyyMMdd-HHmmss")
+$script:ValidationReportPath = $null
+$script:ValidationReportRequired = $false
+$script:RequestedValidationReportPath = $ReportPath
+$script:RequestedValidationLogPath = $LogPath
 
 function Write-CheckResult {
     param(
@@ -40,6 +49,71 @@ function Write-CheckResult {
             Write-Host $line -ForegroundColor Red
         }
     }
+
+    Write-KitLogFileLine -Line $line
+}
+
+function Get-KitReportingSection {
+    param(
+        [Parameter(Mandatory)]
+        $ScopeConfig,
+
+        [Parameter(Mandatory)]
+        [string]$Name
+    )
+
+    if ($ScopeConfig.PSObject.Properties.Name -notcontains "reporting") {
+        return $null
+    }
+
+    if ($ScopeConfig.reporting.PSObject.Properties.Name -notcontains $Name) {
+        return $null
+    }
+
+    $section = $ScopeConfig.reporting.$Name
+    if ($null -eq $section -or -not $section.enabled) {
+        return $null
+    }
+
+    return $section
+}
+
+function Resolve-KitArtifactSpec {
+    param(
+        [AllowEmptyString()]
+        [string]$ExplicitPath,
+
+        [AllowEmptyString()]
+        [string]$AutoDirectory,
+
+        [Parameter(Mandatory)]
+        [string]$FileName,
+
+        [hashtable]$PathMap
+    )
+
+    if (-not [string]::IsNullOrWhiteSpace($ExplicitPath)) {
+        return [pscustomobject]@{
+            path = Resolve-KitOutputPath -Path $ExplicitPath -PathMap $PathMap -RepoRoot $RepoRoot
+            required = $true
+            source = "explicit"
+        }
+    }
+
+    if (-not [string]::IsNullOrWhiteSpace($AutoDirectory)) {
+        $directory = Resolve-KitOutputPath -Path $AutoDirectory -PathMap $PathMap -RepoRoot $RepoRoot
+        return [pscustomobject]@{
+            path = Join-Path -Path $directory -ChildPath $FileName
+            required = $false
+            source = "profile"
+        }
+    }
+
+    return [pscustomobject]@{
+        path = $null
+        required = $false
+        source = "none"
+    }
 }
 
 function Resolve-RepoPath {
@@ -53,10 +127,10 @@ function Resolve-RepoPath {
     }
 
     if ([IO.Path]::IsPathRooted($Path)) {
-        return $Path
+        return [IO.Path]::GetFullPath($Path)
     }
 
-    return Join-Path -Path $RepoRoot -ChildPath $Path
+    return [IO.Path]::GetFullPath((Join-Path -Path $RepoRoot -ChildPath $Path))
 }
 
 function Read-JsonFile {
@@ -570,7 +644,9 @@ function Test-SoftwareManifest {
 function Write-ValidationReport {
     param(
         [AllowEmptyString()]
-        [string]$Path
+        [string]$Path,
+
+        [switch]$Required
     )
 
     if ([string]::IsNullOrWhiteSpace($Path)) {
@@ -612,18 +688,32 @@ function Write-ValidationReport {
             $lines += "| $($result.level) | $message |"
         }
 
-        Set-Content -LiteralPath $resolvedPath -Value $lines -Encoding UTF8
+        $written = Write-KitTextFile -Path $resolvedPath -Content $lines -Description "项目配置验证报告" -Required:$Required
     } else {
-        $report | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $resolvedPath -Encoding UTF8
+        $written = Write-KitTextFile -Path $resolvedPath -Content ($report | ConvertTo-Json -Depth 8) -Description "项目配置验证报告" -Required:$Required
     }
 
-    Write-Host ("[OK] 验证报告已写入：{0}" -f $resolvedPath) -ForegroundColor Green
+    if ($written) {
+        $line = "[OK] 验证报告已写入：{0}" -f $resolvedPath
+        Write-Host $line -ForegroundColor Green
+        Write-KitLogFileLine -Line $line
+    }
 }
+
+$initialLogSpec = Resolve-KitArtifactSpec -ExplicitPath $LogPath -AutoDirectory $null -FileName "unused.log" -PathMap $null
+if (-not [string]::IsNullOrWhiteSpace($initialLogSpec.path)) {
+    Set-KitLogPath -Path $initialLogSpec.path -Required:$initialLogSpec.required
+}
+
+$initialReportSpec = Resolve-KitArtifactSpec -ExplicitPath $ReportPath -AutoDirectory $null -FileName "unused.md" -PathMap $null
+$script:ValidationReportPath = $initialReportSpec.path
+$script:ValidationReportRequired = $initialReportSpec.required
 
 $resolvedScopePath = Resolve-RepoPath -Path $ScopeManifestPath
 if (-not (Test-Path -LiteralPath $resolvedScopePath)) {
     Write-CheckResult -Level ERROR -Message "总定制清单不存在：$ScopeManifestPath"
-    Write-ValidationReport -Path $ReportPath
+    Write-ValidationReport -Path $script:ValidationReportPath -Required:$script:ValidationReportRequired
+    Clear-KitLogPath
     exit 1
 }
 
@@ -636,6 +726,41 @@ $pathsManifestPath = Resolve-RepoPath -Path $scope.pathsManifest
 Test-ReferencedPath -Description "pathsManifest" -Path $scope.pathsManifest
 
 $pathMap = Get-KitPathMap -ManifestPath $pathsManifestPath
+$reportingConfig = Get-KitReportingSection -ScopeConfig $scope -Name "validation"
+
+if (-not [string]::IsNullOrWhiteSpace($script:RequestedValidationLogPath) -and $script:RequestedValidationLogPath -match '\$\{[^}]+\}') {
+    Clear-KitLogPath
+    $resolvedLogSpec = Resolve-KitArtifactSpec -ExplicitPath $script:RequestedValidationLogPath -AutoDirectory $null -FileName "unused.log" -PathMap $pathMap
+    Set-KitLogPath -Path $resolvedLogSpec.path -Required:$resolvedLogSpec.required
+}
+
+if (-not [string]::IsNullOrWhiteSpace($script:RequestedValidationReportPath) -and $script:RequestedValidationReportPath -match '\$\{[^}]+\}') {
+    $resolvedReportSpec = Resolve-KitArtifactSpec -ExplicitPath $script:RequestedValidationReportPath -AutoDirectory $null -FileName "unused.md" -PathMap $pathMap
+    $script:ValidationReportPath = $resolvedReportSpec.path
+    $script:ValidationReportRequired = $resolvedReportSpec.required
+}
+
+if ([string]::IsNullOrWhiteSpace((Get-KitLogPath))) {
+    $autoLogSpec = Resolve-KitArtifactSpec `
+        -ExplicitPath $null `
+        -AutoDirectory $(if ($null -ne $reportingConfig) { [string]$reportingConfig.logDirectory } else { $null }) `
+        -FileName ("project-config-validation-{0}.log" -f $script:ValidationRunStamp) `
+        -PathMap $pathMap
+    if (-not [string]::IsNullOrWhiteSpace($autoLogSpec.path)) {
+        Set-KitLogPath -Path $autoLogSpec.path -Required:$autoLogSpec.required
+    }
+}
+
+if ([string]::IsNullOrWhiteSpace($script:ValidationReportPath)) {
+    $autoReportSpec = Resolve-KitArtifactSpec `
+        -ExplicitPath $null `
+        -AutoDirectory $(if ($null -ne $reportingConfig) { [string]$reportingConfig.reportDirectory } else { $null }) `
+        -FileName ("project-config-validation-{0}.md" -f $script:ValidationRunStamp) `
+        -PathMap $pathMap
+    $script:ValidationReportPath = $autoReportSpec.path
+    $script:ValidationReportRequired = $autoReportSpec.required
+}
+
 Test-ReferencedPath -Description "Defender 排除项清单" -Path $scope.system.windowsDefender.exclusionsManifest
 Test-ReferencedPath -Description "AppX 清理清单" -Path $scope.appx.removeManifest
 Test-ReferencedPath -Description "软件清单" -Path $scope.applications.softwareManifest
@@ -649,11 +774,17 @@ $softwareManifestPath = Resolve-RepoPath -Path $scope.applications.softwareManif
 $softwareManifest = Read-JsonFile -Path $softwareManifestPath
 Test-SoftwareManifest -SoftwareManifest $softwareManifest -PathMap $pathMap
 
-Write-ValidationReport -Path $ReportPath
+Write-ValidationReport -Path $script:ValidationReportPath -Required:$script:ValidationReportRequired
 
 if ($script:Failed -gt 0) {
-    Write-Host ("项目配置验证失败：{0} 个错误，{1} 个警告。" -f $script:Failed, $script:Warnings) -ForegroundColor Red
+    $line = "项目配置验证失败：{0} 个错误，{1} 个警告。" -f $script:Failed, $script:Warnings
+    Write-Host $line -ForegroundColor Red
+    Write-KitLogFileLine -Line $line
+    Clear-KitLogPath
     exit 1
 }
 
-Write-Host ("项目配置验证通过：0 个错误，{0} 个警告。" -f $script:Warnings) -ForegroundColor Green
+$line = "项目配置验证通过：0 个错误，{0} 个警告。" -f $script:Warnings
+Write-Host $line -ForegroundColor Green
+Write-KitLogFileLine -Line $line
+Clear-KitLogPath

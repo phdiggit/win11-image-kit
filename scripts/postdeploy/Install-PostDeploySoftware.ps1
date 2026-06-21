@@ -2,7 +2,8 @@
 param(
     [string]$ManifestPath = "manifests/software.json",
     [string]$PathsManifestPath = "manifests/paths.json",
-    [string]$ReportPath
+    [string]$ReportPath,
+    [switch]$ReportRequired
 )
 
 $ErrorActionPreference = "Stop"
@@ -25,10 +26,10 @@ function Resolve-KitRepoPath {
     }
 
     if ([IO.Path]::IsPathRooted($Path)) {
-        return $Path
+        return [IO.Path]::GetFullPath($Path)
     }
 
-    return Join-Path -Path $repoRoot -ChildPath $Path
+    return [IO.Path]::GetFullPath((Join-Path -Path $repoRoot -ChildPath $Path))
 }
 
 $ManifestPath = Resolve-KitRepoPath -Path $ManifestPath
@@ -147,7 +148,9 @@ function Write-KitInstallerManualChecklist {
 function Write-KitInstallerReport {
     param(
         [AllowEmptyString()]
-        [string]$Path
+        [string]$Path,
+
+        [switch]$Required
     )
 
     if ([string]::IsNullOrWhiteSpace($Path)) {
@@ -167,8 +170,15 @@ function Write-KitInstallerReport {
         items = $script:InstallerReportItems
     }
 
-    $report | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $resolvedPath -Encoding UTF8 -WhatIf:$false
-    Write-KitLog "安装器计划报告已写入：$resolvedPath" "OK"
+    $written = Write-KitTextFile `
+        -Path $resolvedPath `
+        -Content ($report | ConvertTo-Json -Depth 8) `
+        -Description "安装器计划报告" `
+        -Required:$Required
+
+    if ($written) {
+        Write-KitLog "安装器计划报告已写入：$resolvedPath" "OK"
+    }
 }
 
 function Invoke-KitInstallerPackage {
@@ -314,5 +324,5 @@ try {
     Write-KitInstallerManualChecklist
     Write-KitLog "部署后软件处理完成" "OK"
 } finally {
-    Write-KitInstallerReport -Path $ReportPath
+    Write-KitInstallerReport -Path $ReportPath -Required:$ReportRequired
 }

@@ -1,6 +1,4 @@
-﻿#Requires -RunAsAdministrator
-
-[CmdletBinding(SupportsShouldProcess, ConfirmImpact = "High")]
+﻿[CmdletBinding(SupportsShouldProcess, ConfirmImpact = "High")]
 param(
     [string]$ManifestPath = "$PSScriptRoot\..\..\manifests\defender-exclusions.json",
     [string]$PathsManifestPath = "$PSScriptRoot\..\..\manifests\paths.json"
@@ -8,7 +6,10 @@ param(
 
 $ErrorActionPreference = "Continue"
 . "$PSScriptRoot\..\common\Write-Log.ps1"
+. "$PSScriptRoot\..\common\Assert-KitElevation.ps1"
 . "$PSScriptRoot\..\common\Resolve-KitPath.ps1"
+
+Assert-KitElevation -Operation "Defender 排除项设置" -AllowWhatIfPreview
 
 if (-not (Get-Command Add-MpPreference -ErrorAction SilentlyContinue)) {
     Write-KitLog "当前系统不可用 Add-MpPreference，跳过 Defender 排除项设置。" "WARN"

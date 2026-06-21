@@ -1,6 +1,4 @@
-﻿#Requires -RunAsAdministrator
-
-[CmdletBinding(SupportsShouldProcess, ConfirmImpact = "High")]
+﻿[CmdletBinding(SupportsShouldProcess, ConfirmImpact = "High")]
 param(
     [string]$ManifestPath = "$PSScriptRoot\..\..\manifests\services.json",
     [string]$PathsManifestPath = "$PSScriptRoot\..\..\manifests\paths.json"
@@ -8,7 +6,10 @@ param(
 
 $ErrorActionPreference = "Stop"
 . "$PSScriptRoot\..\common\Write-Log.ps1"
+. "$PSScriptRoot\..\common\Assert-KitElevation.ps1"
 . "$PSScriptRoot\..\common\Resolve-KitPath.ps1"
+
+Assert-KitElevation -Operation "中间件服务注册" -AllowWhatIfPreview
 
 function Invoke-ServiceInstallCommand {
     param(

@@ -12,10 +12,10 @@
     }
 
     if ([IO.Path]::IsPathRooted($Path)) {
-        return $Path
+        return [IO.Path]::GetFullPath($Path)
     }
 
-    return Join-Path -Path $RepoRoot -ChildPath $Path
+    return [IO.Path]::GetFullPath((Join-Path -Path $RepoRoot -ChildPath $Path))
 }
 
 function Invoke-KitStep {
