@@ -2,7 +2,9 @@
 param(
     [string]$ScopeManifestPath = "$PSScriptRoot\..\..\manifests\customization-scope.json",
     [string]$PathsManifestPath,
-    [string]$ReportPath
+    [string]$ReportPath,
+    [string]$UserExperienceReportPath,
+    [switch]$StrictUserExperience
 )
 
 $ErrorActionPreference = "Stop"
@@ -80,8 +82,10 @@ Invoke-KitStep `
 
 $restoreUserExperience = (
     $scopeConfig.system.startMenu.enabled -or
+    (($scopeConfig.system.PSObject.Properties.Name -contains "windowsTerminal") -and $scopeConfig.system.windowsTerminal.enabled) -or
     $scopeConfig.system.defaultApps.enabled -or
-    $scopeConfig.system.explorerOptions.enabled
+    $scopeConfig.system.explorerOptions.enabled -or
+    (($scopeConfig.system.PSObject.Properties.Name -contains "vscodePortable") -and $scopeConfig.system.vscodePortable.enabled)
 )
 Invoke-KitStep `
     -Name "用户体验恢复" `
@@ -93,6 +97,8 @@ Invoke-KitStep `
     -Arguments @{
         ScopeManifestPath = $ScopeManifestPath
         PathsManifestPath = $PathsManifestPath
+        ReportPath = $UserExperienceReportPath
+        Strict = $StrictUserExperience
     }
 
 Write-KitLog "部署后恢复完成" "OK"

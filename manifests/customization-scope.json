@@ -14,6 +14,11 @@
       "enabled": true,
       "config": "${ConfigRoot}\\start-menu"
     },
+    "windowsTerminal": {
+      "enabled": true,
+      "source": "${ConfigRoot}\\windows-terminal",
+      "destination": "%LOCALAPPDATA%\\Packages\\Microsoft.WindowsTerminal_8wekyb3d8bbwe\\LocalState"
+    },
     "explorerOptions": {
       "enabled": true,
       "showFileExtensions": true,
@@ -22,6 +27,11 @@
     "defaultApps": {
       "enabled": true,
       "associationFile": "${ConfigRoot}\\default-apps\\DefaultAppAssoc.xml"
+    },
+    "vscodePortable": {
+      "enabled": true,
+      "source": "${ConfigRoot}\\vscode-portable\\data",
+      "destination": "${ToolRoot}\\vscode-portable\\data"
     },
     "windowsDefender": {
       "mode": "enabled-with-exclusions",
@@ -51,6 +61,7 @@
       "修改 paths.json 中的 NAS、本机工具目录和数据目录",
       "在 software.json 中增删安装包或便携包",
       "在 customization-scope.json 中启用或停用系统定制项",
+      "在 ConfigRoot 下维护 Windows Terminal 和 VSCode 便携版配置模板",
       "在 defender-exclusions.json 中增删可信目录或进程排除项",
       "在 junctions.json 中增删需要迁移到数据盘的目录"
     ]

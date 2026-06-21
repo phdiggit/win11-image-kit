@@ -14,8 +14,10 @@
       "properties": {
         "contextMenu": { "$ref": "#/$defs/enabledBlock" },
         "startMenu": { "$ref": "#/$defs/enabledBlock" },
+        "windowsTerminal": { "$ref": "#/$defs/enabledBlock" },
         "explorerOptions": { "$ref": "#/$defs/enabledBlock" },
         "defaultApps": { "$ref": "#/$defs/enabledBlock" },
+        "vscodePortable": { "$ref": "#/$defs/enabledBlock" },
         "windowsDefender": {
           "type": "object",
           "required": ["mode"],

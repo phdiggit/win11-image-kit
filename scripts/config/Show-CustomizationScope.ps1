@@ -22,8 +22,22 @@ foreach ($key in @($pathMap.Keys | Sort-Object)) {
 Write-KitLog "系统定制："
 Write-KitLog ("  右键菜单：{0}" -f $scopeConfig.system.contextMenu.enabled)
 Write-KitLog ("  开始菜单：{0}" -f $scopeConfig.system.startMenu.enabled)
+if ($scopeConfig.system.PSObject.Properties.Name -contains "windowsTerminal") {
+    Write-KitLog ("  Windows Terminal 配置：{0}" -f $scopeConfig.system.windowsTerminal.enabled)
+    if ($scopeConfig.system.windowsTerminal.enabled) {
+        Write-KitLog ("    来源：{0}" -f (Resolve-KitPath -Path $scopeConfig.system.windowsTerminal.source -PathMap $pathMap))
+        Write-KitLog ("    目标：{0}" -f (Resolve-KitPath -Path $scopeConfig.system.windowsTerminal.destination -PathMap $pathMap))
+    }
+}
 Write-KitLog ("  资源管理器选项：{0}" -f $scopeConfig.system.explorerOptions.enabled)
 Write-KitLog ("  默认应用：{0}" -f $scopeConfig.system.defaultApps.enabled)
+if ($scopeConfig.system.PSObject.Properties.Name -contains "vscodePortable") {
+    Write-KitLog ("  VSCode 便携配置：{0}" -f $scopeConfig.system.vscodePortable.enabled)
+    if ($scopeConfig.system.vscodePortable.enabled) {
+        Write-KitLog ("    来源：{0}" -f (Resolve-KitPath -Path $scopeConfig.system.vscodePortable.source -PathMap $pathMap))
+        Write-KitLog ("    目标：{0}" -f (Resolve-KitPath -Path $scopeConfig.system.vscodePortable.destination -PathMap $pathMap))
+    }
+}
 Write-KitLog ("  Windows Defender：{0}" -f $scopeConfig.system.windowsDefender.mode)
 Write-KitLog ("  安装火绒：{0}" -f $scopeConfig.system.huorong.install)
 
