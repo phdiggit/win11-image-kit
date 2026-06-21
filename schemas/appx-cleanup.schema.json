@@ -4,6 +4,7 @@
   "type": "object",
   "required": ["policy", "removeNamePatterns", "keepNamePatterns"],
   "properties": {
+    "$schema": { "type": "string" },
     "policy": {
       "type": "string",
       "enum": ["audit-only", "remove-listed-microsoft-apps"]

@@ -4,6 +4,7 @@
   "type": "object",
   "required": ["paths", "processes"],
   "properties": {
+    "$schema": { "type": "string" },
     "paths": {
       "type": "array",
       "items": {

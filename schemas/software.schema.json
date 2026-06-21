@@ -4,6 +4,7 @@
   "type": "object",
   "required": ["packages"],
   "properties": {
+    "$schema": { "type": "string" },
     "packages": {
       "type": "array",
       "items": {

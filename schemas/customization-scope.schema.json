@@ -4,6 +4,7 @@
   "type": "object",
   "required": ["profile", "goal", "pathsManifest", "system", "appx", "applications", "userInteraction"],
   "properties": {
+    "$schema": { "type": "string" },
     "profile": { "type": "string" },
     "goal": { "type": "string" },
     "pathsManifest": { "type": "string" },

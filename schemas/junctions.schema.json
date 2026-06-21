@@ -4,6 +4,7 @@
   "type": "object",
   "required": ["junctions"],
   "properties": {
+    "$schema": { "type": "string" },
     "junctions": {
       "type": "array",
       "items": {
