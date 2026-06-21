@@ -1,19 +1,20 @@
-﻿#Requires -RunAsAdministrator
-
-[CmdletBinding(SupportsShouldProcess)]
+﻿[CmdletBinding(SupportsShouldProcess)]
 param(
     [string]$ScopeManifestPath = "$PSScriptRoot\..\..\manifests\customization-scope.json",
-    [string]$PathsManifestPath
+    [string]$PathsManifestPath,
+    [string]$ReportPath
 )
 
 $ErrorActionPreference = "Stop"
 . "$PSScriptRoot\..\common\Write-Log.ps1"
+. "$PSScriptRoot\..\common\Assert-KitElevation.ps1"
 . "$PSScriptRoot\..\common\Resolve-KitPath.ps1"
 . "$PSScriptRoot\..\common\Invoke-KitStep.ps1"
 
 $repoRoot = (Resolve-Path -LiteralPath "$PSScriptRoot\..\..").Path
 
 Write-KitLog "开始执行部署后恢复"
+Assert-KitElevation -Operation "部署后恢复编排" -AllowWhatIfPreview
 
 $ScopeManifestPath = Resolve-KitRepoPath -RepoRoot $repoRoot -Path $ScopeManifestPath
 $scopeConfig = Get-Content -LiteralPath $ScopeManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
@@ -63,6 +64,7 @@ Invoke-KitStep `
     -Arguments @{
         ManifestPath = Resolve-KitRepoPath -RepoRoot $repoRoot -Path $scopeConfig.applications.softwareManifest
         PathsManifestPath = $PathsManifestPath
+        ReportPath = $ReportPath
     }
 
 Invoke-KitStep `

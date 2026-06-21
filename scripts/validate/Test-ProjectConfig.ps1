@@ -522,6 +522,27 @@ function Test-SoftwareManifest {
             Write-CheckResult -Level ERROR -Message ("安装器缺少 silentInstall：{0}" -f $package.name)
         }
 
+        if ($null -ne $package.successExitCodes) {
+            $successExitCodes = @($package.successExitCodes)
+            if ($successExitCodes.Count -eq 0) {
+                Write-CheckResult -Level ERROR -Message ("安装器 successExitCodes 不能为空：{0}" -f $package.name)
+            }
+
+            foreach ($successExitCode in $successExitCodes) {
+                $numericExitCode = $null
+                try {
+                    $numericExitCode = [double]$successExitCode
+                } catch {
+                    Write-CheckResult -Level ERROR -Message ("安装器 successExitCodes 包含无效值：{0} -> {1}" -f $package.name, $successExitCode)
+                    continue
+                }
+
+                if ($numericExitCode -lt 0 -or $numericExitCode -ne [Math]::Floor($numericExitCode)) {
+                    Write-CheckResult -Level ERROR -Message ("安装器 successExitCodes 必须是非负整数：{0} -> {1}" -f $package.name, $successExitCode)
+                }
+            }
+        }
+
         $expectedHash = [string]$package.sha256
         if (-not [string]::IsNullOrWhiteSpace($expectedHash) -and $expectedHash -notmatch '^[A-Fa-f0-9]{64}$') {
             Write-CheckResult -Level ERROR -Message ("SHA256 格式无效：{0}" -f $package.name)

@@ -43,6 +43,10 @@
             "items": { "type": "string" }
           },
           "silentInstall": { "type": "boolean" },
+          "successExitCodes": {
+            "type": "array",
+            "items": { "type": "number" }
+          },
           "uninstall": {
             "anyOf": [
               { "type": "string" },
