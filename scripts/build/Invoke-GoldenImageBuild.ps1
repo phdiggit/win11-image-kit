@@ -1,8 +1,6 @@
-﻿#Requires -RunAsAdministrator
-
-[CmdletBinding(SupportsShouldProcess)]
+﻿[CmdletBinding(SupportsShouldProcess)]
 param(
-    [string]$ScopeManifestPath = "$PSScriptRoot\..\..\manifests\customization-scope.json",
+    [string]$ScopeManifestPath = "manifests/customization-scope.json",
     [string]$PathsManifestPath,
     [switch]$SkipPortableApps,
     [switch]$SkipSystemTweaks,
@@ -12,12 +10,14 @@ param(
 
 $ErrorActionPreference = "Stop"
 . "$PSScriptRoot\..\common\Write-Log.ps1"
+. "$PSScriptRoot\..\common\Assert-KitElevation.ps1"
 . "$PSScriptRoot\..\common\Resolve-KitPath.ps1"
 . "$PSScriptRoot\..\common\Invoke-KitStep.ps1"
 
 $repoRoot = (Resolve-Path -LiteralPath "$PSScriptRoot\..\..").Path
 
 Write-KitLog "开始执行金镜像构建编排"
+Assert-KitElevation -Operation "金镜像构建编排" -AllowWhatIfPreview
 
 $ScopeManifestPath = Resolve-KitRepoPath -RepoRoot $repoRoot -Path $ScopeManifestPath
 $scopeConfig = Get-Content -LiteralPath $ScopeManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
@@ -33,7 +33,7 @@ Write-KitLog ("工具根目录：{0}" -f $pathMap["ToolRoot"])
 Write-KitLog ("安装包根目录：{0}" -f $pathMap["PackageRoot"])
 
 Invoke-KitStep `
-    -Name "golden-image 归档软件包" `
+    -Name "golden-image 通用归档软件包" `
     -ScriptPath "$PSScriptRoot\Install-PortableApps.ps1" `
     -Enabled (-not $SkipPortableApps) `
     -SupportsWhatIf $true `
@@ -46,16 +46,30 @@ Invoke-KitStep `
     }
 
 Invoke-KitStep `
-    -Name "开发运行时占位检查" `
+    -Name "golden-image 开发运行时" `
     -ScriptPath "$PSScriptRoot\Install-DevRuntime.ps1" `
     -Enabled (-not $SkipDevRuntime) `
-    -StepKind "构建步骤"
+    -SupportsWhatIf $true `
+    -ForwardWhatIf $WhatIfPreference `
+    -StepKind "构建步骤" `
+    -Arguments @{
+        ManifestPath = Resolve-KitRepoPath -RepoRoot $repoRoot -Path $scopeConfig.applications.softwareManifest
+        PathsManifestPath = $PathsManifestPath
+        Stage = "golden-image"
+    }
 
 Invoke-KitStep `
-    -Name "中间件占位检查" `
+    -Name "golden-image 中间件准备" `
     -ScriptPath "$PSScriptRoot\Install-Middleware.ps1" `
     -Enabled (-not $SkipMiddleware) `
-    -StepKind "构建步骤"
+    -SupportsWhatIf $true `
+    -ForwardWhatIf $WhatIfPreference `
+    -StepKind "构建步骤" `
+    -Arguments @{
+        ManifestPath = Resolve-KitRepoPath -RepoRoot $repoRoot -Path $scopeConfig.applications.softwareManifest
+        PathsManifestPath = $PathsManifestPath
+        Stage = "golden-image"
+    }
 
 $systemTweaksEnabled = (
     $scopeConfig.system.contextMenu.enabled -or

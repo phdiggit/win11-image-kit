@@ -11,6 +11,41 @@ $ErrorActionPreference = "Continue"
 $failed = 0
 $skipped = 0
 
+function Get-TestCommandExecutablePath {
+    param(
+        [Parameter(Mandatory)]
+        [string]$Command
+    )
+
+    $trimmed = $Command.Trim()
+    if ([string]::IsNullOrWhiteSpace($trimmed)) {
+        return $null
+    }
+
+    $candidate = $null
+    if ($trimmed.StartsWith('"')) {
+        $closingQuoteIndex = $trimmed.IndexOf('"', 1)
+        if ($closingQuoteIndex -gt 1) {
+            $candidate = $trimmed.Substring(1, $closingQuoteIndex - 1)
+        }
+    } else {
+        $firstToken = ($trimmed -split '\s+', 2)[0]
+        if (-not [string]::IsNullOrWhiteSpace($firstToken)) {
+            $candidate = $firstToken
+        }
+    }
+
+    if ([string]::IsNullOrWhiteSpace($candidate)) {
+        return $null
+    }
+
+    if ([IO.Path]::IsPathRooted($candidate)) {
+        return $candidate
+    }
+
+    return $null
+}
+
 function Invoke-TestCommand {
     param(
         [Parameter(Mandatory)]
@@ -54,6 +89,13 @@ foreach ($package in $manifest.packages) {
     $testCommand = Resolve-KitPath -Path $package.test -PathMap $pathMap
     if ($SkipCommandTests) {
         Write-KitLog "仅检查测试命令声明，未执行：$($package.name) -> $testCommand"
+        continue
+    }
+
+    $testExecutablePath = Get-TestCommandExecutablePath -Command $testCommand
+    if ($testExecutablePath -and -not (Test-Path -LiteralPath $testExecutablePath)) {
+        Write-KitLog "测试目标不存在，按未安装跳过：$($package.name) -> $testExecutablePath" "WARN"
+        $skipped++
         continue
     }
 

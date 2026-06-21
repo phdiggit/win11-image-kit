@@ -1,8 +1,6 @@
-#Requires -RunAsAdministrator
-
-[CmdletBinding(SupportsShouldProcess)]
+﻿[CmdletBinding(SupportsShouldProcess)]
 param(
-    [string]$PathsManifestPath = "$PSScriptRoot\..\..\manifests\paths.json"
+    [string]$PathsManifestPath = "manifests/paths.json"
 )
 
 $ErrorActionPreference = "Stop"
