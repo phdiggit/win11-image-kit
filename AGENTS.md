@@ -4,43 +4,47 @@
 
 ## 执行优先级
 
-1. 对于涉及安装或卸载软件、启动服务、删除工作区外文件、修改注册表、修改 Defender 的 `.ps1` 文件，必须先向用户申请并得到明确同意。
-2. 用户本轮明确要求。
-3. 本 `AGENTS.md`。
-4. `README.md`、`docs/`、`manifests/`、`schemas/` 中的项目约定。
-5. 其他默认工具习惯。
+1. 用户本轮明确要求。
+2. 本 `AGENTS.md`。
+3. `README.md`、`docs/`、`manifests/`、`schemas/` 中与当前任务直接相关的项目约定。
+4. 其他默认工具习惯。
 
-如果规则冲突，优先满足更高层规则。只读分析任务保持只读；实现任务在范围清楚后直接做完必要步骤。
+如果规则冲突，优先满足更高层规则。只读分析任务保持只读；实现任务在范围清楚后直接做完必要步骤。任务卡或 Issue 已经给出的分支名、范围、验收标准和禁止事项，不要重复询问。
 
-## GitHub 操作
+## 任务启动协议
 
-1. 涉及 GitHub 远端读写时，默认优先使用已认证的 `gh` CLI，例如读取 Issue/PR、读取评论、查看 checks、创建或更新 PR、回复评论、merge、close issue。
-2. 只有在 `gh` 不可用、未认证、权限不足或明确无法完成目标动作时，才退回 GitHub connector；退回前先判断是不是只需要重新认证或刷新权限。
-3. GitHub 写操作按“先判断、后执行”：先用最少必要读取确认目标，再执行一次写操作。不要为同一目标反复调用不同接口，也不要混用 PR 更新接口和 issue 更新接口。
-4. 如果退回 connector，在最终说明或 PR 说明里写清楚原因。
+1. 读取根 `AGENTS.md` 和当前 Issue 或任务卡。
+2. 检查默认分支、工作区状态、任务范围、禁止范围和验收标准。
+3. 按任务路由读取最小必要文件集；发现新依赖时再增量读取。
+4. 先盘点调用方、现有行为和相关约定，再实施最小改动。
+5. 先运行定向验证，再运行适用的全量或轻量验证。
+6. 核对 changed files、禁止范围和工作区状态。
+7. 需要交付 PR 时，提交、推送、创建非 Draft PR，并在验证完成后保持 ready for review。
+8. 最终报告只写计划、事实、修改摘要、命令结果和未解决问题；不要输出私有思维过程。
 
-## 快速定位
+详细生命周期、PR body 清单和最终报告字段见 [Codex 工作流](docs/codex-workflow.md)。
 
-开始前优先读这些文件，按任务相关性取最小集合：
+## 最小读取路由
 
-```text
-README.md
-docs/07-定制范围与配置入口.md
-docs/06-已知问题与决策.md
-manifests/customization-scope.json
-manifests/paths.json
-scripts/config/Show-CustomizationScope.ps1
-```
+| 任务类型 | 优先读取 |
+|---|---|
+| 纯文档任务 | 根 `AGENTS.md`、当前 Issue/任务卡、目标文档、与目标文档直接关联的索引文件 |
+| Manifest/Schema | 根 `AGENTS.md`、当前 Issue、对应 manifest、对应 schema、validator、直接使用该配置的脚本 |
+| 构建任务 | 根 `AGENTS.md`、当前 Issue、scope/paths manifest、build 入口、相关 handler、直接使用的 common 文件 |
+| 部署后任务 | 根 `AGENTS.md`、当前 Issue、scope/paths manifest、postdeploy 入口、目标 handler、对应测试 |
+| Sysprep/AppX | 根 `AGENTS.md`、当前 Issue、Sysprep 文档、presysprep 入口、AppX/服务 manifest、目标脚本和测试 |
+| WinPE | 根 `AGENTS.md`、当前 Issue、WinPE 文档、目标 WinPE 脚本、计划或模拟测试 |
+| 测试/CI | 根 `AGENTS.md`、当前 Issue、当前验证入口、目标测试、CI 配置、被测试的最小实现集合 |
+| GitHub/PR | 根 `AGENTS.md`、当前 Issue 或 PR、changed files；不默认通读业务文档 |
 
-常用入口：
+上下文纪律：
 
-```powershell
-scripts/config/Show-CustomizationScope.ps1
-scripts/build/Invoke-GoldenImageBuild.ps1
-scripts/presysprep/Invoke-PreSysprepCheck.ps1
-scripts/postdeploy/Invoke-PostDeploy.ps1
-scripts/tests/Test-PostDeploy.ps1
-```
+1. 已读取且未变化的文件不重复读取。
+2. 优先使用 `rg`、路径过滤、函数定位、章节定位和行区间。
+3. 不默认打印完整大文件、完整 manifest、完整日志、完整 diff 或完整 Issue。
+4. 只引用和当前结论直接相关的片段。
+5. 验证失败时保留复现命令和关键错误，不把完整日志复制进回复。
+6. 动态事实从事实源读取，不长期写入根规则。
 
 ## 架构原则
 
@@ -48,8 +52,9 @@ scripts/tests/Test-PostDeploy.ps1
 2. `manifests/customization-scope.json` 是总定制入口，控制系统项、AppX、Defender、火绒、软件、服务和 Junction 等模块。
 3. `manifests/paths.json` 是 NAS、安装包、镜像、部署、临时工作区、工具根目录和数据根目录的单一来源。
 4. 脚本和 manifest 中需要路径时，优先使用 `${PackageRoot}`、`${ToolRoot}`、`${DataRoot}` 等变量，并通过 `scripts/common/Resolve-KitPath.ps1` 解析。
-5. 不要把 `C:\tools`、`D:\Data`、NAS 共享等路径继续硬编码到新脚本中。
-6. 当前真实项目根优先是 `\\192.168.1.37\backups\win11-image-kit`。早期的 `\\192.168.1.37\images`、`\\192.168.1.37\backups\packages` 等旧路径不要作为新代码来源。
+5. 不要把工具目录、数据目录、NAS 共享等环境路径继续硬编码到新代码中；当前值以 manifest 和实际工作区为准。
+6. Git 保存代码、文档、manifest、schema 和轻量说明；NAS 保存安装包、压缩包、WIM/ISO、导出的软件配置、部署日志和报告。
+7. 不提交授权文件、账号令牌、私钥、商业软件安装包、破解或绕授权工具。
 
 ## 目录职责
 
@@ -62,18 +67,6 @@ configs/    可进入 Git 的配置模板说明
 packages/   只放说明和校验信息，不放大型安装包
 logs/       只保留 .gitkeep，本地日志不提交
 ```
-
-NAS 保存大型资产：安装包、压缩包、WIM/ISO、导出的软件配置、部署日志和报告。Git 保存代码、文档、manifest、schema 和轻量说明。
-
-## 安全边界
-
-这些操作必须显式确认，或默认只提供 `-WhatIf` / dry-run / 示例命令：
-
-1. 清盘、分区、格式化、`diskpart clean`。
-2. Sysprep、generalize、不可逆系统状态变更。
-3. 删除服务、卸载 AppX、移动用户目录、创建 Junction。
-4. 修改 Defender 策略、添加大范围排除项。
-5. 写入 NAS 大量文件、复制镜像、删除旧资产。
 
 默认不提交也不读取无关敏感内容：
 
@@ -99,7 +92,26 @@ secrets/
 .codex/
 ```
 
-不要提交授权文件、账号令牌、私钥、商业软件安装包、破解或绕授权工具。
+## 危险操作边界
+
+代码变更授权和真实执行授权必须分开判断。
+
+当前 Issue/任务卡明确要求修改危险脚本时，可以编辑源码、写 Mock 测试、运行语法检查、静态检查、`-WhatIf`、临时目录测试和模拟输出测试。不要仅因目标脚本涉及注册表、Defender、服务、AppX、Junction 或 Sysprep 就重复请求代码编辑授权。
+
+以下真实动作仍必须获得用户单独、明确许可，或默认只提供 `-WhatIf`、plan、dry-run 或示例命令：
+
+1. 安装或卸载软件。
+2. 启动、停止、删除或注册服务。
+3. 修改注册表或 Defender 策略。
+4. 卸载或 provision AppX。
+5. 移动真实用户目录，创建或删除真实 Junction。
+6. 执行 Sysprep、generalize 或其它不可逆系统状态变更。
+7. 清盘、分区、格式化或 `diskpart clean`。
+8. 捕获或应用真实系统镜像。
+9. 对 NAS 进行大规模复制、移动或删除。
+10. 删除工作区外文件。
+
+普通验证不得执行真实安装、删除、分区、Sysprep、移动用户目录、修改 Defender、修改注册表、修改 AppX 或服务变更。
 
 ## Shell、编码与路径
 
@@ -113,48 +125,45 @@ secrets/
 ```
 
 5. 自动化目录尽量使用英文、数字、短横线，避免 WinPE、cmd、SMB 和日志编码问题。
-6. Windows 工作区中，仓库内常规命令默认优先使用 Git Bash（`D:\Git\bin\bash.exe`），尤其是 `git`、`gh`、`rg`、`python`、`pytest`、命令串联、重定向和管道操作。
+6. 当前 shell 能可靠执行时保持当前 shell；`git`、`gh`、`rg`、Python 等优先使用 PATH 中的命令。
 7. 需要 PowerShell 专属能力时使用 PowerShell，例如 `.ps1`、Windows 权限、注册表、Defender、AppX、服务管理和 PowerShell 对象管道。
-8. 如果当前已经在 PowerShell 或 Git Bash，并且等价命令简单可靠，就保持当前 shell，不要为了切 shell 绕路。
-9. PowerShell + Git Bash 混合环境里不要写复杂嵌套引号命令。多关键词搜索优先用一次 `rg -n "A|B|C" <paths>` 或等价单条简单命令完成。
+8. Git Bash 只是可选工具；只有在路径实际存在时，才把本机固定 Bash 路径作为 fallback。
+9. 避免 PowerShell 与 Bash 多层嵌套引号。多关键词搜索优先用一次 `rg -n "A|B|C" <paths>` 或等价单条简单命令完成。
 10. 处理中文路径、`git status`、changed files、diff 范围核对时，优先使用 `git -c core.quotepath=false status --short` 和 `git -c core.quotepath=false diff --name-only`。
 
 ## 改动方法
 
 1. 修改前先看 `git status --short`，不要覆盖用户已有改动。
-2. 先用 `rg` 精确定位旧路径、旧常量、目标函数，再小步修改。
+2. 先用 `rg` 精确定位旧路径、旧常量、目标函数或目标章节，再小步修改。
 3. 新增系统项、应用项、服务、Junction、Defender 排除项时，优先改 manifest 和 schema，再改执行脚本。
 4. 大脚本治理要分阶段：先抽公共路径/配置读取，再做编排，再补具体动作。
 5. 危险脚本优先实现 `SupportsShouldProcess`、`-WhatIf`、确认提示和清晰日志。
 6. 不要为了一个功能顺手重写无关文档、批量格式化全仓库或清理历史文件。
 
-## 验证
+## 验证选择
 
-纯文档改动通常只需检查内容和 `git diff`。涉及 manifest、schema 或脚本时，优先运行对应的轻量验证：
+验证遵循先便宜后昂贵、先定向后全量、先静态后运行。危险 handler 只做 Mock、`-WhatIf` 或临时目录测试；没有代码变化时，不重复运行同一个重型失败命令。
+
+常用入口按任务相关性选择：
 
 ```powershell
 scripts/validate/Test-ProjectConfig.ps1
-
-Get-ChildItem -Path manifests,schemas -Recurse -Filter *.json | ForEach-Object {
-    Get-Content -LiteralPath $_.FullName -Raw -Encoding UTF8 | ConvertFrom-Json | Out-Null
-}
-
-Get-ChildItem -Path scripts -Recurse -Filter *.ps1 | ForEach-Object {
-    [scriptblock]::Create((Get-Content -LiteralPath $_.FullName -Raw -Encoding UTF8)) | Out-Null
-}
-
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/config/Show-CustomizationScope.ps1
-```
-
-涉及部署后恢复时，再按风险运行相关测试或 `-WhatIf`：
-
-```powershell
-scripts/presysprep/Clear-AppxForSysprep.ps1 -WhatIf
-scripts/presysprep/Stop-ImageUnsafeServices.ps1 -WhatIf
+scripts/config/Show-CustomizationScope.ps1
 scripts/tests/Test-PostDeploy.ps1
 ```
 
-不要在普通验证中执行会真实安装、删除、分区、Sysprep、移动用户目录或修改 Defender 的命令。
+完整分级验证矩阵、失败分类、停止条件和最小重跑策略见 [Codex 工作流](docs/codex-workflow.md)。
+
+## GitHub、Commit 与 PR
+
+1. 涉及 GitHub 远端读写时，优先使用当前已认证且调用最少的接口；`gh` CLI、GitHub connector 或其它已认证接口都可以，但不要对同一目标重复写入。
+2. 退回 connector 时，在最终说明或 PR 说明里写清楚原因。
+3. 默认基于仓库默认分支创建 `codex/<short-task>` 分支。
+4. 一个任务卡对应一个分支和一个 PR。
+5. Commit 必须是原子的，不机械拆分无意义 commit。
+6. PR 标题简洁，正文包含 `Closes #<issue>`。
+7. 创建 PR 前核对 changed files、scope、验证结果、工作区状态、base/head。
+8. 验证完成时创建非 Draft PR，并保持 ready for review；验证未完成时不得伪装为 ready。
 
 ## 回报结果
 
@@ -164,3 +173,4 @@ scripts/tests/Test-PostDeploy.ps1
 2. 是否触及危险操作；如果没有，明确说没有执行。
 3. 运行了哪些验证命令及结果。
 4. 工作区中是否存在与本次无关的既有改动。
+5. 如创建 PR，说明 base/head、Draft/ready 状态和链接。
