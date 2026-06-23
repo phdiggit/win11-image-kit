@@ -191,6 +191,18 @@ git -c core.quotepath=false diff --stat origin/<default-branch>...HEAD
 
 <!-- 要求 PR body 包含可复核事实，不要复制完整任务卡。 -->
 
+正文文件放在 `.tmp/pr-bodies/`，并使用本地护栏工具规范化、校验和写入：
+
+```bash
+python scripts/dev/pr_body_tool.py normalize --input <draft.md> --output .tmp/pr-bodies/<name>.md
+python scripts/dev/pr_body_tool.py validate .tmp/pr-bodies/<name>.md
+python scripts/dev/pr_body_tool.py create --title "<title>" --body-file .tmp/pr-bodies/<name>.md --base <default-branch> --head <branch>
+python scripts/dev/pr_body_tool.py edit --pr <number-or-url> --body-file .tmp/pr-bodies/<name>.md
+python scripts/dev/pr_body_tool.py verify --pr <number-or-url> --body-file .tmp/pr-bodies/<name>.md
+```
+
+不要通过 PowerShell 管道或命令行字符串直接向 `gh` 传中文正文；创建或编辑 PR 后必须读回 GitHub 正文并验证一致。
+
 PR 标题建议：
 
 ```text
