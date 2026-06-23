@@ -68,6 +68,13 @@ scripts/validate/Test-ProjectConfig.ps1 `
 
 如需统一归档到 `${DeployRoot}`，可在 `manifests/customization-scope.json` 的 `reporting` 段按模块启用；默认关闭，因此普通验证不会强制写 NAS。
 
+## Codex/Agent 协作
+
+- 仓库协作规则见 [AGENTS.md](AGENTS.md)。
+- 详细本地任务流程、验证矩阵、失败分类和 PR 清单见 [Codex 工作流](docs/codex-workflow.md)。
+- 编写后续任务卡时使用 [Codex 任务卡模板](docs/codex-task-card-template.md)。
+- Roadmap 入口为 GitHub Issue #19；当前任务卡以对应 Issue 或用户提供的任务卡为准。
+
 ## 安全约定
 
 - 不提交授权文件、账号令牌、私钥、商业软件安装包。
