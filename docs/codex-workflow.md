@@ -18,7 +18,7 @@
 6. 实施最小改动，不顺手扩大范围。
 7. 先运行定向验证，再运行适用的最终验证。
 8. 核对 changed files、diff、工作区状态和禁止范围。
-9. 提交、推送、创建 PR。
+9. 提交、推送；验证完成后创建 ready PR，验证未完成时创建 Draft 或停止并报告。
 10. 输出可核验的最终报告。
 
 ## 基线同步
@@ -38,10 +38,7 @@ git checkout -b codex/<short-task>
 - 基线 commit SHA。
 - 默认分支。
 - 分支名。
-- 是否存在 `.github/ISSUE_TEMPLATE`。
-- 是否存在 `.github/PULL_REQUEST_TEMPLATE.md`。
-- 是否存在目录级 `AGENTS.md`。
-- 当前验证入口。
+- 任务卡指定的其它基线事实。
 
 ## 工作区保护
 
@@ -49,7 +46,14 @@ git checkout -b codex/<short-task>
 
 ```bash
 git -c core.quotepath=false status --short
-git -c core.quotepath=false diff --name-only origin/main...HEAD
+git -c core.quotepath=false diff --name-only
+git ls-files --others --exclude-standard
+```
+
+提交后再检查相对基线的 changed files：
+
+```bash
+git -c core.quotepath=false diff --name-only origin/<base>...HEAD
 ```
 
 如果工作区在任务开始时不为空：
@@ -70,25 +74,24 @@ git -c core.quotepath=false diff --name-only origin/main...HEAD
 - 不把完整 Issue、完整 AGENTS、完整 manifest、完整 registry、完整日志或完整 diff 复制进回复。
 - 任务卡已给出的答案不再询问。
 - 动态事实只从事实源读取：路径值来自 `manifests/paths.json`，定制范围来自 `manifests/customization-scope.json`，当前任务来自 Issue/任务卡，当前代码状态来自 Git 和实际文件。
+- 除非任务明确提供路径或授权，不读取仓库外的用户目录、全局 Codex memory、VSCode 用户配置、浏览器数据或其它项目文件。
 
 ## 修改前盘点
 
 按任务相关性盘点，不为了盘点修改无关文件。
 
-常用搜索：
+按任务卡给出的关键词、函数、路径或章节搜索；任务卡未指定时，基于当前目标构造一次最小搜索。
 
 ```bash
-rg -n "AGENTS|Codex|任务卡|验证|WhatIf|危险|GitHub|gh CLI|git status|192\\.168" . --glob "!logs/**"
+rg -n "<keyword>|<keyword>" <paths>
 ```
 
 盘点结论应覆盖：
 
-- 必须保留的稳定架构和安全规则。
-- 应迁移到事实源的动态事实。
-- 重复或会放大上下文的规则。
-- 会阻塞安全源码编辑、Mock 测试或 `-WhatIf` 的过宽授权规则。
-- 当前可用验证入口。
-- 是否已有任务、贡献、Issue 或 PR 模板可复用。
+- 当前实现或文档结构。
+- 必须保持不变的安全边界、公开接口或业务不变量。
+- 本次应修改和不应修改的范围。
+- 本次需要的验证入口。
 
 ## 改动范围控制
 
@@ -192,27 +195,25 @@ rg -n "AGENTS|Codex|任务卡|验证|WhatIf|危险|GitHub|gh CLI|git status|192\
 - Commit 必须是原子的，按真实改动边界拆分。
 - 不为了满足数量机械拆分 commit。
 - Commit message 使用简洁英文前缀，例如 `docs(agents): streamline repository instructions`。
-- 提交前核对 changed files 和禁止范围。
+- 提交前核对未提交文件、未跟踪文件和禁止范围。
+
+## Shell 和编码
+
+- 当前 shell 能可靠执行时使用当前 shell，不无必要地嵌套 PowerShell 与 Bash。
+- Windows PowerShell 5.1 中不要用 `&&` 或 `||` 串联命令；连续步骤拆成单条命令或使用原生控制流。
+- 中文 PR body、评论正文或其它需要交给 `gh --body-file` 的文本，先写入明确的 UTF-8 文件，再传给 `gh`。
+- 创建或更新 PR 后，读回标题、正文、base/head 和 Draft 状态，确认中文未损坏。
 
 ## PR body 清单
 
 PR body 至少包含：
 
 1. 摘要。
-2. 修改前盘点摘要。
-3. 稳定规则与动态事实的拆分。
-4. 最小读取任务路由。
-5. 上下文纪律。
-6. 危险脚本可编辑与危险动作不可执行的授权边界。
-7. 分级验证矩阵。
-8. 失败分类与最小重跑策略。
-9. Shell 可移植性调整。
-10. 修改文件。
-11. 验证命令和精确结果。
-12. 环境警告或非阻断事项。
-13. 明确没有执行危险系统操作。
-14. Final Changed Files。
-15. `Closes #<issue>`。
+2. 范围和修改文件。
+3. 验证命令和结果。
+4. 风险或危险动作说明。
+5. 未解决事项。
+6. `Closes #<issue>`。
 
 ## Ready For Review 条件
 
@@ -223,7 +224,7 @@ PR body 至少包含：
 - 验证已按任务要求完成并记录结果。
 - 工作区无未提交改动。
 - 未执行未经授权的危险系统动作。
-- PR body 包含必要上下文和 `Closes #<issue>`。
+- PR body 已读回确认，包含必要上下文和 `Closes #<issue>`。
 
 如果验证未完成，创建 Draft 或停止并报告，不伪装 ready。
 
@@ -239,22 +240,12 @@ PR body 至少包含：
 - Draft 状态。
 - ready 状态。
 - 修改文件列表。
-- 核心规则保留摘要。
-- 动态事实删除或迁移摘要。
-- 任务启动协议摘要。
-- 任务路由摘要。
-- 上下文纪律摘要。
-- 危险操作授权边界摘要。
-- Shell 可移植性调整。
-- 验证矩阵摘要。
-- 失败分类和停止条件摘要。
-- 任务卡模板位置。
-- README 入口位置。
 - 每条验证命令及结果。
-- 项目轻量验证是否产生警告。
 - 是否执行任何危险系统操作。
 - 工作区最终状态。
-- 未解决的非阻断事项。
+- 未解决事项或非阻断风险。
+
+任务卡可以追加当前任务特有字段；通用工作流不要求所有任务输出与当前目标无关的章节。
 
 ## 完成定义
 

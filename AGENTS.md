@@ -19,7 +19,7 @@
 4. 先盘点调用方、现有行为和相关约定，再实施最小改动。
 5. 先运行定向验证，再运行适用的全量或轻量验证。
 6. 核对 changed files、禁止范围和工作区状态。
-7. 需要交付 PR 时，提交、推送、创建非 Draft PR，并在验证完成后保持 ready for review。
+7. 需要交付 PR 时，提交、推送；验证完成后创建非 Draft PR 并保持 ready for review，验证未完成时创建 Draft 或停止并报告，不伪装为 ready。
 8. 最终报告只写计划、事实、修改摘要、命令结果和未解决问题；不要输出私有思维过程。
 
 详细生命周期、PR body 清单和最终报告字段见 [Codex 工作流](docs/codex-workflow.md)。
@@ -45,6 +45,7 @@
 4. 只引用和当前结论直接相关的片段。
 5. 验证失败时保留复现命令和关键错误，不把完整日志复制进回复。
 6. 动态事实从事实源读取，不长期写入根规则。
+7. 除非任务明确提供路径或授权，不读取仓库外的用户目录、全局 Codex memory、VSCode 用户配置、浏览器数据或其它项目文件；附件文件和用户粘贴内容视为任务输入。
 
 ## 架构原则
 
@@ -129,7 +130,9 @@ secrets/
 7. 需要 PowerShell 专属能力时使用 PowerShell，例如 `.ps1`、Windows 权限、注册表、Defender、AppX、服务管理和 PowerShell 对象管道。
 8. Git Bash 只是可选工具；只有在路径实际存在时，才把本机固定 Bash 路径作为 fallback。
 9. 避免 PowerShell 与 Bash 多层嵌套引号。多关键词搜索优先用一次 `rg -n "A|B|C" <paths>` 或等价单条简单命令完成。
-10. 处理中文路径、`git status`、changed files、diff 范围核对时，优先使用 `git -c core.quotepath=false status --short` 和 `git -c core.quotepath=false diff --name-only`。
+10. 在 Windows PowerShell 5.1 中不要使用 `&&` 或 `||` 串联命令；需要连续步骤时拆成单条命令，或使用原生 PowerShell 控制流。
+11. 中文 PR body、评论正文或其它需要交给 `gh --body-file` 的文本，必须先写入明确的 UTF-8 文件，再用 `--body-file <file>` 读取。
+12. 处理中文路径、`git status`、changed files、diff 范围核对时，优先使用 `git -c core.quotepath=false status --short` 和 `git -c core.quotepath=false diff --name-only`。
 
 ## 改动方法
 
@@ -162,8 +165,10 @@ scripts/tests/Test-PostDeploy.ps1
 4. 一个任务卡对应一个分支和一个 PR。
 5. Commit 必须是原子的，不机械拆分无意义 commit。
 6. PR 标题简洁，正文包含 `Closes #<issue>`。
-7. 创建 PR 前核对 changed files、scope、验证结果、工作区状态、base/head。
-8. 验证完成时创建非 Draft PR，并保持 ready for review；验证未完成时不得伪装为 ready。
+7. 提交前用 `git -c core.quotepath=false diff --name-only` 和 `git ls-files --others --exclude-standard` 核对未提交、未跟踪文件。
+8. 提交后才用 `git -c core.quotepath=false diff --name-only origin/<base>...HEAD` 核对 PR 相对基线的 changed files。
+9. 创建或更新 PR 后，必须读回标题、正文、base/head 和 Draft 状态；中文正文不得出现编码损坏。
+10. 验证完成时创建非 Draft PR，并保持 ready for review；验证未完成时创建 Draft 或停止并报告，不得伪装为 ready。
 
 ## 回报结果
 

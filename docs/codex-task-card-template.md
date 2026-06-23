@@ -169,7 +169,8 @@ Commit 1：
 
 ```bash
 git -c core.quotepath=false diff --check
-git -c core.quotepath=false diff --name-only origin/<default-branch>...HEAD
+git -c core.quotepath=false diff --name-only
+git ls-files --others --exclude-standard
 ```
 
 定向验证：
@@ -182,6 +183,7 @@ git -c core.quotepath=false diff --name-only origin/<default-branch>...HEAD
 
 ```bash
 git -c core.quotepath=false status --short
+git -c core.quotepath=false diff --name-only origin/<default-branch>...HEAD
 git -c core.quotepath=false diff --stat origin/<default-branch>...HEAD
 ```
 
