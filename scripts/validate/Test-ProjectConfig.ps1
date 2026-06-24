@@ -9,10 +9,12 @@ $ErrorActionPreference = "Stop"
 . "$PSScriptRoot\..\common\Write-Log.ps1"
 . "$PSScriptRoot\..\common\Resolve-KitPath.ps1"
 . "$PSScriptRoot\..\common\Resolve-KitOutputPath.ps1"
+. "$PSScriptRoot\..\common\New-StepResult.ps1"
 
 $script:Failed = 0
 $script:Warnings = 0
 $script:Results = @()
+$script:StepResults = @()
 $RepoRoot = (Resolve-Path -LiteralPath "$PSScriptRoot\..\..").Path
 $script:ValidationStartedAt = Get-Date
 $script:ValidationRunStamp = $script:ValidationStartedAt.ToString("yyyyMMdd-HHmmss")
@@ -36,20 +38,34 @@ function Write-CheckResult {
         message = $Message
     }
 
+    $stepResultArgs = @{
+        Name = $Message
+        Message = $Message
+    }
+
     switch ($Level) {
         "OK" {
+            $stepResultArgs.Required = $true
+            $stepResultArgs.Status = "unchanged"
             Write-Host $line -ForegroundColor Green
         }
         "WARN" {
             $script:Warnings++
+            $stepResultArgs.Required = $false
+            $stepResultArgs.Status = "unchanged"
+            $stepResultArgs.Warnings = @($Message)
             Write-Host $line -ForegroundColor Yellow
         }
         "ERROR" {
             $script:Failed++
+            $stepResultArgs.Required = $true
+            $stepResultArgs.Status = "failed"
+            $stepResultArgs.Errors = @($Message)
             Write-Host $line -ForegroundColor Red
         }
     }
 
+    $script:StepResults += New-KitStepResult @stepResultArgs
     Write-KitLogFileLine -Line $line
 }
 
@@ -660,6 +676,7 @@ function Write-ValidationReport {
     }
 
     $okCount = @($script:Results | Where-Object { $_.level -eq "OK" }).Count
+    $stepSummary = Get-KitStepResultSummary -Results $script:StepResults
     $report = [pscustomobject]@{
         generatedAt = (Get-Date).ToString("s")
         repoRoot = $RepoRoot
@@ -667,6 +684,8 @@ function Write-ValidationReport {
         warnings = $script:Warnings
         passed = $okCount
         results = $script:Results
+        stepResults = $script:StepResults
+        stepSummary = $stepSummary
     }
 
     if ([IO.Path]::GetExtension($resolvedPath).ToLowerInvariant() -eq ".md") {
@@ -678,6 +697,8 @@ function Write-ValidationReport {
             "- 通过：$okCount",
             "- 警告：$script:Warnings",
             "- 错误：$script:Failed",
+            "- StepResult 总数：$($stepSummary.total)",
+            "- StepResult 阻断失败：$($stepSummary.failedRequiredCount)",
             "",
             "| 级别 | 消息 |",
             "|---|---|"
