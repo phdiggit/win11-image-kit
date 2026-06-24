@@ -13,7 +13,12 @@
         "properties": {
           "description": { "type": "string" },
           "source": { "type": "string" },
-          "target": { "type": "string" }
+          "target": { "type": "string" },
+          "required": { "type": "boolean" },
+          "failurePolicy": {
+            "type": "string",
+            "enum": ["fail", "skip", "manual"]
+          }
         },
         "additionalProperties": false
       }

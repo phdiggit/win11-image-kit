@@ -1,13 +1,16 @@
 ﻿[CmdletBinding(SupportsShouldProcess, ConfirmImpact = "High")]
 param(
     [string]$ManifestPath = "$PSScriptRoot\..\..\manifests\junctions.json",
-    [string]$PathsManifestPath = "$PSScriptRoot\..\..\manifests\paths.json"
+    [string]$PathsManifestPath = "$PSScriptRoot\..\..\manifests\paths.json",
+    [string]$ReportPath,
+    [switch]$ReportRequired
 )
 
 $ErrorActionPreference = "Stop"
 . "$PSScriptRoot\..\common\Write-Log.ps1"
 . "$PSScriptRoot\..\common\Assert-KitElevation.ps1"
 . "$PSScriptRoot\..\common\Resolve-KitPath.ps1"
+. "$PSScriptRoot\..\common\Test-KitJunctionState.ps1"
 
 Assert-KitElevation -Operation "数据目录 Junction 设置" -AllowWhatIfPreview
 
@@ -79,14 +82,54 @@ function Set-DataJunction {
     }
 }
 
+function Write-DataJunctionReport {
+    param(
+        [AllowNull()]
+        $Results = @()
+    )
+
+    $report = New-KitJunctionStateReport -Results $Results
+    if (-not [string]::IsNullOrWhiteSpace($ReportPath)) {
+        $written = Write-KitTextFile -Path $ReportPath -Content ($report | ConvertTo-Json -Depth 10) -Description "Junction 状态验证报告" -Required:$ReportRequired
+        if ($written) {
+            Write-KitLog "Junction 状态验证报告已写入：$ReportPath" "OK"
+        }
+    }
+
+    return $report.junctionSummary
+}
+
 $manifest = Get-Content -LiteralPath $ManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
 $pathMap = Get-KitPathMap -ManifestPath $PathsManifestPath
+$junctionResults = @()
 
 foreach ($junction in $manifest.junctions) {
+    $resolvedJunction = [pscustomobject]@{
+        name = [string]$junction.description
+        description = [string]$junction.description
+        source = Resolve-KitPath -Path $junction.source -PathMap $pathMap
+        target = Resolve-KitPath -Path $junction.target -PathMap $pathMap
+        required = if ($junction.PSObject.Properties.Name -contains "required") { [bool]$junction.required } else { $true }
+        failurePolicy = if ($junction.PSObject.Properties.Name -contains "failurePolicy" -and -not [string]::IsNullOrWhiteSpace([string]$junction.failurePolicy)) { [string]$junction.failurePolicy } else { "fail" }
+    }
+
+    if ($WhatIfPreference) {
+        $junctionResults += Test-KitJunctionState -JunctionConfig $resolvedJunction -WhatIf
+        Write-KitLog "WhatIf 预演：未创建、迁移或查询 Junction 状态：$($resolvedJunction.source)"
+        continue
+    }
+
     Set-DataJunction `
-        -Source (Resolve-KitPath -Path $junction.source -PathMap $pathMap) `
-        -Target (Resolve-KitPath -Path $junction.target -PathMap $pathMap) `
-        -Description $junction.description
+        -Source $resolvedJunction.source `
+        -Target $resolvedJunction.target `
+        -Description $resolvedJunction.description
+
+    $junctionResults += Test-KitJunctionState -JunctionConfig $resolvedJunction
+}
+
+$junctionSummary = Write-DataJunctionReport -Results $junctionResults
+if ($junctionSummary.exitCode -ne 0) {
+    throw "Junction 状态验证失败：$($junctionSummary.failedRequiredCount) 项 required Junction 失败。"
 }
 
 Write-KitLog "目录 Junction 设置完成" "OK"
