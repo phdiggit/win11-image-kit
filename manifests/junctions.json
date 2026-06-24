@@ -4,32 +4,50 @@
     {
       "description": "Maven 本地仓库",
       "source": "%USERPROFILE%\\.m2\\repository",
-      "target": "${DataRoot}\\maven\\repository"
+      "target": "${DataRoot}\\maven\\repository",
+      "onTargetConflict": "fail",
+      "backupRetention": "keep",
+      "verificationMode": "countAndSize"
     },
     {
       "description": "JetBrains 缓存索引",
       "source": "%LOCALAPPDATA%\\JetBrains",
-      "target": "${DataRoot}\\JetBrains\\cache"
+      "target": "${DataRoot}\\JetBrains\\cache",
+      "onTargetConflict": "fail",
+      "backupRetention": "keep",
+      "verificationMode": "countAndSize"
     },
     {
       "description": "MySQL 数据目录",
       "source": "${ToolRoot}\\mysql\\data",
-      "target": "${DataRoot}\\mysql\\data"
+      "target": "${DataRoot}\\mysql\\data",
+      "onTargetConflict": "fail",
+      "backupRetention": "keep",
+      "verificationMode": "countAndSize"
     },
     {
       "description": "MongoDB 数据目录",
       "source": "${ToolRoot}\\mongodb\\data",
-      "target": "${DataRoot}\\mongodb\\data"
+      "target": "${DataRoot}\\mongodb\\data",
+      "onTargetConflict": "fail",
+      "backupRetention": "keep",
+      "verificationMode": "countAndSize"
     },
     {
       "description": "npm 全局模块",
       "source": "${ToolRoot}\\npm-global",
-      "target": "${DataRoot}\\npm\\global"
+      "target": "${DataRoot}\\npm\\global",
+      "onTargetConflict": "fail",
+      "backupRetention": "keep",
+      "verificationMode": "countAndSize"
     },
     {
       "description": "Conda 虚拟环境",
       "source": "${ToolRoot}\\miniconda3\\envs",
-      "target": "${DataRoot}\\conda\\envs"
+      "target": "${DataRoot}\\conda\\envs",
+      "onTargetConflict": "fail",
+      "backupRetention": "keep",
+      "verificationMode": "countAndSize"
     }
   ]
 }
