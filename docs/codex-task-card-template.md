@@ -187,6 +187,15 @@ git -c core.quotepath=false diff --name-only origin/<default-branch>...HEAD
 git -c core.quotepath=false diff --stat origin/<default-branch>...HEAD
 ```
 
+## 时间控制规则
+
+<!-- 可删除。需要 PR 交付或 CI 验证时保留。 -->
+
+- 默认 PR_READY：创建 ready PR 后不等待 CI 完成，除非本任务明确要求。
+- 本地全量 Pester 最多一次；follow-up 只跑受影响测试。
+- CI 失败最多修一轮，第二次仍失败则停止并报告。
+- PR CI 不新增真实危险执行测试；真实执行另开 VM/admin smoke。
+
 ## PR body
 
 <!-- 要求 PR body 包含可复核事实，不要复制完整任务卡。 -->
@@ -216,7 +225,7 @@ PR body 至少包含：
 3. 验证命令和结果。
 4. 危险操作说明。
 5. 未解决事项。
-6. `Closes #<issue>`。
+6. Issue 引用：阶段性 PR 使用 `Refs #<issue>`；任务明确关闭时才使用 `Closes/Fixes/Resolves #<issue>`。
 
 ## 最终验收标准
 
@@ -242,6 +251,9 @@ PR body 至少包含：
 - Draft/ready 状态。
 - 修改文件列表。
 - 验证命令及结果。
+- latest head SHA。
+- CI 是否已触发。
+- 是否等待 CI；如果未等待 CI，说明这是 PR_READY 模式。
 - 是否执行危险系统动作。
 - 工作区最终状态。
 - 未解决的非阻断事项。
