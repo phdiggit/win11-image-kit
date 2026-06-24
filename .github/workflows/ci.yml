@@ -1,0 +1,80 @@
+name: Windows CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  validate:
+    name: Validate (${{ matrix.name }})
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Windows PowerShell 5.1
+            shell: powershell
+          - name: PowerShell 7
+            shell: pwsh
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show PowerShell version
+        shell: ${{ matrix.shell }}
+        run: |
+          $PSVersionTable
+
+      - name: Install PowerShell test modules
+        shell: ${{ matrix.shell }}
+        run: |
+          $ErrorActionPreference = "Stop"
+          Install-Module Pester -Scope CurrentUser -Force -SkipPublisherCheck -MinimumVersion 5.5.0
+          Install-Module PSScriptAnalyzer -Scope CurrentUser -Force
+          Import-Module Pester -MinimumVersion 5.5.0 -Force
+          Import-Module PSScriptAnalyzer -Force
+
+      - name: Run JSON parse check
+        shell: ${{ matrix.shell }}
+        run: |
+          $ErrorActionPreference = "Stop"
+          Get-ChildItem -Path manifests,schemas -Recurse -Filter *.json | ForEach-Object {
+              Get-Content -LiteralPath $_.FullName -Raw -Encoding UTF8 | ConvertFrom-Json | Out-Null
+          }
+
+      - name: Run PowerShell parse check
+        shell: ${{ matrix.shell }}
+        run: |
+          $ErrorActionPreference = "Stop"
+          Get-ChildItem -Path scripts -Recurse -Filter *.ps1 | ForEach-Object {
+              [scriptblock]::Create((Get-Content -LiteralPath $_.FullName -Raw -Encoding UTF8)) | Out-Null
+          }
+
+      - name: Run project config validation
+        shell: ${{ matrix.shell }}
+        run: |
+          $ErrorActionPreference = "Stop"
+          & .\scripts\validate\Test-ProjectConfig.ps1
+
+      - name: Run PSScriptAnalyzer
+        shell: ${{ matrix.shell }}
+        run: |
+          $ErrorActionPreference = "Stop"
+          Import-Module PSScriptAnalyzer -Force
+          $results = @(Invoke-ScriptAnalyzer -Path scripts -Recurse -Settings .\PSScriptAnalyzerSettings.psd1)
+          if ($results.Count -gt 0) {
+              $results | Format-Table -AutoSize
+              Write-Warning ("PSScriptAnalyzer reported {0} diagnostics. This baseline reports diagnostics without blocking CI." -f $results.Count)
+          } else {
+              Write-Host "PSScriptAnalyzer reported 0 diagnostics."
+          }
+
+      - name: Run Pester tests
+        shell: ${{ matrix.shell }}
+        run: |
+          $ErrorActionPreference = "Stop"
+          Import-Module Pester -MinimumVersion 5.5.0 -Force
+          Invoke-Pester -Path tests/pester -CI

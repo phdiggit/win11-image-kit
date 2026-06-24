@@ -68,6 +68,25 @@ scripts/validate/Test-ProjectConfig.ps1 `
 
 如需统一归档到 `${DeployRoot}`，可在 `manifests/customization-scope.json` 的 `reporting` 段按模块启用；默认关闭，因此普通验证不会强制写 NAS。
 
+## 本地验证 / CI 等价命令
+
+首次运行 Pester 或 PSScriptAnalyzer 时，先在当前用户范围安装模块：
+
+```powershell
+Install-Module Pester -Scope CurrentUser -Force
+Install-Module PSScriptAnalyzer -Scope CurrentUser -Force
+```
+
+本地执行与 CI 对应的轻量验证：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/validate/Test-ProjectConfig.ps1
+Invoke-ScriptAnalyzer -Path scripts -Recurse -Settings .\PSScriptAnalyzerSettings.psd1
+Invoke-Pester -Path tests/pester
+```
+
+这些命令只做 JSON/PowerShell 解析、项目配置校验、静态检查和 Pester 单元测试；不会安装软件、修改服务、注册表、Defender、AppX、Junction、Sysprep、分区、WinPE 或写入 NAS。
+
 ## Codex/Agent 协作
 
 - 仓库协作规则见 [AGENTS.md](AGENTS.md)。
