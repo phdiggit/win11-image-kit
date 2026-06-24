@@ -18,7 +18,7 @@
         $map[$key] = Resolve-KitPath -Path $map[$key] -PathMap $map
     }
 
-    Write-Output -NoEnumerate $map
+    return ,$map
 }
 
 function Resolve-KitPath {
