@@ -40,6 +40,29 @@ Describe "User experience config state verification results" {
         Assert-KitEqual $result.actualValue 0
     }
 
+    It "accepts restored as succeeded without mapping skipped or whatif to success" {
+        $config = [pscustomobject]@{
+            name = "TerminalConfigRestored"
+            domain = "terminal"
+            settingName = "Windows Terminal 配置模板"
+            expectedValue = "succeeded"
+            required = $true
+            failurePolicy = "fail"
+        }
+
+        $restored = @(Test-KitConfigState -Config $config -ConfigQuery { [pscustomobject]@{ found = $true; value = "restored" } })[0]
+        $skipped = @(Test-KitConfigState -Config $config -ConfigQuery { [pscustomobject]@{ found = $true; value = "skipped" } })[0]
+        $whatif = @(Test-KitConfigState -Config $config -ConfigQuery { [pscustomobject]@{ found = $true; value = "whatif" } })[0]
+
+        Assert-KitEqual $restored.status "unchanged"
+        Assert-KitEqual $restored.reason "config-state-ok"
+        Assert-KitEqual $restored.actualValue "restored"
+        Assert-KitEqual $skipped.status "failed"
+        Assert-KitEqual $skipped.reason "config-state-mismatch"
+        Assert-KitEqual $whatif.status "failed"
+        Assert-KitEqual $whatif.reason "config-state-mismatch"
+    }
+
     It "fails required config mismatch" {
         $config = [pscustomobject]@{
             name = "ExplorerShowHiddenFiles"

@@ -137,6 +137,10 @@ function Test-KitConfigStateValueEqual {
         return ([bool]$Actual) -eq ([bool]$Expected)
     }
 
+    if ([string]$Expected -eq "succeeded" -and [string]$Actual -eq "restored") {
+        return $true
+    }
+
     if ($Actual -is [int] -or $Actual -is [long] -or $Actual -is [double] -or $Actual -is [decimal] -or
         $Expected -is [int] -or $Expected -is [long] -or $Expected -is [double] -or $Expected -is [decimal]) {
         try {
