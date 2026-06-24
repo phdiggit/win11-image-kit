@@ -4,7 +4,9 @@ param(
     [string]$PathsManifestPath = "manifests/paths.json",
     [ValidateSet("golden-image", "post-deploy", "manual", "all")]
     [string]$Stage = "golden-image",
-    [string[]]$Categories = @("middleware", "middleware-*", "database", "cache", "message-queue", "search", "service-registry", "coordination")
+    [string[]]$Categories = @("middleware", "middleware-*", "database", "cache", "message-queue", "search", "service-registry", "coordination"),
+    [string]$PackageReportPath,
+    [switch]$PackageReportRequired
 )
 
 $ErrorActionPreference = "Stop"
@@ -23,4 +25,6 @@ Install-KitSoftwarePackages `
     -IncludeTypes @("archive", "zip") `
     -WorkloadName "中间件准备项" `
     -CompletionMessage "中间件准备完成，未注册或启动长期服务" `
+    -PackageReportPath $PackageReportPath `
+    -PackageReportRequired:$PackageReportRequired `
     -WhatIf:$WhatIfPreference
