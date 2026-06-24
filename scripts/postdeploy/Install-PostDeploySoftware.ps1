@@ -81,6 +81,49 @@ function Get-KitInstallerSuccessExitCodes {
     return $codes
 }
 
+function Get-KitInstallerRuntimeFailureAction {
+    param(
+        [Parameter(Mandatory)]
+        $Package,
+
+        [Parameter(Mandatory)]
+        $Policy
+    )
+
+    if ([bool]$Policy.required) {
+        return "fail"
+    }
+
+    $failurePolicy = [string]$Policy.failurePolicy
+    if ($null -ne $Package.PSObject.Properties["failurePolicy"] -and -not [string]::IsNullOrWhiteSpace([string]$Package.failurePolicy)) {
+        $failurePolicy = [string]$Package.failurePolicy
+    }
+
+    if ($failurePolicy -eq "manual") {
+        return "manual"
+    }
+
+    if ($failurePolicy -eq "skip") {
+        return "skip"
+    }
+
+    return "fail"
+}
+
+function Test-KitInstallerRebootRequired {
+    param(
+        [int]$ExitCode,
+
+        [int[]]$SuccessExitCodes
+    )
+
+    if ($SuccessExitCodes -notcontains $ExitCode) {
+        return $false
+    }
+
+    return @(3010, 1641) -contains $ExitCode
+}
+
 function Format-KitInstallerCommand {
     param(
         [Parameter(Mandatory)]
@@ -124,13 +167,16 @@ function Add-KitInstallerReportItem {
         $Warnings = @(),
         [AllowNull()]
         $Errors = @(),
+        [AllowNull()]
+        $HashResult,
         [string]$SkippedReason,
         [string]$ManualAction,
+        [bool]$RebootRequired = $false,
         [datetime]$StartedAt = (Get-Date),
         [datetime]$EndedAt = (Get-Date)
     )
 
-    $script:InstallerReportItems += [pscustomobject]@{
+    $reportItem = [ordered]@{
         name = $Name
         status = $Status
         reason = $Reason
@@ -144,7 +190,23 @@ function Add-KitInstallerReportItem {
         required = [bool]$Required
         failurePolicy = $FailurePolicy
         allowMissingSource = [bool]$AllowMissingSource
+        rebootRequired = [bool]$RebootRequired
     }
+
+    if ($Warnings.Count -gt 0) {
+        $reportItem["warnings"] = @($Warnings)
+    }
+
+    if ($Errors.Count -gt 0) {
+        $reportItem["errors"] = @($Errors)
+    }
+
+    if ($null -ne $HashResult) {
+        $reportItem["expectedHash"] = [string]$HashResult.expectedHash
+        $reportItem["actualHash"] = [string]$HashResult.actualHash
+    }
+
+    $script:InstallerReportItems += [pscustomobject]$reportItem
 
     if ($null -eq $Package) {
         $Package = [pscustomobject]@{
@@ -174,12 +236,18 @@ function Add-KitInstallerReportItem {
         $ManualAction = if ($Reason -eq "source-missing") { "provide-source" } elseif ($Reason -eq "silentInstall=false") { "run-manually" } else { $Reason }
     }
 
-    $evidence = [pscustomobject]@{
+    $evidence = [ordered]@{
         command = $Command
         successExitCodes = $SuccessExitCodes
         exitCode = $ExitCode
         silentInstall = [bool]$SilentInstall
         uninstall = $Uninstall
+    }
+
+    if ($null -ne $HashResult) {
+        $evidence["expectedHash"] = [string]$HashResult.expectedHash
+        $evidence["actualHash"] = [string]$HashResult.actualHash
+        $evidence["hashReason"] = [string]$HashResult.reason
     }
 
     $script:InstallerPackageResults += New-KitPackageResult `
@@ -194,6 +262,7 @@ function Add-KitInstallerReportItem {
         -Errors $Errors `
         -SkippedReason $SkippedReason `
         -ManualAction $ManualAction `
+        -RebootRequired:$RebootRequired `
         -StartedAt $StartedAt `
         -EndedAt $EndedAt
 }
@@ -385,7 +454,52 @@ function Invoke-KitInstallerPackage {
         return
     }
 
-    Test-KitPackageHash -Source $source -ExpectedHash ([string]$Package.sha256)
+    $hashResult = Test-KitPackageHash -Source $source -ExpectedHash ([string]$Package.sha256) -PassThru
+    if ($hashResult.status -eq "failed") {
+        $hashFailureAction = Get-KitInstallerRuntimeFailureAction -Package $Package -Policy $policy
+        $hashStatus = "failed"
+        $hashSkippedReason = ""
+        $hashManualAction = ""
+
+        if ($hashFailureAction -eq "skip") {
+            $hashStatus = "skipped"
+            $hashSkippedReason = [string]$hashResult.reason
+            Write-KitLog "$($hashResult.reason): 安装器 SHA256 校验失败，skipped 跳过并继续：$($Package.name)" "WARN"
+        } elseif ($hashFailureAction -eq "manual") {
+            $hashStatus = "manual"
+            $hashManualAction = "verify-or-replace-source"
+            Write-KitLog "$($hashResult.reason): 安装器 SHA256 校验失败，记录为 manual 人工核验并继续：$($Package.name)" "WARN"
+        } else {
+            Write-KitLog "$($hashResult.reason): 安装器 SHA256 校验失败，处理失败：$($Package.name)" "ERROR"
+        }
+
+        Add-KitInstallerReportItem `
+            -Name ([string]$Package.name) `
+            -Status $hashStatus `
+            -Reason ([string]$hashResult.reason) `
+            -Source $source `
+            -Destination $destination `
+            -Command $commandText `
+            -SuccessExitCodes $successExitCodes `
+            -SilentInstall $true `
+            -Uninstall $uninstallCommand `
+            -Required $policy.required `
+            -FailurePolicy $policy.failurePolicy `
+            -AllowMissingSource $policy.allowMissingSource `
+            -Package $Package `
+            -HashResult $hashResult `
+            -SkippedReason $hashSkippedReason `
+            -ManualAction $hashManualAction `
+            -Errors @([string]$hashResult.message) `
+            -StartedAt $packageStartedAt `
+            -EndedAt (Get-Date)
+
+        if ($hashFailureAction -eq "fail") {
+            throw "$($hashResult.reason): 安装器 SHA256 校验失败：$($Package.name) ($($hashResult.message))"
+        }
+
+        return
+    }
 
     if (-not $PSCmdlet.ShouldProcess($Package.name, "执行静默安装器：$commandText")) {
         $reason = if ($WhatIfPreference) { "whatif-preview" } else { "shouldprocess-declined" }
@@ -417,9 +531,26 @@ function Invoke-KitInstallerPackage {
     Write-KitLog "安装器退出码：$($Package.name) -> $exitCode"
 
     if ($successExitCodes -notcontains $exitCode) {
+        $exitFailureAction = Get-KitInstallerRuntimeFailureAction -Package $Package -Policy $policy
+        $exitStatus = "failed"
+        $exitSkippedReason = ""
+        $exitManualAction = ""
+
+        if ($exitFailureAction -eq "skip") {
+            $exitStatus = "skipped"
+            $exitSkippedReason = "unexpected-exit-code"
+            Write-KitLog "静默安装退出码不在允许列表内，按策略 skipped 跳过：$($Package.name)，exit code: $exitCode" "WARN"
+        } elseif ($exitFailureAction -eq "manual") {
+            $exitStatus = "manual"
+            $exitManualAction = "inspect-installer-failure"
+            Write-KitLog "静默安装退出码不在允许列表内，记录为 manual 人工检查：$($Package.name)，exit code: $exitCode" "WARN"
+        } else {
+            Write-KitLog "静默安装失败：$($Package.name)，退出码不在允许列表内。" "ERROR"
+        }
+
         Add-KitInstallerReportItem `
             -Name ([string]$Package.name) `
-            -Status "failed" `
+            -Status $exitStatus `
             -Reason "unexpected-exit-code" `
             -Source $source `
             -Destination $destination `
@@ -432,11 +563,22 @@ function Invoke-KitInstallerPackage {
             -FailurePolicy $policy.failurePolicy `
             -AllowMissingSource $policy.allowMissingSource `
             -Package $Package `
+            -SkippedReason $exitSkippedReason `
+            -ManualAction $exitManualAction `
             -Errors @("unexpected-exit-code: $exitCode") `
             -StartedAt $packageStartedAt `
             -EndedAt (Get-Date)
-        Write-KitLog "静默安装失败：$($Package.name)，退出码不在允许列表内。" "ERROR"
-        throw "静默安装失败：$($Package.name)，exit code: $exitCode，allowed: $($successExitCodes -join ', ')，command: $commandText"
+
+        if ($exitFailureAction -eq "fail") {
+            throw "静默安装失败：$($Package.name)，exit code: $exitCode，allowed: $($successExitCodes -join ', ')，command: $commandText"
+        }
+
+        return
+    }
+
+    $rebootRequired = Test-KitInstallerRebootRequired -ExitCode $exitCode -SuccessExitCodes $successExitCodes
+    if ($rebootRequired) {
+        Write-KitLog "静默安装完成但需要重启：$($Package.name)，exit code: $exitCode" "WARN"
     }
 
     Add-KitInstallerReportItem `
@@ -454,6 +596,7 @@ function Invoke-KitInstallerPackage {
         -FailurePolicy $policy.failurePolicy `
         -AllowMissingSource $policy.allowMissingSource `
         -Package $Package `
+        -RebootRequired:$rebootRequired `
         -StartedAt $packageStartedAt `
         -EndedAt (Get-Date)
     Write-KitLog "静默安装完成：$($Package.name)" "OK"

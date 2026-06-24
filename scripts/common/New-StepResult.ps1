@@ -124,6 +124,7 @@ function Get-KitStepResultSummary {
     }
     $failedRequiredCount = 0
     $failedOptionalCount = 0
+    $rebootRequiredCount = 0
 
     foreach ($result in $resultList) {
         $status = [string]$result.status
@@ -138,6 +139,10 @@ function Get-KitStepResultSummary {
                 $failedOptionalCount++
             }
         }
+
+        if ([bool]$result.rebootRequired) {
+            $rebootRequiredCount++
+        }
     }
 
     $hasBlockingFailure = $failedRequiredCount -gt 0
@@ -147,6 +152,7 @@ function Get-KitStepResultSummary {
         statusCounts = [pscustomobject]$statusCounts
         failedRequiredCount = $failedRequiredCount
         failedOptionalCount = $failedOptionalCount
+        rebootRequiredCount = $rebootRequiredCount
         hasBlockingFailure = $hasBlockingFailure
         exitCode = if ($hasBlockingFailure) { 1 } else { 0 }
         results = $resultList
