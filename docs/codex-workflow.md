@@ -224,7 +224,39 @@ PR body 至少包含：
 3. 验证命令和结果。
 4. 风险或危险动作说明。
 5. 未解决事项。
-6. `Closes #<issue>`。
+6. Issue 引用：阶段性、分步推进或不应关闭 Issue 的 PR 使用 `Refs #<issue>`；只有任务卡明确要求关闭 Issue，或验收标准已完整覆盖并经用户确认时，才使用 `Closes #<issue>` / `Fixes #<issue>` / `Resolves #<issue>`。
+
+## PR_READY 交付与 CI 控时
+
+默认使用 PR_READY 模式交付：
+
+- 本地必要验证通过。
+- PR 创建为 ready，非 Draft。
+- PR body 工具 `verify` 通过。
+- latest head SHA 已触发 `pull_request` CI。
+- Codex 不默认等待 CI 完成。
+- 最终报告说明 CI 已触发、head SHA，以及是否观察到 pending 或 failure。
+
+只有以下情况才等待 CI：
+
+- 任务卡明确要求等待 CI。
+- 修改 GitHub Actions workflow。
+- 修改 Pester 公共 helper 或跨 shell 兼容敏感逻辑。
+- 用户明确要求等待 CI。
+- PR body 必须引用 CI 通过结果。
+
+CI 失败后最多修一轮：
+
+- 第一次 CI 失败：拉取失败日志，允许一个 follow-up commit。
+- 第二次 CI 仍失败：停止，报告失败 run、job、关键日志和当前判断；不要继续第 3、第 4 轮试错。
+
+本地验证控时：
+
+- 全量本地 Pester 每个任务最多执行一次，除非改了公共测试 helper 或核心 common helper。
+- follow-up 只改测试文件时，只跑该测试文件、parse 和 `git diff --check`。
+- 不因为 PR body “最终验证结果”过期而重复跑全量 Pester；PR body 可标注 follow-up 后仅重跑受影响测试。
+
+PR CI 禁止新增真实 installer `Start-Process`、admin-only、服务、Junction、Defender、注册表、AppX、Sysprep、DISM、diskpart、NAS 写入等真实执行测试。需要真实执行验证时，另开 VM/admin smoke 任务。
 
 ## Ready For Review 条件
 
@@ -235,7 +267,7 @@ PR body 至少包含：
 - 验证已按任务要求完成并记录结果。
 - 工作区无未提交改动。
 - 未执行未经授权的危险系统动作。
-- PR body 已读回确认，包含必要上下文和 `Closes #<issue>`。
+- PR body 已读回确认，包含必要上下文和正确的 Issue 引用；阶段性 PR 默认使用 `Refs #<issue>`，只有明确应关闭 Issue 时才使用关闭关键词。
 
 如果验证未完成，创建 Draft 或停止并报告，不伪装 ready。
 
