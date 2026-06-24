@@ -322,6 +322,7 @@ function Write-KitBuildReport {
         }
     )
     $packageReportSummary = Get-KitPackageReportAggregate -PackageReports $packageReports
+    $childReportSummary = Get-KitChildReportBlockingSummary -PackageReports $packageReports
 
     $report = [pscustomobject]@{
         generatedAt = $finishedAt.ToString("s")
@@ -336,6 +337,7 @@ function Write-KitBuildReport {
         steps = $script:BuildReportItems
         stepResults = $script:BuildStepResults
         stepSummary = $stepSummary
+        childReportSummary = $childReportSummary
         packageReports = $packageReports
     }
 
@@ -363,6 +365,13 @@ function Write-KitBuildReport {
             "- StepResult manual：$($stepSummary.statusCounts.manual)",
             "- StepResult whatif：$($stepSummary.statusCounts.whatif)",
             "- StepResult failed：$($stepSummary.statusCounts.failed)",
+            "- 子报告总数：$($childReportSummary.reports)",
+            "- 子报告存在：$($childReportSummary.existing)",
+            "- 子报告缺失：$($childReportSummary.missing)",
+            "- 子报告 required 失败：$($childReportSummary.failedRequired)",
+            "- 子报告 optional 失败：$($childReportSummary.failedOptional)",
+            "- 子报告阻断失败：$($childReportSummary.hasBlockingFailure)",
+            "- 子报告建议 exitCode：$($childReportSummary.exitCode)",
             "- 软件包子报告：$($packageReportSummary.reports)",
             "- 软件包子报告存在：$($packageReportSummary.existing)",
             "- 软件包失败：$($packageReportSummary.failedRequired + $packageReportSummary.failedOptional)",

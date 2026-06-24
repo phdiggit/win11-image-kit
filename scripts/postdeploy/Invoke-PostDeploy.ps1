@@ -292,6 +292,12 @@ function Write-KitPostDeployReport {
         $userExperienceReports += $userExperienceReport
     }
     $userExperienceReportSummary = Get-KitUserExperienceReportAggregate -UserExperienceReports $userExperienceReports
+    $childReportSummary = Get-KitChildReportBlockingSummary `
+        -PackageReports $packageReports `
+        -ServiceReports $serviceReports `
+        -JunctionReports $junctionReports `
+        -DefenderReports $defenderReports `
+        -UserExperienceReports $userExperienceReports
 
     $report = [pscustomobject]@{
         generatedAt = $finishedAt.ToString("s")
@@ -312,6 +318,7 @@ function Write-KitPostDeployReport {
         steps = $script:PostDeployReportItems
         stepResults = $script:PostDeployStepResults
         stepSummary = $stepSummary
+        childReportSummary = $childReportSummary
         packageReports = $packageReports
         defenderReports = $defenderReports
         junctionReports = $junctionReports
@@ -349,6 +356,13 @@ function Write-KitPostDeployReport {
             "- StepResult manual：$($stepSummary.statusCounts.manual)",
             "- StepResult whatif：$($stepSummary.statusCounts.whatif)",
             "- StepResult failed：$($stepSummary.statusCounts.failed)",
+            "- 子报告总数：$($childReportSummary.reports)",
+            "- 子报告存在：$($childReportSummary.existing)",
+            "- 子报告缺失：$($childReportSummary.missing)",
+            "- 子报告 required 失败：$($childReportSummary.failedRequired)",
+            "- 子报告 optional 失败：$($childReportSummary.failedOptional)",
+            "- 子报告阻断失败：$($childReportSummary.hasBlockingFailure)",
+            "- 子报告建议 exitCode：$($childReportSummary.exitCode)",
             "- 软件包子报告：$($packageReportSummary.reports)",
             "- 软件包子报告存在：$($packageReportSummary.existing)",
             "- 软件包失败：$($packageReportSummary.failedRequired + $packageReportSummary.failedOptional)",

@@ -240,6 +240,7 @@ PR body 至少包含：
 CI 分为 PR Fast CI 与 Full CI：
 
 - PR Fast CI 是默认 PR 检查，只跑快速阻断项和 smoke/targeted Pester，用于尽早发现 parse、配置、lint 和核心单测问题。
+- 报告一致性类快速回归只校验顶层 `childReportSummary`、compact child report reference 和 Markdown 汇总行，不执行真实 installer、服务、Junction、Defender、AppX 或用户配置变更。
 - Full CI 在 `main` push 和 `workflow_dispatch` 跑，保留完整 Windows PowerShell 与 PowerShell 7 全量 Pester 覆盖。
 - Codex 默认不等待 Full CI；如需 Full CI，由用户或审查者手动触发 `workflow_dispatch`，或等待合并后的 `main` push。
 - 修改 workflow、Pester 公共 helper 或跨 shell 兼容敏感逻辑的任务，可以等待一次 latest head SHA 的 PR Fast CI。

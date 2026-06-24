@@ -227,6 +227,14 @@ Describe "Orchestrator package report links" {
         Assert-KitNotNullOrEmpty $report.steps
         Assert-KitNotNullOrEmpty $report.stepResults
         Assert-KitNotNullOrEmpty $report.stepSummary
+        Assert-KitNotNullOrEmpty $report.childReportSummary
+        Assert-KitEqual $report.childReportSummary.reports 1
+        Assert-KitEqual $report.childReportSummary.existing 1
+        Assert-KitEqual $report.childReportSummary.failedRequired 0
+        Assert-KitEqual $report.childReportSummary.failedOptional 0
+        Assert-KitEqual $report.childReportSummary.hasBlockingFailure $false
+        Assert-KitEqual $report.childReportSummary.exitCode 0
+        Assert-KitEqual $report.childReportSummary.byType.package.reports 1
         Assert-KitEqual @($report.packageReports).Count 1
         Assert-KitEqual $report.packageReports[0].exists $true
         Assert-KitNotNullOrEmpty $report.packageReports[0].packageSummary
@@ -314,6 +322,15 @@ Describe "Orchestrator package report links" {
         Assert-KitNotNullOrEmpty $report.steps
         Assert-KitNotNullOrEmpty $report.stepResults
         Assert-KitNotNullOrEmpty $report.stepSummary
+        Assert-KitNotNullOrEmpty $report.childReportSummary
+        Assert-KitEqual $report.childReportSummary.reports 2
+        Assert-KitEqual $report.childReportSummary.existing 1
+        Assert-KitEqual $report.childReportSummary.missing 1
+        Assert-KitEqual $report.childReportSummary.failedRequired 1
+        Assert-KitEqual $report.childReportSummary.failedOptional 0
+        Assert-KitEqual $report.childReportSummary.hasBlockingFailure $true
+        Assert-KitEqual $report.childReportSummary.exitCode 1
+        Assert-KitEqual $report.childReportSummary.byType.package.reports 1
         Assert-KitEqual @($report.packageReports).Count 1
         Assert-KitEqual $report.packageReports[0].path $installerPath
         Assert-KitEqual $report.packageReports[0].exists $true
