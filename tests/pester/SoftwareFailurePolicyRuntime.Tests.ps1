@@ -70,7 +70,12 @@ Describe "Software failure policy runtime" {
 
                 [int[]]$SuccessExitCodes = @(0),
 
-                [string]$MarkerPath = ""
+                [string]$MarkerPath = "",
+
+                [AllowEmptyString()]
+                [string]$SourceOverride = "",
+
+                [string[]]$InstallArgs = @()
             )
 
             $softwareManifestPath = Join-Path $TempRoot "software.json"
@@ -79,7 +84,7 @@ Describe "Software failure policy runtime" {
             $sourceName = "source.$extension"
             $sourcePath = Join-Path (Join-Path $TempRoot "packages") $sourceName
 
-            if ($Type -eq "installer") {
+            if ($Type -eq "installer" -and [string]::IsNullOrWhiteSpace($SourceOverride)) {
                 $lines = @("@echo off")
                 if (-not [string]::IsNullOrWhiteSpace($MarkerPath)) {
                     $lines += "echo executed> `"$MarkerPath`""
@@ -100,7 +105,7 @@ Describe "Software failure policy runtime" {
                 required = [bool]$Policy.required
                 failurePolicy = [string]$Policy.failurePolicy
                 allowMissingSource = [bool]$Policy.allowMissingSource
-                source = '${PackageRoot}\' + $sourceName
+                source = if ([string]::IsNullOrWhiteSpace($SourceOverride)) { '${PackageRoot}\' + $sourceName } else { $SourceOverride }
                 destination = if ($Type -eq "installer") { 'C:\Program Files\FailurePolicyTest' } else { '${ToolRoot}\failure-policy-test' }
             }
 
@@ -113,7 +118,7 @@ Describe "Software failure policy runtime" {
                     $package["archiveFormat"] = "zip"
                 }
             } elseif ($Type -eq "installer") {
-                $package["installArgs"] = @()
+                $package["installArgs"] = @($InstallArgs)
                 $package["silentInstall"] = $true
                 $package["successExitCodes"] = @($SuccessExitCodes)
             }
@@ -216,6 +221,16 @@ Describe "Software failure policy runtime" {
             $tempRoot = & $script:NewTempRoot
             $pathsManifestPath = & $script:WritePathsManifest -TempRoot $tempRoot
             $markerPath = Join-Path $tempRoot "installer-marker.txt"
+            $sourceOverride = ""
+            $installArgs = @()
+            if ($RequireAdmin) {
+                $sourceOverride = $env:ComSpec
+                if ([string]::IsNullOrWhiteSpace($sourceOverride)) {
+                    $sourceOverride = Join-Path $env:SystemRoot "System32\cmd.exe"
+                }
+                $installArgs = @("/c", "exit", "/b", [string]$InstallerExitCode)
+            }
+
             $manifestInfo = & $script:WriteSoftwareManifest `
                 -TempRoot $tempRoot `
                 -Policy $Policy `
@@ -223,7 +238,9 @@ Describe "Software failure policy runtime" {
                 -Sha256 $Sha256 `
                 -InstallerExitCode $InstallerExitCode `
                 -SuccessExitCodes $SuccessExitCodes `
-                -MarkerPath $markerPath
+                -MarkerPath $markerPath `
+                -SourceOverride $sourceOverride `
+                -InstallArgs $installArgs
             $reportPath = Join-Path $tempRoot "installer-report.json"
             $arguments = @(
                 "-NoProfile",
