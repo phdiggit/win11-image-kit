@@ -83,6 +83,7 @@ jobs:
               "tests/pester/SoftwarePackageResults.Tests.ps1",
               "tests/pester/SoftwarePackageTestCommand.Tests.ps1",
               "tests/pester/PackageReportLinks.Tests.ps1",
+              "tests/pester/ReportBlockingSummary.Tests.ps1",
               "tests/pester/SoftwareFailurePolicyRuntime.Tests.ps1",
               "tests/pester/ServiceStateVerification.Tests.ps1",
               "tests/pester/JunctionStateVerification.Tests.ps1",

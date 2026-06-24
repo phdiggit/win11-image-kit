@@ -723,3 +723,202 @@ function Get-KitUserExperienceReportAggregate {
 
     [pscustomobject]$aggregate
 }
+
+function ConvertTo-KitChildReportReferenceArray {
+    param(
+        [AllowNull()]
+        $Value
+    )
+
+    if ($null -eq $Value) {
+        return @()
+    }
+
+    if ($Value -is [System.Array] -or $Value -is [System.Collections.IEnumerable] -and -not ($Value -is [string])) {
+        return @($Value)
+    }
+
+    return @($Value)
+}
+
+function Get-KitChildReportPropertyValue {
+    param(
+        [AllowNull()]
+        $InputObject,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string]$PropertyName
+    )
+
+    if ($null -eq $InputObject) {
+        return $null
+    }
+
+    if ($InputObject.PSObject.Properties.Name -contains $PropertyName) {
+        return $InputObject.$PropertyName
+    }
+
+    return $null
+}
+
+function Get-KitChildReportIntegerProperty {
+    param(
+        [AllowNull()]
+        $InputObject,
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string]$PropertyName
+    )
+
+    $value = Get-KitChildReportPropertyValue -InputObject $InputObject -PropertyName $PropertyName
+    if ($null -eq $value) {
+        return 0
+    }
+
+    return [int]$value
+}
+
+function Get-KitChildReportTypeBlockingSummary {
+    param(
+        [AllowNull()]
+        $Reports = @(),
+
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string]$SummaryPropertyName,
+
+        [AllowNull()]
+        $Aggregate
+    )
+
+    $reportList = @(ConvertTo-KitChildReportReferenceArray -Value $Reports | Where-Object { $null -ne $_ })
+    $summary = [ordered]@{}
+    if ($null -ne $Aggregate) {
+        foreach ($property in $Aggregate.PSObject.Properties) {
+            $summary[$property.Name] = $property.Value
+        }
+    }
+
+    if (-not $summary.Contains("reports")) {
+        $summary["reports"] = $reportList.Count
+    }
+    if (-not $summary.Contains("existing")) {
+        $summary["existing"] = @($reportList | Where-Object { [bool]$_.exists }).Count
+    }
+    if (-not $summary.Contains("missing")) {
+        $summary["missing"] = @($reportList | Where-Object { -not [bool]$_.exists }).Count
+    }
+
+    $failedRequired = Get-KitChildReportIntegerProperty -InputObject $Aggregate -PropertyName "failedRequired"
+    $failedOptional = Get-KitChildReportIntegerProperty -InputObject $Aggregate -PropertyName "failedOptional"
+
+    foreach ($report in $reportList) {
+        $childSummary = Get-KitChildReportPropertyValue -InputObject $report -PropertyName $SummaryPropertyName
+        if ($null -ne $childSummary) {
+            continue
+        }
+
+        $errorCode = [string](Get-KitChildReportPropertyValue -InputObject $report -PropertyName "error")
+        $hasReferenceFailure = (-not [bool]$report.exists) -or -not [string]::IsNullOrWhiteSpace($errorCode)
+        if (-not $hasReferenceFailure) {
+            continue
+        }
+
+        if ([bool]$report.required) {
+            $failedRequired++
+        } else {
+            $failedOptional++
+        }
+    }
+
+    $hasBlockingFailure = $failedRequired -gt 0
+    $summary["failedRequired"] = $failedRequired
+    $summary["failedOptional"] = $failedOptional
+    $summary["hasBlockingFailure"] = $hasBlockingFailure
+    $summary["exitCode"] = if ($hasBlockingFailure) { 1 } else { 0 }
+
+    [pscustomobject]$summary
+}
+
+function Get-KitChildReportBlockingSummary {
+    param(
+        [AllowNull()]
+        $PackageReports = @(),
+
+        [AllowNull()]
+        $ServiceReports = @(),
+
+        [AllowNull()]
+        $JunctionReports = @(),
+
+        [AllowNull()]
+        $DefenderReports = @(),
+
+        [AllowNull()]
+        $AppxReports = @(),
+
+        [AllowNull()]
+        $UserExperienceReports = @()
+    )
+
+    $packageSummary = Get-KitChildReportTypeBlockingSummary `
+        -Reports $PackageReports `
+        -SummaryPropertyName "packageSummary" `
+        -Aggregate (Get-KitPackageReportAggregate -PackageReports $PackageReports)
+    $serviceSummary = Get-KitChildReportTypeBlockingSummary `
+        -Reports $ServiceReports `
+        -SummaryPropertyName "serviceSummary" `
+        -Aggregate (Get-KitServiceReportAggregate -ServiceReports $ServiceReports)
+    $junctionSummary = Get-KitChildReportTypeBlockingSummary `
+        -Reports $JunctionReports `
+        -SummaryPropertyName "junctionSummary" `
+        -Aggregate (Get-KitJunctionReportAggregate -JunctionReports $JunctionReports)
+    $defenderSummary = Get-KitChildReportTypeBlockingSummary `
+        -Reports $DefenderReports `
+        -SummaryPropertyName "defenderSummary" `
+        -Aggregate (Get-KitDefenderReportAggregate -DefenderReports $DefenderReports)
+    $appxSummary = Get-KitChildReportTypeBlockingSummary `
+        -Reports $AppxReports `
+        -SummaryPropertyName "appxSummary" `
+        -Aggregate (Get-KitAppxReportAggregate -AppxReports $AppxReports)
+    $userExperienceSummary = Get-KitChildReportTypeBlockingSummary `
+        -Reports $UserExperienceReports `
+        -SummaryPropertyName "userExperienceSummary" `
+        -Aggregate (Get-KitUserExperienceReportAggregate -UserExperienceReports $UserExperienceReports)
+
+    $byType = [pscustomobject][ordered]@{
+        package = $packageSummary
+        service = $serviceSummary
+        junction = $junctionSummary
+        defender = $defenderSummary
+        appx = $appxSummary
+        userExperience = $userExperienceSummary
+    }
+
+    $reports = 0
+    $existing = 0
+    $missing = 0
+    $failedRequired = 0
+    $failedOptional = 0
+    foreach ($typeSummary in @($packageSummary, $serviceSummary, $junctionSummary, $defenderSummary, $appxSummary, $userExperienceSummary)) {
+        $reports += [int]$typeSummary.reports
+        $existing += [int]$typeSummary.existing
+        $missing += [int]$typeSummary.missing
+        $failedRequired += [int]$typeSummary.failedRequired
+        $failedOptional += [int]$typeSummary.failedOptional
+    }
+
+    $hasBlockingFailure = $failedRequired -gt 0
+    [pscustomobject][ordered]@{
+        reports = $reports
+        existing = $existing
+        missing = $missing
+        failedRequired = $failedRequired
+        failedOptional = $failedOptional
+        hasBlockingFailure = $hasBlockingFailure
+        exitCode = if ($hasBlockingFailure) { 1 } else { 0 }
+        byType = $byType
+    }
+}
