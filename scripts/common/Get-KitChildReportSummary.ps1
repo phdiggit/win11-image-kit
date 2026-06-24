@@ -604,3 +604,122 @@ function Get-KitAppxReportAggregate {
 
     [pscustomobject]$aggregate
 }
+
+function Get-KitUserExperienceReportReference {
+    param(
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string]$Name,
+
+        [AllowEmptyString()]
+        [string]$StepName,
+
+        [AllowEmptyString()]
+        [string]$Path,
+
+        [switch]$Required,
+
+        [string]$ReportType = "post-deploy-user-experience"
+    )
+
+    if ([string]::IsNullOrWhiteSpace($Path)) {
+        return $null
+    }
+
+    $exists = Test-Path -LiteralPath $Path
+    $userExperienceSummary = $null
+    $errorCode = $null
+
+    if (-not $exists) {
+        $errorCode = "report-missing"
+    } else {
+        try {
+            $childReport = Get-Content -LiteralPath $Path -Raw -Encoding UTF8 | ConvertFrom-Json
+            if ($childReport.PSObject.Properties.Name -contains "userExperienceSummary") {
+                $userExperienceSummary = Copy-KitPackageSummaryWithoutResults -PackageSummary $childReport.userExperienceSummary
+            } else {
+                $errorCode = "user-experience-summary-missing"
+            }
+        } catch {
+            $errorCode = "report-parse-failed"
+            if ($Required) {
+                throw "User experience report parse failed: $Path - $($_.Exception.Message)"
+            }
+        }
+    }
+
+    [pscustomobject][ordered]@{
+        name = $Name
+        stepName = $StepName
+        reportType = $ReportType
+        path = $Path
+        required = [bool]$Required
+        exists = [bool]$exists
+        userExperienceSummary = $userExperienceSummary
+        error = $errorCode
+    }
+}
+
+function Get-KitUserExperienceReportAggregate {
+    param(
+        [AllowNull()]
+        $UserExperienceReports = @()
+    )
+
+    $reports = @($UserExperienceReports | Where-Object { $null -ne $_ })
+    $aggregate = [ordered]@{
+        reports = $reports.Count
+        existing = 0
+        missing = 0
+        failedRequired = 0
+        failedOptional = 0
+        skipped = 0
+        manual = 0
+        whatif = 0
+        configCheckedCount = 0
+        configMismatchCount = 0
+        configMissingCount = 0
+        configQueryFailedCount = 0
+        configNotRunCount = 0
+    }
+
+    foreach ($report in $reports) {
+        if ([bool]$report.exists) {
+            $aggregate.existing++
+        } else {
+            $aggregate.missing++
+        }
+
+        if ($null -eq $report.userExperienceSummary) {
+            continue
+        }
+
+        $summary = $report.userExperienceSummary
+        $aggregate.failedRequired += [int]$summary.failedRequiredCount
+        $aggregate.failedOptional += [int]$summary.failedOptionalCount
+
+        if ($null -ne $summary.statusCounts) {
+            $aggregate.skipped += [int]$summary.statusCounts.skipped
+            $aggregate.manual += [int]$summary.statusCounts.manual
+            $aggregate.whatif += [int]$summary.statusCounts.whatif
+        }
+
+        if ($null -ne $summary.PSObject.Properties["configCheckedCount"]) {
+            $aggregate.configCheckedCount += [int]$summary.configCheckedCount
+        }
+        if ($null -ne $summary.PSObject.Properties["configMismatchCount"]) {
+            $aggregate.configMismatchCount += [int]$summary.configMismatchCount
+        }
+        if ($null -ne $summary.PSObject.Properties["configMissingCount"]) {
+            $aggregate.configMissingCount += [int]$summary.configMissingCount
+        }
+        if ($null -ne $summary.PSObject.Properties["configQueryFailedCount"]) {
+            $aggregate.configQueryFailedCount += [int]$summary.configQueryFailedCount
+        }
+        if ($null -ne $summary.PSObject.Properties["configNotRunCount"]) {
+            $aggregate.configNotRunCount += [int]$summary.configNotRunCount
+        }
+    }
+
+    [pscustomobject]$aggregate
+}

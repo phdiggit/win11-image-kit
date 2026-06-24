@@ -282,6 +282,16 @@ function Write-KitPostDeployReport {
         $junctionReports += $junctionReport
     }
     $junctionReportSummary = Get-KitJunctionReportAggregate -JunctionReports $junctionReports
+    $userExperienceReport = Get-KitUserExperienceReportReference `
+        -Name "用户体验配置状态" `
+        -StepName "用户体验恢复" `
+        -Path $script:UserExperienceReportOutputPath `
+        -Required:$userExperienceReportSpec.required
+    $userExperienceReports = @()
+    if ($null -ne $userExperienceReport) {
+        $userExperienceReports += $userExperienceReport
+    }
+    $userExperienceReportSummary = Get-KitUserExperienceReportAggregate -UserExperienceReports $userExperienceReports
 
     $report = [pscustomobject]@{
         generatedAt = $finishedAt.ToString("s")
@@ -306,6 +316,7 @@ function Write-KitPostDeployReport {
         defenderReports = $defenderReports
         junctionReports = $junctionReports
         serviceReports = $serviceReports
+        userExperienceReports = $userExperienceReports
     }
 
     $written = $false
@@ -364,6 +375,13 @@ function Write-KitPostDeployReport {
             "- 服务状态不符：$($serviceReportSummary.serviceMismatchCount)",
             "- 服务不存在：$($serviceReportSummary.serviceMissingCount)",
             "- 服务未查询：$($serviceReportSummary.serviceNotRunCount)",
+            "- 用户体验子报告：$($userExperienceReportSummary.reports)",
+            "- 用户体验子报告存在：$($userExperienceReportSummary.existing)",
+            "- 用户体验阻断失败：$($userExperienceReportSummary.failedRequired)",
+            "- 用户体验状态不符：$($userExperienceReportSummary.configMismatchCount)",
+            "- 用户体验状态缺失：$($userExperienceReportSummary.configMissingCount)",
+            "- 用户体验查询失败：$($userExperienceReportSummary.configQueryFailedCount)",
+            "- 用户体验未查询：$($userExperienceReportSummary.configNotRunCount)",
             "",
             "| 软件包子报告 | 步骤 | 存在 | 路径 | 摘要错误 |",
             "|---|---|---|---|---|"
@@ -401,6 +419,16 @@ function Write-KitPostDeployReport {
 
         foreach ($serviceReportItem in $serviceReports) {
             $lines += "| $($serviceReportItem.name) | $($serviceReportItem.stepName) | $($serviceReportItem.exists) | $($serviceReportItem.path) | $($serviceReportItem.error) |"
+        }
+
+        $lines += @(
+            "",
+            "| 用户体验子报告 | 步骤 | 存在 | 路径 | 摘要错误 |",
+            "|---|---|---|---|---|"
+        )
+
+        foreach ($userExperienceReportItem in $userExperienceReports) {
+            $lines += "| $($userExperienceReportItem.name) | $($userExperienceReportItem.stepName) | $($userExperienceReportItem.exists) | $($userExperienceReportItem.path) | $($userExperienceReportItem.error) |"
         }
 
         $lines += @(
