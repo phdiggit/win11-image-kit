@@ -178,6 +178,118 @@ function New-KitMissingSourcePackageResult {
         -EndedAt (Get-Date)
 }
 
+function Get-KitPackageRuntimeFailureAction {
+    param(
+        [Parameter(Mandatory)]
+        $Package,
+
+        [Parameter(Mandatory)]
+        $Policy
+    )
+
+    if ([bool]$Policy.required) {
+        return "fail"
+    }
+
+    $failurePolicy = [string]$Policy.failurePolicy
+    if ($null -ne $Package.PSObject.Properties["failurePolicy"] -and -not [string]::IsNullOrWhiteSpace([string]$Package.failurePolicy)) {
+        $failurePolicy = [string]$Package.failurePolicy
+    }
+
+    if ($failurePolicy -eq "manual") {
+        return "manual"
+    }
+
+    if ($failurePolicy -eq "skip") {
+        return "skip"
+    }
+
+    return "fail"
+}
+
+function New-KitHashFailurePackageResult {
+    param(
+        [Parameter(Mandatory)]
+        $Package,
+
+        [Parameter(Mandatory)]
+        $Policy,
+
+        [Parameter(Mandatory)]
+        $HashResult,
+
+        [AllowEmptyString()]
+        [string]$Destination,
+
+        [datetime]$StartedAt = (Get-Date)
+    )
+
+    $action = Get-KitPackageRuntimeFailureAction -Package $Package -Policy $Policy
+    $status = "failed"
+    $skippedReason = ""
+    $manualAction = ""
+
+    if ($action -eq "skip") {
+        $status = "skipped"
+        $skippedReason = [string]$HashResult.reason
+    } elseif ($action -eq "manual") {
+        $status = "manual"
+        $manualAction = "verify-or-replace-source"
+    }
+
+    $evidence = [pscustomobject]@{
+        expectedHash = [string]$HashResult.expectedHash
+        actualHash = [string]$HashResult.actualHash
+        hashReason = [string]$HashResult.reason
+    }
+
+    return New-KitPackageResult `
+        -Package $Package `
+        -Status $status `
+        -Reason ([string]$HashResult.reason) `
+        -Message ([string]$HashResult.message) `
+        -Source ([string]$HashResult.source) `
+        -Destination $Destination `
+        -Policy $Policy `
+        -Evidence $evidence `
+        -Errors @([string]$HashResult.message) `
+        -SkippedReason $skippedReason `
+        -ManualAction $manualAction `
+        -StartedAt $StartedAt `
+        -EndedAt (Get-Date)
+}
+
+function Invoke-KitHashFailurePolicy {
+    param(
+        [Parameter(Mandatory)]
+        $Package,
+
+        [Parameter(Mandatory)]
+        $Policy,
+
+        [Parameter(Mandatory)]
+        $HashResult
+    )
+
+    $action = Get-KitPackageRuntimeFailureAction -Package $Package -Policy $Policy
+    $packageName = [string]$Package.name
+    $reason = [string]$HashResult.reason
+    $message = [string]$HashResult.message
+
+    switch ($action) {
+        "fail" {
+            Write-KitLog "${reason}: 软件包 SHA256 校验失败，处理失败：$packageName ($message)" "ERROR"
+            throw "${reason}: 软件包 SHA256 校验失败：$packageName ($message)"
+        }
+        "manual" {
+            Write-KitLog "${reason}: 软件包 SHA256 校验失败，记录为 manual 人工核验并继续：$packageName ($message)" "WARN"
+        }
+        default {
+            Write-KitLog "${reason}: 软件包 SHA256 校验失败，skipped 跳过并继续：$packageName ($message)" "WARN"
+        }
+    }
+}
+
 function Write-KitSoftwarePackageReport {
     param(
         [AllowEmptyString()]
@@ -337,7 +449,19 @@ function Install-KitSoftwarePackages {
                     continue
                 }
 
-                Test-KitPackageHash -Source $source -ExpectedHash ([string]$package.sha256)
+                $hashResult = Test-KitPackageHash -Source $source -ExpectedHash ([string]$package.sha256) -PassThru
+                if ($hashResult.status -eq "failed") {
+                    $packageResults += New-KitHashFailurePackageResult `
+                        -Package $package `
+                        -Policy $policy `
+                        -HashResult $hashResult `
+                        -Destination $destination `
+                        -StartedAt $packageStartedAt
+                    $packageResultRecorded = $true
+                    Invoke-KitHashFailurePolicy -Package $package -Policy $policy -HashResult $hashResult
+                    continue
+                }
+
                 Expand-KitArchive -Source $source -Destination $destination -ArchiveFormat $archiveFormat -WhatIf:$WhatIfPreference
 
                 if ($package.env) {
