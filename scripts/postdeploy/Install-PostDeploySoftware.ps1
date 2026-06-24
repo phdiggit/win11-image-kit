@@ -10,6 +10,7 @@ $ErrorActionPreference = "Stop"
 . "$PSScriptRoot\..\common\Write-Log.ps1"
 . "$PSScriptRoot\..\common\Assert-KitElevation.ps1"
 . "$PSScriptRoot\..\common\Resolve-KitPath.ps1"
+. "$PSScriptRoot\..\common\Resolve-KitPackagePolicy.ps1"
 . "$PSScriptRoot\..\common\Test-KitPackageHash.ps1"
 
 $script:InstallerReportItems = @()
@@ -111,7 +112,10 @@ function Add-KitInstallerReportItem {
         [AllowNull()]
         [int]$ExitCode,
         [bool]$SilentInstall = $false,
-        [string]$Uninstall
+        [string]$Uninstall,
+        [bool]$Required = $true,
+        [string]$FailurePolicy = "fail",
+        [bool]$AllowMissingSource = $false
     )
 
     $script:InstallerReportItems += [pscustomobject]@{
@@ -125,6 +129,9 @@ function Add-KitInstallerReportItem {
         exitCode = $ExitCode
         silentInstall = $SilentInstall
         uninstall = $Uninstall
+        required = [bool]$Required
+        failurePolicy = $FailurePolicy
+        allowMissingSource = [bool]$AllowMissingSource
     }
 }
 
@@ -163,10 +170,20 @@ function Write-KitInstallerReport {
         New-Item -ItemType Directory -Path $directory -Force -WhatIf:$false | Out-Null
     }
 
+    $summary = [pscustomobject]@{
+        total = @($script:InstallerReportItems).Count
+        succeeded = @($script:InstallerReportItems | Where-Object { $_.status -eq "succeeded" }).Count
+        failed = @($script:InstallerReportItems | Where-Object { $_.status -eq "failed" }).Count
+        skipped = @($script:InstallerReportItems | Where-Object { $_.status -eq "skipped" }).Count
+        manual = @($script:InstallerReportItems | Where-Object { $_.status -eq "manual" }).Count
+        whatif = @($script:InstallerReportItems | Where-Object { $_.status -eq "whatif" }).Count
+    }
+
     $report = [pscustomobject]@{
         generatedAt = (Get-Date).ToString("s")
         manifestPath = $ManifestPath
         reportType = "post-deploy-installer-plan"
+        summary = $summary
         items = $script:InstallerReportItems
     }
 
@@ -197,34 +214,91 @@ function Invoke-KitInstallerPackage {
     $successExitCodes = Get-KitInstallerSuccessExitCodes -Package $Package
     $uninstallCommand = Resolve-KitPath -Path ([string]$Package.uninstall) -PathMap $PathMap
     $commandText = Format-KitInstallerCommand -FilePath $source -Arguments $arguments
+    $policy = Resolve-KitPackagePolicy -Package $Package
+    $missingSourceAction = Get-KitPackageMissingSourceAction -Policy $policy
 
     if (-not $Package.silentInstall) {
-        Write-KitLog "安装器未声明静默安装，保留人工处理：$($Package.name)" "WARN"
+        if ($missingSourceAction -eq "fail") {
+            Write-KitLog "安装器必须自动静默处理，但 silentInstall=false：$($Package.name)" "ERROR"
+            Add-KitInstallerReportItem `
+                -Name ([string]$Package.name) `
+                -Status "failed" `
+                -Reason "silent-install-required" `
+                -Source $source `
+                -Destination $destination `
+                -Command $commandText `
+                -SuccessExitCodes $successExitCodes `
+                -SilentInstall $false `
+                -Uninstall $uninstallCommand `
+                -Required $policy.required `
+                -FailurePolicy $policy.failurePolicy `
+                -AllowMissingSource $policy.allowMissingSource
+            throw "silent-install-required: 必需安装器未声明静默安装：$($Package.name)"
+        }
+
+        $manualStatus = "manual"
+        if ($missingSourceAction -eq "skip") {
+            $manualStatus = "skipped"
+            Write-KitLog "安装器未声明静默安装，按策略 skipped 跳过：$($Package.name)" "WARN"
+        } else {
+            Write-KitLog "安装器未声明静默安装，保留 manual 人工处理：$($Package.name)" "WARN"
+        }
+
         Add-KitInstallerReportItem `
             -Name ([string]$Package.name) `
-            -Status "manual" `
+            -Status $manualStatus `
             -Reason "silentInstall=false" `
             -Source $source `
             -Destination $destination `
             -Command $commandText `
             -SuccessExitCodes $successExitCodes `
             -SilentInstall $false `
-            -Uninstall $uninstallCommand
+            -Uninstall $uninstallCommand `
+            -Required $policy.required `
+            -FailurePolicy $policy.failurePolicy `
+            -AllowMissingSource $policy.allowMissingSource
         return
     }
 
-    if (-not (Test-Path -LiteralPath $source)) {
-        Write-KitLog "安装器不存在，跳过：$source" "WARN"
+    $sourceError = ""
+    try {
+        $sourceExists = Test-Path -LiteralPath $source -ErrorAction Stop
+    } catch {
+        $sourceExists = $false
+        $sourceError = $_.Exception.Message
+    }
+
+    if (-not $sourceExists) {
+        $sourceDetail = if ([string]::IsNullOrWhiteSpace($sourceError)) { "Test-Path=false" } else { $sourceError }
+        $sourceStatus = "skipped"
+        if ($missingSourceAction -eq "manual") {
+            $sourceStatus = "manual"
+            Write-KitLog "source-missing: 安装器不存在，记录为 manual 人工处理并继续：$source ($sourceDetail)" "WARN"
+        } elseif ($missingSourceAction -eq "fail") {
+            $sourceStatus = "failed"
+            Write-KitLog "source-missing: 必需安装器不存在或不可访问，处理失败：$source ($sourceDetail)" "ERROR"
+        } else {
+            Write-KitLog "source-missing: 安装器不存在，skipped 跳过并继续：$source ($sourceDetail)" "WARN"
+        }
+
         Add-KitInstallerReportItem `
             -Name ([string]$Package.name) `
-            -Status "skipped" `
+            -Status $sourceStatus `
             -Reason "source-missing" `
             -Source $source `
             -Destination $destination `
             -Command $commandText `
             -SuccessExitCodes $successExitCodes `
             -SilentInstall $true `
-            -Uninstall $uninstallCommand
+            -Uninstall $uninstallCommand `
+            -Required $policy.required `
+            -FailurePolicy $policy.failurePolicy `
+            -AllowMissingSource $policy.allowMissingSource
+
+        if ($missingSourceAction -eq "fail") {
+            throw "source-missing: 必需安装器不存在或不可访问：$($Package.name) -> $source ($sourceDetail)"
+        }
+
         return
     }
 
@@ -241,7 +315,10 @@ function Invoke-KitInstallerPackage {
             -Command $commandText `
             -SuccessExitCodes $successExitCodes `
             -SilentInstall $true `
-            -Uninstall $uninstallCommand
+            -Uninstall $uninstallCommand `
+            -Required $policy.required `
+            -FailurePolicy $policy.failurePolicy `
+            -AllowMissingSource $policy.allowMissingSource
         return
     }
 
@@ -264,7 +341,10 @@ function Invoke-KitInstallerPackage {
             -SuccessExitCodes $successExitCodes `
             -ExitCode $exitCode `
             -SilentInstall $true `
-            -Uninstall $uninstallCommand
+            -Uninstall $uninstallCommand `
+            -Required $policy.required `
+            -FailurePolicy $policy.failurePolicy `
+            -AllowMissingSource $policy.allowMissingSource
         Write-KitLog "静默安装失败：$($Package.name)，退出码不在允许列表内。" "ERROR"
         throw "静默安装失败：$($Package.name)，exit code: $exitCode，allowed: $($successExitCodes -join ', ')，command: $commandText"
     }
@@ -279,7 +359,10 @@ function Invoke-KitInstallerPackage {
         -SuccessExitCodes $successExitCodes `
         -ExitCode $exitCode `
         -SilentInstall $true `
-        -Uninstall $uninstallCommand
+        -Uninstall $uninstallCommand `
+        -Required $policy.required `
+        -FailurePolicy $policy.failurePolicy `
+        -AllowMissingSource $policy.allowMissingSource
     Write-KitLog "静默安装完成：$($Package.name)" "OK"
 }
 
