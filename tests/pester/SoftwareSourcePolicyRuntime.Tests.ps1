@@ -100,11 +100,31 @@ Describe "Software source policy runtime" {
             $stdoutPath = Join-Path $tempRoot "archive.stdout.txt"
             $stderrPath = Join-Path $tempRoot "archive.stderr.txt"
 
-            & $script:PowerShell -NoProfile -ExecutionPolicy Bypass -File $script:ArchiveScript -ManifestPath $softwareManifestPath -PathsManifestPath $pathsManifestPath -Stage "golden-image" -WhatIf > $stdoutPath 2> $stderrPath
+            $process = Start-Process `
+                -FilePath $script:PowerShell `
+                -ArgumentList @(
+                    "-NoProfile",
+                    "-ExecutionPolicy",
+                    "Bypass",
+                    "-File",
+                    $script:ArchiveScript,
+                    "-ManifestPath",
+                    $softwareManifestPath,
+                    "-PathsManifestPath",
+                    $pathsManifestPath,
+                    "-Stage",
+                    "golden-image",
+                    "-WhatIf"
+                ) `
+                -RedirectStandardOutput $stdoutPath `
+                -RedirectStandardError $stderrPath `
+                -Wait `
+                -PassThru `
+                -WindowStyle Hidden
             $destinationPath = Join-Path (Join-Path $tempRoot "tools") "runtime-policy-test"
 
             return [pscustomobject]@{
-                ExitCode = $LASTEXITCODE
+                ExitCode = [int]$process.ExitCode
                 Stdout = Get-Content -LiteralPath $stdoutPath -Raw -Encoding UTF8
                 Stderr = Get-Content -LiteralPath $stderrPath -Raw -Encoding UTF8
                 DestinationExists = Test-Path -LiteralPath $destinationPath
@@ -126,7 +146,28 @@ Describe "Software source policy runtime" {
             $stdoutPath = Join-Path $tempRoot "installer.stdout.txt"
             $stderrPath = Join-Path $tempRoot "installer.stderr.txt"
 
-            & $script:PowerShell -NoProfile -ExecutionPolicy Bypass -File $script:InstallerScript -ManifestPath $softwareManifestPath -PathsManifestPath $pathsManifestPath -ReportPath $reportPath -ReportRequired -WhatIf > $stdoutPath 2> $stderrPath
+            $process = Start-Process `
+                -FilePath $script:PowerShell `
+                -ArgumentList @(
+                    "-NoProfile",
+                    "-ExecutionPolicy",
+                    "Bypass",
+                    "-File",
+                    $script:InstallerScript,
+                    "-ManifestPath",
+                    $softwareManifestPath,
+                    "-PathsManifestPath",
+                    $pathsManifestPath,
+                    "-ReportPath",
+                    $reportPath,
+                    "-ReportRequired",
+                    "-WhatIf"
+                ) `
+                -RedirectStandardOutput $stdoutPath `
+                -RedirectStandardError $stderrPath `
+                -Wait `
+                -PassThru `
+                -WindowStyle Hidden
 
             $report = $null
             if (Test-Path -LiteralPath $reportPath) {
@@ -134,7 +175,7 @@ Describe "Software source policy runtime" {
             }
 
             return [pscustomobject]@{
-                ExitCode = $LASTEXITCODE
+                ExitCode = [int]$process.ExitCode
                 Stdout = Get-Content -LiteralPath $stdoutPath -Raw -Encoding UTF8
                 Stderr = Get-Content -LiteralPath $stderrPath -Raw -Encoding UTF8
                 Report = $report
