@@ -1,22 +1,24 @@
 $RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
 . (Join-Path $RepoRoot "tests\pester\TestHelpers.ps1")
 
-function Get-Issue6ClosePrepDraft {
-    param(
-        [string]$Content
-    )
-
-    $match = [regex]::Match($Content, '(?s)```markdown\r?\n(?<body>Issue #6 final validation evidence:.*?Conclusion: ready for manual closure after all boxes are checked\.\r?\n)```')
-    if (-not $match.Success) {
-        throw "Copyable closure comment draft was not found."
-    }
-
-    return $match.Groups["body"].Value
-}
-
 Describe "Issue 6 close preparation package" {
     BeforeAll {
         $script:RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
+        . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
+
+        function script:Get-Issue6ClosePrepDraft {
+            param(
+                [string]$Content
+            )
+
+            $match = [regex]::Match($Content, '(?s)```markdown\r?\n(?<body>Issue #6 final validation evidence:.*?Conclusion: ready for manual closure after all boxes are checked\.\r?\n)```')
+            if (-not $match.Success) {
+                throw "Copyable closure comment draft was not found."
+            }
+
+            return $match.Groups["body"].Value
+        }
+
         $script:DocPath = @(Get-ChildItem -LiteralPath (Join-Path $script:RepoRoot "docs") -Filter "10-issue6-*.md" -ErrorAction SilentlyContinue)[0].FullName
         $script:Doc = Get-Content -LiteralPath $script:DocPath -Raw -Encoding UTF8
         $script:Workflow = Get-Content -LiteralPath (Join-Path $script:RepoRoot ".github\workflows\ci.yml") -Raw -Encoding UTF8
