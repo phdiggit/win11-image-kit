@@ -8,6 +8,19 @@ function New-TestRunRoot {
     return $root
 }
 
+function ConvertTo-ProcessArgument {
+    param(
+        [AllowNull()]
+        [string]$Value
+    )
+
+    if ($null -eq $Value) {
+        return '""'
+    }
+
+    return '"' + $Value.Replace('"', '\"') + '"'
+}
+
 function Invoke-CollectArtifacts {
     param(
         [Parameter(Mandatory)]
@@ -20,11 +33,25 @@ function Invoke-CollectArtifacts {
     }
 
     $scriptPath = Join-Path $RepoRoot "scripts\dev\Collect-KitRunArtifacts.ps1"
-    $output = & $powerShell -NoProfile -ExecutionPolicy Bypass -File $scriptPath @Arguments 2>&1
+    $processArguments = @("-NoProfile", "-ExecutionPolicy", "Bypass", "-File", $scriptPath) + $Arguments
+    $startInfo = New-Object System.Diagnostics.ProcessStartInfo
+    $startInfo.FileName = $powerShell
+    $startInfo.UseShellExecute = $false
+    $startInfo.RedirectStandardOutput = $true
+    $startInfo.RedirectStandardError = $true
+    $startInfo.CreateNoWindow = $true
+    $startInfo.Arguments = ($processArguments | ForEach-Object { ConvertTo-ProcessArgument -Value $_ }) -join " "
+
+    $process = New-Object System.Diagnostics.Process
+    $process.StartInfo = $startInfo
+    [void]$process.Start()
+    $standardOutput = $process.StandardOutput.ReadToEnd()
+    $standardError = $process.StandardError.ReadToEnd()
+    $process.WaitForExit()
 
     return [pscustomobject]@{
-        ExitCode = $LASTEXITCODE
-        Output = ($output -join "`n")
+        ExitCode = $process.ExitCode
+        Output = (($standardOutput, $standardError | Where-Object { -not [string]::IsNullOrWhiteSpace($_) }) -join "`n")
     }
 }
 
@@ -40,6 +67,76 @@ function Expand-TestArchive {
 }
 
 Describe "Collect-KitRunArtifacts" {
+    BeforeAll {
+        $script:RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
+        . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
+
+        function New-TestRunRoot {
+            $root = Join-Path ([IO.Path]::GetTempPath()) ("win11-image-kit-run-{0}" -f ([guid]::NewGuid().ToString("N")))
+            New-Item -ItemType Directory -Path (Join-Path $root "logs") -Force | Out-Null
+            New-Item -ItemType Directory -Path (Join-Path $root "reports") -Force | Out-Null
+            return $root
+        }
+
+        function ConvertTo-ProcessArgument {
+            param(
+                [AllowNull()]
+                [string]$Value
+            )
+
+            if ($null -eq $Value) {
+                return '""'
+            }
+
+            return '"' + $Value.Replace('"', '\"') + '"'
+        }
+
+        function Invoke-CollectArtifacts {
+            param(
+                [Parameter(Mandatory)]
+                [string[]]$Arguments
+            )
+
+            $powerShell = (Get-Command powershell -ErrorAction SilentlyContinue).Source
+            if ([string]::IsNullOrWhiteSpace($powerShell)) {
+                $powerShell = (Get-Command pwsh -ErrorAction Stop).Source
+            }
+
+            $scriptPath = Join-Path $script:RepoRoot "scripts\dev\Collect-KitRunArtifacts.ps1"
+            $processArguments = @("-NoProfile", "-ExecutionPolicy", "Bypass", "-File", $scriptPath) + $Arguments
+            $startInfo = New-Object System.Diagnostics.ProcessStartInfo
+            $startInfo.FileName = $powerShell
+            $startInfo.UseShellExecute = $false
+            $startInfo.RedirectStandardOutput = $true
+            $startInfo.RedirectStandardError = $true
+            $startInfo.CreateNoWindow = $true
+            $startInfo.Arguments = ($processArguments | ForEach-Object { ConvertTo-ProcessArgument -Value $_ }) -join " "
+
+            $process = New-Object System.Diagnostics.Process
+            $process.StartInfo = $startInfo
+            [void]$process.Start()
+            $standardOutput = $process.StandardOutput.ReadToEnd()
+            $standardError = $process.StandardError.ReadToEnd()
+            $process.WaitForExit()
+
+            return [pscustomobject]@{
+                ExitCode = $process.ExitCode
+                Output = (($standardOutput, $standardError | Where-Object { -not [string]::IsNullOrWhiteSpace($_) }) -join "`n")
+            }
+        }
+
+        function Expand-TestArchive {
+            param(
+                [Parameter(Mandatory)]
+                [string]$ArchivePath
+            )
+
+            $extractRoot = Join-Path ([IO.Path]::GetTempPath()) ("win11-image-kit-zip-{0}" -f ([guid]::NewGuid().ToString("N")))
+            Expand-Archive -LiteralPath $ArchivePath -DestinationPath $extractRoot -Force
+            return $extractRoot
+        }
+    }
+
     BeforeEach {
         $script:TempPaths = @()
     }
