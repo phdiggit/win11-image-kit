@@ -63,6 +63,24 @@ Describe "Defender and AppX state verification results" {
         Assert-KitEqual $summary.exitCode 1
     }
 
+    It "fails required Defender check when expected false setting is missing" {
+        $config = [pscustomobject]@{
+            settingName = "DisableRealtimeMonitoring"
+            expectedValue = $false
+            required = $true
+            failurePolicy = "fail"
+        }
+        $query = { [pscustomobject]@{ DisableIOAVProtection = $false } }
+
+        $result = @(Test-KitDefenderState -Config $config -DefenderQuery $query)[0]
+        $summary = Get-KitDefenderResultSummary -Results @($result)
+
+        Assert-KitEqual $result.status "failed"
+        Assert-KitEqual $result.reason "defender-setting-missing"
+        Assert-KitEqual $summary.defenderSettingMissingCount 1
+        Assert-KitEqual $summary.exitCode 1
+    }
+
     It "maps optional Defender skip policy to skipped" {
         $config = [pscustomobject]@{
             settingName = "DisableIOAVProtection"

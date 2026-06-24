@@ -29,6 +29,30 @@ function Get-KitDefenderConfigProperty {
     return $DefaultValue
 }
 
+function Test-KitDefenderConfigPropertyExists {
+    param(
+        [AllowNull()]
+        $Config,
+
+        [Parameter(Mandatory)]
+        [string]$Name
+    )
+
+    if ($null -eq $Config) {
+        return $false
+    }
+
+    if ($Config -is [System.Collections.IDictionary]) {
+        return $Config.Contains($Name)
+    }
+
+    if ($null -ne $Config.PSObject) {
+        return @($Config.PSObject.Properties | Where-Object { $_.Name -eq $Name }).Count -gt 0
+    }
+
+    return $false
+}
+
 function ConvertTo-KitDefenderStateCheck {
     param(
         [Parameter(Mandatory)]
@@ -121,6 +145,10 @@ function Test-KitDefenderValueEqual {
         [AllowNull()]
         $Expected
     )
+
+    if ($null -eq $Actual -or $null -eq $Expected) {
+        return ($null -eq $Actual) -and ($null -eq $Expected)
+    }
 
     if ($Actual -is [bool] -or $Expected -is [bool]) {
         return ([bool]$Actual) -eq ([bool]$Expected)
@@ -270,6 +298,14 @@ function Test-KitDefenderState {
     foreach ($check in $checks) {
         $settingName = [string](Get-KitDefenderConfigProperty -Config $check -Name "settingName" -DefaultValue "")
         $expectedValue = Get-KitDefenderConfigProperty -Config $check -Name "expectedValue" -DefaultValue $null
+        if (-not (Test-KitDefenderConfigPropertyExists -Config $preference -Name $settingName)) {
+            $required = Get-KitDefenderRequired -Config $check
+            $failurePolicy = Get-KitDefenderFailurePolicy -Config $check
+            $status = Resolve-KitDefenderFailureStatus -Required $required -FailurePolicy $failurePolicy
+            $results += New-KitDefenderStateResult -Config $check -Status $status -Reason "defender-setting-missing" -Message "Defender 状态字段不存在" -ActualValue $null -Errors @("settingName not found: $settingName") -StartedAt $startedAt -EndedAt (Get-Date)
+            continue
+        }
+
         $actualValue = Get-KitDefenderConfigProperty -Config $preference -Name $settingName -DefaultValue $null
         if (Test-KitDefenderValueEqual -Actual $actualValue -Expected $expectedValue) {
             $results += New-KitDefenderStateResult -Config $check -Status "unchanged" -Reason "defender-state-ok" -Message "Defender 状态符合预期" -ActualValue $actualValue -StartedAt $startedAt -EndedAt (Get-Date)
@@ -294,6 +330,7 @@ function Get-KitDefenderResultSummary {
     $defenderResults = @(ConvertTo-KitStepResultArray -Value $Results)
     $stepSummary = Get-KitStepResultSummary -Results $defenderResults
     $defenderMismatchCount = @($defenderResults | Where-Object { $_.reason -eq "defender-state-mismatch" }).Count
+    $defenderSettingMissingCount = @($defenderResults | Where-Object { $_.reason -eq "defender-setting-missing" }).Count
     $defenderQueryFailedCount = @($defenderResults | Where-Object { $_.reason -eq "defender-query-failed" }).Count
     $defenderNotRunCount = @($defenderResults | Where-Object { $_.status -eq "whatif" -or $_.reason -eq "defender-verification-not-run" }).Count
     $defenderCheckedCount = $defenderResults.Count - $defenderNotRunCount
@@ -307,6 +344,7 @@ function Get-KitDefenderResultSummary {
         exitCode = $stepSummary.exitCode
         defenderCheckedCount = $defenderCheckedCount
         defenderMismatchCount = $defenderMismatchCount
+        defenderSettingMissingCount = $defenderSettingMissingCount
         defenderQueryFailedCount = $defenderQueryFailedCount
         defenderNotRunCount = $defenderNotRunCount
     }

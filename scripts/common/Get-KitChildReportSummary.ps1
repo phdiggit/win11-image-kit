@@ -444,6 +444,7 @@ function Get-KitDefenderReportAggregate {
         whatif = 0
         defenderCheckedCount = 0
         defenderMismatchCount = 0
+        defenderSettingMissingCount = 0
         defenderQueryFailedCount = 0
         defenderNotRunCount = 0
     }
@@ -474,6 +475,9 @@ function Get-KitDefenderReportAggregate {
         }
         if ($null -ne $summary.PSObject.Properties["defenderMismatchCount"]) {
             $aggregate.defenderMismatchCount += [int]$summary.defenderMismatchCount
+        }
+        if ($null -ne $summary.PSObject.Properties["defenderSettingMissingCount"]) {
+            $aggregate.defenderSettingMissingCount += [int]$summary.defenderSettingMissingCount
         }
         if ($null -ne $summary.PSObject.Properties["defenderQueryFailedCount"]) {
             $aggregate.defenderQueryFailedCount += [int]$summary.defenderQueryFailedCount

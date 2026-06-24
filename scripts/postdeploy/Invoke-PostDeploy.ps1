@@ -348,6 +348,7 @@ function Write-KitPostDeployReport {
             "- Defender 子报告存在：$($defenderReportSummary.existing)",
             "- Defender 阻断失败：$($defenderReportSummary.failedRequired)",
             "- Defender 状态不符：$($defenderReportSummary.defenderMismatchCount)",
+            "- Defender 字段缺失：$($defenderReportSummary.defenderSettingMissingCount)",
             "- Defender 查询失败：$($defenderReportSummary.defenderQueryFailedCount)",
             "- Defender 未查询：$($defenderReportSummary.defenderNotRunCount)",
             "- Junction 子报告：$($junctionReportSummary.reports)",
