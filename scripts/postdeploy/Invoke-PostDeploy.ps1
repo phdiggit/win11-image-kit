@@ -5,6 +5,7 @@ param(
     [string]$LogPath,
     [string]$SummaryReportPath,
     [string]$ReportPath,
+    [string]$DefenderReportPath,
     [string]$JunctionReportPath,
     [string]$ServiceReportPath,
     [string]$UserExperienceReportPath,
@@ -28,6 +29,7 @@ $script:PostDeployRunStamp = $script:PostDeployStartedAt.ToString("yyyyMMdd-HHmm
 $script:PostDeployLogPath = $null
 $script:PostDeployStatus = "running"
 $script:InstallerReportOutputPath = $null
+$script:DefenderReportOutputPath = $null
 $script:JunctionReportOutputPath = $null
 $script:ServiceReportOutputPath = $null
 $script:UserExperienceReportOutputPath = $null
@@ -250,6 +252,16 @@ function Write-KitPostDeployReport {
         $packageReports += $installerPackageReport
     }
     $packageReportSummary = Get-KitPackageReportAggregate -PackageReports $packageReports
+    $defenderReport = Get-KitDefenderReportReference `
+        -Name "Windows Defender 状态" `
+        -StepName "Windows Defender 排除项" `
+        -Path $script:DefenderReportOutputPath `
+        -Required:$defenderReportSpec.required
+    $defenderReports = @()
+    if ($null -ne $defenderReport) {
+        $defenderReports += $defenderReport
+    }
+    $defenderReportSummary = Get-KitDefenderReportAggregate -DefenderReports $defenderReports
     $serviceReport = Get-KitServiceReportReference `
         -Name "中间件服务状态" `
         -StepName "中间件服务注册" `
@@ -281,6 +293,7 @@ function Write-KitPostDeployReport {
         strictUserExperience = [bool]$StrictUserExperience
         logPath = $script:PostDeployLogPath
         installerReportPath = $script:InstallerReportOutputPath
+        defenderReportPath = $script:DefenderReportOutputPath
         junctionReportPath = $script:JunctionReportOutputPath
         serviceReportPath = $script:ServiceReportOutputPath
         userExperienceReportPath = $script:UserExperienceReportOutputPath
@@ -290,6 +303,7 @@ function Write-KitPostDeployReport {
         stepResults = $script:PostDeployStepResults
         stepSummary = $stepSummary
         packageReports = $packageReports
+        defenderReports = $defenderReports
         junctionReports = $junctionReports
         serviceReports = $serviceReports
     }
@@ -308,6 +322,7 @@ function Write-KitPostDeployReport {
             "- 严格用户体验恢复：$($report.strictUserExperience)",
             "- 日志文件：$($report.logPath)",
             "- 安装器报告：$($report.installerReportPath)",
+            "- Defender 状态报告：$($report.defenderReportPath)",
             "- Junction 状态报告：$($report.junctionReportPath)",
             "- 服务状态报告：$($report.serviceReportPath)",
             "- 用户体验报告：$($report.userExperienceReportPath)",
@@ -329,6 +344,13 @@ function Write-KitPostDeployReport {
             "- 软件包跳过：$($packageReportSummary.skipped)",
             "- 软件包人工处理：$($packageReportSummary.manual)",
             "- 软件包预演：$($packageReportSummary.whatif)",
+            "- Defender 子报告：$($defenderReportSummary.reports)",
+            "- Defender 子报告存在：$($defenderReportSummary.existing)",
+            "- Defender 阻断失败：$($defenderReportSummary.failedRequired)",
+            "- Defender 状态不符：$($defenderReportSummary.defenderMismatchCount)",
+            "- Defender 字段缺失：$($defenderReportSummary.defenderSettingMissingCount)",
+            "- Defender 查询失败：$($defenderReportSummary.defenderQueryFailedCount)",
+            "- Defender 未查询：$($defenderReportSummary.defenderNotRunCount)",
             "- Junction 子报告：$($junctionReportSummary.reports)",
             "- Junction 子报告存在：$($junctionReportSummary.existing)",
             "- Junction 阻断失败：$($junctionReportSummary.failedRequired)",
@@ -349,6 +371,16 @@ function Write-KitPostDeployReport {
 
         foreach ($packageReport in $packageReports) {
             $lines += "| $($packageReport.name) | $($packageReport.stepName) | $($packageReport.exists) | $($packageReport.path) | $($packageReport.error) |"
+        }
+
+        $lines += @(
+            "",
+            "| Defender 子报告 | 步骤 | 存在 | 路径 | 摘要错误 |",
+            "|---|---|---|---|---|"
+        )
+
+        foreach ($defenderReportItem in $defenderReports) {
+            $lines += "| $($defenderReportItem.name) | $($defenderReportItem.stepName) | $($defenderReportItem.exists) | $($defenderReportItem.path) | $($defenderReportItem.error) |"
         }
 
         $lines += @(
@@ -424,6 +456,12 @@ $installerReportSpec = Resolve-KitArtifactSpec `
     -FileName ("postdeploy-installer-{0}.json" -f $script:PostDeployRunStamp) `
     -PathMap $pathMap
 
+$defenderReportSpec = Resolve-KitArtifactSpec `
+    -ExplicitPath $DefenderReportPath `
+    -AutoDirectory $(if ($null -ne $reportingConfig) { [string]$reportingConfig.reportDirectory } else { $null }) `
+    -FileName ("postdeploy-defender-{0}.json" -f $script:PostDeployRunStamp) `
+    -PathMap $pathMap
+
 $junctionReportSpec = Resolve-KitArtifactSpec `
     -ExplicitPath $JunctionReportPath `
     -AutoDirectory $(if ($null -ne $reportingConfig) { [string]$reportingConfig.reportDirectory } else { $null }) `
@@ -443,6 +481,7 @@ $userExperienceReportSpec = Resolve-KitArtifactSpec `
     -PathMap $pathMap
 
 $script:InstallerReportOutputPath = $installerReportSpec.path
+$script:DefenderReportOutputPath = $defenderReportSpec.path
 $script:JunctionReportOutputPath = $junctionReportSpec.path
 $script:ServiceReportOutputPath = $serviceReportSpec.path
 $script:UserExperienceReportOutputPath = $userExperienceReportSpec.path
@@ -472,6 +511,8 @@ try {
         -Arguments @{
             ManifestPath = Resolve-KitRepoPath -RepoRoot $repoRoot -Path $scopeConfig.system.windowsDefender.exclusionsManifest
             PathsManifestPath = $PathsManifestPath
+            ReportPath = $script:DefenderReportOutputPath
+            ReportRequired = $defenderReportSpec.required
         }
 
     Invoke-KitTrackedStep `

@@ -28,6 +28,24 @@
         },
         "additionalProperties": false
       }
+    },
+    "stateChecks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["settingName", "expectedValue"],
+        "properties": {
+          "name": { "type": "string" },
+          "settingName": { "type": "string" },
+          "expectedValue": {},
+          "required": { "type": "boolean" },
+          "failurePolicy": {
+            "type": "string",
+            "enum": ["fail", "skip", "manual"]
+          }
+        },
+        "additionalProperties": false
+      }
     }
   },
   "additionalProperties": false

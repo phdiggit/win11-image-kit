@@ -39,5 +39,14 @@
   "keepNamePatterns": [
     "Baidu",
     "Netdisk"
+  ],
+  "stateChecks": [
+    {
+      "packageName": "Microsoft.XboxGamingOverlay",
+      "scope": "allUsers",
+      "expectedState": "absent",
+      "required": true,
+      "failurePolicy": "fail"
+    }
   ]
 }
