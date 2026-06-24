@@ -2,6 +2,7 @@
 
 . "$PSScriptRoot\Write-Log.ps1"
 . "$PSScriptRoot\Resolve-KitPath.ps1"
+. "$PSScriptRoot\Resolve-KitPackagePolicy.ps1"
 . "$PSScriptRoot\Test-KitPackageHash.ps1"
 
 function Test-KitCategoryMatch {
@@ -93,6 +94,38 @@ function Invoke-KitPostInstall {
     }
 }
 
+function Invoke-KitMissingSourcePolicy {
+    param(
+        [Parameter(Mandatory)]
+        $Package,
+
+        [Parameter(Mandatory)]
+        $Policy,
+
+        [Parameter(Mandatory)]
+        [string]$Source,
+
+        [Parameter(Mandatory)]
+        [string]$Detail
+    )
+
+    $action = Get-KitPackageMissingSourceAction -Policy $Policy
+    $packageName = [string]$Package.name
+
+    switch ($action) {
+        "fail" {
+            Write-KitLog "source-missing: 必需软件包安装介质缺失或不可访问，处理失败：$packageName -> $Source ($Detail)" "ERROR"
+            throw "source-missing: 软件包安装介质缺失或不可访问：$packageName -> $Source ($Detail)"
+        }
+        "manual" {
+            Write-KitLog "source-missing: 软件包安装介质缺失，记录为 manual 人工处理并继续：$packageName -> $Source ($Detail)" "WARN"
+        }
+        default {
+            Write-KitLog "source-missing: 软件包安装介质缺失，skipped 跳过并继续：$packageName -> $Source ($Detail)" "WARN"
+        }
+    }
+}
+
 function Install-KitSoftwarePackages {
     [CmdletBinding(SupportsShouldProcess)]
     param(
@@ -160,6 +193,7 @@ function Install-KitSoftwarePackages {
         }
 
         Write-KitLog "处理$WorkloadName：$($package.name)"
+        $policy = Resolve-KitPackagePolicy -Package $package
         $source = Resolve-KitPath -Path $package.source -PathMap $pathMap
         $destination = Resolve-KitPath -Path $package.destination -PathMap $pathMap
 
@@ -174,12 +208,12 @@ function Install-KitSoftwarePackages {
         try {
             $sourceExists = Test-Path -LiteralPath $source -ErrorAction Stop
         } catch {
-            Write-KitLog "安装介质无法访问，跳过：$source - $($_.Exception.Message)" "WARN"
+            Invoke-KitMissingSourcePolicy -Package $package -Policy $policy -Source $source -Detail $_.Exception.Message
             continue
         }
 
         if (-not $sourceExists) {
-            Write-KitLog "安装介质不存在，跳过：$source" "WARN"
+            Invoke-KitMissingSourcePolicy -Package $package -Policy $policy -Source $source -Detail "Test-Path=false"
             continue
         }
 
