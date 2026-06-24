@@ -30,23 +30,15 @@ Describe "Orchestrator StepResult reports" {
 
         try {
             $scriptPath = Join-Path $script:RepoRoot "scripts\build\Invoke-GoldenImageBuild.ps1"
-            $process = Start-Process -FilePath $powerShell -ArgumentList @(
-                "-NoProfile",
-                "-ExecutionPolicy",
-                "Bypass",
-                "-File",
-                $scriptPath,
-                "-WhatIf",
-                "-SkipPortableApps",
-                "-SkipSystemTweaks",
-                "-SkipDevRuntime",
-                "-SkipMiddleware",
-                "-ReportPath",
-                $reportPath,
-                "-LogPath",
-                $logPath
-            ) -Wait -PassThru -RedirectStandardOutput $stdoutPath -RedirectStandardError $stderrPath -WindowStyle Hidden
-            $exitCode = [int]$process.ExitCode
+            & $powerShell -NoProfile -ExecutionPolicy Bypass -File $scriptPath `
+                -WhatIf `
+                -SkipPortableApps `
+                -SkipSystemTweaks `
+                -SkipDevRuntime `
+                -SkipMiddleware `
+                -ReportPath $reportPath `
+                -LogPath $logPath 1> $stdoutPath 2> $stderrPath
+            $exitCode = $LASTEXITCODE
 
             Assert-KitEqual $exitCode 0
             Assert-KitNotNullOrEmpty (Get-ChildItem -LiteralPath $reportPath -ErrorAction SilentlyContinue)
@@ -81,23 +73,13 @@ Describe "Orchestrator StepResult reports" {
 
         try {
             $scriptPath = Join-Path $script:RepoRoot "scripts\postdeploy\Invoke-PostDeploy.ps1"
-            $process = Start-Process -FilePath $powerShell -ArgumentList @(
-                "-NoProfile",
-                "-ExecutionPolicy",
-                "Bypass",
-                "-File",
-                $scriptPath,
-                "-WhatIf",
-                "-SummaryReportPath",
-                $summaryPath,
-                "-ReportPath",
-                $installerPath,
-                "-UserExperienceReportPath",
-                $userExperiencePath,
-                "-LogPath",
-                $logPath
-            ) -Wait -PassThru -RedirectStandardOutput $stdoutPath -RedirectStandardError $stderrPath -WindowStyle Hidden
-            $exitCode = [int]$process.ExitCode
+            & $powerShell -NoProfile -ExecutionPolicy Bypass -File $scriptPath `
+                -WhatIf `
+                -SummaryReportPath $summaryPath `
+                -ReportPath $installerPath `
+                -UserExperienceReportPath $userExperiencePath `
+                -LogPath $logPath 1> $stdoutPath 2> $stderrPath
+            $exitCode = $LASTEXITCODE
 
             Assert-KitEqual $exitCode 0
             Assert-KitNotNullOrEmpty (Get-ChildItem -LiteralPath $summaryPath -ErrorAction SilentlyContinue)
@@ -138,25 +120,14 @@ Describe "Orchestrator StepResult reports" {
             Set-Content -LiteralPath $scopePath -Value ($scope | ConvertTo-Json -Depth 12) -Encoding UTF8
 
             $scriptPath = Join-Path $script:RepoRoot "scripts\postdeploy\Invoke-PostDeploy.ps1"
-            $process = Start-Process -FilePath $powerShell -ArgumentList @(
-                "-NoProfile",
-                "-ExecutionPolicy",
-                "Bypass",
-                "-File",
-                $scriptPath,
-                "-WhatIf",
-                "-ScopeManifestPath",
-                $scopePath,
-                "-SummaryReportPath",
-                $summaryPath,
-                "-ReportPath",
-                $installerPath,
-                "-UserExperienceReportPath",
-                $userExperiencePath,
-                "-LogPath",
-                $logPath
-            ) -Wait -PassThru -RedirectStandardOutput $stdoutPath -RedirectStandardError $stderrPath -WindowStyle Hidden
-            $exitCode = [int]$process.ExitCode
+            & $powerShell -NoProfile -ExecutionPolicy Bypass -File $scriptPath `
+                -WhatIf `
+                -ScopeManifestPath $scopePath `
+                -SummaryReportPath $summaryPath `
+                -ReportPath $installerPath `
+                -UserExperienceReportPath $userExperiencePath `
+                -LogPath $logPath 1> $stdoutPath 2> $stderrPath
+            $exitCode = $LASTEXITCODE
 
             if ($exitCode -eq 0) {
                 throw "Expected postdeploy to return a non-zero exit code for a missing software manifest."
