@@ -92,7 +92,8 @@ jobs:
               "tests/pester/UserExperienceStateVerification.Tests.ps1",
               "tests/pester/DryRunAcceptanceBaseline.Tests.ps1",
               "tests/pester/Issue6AcceptanceAudit.Tests.ps1",
-              "tests/pester/Issue6ClosePrep.Tests.ps1"
+              "tests/pester/Issue6ClosePrep.Tests.ps1",
+              "tests/pester/Issue6MainValidationEvidence.Tests.ps1"
           )
           $pester = Import-Module Pester -Force -PassThru
           if ($pester.Version.Major -ge 5) {
