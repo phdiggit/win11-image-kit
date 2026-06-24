@@ -1,49 +1,5 @@
 $RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
 
-function New-TestJunctionConfig {
-    param(
-        [string]$Source = "C:\Source",
-        [string]$Target = "D:\Data\Target",
-        [string]$OnTargetConflict = "fail"
-    )
-
-    [pscustomobject]@{
-        name = "PesterJunction"
-        description = "PesterJunction"
-        source = $Source
-        target = $Target
-        required = $true
-        failurePolicy = "fail"
-        onTargetConflict = $OnTargetConflict
-        backupRetention = "keep"
-        verificationMode = "countAndSize"
-    }
-}
-
-function New-TestPathState {
-    param(
-        [bool]$Exists = $false,
-        [bool]$IsDirectory = $false,
-        [bool]$IsJunction = $false,
-        [AllowNull()]$IsEmpty = $null,
-        [string]$Target = "",
-        [string]$LinkType = "",
-        [string]$Attributes = "",
-        [AllowNull()]$SizeBytes = 0
-    )
-
-    [pscustomobject]@{
-        exists = $Exists
-        isDirectory = $IsDirectory
-        isJunction = $IsJunction
-        isEmpty = $IsEmpty
-        target = $Target
-        linkType = $LinkType
-        attributes = $Attributes
-        sizeBytes = $SizeBytes
-    }
-}
-
 Describe "Junction transaction preflight" {
     BeforeEach {
         $script:RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
@@ -53,17 +9,61 @@ Describe "Junction transaction preflight" {
         if ([string]::IsNullOrWhiteSpace($script:PowerShell)) {
             $script:PowerShell = (Get-Command pwsh -ErrorAction Stop).Source
         }
+
+        $script:NewTestJunctionConfig = {
+            param(
+                [string]$Source = "C:\Source",
+                [string]$Target = "D:\Data\Target",
+                [string]$OnTargetConflict = "fail"
+            )
+
+            [pscustomobject]@{
+                name = "PesterJunction"
+                description = "PesterJunction"
+                source = $Source
+                target = $Target
+                required = $true
+                failurePolicy = "fail"
+                onTargetConflict = $OnTargetConflict
+                backupRetention = "keep"
+                verificationMode = "countAndSize"
+            }
+        }
+
+        $script:NewTestPathState = {
+            param(
+                [bool]$Exists = $false,
+                [bool]$IsDirectory = $false,
+                [bool]$IsJunction = $false,
+                [AllowNull()]$IsEmpty = $null,
+                [string]$Target = "",
+                [string]$LinkType = "",
+                [string]$Attributes = "",
+                [AllowNull()]$SizeBytes = 0
+            )
+
+            [pscustomobject]@{
+                exists = $Exists
+                isDirectory = $IsDirectory
+                isJunction = $IsJunction
+                isEmpty = $IsEmpty
+                target = $Target
+                linkType = $LinkType
+                attributes = $Attributes
+                sizeBytes = $SizeBytes
+            }
+        }
     }
 
     It "records an existing expected junction as unchanged" {
-        $junction = New-TestJunctionConfig -Target "D:\Data\Expected"
+        $junction = & $script:NewTestJunctionConfig -Target "D:\Data\Expected"
         $query = {
             param([string]$Path, [string]$Role, $JunctionConfig)
             if ($Role -eq "source") {
-                return New-TestPathState -Exists $true -IsDirectory $true -IsJunction $true -Target "D:\Data\Expected\" -LinkType "Junction" -Attributes "Directory, ReparsePoint"
+                return & $script:NewTestPathState -Exists $true -IsDirectory $true -IsJunction $true -Target "D:\Data\Expected\" -LinkType "Junction" -Attributes "Directory, ReparsePoint"
             }
 
-            New-TestPathState -Exists $true -IsDirectory $true -IsEmpty $false
+            & $script:NewTestPathState -Exists $true -IsDirectory $true -IsEmpty $false
         }
 
         $result = Test-KitDataJunctionPreflight -JunctionConfig $junction -StateQuery $query
@@ -75,14 +75,14 @@ Describe "Junction transaction preflight" {
     }
 
     It "blocks an existing junction that points at the wrong target" {
-        $junction = New-TestJunctionConfig -Target "D:\Data\Expected"
+        $junction = & $script:NewTestJunctionConfig -Target "D:\Data\Expected"
         $query = {
             param([string]$Path, [string]$Role, $JunctionConfig)
             if ($Role -eq "source") {
-                return New-TestPathState -Exists $true -IsDirectory $true -IsJunction $true -Target "D:\Data\Actual" -LinkType "Junction" -Attributes "Directory, ReparsePoint"
+                return & $script:NewTestPathState -Exists $true -IsDirectory $true -IsJunction $true -Target "D:\Data\Actual" -LinkType "Junction" -Attributes "Directory, ReparsePoint"
             }
 
-            New-TestPathState -Exists $true -IsDirectory $true -IsEmpty $true
+            & $script:NewTestPathState -Exists $true -IsDirectory $true -IsEmpty $true
         }
 
         $result = Test-KitDataJunctionPreflight -JunctionConfig $junction -StateQuery $query
@@ -94,14 +94,14 @@ Describe "Junction transaction preflight" {
     }
 
     It "blocks a non-empty target when onTargetConflict uses the default fail policy" {
-        $junction = New-TestJunctionConfig
+        $junction = & $script:NewTestJunctionConfig
         $query = {
             param([string]$Path, [string]$Role, $JunctionConfig)
             if ($Role -eq "source") {
-                return New-TestPathState -Exists $true -IsDirectory $true -IsEmpty $false -SizeBytes 10
+                return & $script:NewTestPathState -Exists $true -IsDirectory $true -IsEmpty $false -SizeBytes 10
             }
 
-            New-TestPathState -Exists $true -IsDirectory $true -IsEmpty $false
+            & $script:NewTestPathState -Exists $true -IsDirectory $true -IsEmpty $false
         }
 
         $result = Test-KitDataJunctionPreflight -JunctionConfig $junction -StateQuery $query
@@ -112,10 +112,10 @@ Describe "Junction transaction preflight" {
     }
 
     It "blocks same-path and parent-child path risks before querying disk state" {
-        $samePath = New-TestJunctionConfig -Source "C:\Data\Same\" -Target "c:\data\same"
+        $samePath = & $script:NewTestJunctionConfig -Source "C:\Data\Same\" -Target "c:\data\same"
         $samePathResult = Test-KitDataJunctionPreflight -JunctionConfig $samePath -StateQuery { throw "state query should not run for same paths" }
 
-        $parentChild = New-TestJunctionConfig -Source "C:\Data" -Target "C:\Data\Nested"
+        $parentChild = & $script:NewTestJunctionConfig -Source "C:\Data" -Target "C:\Data\Nested"
         $parentChildResult = Test-KitDataJunctionPreflight -JunctionConfig $parentChild -StateQuery { throw "state query should not run for parent-child paths" }
 
         Assert-KitEqual $samePathResult.status "failed"
@@ -132,14 +132,14 @@ Describe "Junction transaction preflight" {
         $target = Join-Path $tempRoot "target"
         [IO.Directory]::CreateDirectory($tempRoot) | Out-Null
         try {
-            $junction = New-TestJunctionConfig -Source $source -Target $target
+            $junction = & $script:NewTestJunctionConfig -Source $source -Target $target
             $query = {
                 param([string]$Path, [string]$Role, $JunctionConfig)
                 if ($Role -eq "source") {
-                    return New-TestPathState -Exists $true -IsDirectory $true -IsEmpty $false -SizeBytes 100
+                    return & $script:NewTestPathState -Exists $true -IsDirectory $true -IsEmpty $false -SizeBytes 100
                 }
 
-                New-TestPathState -Exists $false -IsDirectory $false -IsEmpty $null
+                & $script:NewTestPathState -Exists $false -IsDirectory $false -IsEmpty $null
             }
             $space = {
                 param([string]$Path, $JunctionConfig)
