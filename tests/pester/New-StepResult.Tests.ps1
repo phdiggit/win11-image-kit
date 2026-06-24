@@ -3,6 +3,10 @@ $RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
 . (Join-Path $RepoRoot "scripts\common\New-StepResult.ps1")
 
 Describe "Step result model" {
+    BeforeEach {
+        . (Join-Path $RepoRoot "scripts\common\New-StepResult.ps1")
+    }
+
     It "creates changed results with required default" {
         $result = New-KitStepResult -Name "install-tool" -Status changed
 

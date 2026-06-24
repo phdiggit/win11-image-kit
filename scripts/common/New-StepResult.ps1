@@ -62,7 +62,7 @@ function New-KitStepResult {
         [AllowEmptyString()]
         [string]$ManualAction,
 
-        [bool]$WhatIf = $false,
+        [bool]$WhatIfResult = $false,
 
         [bool]$RebootRequired = $false,
 
@@ -81,7 +81,7 @@ function New-KitStepResult {
         $Status -eq "changed"
     }
 
-    $effectiveWhatIf = [bool]$WhatIf
+    $effectiveWhatIf = [bool]$WhatIfResult
     if ($Status -eq "whatif") {
         $effectiveWhatIf = $true
         $effectiveChanged = $false
