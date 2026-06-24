@@ -18,6 +18,21 @@
           "failurePolicy": {
             "type": "string",
             "enum": ["fail", "skip", "manual"]
+          },
+          "onTargetConflict": {
+            "type": "string",
+            "enum": ["fail", "merge"],
+            "default": "fail"
+          },
+          "backupRetention": {
+            "type": "string",
+            "enum": ["keep", "delete"],
+            "default": "keep"
+          },
+          "verificationMode": {
+            "type": "string",
+            "enum": ["countAndSize"],
+            "default": "countAndSize"
           }
         },
         "additionalProperties": false

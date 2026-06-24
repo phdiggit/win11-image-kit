@@ -11,6 +11,7 @@ $ErrorActionPreference = "Stop"
 . "$PSScriptRoot\..\common\Assert-KitElevation.ps1"
 . "$PSScriptRoot\..\common\Resolve-KitPath.ps1"
 . "$PSScriptRoot\..\common\Test-KitJunctionState.ps1"
+. "$PSScriptRoot\..\common\Test-KitJunctionPreflight.ps1"
 
 Assert-KitElevation -Operation "数据目录 Junction 设置" -AllowWhatIfPreview
 
@@ -62,8 +63,7 @@ function Set-DataJunction {
         if ($PSCmdlet.ShouldProcess($Source, "迁移目录内容到 $Target")) {
             robocopy $Source $Target /E /MOVE /NJH /NJS /NFL /NDL | Out-Null
             if ($LASTEXITCODE -ge 8) {
-                Write-KitLog "robocopy 迁移失败：$Source" "ERROR"
-                return
+                throw "robocopy 迁移失败：$Source，退出码：$LASTEXITCODE"
             }
         }
 
@@ -111,11 +111,16 @@ foreach ($junction in $manifest.junctions) {
         target = Resolve-KitPath -Path $junction.target -PathMap $pathMap
         required = if ($junction.PSObject.Properties.Name -contains "required") { [bool]$junction.required } else { $true }
         failurePolicy = if ($junction.PSObject.Properties.Name -contains "failurePolicy" -and -not [string]::IsNullOrWhiteSpace([string]$junction.failurePolicy)) { [string]$junction.failurePolicy } else { "fail" }
+        onTargetConflict = if ($junction.PSObject.Properties.Name -contains "onTargetConflict" -and -not [string]::IsNullOrWhiteSpace([string]$junction.onTargetConflict)) { [string]$junction.onTargetConflict } else { "fail" }
+        backupRetention = if ($junction.PSObject.Properties.Name -contains "backupRetention" -and -not [string]::IsNullOrWhiteSpace([string]$junction.backupRetention)) { [string]$junction.backupRetention } else { "keep" }
+        verificationMode = if ($junction.PSObject.Properties.Name -contains "verificationMode" -and -not [string]::IsNullOrWhiteSpace([string]$junction.verificationMode)) { [string]$junction.verificationMode } else { "countAndSize" }
     }
 
-    if ($WhatIfPreference) {
-        $junctionResults += Test-KitJunctionState -JunctionConfig $resolvedJunction -WhatIf
-        Write-KitLog "WhatIf 预演：未创建、迁移或查询 Junction 状态：$($resolvedJunction.source)"
+    $preflight = Test-KitDataJunctionPreflight -JunctionConfig $resolvedJunction -WhatIf:$WhatIfPreference
+    Write-KitLog ("Junction 预检：{0}，计划：{1}，状态：{2}，原因：{3}" -f $resolvedJunction.description, $preflight.planAction, $preflight.status, $preflight.reason)
+
+    if ($preflight.status -ne "changed") {
+        $junctionResults += $preflight
         continue
     }
 

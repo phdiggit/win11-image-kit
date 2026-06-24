@@ -88,6 +88,7 @@ jobs:
               "tests/pester/SoftwareFailurePolicyRuntime.Tests.ps1",
               "tests/pester/ServiceStateVerification.Tests.ps1",
               "tests/pester/JunctionStateVerification.Tests.ps1",
+              "tests/pester/JunctionTransactionPreflight.Tests.ps1",
               "tests/pester/DefenderAppxStateVerification.Tests.ps1",
               "tests/pester/UserExperienceStateVerification.Tests.ps1",
               "tests/pester/DryRunAcceptanceBaseline.Tests.ps1",
