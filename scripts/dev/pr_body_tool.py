@@ -277,7 +277,10 @@ def edit_pr_body(
     draft: bool | None = None,
 ) -> dict[str, object]:
     validate_file(body_file)
-    run_gh(["pr", "edit", pr_selector, "--body-file", str(resolve_body_path(body_file))])
+    args = ["pr", "edit", pr_selector, "--body-file", str(resolve_body_path(body_file))]
+    if title:
+        args.extend(["--title", title])
+    run_gh(args)
     return verify_pr_body(pr_selector, body_file, title=title, base=base, head=head, draft=draft)
 
 

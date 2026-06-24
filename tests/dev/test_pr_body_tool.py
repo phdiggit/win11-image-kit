@@ -176,7 +176,10 @@ git -c core.quotepath=false status --short
             with patch.object(pr_body_tool, "fetch_pr_info", return_value=pr_info()):
                 pr_body_tool.edit_pr_body("22", body_file, title="Add local PR body guard")
 
-        self.assertEqual(["pr", "edit", "22", "--body-file", str(body_file.resolve())], calls[0])
+        self.assertEqual(
+            ["pr", "edit", "22", "--body-file", str(body_file.resolve()), "--title", "Add local PR body guard"],
+            calls[0],
+        )
 
     def test_gh_unavailable_raises_clear_error(self) -> None:
         with patch.object(pr_body_tool.shutil, "which", return_value=None):
