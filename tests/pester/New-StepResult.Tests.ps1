@@ -5,6 +5,7 @@ $RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
 Describe "Step result model" {
     BeforeEach {
         $script:RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
+        . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
         . (Join-Path $script:RepoRoot "scripts\common\New-StepResult.ps1")
     }
 
