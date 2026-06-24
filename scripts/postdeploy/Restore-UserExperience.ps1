@@ -12,9 +12,11 @@ $ErrorActionPreference = "Stop"
 . "$PSScriptRoot\..\common\Assert-KitElevation.ps1"
 . "$PSScriptRoot\..\common\Resolve-KitPath.ps1"
 . "$PSScriptRoot\..\common\Invoke-KitStep.ps1"
+. "$PSScriptRoot\..\common\Test-KitConfigState.ps1"
 
 $repoRoot = (Resolve-Path -LiteralPath "$PSScriptRoot\..\..").Path
 $script:UserExperienceReportItems = @()
+$script:UserExperienceStateResults = @()
 
 Assert-KitElevation -Operation "用户体验恢复" -AllowWhatIfPreview
 
@@ -70,6 +72,7 @@ function Write-KitUserExperienceReport {
         missing = @($script:UserExperienceReportItems | Where-Object { $_.status -eq "missing" }).Count
         whatIf = @($script:UserExperienceReportItems | Where-Object { $_.status -eq "whatif" }).Count
     }
+    $userExperienceSummary = Get-KitConfigStateResultSummary -Results $script:UserExperienceStateResults
 
     $report = [pscustomobject]@{
         generatedAt = (Get-Date).ToString("s")
@@ -77,6 +80,8 @@ function Write-KitUserExperienceReport {
         strict = [bool]$Strict
         scopeManifestPath = $ScopeManifestPath
         summary = $summary
+        userExperienceSummary = $userExperienceSummary
+        userExperienceResults = $script:UserExperienceStateResults
         items = $script:UserExperienceReportItems
     }
 
@@ -90,6 +95,12 @@ function Write-KitUserExperienceReport {
             "- 预演：$($summary.whatIf)",
             "- 跳过：$($summary.skipped)",
             "- 缺失：$($summary.missing)",
+            "- 配置状态总数：$($userExperienceSummary.total)",
+            "- 配置状态阻断失败：$($userExperienceSummary.failedRequiredCount)",
+            "- 配置状态不符：$($userExperienceSummary.configMismatchCount)",
+            "- 配置状态缺失：$($userExperienceSummary.configMissingCount)",
+            "- 配置状态查询失败：$($userExperienceSummary.configQueryFailedCount)",
+            "- 配置状态未查询：$($userExperienceSummary.configNotRunCount)",
             "",
             "| 项目 | 状态 | 原因 | 来源 | 目标 | 建议 |",
             "|---|---|---|---|---|---|"
@@ -113,6 +124,78 @@ function Write-KitUserExperienceReport {
     if ($written) {
         Write-KitLog "用户体验恢复报告已写入：$resolvedPath" "OK"
     }
+}
+
+function Get-KitUserExperienceStateChecks {
+    param(
+        [AllowNull()]
+        $ScopeConfig
+    )
+
+    if ($null -eq $ScopeConfig -or $null -eq $ScopeConfig.system) {
+        return @()
+    }
+
+    $checks = @()
+    foreach ($sectionName in @("explorerOptions", "startMenu", "windowsTerminal", "defaultApps", "vscodePortable")) {
+        if ($ScopeConfig.system.PSObject.Properties.Name -notcontains $sectionName) {
+            continue
+        }
+
+        $section = $ScopeConfig.system.$sectionName
+        if ($null -eq $section -or $section.PSObject.Properties.Name -notcontains "stateChecks") {
+            continue
+        }
+
+        $checks += @($section.stateChecks)
+    }
+
+    return $checks
+}
+
+function Get-KitUserExperienceReportItemState {
+    param(
+        [Parameter(Mandatory)]
+        [string]$SettingName
+    )
+
+    $item = @($script:UserExperienceReportItems | Where-Object { $_.name -eq $SettingName } | Select-Object -First 1)
+    if ($item.Count -eq 0) {
+        return [pscustomobject]@{
+            found = $false
+            value = $null
+        }
+    }
+
+    return [pscustomobject]@{
+        found = $true
+        value = [string]$item[0].status
+    }
+}
+
+function Invoke-KitUserExperienceStateChecks {
+    if ($null -eq $scopeConfig) {
+        $script:UserExperienceStateResults = @()
+        return
+    }
+
+    $stateChecks = @(Get-KitUserExperienceStateChecks -ScopeConfig $scopeConfig)
+    if ($stateChecks.Count -eq 0) {
+        $script:UserExperienceStateResults = @()
+        return
+    }
+
+    $query = {
+        param(
+            $Check,
+            [string]$Domain,
+            [string]$SettingName
+        )
+
+        Get-KitUserExperienceReportItemState -SettingName $SettingName
+    }
+
+    $script:UserExperienceStateResults = @(Test-KitConfigState -Config $stateChecks -ConfigQuery $query -WhatIf:$WhatIfPreference)
 }
 
 function Test-KitDirectoryHasContent {
@@ -486,6 +569,7 @@ try {
         Add-KitUserExperienceReportItem -Name "VSCode 便携版 data 配置目录" -Status "skipped" -Reason "disabled"
     }
 } finally {
+    Invoke-KitUserExperienceStateChecks
     Write-KitUserExperienceReport -Path $ReportPath -Required:$ReportRequired
 }
 

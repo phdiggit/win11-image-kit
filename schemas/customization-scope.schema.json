@@ -95,9 +95,39 @@
       "type": "object",
       "required": ["enabled"],
       "properties": {
-        "enabled": { "type": "boolean" }
+        "enabled": { "type": "boolean" },
+        "stateChecks": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/configStateCheck" }
+        }
       },
       "additionalProperties": true
+    },
+    "configStateCheck": {
+      "type": "object",
+      "required": ["name", "domain", "settingName", "expectedValue"],
+      "properties": {
+        "name": { "type": "string" },
+        "domain": {
+          "type": "string",
+          "enum": ["explorer", "startMenu", "terminal", "defaultApps", "contextMenu", "userExperience"]
+        },
+        "settingName": { "type": "string" },
+        "expectedValue": {
+          "anyOf": [
+            { "type": "boolean" },
+            { "type": "string" },
+            { "type": "integer" },
+            { "type": "number" }
+          ]
+        },
+        "required": { "type": "boolean" },
+        "failurePolicy": {
+          "type": "string",
+          "enum": ["fail", "skip", "manual"]
+        }
+      },
+      "additionalProperties": false
     },
     "reportingBlock": {
       "type": "object",

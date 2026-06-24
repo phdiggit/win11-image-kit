@@ -12,26 +12,76 @@
     },
     "startMenu": {
       "enabled": true,
-      "config": "${ConfigRoot}\\start-menu"
+      "config": "${ConfigRoot}\\start-menu",
+      "stateChecks": [
+        {
+          "name": "StartMenuDefaultLayoutRestored",
+          "domain": "startMenu",
+          "settingName": "开始菜单默认布局",
+          "expectedValue": "succeeded",
+          "required": true,
+          "failurePolicy": "fail"
+        }
+      ]
     },
     "windowsTerminal": {
       "enabled": true,
       "source": "${ConfigRoot}\\windows-terminal",
-      "destination": "%LOCALAPPDATA%\\Packages\\Microsoft.WindowsTerminal_8wekyb3d8bbwe\\LocalState"
+      "destination": "%LOCALAPPDATA%\\Packages\\Microsoft.WindowsTerminal_8wekyb3d8bbwe\\LocalState",
+      "stateChecks": [
+        {
+          "name": "WindowsTerminalConfigRestored",
+          "domain": "terminal",
+          "settingName": "Windows Terminal 配置模板",
+          "expectedValue": "succeeded",
+          "required": true,
+          "failurePolicy": "fail"
+        }
+      ]
     },
     "explorerOptions": {
       "enabled": true,
       "showFileExtensions": true,
-      "showHiddenFiles": true
+      "showHiddenFiles": true,
+      "stateChecks": [
+        {
+          "name": "ExplorerOptionsRestored",
+          "domain": "explorer",
+          "settingName": "资源管理器选项",
+          "expectedValue": "succeeded",
+          "required": true,
+          "failurePolicy": "fail"
+        }
+      ]
     },
     "defaultApps": {
       "enabled": true,
-      "associationFile": "${ConfigRoot}\\default-apps\\DefaultAppAssoc.xml"
+      "associationFile": "${ConfigRoot}\\default-apps\\DefaultAppAssoc.xml",
+      "stateChecks": [
+        {
+          "name": "DefaultAppsImported",
+          "domain": "defaultApps",
+          "settingName": "默认应用关联",
+          "expectedValue": "succeeded",
+          "required": true,
+          "failurePolicy": "fail"
+        }
+      ]
     },
     "vscodePortable": {
       "enabled": true,
       "source": "${ConfigRoot}\\vscode-portable\\data",
-      "destination": "${ToolRoot}\\vscode-portable\\data"
+      "destination": "${ToolRoot}\\vscode-portable\\data",
+      "stateChecks": [
+        {
+          "name": "VSCodePortableDataRestored",
+          "domain": "userExperience",
+          "settingName": "VSCode 便携版 data 配置目录",
+          "expectedValue": "succeeded",
+          "required": false,
+          "failurePolicy": "manual"
+        }
+      ]
     },
     "windowsDefender": {
       "mode": "enabled-with-exclusions",
