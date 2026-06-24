@@ -237,10 +237,17 @@ PR body 至少包含：
 - Codex 不默认等待 CI 完成。
 - 最终报告说明 CI 已触发、head SHA，以及是否观察到 pending 或 failure。
 
+CI 分为 PR Fast CI 与 Full CI：
+
+- PR Fast CI 是默认 PR 检查，只跑快速阻断项和 smoke/targeted Pester，用于尽早发现 parse、配置、lint 和核心单测问题。
+- Full CI 在 `main` push 和 `workflow_dispatch` 跑，保留完整 Windows PowerShell 与 PowerShell 7 全量 Pester 覆盖。
+- Codex 默认不等待 Full CI；如需 Full CI，由用户或审查者手动触发 `workflow_dispatch`，或等待合并后的 `main` push。
+- 修改 workflow、Pester 公共 helper 或跨 shell 兼容敏感逻辑的任务，可以等待一次 latest head SHA 的 PR Fast CI。
+
 只有以下情况才等待 CI：
 
 - 任务卡明确要求等待 CI。
-- 修改 GitHub Actions workflow。
+- 修改 GitHub Actions workflow，此时默认只等待 PR Fast CI，除非任务卡明确要求 Full CI。
 - 修改 Pester 公共 helper 或跨 shell 兼容敏感逻辑。
 - 用户明确要求等待 CI。
 - PR body 必须引用 CI 通过结果。

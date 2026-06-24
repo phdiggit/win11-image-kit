@@ -16,6 +16,84 @@ concurrency:
 jobs:
   validate:
     name: Validate
+    if: github.event_name == 'pull_request'
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show Windows PowerShell version
+        shell: powershell
+        run: |
+          $PSVersionTable
+
+      - name: Show Windows PowerShell test modules
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+          Get-Module -ListAvailable Pester, PSScriptAnalyzer | Select-Object Name, Version, Path | Format-Table -AutoSize
+
+      - name: Run JSON parse check with Windows PowerShell
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+          Get-ChildItem -Path manifests,schemas -Recurse -Filter *.json | ForEach-Object {
+              Get-Content -LiteralPath $_.FullName -Raw -Encoding UTF8 | ConvertFrom-Json | Out-Null
+          }
+
+      - name: Run PowerShell parse check with Windows PowerShell
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+          Get-ChildItem -Path scripts -Recurse -Filter *.ps1 | ForEach-Object {
+              [scriptblock]::Create((Get-Content -LiteralPath $_.FullName -Raw -Encoding UTF8)) | Out-Null
+          }
+
+      - name: Run project config validation with Windows PowerShell
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+          & .\scripts\validate\Test-ProjectConfig.ps1
+
+      - name: Run PSScriptAnalyzer with Windows PowerShell
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+          if (-not (Get-Command Invoke-ScriptAnalyzer -ErrorAction SilentlyContinue)) {
+              Write-Warning "PSScriptAnalyzer is not available on this runner. This baseline reports the missing module without blocking CI."
+              return
+          }
+          $results = @(Invoke-ScriptAnalyzer -Path scripts -Recurse -Settings .\PSScriptAnalyzerSettings.psd1)
+          if ($results.Count -gt 0) {
+              $results | Format-Table -AutoSize
+              Write-Warning ("PSScriptAnalyzer reported {0} diagnostics. This baseline reports diagnostics without blocking CI." -f $results.Count)
+          } else {
+              Write-Host "PSScriptAnalyzer reported 0 diagnostics."
+          }
+
+      - name: Run fast Pester tests with Windows PowerShell
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+          $fastPesterPaths = @(
+              "tests/pester/New-StepResult.Tests.ps1",
+              "tests/pester/SoftwarePolicy.Tests.ps1",
+              "tests/pester/SoftwareSourcePolicyRuntime.Tests.ps1",
+              "tests/pester/SoftwarePackageResults.Tests.ps1",
+              "tests/pester/PackageReportLinks.Tests.ps1",
+              "tests/pester/SoftwareFailurePolicyRuntime.Tests.ps1"
+          )
+          $pester = Import-Module Pester -Force -PassThru
+          if ($pester.Version.Major -ge 5) {
+              Invoke-Pester -Path $fastPesterPaths -CI
+          } else {
+              Invoke-Pester -Path $fastPesterPaths
+          }
+
+  full-validate:
+    name: Full Validate
+    if: github.event_name != 'pull_request'
     runs-on: windows-latest
 
     steps:
