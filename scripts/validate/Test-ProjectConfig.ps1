@@ -565,6 +565,7 @@ function Test-SoftwareManifest {
     $allowedStages = @("golden-image", "post-deploy", "manual")
     $allowedTypes = @("archive", "zip", "installer", "manual")
     $allowedArchiveFormats = @("zip", "tar.gz")
+    $allowedFailurePolicies = @("fail", "skip", "manual")
 
     foreach ($package in $SoftwareManifest.packages) {
         if ([string]::IsNullOrWhiteSpace([string]$package.name)) {
@@ -605,6 +606,85 @@ function Test-SoftwareManifest {
 
             if ([string]::IsNullOrWhiteSpace([string]$package.destination)) {
                 Write-CheckResult -Level ERROR -Message ("软件包缺少 destination：{0}" -f $package.name)
+            }
+        }
+
+        $hasRequired = Test-JsonProperty -Object $package -Name "required"
+        $hasFailurePolicy = Test-JsonProperty -Object $package -Name "failurePolicy"
+        $hasAllowMissingSource = Test-JsonProperty -Object $package -Name "allowMissingSource"
+        $requiredValue = $null
+        $allowMissingSourceValue = $null
+        $failurePolicyValue = $null
+        $requiredIsBoolean = $false
+        $allowMissingSourceIsBoolean = $false
+        $failurePolicyIsValid = $false
+
+        if ($package.type -in @("archive", "zip", "installer")) {
+            foreach ($policyField in @("required", "failurePolicy", "allowMissingSource")) {
+                if (-not (Test-JsonProperty -Object $package -Name $policyField)) {
+                    Write-CheckResult -Level WARN -Message ("软件包缺少策略字段 {0}：{1}" -f $policyField, $package.name)
+                }
+            }
+        }
+
+        if ($hasRequired) {
+            $requiredValue = Get-JsonPropertyValue -Object $package -Name "required"
+            if ((Get-JsonTypeName -Value $requiredValue) -eq "boolean") {
+                $requiredIsBoolean = $true
+            } else {
+                Write-CheckResult -Level ERROR -Message ("软件包策略字段 required 必须是 boolean：{0} -> {1}" -f $package.name, (Get-JsonTypeName -Value $requiredValue))
+            }
+        }
+
+        if ($hasAllowMissingSource) {
+            $allowMissingSourceValue = Get-JsonPropertyValue -Object $package -Name "allowMissingSource"
+            if ((Get-JsonTypeName -Value $allowMissingSourceValue) -eq "boolean") {
+                $allowMissingSourceIsBoolean = $true
+            } else {
+                Write-CheckResult -Level ERROR -Message ("软件包策略字段 allowMissingSource 必须是 boolean：{0} -> {1}" -f $package.name, (Get-JsonTypeName -Value $allowMissingSourceValue))
+            }
+        }
+
+        if ($hasFailurePolicy) {
+            $failurePolicyValue = [string](Get-JsonPropertyValue -Object $package -Name "failurePolicy")
+            if ($allowedFailurePolicies -contains $failurePolicyValue) {
+                $failurePolicyIsValid = $true
+            } else {
+                Write-CheckResult -Level ERROR -Message ("软件包策略字段 failurePolicy 无效：{0} -> {1}" -f $package.name, $failurePolicyValue)
+            }
+        }
+
+        if ($requiredIsBoolean -and [bool]$requiredValue -and $allowMissingSourceIsBoolean -and [bool]$allowMissingSourceValue) {
+            Write-CheckResult -Level ERROR -Message ("软件包策略字段组合矛盾：required=true 时 allowMissingSource 必须为 false：{0}" -f $package.name)
+        }
+
+        if ($requiredIsBoolean -and [bool]$requiredValue -and $failurePolicyIsValid -and $failurePolicyValue -ne "fail") {
+            Write-CheckResult -Level ERROR -Message ("软件包策略字段组合矛盾：required=true 时 failurePolicy 必须为 fail：{0}" -f $package.name)
+        }
+
+        if ($allowMissingSourceIsBoolean -and [bool]$allowMissingSourceValue -and $failurePolicyIsValid -and $failurePolicyValue -eq "fail") {
+            Write-CheckResult -Level ERROR -Message ("软件包策略字段组合矛盾：allowMissingSource=true 时 failurePolicy 不能为 fail：{0}" -f $package.name)
+        }
+
+        if ($package.type -eq "manual") {
+            if ($requiredIsBoolean -and [bool]$requiredValue) {
+                Write-CheckResult -Level WARN -Message ("手工软件包建议设置 required=false：{0}" -f $package.name)
+            }
+
+            if ($failurePolicyIsValid -and $failurePolicyValue -ne "manual") {
+                Write-CheckResult -Level WARN -Message ("手工软件包建议设置 failurePolicy=manual：{0}" -f $package.name)
+            }
+
+            if ($allowMissingSourceIsBoolean -and -not [bool]$allowMissingSourceValue) {
+                Write-CheckResult -Level WARN -Message ("手工软件包建议设置 allowMissingSource=true：{0}" -f $package.name)
+            }
+        }
+
+        if ($package.type -eq "installer" -and $package.silentInstall -eq $false) {
+            if (($requiredIsBoolean -and [bool]$requiredValue) -or
+                ($failurePolicyIsValid -and $failurePolicyValue -ne "manual") -or
+                ($allowMissingSourceIsBoolean -and -not [bool]$allowMissingSourceValue)) {
+                Write-CheckResult -Level WARN -Message ("silentInstall=false 的安装器建议设置为手工策略：{0}" -f $package.name)
             }
         }
 

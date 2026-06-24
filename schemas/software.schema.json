@@ -23,6 +23,12 @@
             "type": "string",
             "enum": ["archive", "zip", "installer", "manual"]
           },
+          "required": { "type": "boolean" },
+          "failurePolicy": {
+            "type": "string",
+            "enum": ["fail", "skip", "manual"]
+          },
+          "allowMissingSource": { "type": "boolean" },
           "archiveFormat": {
             "type": "string",
             "enum": ["zip", "tar.gz"]
