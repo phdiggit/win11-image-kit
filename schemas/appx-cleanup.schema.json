@@ -16,6 +16,31 @@
     "keepNamePatterns": {
       "type": "array",
       "items": { "type": "string" }
+    },
+    "stateChecks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["packageName", "scope", "expectedState"],
+        "properties": {
+          "name": { "type": "string" },
+          "packageName": { "type": "string" },
+          "scope": {
+            "type": "string",
+            "enum": ["provisioned", "user", "allUsers"]
+          },
+          "expectedState": {
+            "type": "string",
+            "enum": ["present", "absent"]
+          },
+          "required": { "type": "boolean" },
+          "failurePolicy": {
+            "type": "string",
+            "enum": ["fail", "skip", "manual"]
+          }
+        },
+        "additionalProperties": false
+      }
     }
   },
   "additionalProperties": false

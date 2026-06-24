@@ -370,3 +370,233 @@ function Get-KitJunctionReportAggregate {
 
     [pscustomobject]$aggregate
 }
+
+function Get-KitDefenderReportReference {
+    param(
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string]$Name,
+
+        [AllowEmptyString()]
+        [string]$StepName,
+
+        [AllowEmptyString()]
+        [string]$Path,
+
+        [switch]$Required,
+
+        [string]$ReportType = "defender-state-verification"
+    )
+
+    if ([string]::IsNullOrWhiteSpace($Path)) {
+        return $null
+    }
+
+    $exists = Test-Path -LiteralPath $Path
+    $defenderSummary = $null
+    $errorCode = $null
+
+    if (-not $exists) {
+        $errorCode = "report-missing"
+    } else {
+        try {
+            $childReport = Get-Content -LiteralPath $Path -Raw -Encoding UTF8 | ConvertFrom-Json
+            if ($childReport.PSObject.Properties.Name -contains "defenderSummary") {
+                $defenderSummary = Copy-KitPackageSummaryWithoutResults -PackageSummary $childReport.defenderSummary
+            } else {
+                $errorCode = "defender-summary-missing"
+            }
+        } catch {
+            $errorCode = "report-parse-failed"
+            if ($Required) {
+                throw "Defender report parse failed: $Path - $($_.Exception.Message)"
+            }
+        }
+    }
+
+    [pscustomobject][ordered]@{
+        name = $Name
+        stepName = $StepName
+        reportType = $ReportType
+        path = $Path
+        required = [bool]$Required
+        exists = [bool]$exists
+        defenderSummary = $defenderSummary
+        error = $errorCode
+    }
+}
+
+function Get-KitDefenderReportAggregate {
+    param(
+        [AllowNull()]
+        $DefenderReports = @()
+    )
+
+    $reports = @($DefenderReports | Where-Object { $null -ne $_ })
+    $aggregate = [ordered]@{
+        reports = $reports.Count
+        existing = 0
+        missing = 0
+        failedRequired = 0
+        failedOptional = 0
+        skipped = 0
+        manual = 0
+        whatif = 0
+        defenderCheckedCount = 0
+        defenderMismatchCount = 0
+        defenderQueryFailedCount = 0
+        defenderNotRunCount = 0
+    }
+
+    foreach ($report in $reports) {
+        if ([bool]$report.exists) {
+            $aggregate.existing++
+        } else {
+            $aggregate.missing++
+        }
+
+        if ($null -eq $report.defenderSummary) {
+            continue
+        }
+
+        $summary = $report.defenderSummary
+        $aggregate.failedRequired += [int]$summary.failedRequiredCount
+        $aggregate.failedOptional += [int]$summary.failedOptionalCount
+
+        if ($null -ne $summary.statusCounts) {
+            $aggregate.skipped += [int]$summary.statusCounts.skipped
+            $aggregate.manual += [int]$summary.statusCounts.manual
+            $aggregate.whatif += [int]$summary.statusCounts.whatif
+        }
+
+        if ($null -ne $summary.PSObject.Properties["defenderCheckedCount"]) {
+            $aggregate.defenderCheckedCount += [int]$summary.defenderCheckedCount
+        }
+        if ($null -ne $summary.PSObject.Properties["defenderMismatchCount"]) {
+            $aggregate.defenderMismatchCount += [int]$summary.defenderMismatchCount
+        }
+        if ($null -ne $summary.PSObject.Properties["defenderQueryFailedCount"]) {
+            $aggregate.defenderQueryFailedCount += [int]$summary.defenderQueryFailedCount
+        }
+        if ($null -ne $summary.PSObject.Properties["defenderNotRunCount"]) {
+            $aggregate.defenderNotRunCount += [int]$summary.defenderNotRunCount
+        }
+    }
+
+    [pscustomobject]$aggregate
+}
+
+function Get-KitAppxReportReference {
+    param(
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string]$Name,
+
+        [AllowEmptyString()]
+        [string]$StepName,
+
+        [AllowEmptyString()]
+        [string]$Path,
+
+        [switch]$Required,
+
+        [string]$ReportType = "appx-state-verification"
+    )
+
+    if ([string]::IsNullOrWhiteSpace($Path)) {
+        return $null
+    }
+
+    $exists = Test-Path -LiteralPath $Path
+    $appxSummary = $null
+    $errorCode = $null
+
+    if (-not $exists) {
+        $errorCode = "report-missing"
+    } else {
+        try {
+            $childReport = Get-Content -LiteralPath $Path -Raw -Encoding UTF8 | ConvertFrom-Json
+            if ($childReport.PSObject.Properties.Name -contains "appxSummary") {
+                $appxSummary = Copy-KitPackageSummaryWithoutResults -PackageSummary $childReport.appxSummary
+            } else {
+                $errorCode = "appx-summary-missing"
+            }
+        } catch {
+            $errorCode = "report-parse-failed"
+            if ($Required) {
+                throw "AppX report parse failed: $Path - $($_.Exception.Message)"
+            }
+        }
+    }
+
+    [pscustomobject][ordered]@{
+        name = $Name
+        stepName = $StepName
+        reportType = $ReportType
+        path = $Path
+        required = [bool]$Required
+        exists = [bool]$exists
+        appxSummary = $appxSummary
+        error = $errorCode
+    }
+}
+
+function Get-KitAppxReportAggregate {
+    param(
+        [AllowNull()]
+        $AppxReports = @()
+    )
+
+    $reports = @($AppxReports | Where-Object { $null -ne $_ })
+    $aggregate = [ordered]@{
+        reports = $reports.Count
+        existing = 0
+        missing = 0
+        failedRequired = 0
+        failedOptional = 0
+        skipped = 0
+        manual = 0
+        whatif = 0
+        appxCheckedCount = 0
+        appxMismatchCount = 0
+        appxQueryFailedCount = 0
+        appxNotRunCount = 0
+    }
+
+    foreach ($report in $reports) {
+        if ([bool]$report.exists) {
+            $aggregate.existing++
+        } else {
+            $aggregate.missing++
+        }
+
+        if ($null -eq $report.appxSummary) {
+            continue
+        }
+
+        $summary = $report.appxSummary
+        $aggregate.failedRequired += [int]$summary.failedRequiredCount
+        $aggregate.failedOptional += [int]$summary.failedOptionalCount
+
+        if ($null -ne $summary.statusCounts) {
+            $aggregate.skipped += [int]$summary.statusCounts.skipped
+            $aggregate.manual += [int]$summary.statusCounts.manual
+            $aggregate.whatif += [int]$summary.statusCounts.whatif
+        }
+
+        if ($null -ne $summary.PSObject.Properties["appxCheckedCount"]) {
+            $aggregate.appxCheckedCount += [int]$summary.appxCheckedCount
+        }
+        if ($null -ne $summary.PSObject.Properties["appxMismatchCount"]) {
+            $aggregate.appxMismatchCount += [int]$summary.appxMismatchCount
+        }
+        if ($null -ne $summary.PSObject.Properties["appxQueryFailedCount"]) {
+            $aggregate.appxQueryFailedCount += [int]$summary.appxQueryFailedCount
+        }
+        if ($null -ne $summary.PSObject.Properties["appxNotRunCount"]) {
+            $aggregate.appxNotRunCount += [int]$summary.appxNotRunCount
+        }
+    }
+
+    [pscustomobject]$aggregate
+}

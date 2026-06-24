@@ -27,5 +27,14 @@
       "description": "FlClash",
       "path": "${ToolRoot}\\flclash\\FlClash.exe"
     }
+  ],
+  "stateChecks": [
+    {
+      "name": "DefenderRealtimeProtection",
+      "settingName": "DisableRealtimeMonitoring",
+      "expectedValue": false,
+      "required": true,
+      "failurePolicy": "fail"
+    }
   ]
 }
