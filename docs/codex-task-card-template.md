@@ -192,6 +192,8 @@ git -c core.quotepath=false diff --stat origin/<default-branch>...HEAD
 <!-- 可删除。需要 PR 交付或 CI 验证时保留。 -->
 
 - 默认 PR_READY：创建 ready PR 后不等待 CI 完成，除非本任务明确要求。
+- PR 默认只要求 PR Fast CI；Full CI 在 `main` push 或手动 `workflow_dispatch` 运行。
+- 只有任务卡明确要求，才等待 Full CI。
 - 本地全量 Pester 最多一次；follow-up 只跑受影响测试。
 - CI 失败最多修一轮，第二次仍失败则停止并报告。
 - PR CI 不新增真实危险执行测试；真实执行另开 VM/admin smoke。
