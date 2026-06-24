@@ -67,7 +67,7 @@ function Write-KitUserExperienceReport {
     }
 
     $summary = [pscustomobject]@{
-        succeeded = @($script:UserExperienceReportItems | Where-Object { $_.status -eq "succeeded" }).Count
+        succeeded = @($script:UserExperienceReportItems | Where-Object { $_.status -in @("restored", "succeeded") }).Count
         skipped = @($script:UserExperienceReportItems | Where-Object { $_.status -eq "skipped" }).Count
         missing = @($script:UserExperienceReportItems | Where-Object { $_.status -eq "missing" }).Count
         whatIf = @($script:UserExperienceReportItems | Where-Object { $_.status -eq "whatif" }).Count
@@ -333,7 +333,7 @@ function Copy-KitConfigFile {
         Write-KitLog "$Description 已复制：$Destination" "OK"
         Add-KitUserExperienceReportItem `
             -Name $Description `
-            -Status "succeeded" `
+            -Status "restored" `
             -Reason "completed" `
             -Source $Source `
             -Destination $Destination `
@@ -413,7 +413,7 @@ function Copy-KitConfigDirectory {
         Write-KitLog "$Description 已恢复：$Destination" "OK"
         Add-KitUserExperienceReportItem `
             -Name $Description `
-            -Status "succeeded" `
+            -Status "restored" `
             -Reason "completed" `
             -Source $Source `
             -Destination $Destination `
@@ -467,7 +467,7 @@ function Import-KitDefaultAppAssociations {
         Write-KitLog "默认应用关联导入完成" "OK"
         Add-KitUserExperienceReportItem `
             -Name "默认应用关联" `
-            -Status "succeeded" `
+            -Status "restored" `
             -Reason "completed" `
             -Source $AssociationFile `
             -Advice $Advice
@@ -517,7 +517,7 @@ try {
 
         Add-KitUserExperienceReportItem `
             -Name "资源管理器选项" `
-            -Status $(if ($WhatIfPreference) { "whatif" } else { "succeeded" }) `
+            -Status $(if ($WhatIfPreference) { "whatif" } else { "restored" }) `
             -Reason $(if ($WhatIfPreference) { "whatif-preview" } else { "completed" }) `
             -Destination $advancedPath
     } else {

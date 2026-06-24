@@ -4,6 +4,7 @@ Describe "User experience config state verification results" {
     BeforeEach {
         $script:RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
+        . (Join-Path $script:RepoRoot "scripts\common\Assert-KitElevation.ps1")
         . (Join-Path $script:RepoRoot "scripts\common\Test-KitConfigState.ps1")
 
         $script:PowerShell = (Get-Command powershell -ErrorAction SilentlyContinue).Source
@@ -40,12 +41,12 @@ Describe "User experience config state verification results" {
         Assert-KitEqual $result.actualValue 0
     }
 
-    It "accepts restored as succeeded without mapping skipped or whatif to success" {
+    It "matches restored user experience status without treating skipped or whatif as success" {
         $config = [pscustomobject]@{
             name = "TerminalConfigRestored"
             domain = "terminal"
             settingName = "Windows Terminal 配置模板"
-            expectedValue = "succeeded"
+            expectedValue = "restored"
             required = $true
             failurePolicy = "fail"
         }
@@ -89,7 +90,7 @@ Describe "User experience config state verification results" {
             name = "DefaultAppsImported"
             domain = "defaultApps"
             settingName = "默认应用关联"
-            expectedValue = "succeeded"
+            expectedValue = "restored"
             required = $true
             failurePolicy = "fail"
         }
@@ -111,7 +112,7 @@ Describe "User experience config state verification results" {
             name = "OptionalStartMenu"
             domain = "startMenu"
             settingName = "开始菜单默认布局"
-            expectedValue = "succeeded"
+            expectedValue = "restored"
             required = $false
             failurePolicy = "skip"
         }) -ConfigQuery $query)[0]
@@ -119,7 +120,7 @@ Describe "User experience config state verification results" {
             name = "OptionalTerminal"
             domain = "terminal"
             settingName = "Windows Terminal 配置模板"
-            expectedValue = "succeeded"
+            expectedValue = "restored"
             required = $false
             failurePolicy = "manual"
         }) -ConfigQuery $query)[0]
@@ -135,7 +136,7 @@ Describe "User experience config state verification results" {
             name = "PreviewTerminal"
             domain = "terminal"
             settingName = "Windows Terminal 配置模板"
-            expectedValue = "succeeded"
+            expectedValue = "restored"
         }
         $query = { throw "Config query should not run during WhatIf." }
 
@@ -153,7 +154,7 @@ Describe "User experience config state verification results" {
             name = "QueryFailureContextMenu"
             domain = "contextMenu"
             settingName = "VSCodeOpenHere"
-            expectedValue = "succeeded"
+            expectedValue = "restored"
         }
         $query = { throw "query failed" }
 
@@ -168,7 +169,7 @@ Describe "User experience config state verification results" {
         $results = @(
             (Test-KitConfigState -Config ([pscustomobject]@{ name = "Ok"; domain = "explorer"; settingName = "HideFileExt"; expectedValue = 0 }) -ConfigQuery { [pscustomobject]@{ found = $true; value = 0 } }),
             (Test-KitConfigState -Config ([pscustomobject]@{ name = "Mismatch"; domain = "explorer"; settingName = "Hidden"; expectedValue = 1; required = $true }) -ConfigQuery { [pscustomobject]@{ found = $true; value = 2 } }),
-            (Test-KitConfigState -Config ([pscustomobject]@{ name = "Preview"; domain = "terminal"; settingName = "Windows Terminal 配置模板"; expectedValue = "succeeded" }) -WhatIf)
+            (Test-KitConfigState -Config ([pscustomobject]@{ name = "Preview"; domain = "terminal"; settingName = "Windows Terminal 配置模板"; expectedValue = "restored" }) -WhatIf)
         )
 
         $summary = Get-KitConfigStateResultSummary -Results $results
@@ -226,7 +227,7 @@ Describe "User experience config state verification results" {
                                 name = "ExplorerOptionsRestored"
                                 domain = "explorer"
                                 settingName = "资源管理器选项"
-                                expectedValue = "succeeded"
+                                expectedValue = "restored"
                                 required = $true
                                 failurePolicy = "fail"
                             }
@@ -285,6 +286,76 @@ Describe "User experience config state verification results" {
             if ([IO.Directory]::Exists($tempRoot)) {
                 [IO.Directory]::Delete($tempRoot, $true)
             }
+        }
+    }
+
+    It "passes required user experience state check when legacy report item status is restored" {
+        $restoreScript = Join-Path $script:RepoRoot "scripts\postdeploy\Restore-UserExperience.ps1"
+        $tokens = $null
+        $parseErrors = $null
+        $ast = [System.Management.Automation.Language.Parser]::ParseFile($restoreScript, [ref]$tokens, [ref]$parseErrors)
+        if (@($parseErrors).Count -gt 0) {
+            throw "Restore-UserExperience.ps1 parse failed."
+        }
+
+        foreach ($functionName in @("Get-KitUserExperienceStateChecks", "Get-KitUserExperienceReportItemState", "Invoke-KitUserExperienceStateChecks")) {
+            $functionAst = $ast.Find({
+                param($Node)
+                $Node -is [System.Management.Automation.Language.FunctionDefinitionAst] -and $Node.Name -eq $functionName
+            }, $true)
+            if ($null -eq $functionAst) {
+                throw "Missing function: $functionName"
+            }
+
+            . ([scriptblock]::Create($functionAst.Extent.Text))
+        }
+
+        $oldWhatIfPreference = $WhatIfPreference
+        try {
+            $WhatIfPreference = $false
+            $script:UserExperienceReportItems = @(
+                [pscustomobject]@{
+                    name = "VSCode 便携版 data 配置目录"
+                    status = "restored"
+                    reason = "completed"
+                    source = ""
+                    destination = ""
+                    advice = ""
+                    details = @()
+                }
+            )
+            $script:UserExperienceStateResults = @()
+            $script:scopeConfig = [pscustomobject]@{
+                system = [pscustomobject]@{
+                    vscodePortable = [pscustomobject]@{
+                        stateChecks = @(
+                            [pscustomobject]@{
+                                name = "VSCodePortableDataRestored"
+                                domain = "userExperience"
+                                settingName = "VSCode 便携版 data 配置目录"
+                                expectedValue = "restored"
+                                required = $true
+                                failurePolicy = "fail"
+                            }
+                        )
+                    }
+                }
+            }
+
+            $queryState = Get-KitUserExperienceReportItemState -SettingName "VSCode 便携版 data 配置目录"
+            Invoke-KitUserExperienceStateChecks
+
+            $result = @($script:UserExperienceStateResults)[0]
+            Assert-KitEqual $queryState.found $true
+            Assert-KitEqual $queryState.value "restored"
+            Assert-KitEqual $result.status "unchanged"
+            Assert-KitEqual $result.reason "config-state-ok"
+            Assert-KitEqual $result.actualValue "restored"
+        } finally {
+            $WhatIfPreference = $oldWhatIfPreference
+            $script:UserExperienceReportItems = @()
+            $script:UserExperienceStateResults = @()
+            $script:scopeConfig = $null
         }
     }
 

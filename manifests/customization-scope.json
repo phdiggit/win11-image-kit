@@ -18,7 +18,7 @@
           "name": "StartMenuDefaultLayoutRestored",
           "domain": "startMenu",
           "settingName": "开始菜单默认布局",
-          "expectedValue": "succeeded",
+          "expectedValue": "restored",
           "required": true,
           "failurePolicy": "fail"
         }
@@ -33,7 +33,7 @@
           "name": "WindowsTerminalConfigRestored",
           "domain": "terminal",
           "settingName": "Windows Terminal 配置模板",
-          "expectedValue": "succeeded",
+          "expectedValue": "restored",
           "required": true,
           "failurePolicy": "fail"
         }
@@ -48,7 +48,7 @@
           "name": "ExplorerOptionsRestored",
           "domain": "explorer",
           "settingName": "资源管理器选项",
-          "expectedValue": "succeeded",
+          "expectedValue": "restored",
           "required": true,
           "failurePolicy": "fail"
         }
@@ -62,7 +62,7 @@
           "name": "DefaultAppsImported",
           "domain": "defaultApps",
           "settingName": "默认应用关联",
-          "expectedValue": "succeeded",
+          "expectedValue": "restored",
           "required": true,
           "failurePolicy": "fail"
         }
@@ -77,7 +77,7 @@
           "name": "VSCodePortableDataRestored",
           "domain": "userExperience",
           "settingName": "VSCode 便携版 data 配置目录",
-          "expectedValue": "succeeded",
+          "expectedValue": "restored",
           "required": false,
           "failurePolicy": "manual"
         }
