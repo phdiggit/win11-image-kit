@@ -120,13 +120,15 @@ Describe "Orchestrator StepResult reports" {
             Set-Content -LiteralPath $scopePath -Value ($scope | ConvertTo-Json -Depth 12) -Encoding UTF8
 
             $scriptPath = Join-Path $script:RepoRoot "scripts\postdeploy\Invoke-PostDeploy.ps1"
-            & $powerShell -NoProfile -ExecutionPolicy Bypass -File $scriptPath `
-                -WhatIf `
-                -ScopeManifestPath $scopePath `
-                -SummaryReportPath $summaryPath `
-                -ReportPath $installerPath `
-                -UserExperienceReportPath $userExperiencePath `
-                -LogPath $logPath 1> $stdoutPath 2> $stderrPath
+            $command = @"
+try {
+    & '$scriptPath' -WhatIf -ScopeManifestPath '$scopePath' -SummaryReportPath '$summaryPath' -ReportPath '$installerPath' -UserExperienceReportPath '$userExperiencePath' -LogPath '$logPath'
+    exit 0
+} catch {
+    exit 1
+}
+"@
+            & $powerShell -NoProfile -ExecutionPolicy Bypass -Command $command 1> $stdoutPath 2> $stderrPath
             $exitCode = $LASTEXITCODE
 
             if ($exitCode -eq 0) {
