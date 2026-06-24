@@ -136,3 +136,118 @@ function Get-KitPackageReportAggregate {
 
     [pscustomobject]$aggregate
 }
+
+function Get-KitServiceReportReference {
+    param(
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string]$Name,
+
+        [AllowEmptyString()]
+        [string]$StepName,
+
+        [AllowEmptyString()]
+        [string]$Path,
+
+        [switch]$Required,
+
+        [string]$ReportType = "service-state-verification"
+    )
+
+    if ([string]::IsNullOrWhiteSpace($Path)) {
+        return $null
+    }
+
+    $exists = Test-Path -LiteralPath $Path
+    $serviceSummary = $null
+    $errorCode = $null
+
+    if (-not $exists) {
+        $errorCode = "report-missing"
+    } else {
+        try {
+            $childReport = Get-Content -LiteralPath $Path -Raw -Encoding UTF8 | ConvertFrom-Json
+            if ($childReport.PSObject.Properties.Name -contains "serviceSummary") {
+                $serviceSummary = Copy-KitPackageSummaryWithoutResults -PackageSummary $childReport.serviceSummary
+            } else {
+                $errorCode = "service-summary-missing"
+            }
+        } catch {
+            $errorCode = "report-parse-failed"
+            if ($Required) {
+                throw "Service report parse failed: $Path - $($_.Exception.Message)"
+            }
+        }
+    }
+
+    [pscustomobject][ordered]@{
+        name = $Name
+        stepName = $StepName
+        reportType = $ReportType
+        path = $Path
+        required = [bool]$Required
+        exists = [bool]$exists
+        serviceSummary = $serviceSummary
+        error = $errorCode
+    }
+}
+
+function Get-KitServiceReportAggregate {
+    param(
+        [AllowNull()]
+        $ServiceReports = @()
+    )
+
+    $reports = @($ServiceReports | Where-Object { $null -ne $_ })
+    $aggregate = [ordered]@{
+        reports = $reports.Count
+        existing = 0
+        missing = 0
+        failedRequired = 0
+        failedOptional = 0
+        skipped = 0
+        manual = 0
+        whatif = 0
+        serviceCheckedCount = 0
+        serviceMismatchCount = 0
+        serviceMissingCount = 0
+        serviceNotRunCount = 0
+    }
+
+    foreach ($report in $reports) {
+        if ([bool]$report.exists) {
+            $aggregate.existing++
+        } else {
+            $aggregate.missing++
+        }
+
+        if ($null -eq $report.serviceSummary) {
+            continue
+        }
+
+        $summary = $report.serviceSummary
+        $aggregate.failedRequired += [int]$summary.failedRequiredCount
+        $aggregate.failedOptional += [int]$summary.failedOptionalCount
+
+        if ($null -ne $summary.statusCounts) {
+            $aggregate.skipped += [int]$summary.statusCounts.skipped
+            $aggregate.manual += [int]$summary.statusCounts.manual
+            $aggregate.whatif += [int]$summary.statusCounts.whatif
+        }
+
+        if ($null -ne $summary.PSObject.Properties["serviceCheckedCount"]) {
+            $aggregate.serviceCheckedCount += [int]$summary.serviceCheckedCount
+        }
+        if ($null -ne $summary.PSObject.Properties["serviceMismatchCount"]) {
+            $aggregate.serviceMismatchCount += [int]$summary.serviceMismatchCount
+        }
+        if ($null -ne $summary.PSObject.Properties["serviceMissingCount"]) {
+            $aggregate.serviceMissingCount += [int]$summary.serviceMissingCount
+        }
+        if ($null -ne $summary.PSObject.Properties["serviceNotRunCount"]) {
+            $aggregate.serviceNotRunCount += [int]$summary.serviceNotRunCount
+        }
+    }
+
+    [pscustomobject]$aggregate
+}

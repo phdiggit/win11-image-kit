@@ -16,7 +16,20 @@
           "install": { "type": "string" },
           "start": { "type": "string" },
           "stop": { "type": "string" },
-          "delete": { "type": "string" }
+          "delete": { "type": "string" },
+          "expectedState": {
+            "type": "string",
+            "enum": ["Running", "Stopped", "Paused"]
+          },
+          "expectedStartType": {
+            "type": "string",
+            "enum": ["Automatic", "Manual", "Disabled"]
+          },
+          "required": { "type": "boolean" },
+          "failurePolicy": {
+            "type": "string",
+            "enum": ["fail", "skip", "manual"]
+          }
         },
         "additionalProperties": false
       }

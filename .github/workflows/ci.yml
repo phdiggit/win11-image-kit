@@ -83,7 +83,8 @@ jobs:
               "tests/pester/SoftwarePackageResults.Tests.ps1",
               "tests/pester/SoftwarePackageTestCommand.Tests.ps1",
               "tests/pester/PackageReportLinks.Tests.ps1",
-              "tests/pester/SoftwareFailurePolicyRuntime.Tests.ps1"
+              "tests/pester/SoftwareFailurePolicyRuntime.Tests.ps1",
+              "tests/pester/ServiceStateVerification.Tests.ps1"
           )
           $pester = Import-Module Pester -Force -PassThru
           if ($pester.Version.Major -ge 5) {

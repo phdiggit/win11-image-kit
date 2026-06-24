@@ -5,6 +5,7 @@ param(
     [string]$LogPath,
     [string]$SummaryReportPath,
     [string]$ReportPath,
+    [string]$ServiceReportPath,
     [string]$UserExperienceReportPath,
     [switch]$StrictUserExperience
 )
@@ -26,6 +27,7 @@ $script:PostDeployRunStamp = $script:PostDeployStartedAt.ToString("yyyyMMdd-HHmm
 $script:PostDeployLogPath = $null
 $script:PostDeployStatus = "running"
 $script:InstallerReportOutputPath = $null
+$script:ServiceReportOutputPath = $null
 $script:UserExperienceReportOutputPath = $null
 
 function Add-KitPostDeployReportItem {
@@ -246,6 +248,16 @@ function Write-KitPostDeployReport {
         $packageReports += $installerPackageReport
     }
     $packageReportSummary = Get-KitPackageReportAggregate -PackageReports $packageReports
+    $serviceReport = Get-KitServiceReportReference `
+        -Name "中间件服务状态" `
+        -StepName "中间件服务注册" `
+        -Path $script:ServiceReportOutputPath `
+        -Required:$serviceReportSpec.required
+    $serviceReports = @()
+    if ($null -ne $serviceReport) {
+        $serviceReports += $serviceReport
+    }
+    $serviceReportSummary = Get-KitServiceReportAggregate -ServiceReports $serviceReports
 
     $report = [pscustomobject]@{
         generatedAt = $finishedAt.ToString("s")
@@ -257,6 +269,7 @@ function Write-KitPostDeployReport {
         strictUserExperience = [bool]$StrictUserExperience
         logPath = $script:PostDeployLogPath
         installerReportPath = $script:InstallerReportOutputPath
+        serviceReportPath = $script:ServiceReportOutputPath
         userExperienceReportPath = $script:UserExperienceReportOutputPath
         reportType = "post-deploy-summary"
         summary = $summary
@@ -264,6 +277,7 @@ function Write-KitPostDeployReport {
         stepResults = $script:PostDeployStepResults
         stepSummary = $stepSummary
         packageReports = $packageReports
+        serviceReports = $serviceReports
     }
 
     $written = $false
@@ -280,6 +294,7 @@ function Write-KitPostDeployReport {
             "- 严格用户体验恢复：$($report.strictUserExperience)",
             "- 日志文件：$($report.logPath)",
             "- 安装器报告：$($report.installerReportPath)",
+            "- 服务状态报告：$($report.serviceReportPath)",
             "- 用户体验报告：$($report.userExperienceReportPath)",
             "- 完成：$($summary.completed)",
             "- 预演：$($summary.whatIf)",
@@ -299,6 +314,12 @@ function Write-KitPostDeployReport {
             "- 软件包跳过：$($packageReportSummary.skipped)",
             "- 软件包人工处理：$($packageReportSummary.manual)",
             "- 软件包预演：$($packageReportSummary.whatif)",
+            "- 服务子报告：$($serviceReportSummary.reports)",
+            "- 服务子报告存在：$($serviceReportSummary.existing)",
+            "- 服务阻断失败：$($serviceReportSummary.failedRequired)",
+            "- 服务状态不符：$($serviceReportSummary.serviceMismatchCount)",
+            "- 服务不存在：$($serviceReportSummary.serviceMissingCount)",
+            "- 服务未查询：$($serviceReportSummary.serviceNotRunCount)",
             "",
             "| 软件包子报告 | 步骤 | 存在 | 路径 | 摘要错误 |",
             "|---|---|---|---|---|"
@@ -306,6 +327,16 @@ function Write-KitPostDeployReport {
 
         foreach ($packageReport in $packageReports) {
             $lines += "| $($packageReport.name) | $($packageReport.stepName) | $($packageReport.exists) | $($packageReport.path) | $($packageReport.error) |"
+        }
+
+        $lines += @(
+            "",
+            "| 服务子报告 | 步骤 | 存在 | 路径 | 摘要错误 |",
+            "|---|---|---|---|---|"
+        )
+
+        foreach ($serviceReportItem in $serviceReports) {
+            $lines += "| $($serviceReportItem.name) | $($serviceReportItem.stepName) | $($serviceReportItem.exists) | $($serviceReportItem.path) | $($serviceReportItem.error) |"
         }
 
         $lines += @(
@@ -361,6 +392,12 @@ $installerReportSpec = Resolve-KitArtifactSpec `
     -FileName ("postdeploy-installer-{0}.json" -f $script:PostDeployRunStamp) `
     -PathMap $pathMap
 
+$serviceReportSpec = Resolve-KitArtifactSpec `
+    -ExplicitPath $ServiceReportPath `
+    -AutoDirectory $(if ($null -ne $reportingConfig) { [string]$reportingConfig.reportDirectory } else { $null }) `
+    -FileName ("postdeploy-services-{0}.json" -f $script:PostDeployRunStamp) `
+    -PathMap $pathMap
+
 $userExperienceReportSpec = Resolve-KitArtifactSpec `
     -ExplicitPath $UserExperienceReportPath `
     -AutoDirectory $(if ($null -ne $reportingConfig) { [string]$reportingConfig.reportDirectory } else { $null }) `
@@ -368,6 +405,7 @@ $userExperienceReportSpec = Resolve-KitArtifactSpec `
     -PathMap $pathMap
 
 $script:InstallerReportOutputPath = $installerReportSpec.path
+$script:ServiceReportOutputPath = $serviceReportSpec.path
 $script:UserExperienceReportOutputPath = $userExperienceReportSpec.path
 
 if (-not [string]::IsNullOrWhiteSpace($logSpec.path)) {
@@ -430,6 +468,8 @@ try {
         -Arguments @{
             ManifestPath = Resolve-KitRepoPath -RepoRoot $repoRoot -Path $scopeConfig.applications.servicesManifest
             PathsManifestPath = $PathsManifestPath
+            ReportPath = $script:ServiceReportOutputPath
+            ReportRequired = $serviceReportSpec.required
         }
 
     $restoreUserExperience = (
