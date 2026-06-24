@@ -17,20 +17,32 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Show PowerShell 7 version
+        shell: pwsh
+        run: |
+          $PSVersionTable
+
+      - name: Install PowerShell test modules
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+          Install-Module Pester -Scope CurrentUser -Repository PSGallery -Force -SkipPublisherCheck -MinimumVersion 5.5.0 -Confirm:$false
+          Install-Module PSScriptAnalyzer -Scope CurrentUser -Repository PSGallery -Force -Confirm:$false
+          Import-Module Pester -MinimumVersion 5.5.0 -Force
+          Import-Module PSScriptAnalyzer -Force
+
       - name: Show Windows PowerShell version
         shell: powershell
         run: |
           $PSVersionTable
 
-      - name: Install Windows PowerShell test modules
+      - name: Load PowerShell test modules in Windows PowerShell
         shell: powershell
         run: |
           $ErrorActionPreference = "Stop"
-          [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-          Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Scope CurrentUser -Force
-          Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
-          Install-Module Pester -Scope CurrentUser -Repository PSGallery -Force -SkipPublisherCheck -MinimumVersion 5.5.0 -Confirm:$false
-          Install-Module PSScriptAnalyzer -Scope CurrentUser -Repository PSGallery -Force -Confirm:$false
+          $pwshModulePath = Join-Path -Path $HOME -ChildPath "Documents\PowerShell\Modules"
+          $env:PSModulePath = "$pwshModulePath;$env:PSModulePath"
           Import-Module Pester -MinimumVersion 5.5.0 -Force
           Import-Module PSScriptAnalyzer -Force
 
@@ -75,22 +87,6 @@ jobs:
           $ErrorActionPreference = "Stop"
           Import-Module Pester -MinimumVersion 5.5.0 -Force
           Invoke-Pester -Path tests/pester -CI
-
-      - name: Show PowerShell 7 version
-        shell: pwsh
-        run: |
-          $PSVersionTable
-
-      - name: Install PowerShell 7 test modules
-        shell: pwsh
-        run: |
-          $ErrorActionPreference = "Stop"
-          Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Scope CurrentUser -Force
-          Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
-          Install-Module Pester -Scope CurrentUser -Repository PSGallery -Force -SkipPublisherCheck -MinimumVersion 5.5.0 -Confirm:$false
-          Install-Module PSScriptAnalyzer -Scope CurrentUser -Repository PSGallery -Force -Confirm:$false
-          Import-Module Pester -MinimumVersion 5.5.0 -Force
-          Import-Module PSScriptAnalyzer -Force
 
       - name: Run JSON parse check with PowerShell 7
         shell: pwsh
