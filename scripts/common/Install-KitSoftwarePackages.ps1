@@ -5,6 +5,7 @@
 . "$PSScriptRoot\Resolve-KitPackagePolicy.ps1"
 . "$PSScriptRoot\Test-KitPackageHash.ps1"
 . "$PSScriptRoot\New-KitPackageResult.ps1"
+. "$PSScriptRoot\Invoke-KitPackageTestCommand.ps1"
 
 function Test-KitCategoryMatch {
     param(
@@ -144,6 +145,9 @@ function New-KitMissingSourcePackageResult {
         [Parameter(Mandatory)]
         [string]$Detail,
 
+        [Parameter(Mandatory)]
+        [hashtable]$PathMap,
+
         [datetime]$StartedAt = (Get-Date)
     )
 
@@ -174,6 +178,7 @@ function New-KitMissingSourcePackageResult {
         -Errors $errors `
         -SkippedReason $skippedReason `
         -ManualAction $manualAction `
+        -TestCommand (New-KitPackageTestCommandNotRun -Package $Package -PathMap $PathMap -Reason "package-not-successful") `
         -StartedAt $StartedAt `
         -EndedAt (Get-Date)
 }
@@ -221,6 +226,9 @@ function New-KitHashFailurePackageResult {
         [AllowEmptyString()]
         [string]$Destination,
 
+        [Parameter(Mandatory)]
+        [hashtable]$PathMap,
+
         [datetime]$StartedAt = (Get-Date)
     )
 
@@ -255,8 +263,97 @@ function New-KitHashFailurePackageResult {
         -Errors @([string]$HashResult.message) `
         -SkippedReason $skippedReason `
         -ManualAction $manualAction `
+        -TestCommand (New-KitPackageTestCommandNotRun -Package $Package -PathMap $PathMap -Reason "package-not-successful") `
         -StartedAt $StartedAt `
         -EndedAt (Get-Date)
+}
+
+function New-KitPackageResultForTestCommandFailure {
+    param(
+        [Parameter(Mandatory)]
+        $Package,
+
+        [Parameter(Mandatory)]
+        $Policy,
+
+        [Parameter(Mandatory)]
+        $TestCommandResult,
+
+        [AllowEmptyString()]
+        [string]$Source,
+
+        [AllowEmptyString()]
+        [string]$Destination,
+
+        [datetime]$StartedAt = (Get-Date)
+    )
+
+    $action = Get-KitPackageTestCommandFailureAction -Package $Package -Policy $Policy
+    $status = "failed"
+    $skippedReason = ""
+    $manualAction = ""
+    if ($action -eq "skip") {
+        $status = "skipped"
+        $skippedReason = "test-command-failed"
+    } elseif ($action -eq "manual") {
+        $status = "manual"
+        $manualAction = "inspect-test-command-failure"
+    }
+
+    $errorText = if ([string]::IsNullOrWhiteSpace([string]$TestCommandResult.error)) {
+        "testCommand failed"
+    } else {
+        [string]$TestCommandResult.error
+    }
+
+    return New-KitPackageResult `
+        -Package $Package `
+        -Status $status `
+        -Reason "test-command-failed" `
+        -Message "软件包验证命令失败" `
+        -Source $Source `
+        -Destination $Destination `
+        -Policy $Policy `
+        -Errors @($errorText) `
+        -SkippedReason $skippedReason `
+        -ManualAction $manualAction `
+        -TestCommand $TestCommandResult `
+        -StartedAt $StartedAt `
+        -EndedAt (Get-Date)
+}
+
+function Invoke-KitPackageTestFailurePolicy {
+    param(
+        [Parameter(Mandatory)]
+        $Package,
+
+        [Parameter(Mandatory)]
+        $Policy,
+
+        [Parameter(Mandatory)]
+        $TestCommandResult
+    )
+
+    $action = Get-KitPackageTestCommandFailureAction -Package $Package -Policy $Policy
+    $packageName = [string]$Package.name
+    $errorText = if ([string]::IsNullOrWhiteSpace([string]$TestCommandResult.error)) {
+        "testCommand failed"
+    } else {
+        [string]$TestCommandResult.error
+    }
+
+    switch ($action) {
+        "fail" {
+            Write-KitLog "test-command-failed: 软件包验证命令失败，处理失败：$packageName ($errorText)" "ERROR"
+            throw "test-command-failed: 软件包验证命令失败：$packageName ($errorText)"
+        }
+        "manual" {
+            Write-KitLog "test-command-failed: 软件包验证命令失败，记录为 manual 人工检查并继续：$packageName ($errorText)" "WARN"
+        }
+        default {
+            Write-KitLog "test-command-failed: 软件包验证命令失败，skipped 跳过并继续：$packageName ($errorText)" "WARN"
+        }
+    }
 }
 
 function Invoke-KitHashFailurePolicy {
@@ -436,14 +533,14 @@ function Install-KitSoftwarePackages {
                 try {
                     $sourceExists = Test-Path -LiteralPath $source -ErrorAction Stop
                 } catch {
-                    $packageResults += New-KitMissingSourcePackageResult -Package $package -Policy $policy -Source $source -Destination $destination -Detail $_.Exception.Message -StartedAt $packageStartedAt
+                    $packageResults += New-KitMissingSourcePackageResult -Package $package -Policy $policy -Source $source -Destination $destination -Detail $_.Exception.Message -PathMap $pathMap -StartedAt $packageStartedAt
                     $packageResultRecorded = $true
                     Invoke-KitMissingSourcePolicy -Package $package -Policy $policy -Source $source -Detail $_.Exception.Message
                     continue
                 }
 
                 if (-not $sourceExists) {
-                    $packageResults += New-KitMissingSourcePackageResult -Package $package -Policy $policy -Source $source -Destination $destination -Detail "Test-Path=false" -StartedAt $packageStartedAt
+                    $packageResults += New-KitMissingSourcePackageResult -Package $package -Policy $policy -Source $source -Destination $destination -Detail "Test-Path=false" -PathMap $pathMap -StartedAt $packageStartedAt
                     $packageResultRecorded = $true
                     Invoke-KitMissingSourcePolicy -Package $package -Policy $policy -Source $source -Detail "Test-Path=false"
                     continue
@@ -456,6 +553,7 @@ function Install-KitSoftwarePackages {
                         -Policy $policy `
                         -HashResult $hashResult `
                         -Destination $destination `
+                        -PathMap $pathMap `
                         -StartedAt $packageStartedAt
                     $packageResultRecorded = $true
                     Invoke-KitHashFailurePolicy -Package $package -Policy $policy -HashResult $hashResult
@@ -501,6 +599,28 @@ function Install-KitSoftwarePackages {
                     }
                 }
 
+                $testCommandResult = $null
+                if ($WhatIfPreference) {
+                    $testCommandResult = New-KitPackageTestCommandNotRun -Package $package -PathMap $pathMap -Reason "whatif-preview"
+                } elseif ($Stage -ne "post-deploy") {
+                    $testCommandResult = New-KitPackageTestCommandNotRun -Package $package -PathMap $pathMap -Reason "stage-not-executable"
+                } else {
+                    $testCommandResult = Invoke-KitPackageTestCommand -Package $package -PathMap $pathMap
+                }
+
+                if ($null -ne $testCommandResult -and [string]$testCommandResult.status -eq "failed") {
+                    $packageResults += New-KitPackageResultForTestCommandFailure `
+                        -Package $package `
+                        -Policy $policy `
+                        -TestCommandResult $testCommandResult `
+                        -Source $source `
+                        -Destination $destination `
+                        -StartedAt $packageStartedAt
+                    $packageResultRecorded = $true
+                    Invoke-KitPackageTestFailurePolicy -Package $package -Policy $policy -TestCommandResult $testCommandResult
+                    continue
+                }
+
                 $status = if ($WhatIfPreference) { "whatif" } else { "changed" }
                 $reason = if ($WhatIfPreference) { "whatif-preview" } else { "completed" }
                 $packageResults += New-KitPackageResult `
@@ -510,6 +630,7 @@ function Install-KitSoftwarePackages {
                     -Source $source `
                     -Destination $destination `
                     -Policy $policy `
+                    -TestCommand $testCommandResult `
                     -StartedAt $packageStartedAt `
                     -EndedAt (Get-Date)
                 $packageResultRecorded = $true
@@ -524,6 +645,7 @@ function Install-KitSoftwarePackages {
                         -Destination $destination `
                         -Policy $policy `
                         -Errors @($_.Exception.Message) `
+                        -TestCommand (New-KitPackageTestCommandNotRun -Package $package -PathMap $pathMap -Reason "package-not-successful") `
                         -StartedAt $packageStartedAt `
                         -EndedAt (Get-Date)
                 }

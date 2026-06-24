@@ -125,6 +125,10 @@ function Get-KitStepResultSummary {
     $failedRequiredCount = 0
     $failedOptionalCount = 0
     $rebootRequiredCount = 0
+    $testCommandRunCount = 0
+    $testCommandSuccessCount = 0
+    $testCommandFailedCount = 0
+    $testCommandNotRunCount = 0
 
     foreach ($result in $resultList) {
         $status = [string]$result.status
@@ -143,6 +147,19 @@ function Get-KitStepResultSummary {
         if ([bool]$result.rebootRequired) {
             $rebootRequiredCount++
         }
+
+        if ($null -ne $result.PSObject.Properties["testCommand"] -and $null -ne $result.testCommand) {
+            $testStatus = [string]$result.testCommand.status
+            if ($testStatus -eq "success") {
+                $testCommandRunCount++
+                $testCommandSuccessCount++
+            } elseif ($testStatus -eq "failed") {
+                $testCommandRunCount++
+                $testCommandFailedCount++
+            } elseif ($testStatus -in @("notRun", "skipped", "manual")) {
+                $testCommandNotRunCount++
+            }
+        }
     }
 
     $hasBlockingFailure = $failedRequiredCount -gt 0
@@ -153,6 +170,10 @@ function Get-KitStepResultSummary {
         failedRequiredCount = $failedRequiredCount
         failedOptionalCount = $failedOptionalCount
         rebootRequiredCount = $rebootRequiredCount
+        testCommandRunCount = $testCommandRunCount
+        testCommandSuccessCount = $testCommandSuccessCount
+        testCommandFailedCount = $testCommandFailedCount
+        testCommandNotRunCount = $testCommandNotRunCount
         hasBlockingFailure = $hasBlockingFailure
         exitCode = if ($hasBlockingFailure) { 1 } else { 0 }
         results = $resultList

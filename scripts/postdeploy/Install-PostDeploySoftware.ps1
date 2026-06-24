@@ -13,6 +13,7 @@ $ErrorActionPreference = "Stop"
 . "$PSScriptRoot\..\common\Resolve-KitPackagePolicy.ps1"
 . "$PSScriptRoot\..\common\Test-KitPackageHash.ps1"
 . "$PSScriptRoot\..\common\New-KitPackageResult.ps1"
+. "$PSScriptRoot\..\common\Invoke-KitPackageTestCommand.ps1"
 
 $script:InstallerReportItems = @()
 $script:InstallerPackageResults = @()
@@ -163,6 +164,7 @@ function Add-KitInstallerReportItem {
         [bool]$AllowMissingSource = $false,
         [AllowNull()]
         $Package,
+        [hashtable]$PathMap = @{},
         [AllowNull()]
         $Warnings = @(),
         [AllowNull()]
@@ -172,6 +174,8 @@ function Add-KitInstallerReportItem {
         [string]$SkippedReason,
         [string]$ManualAction,
         [bool]$RebootRequired = $false,
+        [AllowNull()]
+        $TestCommand = $null,
         [datetime]$StartedAt = (Get-Date),
         [datetime]$EndedAt = (Get-Date)
     )
@@ -193,6 +197,12 @@ function Add-KitInstallerReportItem {
         rebootRequired = [bool]$RebootRequired
     }
 
+    $effectiveTestCommand = $TestCommand
+    if ($null -eq $effectiveTestCommand -and $null -ne $Package -and (Test-KitPackageHasTestCommand -Package $Package)) {
+        $notRunReason = if ($Status -eq "whatif") { "whatif-preview" } else { "package-not-successful" }
+        $effectiveTestCommand = New-KitPackageTestCommandNotRun -Package $Package -PathMap $PathMap -Reason $notRunReason
+    }
+
     if ($Warnings.Count -gt 0) {
         $reportItem["warnings"] = @($Warnings)
     }
@@ -204,6 +214,10 @@ function Add-KitInstallerReportItem {
     if ($null -ne $HashResult) {
         $reportItem["expectedHash"] = [string]$HashResult.expectedHash
         $reportItem["actualHash"] = [string]$HashResult.actualHash
+    }
+
+    if ($null -ne $effectiveTestCommand) {
+        $reportItem["testCommand"] = $effectiveTestCommand
     }
 
     $script:InstallerReportItems += [pscustomobject]$reportItem
@@ -263,8 +277,64 @@ function Add-KitInstallerReportItem {
         -SkippedReason $SkippedReason `
         -ManualAction $ManualAction `
         -RebootRequired:$RebootRequired `
+        -TestCommand $effectiveTestCommand `
         -StartedAt $StartedAt `
         -EndedAt $EndedAt
+}
+
+function Get-KitInstallerTestCommandFailureStatus {
+    param(
+        [Parameter(Mandatory)]
+        $Package,
+
+        [Parameter(Mandatory)]
+        $Policy
+    )
+
+    $action = Get-KitPackageTestCommandFailureAction -Package $Package -Policy $Policy
+    if ($action -eq "skip") {
+        return "skipped"
+    }
+
+    if ($action -eq "manual") {
+        return "manual"
+    }
+
+    return "failed"
+}
+
+function Invoke-KitInstallerTestFailurePolicy {
+    param(
+        [Parameter(Mandatory)]
+        $Package,
+
+        [Parameter(Mandatory)]
+        $Policy,
+
+        [Parameter(Mandatory)]
+        $TestCommandResult
+    )
+
+    $action = Get-KitPackageTestCommandFailureAction -Package $Package -Policy $Policy
+    $packageName = [string]$Package.name
+    $errorText = if ([string]::IsNullOrWhiteSpace([string]$TestCommandResult.error)) {
+        "testCommand failed"
+    } else {
+        [string]$TestCommandResult.error
+    }
+
+    switch ($action) {
+        "fail" {
+            Write-KitLog "test-command-failed: 安装器验证命令失败，处理失败：$packageName ($errorText)" "ERROR"
+            throw "test-command-failed: 安装器验证命令失败：$packageName ($errorText)"
+        }
+        "manual" {
+            Write-KitLog "test-command-failed: 安装器验证命令失败，记录为 manual 人工检查并继续：$packageName ($errorText)" "WARN"
+        }
+        default {
+            Write-KitLog "test-command-failed: 安装器验证命令失败，skipped 跳过并继续：$packageName ($errorText)" "WARN"
+        }
+    }
 }
 
 function Write-KitInstallerManualChecklist {
@@ -371,6 +441,7 @@ function Invoke-KitInstallerPackage {
                 -FailurePolicy $policy.failurePolicy `
                 -AllowMissingSource $policy.allowMissingSource `
                 -Package $Package `
+                -PathMap $PathMap `
                 -Errors @("silent-install-required") `
                 -StartedAt $packageStartedAt `
                 -EndedAt (Get-Date)
@@ -399,6 +470,7 @@ function Invoke-KitInstallerPackage {
             -FailurePolicy $policy.failurePolicy `
             -AllowMissingSource $policy.allowMissingSource `
             -Package $Package `
+            -PathMap $PathMap `
             -SkippedReason $(if ($manualStatus -eq "skipped") { "silentInstall=false" } else { "" }) `
             -ManualAction $(if ($manualStatus -eq "manual") { "run-manually" } else { "" }) `
             -StartedAt $packageStartedAt `
@@ -441,6 +513,7 @@ function Invoke-KitInstallerPackage {
             -FailurePolicy $policy.failurePolicy `
             -AllowMissingSource $policy.allowMissingSource `
             -Package $Package `
+            -PathMap $PathMap `
             -SkippedReason $(if ($sourceStatus -eq "skipped") { "source-missing" } else { "" }) `
             -ManualAction $(if ($sourceStatus -eq "manual") { "provide-source" } else { "" }) `
             -Errors $(if ($sourceStatus -eq "failed") { @("source-missing: $sourceDetail") } else { @() }) `
@@ -487,6 +560,7 @@ function Invoke-KitInstallerPackage {
             -FailurePolicy $policy.failurePolicy `
             -AllowMissingSource $policy.allowMissingSource `
             -Package $Package `
+            -PathMap $PathMap `
             -HashResult $hashResult `
             -SkippedReason $hashSkippedReason `
             -ManualAction $hashManualAction `
@@ -517,6 +591,7 @@ function Invoke-KitInstallerPackage {
             -FailurePolicy $policy.failurePolicy `
             -AllowMissingSource $policy.allowMissingSource `
             -Package $Package `
+            -PathMap $PathMap `
             -StartedAt $packageStartedAt `
             -EndedAt (Get-Date)
         return
@@ -563,6 +638,7 @@ function Invoke-KitInstallerPackage {
             -FailurePolicy $policy.failurePolicy `
             -AllowMissingSource $policy.allowMissingSource `
             -Package $Package `
+            -PathMap $PathMap `
             -SkippedReason $exitSkippedReason `
             -ManualAction $exitManualAction `
             -Errors @("unexpected-exit-code: $exitCode") `
@@ -581,6 +657,36 @@ function Invoke-KitInstallerPackage {
         Write-KitLog "静默安装完成但需要重启：$($Package.name)，exit code: $exitCode" "WARN"
     }
 
+    $testCommandResult = Invoke-KitPackageTestCommand -Package $Package -PathMap $PathMap
+    if ($null -ne $testCommandResult -and [string]$testCommandResult.status -eq "failed") {
+        $testStatus = Get-KitInstallerTestCommandFailureStatus -Package $Package -Policy $policy
+        Add-KitInstallerReportItem `
+            -Name ([string]$Package.name) `
+            -Status $testStatus `
+            -Reason "test-command-failed" `
+            -Source $source `
+            -Destination $destination `
+            -Command $commandText `
+            -SuccessExitCodes $successExitCodes `
+            -ExitCode $exitCode `
+            -SilentInstall $true `
+            -Uninstall $uninstallCommand `
+            -Required $policy.required `
+            -FailurePolicy $policy.failurePolicy `
+            -AllowMissingSource $policy.allowMissingSource `
+            -Package $Package `
+            -PathMap $PathMap `
+            -SkippedReason $(if ($testStatus -eq "skipped") { "test-command-failed" } else { "" }) `
+            -ManualAction $(if ($testStatus -eq "manual") { "inspect-test-command-failure" } else { "" }) `
+            -Errors @([string]$testCommandResult.error) `
+            -TestCommand $testCommandResult `
+            -RebootRequired:$rebootRequired `
+            -StartedAt $packageStartedAt `
+            -EndedAt (Get-Date)
+        Invoke-KitInstallerTestFailurePolicy -Package $Package -Policy $policy -TestCommandResult $testCommandResult
+        return
+    }
+
     Add-KitInstallerReportItem `
         -Name ([string]$Package.name) `
         -Status "succeeded" `
@@ -596,6 +702,8 @@ function Invoke-KitInstallerPackage {
         -FailurePolicy $policy.failurePolicy `
         -AllowMissingSource $policy.allowMissingSource `
         -Package $Package `
+        -PathMap $PathMap `
+        -TestCommand $testCommandResult `
         -RebootRequired:$rebootRequired `
         -StartedAt $packageStartedAt `
         -EndedAt (Get-Date)
