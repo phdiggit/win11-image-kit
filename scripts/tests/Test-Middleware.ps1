@@ -1,13 +1,17 @@
 ﻿param(
     [string]$ServicesManifestPath = "$PSScriptRoot\..\..\manifests\services.json",
-    [switch]$SkipServiceStatus
+    [switch]$SkipServiceStatus,
+    [string]$ReportPath,
+    [switch]$ReportRequired
 )
 
 $ErrorActionPreference = "Continue"
 . "$PSScriptRoot\..\common\Write-Log.ps1"
+. "$PSScriptRoot\..\common\Test-KitServiceState.ps1"
 
 $failed = 0
 $skipped = 0
+$serviceResults = @()
 
 if (-not (Test-Path -LiteralPath $ServicesManifestPath)) {
     Write-KitLog "服务清单不存在：$ServicesManifestPath" "ERROR"
@@ -28,24 +32,46 @@ foreach ($service in $manifest.services) {
         $failed++
     }
 
-    if ($SkipServiceStatus) {
-        Write-KitLog "仅检查服务声明，未查询服务状态：$($service.name)"
-        $skipped++
-        continue
-    }
+    $serviceResult = Test-KitServiceState -ServiceConfig $service -WhatIf:$SkipServiceStatus
+    $serviceResults += $serviceResult
 
-    $existing = Get-Service -Name $service.name -ErrorAction SilentlyContinue
-    if ($existing) {
-        Write-KitLog "服务存在：$($service.name) ($($existing.Status))" "OK"
-    } else {
-        Write-KitLog "服务尚未注册：$($service.name)" "WARN"
-        $skipped++
+    switch ($serviceResult.status) {
+        "unchanged" {
+            Write-KitLog "服务状态符合预期：$($serviceResult.serviceName) ($($serviceResult.actualState))" "OK"
+        }
+        "whatif" {
+            Write-KitLog "仅检查服务声明，未查询服务状态：$($serviceResult.serviceName)"
+            $skipped++
+        }
+        "skipped" {
+            Write-KitLog "服务状态验证跳过：$($serviceResult.serviceName)，$($serviceResult.reason)" "WARN"
+            $skipped++
+        }
+        "manual" {
+            Write-KitLog "服务状态需要人工确认：$($serviceResult.serviceName)，$($serviceResult.reason)" "WARN"
+            $skipped++
+        }
+        "failed" {
+            Write-KitLog "服务状态验证失败：$($serviceResult.serviceName)，$($serviceResult.reason)" "ERROR"
+        }
+        default {
+            Write-KitLog "服务状态验证结果：$($serviceResult.serviceName)，$($serviceResult.status)"
+        }
     }
 }
 
-if ($failed -gt 0) {
-    Write-KitLog "中间件测试失败：$failed 项失败，$skipped 项跳过。" "ERROR"
+$serviceSummary = Get-KitServiceResultSummary -Results $serviceResults
+if (-not [string]::IsNullOrWhiteSpace($ReportPath)) {
+    $report = New-KitServiceStateReport -Results $serviceResults
+    $written = Write-KitTextFile -Path $ReportPath -Content ($report | ConvertTo-Json -Depth 10) -Description "服务状态验证报告" -Required:$ReportRequired
+    if ($written) {
+        Write-KitLog "服务状态验证报告已写入：$ReportPath" "OK"
+    }
+}
+
+if ($failed -gt 0 -or $serviceSummary.exitCode -ne 0) {
+    Write-KitLog "中间件测试失败：$failed 项声明失败，$($serviceSummary.failedRequiredCount) 项 required 服务失败，$skipped 项跳过。" "ERROR"
     exit 1
 }
 
-Write-KitLog "中间件测试完成：0 项失败，$skipped 项跳过。" "OK"
+Write-KitLog "中间件测试完成：0 项声明失败，$($serviceSummary.failedOptionalCount) 项 optional 服务失败，$skipped 项跳过。" "OK"
