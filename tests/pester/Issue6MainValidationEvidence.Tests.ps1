@@ -19,6 +19,19 @@ Describe "Issue 6 main validation evidence package" {
             return $match.Groups["body"].Value
         }
 
+        function script:Get-Issue6EvidenceStatus {
+            param(
+                [string]$Content
+            )
+
+            $match = [regex]::Match($Content, '(?m)^- Status: (?<status>pending-main-full-validate|ready-for-manual-closure)\s*$')
+            if (-not $match.Success) {
+                throw "Current evidence status was not found."
+            }
+
+            return $match.Groups["status"].Value
+        }
+
         $script:DocPath = Join-Path $script:RepoRoot "docs\11-issue6-main-validation-evidence.md"
         $script:Doc = Get-Content -LiteralPath $script:DocPath -Raw -Encoding UTF8
         $script:Workflow = Get-Content -LiteralPath (Join-Path $script:RepoRoot ".github\workflows\ci.yml") -Raw -Encoding UTF8
@@ -65,13 +78,54 @@ Describe "Issue 6 main validation evidence package" {
             "Validate result:";
             "Full Validate on PR:";
             "Evidence captured by:";
-            "Trigger source: main push / workflow_dispatch";
+            "Trigger source:";
             "Main SHA:";
             "Full Validate result:";
             "Notes:"
         )) {
             if (-not $script:Doc.Contains($term)) {
                 throw "Main validation evidence document is missing evidence field: $term"
+            }
+        }
+    }
+
+    It "enforces pending and ready status evidence rules" {
+        $status = Get-Issue6EvidenceStatus -Content $script:Doc
+
+        if ($status -eq "ready-for-manual-closure") {
+            foreach ($pattern in @(
+                '(?m)^- Main SHA: `?[0-9a-f]{40}`?\s*$';
+                '(?m)^- Workflow run: https://github\.com/.+/actions/runs/\d+\s*$';
+                '(?m)^- Full Validate result: success\s*$';
+                '(?m)^- Trigger source: (main push|workflow_dispatch)\s*$'
+            )) {
+                if (-not [regex]::IsMatch($script:Doc, $pattern)) {
+                    throw "Ready status requires populated main Full Validate evidence matching pattern: $pattern"
+                }
+            }
+        } elseif ($status -eq "pending-main-full-validate") {
+            foreach ($term in @(
+                "pending-main-full-validate";
+                "manually backfill main SHA, workflow run, and Full Validate result";
+                "Do not use PR Fast CI as a substitute for Full Validate"
+            )) {
+                if (-not $script:Doc.Contains($term)) {
+                    throw "Pending status must document manual evidence backfill requirement: $term"
+                }
+            }
+        } else {
+            throw "Unexpected evidence status: $status"
+        }
+    }
+
+    It "documents that PR Fast CI does not replace Full Validate" {
+        foreach ($term in @(
+            "PR Fast CI";
+            "PR Fast CI does not replace main / workflow_dispatch Full Validate";
+            "Do not use PR Fast CI as a substitute for Full Validate"
+        )) {
+            if (-not $script:Doc.Contains($term)) {
+                throw "Main validation evidence document must keep PR Fast CI and Full Validate separated: $term"
             }
         }
     }
@@ -96,10 +150,9 @@ Describe "Issue 6 main validation evidence package" {
 
     It "keeps the copyable final comment free of automatic closing keywords" {
         $comment = Get-Issue6FinalClosureComment -Content $script:Doc
-        foreach ($closingKeyword in @("Fixes #6"; "Closes #6"; "Resolves #6")) {
-            if ($comment.Contains($closingKeyword)) {
-                throw "Copyable final closure comment must not contain closing keyword: $closingKeyword"
-            }
+        $closingPattern = '(?i)\b(close[sd]?|fix(e[sd])?|resolve[sd]?)\s+#6\b'
+        if ($comment -match $closingPattern) {
+            throw "Copyable final closure comment must not contain an automatic closing keyword with issue 6."
         }
     }
 
@@ -107,11 +160,18 @@ Describe "Issue 6 main validation evidence package" {
         foreach ($term in @(
             "Refs #6";
             "PR body uses";
-            "does not automatically close #6"
+            "does not auto-close Issue 6"
         )) {
             if (-not $script:Doc.Contains($term)) {
                 throw "Main validation evidence document is missing staged PR term: $term"
             }
+        }
+    }
+
+    It "keeps the document free of automatic closing keywords for issue 6" {
+        $closingPattern = '(?i)\b(close[sd]?|fix(e[sd])?|resolve[sd]?)\s+#6\b'
+        if ($script:Doc -match $closingPattern) {
+            throw "Main validation evidence document must not contain an automatic closing keyword with issue 6."
         }
     }
 
