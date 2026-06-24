@@ -4,7 +4,8 @@ $RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
 
 Describe "Step result model" {
     BeforeEach {
-        . (Join-Path $RepoRoot "scripts\common\New-StepResult.ps1")
+        $script:RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
+        . (Join-Path $script:RepoRoot "scripts\common\New-StepResult.ps1")
     }
 
     It "creates changed results with required default" {
