@@ -78,6 +78,7 @@ jobs:
           $ErrorActionPreference = "Stop"
           $fastPesterPaths = @(
               "tests/pester/New-StepResult.Tests.ps1",
+              "tests/pester/OrchestratorStepResults.Tests.ps1",
               "tests/pester/SoftwarePolicy.Tests.ps1",
               "tests/pester/SoftwareSourcePolicyRuntime.Tests.ps1",
               "tests/pester/SoftwarePackageResults.Tests.ps1",
@@ -89,7 +90,8 @@ jobs:
               "tests/pester/JunctionStateVerification.Tests.ps1",
               "tests/pester/DefenderAppxStateVerification.Tests.ps1",
               "tests/pester/UserExperienceStateVerification.Tests.ps1",
-              "tests/pester/DryRunAcceptanceBaseline.Tests.ps1"
+              "tests/pester/DryRunAcceptanceBaseline.Tests.ps1",
+              "tests/pester/Issue6AcceptanceAudit.Tests.ps1"
           )
           $pester = Import-Module Pester -Force -PassThru
           if ($pester.Version.Major -ge 5) {
