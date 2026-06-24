@@ -174,7 +174,7 @@ Describe "Dry-run acceptance baseline" {
                             [ordered]@{
                                 name = "DryRunExplorerCheck"
                                 domain = "explorer"
-                                settingName = "资源管理器选项"
+                                settingName = "ExplorerOptions"
                                 expectedValue = "restored"
                                 required = $true
                                 failurePolicy = "fail"
