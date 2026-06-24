@@ -197,11 +197,11 @@ git -c core.quotepath=false diff --stat origin/<default-branch>...HEAD
 python scripts/dev/pr_body_tool.py normalize --input <draft.md> --output .tmp/pr-bodies/<name>.md
 python scripts/dev/pr_body_tool.py validate .tmp/pr-bodies/<name>.md
 python scripts/dev/pr_body_tool.py create --title "<title>" --body-file .tmp/pr-bodies/<name>.md --base <default-branch> --head <branch>
-python scripts/dev/pr_body_tool.py edit --pr <number-or-url> --body-file .tmp/pr-bodies/<name>.md
-python scripts/dev/pr_body_tool.py verify --pr <number-or-url> --body-file .tmp/pr-bodies/<name>.md
+python scripts/dev/pr_body_tool.py edit --pr <number-or-url> --body-file .tmp/pr-bodies/<name>.md --title "<title>" --base <default-branch> --head <branch> --draft false
+python scripts/dev/pr_body_tool.py verify --pr <number-or-url> --body-file .tmp/pr-bodies/<name>.md --title "<title>" --base <default-branch> --head <branch> --draft false
 ```
 
-不要通过 PowerShell 管道或命令行字符串直接向 `gh` 传中文正文；创建或编辑 PR 后必须读回 GitHub 正文并验证一致。
+不要通过 PowerShell 管道或命令行字符串直接向 `gh` 传中文正文；创建或编辑 PR 后必须读回 GitHub 正文、标题、base/head 和 Draft 状态并验证一致。
 
 PR 标题建议：
 

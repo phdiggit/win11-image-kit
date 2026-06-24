@@ -10,31 +10,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[2]
-TEMP_BODY_DIR = ".tmp/pr-bodies"
-ALLOWED_FENCE_LANGUAGES = {
-    "",
-    "bash",
-    "bat",
-    "batch",
-    "cmd",
-    "console",
-    "diff",
-    "ini",
-    "json",
-    "markdown",
-    "md",
-    "powershell",
-    "ps1",
-    "pwsh",
-    "py",
-    "python",
-    "sh",
-    "text",
-    "toml",
-    "txt",
-    "yaml",
-    "yml",
-}
+TEMP_BODY_DIR = Path(".tmp/pr-bodies")
 DAMAGED_FENCE_PATTERNS = (
     re.compile(r"^`\\[A-Za-z]", re.MULTILINE),
     re.compile(r"^`[A-Za-z][A-Za-z0-9_-]*\s*$", re.MULTILINE),
@@ -49,25 +25,55 @@ def repo_root() -> Path:
     return ROOT.resolve()
 
 
-def resolve_repo_path(path: str | Path) -> Path:
+def body_root() -> Path:
+    return (repo_root() / TEMP_BODY_DIR).resolve(strict=False)
+
+
+def _is_relative_to(path: Path, parent: Path) -> bool:
+    try:
+        path.relative_to(parent)
+    except ValueError:
+        return False
+    return True
+
+
+def resolve_repo_path(path: str | Path, *, purpose: str = "path") -> Path:
     candidate = Path(path)
     if not candidate.is_absolute():
         candidate = repo_root() / candidate
-    return candidate.resolve(strict=False)
+    resolved = candidate.resolve(strict=False)
+    if not _is_relative_to(resolved, repo_root()):
+        raise PrBodyError(f"{purpose} must stay inside repository root: {path}")
+    return resolved
+
+
+def resolve_body_path(path: str | Path, *, purpose: str = "body file") -> Path:
+    resolved = resolve_repo_path(path, purpose=purpose)
+    if not _is_relative_to(resolved, body_root()):
+        raise PrBodyError(f"{purpose} must be under {TEMP_BODY_DIR.as_posix()}/: {path}")
+    return resolved
 
 
 def default_normalized_path(input_path: str | Path) -> Path:
     source = Path(input_path)
     name = source.name if source.name else "pr-body.md"
-    return resolve_repo_path(Path(TEMP_BODY_DIR) / name)
+    return resolve_body_path(TEMP_BODY_DIR / name, purpose="normalize output")
 
 
 def canonical_text(text: str) -> str:
     return text.lstrip("\ufeff").replace("\r\n", "\n").replace("\r", "\n")
 
 
+def read_repo_text(path: str | Path, *, purpose: str = "input file") -> str:
+    target = resolve_repo_path(path, purpose=purpose)
+    try:
+        return canonical_text(target.read_text(encoding="utf-8-sig"))
+    except UnicodeDecodeError as exc:
+        raise PrBodyError(f"{purpose} is not valid UTF-8: {path}") from exc
+
+
 def read_body_text(path: str | Path) -> str:
-    target = resolve_repo_path(path)
+    target = resolve_body_path(path)
     try:
         return canonical_text(target.read_text(encoding="utf-8-sig"))
     except UnicodeDecodeError as exc:
@@ -75,7 +81,7 @@ def read_body_text(path: str | Path) -> str:
 
 
 def write_body_text(path: str | Path, text: str) -> Path:
-    target = resolve_repo_path(path)
+    target = resolve_body_path(path, purpose="body output")
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text(canonical_text(text), encoding="utf-8", newline="\n")
     return target
@@ -107,14 +113,8 @@ def _validate_code_fences(text: str) -> list[str]:
         errors.append("triple-backtick code fences must be paired")
 
     for pair_index, (line_number, line) in enumerate(fence_lines):
-        if pair_index % 2 == 1:
-            if line != "```":
-                errors.append(f"line {line_number}: closing code fence must be plain ```")
-            continue
-
-        language = line[3:].strip().lower()
-        if language not in ALLOWED_FENCE_LANGUAGES:
-            errors.append(f"line {line_number}: unsupported code fence language: {language or '<empty>'}")
+        if pair_index % 2 == 1 and line != "```":
+            errors.append(f"line {line_number}: closing code fence must be plain ```")
 
     return errors
 
@@ -144,11 +144,11 @@ def validate_file(path: str | Path) -> None:
 
 
 def normalize_file(input_path: str | Path, output_path: str | Path | None = None) -> Path:
-    text = read_body_text(input_path)
+    text = read_repo_text(input_path, purpose="normalize input")
     errors = validate_text(text)
     if errors:
         raise PrBodyError("; ".join(errors))
-    target = resolve_repo_path(output_path) if output_path else default_normalized_path(input_path)
+    target = resolve_body_path(output_path, purpose="normalize output") if output_path else default_normalized_path(input_path)
     write_body_text(target, text)
     validate_file(target)
     return target
@@ -162,6 +162,38 @@ def compare_body_text(expected: str, actual: str) -> None:
             "GitHub PR body does not match the local UTF-8 body file; "
             "do not mark the PR ready until the body is repaired"
         )
+
+
+def parse_draft_value(value: str | bool | None) -> bool | None:
+    if value is None or isinstance(value, bool):
+        return value
+    normalized = value.strip().lower()
+    if normalized in {"true", "1", "yes"}:
+        return True
+    if normalized in {"false", "0", "no"}:
+        return False
+    raise PrBodyError("--draft must be true or false")
+
+
+def _assert_metadata(name: str, actual: object, expected: object | None) -> None:
+    if expected is None:
+        return
+    if actual != expected:
+        raise PrBodyError(f"GitHub PR {name} mismatch: expected {expected!r}, got {actual!r}")
+
+
+def compare_pr_metadata(
+    info: dict[str, object],
+    *,
+    title: str | None = None,
+    base: str | None = None,
+    head: str | None = None,
+    draft: bool | None = None,
+) -> None:
+    _assert_metadata("title", info.get("title"), title)
+    _assert_metadata("base", info.get("baseRefName"), base)
+    _assert_metadata("head", info.get("headRefName"), head)
+    _assert_metadata("draft", info.get("isDraft"), draft)
 
 
 def ensure_gh_available() -> None:
@@ -197,10 +229,19 @@ def fetch_pr_info(pr_selector: str) -> dict[str, object]:
     return json.loads(raw)
 
 
-def verify_pr_body(pr_selector: str, body_file: str | Path) -> dict[str, object]:
+def verify_pr_body(
+    pr_selector: str,
+    body_file: str | Path,
+    *,
+    title: str | None = None,
+    base: str | None = None,
+    head: str | None = None,
+    draft: bool | None = None,
+) -> dict[str, object]:
     validate_file(body_file)
     info = fetch_pr_info(pr_selector)
     compare_body_text(read_body_text(body_file), str(info.get("body") or ""))
+    compare_pr_metadata(info, title=title, base=base, head=head, draft=draft)
     return info
 
 
@@ -213,7 +254,7 @@ def create_pr_body(
     draft: bool = False,
 ) -> dict[str, object]:
     validate_file(body_file)
-    args = ["pr", "create", "--title", title, "--body-file", str(resolve_repo_path(body_file))]
+    args = ["pr", "create", "--title", title, "--body-file", str(resolve_body_path(body_file))]
     if base:
         args.extend(["--base", base])
     if head:
@@ -223,13 +264,21 @@ def create_pr_body(
 
     output = run_gh(args, capture_json=True).strip()
     selector = output.splitlines()[-1] if output else head or title
-    return verify_pr_body(selector, body_file)
+    return verify_pr_body(selector, body_file, title=title, base=base, head=head, draft=draft)
 
 
-def edit_pr_body(pr_selector: str, body_file: str | Path) -> dict[str, object]:
+def edit_pr_body(
+    pr_selector: str,
+    body_file: str | Path,
+    *,
+    title: str | None = None,
+    base: str | None = None,
+    head: str | None = None,
+    draft: bool | None = None,
+) -> dict[str, object]:
     validate_file(body_file)
-    run_gh(["pr", "edit", pr_selector, "--body-file", str(resolve_repo_path(body_file))])
-    return verify_pr_body(pr_selector, body_file)
+    run_gh(["pr", "edit", pr_selector, "--body-file", str(resolve_body_path(body_file))])
+    return verify_pr_body(pr_selector, body_file, title=title, base=base, head=head, draft=draft)
 
 
 def _emit_stdout(message: str) -> None:
@@ -243,6 +292,7 @@ def _emit_stderr(message: str) -> None:
 def _format_pr_info(info: dict[str, object]) -> str:
     return (
         f"PR #{info.get('number')} verified: "
+        f"title={info.get('title')!r}, "
         f"{info.get('baseRefName')} <- {info.get('headRefName')}, "
         f"draft={info.get('isDraft')}, {info.get('url')}"
     )
@@ -256,7 +306,7 @@ def build_parser() -> argparse.ArgumentParser:
 
     normalize_parser = subparsers.add_parser("normalize", help="Normalize a Markdown body to UTF-8 no BOM and LF.")
     normalize_parser.add_argument("--input", required=True)
-    normalize_parser.add_argument("--output", help=f"default: {TEMP_BODY_DIR}/<input-name>")
+    normalize_parser.add_argument("--output", help=f"default: {TEMP_BODY_DIR.as_posix()}/<input-name>")
 
     validate_parser = subparsers.add_parser("validate", help="Validate a Markdown body file.")
     validate_parser.add_argument("body_file")
@@ -264,17 +314,25 @@ def build_parser() -> argparse.ArgumentParser:
     create_parser = subparsers.add_parser("create", help="Create a PR with gh, then read back and verify the body.")
     create_parser.add_argument("--title", required=True)
     create_parser.add_argument("--body-file", required=True)
-    create_parser.add_argument("--base")
-    create_parser.add_argument("--head")
+    create_parser.add_argument("--base", required=True)
+    create_parser.add_argument("--head", required=True)
     create_parser.add_argument("--draft", action="store_true")
 
     edit_parser = subparsers.add_parser("edit", help="Edit a PR body with gh, then read back and verify it.")
     edit_parser.add_argument("--pr", required=True)
     edit_parser.add_argument("--body-file", required=True)
+    edit_parser.add_argument("--title")
+    edit_parser.add_argument("--base")
+    edit_parser.add_argument("--head")
+    edit_parser.add_argument("--draft", choices=["true", "false"])
 
-    verify_parser = subparsers.add_parser("verify", help="Read back a PR body from GitHub and compare it to a file.")
+    verify_parser = subparsers.add_parser("verify", help="Read back a PR and compare it to expected local metadata.")
     verify_parser.add_argument("--pr", required=True)
     verify_parser.add_argument("--body-file", required=True)
+    verify_parser.add_argument("--title")
+    verify_parser.add_argument("--base")
+    verify_parser.add_argument("--head")
+    verify_parser.add_argument("--draft", choices=["true", "false"])
 
     return parser
 
@@ -289,7 +347,7 @@ def main(argv: list[str] | None = None) -> int:
             _emit_stdout(f"normalized PR body: {output}")
         elif args.command == "validate":
             validate_file(args.body_file)
-            _emit_stdout(f"valid PR body: {resolve_repo_path(args.body_file)}")
+            _emit_stdout(f"valid PR body: {resolve_body_path(args.body_file)}")
         elif args.command == "create":
             info = create_pr_body(
                 title=args.title,
@@ -300,10 +358,24 @@ def main(argv: list[str] | None = None) -> int:
             )
             _emit_stdout(_format_pr_info(info))
         elif args.command == "edit":
-            info = edit_pr_body(args.pr, args.body_file)
+            info = edit_pr_body(
+                args.pr,
+                args.body_file,
+                title=args.title,
+                base=args.base,
+                head=args.head,
+                draft=parse_draft_value(args.draft),
+            )
             _emit_stdout(_format_pr_info(info))
         elif args.command == "verify":
-            info = verify_pr_body(args.pr, args.body_file)
+            info = verify_pr_body(
+                args.pr,
+                args.body_file,
+                title=args.title,
+                base=args.base,
+                head=args.head,
+                draft=parse_draft_value(args.draft),
+            )
             _emit_stdout(_format_pr_info(info))
         else:  # pragma: no cover - argparse enforces commands
             raise AssertionError(f"unknown command: {args.command}")

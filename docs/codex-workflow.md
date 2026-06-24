@@ -209,11 +209,11 @@ rg -n "<keyword>|<keyword>" <paths>
 python scripts/dev/pr_body_tool.py normalize --input <draft.md> --output .tmp/pr-bodies/<name>.md
 python scripts/dev/pr_body_tool.py validate .tmp/pr-bodies/<name>.md
 python scripts/dev/pr_body_tool.py create --title "<title>" --body-file .tmp/pr-bodies/<name>.md --base main --head <branch>
-python scripts/dev/pr_body_tool.py edit --pr <number-or-url> --body-file .tmp/pr-bodies/<name>.md
-python scripts/dev/pr_body_tool.py verify --pr <number-or-url> --body-file .tmp/pr-bodies/<name>.md
+python scripts/dev/pr_body_tool.py edit --pr <number-or-url> --body-file .tmp/pr-bodies/<name>.md --title "<title>" --base main --head <branch> --draft false
+python scripts/dev/pr_body_tool.py verify --pr <number-or-url> --body-file .tmp/pr-bodies/<name>.md --title "<title>" --base main --head <branch> --draft false
 ```
 
-- 创建或更新 PR 后，必须读回标题、正文、base/head 和 Draft 状态，确认中文未损坏；使用上述 `create` 或 `edit` 时，工具会在写入后自动读回正文并验证一致。
+- 创建或更新 PR 后，必须读回标题、正文、base/head 和 Draft 状态，确认中文未损坏；使用上述 `create` 或 `edit` 时，工具会在写入后自动读回并验证 body 与传入的 title/base/head/draft 期望值。
 
 ## PR body 清单
 
