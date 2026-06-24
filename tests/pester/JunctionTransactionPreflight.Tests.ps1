@@ -1,5 +1,49 @@
 $RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
 
+function New-TestJunctionConfig {
+    param(
+        [string]$Source = "C:\Source",
+        [string]$Target = "D:\Data\Target",
+        [string]$OnTargetConflict = "fail"
+    )
+
+    [pscustomobject]@{
+        name = "PesterJunction"
+        description = "PesterJunction"
+        source = $Source
+        target = $Target
+        required = $true
+        failurePolicy = "fail"
+        onTargetConflict = $OnTargetConflict
+        backupRetention = "keep"
+        verificationMode = "countAndSize"
+    }
+}
+
+function New-TestPathState {
+    param(
+        [bool]$Exists = $false,
+        [bool]$IsDirectory = $false,
+        [bool]$IsJunction = $false,
+        [AllowNull()]$IsEmpty = $null,
+        [string]$Target = "",
+        [string]$LinkType = "",
+        [string]$Attributes = "",
+        [AllowNull()]$SizeBytes = 0
+    )
+
+    [pscustomobject]@{
+        exists = $Exists
+        isDirectory = $IsDirectory
+        isJunction = $IsJunction
+        isEmpty = $IsEmpty
+        target = $Target
+        linkType = $LinkType
+        attributes = $Attributes
+        sizeBytes = $SizeBytes
+    }
+}
+
 Describe "Junction transaction preflight" {
     BeforeEach {
         $script:RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
@@ -8,50 +52,6 @@ Describe "Junction transaction preflight" {
         $script:PowerShell = (Get-Command powershell -ErrorAction SilentlyContinue).Source
         if ([string]::IsNullOrWhiteSpace($script:PowerShell)) {
             $script:PowerShell = (Get-Command pwsh -ErrorAction Stop).Source
-        }
-    }
-
-    function New-TestJunctionConfig {
-        param(
-            [string]$Source = "C:\Source",
-            [string]$Target = "D:\Data\Target",
-            [string]$OnTargetConflict = "fail"
-        )
-
-        [pscustomobject]@{
-            name = "PesterJunction"
-            description = "PesterJunction"
-            source = $Source
-            target = $Target
-            required = $true
-            failurePolicy = "fail"
-            onTargetConflict = $OnTargetConflict
-            backupRetention = "keep"
-            verificationMode = "countAndSize"
-        }
-    }
-
-    function New-TestPathState {
-        param(
-            [bool]$Exists = $false,
-            [bool]$IsDirectory = $false,
-            [bool]$IsJunction = $false,
-            [AllowNull()]$IsEmpty = $null,
-            [string]$Target = "",
-            [string]$LinkType = "",
-            [string]$Attributes = "",
-            [AllowNull()]$SizeBytes = 0
-        )
-
-        [pscustomobject]@{
-            exists = $Exists
-            isDirectory = $IsDirectory
-            isJunction = $IsJunction
-            isEmpty = $IsEmpty
-            target = $Target
-            linkType = $LinkType
-            attributes = $Attributes
-            sizeBytes = $SizeBytes
         }
     }
 
