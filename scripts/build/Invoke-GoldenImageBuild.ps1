@@ -15,10 +15,12 @@ $ErrorActionPreference = "Stop"
 . "$PSScriptRoot\..\common\Assert-KitElevation.ps1"
 . "$PSScriptRoot\..\common\Resolve-KitPath.ps1"
 . "$PSScriptRoot\..\common\Resolve-KitOutputPath.ps1"
+. "$PSScriptRoot\..\common\New-StepResult.ps1"
 . "$PSScriptRoot\..\common\Invoke-KitStep.ps1"
 
 $repoRoot = (Resolve-Path -LiteralPath "$PSScriptRoot\..\..").Path
 $script:BuildReportItems = @()
+$script:BuildStepResults = @()
 $script:BuildStartedAt = Get-Date
 $script:BuildRunStamp = $script:BuildStartedAt.ToString("yyyyMMdd-HHmmss")
 $script:BuildLogPath = $null
@@ -42,6 +44,69 @@ function Add-KitBuildReportItem {
         scriptPath = $ScriptPath
         reason = $Reason
     }
+}
+
+function Add-KitBuildStepResult {
+    param(
+        [Parameter(Mandatory)]
+        [string]$Name,
+
+        [Parameter(Mandatory)]
+        [string]$LegacyStatus,
+
+        [AllowEmptyString()]
+        [string]$ScriptPath,
+
+        [AllowEmptyString()]
+        [string]$Reason,
+
+        [datetime]$StartedAt = (Get-Date),
+        [datetime]$EndedAt = (Get-Date)
+    )
+
+    $status = "unchanged"
+    $stepReason = "legacy-step-completed-no-structured-result"
+    $skippedReason = ""
+    $errors = @()
+    $whatIfResult = $false
+
+    switch ($LegacyStatus) {
+        "skipped" {
+            $status = "skipped"
+            $stepReason = if ([string]::IsNullOrWhiteSpace($Reason)) { "disabled" } else { $Reason }
+            $skippedReason = $stepReason
+        }
+        "whatif" {
+            $status = "whatif"
+            $stepReason = if ([string]::IsNullOrWhiteSpace($Reason)) { "whatif-preview" } else { $Reason }
+            $whatIfResult = $true
+        }
+        "failed" {
+            $status = "failed"
+            $stepReason = $Reason
+            $errors = @($Reason)
+        }
+        default {
+            $status = "unchanged"
+            $stepReason = "legacy-step-completed-no-structured-result"
+        }
+    }
+
+    $script:BuildStepResults += New-KitStepResult `
+        -Name $Name `
+        -Required $true `
+        -Status $status `
+        -Reason $stepReason `
+        -Evidence ([pscustomobject]@{
+            scriptPath = $ScriptPath
+            legacyStatus = $LegacyStatus
+            legacyReason = $Reason
+        }) `
+        -Errors $errors `
+        -SkippedReason $skippedReason `
+        -WhatIfResult $whatIfResult `
+        -StartedAt $StartedAt `
+        -EndedAt $EndedAt
 }
 
 function Get-KitReportingSection {
@@ -126,9 +191,11 @@ function Invoke-KitTrackedStep {
         [string]$StepKind = "步骤"
     )
 
+    $stepStartedAt = Get-Date
     if (-not $Enabled) {
         Invoke-KitStep -Name $Name -ScriptPath $ScriptPath -Arguments $Arguments -Enabled $false -SupportsWhatIf $SupportsWhatIf -ForwardWhatIf $ForwardWhatIf -StepKind $StepKind
         Add-KitBuildReportItem -Name $Name -Status "skipped" -ScriptPath $ScriptPath -Reason "disabled"
+        Add-KitBuildStepResult -Name $Name -LegacyStatus "skipped" -ScriptPath $ScriptPath -Reason "disabled" -StartedAt $stepStartedAt -EndedAt (Get-Date)
         return
     }
 
@@ -137,8 +204,11 @@ function Invoke-KitTrackedStep {
         $status = if ($WhatIfPreference) { "whatif" } else { "completed" }
         $reason = if ($WhatIfPreference) { "whatif-preview" } else { "completed" }
         Add-KitBuildReportItem -Name $Name -Status $status -ScriptPath $ScriptPath -Reason $reason
+        Add-KitBuildStepResult -Name $Name -LegacyStatus $status -ScriptPath $ScriptPath -Reason $reason -StartedAt $stepStartedAt -EndedAt (Get-Date)
     } catch {
-        Add-KitBuildReportItem -Name $Name -Status "failed" -ScriptPath $ScriptPath -Reason $_.Exception.Message
+        $errorMessage = $_.Exception.Message
+        Add-KitBuildReportItem -Name $Name -Status "failed" -ScriptPath $ScriptPath -Reason $errorMessage
+        Add-KitBuildStepResult -Name $Name -LegacyStatus "failed" -ScriptPath $ScriptPath -Reason $errorMessage -StartedAt $stepStartedAt -EndedAt (Get-Date)
         throw
     }
 }
@@ -162,6 +232,7 @@ function Write-KitBuildReport {
         skipped = @($script:BuildReportItems | Where-Object { $_.status -eq "skipped" }).Count
         failed = @($script:BuildReportItems | Where-Object { $_.status -eq "failed" }).Count
     }
+    $stepSummary = Get-KitStepResultSummary -Results $script:BuildStepResults
 
     $report = [pscustomobject]@{
         generatedAt = $finishedAt.ToString("s")
@@ -174,6 +245,8 @@ function Write-KitBuildReport {
         reportType = "golden-image-build-summary"
         summary = $summary
         steps = $script:BuildReportItems
+        stepResults = $script:BuildStepResults
+        stepSummary = $stepSummary
     }
 
     $written = $false
@@ -192,6 +265,14 @@ function Write-KitBuildReport {
             "- 预演：$($summary.whatIf)",
             "- 跳过：$($summary.skipped)",
             "- 失败：$($summary.failed)",
+            "- StepResult 总数：$($stepSummary.total)",
+            "- StepResult 阻断失败：$($stepSummary.failedRequiredCount)",
+            "- StepResult changed：$($stepSummary.statusCounts.changed)",
+            "- StepResult unchanged：$($stepSummary.statusCounts.unchanged)",
+            "- StepResult skipped：$($stepSummary.statusCounts.skipped)",
+            "- StepResult manual：$($stepSummary.statusCounts.manual)",
+            "- StepResult whatif：$($stepSummary.statusCounts.whatif)",
+            "- StepResult failed：$($stepSummary.statusCounts.failed)",
             "",
             "| 步骤 | 状态 | 脚本 | 备注 |",
             "|---|---|---|---|"
@@ -203,7 +284,7 @@ function Write-KitBuildReport {
 
         $written = Write-KitTextFile -Path $Path -Content $lines -Description "构建报告" -Required:$Required
     } else {
-        $written = Write-KitTextFile -Path $Path -Content ($report | ConvertTo-Json -Depth 8) -Description "构建报告" -Required:$Required
+        $written = Write-KitTextFile -Path $Path -Content ($report | ConvertTo-Json -Depth 12) -Description "构建报告" -Required:$Required
     }
 
     if ($written) {

@@ -14,10 +14,12 @@ $ErrorActionPreference = "Stop"
 . "$PSScriptRoot\..\common\Assert-KitElevation.ps1"
 . "$PSScriptRoot\..\common\Resolve-KitPath.ps1"
 . "$PSScriptRoot\..\common\Resolve-KitOutputPath.ps1"
+. "$PSScriptRoot\..\common\New-StepResult.ps1"
 . "$PSScriptRoot\..\common\Invoke-KitStep.ps1"
 
 $repoRoot = (Resolve-Path -LiteralPath "$PSScriptRoot\..\..").Path
 $script:PostDeployReportItems = @()
+$script:PostDeployStepResults = @()
 $script:PostDeployStartedAt = Get-Date
 $script:PostDeployRunStamp = $script:PostDeployStartedAt.ToString("yyyyMMdd-HHmmss")
 $script:PostDeployLogPath = $null
@@ -43,6 +45,69 @@ function Add-KitPostDeployReportItem {
         scriptPath = $ScriptPath
         reason = $Reason
     }
+}
+
+function Add-KitPostDeployStepResult {
+    param(
+        [Parameter(Mandatory)]
+        [string]$Name,
+
+        [Parameter(Mandatory)]
+        [string]$LegacyStatus,
+
+        [AllowEmptyString()]
+        [string]$ScriptPath,
+
+        [AllowEmptyString()]
+        [string]$Reason,
+
+        [datetime]$StartedAt = (Get-Date),
+        [datetime]$EndedAt = (Get-Date)
+    )
+
+    $status = "unchanged"
+    $stepReason = "legacy-step-completed-no-structured-result"
+    $skippedReason = ""
+    $errors = @()
+    $whatIfResult = $false
+
+    switch ($LegacyStatus) {
+        "skipped" {
+            $status = "skipped"
+            $stepReason = if ([string]::IsNullOrWhiteSpace($Reason)) { "disabled" } else { $Reason }
+            $skippedReason = $stepReason
+        }
+        "whatif" {
+            $status = "whatif"
+            $stepReason = if ([string]::IsNullOrWhiteSpace($Reason)) { "whatif-preview" } else { $Reason }
+            $whatIfResult = $true
+        }
+        "failed" {
+            $status = "failed"
+            $stepReason = $Reason
+            $errors = @($Reason)
+        }
+        default {
+            $status = "unchanged"
+            $stepReason = "legacy-step-completed-no-structured-result"
+        }
+    }
+
+    $script:PostDeployStepResults += New-KitStepResult `
+        -Name $Name `
+        -Required $true `
+        -Status $status `
+        -Reason $stepReason `
+        -Evidence ([pscustomobject]@{
+            scriptPath = $ScriptPath
+            legacyStatus = $LegacyStatus
+            legacyReason = $Reason
+        }) `
+        -Errors $errors `
+        -SkippedReason $skippedReason `
+        -WhatIfResult $whatIfResult `
+        -StartedAt $StartedAt `
+        -EndedAt $EndedAt
 }
 
 function Get-KitReportingSection {
@@ -127,9 +192,11 @@ function Invoke-KitTrackedStep {
         [string]$StepKind = "步骤"
     )
 
+    $stepStartedAt = Get-Date
     if (-not $Enabled) {
         Invoke-KitStep -Name $Name -ScriptPath $ScriptPath -Arguments $Arguments -Enabled $false -SupportsWhatIf $SupportsWhatIf -ForwardWhatIf $ForwardWhatIf -StepKind $StepKind
         Add-KitPostDeployReportItem -Name $Name -Status "skipped" -ScriptPath $ScriptPath -Reason "disabled"
+        Add-KitPostDeployStepResult -Name $Name -LegacyStatus "skipped" -ScriptPath $ScriptPath -Reason "disabled" -StartedAt $stepStartedAt -EndedAt (Get-Date)
         return
     }
 
@@ -138,8 +205,11 @@ function Invoke-KitTrackedStep {
         $status = if ($WhatIfPreference) { "whatif" } else { "completed" }
         $reason = if ($WhatIfPreference) { "whatif-preview" } else { "completed" }
         Add-KitPostDeployReportItem -Name $Name -Status $status -ScriptPath $ScriptPath -Reason $reason
+        Add-KitPostDeployStepResult -Name $Name -LegacyStatus $status -ScriptPath $ScriptPath -Reason $reason -StartedAt $stepStartedAt -EndedAt (Get-Date)
     } catch {
-        Add-KitPostDeployReportItem -Name $Name -Status "failed" -ScriptPath $ScriptPath -Reason $_.Exception.Message
+        $errorMessage = $_.Exception.Message
+        Add-KitPostDeployReportItem -Name $Name -Status "failed" -ScriptPath $ScriptPath -Reason $errorMessage
+        Add-KitPostDeployStepResult -Name $Name -LegacyStatus "failed" -ScriptPath $ScriptPath -Reason $errorMessage -StartedAt $stepStartedAt -EndedAt (Get-Date)
         throw
     }
 }
@@ -163,6 +233,7 @@ function Write-KitPostDeployReport {
         skipped = @($script:PostDeployReportItems | Where-Object { $_.status -eq "skipped" }).Count
         failed = @($script:PostDeployReportItems | Where-Object { $_.status -eq "failed" }).Count
     }
+    $stepSummary = Get-KitStepResultSummary -Results $script:PostDeployStepResults
 
     $report = [pscustomobject]@{
         generatedAt = $finishedAt.ToString("s")
@@ -178,6 +249,8 @@ function Write-KitPostDeployReport {
         reportType = "post-deploy-summary"
         summary = $summary
         steps = $script:PostDeployReportItems
+        stepResults = $script:PostDeployStepResults
+        stepSummary = $stepSummary
     }
 
     $written = $false
@@ -199,6 +272,14 @@ function Write-KitPostDeployReport {
             "- 预演：$($summary.whatIf)",
             "- 跳过：$($summary.skipped)",
             "- 失败：$($summary.failed)",
+            "- StepResult 总数：$($stepSummary.total)",
+            "- StepResult 阻断失败：$($stepSummary.failedRequiredCount)",
+            "- StepResult changed：$($stepSummary.statusCounts.changed)",
+            "- StepResult unchanged：$($stepSummary.statusCounts.unchanged)",
+            "- StepResult skipped：$($stepSummary.statusCounts.skipped)",
+            "- StepResult manual：$($stepSummary.statusCounts.manual)",
+            "- StepResult whatif：$($stepSummary.statusCounts.whatif)",
+            "- StepResult failed：$($stepSummary.statusCounts.failed)",
             "",
             "| 步骤 | 状态 | 脚本 | 备注 |",
             "|---|---|---|---|"
@@ -210,7 +291,7 @@ function Write-KitPostDeployReport {
 
         $written = Write-KitTextFile -Path $Path -Content $lines -Description "部署后恢复报告" -Required:$Required
     } else {
-        $written = Write-KitTextFile -Path $Path -Content ($report | ConvertTo-Json -Depth 8) -Description "部署后恢复报告" -Required:$Required
+        $written = Write-KitTextFile -Path $Path -Content ($report | ConvertTo-Json -Depth 12) -Description "部署后恢复报告" -Required:$Required
     }
 
     if ($written) {
