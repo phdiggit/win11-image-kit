@@ -25,18 +25,28 @@ Describe "Orchestrator StepResult reports" {
         $powerShell = $script:TestPowerShell
         $reportPath = & $script:NewOrchestratorTempPath ".json"
         $logPath = & $script:NewOrchestratorTempPath ".log"
+        $stdoutPath = & $script:NewOrchestratorTempPath ".out"
+        $stderrPath = & $script:NewOrchestratorTempPath ".err"
 
         try {
             $scriptPath = Join-Path $script:RepoRoot "scripts\build\Invoke-GoldenImageBuild.ps1"
-            & $powerShell -NoProfile -ExecutionPolicy Bypass -File $scriptPath `
-                -WhatIf `
-                -SkipPortableApps `
-                -SkipSystemTweaks `
-                -SkipDevRuntime `
-                -SkipMiddleware `
-                -ReportPath $reportPath `
-                -LogPath $logPath 2>&1 | Out-Null
-            $exitCode = $LASTEXITCODE
+            $process = Start-Process -FilePath $powerShell -ArgumentList @(
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                $scriptPath,
+                "-WhatIf",
+                "-SkipPortableApps",
+                "-SkipSystemTweaks",
+                "-SkipDevRuntime",
+                "-SkipMiddleware",
+                "-ReportPath",
+                $reportPath,
+                "-LogPath",
+                $logPath
+            ) -Wait -PassThru -RedirectStandardOutput $stdoutPath -RedirectStandardError $stderrPath -WindowStyle Hidden
+            $exitCode = [int]$process.ExitCode
 
             Assert-KitEqual $exitCode 0
             Assert-KitNotNullOrEmpty (Get-ChildItem -LiteralPath $reportPath -ErrorAction SilentlyContinue)
@@ -56,7 +66,7 @@ Describe "Orchestrator StepResult reports" {
             Assert-KitEqual @($report.stepResults | Where-Object { $_.status -eq "completed" }).Count 0
             Assert-KitNullOrEmpty (Get-ChildItem -LiteralPath (Join-Path $script:RepoRoot "logs") -Filter "project-config-validation-*" -ErrorAction SilentlyContinue)
         } finally {
-            Remove-Item -LiteralPath $reportPath,$logPath -Force -ErrorAction SilentlyContinue
+            Remove-Item -LiteralPath $reportPath,$logPath,$stdoutPath,$stderrPath -Force -ErrorAction SilentlyContinue
         }
     }
 
@@ -66,16 +76,28 @@ Describe "Orchestrator StepResult reports" {
         $installerPath = & $script:NewOrchestratorTempPath ".json"
         $userExperiencePath = & $script:NewOrchestratorTempPath ".json"
         $logPath = & $script:NewOrchestratorTempPath ".log"
+        $stdoutPath = & $script:NewOrchestratorTempPath ".out"
+        $stderrPath = & $script:NewOrchestratorTempPath ".err"
 
         try {
             $scriptPath = Join-Path $script:RepoRoot "scripts\postdeploy\Invoke-PostDeploy.ps1"
-            & $powerShell -NoProfile -ExecutionPolicy Bypass -File $scriptPath `
-                -WhatIf `
-                -SummaryReportPath $summaryPath `
-                -ReportPath $installerPath `
-                -UserExperienceReportPath $userExperiencePath `
-                -LogPath $logPath 2>&1 | Out-Null
-            $exitCode = $LASTEXITCODE
+            $process = Start-Process -FilePath $powerShell -ArgumentList @(
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                $scriptPath,
+                "-WhatIf",
+                "-SummaryReportPath",
+                $summaryPath,
+                "-ReportPath",
+                $installerPath,
+                "-UserExperienceReportPath",
+                $userExperiencePath,
+                "-LogPath",
+                $logPath
+            ) -Wait -PassThru -RedirectStandardOutput $stdoutPath -RedirectStandardError $stderrPath -WindowStyle Hidden
+            $exitCode = [int]$process.ExitCode
 
             Assert-KitEqual $exitCode 0
             Assert-KitNotNullOrEmpty (Get-ChildItem -LiteralPath $summaryPath -ErrorAction SilentlyContinue)
@@ -93,7 +115,7 @@ Describe "Orchestrator StepResult reports" {
             Assert-KitEqual $report.stepSummary.exitCode 0
             Assert-KitEqual @($report.stepResults | Where-Object { $_.status -eq "completed" }).Count 0
         } finally {
-            Remove-Item -LiteralPath $summaryPath,$installerPath,$userExperiencePath,$logPath -Force -ErrorAction SilentlyContinue
+            Remove-Item -LiteralPath $summaryPath,$installerPath,$userExperiencePath,$logPath,$stdoutPath,$stderrPath -Force -ErrorAction SilentlyContinue
         }
     }
 
@@ -104,6 +126,8 @@ Describe "Orchestrator StepResult reports" {
         $installerPath = & $script:NewOrchestratorTempPath ".json"
         $userExperiencePath = & $script:NewOrchestratorTempPath ".json"
         $logPath = & $script:NewOrchestratorTempPath ".log"
+        $stdoutPath = & $script:NewOrchestratorTempPath ".out"
+        $stderrPath = & $script:NewOrchestratorTempPath ".err"
 
         try {
             $defaultScopePath = Join-Path $script:RepoRoot "manifests\customization-scope.json"
@@ -114,14 +138,25 @@ Describe "Orchestrator StepResult reports" {
             Set-Content -LiteralPath $scopePath -Value ($scope | ConvertTo-Json -Depth 12) -Encoding UTF8
 
             $scriptPath = Join-Path $script:RepoRoot "scripts\postdeploy\Invoke-PostDeploy.ps1"
-            & $powerShell -NoProfile -ExecutionPolicy Bypass -File $scriptPath `
-                -WhatIf `
-                -ScopeManifestPath $scopePath `
-                -SummaryReportPath $summaryPath `
-                -ReportPath $installerPath `
-                -UserExperienceReportPath $userExperiencePath `
-                -LogPath $logPath 2>&1 | Out-Null
-            $exitCode = $LASTEXITCODE
+            $process = Start-Process -FilePath $powerShell -ArgumentList @(
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                $scriptPath,
+                "-WhatIf",
+                "-ScopeManifestPath",
+                $scopePath,
+                "-SummaryReportPath",
+                $summaryPath,
+                "-ReportPath",
+                $installerPath,
+                "-UserExperienceReportPath",
+                $userExperiencePath,
+                "-LogPath",
+                $logPath
+            ) -Wait -PassThru -RedirectStandardOutput $stdoutPath -RedirectStandardError $stderrPath -WindowStyle Hidden
+            $exitCode = [int]$process.ExitCode
 
             if ($exitCode -eq 0) {
                 throw "Expected postdeploy to return a non-zero exit code for a missing software manifest."
@@ -140,7 +175,7 @@ Describe "Orchestrator StepResult reports" {
             Assert-KitEqual $report.stepSummary.exitCode 1
             Assert-KitEqual @($report.stepResults | Where-Object { $_.status -eq "completed" }).Count 0
         } finally {
-            Remove-Item -LiteralPath $scopePath,$summaryPath,$installerPath,$userExperiencePath,$logPath -Force -ErrorAction SilentlyContinue
+            Remove-Item -LiteralPath $scopePath,$summaryPath,$installerPath,$userExperiencePath,$logPath,$stdoutPath,$stderrPath -Force -ErrorAction SilentlyContinue
         }
     }
 }
