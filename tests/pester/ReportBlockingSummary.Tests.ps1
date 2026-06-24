@@ -5,6 +5,9 @@
 Describe "Report blocking summary" {
     BeforeAll {
         $script:RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
+        . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
+        . (Join-Path $script:RepoRoot "scripts\common\Get-KitChildReportSummary.ps1")
+
         $script:PowerShell = (Get-Command powershell -ErrorAction SilentlyContinue).Source
         if ([string]::IsNullOrWhiteSpace($script:PowerShell)) {
             $script:PowerShell = (Get-Command pwsh -ErrorAction Stop).Source
