@@ -263,6 +263,34 @@ Describe "Software package testCommand results" {
         Assert-KitEqual $result.Report.packageResults[0].testCommand.exitCode 3010
     }
 
+    It "fails required package when testCommand times out" {
+        $tempRoot = & $script:NewTempRoot
+        $commandPath = Join-Path (Join-Path $tempRoot "packages") "test-timeout.cmd"
+        @(
+            "@echo off",
+            "ping -n 6 127.0.0.1 > nul",
+            "exit /b 0"
+        ) | Set-Content -LiteralPath $commandPath -Encoding ASCII
+
+        $result = & $script:InvokePackage -Policy @{
+            required = $true
+            failurePolicy = "fail"
+            allowMissingSource = $false
+        } -TestCommand @{
+            command = $commandPath
+            successExitCodes = @(0)
+            timeoutSeconds = 1
+        }
+
+        Assert-KitEqual $result.Thrown $true
+        Assert-KitEqual $result.Report.packageResults[0].status "failed"
+        Assert-KitEqual $result.Report.packageResults[0].testCommand.status "failed"
+        Assert-KitEqual $result.Report.packageResults[0].testCommand.reason "timeout"
+        Assert-KitMatch $result.Report.packageResults[0].testCommand.error "timed out"
+        Assert-KitEqual $result.Report.packageSummary.testCommandFailedCount 1
+        Assert-KitEqual $result.Report.packageSummary.exitCode 1
+    }
+
     It "records notRun for WhatIf and non post-deploy stages" {
         $tempRoot = & $script:NewTempRoot
         $commandPath = & $script:WriteFakeCommand -TempRoot $tempRoot -Name "test-notrun.cmd" -ExitCode 0
