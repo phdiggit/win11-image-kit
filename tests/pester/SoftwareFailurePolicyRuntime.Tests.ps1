@@ -229,9 +229,11 @@ try {
                 [switch]$RequireAdmin
             )
 
-            if ($RequireAdmin -and -not (& $script:CanRunActualPostDeploy)) {
-                return [pscustomobject]@{
-                    SkippedActual = $true
+            if ($RequireAdmin) {
+                if ($env:GITHUB_ACTIONS -eq "true" -or -not (& $script:CanRunActualPostDeploy)) {
+                    return [pscustomobject]@{
+                        SkippedActual = $true
+                    }
                 }
             }
 
