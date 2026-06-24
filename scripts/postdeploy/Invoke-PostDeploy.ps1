@@ -5,6 +5,7 @@ param(
     [string]$LogPath,
     [string]$SummaryReportPath,
     [string]$ReportPath,
+    [string]$JunctionReportPath,
     [string]$ServiceReportPath,
     [string]$UserExperienceReportPath,
     [switch]$StrictUserExperience
@@ -27,6 +28,7 @@ $script:PostDeployRunStamp = $script:PostDeployStartedAt.ToString("yyyyMMdd-HHmm
 $script:PostDeployLogPath = $null
 $script:PostDeployStatus = "running"
 $script:InstallerReportOutputPath = $null
+$script:JunctionReportOutputPath = $null
 $script:ServiceReportOutputPath = $null
 $script:UserExperienceReportOutputPath = $null
 
@@ -258,6 +260,16 @@ function Write-KitPostDeployReport {
         $serviceReports += $serviceReport
     }
     $serviceReportSummary = Get-KitServiceReportAggregate -ServiceReports $serviceReports
+    $junctionReport = Get-KitJunctionReportReference `
+        -Name "数据目录 Junction 状态" `
+        -StepName "数据目录 Junction" `
+        -Path $script:JunctionReportOutputPath `
+        -Required:$junctionReportSpec.required
+    $junctionReports = @()
+    if ($null -ne $junctionReport) {
+        $junctionReports += $junctionReport
+    }
+    $junctionReportSummary = Get-KitJunctionReportAggregate -JunctionReports $junctionReports
 
     $report = [pscustomobject]@{
         generatedAt = $finishedAt.ToString("s")
@@ -269,6 +281,7 @@ function Write-KitPostDeployReport {
         strictUserExperience = [bool]$StrictUserExperience
         logPath = $script:PostDeployLogPath
         installerReportPath = $script:InstallerReportOutputPath
+        junctionReportPath = $script:JunctionReportOutputPath
         serviceReportPath = $script:ServiceReportOutputPath
         userExperienceReportPath = $script:UserExperienceReportOutputPath
         reportType = "post-deploy-summary"
@@ -277,6 +290,7 @@ function Write-KitPostDeployReport {
         stepResults = $script:PostDeployStepResults
         stepSummary = $stepSummary
         packageReports = $packageReports
+        junctionReports = $junctionReports
         serviceReports = $serviceReports
     }
 
@@ -294,6 +308,7 @@ function Write-KitPostDeployReport {
             "- 严格用户体验恢复：$($report.strictUserExperience)",
             "- 日志文件：$($report.logPath)",
             "- 安装器报告：$($report.installerReportPath)",
+            "- Junction 状态报告：$($report.junctionReportPath)",
             "- 服务状态报告：$($report.serviceReportPath)",
             "- 用户体验报告：$($report.userExperienceReportPath)",
             "- 完成：$($summary.completed)",
@@ -314,6 +329,13 @@ function Write-KitPostDeployReport {
             "- 软件包跳过：$($packageReportSummary.skipped)",
             "- 软件包人工处理：$($packageReportSummary.manual)",
             "- 软件包预演：$($packageReportSummary.whatif)",
+            "- Junction 子报告：$($junctionReportSummary.reports)",
+            "- Junction 子报告存在：$($junctionReportSummary.existing)",
+            "- Junction 阻断失败：$($junctionReportSummary.failedRequired)",
+            "- Junction 缺失：$($junctionReportSummary.junctionMissingCount)",
+            "- Junction 类型不符：$($junctionReportSummary.junctionNotJunctionCount)",
+            "- Junction 目标不符：$($junctionReportSummary.junctionTargetMismatchCount)",
+            "- Junction 未查询：$($junctionReportSummary.junctionNotRunCount)",
             "- 服务子报告：$($serviceReportSummary.reports)",
             "- 服务子报告存在：$($serviceReportSummary.existing)",
             "- 服务阻断失败：$($serviceReportSummary.failedRequired)",
@@ -327,6 +349,16 @@ function Write-KitPostDeployReport {
 
         foreach ($packageReport in $packageReports) {
             $lines += "| $($packageReport.name) | $($packageReport.stepName) | $($packageReport.exists) | $($packageReport.path) | $($packageReport.error) |"
+        }
+
+        $lines += @(
+            "",
+            "| Junction 子报告 | 步骤 | 存在 | 路径 | 摘要错误 |",
+            "|---|---|---|---|---|"
+        )
+
+        foreach ($junctionReportItem in $junctionReports) {
+            $lines += "| $($junctionReportItem.name) | $($junctionReportItem.stepName) | $($junctionReportItem.exists) | $($junctionReportItem.path) | $($junctionReportItem.error) |"
         }
 
         $lines += @(
@@ -392,6 +424,12 @@ $installerReportSpec = Resolve-KitArtifactSpec `
     -FileName ("postdeploy-installer-{0}.json" -f $script:PostDeployRunStamp) `
     -PathMap $pathMap
 
+$junctionReportSpec = Resolve-KitArtifactSpec `
+    -ExplicitPath $JunctionReportPath `
+    -AutoDirectory $(if ($null -ne $reportingConfig) { [string]$reportingConfig.reportDirectory } else { $null }) `
+    -FileName ("postdeploy-junctions-{0}.json" -f $script:PostDeployRunStamp) `
+    -PathMap $pathMap
+
 $serviceReportSpec = Resolve-KitArtifactSpec `
     -ExplicitPath $ServiceReportPath `
     -AutoDirectory $(if ($null -ne $reportingConfig) { [string]$reportingConfig.reportDirectory } else { $null }) `
@@ -405,6 +443,7 @@ $userExperienceReportSpec = Resolve-KitArtifactSpec `
     -PathMap $pathMap
 
 $script:InstallerReportOutputPath = $installerReportSpec.path
+$script:JunctionReportOutputPath = $junctionReportSpec.path
 $script:ServiceReportOutputPath = $serviceReportSpec.path
 $script:UserExperienceReportOutputPath = $userExperienceReportSpec.path
 
@@ -444,6 +483,8 @@ try {
         -Arguments @{
             ManifestPath = Resolve-KitRepoPath -RepoRoot $repoRoot -Path $scopeConfig.applications.junctionsManifest
             PathsManifestPath = $PathsManifestPath
+            ReportPath = $script:JunctionReportOutputPath
+            ReportRequired = $junctionReportSpec.required
         }
 
     Invoke-KitTrackedStep `

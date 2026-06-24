@@ -251,3 +251,122 @@ function Get-KitServiceReportAggregate {
 
     [pscustomobject]$aggregate
 }
+
+function Get-KitJunctionReportReference {
+    param(
+        [Parameter(Mandatory)]
+        [ValidateNotNullOrEmpty()]
+        [string]$Name,
+
+        [AllowEmptyString()]
+        [string]$StepName,
+
+        [AllowEmptyString()]
+        [string]$Path,
+
+        [switch]$Required,
+
+        [string]$ReportType = "junction-state-verification"
+    )
+
+    if ([string]::IsNullOrWhiteSpace($Path)) {
+        return $null
+    }
+
+    $exists = Test-Path -LiteralPath $Path
+    $junctionSummary = $null
+    $errorCode = $null
+
+    if (-not $exists) {
+        $errorCode = "report-missing"
+    } else {
+        try {
+            $childReport = Get-Content -LiteralPath $Path -Raw -Encoding UTF8 | ConvertFrom-Json
+            if ($childReport.PSObject.Properties.Name -contains "junctionSummary") {
+                $junctionSummary = Copy-KitPackageSummaryWithoutResults -PackageSummary $childReport.junctionSummary
+            } else {
+                $errorCode = "junction-summary-missing"
+            }
+        } catch {
+            $errorCode = "report-parse-failed"
+            if ($Required) {
+                throw "Junction report parse failed: $Path - $($_.Exception.Message)"
+            }
+        }
+    }
+
+    [pscustomobject][ordered]@{
+        name = $Name
+        stepName = $StepName
+        reportType = $ReportType
+        path = $Path
+        required = [bool]$Required
+        exists = [bool]$exists
+        junctionSummary = $junctionSummary
+        error = $errorCode
+    }
+}
+
+function Get-KitJunctionReportAggregate {
+    param(
+        [AllowNull()]
+        $JunctionReports = @()
+    )
+
+    $reports = @($JunctionReports | Where-Object { $null -ne $_ })
+    $aggregate = [ordered]@{
+        reports = $reports.Count
+        existing = 0
+        missing = 0
+        failedRequired = 0
+        failedOptional = 0
+        skipped = 0
+        manual = 0
+        whatif = 0
+        junctionCheckedCount = 0
+        junctionMissingCount = 0
+        junctionNotJunctionCount = 0
+        junctionTargetMismatchCount = 0
+        junctionNotRunCount = 0
+    }
+
+    foreach ($report in $reports) {
+        if ([bool]$report.exists) {
+            $aggregate.existing++
+        } else {
+            $aggregate.missing++
+        }
+
+        if ($null -eq $report.junctionSummary) {
+            continue
+        }
+
+        $summary = $report.junctionSummary
+        $aggregate.failedRequired += [int]$summary.failedRequiredCount
+        $aggregate.failedOptional += [int]$summary.failedOptionalCount
+
+        if ($null -ne $summary.statusCounts) {
+            $aggregate.skipped += [int]$summary.statusCounts.skipped
+            $aggregate.manual += [int]$summary.statusCounts.manual
+            $aggregate.whatif += [int]$summary.statusCounts.whatif
+        }
+
+        if ($null -ne $summary.PSObject.Properties["junctionCheckedCount"]) {
+            $aggregate.junctionCheckedCount += [int]$summary.junctionCheckedCount
+        }
+        if ($null -ne $summary.PSObject.Properties["junctionMissingCount"]) {
+            $aggregate.junctionMissingCount += [int]$summary.junctionMissingCount
+        }
+        if ($null -ne $summary.PSObject.Properties["junctionNotJunctionCount"]) {
+            $aggregate.junctionNotJunctionCount += [int]$summary.junctionNotJunctionCount
+        }
+        if ($null -ne $summary.PSObject.Properties["junctionTargetMismatchCount"]) {
+            $aggregate.junctionTargetMismatchCount += [int]$summary.junctionTargetMismatchCount
+        }
+        if ($null -ne $summary.PSObject.Properties["junctionNotRunCount"]) {
+            $aggregate.junctionNotRunCount += [int]$summary.junctionNotRunCount
+        }
+    }
+
+    [pscustomobject]$aggregate
+}
