@@ -15,6 +15,7 @@ $ErrorActionPreference = "Stop"
 . "$PSScriptRoot\..\common\Resolve-KitPath.ps1"
 . "$PSScriptRoot\..\common\Resolve-KitOutputPath.ps1"
 . "$PSScriptRoot\..\common\New-StepResult.ps1"
+. "$PSScriptRoot\..\common\Get-KitChildReportSummary.ps1"
 . "$PSScriptRoot\..\common\Invoke-KitStep.ps1"
 
 $repoRoot = (Resolve-Path -LiteralPath "$PSScriptRoot\..\..").Path
@@ -234,6 +235,17 @@ function Write-KitPostDeployReport {
         failed = @($script:PostDeployReportItems | Where-Object { $_.status -eq "failed" }).Count
     }
     $stepSummary = Get-KitStepResultSummary -Results $script:PostDeployStepResults
+    $installerPackageReport = Get-KitPackageReportReference `
+        -Name "部署后软件" `
+        -StepName "部署后软件" `
+        -Path $script:InstallerReportOutputPath `
+        -Required:$installerReportSpec.required `
+        -ReportType "post-deploy-installer-plan"
+    $packageReports = @()
+    if ($null -ne $installerPackageReport) {
+        $packageReports += $installerPackageReport
+    }
+    $packageReportSummary = Get-KitPackageReportAggregate -PackageReports $packageReports
 
     $report = [pscustomobject]@{
         generatedAt = $finishedAt.ToString("s")
@@ -251,6 +263,7 @@ function Write-KitPostDeployReport {
         steps = $script:PostDeployReportItems
         stepResults = $script:PostDeployStepResults
         stepSummary = $stepSummary
+        packageReports = $packageReports
     }
 
     $written = $false
@@ -280,6 +293,22 @@ function Write-KitPostDeployReport {
             "- StepResult manual：$($stepSummary.statusCounts.manual)",
             "- StepResult whatif：$($stepSummary.statusCounts.whatif)",
             "- StepResult failed：$($stepSummary.statusCounts.failed)",
+            "- 软件包子报告：$($packageReportSummary.reports)",
+            "- 软件包子报告存在：$($packageReportSummary.existing)",
+            "- 软件包失败：$($packageReportSummary.failedRequired + $packageReportSummary.failedOptional)",
+            "- 软件包跳过：$($packageReportSummary.skipped)",
+            "- 软件包人工处理：$($packageReportSummary.manual)",
+            "- 软件包预演：$($packageReportSummary.whatif)",
+            "",
+            "| 软件包子报告 | 步骤 | 存在 | 路径 | 摘要错误 |",
+            "|---|---|---|---|---|"
+        )
+
+        foreach ($packageReport in $packageReports) {
+            $lines += "| $($packageReport.name) | $($packageReport.stepName) | $($packageReport.exists) | $($packageReport.path) | $($packageReport.error) |"
+        }
+
+        $lines += @(
             "",
             "| 步骤 | 状态 | 脚本 | 备注 |",
             "|---|---|---|---|"
