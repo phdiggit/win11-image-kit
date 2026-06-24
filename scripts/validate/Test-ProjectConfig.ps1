@@ -297,6 +297,24 @@ function Test-JsonSchemaNode {
     if (Test-JsonProperty -Object $Schema -Name "type") {
         $expectedType = [string](Get-JsonPropertyValue -Object $Schema -Name "type")
         $actualType = Get-JsonTypeName -Value $Value
+        if ($expectedType -eq "integer") {
+            if ($actualType -ne "number") {
+                $errors += "$Path 类型错误：期望 integer，实际 $actualType"
+                return $errors
+            }
+
+            try {
+                $numericValue = [double]$Value
+                if ($numericValue -ne [Math]::Floor($numericValue)) {
+                    $errors += "$Path 类型错误：期望 integer，实际 number"
+                }
+            } catch {
+                $errors += "$Path 类型错误：期望 integer，实际 $actualType"
+            }
+
+            $actualType = "integer"
+        }
+
         if ($expectedType -eq "array" -and $actualType -ne "array") {
             if ($null -eq $Value) {
                 $arrayItems = @()
@@ -331,6 +349,17 @@ function Test-JsonSchemaNode {
         $pattern = [string](Get-JsonPropertyValue -Object $Schema -Name "pattern")
         if ([string]$Value -notmatch $pattern) {
             $errors += "$Path 不匹配正则：$pattern"
+        }
+    }
+
+    if ((Test-JsonProperty -Object $Schema -Name "minimum") -and $null -ne $Value) {
+        $minimum = [double](Get-JsonPropertyValue -Object $Schema -Name "minimum")
+        try {
+            if ([double]$Value -lt $minimum) {
+                $errors += "$Path 小于最小值：$minimum"
+            }
+        } catch {
+            $errors += "$Path 无法按数字比较 minimum：$minimum"
         }
     }
 
@@ -709,6 +738,60 @@ function Test-SoftwareManifest {
 
                 if ($numericExitCode -lt 0 -or $numericExitCode -ne [Math]::Floor($numericExitCode)) {
                     Write-CheckResult -Level ERROR -Message ("安装器 successExitCodes 必须是非负整数：{0} -> {1}" -f $package.name, $successExitCode)
+                }
+            }
+        }
+
+        if (Test-JsonProperty -Object $package -Name "testCommand") {
+            $testCommand = Get-JsonPropertyValue -Object $package -Name "testCommand"
+            if ((Get-JsonTypeName -Value $testCommand) -ne "object") {
+                Write-CheckResult -Level ERROR -Message ("软件包 testCommand 必须是 object：{0}" -f $package.name)
+            } else {
+                if (-not (Test-JsonProperty -Object $testCommand -Name "command") -or [string]::IsNullOrWhiteSpace([string]$testCommand.command)) {
+                    Write-CheckResult -Level ERROR -Message ("软件包 testCommand 缺少 command：{0}" -f $package.name)
+                }
+
+                if (Test-JsonProperty -Object $testCommand -Name "arguments") {
+                    foreach ($argument in @($testCommand.arguments)) {
+                        if ((Get-JsonTypeName -Value $argument) -ne "string") {
+                            Write-CheckResult -Level ERROR -Message ("软件包 testCommand.arguments 必须是 string 数组：{0}" -f $package.name)
+                        }
+                    }
+                }
+
+                if (Test-JsonProperty -Object $testCommand -Name "successExitCodes") {
+                    $testSuccessExitCodes = @($testCommand.successExitCodes)
+                    if ($testSuccessExitCodes.Count -eq 0) {
+                        Write-CheckResult -Level ERROR -Message ("软件包 testCommand.successExitCodes 不能为空：{0}" -f $package.name)
+                    }
+
+                    foreach ($successExitCode in $testSuccessExitCodes) {
+                        $numericExitCode = $null
+                        try {
+                            $numericExitCode = [double]$successExitCode
+                        } catch {
+                            Write-CheckResult -Level ERROR -Message ("软件包 testCommand.successExitCodes 包含无效值：{0} -> {1}" -f $package.name, $successExitCode)
+                            continue
+                        }
+
+                        if ($numericExitCode -lt 0 -or $numericExitCode -ne [Math]::Floor($numericExitCode)) {
+                            Write-CheckResult -Level ERROR -Message ("软件包 testCommand.successExitCodes 必须是非负整数：{0} -> {1}" -f $package.name, $successExitCode)
+                        }
+                    }
+                }
+
+                if (Test-JsonProperty -Object $testCommand -Name "timeoutSeconds") {
+                    $timeoutSeconds = [double]$testCommand.timeoutSeconds
+                    if ($timeoutSeconds -lt 1 -or $timeoutSeconds -ne [Math]::Floor($timeoutSeconds)) {
+                        Write-CheckResult -Level ERROR -Message ("软件包 testCommand.timeoutSeconds 必须是正整数：{0} -> {1}" -f $package.name, $testCommand.timeoutSeconds)
+                    }
+                }
+
+                if (Test-JsonProperty -Object $testCommand -Name "failurePolicy") {
+                    $testFailurePolicy = [string]$testCommand.failurePolicy
+                    if ($allowedFailurePolicies -notcontains $testFailurePolicy) {
+                        Write-CheckResult -Level ERROR -Message ("软件包 testCommand.failurePolicy 无效：{0} -> {1}" -f $package.name, $testFailurePolicy)
+                    }
                 }
             }
         }

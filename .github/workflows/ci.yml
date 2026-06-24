@@ -81,6 +81,7 @@ jobs:
               "tests/pester/SoftwarePolicy.Tests.ps1",
               "tests/pester/SoftwareSourcePolicyRuntime.Tests.ps1",
               "tests/pester/SoftwarePackageResults.Tests.ps1",
+              "tests/pester/SoftwarePackageTestCommand.Tests.ps1",
               "tests/pester/PackageReportLinks.Tests.ps1",
               "tests/pester/SoftwareFailurePolicyRuntime.Tests.ps1"
           )

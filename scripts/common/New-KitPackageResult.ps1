@@ -63,6 +63,9 @@ function New-KitPackageResult {
 
         [bool]$RebootRequired = $false,
 
+        [AllowNull()]
+        $TestCommand = $null,
+
         [datetime]$StartedAt = (Get-Date),
 
         [datetime]$EndedAt = (Get-Date)
@@ -133,7 +136,7 @@ function New-KitPackageResult {
 
     $stepResult = New-KitStepResult @stepArgs
 
-    [pscustomobject][ordered]@{
+    $result = [ordered]@{
         name = $stepResult.name
         required = $stepResult.required
         status = $stepResult.status
@@ -158,4 +161,10 @@ function New-KitPackageResult {
         startedAt = $stepResult.startedAt
         endedAt = $stepResult.endedAt
     }
+
+    if ($null -ne $TestCommand) {
+        $result["testCommand"] = $TestCommand
+    }
+
+    [pscustomobject]$result
 }

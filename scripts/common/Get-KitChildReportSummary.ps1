@@ -93,6 +93,10 @@ function Get-KitPackageReportAggregate {
         skipped = 0
         manual = 0
         whatif = 0
+        testCommandRunCount = 0
+        testCommandSuccessCount = 0
+        testCommandFailedCount = 0
+        testCommandNotRunCount = 0
     }
 
     foreach ($report in $reports) {
@@ -114,6 +118,19 @@ function Get-KitPackageReportAggregate {
             $aggregate.skipped += [int]$summary.statusCounts.skipped
             $aggregate.manual += [int]$summary.statusCounts.manual
             $aggregate.whatif += [int]$summary.statusCounts.whatif
+        }
+
+        if ($null -ne $summary.PSObject.Properties["testCommandRunCount"]) {
+            $aggregate.testCommandRunCount += [int]$summary.testCommandRunCount
+        }
+        if ($null -ne $summary.PSObject.Properties["testCommandSuccessCount"]) {
+            $aggregate.testCommandSuccessCount += [int]$summary.testCommandSuccessCount
+        }
+        if ($null -ne $summary.PSObject.Properties["testCommandFailedCount"]) {
+            $aggregate.testCommandFailedCount += [int]$summary.testCommandFailedCount
+        }
+        if ($null -ne $summary.PSObject.Properties["testCommandNotRunCount"]) {
+            $aggregate.testCommandNotRunCount += [int]$summary.testCommandNotRunCount
         }
     }
 

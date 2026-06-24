@@ -51,7 +51,31 @@
           "silentInstall": { "type": "boolean" },
           "successExitCodes": {
             "type": "array",
-            "items": { "type": "number" }
+            "items": { "type": "integer" }
+          },
+          "testCommand": {
+            "type": "object",
+            "required": ["command"],
+            "properties": {
+              "command": { "type": "string" },
+              "arguments": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "successExitCodes": {
+                "type": "array",
+                "items": { "type": "integer" }
+              },
+              "timeoutSeconds": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "failurePolicy": {
+                "type": "string",
+                "enum": ["fail", "skip", "manual"]
+              }
+            },
+            "additionalProperties": false
           },
           "uninstall": {
             "anyOf": [
