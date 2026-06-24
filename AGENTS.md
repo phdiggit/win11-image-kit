@@ -132,7 +132,8 @@ secrets/
 9. 避免 PowerShell 与 Bash 多层嵌套引号。多关键词搜索优先用一次 `rg -n "A|B|C" <paths>` 或等价单条简单命令完成。
 10. 在 Windows PowerShell 5.1 中不要使用 `&&` 或 `||` 串联命令；需要连续步骤时拆成单条命令，或使用原生 PowerShell 控制流。
 11. 中文 PR body、评论正文或其它需要交给 `gh --body-file` 的文本，必须先写入明确的 UTF-8 文件，再用 `--body-file <file>` 读取。
-12. 处理中文路径、`git status`、changed files、diff 范围核对时，优先使用 `git -c core.quotepath=false status --short` 和 `git -c core.quotepath=false diff --name-only`。
+12. 如果仓库存在 `scripts/dev/pr_body_tool.py`，创建或更新包含中文、多行 Markdown 或 code fence 的 PR body 时，必须先写入 `.tmp/pr-bodies/*.md`，并使用 `scripts/dev/pr_body_tool.py validate/create/edit/verify`；不要用 PowerShell 管道或命令行字符串直接把中文正文传给 `gh --body-file -`；create/edit 后必须读回验证 body、title、base/head 和 Draft 状态。纯英文短正文可按需使用该工具。
+13. 处理中文路径、`git status`、changed files、diff 范围核对时，优先使用 `git -c core.quotepath=false status --short` 和 `git -c core.quotepath=false diff --name-only`。
 
 ## 改动方法
 

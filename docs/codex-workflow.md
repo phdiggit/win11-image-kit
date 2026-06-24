@@ -178,6 +178,7 @@ rg -n "<keyword>|<keyword>" <paths>
 ## 临时文件和报告位置
 
 - 任务临时文件优先放在系统临时目录或仓库已忽略的本地目录。
+- PR body、评论正文等需要交给 `gh --body-file` 的 Markdown 临时文件放在 `.tmp/pr-bodies/`，并通过 `scripts/dev/pr_body_tool.py normalize` 生成或刷新。
 - 轻量日志和报告按 manifest 中 reporting 设置或任务卡指定位置输出。
 - 不把大型日志、镜像、安装包、压缩包、授权文件或临时输出提交到 Git。
 - 普通验证不要强制写 NAS；只有任务明确要求或 manifest 显式启用时才使用对应输出路径。
@@ -201,8 +202,18 @@ rg -n "<keyword>|<keyword>" <paths>
 
 - 当前 shell 能可靠执行时使用当前 shell，不无必要地嵌套 PowerShell 与 Bash。
 - Windows PowerShell 5.1 中不要用 `&&` 或 `||` 串联命令；连续步骤拆成单条命令或使用原生控制流。
-- 中文 PR body、评论正文或其它需要交给 `gh --body-file` 的文本，先写入明确的 UTF-8 文件，再传给 `gh`。
-- 创建或更新 PR 后，读回标题、正文、base/head 和 Draft 状态，确认中文未损坏。
+- 中文 PR body、评论正文或其它需要交给 `gh --body-file` 的文本，先写入明确的 UTF-8 文件，再传给 `gh`；不要通过 PowerShell 管道或命令行字符串直接传中文正文。
+- PR body 使用 `scripts/dev/pr_body_tool.py` 处理：
+
+```bash
+python scripts/dev/pr_body_tool.py normalize --input <draft.md> --output .tmp/pr-bodies/<name>.md
+python scripts/dev/pr_body_tool.py validate .tmp/pr-bodies/<name>.md
+python scripts/dev/pr_body_tool.py create --title "<title>" --body-file .tmp/pr-bodies/<name>.md --base main --head <branch>
+python scripts/dev/pr_body_tool.py edit --pr <number-or-url> --body-file .tmp/pr-bodies/<name>.md --title "<title>" --base main --head <branch> --draft false
+python scripts/dev/pr_body_tool.py verify --pr <number-or-url> --body-file .tmp/pr-bodies/<name>.md --title "<title>" --base main --head <branch> --draft false
+```
+
+- 创建或更新 PR 后，必须读回标题、正文、base/head 和 Draft 状态，确认中文未损坏；使用上述 `create` 或 `edit` 时，工具会在写入后自动读回并验证 body 与传入的 title/base/head/draft 期望值。
 
 ## PR body 清单
 

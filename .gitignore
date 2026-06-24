@@ -14,8 +14,11 @@
 # Logs and temp output
 logs/*
 !logs/.gitkeep
+.tmp/
 *.log
 *.tmp
+__pycache__/
+*.pyc
 
 # Secrets / licenses
 *.key
