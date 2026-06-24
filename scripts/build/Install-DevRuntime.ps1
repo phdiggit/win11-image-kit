@@ -3,7 +3,9 @@ param(
     [string]$ManifestPath = "manifests/software.json",
     [string]$PathsManifestPath = "manifests/paths.json",
     [ValidateSet("golden-image", "post-deploy", "manual", "all")]
-    [string]$Stage = "golden-image"
+    [string]$Stage = "golden-image",
+    [string]$PackageReportPath,
+    [switch]$PackageReportRequired
 )
 
 $ErrorActionPreference = "Stop"
@@ -22,4 +24,6 @@ Install-KitSoftwarePackages `
     -IncludeTypes @("archive", "zip") `
     -WorkloadName "开发运行时" `
     -CompletionMessage "开发运行时准备完成" `
+    -PackageReportPath $PackageReportPath `
+    -PackageReportRequired:$PackageReportRequired `
     -WhatIf:$WhatIfPreference

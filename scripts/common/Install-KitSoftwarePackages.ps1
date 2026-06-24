@@ -4,6 +4,7 @@
 . "$PSScriptRoot\Resolve-KitPath.ps1"
 . "$PSScriptRoot\Resolve-KitPackagePolicy.ps1"
 . "$PSScriptRoot\Test-KitPackageHash.ps1"
+. "$PSScriptRoot\New-KitPackageResult.ps1"
 
 function Test-KitCategoryMatch {
     param(
@@ -126,6 +127,111 @@ function Invoke-KitMissingSourcePolicy {
     }
 }
 
+function New-KitMissingSourcePackageResult {
+    param(
+        [Parameter(Mandatory)]
+        $Package,
+
+        [Parameter(Mandatory)]
+        $Policy,
+
+        [Parameter(Mandatory)]
+        [string]$Source,
+
+        [Parameter(Mandatory)]
+        [string]$Destination,
+
+        [Parameter(Mandatory)]
+        [string]$Detail,
+
+        [datetime]$StartedAt = (Get-Date)
+    )
+
+    $action = Get-KitPackageMissingSourceAction -Policy $Policy
+    $status = "skipped"
+    $errors = @()
+    $skippedReason = ""
+    $manualAction = ""
+
+    if ($action -eq "fail") {
+        $status = "failed"
+        $errors = @("source-missing: $Detail")
+    } elseif ($action -eq "manual") {
+        $status = "manual"
+        $manualAction = "provide-source"
+    } else {
+        $skippedReason = "source-missing"
+    }
+
+    return New-KitPackageResult `
+        -Package $Package `
+        -Status $status `
+        -Reason "source-missing" `
+        -Message "软件包安装介质缺失或不可访问" `
+        -Source $Source `
+        -Destination $Destination `
+        -Policy $Policy `
+        -Errors $errors `
+        -SkippedReason $skippedReason `
+        -ManualAction $manualAction `
+        -StartedAt $StartedAt `
+        -EndedAt (Get-Date)
+}
+
+function Write-KitSoftwarePackageReport {
+    param(
+        [AllowEmptyString()]
+        [string]$Path,
+
+        [switch]$Required,
+
+        [string]$ManifestPath,
+
+        [string]$PathsManifestPath,
+
+        [string]$WorkloadName,
+
+        [string]$Stage,
+
+        [string[]]$IncludeCategories = @(),
+
+        [string[]]$ExcludeCategories = @(),
+
+        [string[]]$IncludeTypes = @(),
+
+        [AllowNull()]
+        $PackageResults = @()
+    )
+
+    if ([string]::IsNullOrWhiteSpace($Path)) {
+        return
+    }
+
+    $report = [pscustomobject][ordered]@{
+        generatedAt = (Get-Date).ToString("s")
+        manifestPath = $ManifestPath
+        pathsManifestPath = $PathsManifestPath
+        reportType = "software-package-results"
+        workloadName = $WorkloadName
+        stage = $Stage
+        includeCategories = @($IncludeCategories)
+        excludeCategories = @($ExcludeCategories)
+        includeTypes = @($IncludeTypes)
+        packageSummary = Get-KitStepResultSummary -Results $PackageResults
+        packageResults = @($PackageResults)
+    }
+
+    $written = Write-KitTextFile `
+        -Path $Path `
+        -Content ($report | ConvertTo-Json -Depth 12) `
+        -Description "软件包结果报告" `
+        -Required:$Required
+
+    if ($written) {
+        Write-KitLog "软件包结果报告已写入：$Path" "OK"
+    }
+}
+
 function Install-KitSoftwarePackages {
     [CmdletBinding(SupportsShouldProcess)]
     param(
@@ -144,119 +250,176 @@ function Install-KitSoftwarePackages {
 
         [string]$WorkloadName = "软件包",
 
-        [string]$CompletionMessage = "软件包处理完成"
+        [string]$CompletionMessage = "软件包处理完成",
+
+        [string]$PackageReportPath,
+
+        [switch]$PackageReportRequired
     )
 
     Write-KitLog "读取软件清单：$ManifestPath"
     $manifest = Get-Content -LiteralPath $ManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
     $pathMap = Get-KitPathMap -ManifestPath $PathsManifestPath
+    $packageResults = @()
 
-    foreach ($package in $manifest.packages) {
-        if ($null -ne $package.enabled -and -not $package.enabled) {
-            Write-KitLog "软件包已停用，跳过：$($package.name)"
-            continue
-        }
+    try {
+        foreach ($package in $manifest.packages) {
+            if ($null -ne $package.enabled -and -not $package.enabled) {
+                Write-KitLog "软件包已停用，跳过：$($package.name)"
+                continue
+            }
 
-        $packageStage = [string]$package.stage
-        if ([string]::IsNullOrWhiteSpace($packageStage)) {
-            throw "软件包缺少 stage：$($package.name)"
-        }
+            $packageStage = [string]$package.stage
+            if ([string]::IsNullOrWhiteSpace($packageStage)) {
+                throw "软件包缺少 stage：$($package.name)"
+            }
 
-        if ($Stage -ne "all" -and $packageStage -ne $Stage) {
-            Write-KitLog "软件包阶段不匹配，跳过：$($package.name) ($packageStage)"
-            continue
-        }
+            if ($Stage -ne "all" -and $packageStage -ne $Stage) {
+                Write-KitLog "软件包阶段不匹配，跳过：$($package.name) ($packageStage)"
+                continue
+            }
 
-        $category = [string]$package.category
-        if (-not (Test-KitCategoryMatch -Category $category -Patterns $IncludeCategories)) {
-            Write-KitLog "软件包分类不匹配，跳过：$($package.name) ($category)"
-            continue
-        }
+            $category = [string]$package.category
+            if (-not (Test-KitCategoryMatch -Category $category -Patterns $IncludeCategories)) {
+                Write-KitLog "软件包分类不匹配，跳过：$($package.name) ($category)"
+                continue
+            }
 
-        if ($ExcludeCategories.Count -gt 0 -and (Test-KitCategoryMatch -Category $category -Patterns $ExcludeCategories)) {
-            Write-KitLog "软件包分类由其他入口处理，跳过：$($package.name) ($category)"
-            continue
-        }
+            if ($ExcludeCategories.Count -gt 0 -and (Test-KitCategoryMatch -Category $category -Patterns $ExcludeCategories)) {
+                Write-KitLog "软件包分类由其他入口处理，跳过：$($package.name) ($category)"
+                continue
+            }
 
-        if ($IncludeTypes.Count -gt 0 -and $IncludeTypes -notcontains [string]$package.type) {
-            Write-KitLog "当前入口不处理该类型，跳过：$($package.name) ($($package.type))"
-            continue
-        }
+            if ($IncludeTypes.Count -gt 0 -and $IncludeTypes -notcontains [string]$package.type) {
+                Write-KitLog "当前入口不处理该类型，跳过：$($package.name) ($($package.type))"
+                continue
+            }
 
-        $archiveFormat = [string]$package.archiveFormat
-        if ([string]$package.type -eq "zip" -and [string]::IsNullOrWhiteSpace($archiveFormat)) {
-            $archiveFormat = "zip"
-        }
+            $packageStartedAt = Get-Date
+            $packageResultRecorded = $false
+            $policy = Resolve-KitPackagePolicy -Package $package
+            $source = Resolve-KitPath -Path $package.source -PathMap $pathMap
+            $destination = Resolve-KitPath -Path $package.destination -PathMap $pathMap
 
-        if ([string]::IsNullOrWhiteSpace($archiveFormat)) {
-            throw "归档包缺少 archiveFormat：$($package.name)"
-        }
-
-        Write-KitLog "处理$WorkloadName：$($package.name)"
-        $policy = Resolve-KitPackagePolicy -Package $package
-        $source = Resolve-KitPath -Path $package.source -PathMap $pathMap
-        $destination = Resolve-KitPath -Path $package.destination -PathMap $pathMap
-
-        if ([string]::IsNullOrWhiteSpace($source)) {
-            throw "软件包缺少 source：$($package.name)"
-        }
-
-        if ([string]::IsNullOrWhiteSpace($destination)) {
-            throw "软件包缺少 destination：$($package.name)"
-        }
-
-        try {
-            $sourceExists = Test-Path -LiteralPath $source -ErrorAction Stop
-        } catch {
-            Invoke-KitMissingSourcePolicy -Package $package -Policy $policy -Source $source -Detail $_.Exception.Message
-            continue
-        }
-
-        if (-not $sourceExists) {
-            Invoke-KitMissingSourcePolicy -Package $package -Policy $policy -Source $source -Detail "Test-Path=false"
-            continue
-        }
-
-        Test-KitPackageHash -Source $source -ExpectedHash ([string]$package.sha256)
-        Expand-KitArchive -Source $source -Destination $destination -ArchiveFormat $archiveFormat -WhatIf:$WhatIfPreference
-
-        if ($package.env) {
-            $package.env.PSObject.Properties | ForEach-Object {
-                $value = Resolve-KitPath -Path $_.Value -PathMap $pathMap
-                if ($PSCmdlet.ShouldProcess($_.Name, "写入系统环境变量")) {
-                    [Environment]::SetEnvironmentVariable($_.Name, $value, "Machine")
-                    Write-KitLog "写入系统环境变量：$($_.Name)"
+            try {
+                $archiveFormat = [string]$package.archiveFormat
+                if ([string]$package.type -eq "zip" -and [string]::IsNullOrWhiteSpace($archiveFormat)) {
+                    $archiveFormat = "zip"
                 }
-            }
-        }
 
-        if ($package.path) {
-            $machinePath = [Environment]::GetEnvironmentVariable("Path", "Machine")
-            $pathItems = @($machinePath -split ';' | Where-Object { -not [string]::IsNullOrWhiteSpace($_) })
-            $pendingPathItems = @()
-
-            foreach ($pathEntry in @($package.path)) {
-                $resolvedPathEntry = Resolve-KitPath -Path $pathEntry -PathMap $pathMap
-                if ($pathItems -notcontains $resolvedPathEntry) {
-                    $pathItems += $resolvedPathEntry
-                    $pendingPathItems += $resolvedPathEntry
+                if ([string]::IsNullOrWhiteSpace($archiveFormat)) {
+                    throw "归档包缺少 archiveFormat：$($package.name)"
                 }
-            }
 
-            if ($pendingPathItems.Count -gt 0 -and $PSCmdlet.ShouldProcess("Machine PATH", "追加 $($pendingPathItems -join ';')")) {
-                [Environment]::SetEnvironmentVariable("Path", ($pathItems -join ';'), "Machine")
-                foreach ($pendingPathItem in $pendingPathItems) {
-                    Write-KitLog "追加系统 PATH：$pendingPathItem"
+                Write-KitLog "处理$WorkloadName：$($package.name)"
+
+                if ([string]::IsNullOrWhiteSpace($source)) {
+                    throw "软件包缺少 source：$($package.name)"
                 }
+
+                if ([string]::IsNullOrWhiteSpace($destination)) {
+                    throw "软件包缺少 destination：$($package.name)"
+                }
+
+                try {
+                    $sourceExists = Test-Path -LiteralPath $source -ErrorAction Stop
+                } catch {
+                    $packageResults += New-KitMissingSourcePackageResult -Package $package -Policy $policy -Source $source -Destination $destination -Detail $_.Exception.Message -StartedAt $packageStartedAt
+                    $packageResultRecorded = $true
+                    Invoke-KitMissingSourcePolicy -Package $package -Policy $policy -Source $source -Detail $_.Exception.Message
+                    continue
+                }
+
+                if (-not $sourceExists) {
+                    $packageResults += New-KitMissingSourcePackageResult -Package $package -Policy $policy -Source $source -Destination $destination -Detail "Test-Path=false" -StartedAt $packageStartedAt
+                    $packageResultRecorded = $true
+                    Invoke-KitMissingSourcePolicy -Package $package -Policy $policy -Source $source -Detail "Test-Path=false"
+                    continue
+                }
+
+                Test-KitPackageHash -Source $source -ExpectedHash ([string]$package.sha256)
+                Expand-KitArchive -Source $source -Destination $destination -ArchiveFormat $archiveFormat -WhatIf:$WhatIfPreference
+
+                if ($package.env) {
+                    $package.env.PSObject.Properties | ForEach-Object {
+                        $value = Resolve-KitPath -Path $_.Value -PathMap $pathMap
+                        if ($PSCmdlet.ShouldProcess($_.Name, "写入系统环境变量")) {
+                            [Environment]::SetEnvironmentVariable($_.Name, $value, "Machine")
+                            Write-KitLog "写入系统环境变量：$($_.Name)"
+                        }
+                    }
+                }
+
+                if ($package.path) {
+                    $machinePath = [Environment]::GetEnvironmentVariable("Path", "Machine")
+                    $pathItems = @($machinePath -split ';' | Where-Object { -not [string]::IsNullOrWhiteSpace($_) })
+                    $pendingPathItems = @()
+
+                    foreach ($pathEntry in @($package.path)) {
+                        $resolvedPathEntry = Resolve-KitPath -Path $pathEntry -PathMap $pathMap
+                        if ($pathItems -notcontains $resolvedPathEntry) {
+                            $pathItems += $resolvedPathEntry
+                            $pendingPathItems += $resolvedPathEntry
+                        }
+                    }
+
+                    if ($pendingPathItems.Count -gt 0 -and $PSCmdlet.ShouldProcess("Machine PATH", "追加 $($pendingPathItems -join ';')")) {
+                        [Environment]::SetEnvironmentVariable("Path", ($pathItems -join ';'), "Machine")
+                        foreach ($pendingPathItem in $pendingPathItems) {
+                            Write-KitLog "追加系统 PATH：$pendingPathItem"
+                        }
+                    }
+                }
+
+                if ($package.postInstall) {
+                    foreach ($step in @($package.postInstall)) {
+                        Invoke-KitPostInstall -Step $step -PathMap $pathMap -WhatIf:$WhatIfPreference
+                    }
+                }
+
+                $status = if ($WhatIfPreference) { "whatif" } else { "changed" }
+                $reason = if ($WhatIfPreference) { "whatif-preview" } else { "completed" }
+                $packageResults += New-KitPackageResult `
+                    -Package $package `
+                    -Status $status `
+                    -Reason $reason `
+                    -Source $source `
+                    -Destination $destination `
+                    -Policy $policy `
+                    -StartedAt $packageStartedAt `
+                    -EndedAt (Get-Date)
+                $packageResultRecorded = $true
+            } catch {
+                if (-not $packageResultRecorded) {
+                    $packageResults += New-KitPackageResult `
+                        -Package $package `
+                        -Status "failed" `
+                        -Reason "package-processing-failed" `
+                        -Message "软件包处理失败" `
+                        -Source $source `
+                        -Destination $destination `
+                        -Policy $policy `
+                        -Errors @($_.Exception.Message) `
+                        -StartedAt $packageStartedAt `
+                        -EndedAt (Get-Date)
+                }
+
+                throw
             }
         }
 
-        if ($package.postInstall) {
-            foreach ($step in @($package.postInstall)) {
-                Invoke-KitPostInstall -Step $step -PathMap $pathMap -WhatIf:$WhatIfPreference
-            }
-        }
+        Write-KitLog $CompletionMessage "OK"
+    } finally {
+        Write-KitSoftwarePackageReport `
+            -Path $PackageReportPath `
+            -Required:$PackageReportRequired `
+            -ManifestPath $ManifestPath `
+            -PathsManifestPath $PathsManifestPath `
+            -WorkloadName $WorkloadName `
+            -Stage $Stage `
+            -IncludeCategories $IncludeCategories `
+            -ExcludeCategories $ExcludeCategories `
+            -IncludeTypes $IncludeTypes `
+            -PackageResults $packageResults
     }
-
-    Write-KitLog $CompletionMessage "OK"
 }
