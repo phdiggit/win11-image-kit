@@ -1,0 +1,136 @@
+name: Windows CI
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+      - codex/**
+
+jobs:
+  validate:
+    name: Validate
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show PowerShell 7 version
+        shell: pwsh
+        run: |
+          $PSVersionTable
+
+      - name: Show Windows PowerShell version
+        shell: powershell
+        run: |
+          $PSVersionTable
+
+      - name: Show Windows PowerShell test modules
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+          Get-Module -ListAvailable Pester, PSScriptAnalyzer | Select-Object Name, Version, Path | Format-Table -AutoSize
+
+      - name: Run JSON parse check with Windows PowerShell
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+          Get-ChildItem -Path manifests,schemas -Recurse -Filter *.json | ForEach-Object {
+              Get-Content -LiteralPath $_.FullName -Raw -Encoding UTF8 | ConvertFrom-Json | Out-Null
+          }
+
+      - name: Run PowerShell parse check with Windows PowerShell
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+          Get-ChildItem -Path scripts -Recurse -Filter *.ps1 | ForEach-Object {
+              [scriptblock]::Create((Get-Content -LiteralPath $_.FullName -Raw -Encoding UTF8)) | Out-Null
+          }
+
+      - name: Run project config validation with Windows PowerShell
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+          & .\scripts\validate\Test-ProjectConfig.ps1
+
+      - name: Run PSScriptAnalyzer with Windows PowerShell
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+          if (-not (Get-Command Invoke-ScriptAnalyzer -ErrorAction SilentlyContinue)) {
+              Write-Warning "PSScriptAnalyzer is not available on this runner. This baseline reports the missing module without blocking CI."
+              return
+          }
+          $results = @(Invoke-ScriptAnalyzer -Path scripts -Recurse -Settings .\PSScriptAnalyzerSettings.psd1)
+          if ($results.Count -gt 0) {
+              $results | Format-Table -AutoSize
+              Write-Warning ("PSScriptAnalyzer reported {0} diagnostics. This baseline reports diagnostics without blocking CI." -f $results.Count)
+          } else {
+              Write-Host "PSScriptAnalyzer reported 0 diagnostics."
+          }
+
+      - name: Run Pester tests with Windows PowerShell
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+          $pester = Import-Module Pester -Force -PassThru
+          if ($pester.Version.Major -ge 5) {
+              Invoke-Pester -Path tests/pester -CI
+          } else {
+              Invoke-Pester -Path tests/pester
+          }
+
+      - name: Run JSON parse check with PowerShell 7
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          Get-ChildItem -Path manifests,schemas -Recurse -Filter *.json | ForEach-Object {
+              Get-Content -LiteralPath $_.FullName -Raw -Encoding UTF8 | ConvertFrom-Json | Out-Null
+          }
+
+      - name: Run PowerShell parse check with PowerShell 7
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          Get-ChildItem -Path scripts -Recurse -Filter *.ps1 | ForEach-Object {
+              [scriptblock]::Create((Get-Content -LiteralPath $_.FullName -Raw -Encoding UTF8)) | Out-Null
+          }
+
+      - name: Run project config validation with PowerShell 7
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          & .\scripts\validate\Test-ProjectConfig.ps1
+
+      - name: Run PSScriptAnalyzer with PowerShell 7
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          if (-not (Get-Command Invoke-ScriptAnalyzer -ErrorAction SilentlyContinue)) {
+              Write-Warning "PSScriptAnalyzer is not available on this runner. This baseline reports the missing module without blocking CI."
+              return
+          }
+          $results = @(Invoke-ScriptAnalyzer -Path scripts -Recurse -Settings .\PSScriptAnalyzerSettings.psd1)
+          if ($results.Count -gt 0) {
+              $results | Format-Table -AutoSize
+              Write-Warning ("PSScriptAnalyzer reported {0} diagnostics. This baseline reports diagnostics without blocking CI." -f $results.Count)
+          } else {
+              Write-Host "PSScriptAnalyzer reported 0 diagnostics."
+          }
+
+      - name: Run Pester tests with PowerShell 7
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $pester = Import-Module Pester -Force -PassThru -ErrorAction SilentlyContinue
+          if ($null -eq $pester) {
+              Write-Warning "Pester is not available in PowerShell 7 on this runner. Windows PowerShell runs the Pester baseline in this workflow."
+              return
+          }
+          if ($pester.Version.Major -ge 5) {
+              Invoke-Pester -Path tests/pester -CI
+          } else {
+              Invoke-Pester -Path tests/pester
+          }
