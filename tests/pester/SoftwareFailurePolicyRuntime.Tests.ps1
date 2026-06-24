@@ -17,16 +17,6 @@ Describe "Software failure policy runtime" {
         $script:TempRoots = @()
         $script:WrongHash = "0000000000000000000000000000000000000000000000000000000000000000"
 
-        $script:IsAdministrator = {
-            try {
-                $identity = [Security.Principal.WindowsIdentity]::GetCurrent()
-                $principal = New-Object Security.Principal.WindowsPrincipal($identity)
-                return $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
-            } catch {
-                return $false
-            }
-        }
-
         $script:NewTempRoot = {
             $tempRoot = Join-Path ([IO.Path]::GetTempPath()) ("win11-image-kit-failure-policy-{0}" -f ([guid]::NewGuid().ToString("N")))
             New-Item -ItemType Directory -Path $tempRoot -Force | Out-Null
@@ -134,6 +124,33 @@ Describe "Software failure policy runtime" {
             }
         }
 
+        $script:CanRunActualPostDeploy = {
+            $tempRoot = & $script:NewTempRoot
+            $stdoutPath = Join-Path $tempRoot "elevation.stdout.txt"
+            $stderrPath = Join-Path $tempRoot "elevation.stderr.txt"
+            $assertScript = Join-Path $script:RepoRoot "scripts\common\Assert-KitElevation.ps1"
+            $command = @"
+`$ErrorActionPreference = 'Stop'
+. '$assertScript'
+try {
+    Assert-KitElevation -Operation 'pester actual installer check'
+    exit 0
+} catch {
+    exit 1
+}
+"@
+            $process = Start-Process `
+                -FilePath $script:PowerShell `
+                -ArgumentList @("-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", $command) `
+                -RedirectStandardOutput $stdoutPath `
+                -RedirectStandardError $stderrPath `
+                -Wait `
+                -PassThru `
+                -WindowStyle Hidden
+
+            return ([int]$process.ExitCode -eq 0)
+        }
+
         $script:InvokeProcess = {
             param(
                 [Parameter(Mandatory)]
@@ -212,7 +229,7 @@ Describe "Software failure policy runtime" {
                 [switch]$RequireAdmin
             )
 
-            if ($RequireAdmin -and -not (& $script:IsAdministrator)) {
+            if ($RequireAdmin -and -not (& $script:CanRunActualPostDeploy)) {
                 return [pscustomobject]@{
                     SkippedActual = $true
                 }
