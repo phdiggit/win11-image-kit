@@ -46,6 +46,7 @@ logs/                 仅保留 .gitkeep，本地日志不提交
 12. Issue #6 已由维护者人工关闭；收口范围和证据链见 [Issue #6 Completion Summary](docs/12-issue6-completion-summary.md)
 13. Issue #7 Junction 事务迁移收口验收见 [Issue #7 Junction Transaction Acceptance](docs/13-issue7-junction-transaction-acceptance.md)
 14. Issue #7 Junction 事务迁移人工关闭准备见 [Issue #7 Close Preparation](docs/14-issue7-close-preparation.md)
+15. Issue #7 main 验证证据见 [Issue #7 Main Validation Evidence](docs/15-issue7-main-validation-evidence.md)
 
 常规配置验证：
 
