@@ -29,7 +29,10 @@ Describe "Issue 12 build lock guardrails" {
             "tests/pester/BuildLockHash.Tests.ps1",
             "tests/pester/BuildLockValidation.Tests.ps1",
             "tests/pester/BuildLockReport.Tests.ps1",
-            "tests/pester/Issue12BuildLock.Tests.ps1"
+            "tests/pester/Issue12BuildLock.Tests.ps1",
+            "tests/pester/Issue12BuildLockAcceptance.Tests.ps1",
+            "tests/pester/Issue12ClosePrep.Tests.ps1",
+            "tests/pester/Issue12MainValidationEvidence.Tests.ps1"
         )) {
             Assert-KitMatch $workflow ([regex]::Escape($testPath))
         }
