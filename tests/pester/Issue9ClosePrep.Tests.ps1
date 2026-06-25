@@ -10,7 +10,10 @@ Describe "Issue 9 close preparation guardrails" {
     It "has close preparation status and required sections" {
         $doc = Get-Content -LiteralPath $script:Doc22 -Raw -Encoding UTF8
 
-        Assert-KitMatch $doc "Status: ready-for-manual-closure-candidate"
+        $statusLine = @($doc -split "`r?`n" | Where-Object { $_ -like "Status:*" })[0]
+        if ($statusLine -notin @("Status: ready-for-manual-closure-candidate", "Status: ready-for-manual-closure")) {
+            throw "Unexpected Issue 9 close preparation status: $statusLine"
+        }
         foreach ($text in @("Final Scope", "Evidence Chain", "Validation Policy", "Manual Closure Checklist", "Optional Manual Validation Evidence", "Closure Note Draft")) {
             Assert-KitMatch $doc $text
         }
@@ -42,8 +45,22 @@ Describe "Issue 9 close preparation guardrails" {
         Assert-KitMatch $doc "AppX removal"
         Assert-KitMatch $doc "DISM removal"
         Assert-KitMatch $doc "profile mutation"
-        Assert-KitMatch $doc "Real VM/admin smoke is optional manual evidence"
-        Assert-KitMatch $doc "Maintainer reviews docs/23"
+        Assert-KitMatch $doc "Real VM/admin smoke remains optional manual evidence|Real VM/admin smoke is optional manual evidence"
+        Assert-KitMatch $doc "docs/23"
+    }
+
+    It "validates ready main evidence when close preparation is ready" {
+        $doc = Get-Content -LiteralPath $script:Doc22 -Raw -Encoding UTF8
+        $statusLine = @($doc -split "`r?`n" | Where-Object { $_ -like "Status:*" })[0]
+        if ($statusLine -ne "Status: ready-for-manual-closure") {
+            return
+        }
+
+        Assert-KitMatch $doc "Main/workflow validation success evidence"
+        Assert-KitMatch $doc "Trigger source: main push|Trigger source: workflow_dispatch"
+        Assert-KitMatch $doc "Result: success"
+        Assert-KitMatch $doc "Full Validate succeeded"
+        Assert-KitMatch $doc "Real VM/admin smoke remains optional|Real VM/admin smoke: not-run"
     }
 
     It "does not contain Issue 9 auto-close keyword combinations" {

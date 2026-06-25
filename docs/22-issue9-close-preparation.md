@@ -1,8 +1,8 @@
 # Issue #9 Close Preparation
 
-Status: ready-for-manual-closure-candidate
+Status: ready-for-manual-closure
 
-本页是 Issue #9 的人工收口候选说明。它不关闭 Issue，也不声称 main/workflow evidence 已完成；真实 main evidence 由 `docs/23-issue9-main-validation-evidence.md` 记录。
+本页是 Issue #9 的人工收口 ready 说明。它不关闭 Issue；main/workflow evidence 由 `docs/23-issue9-main-validation-evidence.md` 记录。
 
 ## Final Scope
 
@@ -29,7 +29,7 @@ Status: ready-for-manual-closure-candidate
 
 ## Validation Policy
 
-PR Fast CI validates schema, fixture inventory, readiness rules, report fields, CLI fixture behavior, mutation guardrails, pending evidence semantics, and manual closure wording. PR Fast CI must not run Sysprep, AppX removal, DISM removal, or profile mutation. Main/workflow evidence belongs in docs/23; without real evidence, this page remains a candidate. Real VM/admin smoke is optional manual evidence, not an automated requirement.
+PR Fast CI validates schema, fixture inventory, readiness rules, report fields, CLI fixture behavior, mutation guardrails, evidence semantics, and manual closure wording. PR Fast CI must not run Sysprep, AppX removal, DISM removal, or profile mutation. Main/workflow validation success evidence is recorded in docs/23. Real VM/admin smoke remains optional manual evidence and is not required for this ready state unless maintainers decide otherwise.
 
 ## Manual Closure Checklist
 
@@ -43,7 +43,12 @@ PR Fast CI validates schema, fixture inventory, readiness rules, report fields, 
 
 ## Optional Manual Validation Evidence
 
-- Main/workflow validation: pending in docs/23.
+- Main/workflow validation: success.
+- Trigger source: main push.
+- Main SHA: f69d5e16647228f9aeeccb8ddb4577ebec92a748.
+- Workflow run: https://github.com/phdiggit/win11-image-kit/actions/runs/28179331088.
+- Result: success.
+- Notes: Windows CI / Full Validate succeeded on the main push after PR #57 was merged.
 - Real VM/admin smoke: not-run.
 - Operator: not-provided.
 - Date: not-provided.
@@ -51,4 +56,4 @@ PR Fast CI validates schema, fixture inventory, readiness rules, report fields, 
 
 ## Closure Note Draft
 
-Issue #9 has an audit-only Sysprep AppX readiness gate, fixture-safe inventory seam, structured JSON report, CLI entrypoint, PR Fast CI guardrails, and manual evidence scaffold. Main/workflow evidence should be reviewed from docs/23 before the maintainer changes the Issue state.
+Issue #9 has an audit-only Sysprep AppX readiness gate, fixture-safe inventory seam, structured JSON report, CLI entrypoint, PR Fast CI guardrails, and successful main push Windows CI / Full Validate evidence recorded in docs/23. Real VM/admin smoke remains optional and not-run. The maintainer can review the evidence chain before changing the Issue state manually.

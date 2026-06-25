@@ -14,11 +14,13 @@ Describe "Issue 9 Sysprep AppX acceptance guardrails" {
     It "has the acceptance document with required sections" {
         $doc = Get-Content -LiteralPath $script:Doc21 -Raw -Encoding UTF8
 
-        Assert-KitMatch $doc "Status: in-acceptance"
+        Assert-KitMatch $doc "Status: (in-acceptance|accepted-ready-for-manual-closure)"
         foreach ($text in @("Scope", "Non-goals", "Acceptance Matrix", "CI Boundary", "Manual Checklist")) {
             Assert-KitMatch $doc $text
         }
         Assert-KitMatch $doc "20-issue9-sysprep-appx-gate\.md"
+        Assert-KitMatch $doc "docs/22"
+        Assert-KitMatch $doc "docs/23"
     }
 
     It "keeps manifest and schema closed to unknown mutation fields" {

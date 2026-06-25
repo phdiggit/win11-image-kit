@@ -1,8 +1,8 @@
 # Issue #9 Main Validation Evidence
 
-Status: pending-main-validation
+Status: ready-for-manual-closure
 
-本页预留 Issue #9 合并后的 main/workflow evidence。当前没有真实 main evidence，因此必须保持 pending 状态，不能把 PR Fast CI 当成 main validation evidence。PR Fast CI must not replace main validation evidence.
+本页记录 Issue #9 合并后的 main/workflow evidence。PR Fast CI must not replace main validation evidence, and real VM/admin smoke remains optional maintainer-provided evidence unless maintainers decide otherwise.
 
 ## Evidence Sources
 
@@ -12,11 +12,11 @@ Status: pending-main-validation
 
 ## Current Evidence
 
-- Trigger source: pending
-- Main SHA: pending
-- Workflow run: pending
-- Result: pending
-- Notes: pending
+- Trigger source: main push
+- Main SHA: f69d5e16647228f9aeeccb8ddb4577ebec92a748
+- Workflow run: https://github.com/phdiggit/win11-image-kit/actions/runs/28179331088
+- Result: success
+- Notes: Windows CI / Full Validate succeeded on the main push after PR #57 was merged. PR Fast CI is not a substitute for this evidence.
 
 ## Real VM/admin Smoke
 
@@ -36,7 +36,7 @@ Status: pending-main-validation
 
 ## Manual Closure Readiness
 
-- Current readiness: pending-main-validation
+- Current readiness: ready-for-manual-closure
 
 ## Ready-State Rules
 
@@ -44,4 +44,4 @@ This page may move to `Status: ready-for-manual-closure` only when the evidence 
 
 ## Manual Closure Comment Draft
 
-Issue #9 has PR Fast CI guardrails and an audit-only Sysprep AppX gate. Main/workflow evidence is still pending until this page records a successful main push or workflow_dispatch run; real VM/admin smoke remains optional maintainer-provided evidence.
+Issue #9 has PR Fast CI guardrails, an audit-only Sysprep AppX gate, and successful main push Windows CI / Full Validate evidence recorded above. PR Fast CI is not a substitute for main/workflow evidence. Real VM/admin smoke remains optional maintainer-provided evidence and is currently not-run.

@@ -1,8 +1,8 @@
 # Issue #9 Sysprep AppX Acceptance Matrix
 
-Status: in-acceptance
+Status: accepted-ready-for-manual-closure
 
-本页记录 Issue #9 的验收范围、安全边界和维护者关闭前检查项。这里的证据只覆盖 audit、gate、report 与静态守卫，不代表已经完成真实 VM/admin smoke。
+本页记录 Issue #9 的验收范围、安全边界和维护者关闭前检查项。Close preparation and main validation evidence are recorded in docs/22 and docs/23. 这里的证据覆盖 audit、gate、report、静态守卫和 main/workflow validation；不代表已经完成真实 VM/admin smoke。
 
 ## Scope
 
