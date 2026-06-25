@@ -12,75 +12,9 @@ $ErrorActionPreference = "Stop"
 . "$PSScriptRoot\..\common\Resolve-KitPath.ps1"
 . "$PSScriptRoot\..\common\Test-KitJunctionState.ps1"
 . "$PSScriptRoot\..\common\Test-KitJunctionPreflight.ps1"
+. "$PSScriptRoot\..\common\Invoke-KitJunctionTransaction.ps1"
 
 Assert-KitElevation -Operation "数据目录 Junction 设置" -AllowWhatIfPreview
-
-function Test-DriveRoot {
-    param(
-        [Parameter(Mandatory)]
-        [string]$Path
-    )
-
-    $qualifier = Split-Path -Path $Path -Qualifier
-    if ([string]::IsNullOrWhiteSpace($qualifier)) {
-        return $true
-    }
-
-    return Test-Path -LiteralPath ("{0}\" -f $qualifier)
-}
-
-function Set-DataJunction {
-    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = "High")]
-    param(
-        [Parameter(Mandatory)]
-        [string]$Source,
-
-        [Parameter(Mandatory)]
-        [string]$Target,
-
-        [Parameter(Mandatory)]
-        [string]$Description
-    )
-
-    Write-KitLog ("{0}: {1} -> {2}" -f $Description, $Source, $Target)
-
-    if (-not (Test-DriveRoot -Path $Target)) {
-        Write-KitLog "目标数据盘不存在，跳过：$Target" "WARN"
-        return
-    }
-
-    if ($PSCmdlet.ShouldProcess($Target, "创建 Junction 目标目录")) {
-        New-Item -ItemType Directory -Path $Target -Force | Out-Null
-    }
-
-    if (Test-Path -LiteralPath $Source) {
-        $item = Get-Item -LiteralPath $Source -Force
-        if ($item.Attributes -band [IO.FileAttributes]::ReparsePoint) {
-            Write-KitLog "已经是重解析点：$Source"
-            return
-        }
-
-        if ($PSCmdlet.ShouldProcess($Source, "迁移目录内容到 $Target")) {
-            robocopy $Source $Target /E /MOVE /NJH /NJS /NFL /NDL | Out-Null
-            if ($LASTEXITCODE -ge 8) {
-                throw "robocopy 迁移失败：$Source，退出码：$LASTEXITCODE"
-            }
-        }
-
-        if ($PSCmdlet.ShouldProcess($Source, "删除迁移后的源目录")) {
-            Remove-Item -LiteralPath $Source -Force -ErrorAction SilentlyContinue
-        }
-    }
-
-    $parent = Split-Path -Path $Source -Parent
-    if ($PSCmdlet.ShouldProcess($parent, "创建 Junction 父目录")) {
-        New-Item -ItemType Directory -Path $parent -Force | Out-Null
-    }
-
-    if ($PSCmdlet.ShouldProcess($Source, "创建 Junction 指向 $Target")) {
-        cmd.exe /c "mklink /J `"$Source`" `"$Target`"" | Out-Null
-    }
-}
 
 function Write-DataJunctionReport {
     param(
@@ -119,17 +53,15 @@ foreach ($junction in $manifest.junctions) {
     $preflight = Test-KitDataJunctionPreflight -JunctionConfig $resolvedJunction -WhatIf:$WhatIfPreference
     Write-KitLog ("Junction 预检：{0}，计划：{1}，状态：{2}，原因：{3}" -f $resolvedJunction.description, $preflight.planAction, $preflight.status, $preflight.reason)
 
-    if ($preflight.status -ne "changed") {
+    if ($preflight.status -ne "changed" -and $preflight.status -ne "whatif") {
         $junctionResults += $preflight
         continue
     }
 
-    Set-DataJunction `
-        -Source $resolvedJunction.source `
-        -Target $resolvedJunction.target `
-        -Description $resolvedJunction.description
-
-    $junctionResults += Test-KitJunctionState -JunctionConfig $resolvedJunction
+    $junctionResults += Invoke-KitDataJunctionTransaction `
+        -JunctionConfig $resolvedJunction `
+        -PreflightResult $preflight `
+        -WhatIf:$WhatIfPreference
 }
 
 $junctionSummary = Write-DataJunctionReport -Results $junctionResults

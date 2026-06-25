@@ -346,6 +346,10 @@ function Test-KitDataJunctionPreflight {
     $target = Get-KitJunctionExpectedTarget -JunctionConfig $JunctionConfig
     $onTargetConflict = Get-KitJunctionPolicy -JunctionConfig $JunctionConfig -Name "onTargetConflict" -DefaultValue "fail"
 
+    if ($onTargetConflict -eq "merge") {
+        return New-KitDataJunctionBlockingPreflightResult -JunctionConfig $JunctionConfig -Reason "junction-merge-not-supported" -Message "Junction target merge policy is not implemented for transaction migration" -PlanAction "block" -Errors @("onTargetConflict=merge requires a separately designed no-clobber merge flow") -StartedAt $startedAt
+    }
+
     $relation = Test-KitJunctionPathRelation -Source $source -Target $target
     if ($relation.samePath -or $relation.parentChild) {
         return New-KitDataJunctionBlockingPreflightResult -JunctionConfig $JunctionConfig -Reason "junction-path-cycle-risk" -Message "Junction source and target paths have an unsafe relationship" -PlanAction "block" -Errors @("relation=$($relation.relation) source=$source target=$target") -StartedAt $startedAt

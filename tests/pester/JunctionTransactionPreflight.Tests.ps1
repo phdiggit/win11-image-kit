@@ -111,6 +111,16 @@ Describe "Junction transaction preflight" {
         Assert-KitEqual $result.planAction "block"
     }
 
+    It "blocks merge target conflict policy until no-clobber merge is implemented" {
+        $junction = & $script:NewTestJunctionConfig -OnTargetConflict "merge"
+        $result = Test-KitDataJunctionPreflight -JunctionConfig $junction -StateQuery { throw "state query should not run for unsupported merge" }
+
+        Assert-KitEqual $result.status "failed"
+        Assert-KitEqual $result.reason "junction-merge-not-supported"
+        Assert-KitEqual $result.planAction "block"
+        Assert-KitMatch $result.errors[0] "onTargetConflict=merge"
+    }
+
     It "blocks same-path and parent-child path risks before querying disk state" {
         $samePath = & $script:NewTestJunctionConfig -Source "C:\Data\Same\" -Target "c:\data\same"
         $samePathResult = Test-KitDataJunctionPreflight -JunctionConfig $samePath -StateQuery { throw "state query should not run for same paths" }
@@ -221,7 +231,7 @@ Describe "Junction transaction preflight" {
             $report = Get-Content -LiteralPath $reportPath -Raw -Encoding UTF8 | ConvertFrom-Json
             $reportedJunction = @($report.junctionResults)[0]
             Assert-KitEqual $reportedJunction.status "whatif"
-            Assert-KitEqual $reportedJunction.reason "junction-migration-planned"
+            Assert-KitEqual $reportedJunction.reason "junction-transaction-plan"
             Assert-KitEqual $reportedJunction.planAction "create-target-and-junction"
             Assert-KitEqual $report.junctionSummary.exitCode 0
         } finally {
@@ -238,6 +248,7 @@ Describe "Junction transaction preflight" {
 
         Assert-KitEqual ($properties.PSObject.Properties.Name -contains "onTargetConflict") $true
         Assert-KitEqual ($properties.onTargetConflict.enum -contains "fail") $true
+        Assert-KitEqual ($properties.onTargetConflict.enum -contains "merge") $false
         Assert-KitEqual ($properties.onTargetConflict.enum -contains "overwrite") $false
         Assert-KitEqual ($properties.backupRetention.enum -contains "keep") $true
         Assert-KitEqual ($properties.backupRetention.enum -contains "purge") $false
