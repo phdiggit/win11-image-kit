@@ -24,8 +24,6 @@ Describe "Issue 8 main validation evidence" {
         if ($status -notin @("pending-main-validation", "ready-for-manual-closure")) {
             throw "docs/19 has unsupported status: $status"
         }
-
-        Assert-KitEqual $status "pending-main-validation"
     }
 
     It "keeps the evidence chain complete" {
@@ -110,6 +108,14 @@ Describe "Issue 8 main validation evidence" {
 
             if (-not $script:Doc19.Contains("manually close Issue #8")) {
                 throw "ready docs/19 status must keep maintainer manual closure semantics."
+            }
+
+            if (-not $script:Doc19.Contains("PR Fast CI is not a substitute for this evidence")) {
+                throw "ready docs/19 status must continue distinguishing PR Fast CI from main validation evidence."
+            }
+
+            if (-not $script:Doc19.Contains("Real VM/admin smoke: optional / not-run")) {
+                throw "ready docs/19 status must keep real VM/admin smoke optional when it was not run."
             }
         }
     }

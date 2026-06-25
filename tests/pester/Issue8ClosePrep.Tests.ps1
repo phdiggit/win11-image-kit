@@ -16,12 +16,14 @@ Describe "Issue 8 close preparation evidence" {
         $script:Ci = Get-Content -LiteralPath $script:CiPath -Raw -Encoding UTF8
     }
 
-    It "keeps the close preparation document present and in candidate state" {
+    It "keeps the close preparation document present and in an allowed manual closure state" {
         Assert-KitNotNullOrEmpty (Get-Item -LiteralPath $script:Doc18Path -ErrorAction SilentlyContinue)
         $statusLine = @($script:Doc18 -split "`r?`n" | Where-Object { $_ -like "Status:*" })[0]
         Assert-KitNotNullOrEmpty $statusLine
         $status = ($statusLine -replace "^Status:\s*", "").Trim()
-        Assert-KitEqual $status "ready-for-manual-closure-candidate"
+        if ($status -notin @("ready-for-manual-closure-candidate", "ready-for-manual-closure")) {
+            throw "docs/18 has unsupported manual closure status: $status"
+        }
 
         foreach ($requiredHeading in @(
             "## Final Scope";
@@ -33,6 +35,22 @@ Describe "Issue 8 close preparation evidence" {
         )) {
             if (-not $script:Doc18.Contains($requiredHeading)) {
                 throw "docs/18 is missing heading: $requiredHeading"
+            }
+        }
+
+        if ($status -eq "ready-for-manual-closure") {
+            foreach ($requiredReadyTerm in @(
+                "Main/workflow validation success evidence is recorded";
+                "Result: success";
+                "Full Validate succeeded"
+            )) {
+                if (-not $script:Doc18.Contains($requiredReadyTerm)) {
+                    throw "ready docs/18 status is missing main validation evidence term: $requiredReadyTerm"
+                }
+            }
+
+            if (-not ($script:Doc18.Contains("Trigger source: main push") -or $script:Doc18.Contains("Trigger source: workflow_dispatch"))) {
+                throw "ready docs/18 status requires a main push or workflow_dispatch trigger."
             }
         }
     }
@@ -61,20 +79,22 @@ Describe "Issue 8 close preparation evidence" {
             "must not perform real Defender mutation";
             "Real VM/admin smoke evidence is optional manual evidence";
             "not a normal PR blocking requirement";
-            "recorded in [Issue #8 Main Validation Evidence]";
-            "candidate rather than a final ready state"
+            "recorded in [Issue #8 Main Validation Evidence]"
         )) {
             if (-not $script:Doc18.Contains($requiredTerm)) {
                 throw "docs/18 is missing CI boundary term: $requiredTerm"
             }
+        }
+
+        if ($script:Doc18.Contains("Status: ready-for-manual-closure-candidate") -and -not $script:Doc18.Contains("candidate rather than a final ready state")) {
+            throw "candidate docs/18 status must explain that it is not final ready state."
         }
     }
 
     It "keeps manual closure semantics and avoids automatic issue-closing phrases" {
         foreach ($requiredTerm in @(
             "closed manually by a maintainer";
-            "manual closure candidate";
-            "ready-for-manual-closure-candidate"
+            "ready-for-manual-closure"
         )) {
             if (-not $script:Doc18.Contains($requiredTerm)) {
                 throw "docs/18 is missing manual closure term: $requiredTerm"

@@ -1,6 +1,6 @@
 # Issue #8 Main Validation Evidence
 
-Status: pending-main-validation
+Status: ready-for-manual-closure
 
 ## Scope
 
@@ -19,11 +19,11 @@ PR Fast CI is not a substitute for main validation evidence.
 ## Current Evidence
 
 Main / workflow validation:
-- Trigger source: pending
-- Main SHA: pending
-- Workflow run: pending
-- Result: pending
-- Notes: pending
+- Trigger source: main push
+- Main SHA: 19117fb2a73a4b56bc951ea63686bcfc1bf6c48b
+- Workflow run: https://github.com/phdiggit/win11-image-kit/actions/runs/28157096525
+- Result: success
+- Notes: Windows CI / Full Validate succeeded on the main push after PR #54 was merged. PR Fast CI is not a substitute for this evidence.
 
 Real VM/admin smoke:
 - Environment: not-run
@@ -48,7 +48,7 @@ Real VM/admin smoke:
 
 ## Manual Closure Readiness
 
-Current readiness: pending-main-validation
+Current readiness: ready-for-manual-closure
 
 Maintainer may manually close Issue #8 only after the evidence fields are reviewed and accepted.
 
@@ -63,7 +63,7 @@ Evidence:
 - Main validation evidence: `docs/19-issue8-main-validation-evidence.md`
 
 Validation status:
-- Main / workflow validation: pending
+- Main / workflow validation: success
 - Real VM/admin smoke: optional / not-run unless separately provided
 
 Remaining optional work such as real VM/admin smoke or future extension/override support should be tracked separately if needed.
