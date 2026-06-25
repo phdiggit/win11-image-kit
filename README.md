@@ -53,7 +53,7 @@ logs/                 仅保留 .gitkeep，本地日志不提交
 19. Issue #9 Sysprep AppX 前置门禁、验收与关闭准备见 [Gate](docs/20-issue9-sysprep-appx-gate.md)、[Acceptance](docs/21-issue9-sysprep-appx-acceptance.md)、[Close Preparation](docs/22-issue9-close-preparation.md) 和 [Main Validation Evidence](docs/23-issue9-main-validation-evidence.md)
 20. Issue #10 machine/default-user/current-user 上下文拆分见 [Context Scope Split](docs/24-issue10-context-scope-split.md)
 21. Issue #10 Context Scope 验收、人工关闭准备与 main 验证证据见 [Acceptance](docs/25-issue10-context-scope-acceptance.md)、[Close Preparation](docs/26-issue10-close-preparation.md) 和 [Main Validation Evidence](docs/27-issue10-main-validation-evidence.md)
-22. Issue #11 manifest capability registry 与实现一致性校验见 [Capability Registry](docs/28-issue11-capability-registry.md)
+22. Issue #11 manifest capability registry 与实现一致性校验见 [Capability Registry](docs/28-issue11-capability-registry.md)，验收、关闭准备和 main 验证证据见 [Acceptance](docs/29-issue11-capability-registry-acceptance.md)、[Close Preparation](docs/30-issue11-close-preparation.md)、[Main Validation Evidence](docs/31-issue11-main-validation-evidence.md)
 
 常规配置验证：
 
