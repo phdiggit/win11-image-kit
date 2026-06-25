@@ -18,17 +18,21 @@ Status: ready-for-manual-closure-candidate
 ## Evidence Chain
 
 - [Issue #7 Junction Transaction Acceptance](13-issue7-junction-transaction-acceptance.md)
+- [Issue #7 Main Validation Evidence](15-issue7-main-validation-evidence.md)
 - `tests/pester/JunctionTransactionPreflight.Tests.ps1`
 - `tests/pester/JunctionTransactionExecution.Tests.ps1`
 - `tests/pester/JunctionStateVerification.Tests.ps1`
 - `tests/pester/Issue7JunctionAcceptance.Tests.ps1`
 - `tests/pester/Issue7ClosePrep.Tests.ps1`
+- `tests/pester/Issue7MainValidationEvidence.Tests.ps1`
 
 ## Validation Policy
 
 PR Fast CI validates the non-mutating guardrails and Pester acceptance tests. It does not run real user-directory migration, NAS writes, or admin-only Junction mutation.
 
 Real VM/admin smoke evidence is optional manual evidence. It is not a normal PR blocking requirement and should be recorded separately when maintainers decide it is needed.
+
+Main/workflow validation evidence is recorded in [Issue #7 Main Validation Evidence](15-issue7-main-validation-evidence.md). Until real main push or workflow_dispatch evidence is available there, this document stays a manual closure candidate rather than a final ready state.
 
 ## Manual Closure Checklist
 
@@ -66,6 +70,7 @@ Issue #7 has reached manual closure readiness after the Junction migration path 
 Evidence:
 - Acceptance matrix: `docs/13-issue7-junction-transaction-acceptance.md`
 - Close preparation: `docs/14-issue7-close-preparation.md`
+- Main validation evidence: `docs/15-issue7-main-validation-evidence.md`
 - PR Fast CI covers preflight, transaction execution, state verification, Issue #7 acceptance, and close-prep tests.
 
 Remaining optional work such as real VM/admin smoke, hash verification, or no-clobber merge should be tracked separately if needed.
