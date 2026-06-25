@@ -1,6 +1,6 @@
 # Issue #11 Close Preparation
 
-Status: `ready-for-manual-closure-candidate`
+Status: `ready-for-manual-closure`
 
 This note prepares the manual close package for Issue #11 after PR validation.
 It does not close the issue, post a GitHub comment, or replace required
@@ -41,34 +41,41 @@ PR Fast CI validates only static, fixture, mock, WhatIf, and report-only paths.
 It must not call real business handlers or perform real system mutation.
 
 The required main-branch or workflow-dispatch evidence is tracked in
-[docs/31](31-issue11-main-validation-evidence.md). Until real evidence is added
-there, that document remains `pending-main-validation`.
+[docs/31](31-issue11-main-validation-evidence.md). Main/workflow validation success evidence is recorded in docs/31.
+Real VM/admin smoke remains optional manual evidence and is not required for
+this ready state unless maintainers decide otherwise.
 
 VM or administrator smoke validation is optional follow-up evidence. It is not
 required for this static acceptance package and must stay explicit when run.
 
 ## Manual Closure Checklist
 
-- Confirm PR Fast CI succeeded for the merged commit or a later validation run.
-- Confirm [docs/31](31-issue11-main-validation-evidence.md) records a real
-  `main` push or `workflow_dispatch` evidence source before treating main
-  validation as complete.
+- Confirm [docs/31](31-issue11-main-validation-evidence.md) records the real
+  `main` push evidence source before treating main validation as complete.
 - Confirm no real mutation was executed as part of PR validation.
 - Confirm the issue is still suitable for manual closure by a maintainer.
 - Use a manual closure note without GitHub automatic closing keywords when the
   maintainer wants a final comment first.
 
-## Optional Evidence Pending
+## Recorded Evidence
 
-- Real `main` branch `Validate` workflow URL.
-- Exact merged commit SHA.
-- Optional workflow-dispatch rerun URL.
-- Optional VM or administrator smoke notes.
+| Evidence | Status |
+|---|---|
+| main push Windows CI / Full Validate | success |
+| workflow_dispatch Windows CI / Full Validate | not-run |
+| real VM/admin smoke | not-run |
+
+Trigger source: main push
+Main SHA: 06f5634fcbb637f64a16de58dd5692b34b4318ae
+Workflow run: https://github.com/phdiggit/win11-image-kit/actions/runs/28187906453
+Result: success
+Notes: Windows CI / Full Validate succeeded on the main push after PR #63 was
+merged. Real VM/admin smoke remains optional and not-run.
 
 ## Closure Note Draft
 
 Issue #11 has a capability registry, schema, consistency report, PR Fast CI
-guardrails, acceptance note, close-prep note, and main-evidence scaffold. Main
-validation evidence should be copied into docs/31 before a maintainer performs
-manual closure.
+guardrails, acceptance note, close-prep note, and recorded main validation
+evidence. A maintainer can use docs/31 to decide whether to perform manual
+closure.
 

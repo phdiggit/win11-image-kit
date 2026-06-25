@@ -1,6 +1,6 @@
 # Issue #11 Main Validation Evidence
 
-Status: `pending-main-validation`
+Status: `ready-for-manual-closure`
 
 This scaffold records evidence after Issue #11 changes are validated from
 `main` or from an explicit `workflow_dispatch` run. PR Fast CI is useful
@@ -23,13 +23,22 @@ Not accepted as completion evidence:
 
 | Field | Value |
 |---|---|
-| Status | `pending` |
-| Main commit SHA | `pending` |
-| Workflow trigger | `pending` |
-| Workflow URL | `pending` |
-| Validate result | `pending` |
-| Evidence recorded by | `pending` |
-| Evidence recorded at | `pending` |
+| Status | `success` |
+| Main commit SHA | `06f5634fcbb637f64a16de58dd5692b34b4318ae` |
+| Workflow trigger | `main push` |
+| Workflow URL | https://github.com/phdiggit/win11-image-kit/actions/runs/28187906453 |
+| Validate result | `success` |
+| Evidence recorded by | codex |
+| Evidence recorded at | 2026-06-25T17:24:13Z |
+
+## Recorded Evidence
+
+Trigger source: main push
+Main SHA: 06f5634fcbb637f64a16de58dd5692b34b4318ae
+Workflow run: https://github.com/phdiggit/win11-image-kit/actions/runs/28187906453
+Result: success
+Notes: Windows CI / Full Validate succeeded on the main push after PR #63 was
+merged. PR Fast CI is not a substitute for this evidence.
 
 ## Real VM/Admin Smoke
 
@@ -48,15 +57,17 @@ static report-only checks.
 
 ## Manual Closure Readiness
 
-Status: `pending`
+Status: `ready-for-manual-closure`
 
-Manual closure readiness becomes `ready` only after this file records a real
-accepted evidence source with a 40-character commit SHA, workflow URL, and
-successful `Validate` result.
+Manual closure readiness is ready because this file records a real accepted
+evidence source with a 40-character commit SHA, workflow URL, and successful
+Full Validate result.
 
 ## Closure Comment Draft
 
-Issue #11 main validation evidence is pending in docs/31. After a successful
-main or workflow-dispatch validation run is recorded, a maintainer can use that
-evidence to decide whether to close the issue manually.
+Issue #11 main validation evidence is recorded in docs/31. The accepted
+evidence is the main push Windows CI / Full Validate run above. PR Fast CI is
+not a substitute for this evidence, and real VM or administrator smoke remains
+optional and not-run unless maintainers record separate evidence. A maintainer
+can use this record to decide whether to close the issue manually.
 

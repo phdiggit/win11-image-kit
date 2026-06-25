@@ -1,10 +1,12 @@
 # Issue #11 Capability Registry Acceptance
 
-Status: `in-acceptance`
+Status: `accepted-ready-for-manual-closure`
 
 This acceptance note records the static and report-only evidence required before
 Issue #11 can be considered ready for manual closure. It extends the runbook and
 design note in [Issue #11 Capability Registry](28-issue11-capability-registry.md).
+Close preparation and main validation evidence are recorded in docs/30 and
+docs/31.
 
 ## Scope
 
