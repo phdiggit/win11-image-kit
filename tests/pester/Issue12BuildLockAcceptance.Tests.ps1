@@ -10,7 +10,7 @@ Describe "Issue 12 build lock acceptance" {
         $statusMatch = [regex]::Match($doc, '(?m)^Status: `([^`]+)`')
 
         Assert-KitEqual $statusMatch.Success $true
-        Assert-KitEqual $statusMatch.Groups[1].Value "in-acceptance"
+        Assert-KitEqual (@("in-acceptance", "accepted-ready-for-manual-closure") -contains $statusMatch.Groups[1].Value) $true
         foreach ($term in @(
             "## Scope",
             "## Non-goals",
@@ -21,6 +21,10 @@ Describe "Issue 12 build lock acceptance" {
             "32-issue12-build-lock.md"
         )) {
             Assert-KitMatch $doc ([regex]::Escape($term))
+        }
+
+        if ($statusMatch.Groups[1].Value -eq "accepted-ready-for-manual-closure") {
+            Assert-KitMatch $doc ([regex]::Escape("Close preparation and main validation evidence are recorded in docs/34 and docs/35."))
         }
     }
 

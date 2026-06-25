@@ -4,13 +4,12 @@ Describe "Issue 12 main validation evidence" {
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
     }
 
-    It "keeps the default evidence state pending" {
+    It "allows pending or ready evidence state" {
         $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\35-issue12-main-validation-evidence.md") -Raw -Encoding UTF8
         $statusMatch = [regex]::Match($doc, '(?m)^Status: `([^`]+)`')
 
         Assert-KitEqual $statusMatch.Success $true
         Assert-KitEqual (@("pending-main-validation", "ready-for-manual-closure") -contains $statusMatch.Groups[1].Value) $true
-        Assert-KitEqual $statusMatch.Groups[1].Value "pending-main-validation"
         foreach ($term in @(
             "## Evidence Sources",
             "## Current Evidence",
@@ -22,21 +21,32 @@ Describe "Issue 12 main validation evidence" {
         }
     }
 
-    It "does not present pending evidence as ready" {
+    It "validates pending or ready evidence details" {
         $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\35-issue12-main-validation-evidence.md") -Raw -Encoding UTF8
+        $status = ([regex]::Match($doc, '(?m)^Status: `([^`]+)`')).Groups[1].Value
 
-        foreach ($term in @(
-            '| Trigger source | `pending` |',
-            '| Main SHA | `pending` |',
-            '| Workflow run | `pending` |',
-            '| Result | `pending` |',
-            '| Current readiness | `pending-main-validation` |'
-        )) {
-            Assert-KitMatch $doc ([regex]::Escape($term))
+        if ($status -eq "pending-main-validation") {
+            foreach ($term in @(
+                '| Trigger source | `pending` |',
+                '| Main SHA | `pending` |',
+                '| Workflow run | `pending` |',
+                '| Result | `pending` |',
+                '| Current readiness | `pending-main-validation` |'
+            )) {
+                Assert-KitMatch $doc ([regex]::Escape($term))
+            }
+
+            Assert-KitNotMatch $doc '\| Result \| `success` \|'
+            Assert-KitNotMatch $doc '\| Current readiness \| `ready-for-manual-closure` \|'
+        } else {
+            Assert-KitMatch $doc '\| Trigger source \| `(main push|workflow_dispatch)` \|'
+            Assert-KitMatch $doc '\| Main SHA \| `[0-9a-f]{40}` \|'
+            Assert-KitMatch $doc '\| Workflow run \| https://github\.com/phdiggit/win11-image-kit/actions/runs/[0-9]+ \|'
+            Assert-KitMatch $doc '\| Full Validate job \| https://github\.com/phdiggit/win11-image-kit/actions/runs/[0-9]+/job/[0-9]+ \|'
+            Assert-KitMatch $doc '\| Result \| `success` \|'
+            Assert-KitMatch $doc '\| Build Lock report \| `(passed|manual)`, `failedCount=0` \|'
+            Assert-KitMatch $doc '\| Current readiness \| `ready-for-manual-closure` \|'
         }
-
-        Assert-KitNotMatch $doc '\| Result \| `success` \|'
-        Assert-KitNotMatch $doc '\| Current readiness \| `ready-for-manual-closure` \|'
     }
 
     It "documents ready-state rules for future main evidence" {
@@ -46,7 +56,9 @@ Describe "Issue 12 main validation evidence" {
             'Trigger source is `main push` or `workflow_dispatch`',
             "Main SHA is a 40-character Git SHA",
             "Workflow run is a GitHub Actions URL",
+            "Full Validate job is a GitHub Actions job URL",
             'Result is `success`',
+            'Build Lock report is `passed` or `manual`, with `failedCount=0`',
             'Current readiness is `ready-for-manual-closure`'
         )) {
             Assert-KitMatch $doc ([regex]::Escape($term))
