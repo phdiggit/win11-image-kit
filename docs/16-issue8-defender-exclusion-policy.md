@@ -2,6 +2,8 @@
 
 Defender exclusion 会直接减少扫描覆盖面，因此本项目只允许由 `manifests/defender-exclusions.json` 显式声明的排除项进入部署后流程。默认目标是解决 kit 管理目录和少数可信便携工具的误报或重复扫描问题，而不是降低 Windows Defender 的全局保护级别。
 
+本文说明 Issue #8 的策略边界和执行语义；验收矩阵、CI 守卫和维护者手动关闭前检查清单见 [Issue #8 Defender Exclusion Acceptance](17-issue8-defender-exclusion-acceptance.md)。
+
 ## 支持类型
 
 - `path`：只允许位于 kit 管理路径下的窄子目录，例如 `${WorkRoot}\cache`、`${DeployRoot}\reports`。
