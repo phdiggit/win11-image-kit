@@ -6,17 +6,26 @@ Describe "Issue 10 main validation evidence scaffold" {
         $script:Doc = Get-Content -LiteralPath $script:DocPath -Raw -Encoding UTF8
     }
 
-    It "keeps the scaffold pending by default" {
+    It "keeps the scaffold in an allowed evidence state" {
         Assert-KitEqual (Test-Path -LiteralPath $script:DocPath) $true
-        Assert-KitMatch $script:Doc "Status: pending-main-validation"
-        Assert-KitMatch $script:Doc "Current readiness: pending-main-validation"
+        Assert-KitMatch $script:Doc "Status: (pending-main-validation|ready-for-manual-closure)"
+        Assert-KitMatch $script:Doc "Current readiness: (pending-main-validation|ready-for-manual-closure)"
     }
 
-    It "does not pretend pending evidence is ready" {
-        foreach ($pending in @("Trigger source | pending", "Main SHA | pending", "Workflow run | pending", "Result | pending")) {
-            Assert-KitMatch $script:Doc ([regex]::Escape($pending))
+    It "keeps pending and ready evidence states internally consistent" {
+        if ($script:Doc -match "Status: pending-main-validation") {
+            foreach ($pending in @("Trigger source | pending", "Main SHA | pending", "Workflow run | pending", "Result | pending")) {
+                Assert-KitMatch $script:Doc ([regex]::Escape($pending))
+            }
+            Assert-KitMatch $script:Doc "Current readiness: pending-main-validation"
+            Assert-KitNotMatch $script:Doc "Result \| success"
+        } else {
+            Assert-KitMatch $script:Doc "Trigger source \| (main push|workflow_dispatch)"
+            Assert-KitMatch $script:Doc 'Main SHA \| `?[0-9a-f]{40}`?'
+            Assert-KitMatch $script:Doc "Workflow run \| https://github\.com/phdiggit/win11-image-kit/actions/runs/[0-9]+"
+            Assert-KitMatch $script:Doc "Result \| success"
+            Assert-KitMatch $script:Doc "Current readiness: ready-for-manual-closure"
         }
-        Assert-KitNotMatch $script:Doc "Status: ready-for-manual-closure"
     }
 
     It "documents the reserved ready-state rules" {
@@ -29,6 +38,7 @@ Describe "Issue 10 main validation evidence scaffold" {
         Assert-KitMatch $script:Doc "PR Fast CI is not a substitute"
         Assert-KitMatch $script:Doc "Environment | not-run"
         Assert-KitMatch $script:Doc "Result | not-run"
+        Assert-KitMatch $script:Doc "optional / not-run"
     }
 
     It "does not contain issue-closing keywords aimed at issue 10" {

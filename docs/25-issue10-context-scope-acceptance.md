@@ -1,10 +1,14 @@
 # Issue #10 Context Scope Acceptance
 
-Status: in-acceptance
+Status: accepted-ready-for-manual-closure
 
 This acceptance matrix covers the guardrails added for the
 machine/default-user/current-user split. It is a PR-safe evidence layer and does
 not perform real registry, hive, or profile mutation.
+
+Close preparation and main validation evidence are recorded in
+[docs/26](26-issue10-close-preparation.md) and
+[docs/27](27-issue10-main-validation-evidence.md).
 
 ## Scope
 
