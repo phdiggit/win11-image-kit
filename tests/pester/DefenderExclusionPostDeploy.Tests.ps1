@@ -87,6 +87,88 @@ Describe "Defender exclusion postdeploy integration" {
         $script:RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
 
+        function script:Write-TestDefenderManifest {
+            param(
+                [Parameter(Mandatory)]
+                [string]$Path,
+
+                [AllowNull()]
+                $Exclusions = @(),
+
+                [AllowNull()]
+                $StateChecks = @()
+            )
+
+            $manifest = [ordered]@{
+                exclusions = @($Exclusions)
+            }
+            if (@($StateChecks).Count -gt 0) {
+                $manifest.stateChecks = @($StateChecks)
+            }
+
+            $manifest | ConvertTo-Json -Depth 8 | Set-Content -LiteralPath $Path -Encoding UTF8
+        }
+
+        function script:New-TestDefenderExclusion {
+            param(
+                [Parameter(Mandatory)]
+                [string]$Id,
+
+                [Parameter(Mandatory)]
+                [string]$Type,
+
+                [Parameter(Mandatory)]
+                [string]$Value,
+
+                [bool]$Required = $false,
+
+                [string]$FailurePolicy = "manual"
+            )
+
+            [ordered]@{
+                id = $Id
+                type = $Type
+                value = $Value
+                scope = $Id
+                reason = $Id
+                required = $Required
+                failurePolicy = $FailurePolicy
+            }
+        }
+
+        function script:Invoke-TestDefenderScript {
+            param(
+                [Parameter(Mandatory)]
+                [string]$ScriptPath,
+
+                [Parameter(Mandatory)]
+                [string]$ManifestPath,
+
+                [Parameter(Mandatory)]
+                [string]$PathsManifestPath,
+
+                [Parameter(Mandatory)]
+                [string]$ReportPath,
+
+                [switch]$ExpectFailure
+            )
+
+            $thrown = $null
+            try {
+                & $ScriptPath -ManifestPath $ManifestPath -PathsManifestPath $PathsManifestPath -ReportPath $ReportPath -WhatIf
+            } catch {
+                $thrown = $_
+            }
+
+            if ($ExpectFailure) {
+                return $thrown
+            }
+
+            if ($null -ne $thrown) {
+                throw $thrown
+            }
+        }
+
         $script:TempRoot = Join-Path ([IO.Path]::GetTempPath()) ("win11-image-kit-defender-postdeploy-{0}" -f ([guid]::NewGuid().ToString("N")))
         [IO.Directory]::CreateDirectory($script:TempRoot) | Out-Null
         $script:PathsPath = Join-Path $script:TempRoot "paths.json"
