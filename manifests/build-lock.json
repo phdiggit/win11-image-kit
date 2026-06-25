@@ -9,7 +9,7 @@
       "path": "manifests/capability-registry.json",
       "category": "manifest",
       "required": true,
-      "hash": "60e8181aa21a7b13705c8571a9985a7cf3be01e24b30290899befae387c1d0e0",
+      "hash": "82080427cc9fafb5a6310aa95d4710d12e994976a294f66446c683cd47aed4aa",
       "reason": "Capability registry is a supply-chain control plane input."
     },
     {
@@ -51,7 +51,7 @@
       "path": "schemas/build-lock.schema.json",
       "category": "schema",
       "required": true,
-      "hash": "0222afa859dcc36b18d418438d2cb9bf281de4063e6408d2a0f21926e61862d5",
+      "hash": "a8bcb03d90d55290112d78177e21f662243999b9de63df35509057a5dd05747c",
       "reason": "Build lock schema constrains immutable input lock metadata."
     },
     {
@@ -93,70 +93,70 @@
       "path": "scripts/common/Get-KitFileHash.ps1",
       "category": "script",
       "required": true,
-      "hash": "2e1296772a658c75840a2b1f0a41eeca001c67f71649af39e7ca0d5ebe0ca827",
+      "hash": "31fad619dccc118cdda52fd2b8d3df710f75b7a199dbf05dfea3895c7c0e9279",
       "reason": "Build lock hash helper computes immutable input digests."
     },
     {
       "path": "scripts/common/Get-KitBuildLock.ps1",
       "category": "script",
       "required": true,
-      "hash": "da1d0c53f5197788bba349874dc10c6339b78d954716a9f178914882712b5a18",
+      "hash": "0088197ec329363e20db1c6ec0661252e077cffeaec2093c52d2caaec941561c",
       "reason": "Build lock loader enforces manifest parsing and duplicate path checks."
     },
     {
       "path": "scripts/common/Test-KitBuildLock.ps1",
       "category": "script",
       "required": true,
-      "hash": "1ca2ca4a41511835786bea2b42a0ae5b173f84e75dddca0c532a322cb2569ff7",
+      "hash": "7f254183dc2bacab9566efbe3b760d7a9aa143dbbab89521770664ced97e9c03",
       "reason": "Build lock validator checks hashes and watched files."
     },
     {
       "path": "scripts/common/New-KitBuildLockReport.ps1",
       "category": "script",
       "required": true,
-      "hash": "c3cf797b6e8008b55d9a571c9319aaacd841ec3dd720332a51942d5f9b5e9ec7",
+      "hash": "5d2583d3006acbc3d3a6e95ad5b066a36eb8191ff89d50f9f01b82317698dd65",
       "reason": "Build lock report builder produces CI and review evidence."
     },
     {
       "path": "scripts/validate/Test-BuildLock.ps1",
       "category": "script",
       "required": true,
-      "hash": "f5e6f5d2dc1da06f794281076e36bc66f02eadaa65a0bb56e112350b3eb11038",
+      "hash": "5da3071ef6a04fac9b47120ef85a3fce3d3557dd55203c72be13d82fcc0ada33",
       "reason": "Build lock validate entrypoint writes explicit reports and exit codes."
     },
     {
       "path": "tests/pester/BuildLockSchema.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "8e387964ee14facaa7d690f51bb5919d835425e60ccd5830b13132260097064d",
+      "hash": "a71f9efc9f39e310ed43d0d3efbe94b217c4dffe52c493e8d76d494b983e364a",
       "reason": "Build lock schema tests guard manifest structure."
     },
     {
       "path": "tests/pester/BuildLockHash.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "11a2f686aa13338fd4fa8720698d4ae79cf5658506bcfdaa0e5ac637d6f08655",
+      "hash": "b6a89266cab2dcf1ca2c82d415dc24169f7c227730c24a22bd98192ce75cd267",
       "reason": "Build lock hash tests guard deterministic digest behavior."
     },
     {
       "path": "tests/pester/BuildLockValidation.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "a90919ca83267d0a9f9d30a35914d1e6d9fa0b89bbefbe04fd72d212ab2b7ee8",
+      "hash": "54912d397e3afd6679f5d7268c664367ada46535c24a2418000429dfe5edb779",
       "reason": "Build lock validation tests guard missing, mismatch, and watched-file behavior."
     },
     {
       "path": "tests/pester/BuildLockReport.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "c88970efdbc2f0311adb6dcbd8e2a2718dcacf036a66be51272ec46be344d766",
+      "hash": "68f4edb1f9270b4462abaf508cca24e149590aebf9ee6b532195ff7acc581dcc",
       "reason": "Build lock report tests guard report evidence structure."
     },
     {
       "path": "tests/pester/Issue12BuildLock.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "533c294923793889c1e2106d671383e7b247089ffe640b95f3804fef3e799bc8",
+      "hash": "7b7752cb5dec4c361f02aebfa48627f8584ccf3abdee78aa2637b36cc1f67386",
       "reason": "Issue 12 guardrail tests keep CI, docs, and safety boundaries wired."
     },
     {
@@ -170,14 +170,14 @@
       "path": "docs/32-issue12-build-lock.md",
       "category": "doc",
       "required": true,
-      "hash": "9b724b7875c7a7a6d25bb8c7a4b349a9fdb2d82aa451ed5b06fe0615aa6cf940",
+      "hash": "39021b9bc05a2f61db1df93f934813db56361f9362b0fbe1465ac02366d88c18",
       "reason": "Build lock runbook documents report-only supply-chain validation."
     },
     {
       "path": ".github/workflows/ci.yml",
       "category": "workflow",
       "required": true,
-      "hash": "f03a9fb78ecae5d2b7d1bb8251cda60e1f28cf574c0119e44d65f7ba3db4a509",
+      "hash": "5ba5a09456edf4861cbde3b1a5843bcc256710ccbf64f40c683cb68ee0e57bb0",
       "reason": "PR Fast CI wiring is a trusted guardrail for build lock tests."
     }
   ],
