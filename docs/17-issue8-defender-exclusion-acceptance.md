@@ -1,8 +1,8 @@
 # Issue #8 Defender Exclusion Acceptance
 
-Status: in-acceptance
+Status: accepted-pending-manual-closure
 
-本页是 Issue #8 的验收收口层。策略说明见 [Issue #8 Defender Exclusion Policy](16-issue8-defender-exclusion-policy.md)；本页只记录验收矩阵、CI 边界和维护者手动关闭前检查清单，不声明真实 VM/admin smoke 已完成。
+本页是 Issue #8 的验收收口层。策略说明见 [Issue #8 Defender Exclusion Policy](16-issue8-defender-exclusion-policy.md)；关闭准备见 [Issue #8 Close Preparation](18-issue8-close-preparation.md)，main/workflow evidence scaffold 见 [Issue #8 Main Validation Evidence](19-issue8-main-validation-evidence.md)。本页只记录验收矩阵、CI 边界和维护者手动关闭前检查清单，不声明真实 VM/admin smoke 已完成。
 
 ## Scope
 

@@ -55,12 +55,14 @@ Describe "Issue 8 Defender exclusion acceptance guardrails" {
         $docPath = Join-Path $script:RepoRoot "docs\17-issue8-defender-exclusion-acceptance.md"
         $content = Get-Content -LiteralPath $docPath -Raw -Encoding UTF8
 
-        Assert-KitMatch $content "Status: in-acceptance"
+        Assert-KitMatch $content "Status: accepted-pending-manual-closure"
         Assert-KitMatch $content "## Scope"
         Assert-KitMatch $content "## Non-goals"
         Assert-KitMatch $content "## Acceptance Matrix"
         Assert-KitMatch $content "## Manual Checklist"
         Assert-KitMatch $content "16-issue8-defender-exclusion-policy.md"
+        Assert-KitMatch $content "18-issue8-close-preparation.md"
+        Assert-KitMatch $content "19-issue8-main-validation-evidence.md"
     }
 
     It "keeps docs and README linked to the acceptance layer" {
