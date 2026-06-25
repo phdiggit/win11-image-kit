@@ -1,6 +1,6 @@
 # Issue #7 Close Preparation
 
-Status: ready-for-manual-closure-candidate
+Status: ready-for-manual-closure
 
 ## Final Scope
 
@@ -32,7 +32,7 @@ PR Fast CI validates the non-mutating guardrails and Pester acceptance tests. It
 
 Real VM/admin smoke evidence is optional manual evidence. It is not a normal PR blocking requirement and should be recorded separately when maintainers decide it is needed.
 
-Main/workflow validation evidence is recorded in [Issue #7 Main Validation Evidence](15-issue7-main-validation-evidence.md). Until real main push or workflow_dispatch evidence is available there, this document stays a manual closure candidate rather than a final ready state.
+Main/workflow validation success evidence is recorded in [Issue #7 Main Validation Evidence](15-issue7-main-validation-evidence.md). Real VM/admin smoke remains optional manual evidence and is not required for this ready state unless maintainers decide otherwise.
 
 ## Manual Closure Checklist
 
@@ -50,11 +50,11 @@ Main/workflow validation evidence is recorded in [Issue #7 Main Validation Evide
 ## Optional Manual Validation Evidence
 
 Main / workflow evidence:
-- Trigger source: pending
-- Main SHA: pending
-- Workflow run: pending
-- Result: pending
-- Notes: pending
+- Trigger source: main push
+- Main SHA: 638336e16dfb02c2b7c4270f7fd7e8b1b0c21ac7
+- Workflow run: https://github.com/phdiggit/win11-image-kit/actions/runs/28148874577
+- Result: success
+- Notes: Windows CI / Full Validate succeeded on the main push after PR #50 was merged.
 
 Real VM/admin smoke evidence:
 - Environment: not-run

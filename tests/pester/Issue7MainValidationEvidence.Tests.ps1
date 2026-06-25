@@ -68,6 +68,16 @@ Describe "Issue 7 main validation evidence" {
             throw "docs/15 must not be ready when main evidence is still pending."
         }
 
+        if ($status -eq "pending-main-validation") {
+            if ($script:Doc15.Contains("Current readiness: ready-for-manual-closure")) {
+                throw "pending docs/15 status must not present manual closure readiness as ready."
+            }
+
+            if ($script:Doc15.Contains("Result: success")) {
+                throw "pending docs/15 status must not contain success main validation evidence."
+            }
+        }
+
         if ($status -eq "ready-for-manual-closure") {
             foreach ($forbiddenPending in @("Trigger source: pending"; "Main SHA: pending"; "Workflow run: pending"; "Result: pending")) {
                 if ($script:Doc15.Contains($forbiddenPending)) {
@@ -75,8 +85,32 @@ Describe "Issue 7 main validation evidence" {
                 }
             }
 
-            if (-not ($script:Doc15.Contains("Result: success") -and ($script:Doc15.Contains("Trigger source: main push") -or $script:Doc15.Contains("Trigger source: workflow_dispatch")))) {
-                throw "ready docs/15 status requires success result and a main push or workflow_dispatch trigger."
+            if (-not ($script:Doc15.Contains("Trigger source: main push") -or $script:Doc15.Contains("Trigger source: workflow_dispatch"))) {
+                throw "ready docs/15 status requires a main push or workflow_dispatch trigger."
+            }
+
+            if (-not ($script:Doc15 -match "(?m)^- Main SHA: [0-9a-f]{40}\r?$")) {
+                throw "ready docs/15 status requires a full main commit SHA."
+            }
+
+            if (-not ($script:Doc15 -match "(?m)^- Workflow run: https://github\.com/phdiggit/win11-image-kit/actions/runs/[0-9]+\r?$")) {
+                throw "ready docs/15 status requires an actions run URL."
+            }
+
+            if (-not $script:Doc15.Contains("Result: success")) {
+                throw "ready docs/15 status requires success result."
+            }
+
+            if (-not $script:Doc15.Contains("Current readiness: ready-for-manual-closure")) {
+                throw "ready docs/15 status requires matching manual closure readiness."
+            }
+
+            if (-not $script:Doc15.Contains("manually close Issue #7")) {
+                throw "ready docs/15 status must keep maintainer manual closure semantics."
+            }
+
+            if (-not $script:Doc15.Contains("Real VM/admin smoke: optional / not-run")) {
+                throw "ready docs/15 status must keep real VM/admin smoke optional when it was not run."
             }
         }
     }
