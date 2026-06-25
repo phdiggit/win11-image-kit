@@ -22,3 +22,9 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts/validate/Test-Syspre
 发现 blocking findings 后，先读取 JSON report 中的 `findings`、`queryErrors` 和 `recommendedActions`。真实修复应在 VM snapshot 环境中人工处理并复核；不要在 PR Fast CI 中修复真实系统，不要运行 Sysprep，不要执行 `Remove-AppxPackage`、`Remove-AppxProvisionedPackage` 或 DISM remove。
 
 后续如果需要真实 VM/admin smoke 或具体修复 runbook，应作为单独任务处理。
+
+## 收口与证据链
+
+- [Issue #9 验收矩阵](21-issue9-sysprep-appx-acceptance.md)
+- [Issue #9 关闭准备](22-issue9-close-preparation.md)
+- [Issue #9 main 验证证据](23-issue9-main-validation-evidence.md)
