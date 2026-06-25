@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "win11-image-kit Sysprep AppX readiness gate policy",
+  "type": "object",
+  "required": ["mode", "failurePolicy", "rules", "allowFamilies", "manualFamilies"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "mode": {
+      "type": "string",
+      "enum": ["audit", "gate"],
+      "default": "audit"
+    },
+    "failurePolicy": {
+      "type": "string",
+      "enum": ["fail", "manual", "skip"],
+      "default": "fail"
+    },
+    "rules": {
+      "type": "object",
+      "required": [
+        "blockUserInstalledNotProvisioned",
+        "blockProvisionedInstalledMismatch",
+        "blockQueryFailure",
+        "ignoreFrameworkPackages",
+        "ignoreResourcePackages",
+        "ignoreNonRemovableSystemPackages"
+      ],
+      "properties": {
+        "blockUserInstalledNotProvisioned": { "type": "boolean", "default": true },
+        "blockProvisionedInstalledMismatch": { "type": "boolean", "default": true },
+        "blockQueryFailure": { "type": "boolean", "default": true },
+        "ignoreFrameworkPackages": { "type": "boolean", "default": true },
+        "ignoreResourcePackages": { "type": "boolean", "default": true },
+        "ignoreNonRemovableSystemPackages": { "type": "boolean", "default": true }
+      },
+      "additionalProperties": false
+    },
+    "allowFamilies": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/familyPolicy" },
+      "default": []
+    },
+    "manualFamilies": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/familyPolicy" },
+      "default": []
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "familyPolicy": {
+      "type": "object",
+      "required": ["familyName", "reason"],
+      "properties": {
+        "familyName": {
+          "type": "string",
+          "pattern": "\\S"
+        },
+        "reason": {
+          "type": "string",
+          "pattern": "\\S"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

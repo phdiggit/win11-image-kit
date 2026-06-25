@@ -1,0 +1,20 @@
+{
+  "$schema": "../schemas/sysprep-appx-gate.schema.json",
+  "mode": "audit",
+  "failurePolicy": "fail",
+  "rules": {
+    "blockUserInstalledNotProvisioned": true,
+    "blockProvisionedInstalledMismatch": true,
+    "blockQueryFailure": true,
+    "ignoreFrameworkPackages": true,
+    "ignoreResourcePackages": true,
+    "ignoreNonRemovableSystemPackages": true
+  },
+  "allowFamilies": [
+    {
+      "familyName": "Microsoft.WindowsStore_8wekyb3d8bbwe",
+      "reason": "Known inbox Store package; allowed when provisioned and installed state is consistent."
+    }
+  ],
+  "manualFamilies": []
+}
