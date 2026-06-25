@@ -9,6 +9,38 @@ Describe "Build lock validation" {
         [IO.Directory]::CreateDirectory((Join-Path $script:TempRoot "scripts\common")) | Out-Null
         [IO.File]::WriteAllBytes((Join-Path $script:TempRoot "manifests\a.json"), [byte[]](97, 98, 99))
         [IO.File]::WriteAllBytes((Join-Path $script:TempRoot "scripts\common\new.ps1"), [byte[]](110, 101, 119))
+
+        $script:NewTestBuildLock = {
+            param(
+                [string]$Hash = "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+                [string]$Algorithm = "SHA256",
+                [bool]$Required = $true,
+                [string]$Path = "manifests/a.json",
+                [string]$MissingPolicy = "fail",
+                [string]$MismatchPolicy = "fail",
+                [string]$UntrackedPolicy = "manual"
+            )
+
+            [pscustomobject]@{
+                lockVersion = 1
+                algorithm = $Algorithm
+                mode = "verify"
+                entries = @([pscustomobject]@{
+                    path = $Path
+                    category = "manifest"
+                    required = $Required
+                    hash = $Hash
+                    reason = "fixture"
+                })
+                watchGlobs = @("manifests/*.json", "scripts/common/*.ps1")
+                policy = [pscustomobject]@{
+                    missingRequired = $MissingPolicy
+                    hashMismatch = $MismatchPolicy
+                    untrackedWatchedFile = $UntrackedPolicy
+                    unsupportedAlgorithm = "fail"
+                }
+            }
+        }
     }
 
     AfterEach {
@@ -17,40 +49,8 @@ Describe "Build lock validation" {
         }
     }
 
-    function New-TestBuildLock {
-        param(
-            [string]$Hash = "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
-            [string]$Algorithm = "SHA256",
-            [bool]$Required = $true,
-            [string]$Path = "manifests/a.json",
-            [string]$MissingPolicy = "fail",
-            [string]$MismatchPolicy = "fail",
-            [string]$UntrackedPolicy = "manual"
-        )
-
-        [pscustomobject]@{
-            lockVersion = 1
-            algorithm = $Algorithm
-            mode = "verify"
-            entries = @([pscustomobject]@{
-                path = $Path
-                category = "manifest"
-                required = $Required
-                hash = $Hash
-                reason = "fixture"
-            })
-            watchGlobs = @("manifests/*.json", "scripts/common/*.ps1")
-            policy = [pscustomobject]@{
-                missingRequired = $MissingPolicy
-                hashMismatch = $MismatchPolicy
-                untrackedWatchedFile = $UntrackedPolicy
-                unsupportedAlgorithm = "fail"
-            }
-        }
-    }
-
     It "passes matching hashes" {
-        $results = @(Test-KitBuildLock -BuildLock (New-TestBuildLock -UntrackedPolicy "pass") -RepoRoot $script:TempRoot)
+        $results = @(Test-KitBuildLock -BuildLock (& $script:NewTestBuildLock -UntrackedPolicy "pass") -RepoRoot $script:TempRoot)
         $entry = @($results | Where-Object { $_.path -eq "manifests/a.json" })[0]
 
         Assert-KitEqual $entry.status "passed"
@@ -59,8 +59,8 @@ Describe "Build lock validation" {
     }
 
     It "handles missing required files according to policy" {
-        $failed = @(Test-KitBuildLock -BuildLock (New-TestBuildLock -Path "manifests/missing.json" -MissingPolicy "fail") -RepoRoot $script:TempRoot)[0]
-        $manual = @(Test-KitBuildLock -BuildLock (New-TestBuildLock -Path "manifests/missing.json" -MissingPolicy "manual") -RepoRoot $script:TempRoot)[0]
+        $failed = @(Test-KitBuildLock -BuildLock (& $script:NewTestBuildLock -Path "manifests/missing.json" -MissingPolicy "fail") -RepoRoot $script:TempRoot)[0]
+        $manual = @(Test-KitBuildLock -BuildLock (& $script:NewTestBuildLock -Path "manifests/missing.json" -MissingPolicy "manual") -RepoRoot $script:TempRoot)[0]
 
         Assert-KitEqual $failed.status "failed"
         Assert-KitMatch ($failed.errors -join ";") "required file missing"
@@ -69,8 +69,8 @@ Describe "Build lock validation" {
     }
 
     It "handles hash mismatch according to policy" {
-        $failed = @(Test-KitBuildLock -BuildLock (New-TestBuildLock -Hash ("0" * 64) -MismatchPolicy "fail") -RepoRoot $script:TempRoot)[0]
-        $manual = @(Test-KitBuildLock -BuildLock (New-TestBuildLock -Hash ("0" * 64) -MismatchPolicy "manual") -RepoRoot $script:TempRoot)[0]
+        $failed = @(Test-KitBuildLock -BuildLock (& $script:NewTestBuildLock -Hash ("0" * 64) -MismatchPolicy "fail") -RepoRoot $script:TempRoot)[0]
+        $manual = @(Test-KitBuildLock -BuildLock (& $script:NewTestBuildLock -Hash ("0" * 64) -MismatchPolicy "manual") -RepoRoot $script:TempRoot)[0]
 
         Assert-KitEqual $failed.status "failed"
         Assert-KitMatch ($failed.errors -join ";") "hash mismatch"
@@ -79,14 +79,14 @@ Describe "Build lock validation" {
     }
 
     It "fails unsupported algorithms" {
-        $result = @(Test-KitBuildLock -BuildLock (New-TestBuildLock -Algorithm "SHA1") -RepoRoot $script:TempRoot)[0]
+        $result = @(Test-KitBuildLock -BuildLock (& $script:NewTestBuildLock -Algorithm "SHA1") -RepoRoot $script:TempRoot)[0]
 
         Assert-KitEqual $result.status "failed"
         Assert-KitMatch ($result.errors -join ";") "unsupported algorithm"
     }
 
     It "reports watched files that are not listed in entries" {
-        $results = @(Test-KitBuildLock -BuildLock (New-TestBuildLock -UntrackedPolicy "manual") -RepoRoot $script:TempRoot)
+        $results = @(Test-KitBuildLock -BuildLock (& $script:NewTestBuildLock -UntrackedPolicy "manual") -RepoRoot $script:TempRoot)
         $untracked = @($results | Where-Object { $_.category -eq "untracked" })
 
         Assert-KitEqual (@($untracked | Where-Object { $_.path -eq "scripts/common/new.ps1" }).Count) 1
@@ -101,7 +101,7 @@ Describe "Build lock validation" {
         Mock Invoke-PostDeploy { throw "should not run postdeploy" }
 
         $lockPath = Join-Path $script:TempRoot "manifests\build-lock.json"
-        $lockJson = (New-TestBuildLock -Hash ("0" * 64)) | ConvertTo-Json -Depth 8
+        $lockJson = (& $script:NewTestBuildLock -Hash ("0" * 64)) | ConvertTo-Json -Depth 8
         $lockJson | Set-Content -LiteralPath $lockPath -Encoding UTF8
 
         $lock = Get-KitBuildLock -Path $lockPath -RepoRoot $script:TempRoot

@@ -142,14 +142,14 @@
       "path": "tests/pester/BuildLockValidation.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "b77977ec1ccc8acd2f56b3e3923f5f8aac2de80b94a029a051c2541c255c4e02",
+      "hash": "a90919ca83267d0a9f9d30a35914d1e6d9fa0b89bbefbe04fd72d212ab2b7ee8",
       "reason": "Build lock validation tests guard missing, mismatch, and watched-file behavior."
     },
     {
       "path": "tests/pester/BuildLockReport.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "64049f93989f516e4c6279c2a93d16132d607ec4699b6dd37135287efdb43f98",
+      "hash": "c88970efdbc2f0311adb6dcbd8e2a2718dcacf036a66be51272ec46be344d766",
       "reason": "Build lock report tests guard report evidence structure."
     },
     {
