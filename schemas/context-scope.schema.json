@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "win11-image-kit context scope",
+  "type": "object",
+  "required": ["defaultMode", "allowedContexts", "phasePolicy", "targets"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "defaultMode": {
+      "type": "string",
+      "enum": ["plan"]
+    },
+    "allowedContexts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/context" }
+    },
+    "phasePolicy": {
+      "type": "object",
+      "properties": {
+        "build": { "$ref": "#/$defs/contextList" },
+        "postdeploy": { "$ref": "#/$defs/contextList" },
+        "interactive": { "$ref": "#/$defs/contextList" },
+        "validate": { "$ref": "#/$defs/contextList" }
+      },
+      "additionalProperties": false
+    },
+    "targets": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/target" }
+    }
+  },
+  "$defs": {
+    "context": {
+      "type": "string",
+      "enum": ["machine", "default-user", "current-user"]
+    },
+    "contextList": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/context" }
+    },
+    "phase": {
+      "type": "string",
+      "enum": ["build", "postdeploy", "interactive", "validate"]
+    },
+    "targetType": {
+      "type": "string",
+      "enum": ["registry", "file", "profile", "scheduled-task", "service", "capability", "appx", "unknown"]
+    },
+    "mutationPolicy": {
+      "type": "string",
+      "enum": ["planned", "manual", "blocked"]
+    },
+    "target": {
+      "type": "object",
+      "required": ["id", "context", "targetType", "phase", "mutationPolicy", "reason"],
+      "properties": {
+        "id": { "type": "string" },
+        "context": { "$ref": "#/$defs/context" },
+        "targetType": { "$ref": "#/$defs/targetType" },
+        "phase": { "$ref": "#/$defs/phase" },
+        "mutationPolicy": { "$ref": "#/$defs/mutationPolicy" },
+        "reason": { "type": "string" },
+        "root": {
+          "type": "string",
+          "enum": ["HKLM", "HKU_DEFAULT", "HKCU"]
+        },
+        "path": { "type": "string" },
+        "marker": { "type": "string" }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "targetType": { "const": "registry" }
+            }
+          },
+          "then": {
+            "required": ["root"]
+          }
+        }
+      ],
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

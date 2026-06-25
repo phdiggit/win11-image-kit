@@ -1,0 +1,74 @@
+{
+  "$schema": "../schemas/context-scope.schema.json",
+  "defaultMode": "plan",
+  "allowedContexts": [
+    "machine",
+    "default-user",
+    "current-user"
+  ],
+  "phasePolicy": {
+    "build": [
+      "machine",
+      "default-user"
+    ],
+    "postdeploy": [
+      "machine",
+      "current-user"
+    ],
+    "interactive": [
+      "current-user"
+    ],
+    "validate": [
+      "machine",
+      "default-user",
+      "current-user"
+    ]
+  },
+  "targets": [
+    {
+      "id": "machine-registry",
+      "context": "machine",
+      "targetType": "registry",
+      "root": "HKLM",
+      "phase": "build",
+      "mutationPolicy": "planned",
+      "reason": "Machine-level registry operations must not be routed through HKCU."
+    },
+    {
+      "id": "default-user-registry",
+      "context": "default-user",
+      "targetType": "registry",
+      "root": "HKU_DEFAULT",
+      "phase": "build",
+      "mutationPolicy": "manual",
+      "reason": "Default User hive operations require explicit mount and unmount handling."
+    },
+    {
+      "id": "current-user-registry",
+      "context": "current-user",
+      "targetType": "registry",
+      "root": "HKCU",
+      "phase": "interactive",
+      "mutationPolicy": "manual",
+      "reason": "Current-user operations must be explicit and never run as build defaults."
+    },
+    {
+      "id": "user-experience-explorer-options",
+      "context": "current-user",
+      "targetType": "registry",
+      "root": "HKCU",
+      "phase": "postdeploy",
+      "mutationPolicy": "manual",
+      "reason": "Explorer preferences are HKCU settings and must stay out of image build defaults."
+    },
+    {
+      "id": "user-experience-start-menu-default-profile",
+      "context": "default-user",
+      "targetType": "profile",
+      "path": "C:\\Users\\Default\\AppData\\Local\\Microsoft\\Windows\\Shell\\LayoutModification.json",
+      "phase": "build",
+      "mutationPolicy": "manual",
+      "reason": "Start menu defaults target the Default User profile and must not be treated as the current user."
+    }
+  ]
+}
