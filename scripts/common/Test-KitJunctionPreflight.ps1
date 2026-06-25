@@ -346,6 +346,10 @@ function Test-KitDataJunctionPreflight {
     $target = Get-KitJunctionExpectedTarget -JunctionConfig $JunctionConfig
     $onTargetConflict = Get-KitJunctionPolicy -JunctionConfig $JunctionConfig -Name "onTargetConflict" -DefaultValue "fail"
 
+    if ($onTargetConflict -eq "merge") {
+        return New-KitDataJunctionBlockingPreflightResult -JunctionConfig $JunctionConfig -Reason "junction-merge-not-supported" -Message "Junction target merge policy is not implemented for transaction migration" -PlanAction "block" -Errors @("onTargetConflict=merge requires a separately designed no-clobber merge flow") -StartedAt $startedAt
+    }
+
     $relation = Test-KitJunctionPathRelation -Source $source -Target $target
     if ($relation.samePath -or $relation.parentChild) {
         return New-KitDataJunctionBlockingPreflightResult -JunctionConfig $JunctionConfig -Reason "junction-path-cycle-risk" -Message "Junction source and target paths have an unsafe relationship" -PlanAction "block" -Errors @("relation=$($relation.relation) source=$source target=$target") -StartedAt $startedAt
@@ -378,8 +382,17 @@ function Test-KitDataJunctionPreflight {
     $sourceActualTarget = ConvertTo-KitJunctionTargetText -Value (Get-KitJunctionConfigProperty -JunctionConfig $sourceState -Name "target" -DefaultValue "")
     $targetExists = [bool](Get-KitJunctionConfigProperty -JunctionConfig $targetState -Name "exists" -DefaultValue $false)
     $targetIsDirectory = [bool](Get-KitJunctionConfigProperty -JunctionConfig $targetState -Name "isDirectory" -DefaultValue $false)
+    $targetIsJunction = [bool](Get-KitJunctionConfigProperty -JunctionConfig $targetState -Name "isJunction" -DefaultValue $false)
     $targetIsEmpty = Get-KitJunctionConfigProperty -JunctionConfig $targetState -Name "isEmpty" -DefaultValue $null
+    $targetActualTarget = ConvertTo-KitJunctionTargetText -Value (Get-KitJunctionConfigProperty -JunctionConfig $targetState -Name "target" -DefaultValue "")
+    $targetLinkType = [string](Get-KitJunctionConfigProperty -JunctionConfig $targetState -Name "linkType" -DefaultValue "")
+    $targetAttributes = [string](Get-KitJunctionConfigProperty -JunctionConfig $targetState -Name "attributes" -DefaultValue "")
+    $targetHasReparsePoint = $targetAttributes -match "(^|,\s*)ReparsePoint(\s*,|$)"
     $sourceSizeBytes = Get-KitJunctionConfigProperty -JunctionConfig $sourceState -Name "sizeBytes" -DefaultValue $null
+
+    if ($targetExists -and ($targetIsJunction -or $targetHasReparsePoint)) {
+        return New-KitDataJunctionBlockingPreflightResult -JunctionConfig $JunctionConfig -Reason "junction-target-is-reparse-point" -Message "Target path exists as a Junction or reparse point" -PlanAction "block" -SourceState $sourceState -TargetState $targetState -Errors @("target=$target actualTarget=$targetActualTarget linkType=$targetLinkType attributes=$targetAttributes") -StartedAt $startedAt
+    }
 
     if ($sourceExists -and $sourceIsJunction) {
         if (Test-KitJunctionTargetMatch -ActualTarget $sourceActualTarget -ExpectedTarget $target) {

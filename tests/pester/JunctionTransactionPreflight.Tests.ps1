@@ -5,6 +5,7 @@ Describe "Junction transaction preflight" {
         $script:RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
         . (Join-Path $script:RepoRoot "scripts\common\Test-KitJunctionPreflight.ps1")
+        . (Join-Path $script:RepoRoot "scripts\common\Invoke-KitJunctionTransaction.ps1")
         $script:PowerShell = (Get-Command powershell -ErrorAction SilentlyContinue).Source
         if ([string]::IsNullOrWhiteSpace($script:PowerShell)) {
             $script:PowerShell = (Get-Command pwsh -ErrorAction Stop).Source
@@ -109,6 +110,71 @@ Describe "Junction transaction preflight" {
         Assert-KitEqual $result.status "failed"
         Assert-KitEqual $result.reason "junction-target-conflict"
         Assert-KitEqual $result.planAction "block"
+    }
+
+    It "blocks a target junction before copy, backup, or mklink operations run" {
+        $operations = [ordered]@{ create = 0; copy = 0; rename = 0; mklink = 0 }
+        $junction = & $script:NewTestJunctionConfig
+        $query = {
+            param([string]$Path, [string]$Role, $JunctionConfig)
+            if ($Role -eq "source") {
+                return & $script:NewTestPathState -Exists $true -IsDirectory $true -IsEmpty $false -SizeBytes 10
+            }
+
+            & $script:NewTestPathState -Exists $true -IsDirectory $true -IsJunction $true -IsEmpty $null -Target "E:\UnexpectedTarget" -LinkType "Junction" -Attributes "Directory, ReparsePoint"
+        }
+
+        $preflight = Test-KitDataJunctionPreflight -JunctionConfig $junction -StateQuery $query
+        $result = Invoke-KitDataJunctionTransaction `
+            -JunctionConfig $junction `
+            -PreflightResult $preflight `
+            -CreateDirectory { $operations.create++ } `
+            -CopyDirectory { $operations.copy++; 0 } `
+            -RenameSourceToBackup { $operations.rename++ } `
+            -CreateJunction { $operations.mklink++; 0 }
+
+        Assert-KitEqual $preflight.status "failed"
+        Assert-KitEqual $preflight.reason "junction-target-is-reparse-point"
+        Assert-KitEqual $preflight.planAction "block"
+        Assert-KitMatch $preflight.errors[0] "target=D:\\Data\\Target"
+        Assert-KitMatch $preflight.errors[0] "actualTarget=E:\\UnexpectedTarget"
+        Assert-KitMatch $preflight.errors[0] "linkType=Junction"
+        Assert-KitMatch $preflight.errors[0] "attributes=Directory, ReparsePoint"
+        Assert-KitEqual $result.reason "junction-target-is-reparse-point"
+        Assert-KitEqual $operations.create 0
+        Assert-KitEqual $operations.copy 0
+        Assert-KitEqual $operations.rename 0
+        Assert-KitEqual $operations.mklink 0
+    }
+
+    It "blocks a target reparse point even when it is not reported as a junction" {
+        $junction = & $script:NewTestJunctionConfig
+        $query = {
+            param([string]$Path, [string]$Role, $JunctionConfig)
+            if ($Role -eq "source") {
+                return & $script:NewTestPathState -Exists $true -IsDirectory $true -IsEmpty $false -SizeBytes 10
+            }
+
+            & $script:NewTestPathState -Exists $true -IsDirectory $true -IsJunction $false -IsEmpty $null -Target "E:\LinkedTarget" -LinkType "SymbolicLink" -Attributes "Directory, ReparsePoint"
+        }
+
+        $result = Test-KitDataJunctionPreflight -JunctionConfig $junction -StateQuery $query
+
+        Assert-KitEqual $result.status "failed"
+        Assert-KitEqual $result.reason "junction-target-is-reparse-point"
+        Assert-KitMatch $result.errors[0] "actualTarget=E:\\LinkedTarget"
+        Assert-KitMatch $result.errors[0] "linkType=SymbolicLink"
+        Assert-KitMatch $result.errors[0] "attributes=Directory, ReparsePoint"
+    }
+
+    It "blocks merge target conflict policy until no-clobber merge is implemented" {
+        $junction = & $script:NewTestJunctionConfig -OnTargetConflict "merge"
+        $result = Test-KitDataJunctionPreflight -JunctionConfig $junction -StateQuery { throw "state query should not run for unsupported merge" }
+
+        Assert-KitEqual $result.status "failed"
+        Assert-KitEqual $result.reason "junction-merge-not-supported"
+        Assert-KitEqual $result.planAction "block"
+        Assert-KitMatch $result.errors[0] "onTargetConflict=merge"
     }
 
     It "blocks same-path and parent-child path risks before querying disk state" {
@@ -221,7 +287,7 @@ Describe "Junction transaction preflight" {
             $report = Get-Content -LiteralPath $reportPath -Raw -Encoding UTF8 | ConvertFrom-Json
             $reportedJunction = @($report.junctionResults)[0]
             Assert-KitEqual $reportedJunction.status "whatif"
-            Assert-KitEqual $reportedJunction.reason "junction-migration-planned"
+            Assert-KitEqual $reportedJunction.reason "junction-transaction-plan"
             Assert-KitEqual $reportedJunction.planAction "create-target-and-junction"
             Assert-KitEqual $report.junctionSummary.exitCode 0
         } finally {
@@ -238,6 +304,7 @@ Describe "Junction transaction preflight" {
 
         Assert-KitEqual ($properties.PSObject.Properties.Name -contains "onTargetConflict") $true
         Assert-KitEqual ($properties.onTargetConflict.enum -contains "fail") $true
+        Assert-KitEqual ($properties.onTargetConflict.enum -contains "merge") $false
         Assert-KitEqual ($properties.onTargetConflict.enum -contains "overwrite") $false
         Assert-KitEqual ($properties.backupRetention.enum -contains "keep") $true
         Assert-KitEqual ($properties.backupRetention.enum -contains "purge") $false

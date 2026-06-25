@@ -21,7 +21,7 @@
           },
           "onTargetConflict": {
             "type": "string",
-            "enum": ["fail", "merge"],
+            "enum": ["fail"],
             "default": "fail"
           },
           "backupRetention": {
