@@ -442,7 +442,8 @@ function Invoke-KitDataJunctionTransaction {
     $verifiedTarget = [string](Get-KitJunctionConfigProperty -JunctionConfig $verification -Name "actualTarget" -DefaultValue "")
     if ([string]$verification.status -ne "unchanged") {
         $status = Resolve-KitJunctionFailureStatus -Required $required -FailurePolicy $failurePolicy
-        return New-KitDataJunctionTransactionResult -JunctionConfig $JunctionConfig -Status $status -Reason "junction-post-verify-failed" -Message "Junction was created but final target verification failed; backup was preserved" -PlanAction $planAction -TransactionStage "verify-junction" -SourceState $sourceState -TargetState $targetState -SourceStats $sourceStats -TargetStats $targetStats -RobocopyExitCode $robocopyExitCode -BackupPath $backupPath -MklinkExitCode $mklinkExitCode -VerifiedTarget $verifiedTarget -ManualRecoveryHint "Inspect the created junction and restore from backupPath if the target is wrong." -Warnings $warnings -Errors @($verification.errors) -StartedAt $startedAt
+        $verificationErrors = @(ConvertTo-KitStepResultArray -Value $verification.errors)
+        return New-KitDataJunctionTransactionResult -JunctionConfig $JunctionConfig -Status $status -Reason "junction-post-verify-failed" -Message "Junction was created but final target verification failed; backup was preserved" -PlanAction $planAction -TransactionStage "verify-junction" -SourceState $sourceState -TargetState $targetState -SourceStats $sourceStats -TargetStats $targetStats -RobocopyExitCode $robocopyExitCode -BackupPath $backupPath -MklinkExitCode $mklinkExitCode -VerifiedTarget $verifiedTarget -ManualRecoveryHint "Inspect the created junction and restore from backupPath if the target is wrong." -Warnings $warnings -Errors $verificationErrors -StartedAt $startedAt
     }
 
     if ($backupRetention -eq "delete" -and -not [string]::IsNullOrWhiteSpace($backupPath)) {
