@@ -2,7 +2,7 @@
 
 Defender exclusion 会直接减少扫描覆盖面，因此本项目只允许由 `manifests/defender-exclusions.json` 显式声明的排除项进入部署后流程。默认目标是解决 kit 管理目录和少数可信便携工具的误报或重复扫描问题，而不是降低 Windows Defender 的全局保护级别。
 
-本文说明 Issue #8 的策略边界和执行语义；验收矩阵、CI 守卫和维护者手动关闭前检查清单见 [Issue #8 Defender Exclusion Acceptance](17-issue8-defender-exclusion-acceptance.md)。
+本文说明 Issue #8 的策略边界和执行语义；验收矩阵、CI 守卫和维护者手动关闭前检查清单见 [Issue #8 Defender Exclusion Acceptance](17-issue8-defender-exclusion-acceptance.md)。关闭准备和 main/workflow evidence scaffold 见 [Issue #8 Close Preparation](18-issue8-close-preparation.md) 与 [Issue #8 Main Validation Evidence](19-issue8-main-validation-evidence.md)。
 
 ## 支持类型
 
