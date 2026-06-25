@@ -1,6 +1,8 @@
 # Issue #7 Junction Transaction Acceptance
 
-Status: in-acceptance
+Status: accepted-pending-manual-closure
+
+Close preparation: [Issue #7 Close Preparation](14-issue7-close-preparation.md)
 
 ## Scope
 
