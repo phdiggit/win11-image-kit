@@ -97,6 +97,7 @@ jobs:
               "tests/pester/DefenderExclusionPolicy.Tests.ps1",
               "tests/pester/DefenderExclusionState.Tests.ps1",
               "tests/pester/DefenderExclusionPostDeploy.Tests.ps1",
+              "tests/pester/Issue8DefenderAcceptance.Tests.ps1",
               "tests/pester/UserExperienceStateVerification.Tests.ps1",
               "tests/pester/DryRunAcceptanceBaseline.Tests.ps1",
               "tests/pester/Issue6AcceptanceAudit.Tests.ps1",
