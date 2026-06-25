@@ -394,8 +394,7 @@ Describe "Defender and AppX state verification results" {
             ([ordered]@{ junctions = @() }) | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath $junctionsPath -Encoding UTF8
             ([ordered]@{ services = @() }) | ConvertTo-Json -Depth 4 | Set-Content -LiteralPath $servicesPath -Encoding UTF8
             ([ordered]@{
-                paths = @()
-                processes = @()
+                exclusions = @()
                 stateChecks = @(
                     [ordered]@{
                         settingName = "DisableRealtimeMonitoring"
@@ -458,10 +457,11 @@ Describe "Defender and AppX state verification results" {
 
             Assert-KitEqual $summaryReport.defenderReportPath $defenderReportPath
             Assert-KitEqual $defenderReference.exists $true
-            Assert-KitEqual $defenderReference.defenderSummary.defenderNotRunCount 1
+            Assert-KitEqual $defenderReference.defenderSummary.whatIfCount 1
             Assert-KitEqual ($defenderReference.defenderSummary.PSObject.Properties.Name -contains "defenderResults") $false
-            Assert-KitEqual $defenderReport.defenderSummary.defenderNotRunCount 1
-            Assert-KitEqual @($defenderReport.defenderResults).Count 1
+            Assert-KitEqual $defenderReport.defenderSummary.whatIfCount 1
+            Assert-KitEqual @($defenderReport.defenderResults).Count 0
+            Assert-KitEqual @($defenderReport.defenderStateResults).Count 1
         } finally {
             if ([IO.Directory]::Exists($tempRoot)) {
                 [IO.Directory]::Delete($tempRoot, $true)

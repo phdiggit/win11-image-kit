@@ -47,6 +47,7 @@ logs/                 仅保留 .gitkeep，本地日志不提交
 13. Issue #7 Junction 事务迁移收口验收见 [Issue #7 Junction Transaction Acceptance](docs/13-issue7-junction-transaction-acceptance.md)
 14. Issue #7 Junction 事务迁移人工关闭准备见 [Issue #7 Close Preparation](docs/14-issue7-close-preparation.md)
 15. Issue #7 main 验证证据见 [Issue #7 Main Validation Evidence](docs/15-issue7-main-validation-evidence.md)
+16. Defender 排除项最小权限策略见 [Issue #8 Defender Exclusion Policy](docs/16-issue8-defender-exclusion-policy.md)
 
 常规配置验证：
 
