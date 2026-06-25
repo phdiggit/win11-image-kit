@@ -5,6 +5,13 @@ It records which manifest declares a capability, which schema validates it,
 which scripts implement or check it, and which tests and docs prove the
 capability is covered.
 
+This document is the Issue #11 runbook and design note. Acceptance, close
+preparation, and main validation evidence are tracked separately:
+
+- [Issue #11 Capability Registry Acceptance](29-issue11-capability-registry-acceptance.md)
+- [Issue #11 Close Preparation](30-issue11-close-preparation.md)
+- [Issue #11 Main Validation Evidence](31-issue11-main-validation-evidence.md)
+
 ## Fields
 
 - `id`: stable kebab-case capability identifier.
@@ -46,12 +53,14 @@ whether to add registry entries in later stages.
 
 ## New Capability Checklist
 
+- Add or update the registry entry before declaring the capability
+  `implemented`.
 - Manifest exists, or the capability is explicitly `planned`.
 - Schema exists, or static-only notes explain why no schema applies.
 - Implementation entrypoint paths are real.
 - Validation entrypoint paths are real when listed.
-- Pester tests exist.
-- Docs exist.
+- Pester tests exist or are updated for the new capability.
+- Docs exist or are updated for the new capability.
 - `mutationLevel` is explicit and not `unknown` for implemented work.
 - `context` is aligned with Issue #10.
 - PR Fast CI uses static, fixture, mock, WhatIf, or report-only paths.
