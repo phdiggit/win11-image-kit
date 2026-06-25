@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "win11-image-kit capability registry",
+  "type": "object",
+  "required": ["registryVersion", "defaultValidationMode", "capabilities"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "registryVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "defaultValidationMode": {
+      "type": "string",
+      "enum": ["static", "fixture", "runtime"]
+    },
+    "capabilities": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/capability" }
+    }
+  },
+  "$defs": {
+    "status": {
+      "type": "string",
+      "enum": ["planned", "implemented", "deprecated", "static-only"]
+    },
+    "context": {
+      "type": "string",
+      "enum": ["machine", "default-user", "current-user", "mixed", "none"]
+    },
+    "mutationLevel": {
+      "type": "string",
+      "enum": [
+        "audit-only",
+        "plan-only",
+        "filesystem-planned",
+        "registry-planned",
+        "security-policy-planned",
+        "profile-planned",
+        "real-mutation",
+        "unknown"
+      ]
+    },
+    "stringList": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "capability": {
+      "type": "object",
+      "required": [
+        "id",
+        "issue",
+        "status",
+        "context",
+        "mutationLevel",
+        "manifest",
+        "schema",
+        "entrypoints",
+        "validateEntrypoints",
+        "tests",
+        "docs",
+        "notes"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+        },
+        "issue": {
+          "type": "string",
+          "pattern": "^#[0-9]+$"
+        },
+        "status": { "$ref": "#/$defs/status" },
+        "context": { "$ref": "#/$defs/context" },
+        "mutationLevel": { "$ref": "#/$defs/mutationLevel" },
+        "manifest": { "type": "string" },
+        "schema": { "type": "string" },
+        "entrypoints": { "$ref": "#/$defs/stringList" },
+        "validateEntrypoints": { "$ref": "#/$defs/stringList" },
+        "tests": { "$ref": "#/$defs/stringList" },
+        "docs": { "$ref": "#/$defs/stringList" },
+        "notes": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
