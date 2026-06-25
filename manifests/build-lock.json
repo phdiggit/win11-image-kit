@@ -1,0 +1,201 @@
+{
+  "$schema": "../schemas/build-lock.schema.json",
+  "lockVersion": 1,
+  "algorithm": "SHA256",
+  "mode": "verify",
+  "generatedBy": "win11-image-kit",
+  "entries": [
+    {
+      "path": "manifests/capability-registry.json",
+      "category": "manifest",
+      "required": true,
+      "hash": "60e8181aa21a7b13705c8571a9985a7cf3be01e24b30290899befae387c1d0e0",
+      "reason": "Capability registry is a supply-chain control plane input."
+    },
+    {
+      "path": "schemas/capability-registry.schema.json",
+      "category": "schema",
+      "required": true,
+      "hash": "bc619fd8f099a18b47ff136e7728dcc273876d2cb8f571df2d193be3e8367ed1",
+      "reason": "Capability registry schema constrains supply-chain metadata."
+    },
+    {
+      "path": "manifests/context-scope.json",
+      "category": "manifest",
+      "required": true,
+      "hash": "8f3621d8e3fd87efaa55e2f541624d95b00775f7b98e0c94c9b9a01a3764da7e",
+      "reason": "Context scope manifest is a trusted routing input."
+    },
+    {
+      "path": "schemas/context-scope.schema.json",
+      "category": "schema",
+      "required": true,
+      "hash": "adc78103ca7fbb83e2f4b7dd680334d2aa73f1c38a775cdebc0f9c6f6ae40103",
+      "reason": "Context scope schema constrains routing input structure."
+    },
+    {
+      "path": "manifests/sysprep-appx-gate.json",
+      "category": "manifest",
+      "required": true,
+      "hash": "52a1b556f110d790a35f87dde62250613d0d95c5460c40621d3cd1f239386b0d",
+      "reason": "Sysprep AppX gate manifest is a trusted readiness input."
+    },
+    {
+      "path": "schemas/sysprep-appx-gate.schema.json",
+      "category": "schema",
+      "required": true,
+      "hash": "a4324cc705b0ba57868f1bce57d3c6b45cd31062120c33354f38f87eae58ab00",
+      "reason": "Sysprep AppX gate schema constrains readiness input structure."
+    },
+    {
+      "path": "schemas/build-lock.schema.json",
+      "category": "schema",
+      "required": true,
+      "hash": "0222afa859dcc36b18d418438d2cb9bf281de4063e6408d2a0f21926e61862d5",
+      "reason": "Build lock schema constrains immutable input lock metadata."
+    },
+    {
+      "path": "scripts/validate/Test-CapabilityRegistry.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "7d0d55509166deb938e704b923359fcf8b2715c5029df38f454278d05dff436a",
+      "reason": "Capability registry validation is part of supply-chain consistency checks."
+    },
+    {
+      "path": "scripts/validate/Test-ContextScope.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "e00e7fbda8936b4eba51292753c3ec32ecbe53b3ae21849cff6a219684297722",
+      "reason": "Context scope validation is a trusted static guardrail."
+    },
+    {
+      "path": "scripts/validate/Test-SysprepReadiness.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "54b1cf7d2e24dc93911e48d3341fbe6cb4cf0a41c5e9a25a70cbdd68177c59b9",
+      "reason": "Sysprep readiness validation is a trusted static guardrail."
+    },
+    {
+      "path": "scripts/common/New-KitCapabilityConsistencyReport.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "48cb55b7e08e9d33066fc003078f3e0f3e85e0bdf1e2e080796c7e3998e4af88",
+      "reason": "Capability consistency report generation feeds static evidence."
+    },
+    {
+      "path": "scripts/common/New-KitContextPlan.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "3d1bedb892218d676228b937d725c687fb64c7d1d740fffd398500f26fdbd26f",
+      "reason": "Context planning report generation feeds static evidence."
+    },
+    {
+      "path": "scripts/common/Get-KitFileHash.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "2e1296772a658c75840a2b1f0a41eeca001c67f71649af39e7ca0d5ebe0ca827",
+      "reason": "Build lock hash helper computes immutable input digests."
+    },
+    {
+      "path": "scripts/common/Get-KitBuildLock.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "da1d0c53f5197788bba349874dc10c6339b78d954716a9f178914882712b5a18",
+      "reason": "Build lock loader enforces manifest parsing and duplicate path checks."
+    },
+    {
+      "path": "scripts/common/Test-KitBuildLock.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "1ca2ca4a41511835786bea2b42a0ae5b173f84e75dddca0c532a322cb2569ff7",
+      "reason": "Build lock validator checks hashes and watched files."
+    },
+    {
+      "path": "scripts/common/New-KitBuildLockReport.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "c3cf797b6e8008b55d9a571c9319aaacd841ec3dd720332a51942d5f9b5e9ec7",
+      "reason": "Build lock report builder produces CI and review evidence."
+    },
+    {
+      "path": "scripts/validate/Test-BuildLock.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "f5e6f5d2dc1da06f794281076e36bc66f02eadaa65a0bb56e112350b3eb11038",
+      "reason": "Build lock validate entrypoint writes explicit reports and exit codes."
+    },
+    {
+      "path": "tests/pester/BuildLockSchema.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "8e387964ee14facaa7d690f51bb5919d835425e60ccd5830b13132260097064d",
+      "reason": "Build lock schema tests guard manifest structure."
+    },
+    {
+      "path": "tests/pester/BuildLockHash.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "11a2f686aa13338fd4fa8720698d4ae79cf5658506bcfdaa0e5ac637d6f08655",
+      "reason": "Build lock hash tests guard deterministic digest behavior."
+    },
+    {
+      "path": "tests/pester/BuildLockValidation.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "b77977ec1ccc8acd2f56b3e3923f5f8aac2de80b94a029a051c2541c255c4e02",
+      "reason": "Build lock validation tests guard missing, mismatch, and watched-file behavior."
+    },
+    {
+      "path": "tests/pester/BuildLockReport.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "64049f93989f516e4c6279c2a93d16132d607ec4699b6dd37135287efdb43f98",
+      "reason": "Build lock report tests guard report evidence structure."
+    },
+    {
+      "path": "tests/pester/Issue12BuildLock.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "533c294923793889c1e2106d671383e7b247089ffe640b95f3804fef3e799bc8",
+      "reason": "Issue 12 guardrail tests keep CI, docs, and safety boundaries wired."
+    },
+    {
+      "path": "docs/28-issue11-capability-registry.md",
+      "category": "doc",
+      "required": true,
+      "hash": "24f3b7c976c9dca89f108e3e271d4cbe78aaf02ded3dd67d187e289710593b43",
+      "reason": "Capability registry runbook defines the upstream control plane."
+    },
+    {
+      "path": "docs/32-issue12-build-lock.md",
+      "category": "doc",
+      "required": true,
+      "hash": "9b724b7875c7a7a6d25bb8c7a4b349a9fdb2d82aa451ed5b06fe0615aa6cf940",
+      "reason": "Build lock runbook documents report-only supply-chain validation."
+    },
+    {
+      "path": ".github/workflows/ci.yml",
+      "category": "workflow",
+      "required": true,
+      "hash": "f03a9fb78ecae5d2b7d1bb8251cda60e1f28cf574c0119e44d65f7ba3db4a509",
+      "reason": "PR Fast CI wiring is a trusted guardrail for build lock tests."
+    }
+  ],
+  "watchGlobs": [
+    "manifests/*.json",
+    "schemas/*.json",
+    "scripts/common/*.ps1",
+    "scripts/validate/*.ps1",
+    "tests/pester/*Registry*.Tests.ps1",
+    "tests/pester/*BuildLock*.Tests.ps1",
+    "docs/28-issue11-capability-registry.md",
+    "docs/32-issue12-build-lock.md",
+    ".github/workflows/ci.yml"
+  ],
+  "policy": {
+    "missingRequired": "fail",
+    "hashMismatch": "fail",
+    "untrackedWatchedFile": "manual",
+    "unsupportedAlgorithm": "fail"
+  }
+}

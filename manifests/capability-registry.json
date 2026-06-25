@@ -110,6 +110,35 @@
         "docs/24-issue10-context-scope-split.md"
       ],
       "notes": "Plan and report capability only. It must not perform real registry, profile, or Default User hive mutation."
+    },
+    {
+      "id": "immutable-build-lock",
+      "issue": "#12",
+      "status": "implemented",
+      "context": "none",
+      "mutationLevel": "audit-only",
+      "manifest": "manifests/build-lock.json",
+      "schema": "schemas/build-lock.schema.json",
+      "entrypoints": [
+        "scripts/common/Get-KitFileHash.ps1",
+        "scripts/common/Get-KitBuildLock.ps1",
+        "scripts/common/Test-KitBuildLock.ps1",
+        "scripts/common/New-KitBuildLockReport.ps1"
+      ],
+      "validateEntrypoints": [
+        "scripts/validate/Test-BuildLock.ps1"
+      ],
+      "tests": [
+        "tests/pester/BuildLockSchema.Tests.ps1",
+        "tests/pester/BuildLockHash.Tests.ps1",
+        "tests/pester/BuildLockValidation.Tests.ps1",
+        "tests/pester/BuildLockReport.Tests.ps1",
+        "tests/pester/Issue12BuildLock.Tests.ps1"
+      ],
+      "docs": [
+        "docs/32-issue12-build-lock.md"
+      ],
+      "notes": "Audit/report-only immutable input lock. It validates selected trusted inputs and does not build images or mutate the system."
     }
   ]
 }

@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "win11-image-kit build lock",
+  "type": "object",
+  "required": ["lockVersion", "algorithm", "mode", "entries", "watchGlobs", "policy"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "lockVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "algorithm": {
+      "type": "string",
+      "enum": ["SHA256"]
+    },
+    "mode": {
+      "type": "string",
+      "enum": ["verify", "audit"]
+    },
+    "generatedBy": { "type": "string" },
+    "entries": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/entry" }
+    },
+    "watchGlobs": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "policy": { "$ref": "#/$defs/policy" }
+  },
+  "$defs": {
+    "category": {
+      "type": "string",
+      "enum": ["manifest", "schema", "script", "test", "doc", "workflow", "config"]
+    },
+    "policyValue": {
+      "type": "string",
+      "enum": ["pass", "manual", "fail"]
+    },
+    "entry": {
+      "type": "object",
+      "required": ["path", "category", "required", "hash", "reason"],
+      "properties": {
+        "path": { "type": "string" },
+        "category": { "$ref": "#/$defs/category" },
+        "required": { "type": "boolean" },
+        "hash": {
+          "type": "string",
+          "pattern": "^[A-Fa-f0-9]{64}$"
+        },
+        "reason": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "policy": {
+      "type": "object",
+      "required": ["missingRequired", "hashMismatch", "untrackedWatchedFile", "unsupportedAlgorithm"],
+      "properties": {
+        "missingRequired": { "$ref": "#/$defs/policyValue" },
+        "hashMismatch": { "$ref": "#/$defs/policyValue" },
+        "untrackedWatchedFile": { "$ref": "#/$defs/policyValue" },
+        "unsupportedAlgorithm": { "$ref": "#/$defs/policyValue" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
