@@ -6,19 +6,34 @@ Describe "Issue 11 close preparation" {
 
     It "records close-prep status and manual closure boundaries" {
         $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\30-issue11-close-preparation.md") -Raw -Encoding UTF8
+        $statusMatch = [regex]::Match($doc, '(?m)^Status: `([^`]+)`')
 
+        Assert-KitEqual $statusMatch.Success $true
+        Assert-KitEqual (@("ready-for-manual-closure-candidate", "ready-for-manual-closure") -contains $statusMatch.Groups[1].Value) $true
         foreach ($term in @(
-            'Status: `ready-for-manual-closure-candidate`',
             "## Final Scope",
             "## Evidence Chain",
             "## Validation Policy",
             "## Manual Closure Checklist",
-            "## Optional Evidence Pending",
             "## Closure Note Draft",
-            "manual closure",
-            "pending-main-validation"
+            "manual closure"
         )) {
             Assert-KitMatch $doc ([regex]::Escape($term))
+        }
+
+        if ($statusMatch.Groups[1].Value -eq "ready-for-manual-closure") {
+            foreach ($term in @(
+                "Main/workflow validation success evidence",
+                "Trigger source: main push",
+                "Result: success",
+                "Full Validate succeeded",
+                "real VM/admin smoke | not-run"
+            )) {
+                Assert-KitMatch $doc ([regex]::Escape($term))
+            }
+        } else {
+            Assert-KitMatch $doc "pending-main-validation"
+            Assert-KitMatch $doc "## Optional Evidence Pending"
         }
     }
 
@@ -49,7 +64,7 @@ Describe "Issue 11 close preparation" {
             "must not call real business handlers",
             "real system mutation",
             "VM or administrator smoke validation is optional",
-            "workflow-dispatch",
+            "workflow_dispatch",
             "manual closure"
         )) {
             Assert-KitMatch $doc ([regex]::Escape($term))

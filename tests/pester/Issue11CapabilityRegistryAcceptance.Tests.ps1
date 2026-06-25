@@ -8,9 +8,11 @@ Describe "Issue 11 capability registry acceptance" {
 
     It "documents acceptance scope, non-goals, matrix, extension checklist, and evidence links" {
         $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\29-issue11-capability-registry-acceptance.md") -Raw -Encoding UTF8
+        $statusMatch = [regex]::Match($doc, '(?m)^Status: `([^`]+)`')
 
+        Assert-KitEqual $statusMatch.Success $true
+        Assert-KitEqual (@("in-acceptance", "accepted-ready-for-manual-closure") -contains $statusMatch.Groups[1].Value) $true
         foreach ($term in @(
-            'Status: `in-acceptance`',
             "## Scope",
             "## Non-goals",
             "## Acceptance Matrix",
@@ -22,6 +24,11 @@ Describe "Issue 11 capability registry acceptance" {
             "31-issue11-main-validation-evidence.md"
         )) {
             Assert-KitMatch $doc ([regex]::Escape($term))
+        }
+
+        if ($statusMatch.Groups[1].Value -eq "accepted-ready-for-manual-closure") {
+            Assert-KitMatch $doc "Close preparation and main validation evidence are recorded in docs/30 and"
+            Assert-KitMatch $doc "docs/31"
         }
     }
 
