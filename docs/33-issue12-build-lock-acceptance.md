@@ -1,6 +1,6 @@
 # Issue #12 Build Lock Acceptance
 
-Status: `in-acceptance`
+Status: `accepted-ready-for-manual-closure`
 
 ## Scope
 
@@ -14,6 +14,8 @@ Status: `in-acceptance`
 - watched-but-untracked warning/manual behavior
 - PR Fast CI guardrails
 - docs and README entry
+
+Close preparation and main validation evidence are recorded in docs/34 and docs/35.
 
 ## Non-goals
 

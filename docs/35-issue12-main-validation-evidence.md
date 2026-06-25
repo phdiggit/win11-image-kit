@@ -1,6 +1,6 @@
 # Issue #12 Main Validation Evidence
 
-Status: `pending-main-validation`
+Status: `ready-for-manual-closure`
 
 ## Evidence Sources
 
@@ -14,11 +14,13 @@ Pull request-only Fast CI is not a substitute for main validation evidence.
 
 | Field | Value |
 | --- | --- |
-| Trigger source | `pending` |
-| Main SHA | `pending` |
-| Workflow run | `pending` |
-| Result | `pending` |
-| Notes | `pending` |
+| Trigger source | `main push` |
+| Main SHA | `65c5c98d4c47dade576503952a9c68a9ccd456ef` |
+| Workflow run | https://github.com/phdiggit/win11-image-kit/actions/runs/28195790448 |
+| Full Validate job | https://github.com/phdiggit/win11-image-kit/actions/runs/28195790448/job/83522088038 |
+| Result | `success` |
+| Build Lock report | `manual`, `failedCount=0` |
+| Notes | Windows CI / Full Validate succeeded on the main push after PR #66 was merged. PR Fast CI is not a substitute for this evidence. |
 
 ## Real VM/Admin Smoke
 
@@ -46,8 +48,8 @@ Real VM/admin smoke is optional manual evidence. It is not required by PR Fast C
 
 | Field | Value |
 | --- | --- |
-| Current readiness | `pending-main-validation` |
-| Required next evidence | `main push` or `workflow_dispatch` Full Validate success |
+| Current readiness | `ready-for-manual-closure` |
+| Required next evidence | `none` |
 | PR Fast CI substitute allowed | `false` |
 
 ## Ready-State Rules
@@ -57,7 +59,9 @@ This document can move to `ready-for-manual-closure` only when all of these are 
 - Trigger source is `main push` or `workflow_dispatch`.
 - Main SHA is a 40-character Git SHA.
 - Workflow run is a GitHub Actions URL.
+- Full Validate job is a GitHub Actions job URL.
 - Result is `success`.
+- Build Lock report is `passed` or `manual`, with `failedCount=0`.
 - Current readiness is `ready-for-manual-closure`.
 
 ## Copyable Manual Closure Comment Draft

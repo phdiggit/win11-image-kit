@@ -156,7 +156,7 @@
       "path": "tests/pester/Issue12BuildLock.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "7b7752cb5dec4c361f02aebfa48627f8584ccf3abdee78aa2637b36cc1f67386",
+      "hash": "9c78cce1b34023bb63c4e6f4c70a8ac5b4f7afdc79714ef2533d7ca020df86f3",
       "reason": "Issue 12 guardrail tests keep CI, docs, and safety boundaries wired."
     },
     {
@@ -170,14 +170,14 @@
       "path": "docs/32-issue12-build-lock.md",
       "category": "doc",
       "required": true,
-      "hash": "39021b9bc05a2f61db1df93f934813db56361f9362b0fbe1465ac02366d88c18",
+      "hash": "90c8c9e6cf24aa9801018c2570c7c2697e7d37d72f7728cbdb6a39e275ac8d80",
       "reason": "Build lock runbook documents report-only supply-chain validation."
     },
     {
       "path": ".github/workflows/ci.yml",
       "category": "workflow",
       "required": true,
-      "hash": "5ba5a09456edf4861cbde3b1a5843bcc256710ccbf64f40c683cb68ee0e57bb0",
+      "hash": "7df3418296a0d3b7e39ddfa334e991a8d98edeef98b39e0cfe5d4ce46cbbd147",
       "reason": "PR Fast CI wiring is a trusted guardrail for build lock tests."
     }
   ],

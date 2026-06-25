@@ -4,22 +4,39 @@ Describe "Issue 12 close preparation" {
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
     }
 
-    It "records candidate close-prep status and manual closure boundaries" {
+    It "records close-prep status and manual closure boundaries" {
         $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\34-issue12-close-preparation.md") -Raw -Encoding UTF8
         $statusMatch = [regex]::Match($doc, '(?m)^Status: `([^`]+)`')
 
         Assert-KitEqual $statusMatch.Success $true
-        Assert-KitEqual $statusMatch.Groups[1].Value "ready-for-manual-closure-candidate"
+        Assert-KitEqual (@("ready-for-manual-closure-candidate", "ready-for-manual-closure") -contains $statusMatch.Groups[1].Value) $true
         foreach ($term in @(
             "## Final Scope",
             "## Evidence Chain",
             "## Validation Policy",
             "## Manual Closure Checklist",
+            "## Recorded Evidence",
             "## Optional Manual Validation Evidence",
             "## Closure Note Draft",
             "manual issue handling"
         )) {
             Assert-KitMatch $doc ([regex]::Escape($term))
+        }
+
+        if ($statusMatch.Groups[1].Value -eq "ready-for-manual-closure") {
+            foreach ($term in @(
+                "Main/workflow validation success evidence",
+                "main push Windows CI / Full Validate",
+                "Trigger source",
+                'Result: `success`',
+                "Full Validate job",
+                "Build Lock report",
+                "failedCount=0",
+                "real VM/admin smoke",
+                "not-run"
+            )) {
+                Assert-KitMatch $doc ([regex]::Escape($term))
+            }
         }
     }
 
@@ -53,8 +70,7 @@ Describe "Issue 12 close preparation" {
             "signing",
             "business handler",
             "system mutation",
-            "Real VM/admin smoke is optional manual evidence",
-            "pending-main-validation"
+            "Real VM/admin smoke is optional manual evidence"
         )) {
             Assert-KitMatch $doc ([regex]::Escape($term))
         }
