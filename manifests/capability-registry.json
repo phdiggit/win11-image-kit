@@ -1,0 +1,115 @@
+{
+  "$schema": "../schemas/capability-registry.schema.json",
+  "registryVersion": 1,
+  "defaultValidationMode": "static",
+  "capabilities": [
+    {
+      "id": "junction-transaction-migration",
+      "issue": "#7",
+      "status": "implemented",
+      "context": "machine",
+      "mutationLevel": "filesystem-planned",
+      "manifest": "manifests/junctions.json",
+      "schema": "schemas/junctions.schema.json",
+      "entrypoints": [
+        "scripts/common/Invoke-KitJunctionTransaction.ps1",
+        "scripts/common/Test-KitJunctionPreflight.ps1",
+        "scripts/common/Test-KitJunctionState.ps1",
+        "scripts/postdeploy/Set-DataJunctions.ps1"
+      ],
+      "validateEntrypoints": [],
+      "tests": [
+        "tests/pester/JunctionTransactionPreflight.Tests.ps1",
+        "tests/pester/JunctionTransactionExecution.Tests.ps1",
+        "tests/pester/JunctionStateVerification.Tests.ps1",
+        "tests/pester/Issue7JunctionAcceptance.Tests.ps1"
+      ],
+      "docs": [
+        "docs/13-issue7-junction-transaction-acceptance.md"
+      ],
+      "notes": "Implemented filesystem capability. PR Fast CI must use fixture, mock, WhatIf, or report-only paths and must not perform real junction migration."
+    },
+    {
+      "id": "defender-exclusion-policy",
+      "issue": "#8",
+      "status": "implemented",
+      "context": "machine",
+      "mutationLevel": "security-policy-planned",
+      "manifest": "manifests/defender-exclusions.json",
+      "schema": "schemas/defender-exclusions.schema.json",
+      "entrypoints": [
+        "scripts/common/Get-KitDefenderExclusionState.ps1",
+        "scripts/common/Set-KitDefenderExclusionState.ps1",
+        "scripts/common/Test-KitDefenderExclusionPolicy.ps1",
+        "scripts/postdeploy/Set-DefenderExclusions.ps1"
+      ],
+      "validateEntrypoints": [],
+      "tests": [
+        "tests/pester/DefenderExclusionPolicy.Tests.ps1",
+        "tests/pester/DefenderExclusionState.Tests.ps1",
+        "tests/pester/DefenderExclusionPostDeploy.Tests.ps1",
+        "tests/pester/Issue8DefenderAcceptance.Tests.ps1"
+      ],
+      "docs": [
+        "docs/16-issue8-defender-exclusion-policy.md"
+      ],
+      "notes": "Implemented Defender policy capability. PR Fast CI must stay on policy, state, mock, or WhatIf paths and must not mutate Defender settings."
+    },
+    {
+      "id": "sysprep-appx-readiness",
+      "issue": "#9",
+      "status": "implemented",
+      "context": "machine",
+      "mutationLevel": "audit-only",
+      "manifest": "manifests/sysprep-appx-gate.json",
+      "schema": "schemas/sysprep-appx-gate.schema.json",
+      "entrypoints": [
+        "scripts/common/Get-KitAppxInventory.ps1",
+        "scripts/common/Test-KitAppxState.ps1",
+        "scripts/common/Test-KitSysprepAppxReadiness.ps1",
+        "scripts/validate/Test-SysprepReadiness.ps1"
+      ],
+      "validateEntrypoints": [
+        "scripts/validate/Test-SysprepReadiness.ps1"
+      ],
+      "tests": [
+        "tests/pester/SysprepAppxInventory.Tests.ps1",
+        "tests/pester/SysprepAppxReadiness.Tests.ps1",
+        "tests/pester/SysprepAppxReport.Tests.ps1",
+        "tests/pester/Issue9SysprepAppxGate.Tests.ps1"
+      ],
+      "docs": [
+        "docs/20-issue9-sysprep-appx-gate.md"
+      ],
+      "notes": "Audit and readiness capability only. This registry entry does not authorize Sysprep, AppX removal, or DISM removal."
+    },
+    {
+      "id": "context-scope-routing",
+      "issue": "#10",
+      "status": "implemented",
+      "context": "machine",
+      "mutationLevel": "plan-only",
+      "manifest": "manifests/context-scope.json",
+      "schema": "schemas/context-scope.schema.json",
+      "entrypoints": [
+        "scripts/common/Resolve-KitContextScope.ps1",
+        "scripts/common/New-KitContextPlan.ps1",
+        "scripts/common/Test-KitContextSafety.ps1"
+      ],
+      "validateEntrypoints": [
+        "scripts/validate/Test-ContextScope.ps1"
+      ],
+      "tests": [
+        "tests/pester/ContextScopeSchema.Tests.ps1",
+        "tests/pester/ContextScopeResolver.Tests.ps1",
+        "tests/pester/ContextScopeSafety.Tests.ps1",
+        "tests/pester/ContextScopeReport.Tests.ps1",
+        "tests/pester/Issue10ContextScope.Tests.ps1"
+      ],
+      "docs": [
+        "docs/24-issue10-context-scope-split.md"
+      ],
+      "notes": "Plan and report capability only. It must not perform real registry, profile, or Default User hive mutation."
+    }
+  ]
+}

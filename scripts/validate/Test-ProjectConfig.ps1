@@ -435,6 +435,7 @@ function Test-JsonFiles {
 function Test-JsonSchemaFiles {
     $schemaPairs = @(
         @{ Manifest = "appx-cleanup.json"; Schema = "appx-cleanup.schema.json" },
+        @{ Manifest = "capability-registry.json"; Schema = "capability-registry.schema.json" },
         @{ Manifest = "context-scope.json"; Schema = "context-scope.schema.json" },
         @{ Manifest = "customization-scope.json"; Schema = "customization-scope.schema.json" },
         @{ Manifest = "defender-exclusions.json"; Schema = "defender-exclusions.schema.json" },
