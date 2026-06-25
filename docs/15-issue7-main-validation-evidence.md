@@ -1,6 +1,6 @@
 # Issue #7 Main Validation Evidence
 
-Status: pending-main-validation
+Status: ready-for-manual-closure
 
 ## Scope
 
@@ -19,11 +19,11 @@ PR Fast CI is not a substitute for main validation evidence.
 ## Current Evidence
 
 Main / workflow validation:
-- Trigger source: pending
-- Main SHA: pending
-- Workflow run: pending
-- Result: pending
-- Notes: pending
+- Trigger source: main push
+- Main SHA: 638336e16dfb02c2b7c4270f7fd7e8b1b0c21ac7
+- Workflow run: https://github.com/phdiggit/win11-image-kit/actions/runs/28148874577
+- Result: success
+- Notes: Windows CI / Full Validate succeeded on the main push after PR #50 was merged. PR Fast CI is not a substitute for this evidence.
 
 Real VM/admin smoke:
 - Environment: not-run
@@ -47,9 +47,9 @@ Real VM/admin smoke:
 
 ## Manual Closure Readiness
 
-Current readiness: pending-main-validation
+Current readiness: ready-for-manual-closure
 
-Maintainer may manually close Issue #7 only after the evidence fields are reviewed and accepted.
+Maintainer may manually close Issue #7 after reviewing this evidence and accepting the manual closure note.
 
 ## Copyable Manual Closure Comment Draft
 
@@ -61,7 +61,7 @@ Evidence:
 - Main validation evidence: `docs/15-issue7-main-validation-evidence.md`
 
 Validation status:
-- Main / workflow validation: pending
+- Main / workflow validation: success
 - Real VM/admin smoke: optional / not-run unless separately provided
 
 Remaining optional work such as real VM/admin smoke automation, hash verification, or no-clobber merge should be tracked separately if needed.

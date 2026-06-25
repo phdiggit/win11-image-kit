@@ -16,10 +16,26 @@ Describe "Issue 7 close preparation evidence" {
         $script:Ci = Get-Content -LiteralPath $script:CiPath -Raw -Encoding UTF8
     }
 
-    It "keeps the close preparation document present and in manual closure candidate state" {
+    It "keeps the close preparation document present and in an allowed manual closure state" {
         Assert-KitNotNullOrEmpty (Get-Item -LiteralPath $script:Doc14Path -ErrorAction SilentlyContinue)
-        if (-not $script:Doc14.Contains("Status: ready-for-manual-closure-candidate")) {
-            throw "docs/14 is missing the manual closure candidate status."
+        $statusLine = @($script:Doc14 -split "`r?`n" | Where-Object { $_ -like "Status:*" })[0]
+        Assert-KitNotNullOrEmpty $statusLine
+        $status = ($statusLine -replace "^Status:\s*", "").Trim()
+        if ($status -notin @("ready-for-manual-closure-candidate", "ready-for-manual-closure")) {
+            throw "docs/14 has unsupported manual closure status: $status"
+        }
+
+        if ($status -eq "ready-for-manual-closure") {
+            foreach ($requiredReadyTerm in @(
+                "Main/workflow validation success evidence is recorded";
+                "Trigger source: main push";
+                "Result: success";
+                "Full Validate succeeded"
+            )) {
+                if (-not $script:Doc14.Contains($requiredReadyTerm)) {
+                    throw "ready docs/14 status is missing main validation evidence term: $requiredReadyTerm"
+                }
+            }
         }
     }
 
@@ -56,7 +72,7 @@ Describe "Issue 7 close preparation evidence" {
         foreach ($requiredTerm in @(
             "closed manually by a maintainer";
             "manual closure readiness";
-            "ready-for-manual-closure-candidate"
+            "ready-for-manual-closure"
         )) {
             if (-not $script:Doc14.Contains($requiredTerm)) {
                 throw "docs/14 is missing manual closure term: $requiredTerm"
