@@ -89,11 +89,11 @@ Describe "Issue 7 main validation evidence" {
                 throw "ready docs/15 status requires a main push or workflow_dispatch trigger."
             }
 
-            if (-not ($script:Doc15 -match "(?m)^- Main SHA: [0-9a-f]{40}$")) {
+            if (-not ($script:Doc15 -match "(?m)^- Main SHA: [0-9a-f]{40}\r?$")) {
                 throw "ready docs/15 status requires a full main commit SHA."
             }
 
-            if (-not ($script:Doc15 -match "(?m)^- Workflow run: https://github\.com/phdiggit/win11-image-kit/actions/runs/[0-9]+$")) {
+            if (-not ($script:Doc15 -match "(?m)^- Workflow run: https://github\.com/phdiggit/win11-image-kit/actions/runs/[0-9]+\r?$")) {
                 throw "ready docs/15 status requires an actions run URL."
             }
 
