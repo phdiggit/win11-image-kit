@@ -4,6 +4,13 @@ Issue #10 separates Windows customization into three execution contexts so a
 build or deployment plan can block unsafe routing before it becomes a registry,
 hive, or profile write.
 
+This page is the context scope runbook and design note. The acceptance matrix,
+manual closure preparation, and post-merge evidence scaffold are tracked in:
+
+- [Issue #10 context scope acceptance](25-issue10-context-scope-acceptance.md)
+- [Issue #10 close preparation](26-issue10-close-preparation.md)
+- [Issue #10 main validation evidence](27-issue10-main-validation-evidence.md)
+
 ## Contexts
 
 - `machine`: machine, image, and system-wide settings such as HKLM, services,
@@ -38,3 +45,8 @@ New or updated handlers should declare or map each configurable target to a
 context before mutation. Missing context should produce a warning/manual or
 blocked plan item, not an implicit machine success. `current-user` operations
 must be explicit opt-in and must not become build/image defaults.
+
+Handler adoption remains incremental. Future handler PRs should add explicit
+context declarations or mapping rules before adding mutation behavior; they
+should keep HKCU, HKLM, Default User hive, and profile targets separated in both
+configuration and validation evidence.
