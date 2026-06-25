@@ -1,6 +1,6 @@
 # Issue #8 Close Preparation
 
-Status: ready-for-manual-closure-candidate
+Status: ready-for-manual-closure
 
 ## Final Scope
 
@@ -30,7 +30,7 @@ Status: ready-for-manual-closure-candidate
 
 PR Fast CI validates schema, policy, seam, report, and WhatIf guardrails. It must not perform real Defender mutation.
 
-Main/workflow validation evidence is recorded in [Issue #8 Main Validation Evidence](19-issue8-main-validation-evidence.md). Until real main push or workflow_dispatch evidence is available there, this document stays a manual closure candidate rather than a final ready state.
+Main/workflow validation success evidence is recorded in [Issue #8 Main Validation Evidence](19-issue8-main-validation-evidence.md). Real VM/admin smoke remains optional manual evidence and is not required for this ready state unless maintainers decide otherwise.
 
 Real VM/admin smoke evidence is optional manual evidence. It is not a normal PR blocking requirement and should be recorded separately when maintainers decide it is needed.
 
@@ -49,11 +49,11 @@ Real VM/admin smoke evidence is optional manual evidence. It is not a normal PR 
 ## Optional Manual Validation Evidence
 
 Main / workflow evidence:
-- Trigger source: pending
-- Main SHA: pending
-- Workflow run: pending
-- Result: pending
-- Notes: pending
+- Trigger source: main push
+- Main SHA: 19117fb2a73a4b56bc951ea63686bcfc1bf6c48b
+- Workflow run: https://github.com/phdiggit/win11-image-kit/actions/runs/28157096525
+- Result: success
+- Notes: Windows CI / Full Validate succeeded on the main push after PR #54 was merged. PR Fast CI is not a substitute for this evidence.
 
 Real VM/admin smoke evidence:
 - Environment: not-run
@@ -65,7 +65,7 @@ Real VM/admin smoke evidence:
 
 ## Closure Note Draft
 
-Issue #8 has reached manual closure candidate state after Defender exclusions were converted to a manifest-driven, minimal-privilege, reportable policy flow with acceptance guardrails.
+Issue #8 has reached manual closure readiness after Defender exclusions were converted to a manifest-driven, minimal-privilege, reportable policy flow with acceptance guardrails and main/workflow validation evidence.
 
 Evidence:
 - Policy: `docs/16-issue8-defender-exclusion-policy.md`
