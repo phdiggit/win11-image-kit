@@ -51,6 +51,7 @@ logs/                 仅保留 .gitkeep，本地日志不提交
 17. Issue #8 Defender 排除项验收矩阵与关闭前检查清单见 [Issue #8 Defender Exclusion Acceptance](docs/17-issue8-defender-exclusion-acceptance.md)
 18. Issue #8 Defender 排除项关闭准备与 main 验证证据见 [Issue #8 Close Preparation](docs/18-issue8-close-preparation.md) 和 [Issue #8 Main Validation Evidence](docs/19-issue8-main-validation-evidence.md)
 19. Issue #9 Sysprep AppX 前置门禁、验收与关闭准备见 [Gate](docs/20-issue9-sysprep-appx-gate.md)、[Acceptance](docs/21-issue9-sysprep-appx-acceptance.md)、[Close Preparation](docs/22-issue9-close-preparation.md) 和 [Main Validation Evidence](docs/23-issue9-main-validation-evidence.md)
+20. Issue #10 machine/default-user/current-user 上下文拆分见 [Context Scope Split](docs/24-issue10-context-scope-split.md)
 
 常规配置验证：
 
