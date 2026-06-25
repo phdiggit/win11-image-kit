@@ -44,6 +44,7 @@ logs/                 仅保留 .gitkeep，本地日志不提交
 10. VM 内反复测试时，先阅读 [VM 测试 Runbook](docs/vm-test-runbook.md)，并用 `scripts/dev/Collect-KitRunArtifacts.ps1` 打包日志和报告
 11. 遇到封装/还原异常时，记录到 [已知问题与决策](docs/06-已知问题与决策.md)
 12. Issue #6 已由维护者人工关闭；收口范围和证据链见 [Issue #6 Completion Summary](docs/12-issue6-completion-summary.md)
+13. Issue #7 Junction 事务迁移收口验收见 [Issue #7 Junction Transaction Acceptance](docs/13-issue7-junction-transaction-acceptance.md)
 
 常规配置验证：
 
