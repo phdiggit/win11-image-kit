@@ -99,8 +99,7 @@ Describe "Dry-run acceptance baseline" {
             )
 
             $defenderPath = & $script:WriteJson -Path (Join-Path $TempRoot "defender-exclusions.json") -Value ([ordered]@{
-                paths = @()
-                processes = @()
+                exclusions = @()
                 stateChecks = @(
                     [ordered]@{
                         name = "DryRunDefenderCheck"

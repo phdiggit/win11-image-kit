@@ -1,31 +1,43 @@
 {
   "$schema": "../schemas/defender-exclusions.schema.json",
-  "paths": [
+  "exclusions": [
     {
-      "description": "便携工具根目录",
-      "path": "${ToolRoot}"
+      "id": "kit-work-cache",
+      "type": "path",
+      "value": "${WorkRoot}\\cache",
+      "scope": "kit-work-cache",
+      "reason": "Avoid repeated scanning of kit-managed temporary build cache files.",
+      "required": false,
+      "failurePolicy": "manual"
     },
     {
-      "description": "D 盘开发数据目录",
-      "path": "${DataRoot}"
-    }
-  ],
-  "processes": [
-    {
-      "description": "VSCode 便携版",
-      "path": "${ToolRoot}\\vscode-portable\\Code.exe"
+      "id": "kit-deploy-reports",
+      "type": "path",
+      "value": "${DeployRoot}\\reports",
+      "scope": "kit-deploy-reports",
+      "reason": "Avoid repeated scanning of kit-generated deployment reports.",
+      "required": false,
+      "failurePolicy": "manual"
     },
     {
-      "description": "Cmder",
-      "path": "${ToolRoot}\\cmder\\Cmder.exe"
+      "id": "vscode-portable",
+      "type": "process",
+      "value": "${ToolRoot}\\vscode-portable\\Code.exe",
+      "scope": "vscode-portable",
+      "reason": "Allow the explicitly managed portable VSCode executable used by this kit.",
+      "required": false,
+      "failurePolicy": "manual",
+      "owner": "maintainer"
     },
     {
-      "description": "LocalSend",
-      "path": "${ToolRoot}\\localsend\\LocalSend.exe"
-    },
-    {
-      "description": "FlClash",
-      "path": "${ToolRoot}\\flclash\\FlClash.exe"
+      "id": "cmder-portable",
+      "type": "process",
+      "value": "${ToolRoot}\\cmder\\Cmder.exe",
+      "scope": "cmder-portable",
+      "reason": "Allow the explicitly managed portable Cmder executable used by this kit.",
+      "required": false,
+      "failurePolicy": "manual",
+      "owner": "maintainer"
     }
   ],
   "stateChecks": [

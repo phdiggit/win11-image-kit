@@ -1,30 +1,49 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "win11-image-kit Defender 排除项清单",
+  "title": "win11-image-kit Defender exclusion manifest",
   "type": "object",
-  "required": ["paths", "processes"],
+  "required": ["exclusions"],
   "properties": {
     "$schema": { "type": "string" },
-    "paths": {
+    "exclusions": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["description", "path"],
+        "required": ["id", "type", "value", "scope", "reason", "required", "failurePolicy"],
         "properties": {
-          "description": { "type": "string" },
-          "path": { "type": "string" }
-        },
-        "additionalProperties": false
-      }
-    },
-    "processes": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "required": ["description", "path"],
-        "properties": {
-          "description": { "type": "string" },
-          "path": { "type": "string" }
+          "id": {
+            "type": "string",
+            "pattern": "^(?!\\s*$)[A-Za-z0-9][A-Za-z0-9_.-]*$"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["path", "process"]
+          },
+          "value": {
+            "type": "string",
+            "pattern": "^(?!\\s*$).+"
+          },
+          "scope": {
+            "type": "string",
+            "pattern": "^(?!\\s*$).+"
+          },
+          "reason": {
+            "type": "string",
+            "pattern": "^(?!\\s*$).+"
+          },
+          "required": {
+            "type": "boolean"
+          },
+          "failurePolicy": {
+            "type": "string",
+            "enum": ["fail", "skip", "manual"]
+          },
+          "enabled": {
+            "type": "boolean"
+          },
+          "owner": {
+            "type": "string"
+          }
         },
         "additionalProperties": false
       }
@@ -36,7 +55,7 @@
         "required": ["settingName", "expectedValue"],
         "properties": {
           "name": { "type": "string" },
-          "settingName": { "type": "string" },
+          "settingName": { "type": "string", "pattern": "^(?!\\s*$).+" },
           "expectedValue": {},
           "required": { "type": "boolean" },
           "failurePolicy": {
