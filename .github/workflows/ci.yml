@@ -91,6 +91,7 @@ jobs:
               "tests/pester/JunctionTransactionPreflight.Tests.ps1",
               "tests/pester/JunctionTransactionExecution.Tests.ps1",
               "tests/pester/Issue7JunctionAcceptance.Tests.ps1",
+              "tests/pester/Issue7ClosePrep.Tests.ps1",
               "tests/pester/DefenderAppxStateVerification.Tests.ps1",
               "tests/pester/UserExperienceStateVerification.Tests.ps1",
               "tests/pester/DryRunAcceptanceBaseline.Tests.ps1",
