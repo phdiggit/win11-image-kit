@@ -1,6 +1,6 @@
 # Issue #10 Close Preparation
 
-Status: ready-for-manual-closure-candidate
+Status: ready-for-manual-closure
 
 This page is a maintainer review checklist. It prepares the Issue #10 evidence
 chain, but the issue remains a manual maintainer action until the evidence is
@@ -36,9 +36,10 @@ reviewed.
   acceptance, close-preparation, and main-evidence guardrails.
 - PR Fast CI must not run `reg load`, `reg unload`, real HKCU/HKLM writes, or
   profile mutation.
-- Main/workflow evidence is recorded in [docs/27](27-issue10-main-validation-evidence.md).
-  Without real evidence, this page remains a candidate.
-- Real VM/admin smoke validation is optional manual evidence.
+- Main/workflow validation success evidence is recorded in
+  [docs/27](27-issue10-main-validation-evidence.md). Real VM/admin smoke remains
+  optional manual evidence and is not required for this ready state unless
+  maintainers decide otherwise.
 
 ## Manual Closure Checklist
 
@@ -47,21 +48,32 @@ reviewed.
 - Safety validator blocks HKCU/HKLM/default-user/profile mix-ups.
 - `Test-ContextScope.ps1` writes only an explicit report path.
 - PR Fast CI includes every Issue #10 test listed in this page.
-- [docs/27](27-issue10-main-validation-evidence.md) remains pending until real
-  evidence is available.
+- [docs/27](27-issue10-main-validation-evidence.md) records main/workflow
+  validation success evidence.
 - Maintainer performs issue closure manually after evidence review.
 
 ## Optional Manual Validation Evidence
 
 | Evidence | Status |
 | --- | --- |
-| main push Windows CI / Full Validate | pending |
-| workflow_dispatch Windows CI / Full Validate | pending |
+| main push Windows CI / Full Validate | success |
+| workflow_dispatch Windows CI / Full Validate | not-run |
 | real VM/admin smoke | not-run |
+
+## Recorded Main/Workflow Evidence
+
+| Field | Value |
+| --- | --- |
+| Trigger source | main push |
+| Main SHA | `6cabd08b4e80644736ddd7bde5f7c23f2b604c27` |
+| Workflow run | https://github.com/phdiggit/win11-image-kit/actions/runs/28183799819 |
+| Result | success |
+| Notes | Windows CI / Full Validate succeeded on the main push after PR #60 was merged. PR Fast CI is not a substitute for this evidence. |
+| Real VM/admin smoke | optional / not-run |
 
 ## Closure Note Draft
 
 Issue #10 context-scope work has a manifest/schema contract, resolver and safety
-guardrails, plan/report output, PR Fast CI coverage, an acceptance matrix, and a
-pending main-validation evidence scaffold. Real registry writes, Default User
+guardrails, plan/report output, PR Fast CI coverage, an acceptance matrix, and
+main/workflow validation success evidence. Real registry writes, Default User
 hive load/unload, and profile mutation are outside the PR-safe validation path.

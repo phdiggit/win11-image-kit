@@ -1,6 +1,6 @@
 # Issue #10 Main Validation Evidence
 
-Status: pending-main-validation
+Status: ready-for-manual-closure
 
 This scaffold records post-merge evidence for Issue #10. It starts pending by
 design because PR Fast CI is not a substitute for main/workflow evidence.
@@ -15,11 +15,11 @@ design because PR Fast CI is not a substitute for main/workflow evidence.
 
 | Field | Value |
 | --- | --- |
-| Trigger source | pending |
-| Main SHA | pending |
-| Workflow run | pending |
-| Result | pending |
-| Notes | pending |
+| Trigger source | main push |
+| Main SHA | `6cabd08b4e80644736ddd7bde5f7c23f2b604c27` |
+| Workflow run | https://github.com/phdiggit/win11-image-kit/actions/runs/28183799819 |
+| Result | success |
+| Notes | Windows CI / Full Validate succeeded on the main push after PR #60 was merged. PR Fast CI is not a substitute for this evidence. |
 
 ## Real VM/Admin Smoke
 
@@ -40,7 +40,7 @@ design because PR Fast CI is not a substitute for main/workflow evidence.
 
 ## Manual Closure Readiness
 
-Current readiness: pending-main-validation
+Current readiness: ready-for-manual-closure
 
 Readiness can move to `ready-for-manual-closure` only after real main push or
 `workflow_dispatch` success evidence is recorded with a 40-character SHA, an
@@ -49,5 +49,7 @@ Actions workflow URL, `Result: success`, and matching readiness text.
 ## Copyable Manual Closure Comment Draft
 
 Issue #10 has PR-safe context-scope acceptance coverage and a pending main
-validation evidence scaffold. Main/workflow evidence should be filled in here
-before maintainer manual closure.
+validation evidence scaffold. Main/workflow validation evidence is now recorded
+as success from the main push after PR #60 was merged. PR Fast CI is not a
+substitute for main/workflow validation evidence, and real VM/admin smoke remains
+optional / not-run unless maintainers provide separate evidence.

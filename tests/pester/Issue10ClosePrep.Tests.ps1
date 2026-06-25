@@ -6,9 +6,9 @@ Describe "Issue 10 close preparation guardrails" {
         $script:Doc = Get-Content -LiteralPath $script:DocPath -Raw -Encoding UTF8
     }
 
-    It "keeps the close preparation document in manual-candidate state" {
+    It "keeps the close preparation document in an allowed manual closure state" {
         Assert-KitEqual (Test-Path -LiteralPath $script:DocPath) $true
-        Assert-KitMatch $script:Doc "Status: ready-for-manual-closure-candidate"
+        Assert-KitMatch $script:Doc "Status: (ready-for-manual-closure-candidate|ready-for-manual-closure)"
         foreach ($section in @("## Final Scope", "## Evidence Chain", "## Validation Policy", "## Manual Closure Checklist", "## Optional Manual Validation Evidence", "## Closure Note Draft")) {
             Assert-KitMatch $script:Doc ([regex]::Escape($section))
         }
@@ -36,6 +36,23 @@ Describe "Issue 10 close preparation guardrails" {
     It "keeps PR Fast CI mutation boundaries explicit" {
         foreach ($boundary in @("reg load", "reg unload", "HKCU/HKLM writes", "profile mutation", "optional manual evidence")) {
             Assert-KitMatch $script:Doc ([regex]::Escape($boundary))
+        }
+    }
+
+    It "requires recorded main evidence when the close preparation state is ready" {
+        if ($script:Doc -match "Status: ready-for-manual-closure\r?\n") {
+            foreach ($evidence in @(
+                "Main/workflow validation success evidence",
+                "Trigger source | main push",
+                "Result | success",
+                "Full Validate succeeded",
+                "Real VM/admin smoke | optional / not-run"
+            )) {
+                Assert-KitMatch $script:Doc ([regex]::Escape($evidence))
+            }
+
+            Assert-KitMatch $script:Doc 'Main SHA \| `?[0-9a-f]{40}`?'
+            Assert-KitMatch $script:Doc "Workflow run \| https://github\.com/phdiggit/win11-image-kit/actions/runs/[0-9]+"
         }
     }
 

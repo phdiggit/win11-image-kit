@@ -9,7 +9,8 @@ Describe "Issue 10 context scope acceptance matrix" {
         Assert-KitEqual (Test-Path -LiteralPath $docPath) $true
         $doc = Get-Content -LiteralPath $docPath -Raw -Encoding UTF8
 
-        Assert-KitMatch $doc "Status: in-acceptance"
+        Assert-KitMatch $doc "Status: (in-acceptance|accepted-ready-for-manual-closure)"
+        Assert-KitMatch $doc "Close preparation and main validation evidence"
         foreach ($section in @("## Scope", "## Non-goals", "## Acceptance Matrix", "## Handler Adoption Checklist", "CI boundary")) {
             Assert-KitMatch $doc ([regex]::Escape($section))
         }
