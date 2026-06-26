@@ -1,10 +1,10 @@
 # Issue #15 Layered Configuration Acceptance
 
-Status: `in-acceptance`
+Status: `accepted-pending-main-validation`
 
 ## Scope
 
-本阶段在 #75 分层配置基线之上推进验收硬化，但仍不关闭 Issue #15。范围包括：默认 / profile / hardware / local-private / CLI explicit 的优先级、有效配置来源报告、local missing / malformed 行为、token 与旧路径安全、CI / Quality Gates / Build Lock 接入。
+本阶段在 #75 分层配置基线和 #76 验收硬化之上完成功能验收，并推进到等待 main/workflow evidence 的状态；仍不关闭 Issue #15。范围包括：默认 / profile / hardware / local-private / CLI explicit 的优先级、有效配置来源报告、local missing / malformed 行为、token 与旧路径安全、CI / Quality Gates / Build Lock 接入，以及 Show-CustomizationScope 的 opt-in consumer integration。
 
 ## Acceptance Matrix
 
@@ -16,11 +16,15 @@ Status: `in-acceptance`
 | CLI explicit override | `covered` | `-PathOverrideJson`, `sourceLayer = cli-explicit` |
 | Token / path safety | `covered` | `EffectiveConfigurationTokenSafety.Tests.ps1`, `Test-EffectiveConfiguration.ps1` |
 | Report contract | `covered` | `pathSources.key/value/redactedValue/sourceLayer`, `failedCount` |
-| Close readiness | `not-started` | Close-prep and main evidence are intentionally out of scope. |
+| Consumer integration | `covered` | `Show-CustomizationScope.ps1 -UseEffectiveConfiguration`, `CustomizationScopeEffectiveConfiguration.Tests.ps1` |
+| Close readiness | `candidate` | `docs/46-issue15-close-preparation.md` is a manual closure candidate only. |
+| Main evidence | `pending` | `docs/47-issue15-main-validation-evidence.md` is pending; PR Fast CI is not a substitute. |
 
 ## Evidence Chain
 
-Evidence remains local and PR Fast CI only. PR Fast CI runs static JSON / PowerShell parse, project config validation, quality gates validation, effective configuration validation for all stacks, and curated Pester tests. Full Validate remains limited to `main` push / `workflow_dispatch`.
+Evidence remains local and PR Fast CI only until the close-prep PR is merged. PR Fast CI runs static JSON / PowerShell parse, project config validation, quality gates validation, effective configuration validation for all stacks, and curated Pester tests. Full Validate remains limited to `main` push / `workflow_dispatch`.
+
+Functional acceptance is complete, but main/workflow evidence is still pending. This document does not mean Issue #15 is closed, and close-prep is only a candidate while `docs/47-issue15-main-validation-evidence.md` remains pending.
 
 ## Layer Priority
 
@@ -77,22 +81,39 @@ CI does not use `-IncludeLocal` and does not upload local override artifacts. `S
 - Quality Gates keep `effective-configuration` as `report-only`.
 - Build Lock covers tracked Issue #15 docs, manifests, schemas, scripts, tests, workflow, README, `.gitignore`, and the local example.
 
+## Consumer Integration
+
+`Show-CustomizationScope.ps1` keeps the existing `pathsManifest` default behavior. `-UseEffectiveConfiguration` is an opt-in migration entrypoint that shows the selected effective stack and source layers before printing the effective path map.
+
+Supported opt-in parameters:
+
+- `-StackName`
+- `-IncludeLocal`
+- `-PathOverrideJson`
+
+`manifests/customization-scope.json` declares `configLayersManifest` and `defaultStack`, while retaining `pathsManifest` for current consumers.
+
 ## Non-goals
 
 - No true build.
 - No install / uninstall / upgrade.
 - No service, Defender, AppX, Junction, Sysprep, DISM, registry, profile, or hive mutation.
 - No network package lookup or download.
-- No close-preparation, main-validation-evidence, or completion summary.
+- No final closure.
+- No completion summary.
+- No main/workflow evidence backfill in this stage.
+- No real VM/admin smoke claim unless explicitly performed later.
 
 ## Remaining Work
 
+- Backfill main/workflow validation evidence after this close-prep scaffold is merged.
 - Decide whether more manifests should consume effective configuration directly.
 - Decide whether CLI explicit should support non-path sections after more use.
-- Prepare close-prep only in a later task after maintainers accept the current evidence.
 
 ## Related Documents
 
 - [Issue #15 Layered Configuration](44-issue15-layered-configuration.md)
+- [Issue #15 Close Preparation](46-issue15-close-preparation.md)
+- [Issue #15 Main Validation Evidence](47-issue15-main-validation-evidence.md)
 - [Quality Gates](40-issue14-quality-gates.md)
 - [Build Lock](32-issue12-build-lock.md)

@@ -4,11 +4,11 @@ Describe "Issue 15 layered configuration acceptance" {
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
     }
 
-    It "adds acceptance scaffold without close-prep or main evidence" {
+    It "tracks accepted-pending-main-validation state with close-prep scaffold" {
         $doc45 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\45-issue15-layered-configuration-acceptance.md") -Raw -Encoding UTF8
 
         foreach ($term in @(
-            'Status: `in-acceptance`',
+            'Status: `accepted-pending-main-validation`',
             "## Scope",
             "## Acceptance Matrix",
             "## Evidence Chain",
@@ -19,6 +19,7 @@ Describe "Issue 15 layered configuration acceptance" {
             "## Token / Path Safety",
             "## Report Contract",
             "## CI / Quality Gates / Build Lock",
+            "## Consumer Integration",
             "## Non-goals",
             "## Remaining Work",
             "## Related Documents",
@@ -27,8 +28,9 @@ Describe "Issue 15 layered configuration acceptance" {
             Assert-KitMatch $doc45 ([regex]::Escape($term))
         }
 
-        Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot "docs\46-issue15-close-preparation.md")) $false
-        Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot "docs\47-issue15-main-validation-evidence.md")) $false
+        Assert-KitMatch $doc45 "main/workflow evidence is still pending"
+        Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot "docs\46-issue15-close-preparation.md")) $true
+        Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot "docs\47-issue15-main-validation-evidence.md")) $true
     }
 
     It "wires README, CI, Quality Gates, and Build Lock for hardening" {
@@ -40,18 +42,30 @@ Describe "Issue 15 layered configuration acceptance" {
         $gate = @($qualityGates.gates | Where-Object { $_.id -eq "effective-configuration" })[0]
 
         Assert-KitMatch $readme "docs/45-issue15-layered-configuration-acceptance\.md"
+        Assert-KitMatch $readme "docs/46-issue15-close-preparation\.md"
+        Assert-KitMatch $readme "docs/47-issue15-main-validation-evidence\.md"
         Assert-KitMatch $ci "Test-EffectiveConfiguration\.ps1 -AllStacks"
         Assert-KitMatch $ci "EffectiveConfigurationMergePolicy\.Tests\.ps1"
+        Assert-KitMatch $ci "EffectiveConfigurationConsumerIntegration\.Tests\.ps1"
+        Assert-KitMatch $ci "CustomizationScopeEffectiveConfiguration\.Tests\.ps1"
+        Assert-KitMatch $ci "Issue15ClosePrep\.Tests\.ps1"
+        Assert-KitMatch $ci "Issue15MainValidationEvidence\.Tests\.ps1"
         Assert-KitEqual $gate.mode "report-only"
         Assert-KitNotMatch ($qualityGates | ConvertTo-Json -Depth 10) "true-execution"
 
         foreach ($path in @(
             "docs/45-issue15-layered-configuration-acceptance.md",
+            "docs/46-issue15-close-preparation.md",
+            "docs/47-issue15-main-validation-evidence.md",
             "manifests/paths.local.example.json",
+            "tests/pester/EffectiveConfigurationConsumerIntegration.Tests.ps1",
+            "tests/pester/CustomizationScopeEffectiveConfiguration.Tests.ps1",
             "tests/pester/EffectiveConfigurationMergePolicy.Tests.ps1",
             "tests/pester/EffectiveConfigurationLocalOverride.Tests.ps1",
             "tests/pester/EffectiveConfigurationTokenSafety.Tests.ps1",
             "tests/pester/EffectiveConfigurationCliOverride.Tests.ps1",
+            "tests/pester/Issue15ClosePrep.Tests.ps1",
+            "tests/pester/Issue15MainValidationEvidence.Tests.ps1",
             "tests/pester/Issue15LayeredConfigurationAcceptance.Tests.ps1"
         )) {
             Assert-KitEqual ($paths -contains $path) $true
