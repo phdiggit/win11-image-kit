@@ -296,57 +296,99 @@
       "path": ".github/workflows/ci.yml",
       "category": "workflow",
       "required": true,
-      "hash": "89ee2de8544515700f7ff7e2bf603604acf8aae3d9836f63622b8afefc6108f0",
+      "hash": "435b99bb79334038587811f84c29231aa5c95ea60aff7649ae8711e34458183c",
       "reason": "PR Fast CI wiring is a trusted guardrail for build lock and ensure-state tests."
     },
     {
       "path": "README.md",
       "category": "doc",
       "required": true,
-      "hash": "3d0fc62f7120557202efb764a340b266b93d195f9798737e57e11f282f0c67df",
+      "hash": "0ab7c7af97433147e7eac599d5e838e09d78aed3fc8dad9d0d247e346c450070",
       "reason": "README quick entry links Issue 13 acceptance, close-preparation, and main-evidence docs."
     },
     {
       "path": "docs/37-issue13-ensure-state-acceptance.md",
       "category": "doc",
       "required": true,
-      "hash": "37eb051514e88009db3fe1010182a241831678ce48c8948309f68db7a4213184",
+      "hash": "aaa96e5cd404dc239ab2733ee8f376d160bb4cf368429b36de7c54db1b51701f",
       "reason": "Issue 13 acceptance matrix documents plan-only Ensure-State coverage and CI boundaries."
     },
     {
       "path": "docs/38-issue13-close-preparation.md",
       "category": "doc",
       "required": true,
-      "hash": "401ba2b3cdb92a98eb836af98fc6a8a82335050ea779ec0447caa0c512912409",
+      "hash": "41c30662ad790b01fd5419774e49256f7114ee210274816001a28672b5ee122a",
       "reason": "Issue 13 close-preparation checklist documents manual closure boundaries."
     },
     {
       "path": "docs/39-issue13-main-validation-evidence.md",
       "category": "doc",
       "required": true,
-      "hash": "f2d498a13d354eb10eb2038b62c6e85b6d2f6bfb1a82cdf1535e88c497db5c0d",
+      "hash": "1395979db658dc3c5f696ccf2667ffd272927d0ddd1eac97ae8dd68b6984976e",
       "reason": "Issue 13 main validation evidence scaffold prevents PR Fast CI evidence substitution."
     },
     {
       "path": "tests/pester/Issue13EnsureStateAcceptance.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "735396c74714ff682bcd93fb4f46b604113a5242d546435b603f064c2cb6468f",
+      "hash": "60c19e2ed8d4e9857cb43fc24b0b2c5ab025b57ca51cd6ae0b097d6219b0b180",
       "reason": "Issue 13 acceptance guardrails cover schema, safety, report contract, registry, Build Lock, docs, and CI wiring."
     },
     {
       "path": "tests/pester/Issue13ClosePrep.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "aee0a22408a49f616f13fda473df3b51554254d1afba3d7b99b2bbc08f86f0f6",
+      "hash": "5357cfd5fa4b19a25f2f5f8528ec5a92f9f163884768c75875515a43103f22f6",
       "reason": "Issue 13 close-preparation tests guard manual closure semantics and safe validation policy."
     },
     {
       "path": "tests/pester/Issue13MainValidationEvidence.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "b3f5ade5b5cf0e6a41f5cede3d3edddd17f4839aef4b9e0d0ec1c42b17c74186",
+      "hash": "a781fe6ed25c727d904c3bab47723616ec7891ec0d6f32637c50aa53a9413934",
       "reason": "Issue 13 main-evidence tests keep pending evidence honest and define ready-state rules."
+    },
+    {
+      "path": "PSScriptAnalyzerSettings.psd1",
+      "category": "config",
+      "required": true,
+      "hash": "51f44d11ac694c7042c3a5307c2b587b0b10ae58d2324cfcb14b6f610bb71ab3",
+      "reason": "PSScriptAnalyzer settings define the local analyzer baseline for quality gates."
+    },
+    {
+      "path": "docs/40-issue14-quality-gates.md",
+      "category": "doc",
+      "required": true,
+      "hash": "1ef1223436da45cdec5b3520d18b1f9fcc85472a05005c6bbc2b67fb67b1370b",
+      "reason": "Issue 14 quality gates runbook documents schema, Pester, analyzer, CI, and safety boundaries."
+    },
+    {
+      "path": "tests/pester/Issue14QualityGates.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "91f16e785d02243bcf493d56ec884a0332262516d9bd6b2699bdc25262fc9af6",
+      "reason": "Issue 14 quality gate tests guard docs, README, Build Lock, and no auto-close wording."
+    },
+    {
+      "path": "tests/pester/Issue14CiPolicy.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "e87b5910079e0277a0498b11a300f7ba50fda70eb10b877c58762d0fa987216e",
+      "reason": "Issue 14 CI policy tests guard PR fast and Full Validate split plus no-mutation workflow policy."
+    },
+    {
+      "path": "tests/pester/Issue14PesterInventory.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "4e38ecc7beff2f4266d11d7e224e0d3b142fb808b8c3f6706bd36de78ef6e886",
+      "reason": "Issue 14 Pester inventory tests guard fast-path issue test coverage."
+    },
+    {
+      "path": "tests/pester/Issue14AnalyzerPolicy.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "131c44ed4b91ead078272619191ed1a0272ee4a8613ee18b57b2f07b0eaa9467",
+      "reason": "Issue 14 analyzer policy tests guard PSScriptAnalyzer settings and non-blocking workflow behavior."
     }
   ],
   "watchGlobs": [
@@ -360,7 +402,10 @@
     "docs/32-issue12-build-lock.md",
     ".github/workflows/ci.yml",
     "tests/pester/*EnsureState*.Tests.ps1",
-    "docs/*issue13*.md"
+    "docs/*issue13*.md",
+    "tests/pester/Issue14*.Tests.ps1",
+    "docs/*issue14*.md",
+    "PSScriptAnalyzerSettings.psd1"
   ],
   "policy": {
     "missingRequired": "fail",
