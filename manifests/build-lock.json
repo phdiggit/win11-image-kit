@@ -198,8 +198,8 @@
       "path": "scripts/validate/Test-ProjectConfig.ps1",
       "category": "script",
       "required": true,
-      "hash": "f397dead13215b94025527be5e9367a7ba2d7c2f116f4e725bea7d0d81f3e694",
-      "reason": "Project config validation now enforces Ensure-State manifest structure."
+      "hash": "7a914d836beebf9a09cd4a9f5febe4966727bb9ac9728dc91cc0de474cd64172",
+      "reason": "Project config validation now enforces quality gate manifest structure."
     },
     {
       "path": "tests/pester/BuildLockSchema.Tests.ps1",
@@ -296,15 +296,15 @@
       "path": ".github/workflows/ci.yml",
       "category": "workflow",
       "required": true,
-      "hash": "435b99bb79334038587811f84c29231aa5c95ea60aff7649ae8711e34458183c",
-      "reason": "PR Fast CI wiring is a trusted guardrail for build lock and ensure-state tests."
+      "hash": "eb97642792c411f91777d8f32006521862982600c3a9603025a7ccdcea7c3410",
+      "reason": "PR Fast CI and Full Validate wire the Issue 14 quality gate runner and acceptance tests."
     },
     {
       "path": "README.md",
       "category": "doc",
       "required": true,
-      "hash": "0ab7c7af97433147e7eac599d5e838e09d78aed3fc8dad9d0d247e346c450070",
-      "reason": "README quick entry links Issue 13 acceptance, close-preparation, and main-evidence docs."
+      "hash": "e9557ddd127efae7c37b1f95910e3d5781762a054552ad034c7a15df120602c7",
+      "reason": "README quick entry links Issue 14 quality gate runner and acceptance scaffold."
     },
     {
       "path": "docs/37-issue13-ensure-state-acceptance.md",
@@ -359,36 +359,99 @@
       "path": "docs/40-issue14-quality-gates.md",
       "category": "doc",
       "required": true,
-      "hash": "1ef1223436da45cdec5b3520d18b1f9fcc85472a05005c6bbc2b67fb67b1370b",
-      "reason": "Issue 14 quality gates runbook documents schema, Pester, analyzer, CI, and safety boundaries."
+      "hash": "a7fb590f454251def6a80815b8caf40ade8fcd6ab1efe0169a763c9d4a4ab6b5",
+      "reason": "Issue 14 quality gates runbook documents schema, Pester, analyzer, CI, runner/report, and safety boundaries."
     },
     {
       "path": "tests/pester/Issue14QualityGates.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "91f16e785d02243bcf493d56ec884a0332262516d9bd6b2699bdc25262fc9af6",
+      "hash": "8ea15ec212afcc48fc5c9c8e692c50203bc50bff76786cf516f99516af1caa32",
       "reason": "Issue 14 quality gate tests guard docs, README, Build Lock, and no auto-close wording."
     },
     {
       "path": "tests/pester/Issue14CiPolicy.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "e87b5910079e0277a0498b11a300f7ba50fda70eb10b877c58762d0fa987216e",
+      "hash": "dbd4f9782500f3b89a7ce117dec513200de40e645b29307156517321360fb1dd",
       "reason": "Issue 14 CI policy tests guard PR fast and Full Validate split plus no-mutation workflow policy."
     },
     {
       "path": "tests/pester/Issue14PesterInventory.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "4e38ecc7beff2f4266d11d7e224e0d3b142fb808b8c3f6706bd36de78ef6e886",
+      "hash": "d95bb34393ae81e64cd863bf5c2083fc101b08d610476cf12bdb422b7572ef30",
       "reason": "Issue 14 Pester inventory tests guard fast-path issue test coverage."
     },
     {
       "path": "tests/pester/Issue14AnalyzerPolicy.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "131c44ed4b91ead078272619191ed1a0272ee4a8613ee18b57b2f07b0eaa9467",
+      "hash": "0a215988e286dc504d0ff3f69840bb3d7796ddec60e5bf72f749132de798cd91",
       "reason": "Issue 14 analyzer policy tests guard PSScriptAnalyzer settings and non-blocking workflow behavior."
+    },
+    {
+      "path": "manifests/quality-gates.json",
+      "category": "manifest",
+      "required": true,
+      "hash": "6e66c4771864ebeda65a7a2147bd9fea3673b077991bce0ad3e5785894b0ba74",
+      "reason": "Issue 14 quality gate manifest is a trusted validation inventory."
+    },
+    {
+      "path": "schemas/quality-gates.schema.json",
+      "category": "schema",
+      "required": true,
+      "hash": "7f1da53d1225357a05472813371e4bb693a154c98f10d99bf027e259b83279bc",
+      "reason": "Issue 14 quality gate schema constrains runner inventory structure."
+    },
+    {
+      "path": "scripts/common/New-KitQualityGateReport.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "6d07d2b4ca4662e8b9c7b9cb379b953c94a17f4c6942d1307d0d7cc04ca6b31d",
+      "reason": "Quality gate report builder produces report-only validation evidence."
+    },
+    {
+      "path": "scripts/validate/Test-QualityGates.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "d96ffa849858ea4a8051522ea743e2d469d8b6ce4cefae2fe0aceae5b33224e3",
+      "reason": "Quality gate validate entrypoint writes explicit reports and exit codes."
+    },
+    {
+      "path": "tests/pester/QualityGateSchema.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "3f7350ef222ac4ef4ae1701a65ffcdd0babc512359d93b1493d84978ddfa12e7",
+      "reason": "Quality gate schema tests guard manifest structure and validator wiring."
+    },
+    {
+      "path": "tests/pester/QualityGateReport.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "9d58105ef04ef91a5dbe9a98b3f9559d3d0a7ff9cf18824e19778f1322801d9b",
+      "reason": "Quality gate report tests guard summary, safety, and manual policy fields."
+    },
+    {
+      "path": "tests/pester/QualityGateValidation.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "96f1918d612f1a338e0d695419a8ea3e5dca53a9d132e7ee63f64710395cb472",
+      "reason": "Quality gate validation tests guard report writing and failure exit codes."
+    },
+    {
+      "path": "tests/pester/Issue14QualityGateAcceptance.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "628a355aa17df712beed6c7f68a2e52350be6f20582a4f950498a0df71f144f2",
+      "reason": "Issue 14 acceptance tests guard docs, CI wiring, Build Lock coverage, and report-only scope."
+    },
+    {
+      "path": "docs/41-issue14-quality-gates-acceptance.md",
+      "category": "doc",
+      "required": true,
+      "hash": "74bed0c44570b3f864aaf37f6393e9867e7e7198e6ba7628a2848307a0a00de9",
+      "reason": "Issue 14 acceptance scaffold documents runner, report, CI, analyzer, and Build Lock boundaries."
     }
   ],
   "watchGlobs": [
@@ -405,7 +468,12 @@
     "docs/*issue13*.md",
     "tests/pester/Issue14*.Tests.ps1",
     "docs/*issue14*.md",
-    "PSScriptAnalyzerSettings.psd1"
+    "PSScriptAnalyzerSettings.psd1",
+    "manifests/quality-gates.json",
+    "schemas/quality-gates.schema.json",
+    "scripts/common/*QualityGate*.ps1",
+    "scripts/validate/*QualityGate*.ps1",
+    "tests/pester/*QualityGate*.Tests.ps1"
   ],
   "policy": {
     "missingRequired": "fail",

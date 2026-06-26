@@ -1,0 +1,126 @@
+{
+  "$schema": "../schemas/quality-gates.schema.json",
+  "manifestVersion": 1,
+  "gates": [
+    {
+      "id": "json-parse",
+      "displayName": "JSON parse validation",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "static",
+      "required": true,
+      "blocking": true,
+      "entrypoint": ".github/workflows/ci.yml",
+      "evidence": "workflow-step",
+      "notes": "Parses manifests and schemas without network access."
+    },
+    {
+      "id": "powershell-parse",
+      "displayName": "PowerShell parse validation",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "static",
+      "required": true,
+      "blocking": true,
+      "entrypoint": ".github/workflows/ci.yml",
+      "evidence": "workflow-step",
+      "notes": "Parses scripts without executing business handlers."
+    },
+    {
+      "id": "project-config",
+      "displayName": "Project config validation",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "static",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "scripts/validate/Test-ProjectConfig.ps1",
+      "evidence": "report",
+      "notes": "Validates manifests, schemas, paths, and static references."
+    },
+    {
+      "id": "psscriptanalyzer",
+      "displayName": "PSScriptAnalyzer baseline",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "static",
+      "required": true,
+      "blocking": false,
+      "entrypoint": "PSScriptAnalyzerSettings.psd1",
+      "evidence": "workflow-step",
+      "notes": "Analyzer availability or diagnostics are warning/manual under current policy."
+    },
+    {
+      "id": "pester-fast-inventory",
+      "displayName": "PR fast Pester inventory",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "fixture",
+      "required": true,
+      "blocking": true,
+      "entrypoint": ".github/workflows/ci.yml",
+      "evidence": "pester",
+      "notes": "Runs the curated fast Pester list on pull requests."
+    },
+    {
+      "id": "pester-full-inventory",
+      "displayName": "Full Pester inventory",
+      "layer": "full-validate",
+      "trigger": "main-push",
+      "mode": "fixture",
+      "required": true,
+      "blocking": true,
+      "entrypoint": ".github/workflows/ci.yml",
+      "evidence": "pester",
+      "notes": "Runs the broader tests/pester inventory on main push or workflow_dispatch."
+    },
+    {
+      "id": "build-lock",
+      "displayName": "Build Lock validation",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "scripts/validate/Test-BuildLock.ps1",
+      "evidence": "report",
+      "notes": "Validates trusted input hashes and watched-file review signals."
+    },
+    {
+      "id": "ci-policy",
+      "displayName": "CI workflow policy",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "static",
+      "required": true,
+      "blocking": true,
+      "entrypoint": ".github/workflows/ci.yml",
+      "evidence": "pester",
+      "notes": "Guards Validate versus Full Validate split and no-mutation workflow policy."
+    },
+    {
+      "id": "safety-boundary",
+      "displayName": "Safety boundary",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "static",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "docs/40-issue14-quality-gates.md",
+      "evidence": "document",
+      "notes": "Documents that real build, mutation, network, signing, and registry/profile/hive writes are out of scope."
+    },
+    {
+      "id": "issue14-acceptance",
+      "displayName": "Issue 14 acceptance scaffold",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "docs/41-issue14-quality-gates-acceptance.md",
+      "evidence": "document",
+      "notes": "Provides the in-acceptance scaffold without close-prep or main-evidence claims."
+    }
+  ]
+}

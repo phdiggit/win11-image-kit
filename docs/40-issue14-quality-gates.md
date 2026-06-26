@@ -83,6 +83,34 @@ Issue #14 adds this runbook and the Issue #14 Pester guardrails to Build Lock. C
 
 `manual / failedCount=0` remains a review signal for watched-but-untracked files, not a failed validation.
 
+## Quality Gate Manifest
+
+`manifests/quality-gates.json` is the declarative inventory for Issue #14 gates. It lists each gate id, display name, layer, trigger, mode, blocking policy, entrypoint, evidence type, and notes.
+
+`schemas/quality-gates.schema.json` keeps that inventory closed with explicit required fields and enums. It is parsed locally by Windows PowerShell and is validated through `Test-ProjectConfig.ps1`; it does not rely on external schema downloads.
+
+## Quality Gate Runner
+
+`scripts/validate/Test-QualityGates.ps1` is the report-only runner for this inventory. It reads the manifest, checks local entrypoints and selected workflow safety constraints, and returns a structured report.
+
+The runner is not a build system and not a real execution engine. It does not run Pester, install analyzer modules, download packages, mutate services, write registry/profile/hive data, or build images.
+
+## Quality Gate Report Contract
+
+`scripts/common/New-KitQualityGateReport.ps1` produces the stable report object:
+
+- `reportType`
+- `status`
+- `summary`
+- `gates`
+- `safety`
+
+`manual / failedCount=0` is a review signal and exits 0. Any failed gate sets `failedCount > 0`, marks the report `failed`, and the validate entrypoint exits 1.
+
+## Acceptance Scaffold Link
+
+Issue #14 acceptance tracking starts in [Quality Gates Acceptance](41-issue14-quality-gates-acceptance.md). That document is intentionally `in-acceptance`; it is not close-preparation or main-validation evidence.
+
 ## Safety Boundaries
 
 Issue #14 is a quality-gates and validation-orchestration issue. It is not a true execution issue.
