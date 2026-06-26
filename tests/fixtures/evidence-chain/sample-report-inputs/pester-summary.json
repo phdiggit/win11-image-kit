@@ -1,0 +1,19 @@
+{
+  "producerId": "pester-summary",
+  "reportType": "pester-summary",
+  "status": "passed",
+  "generatedAt": "2026-06-26T00:00:00Z",
+  "reproducible": true,
+  "sourceMetadata": {
+    "kind": "fixture",
+    "sha": "5688a741e98a29572a99dc1e025b9f97c7876dc3",
+    "command": "Invoke-Pester -Path tests/pester/Issue16*.Tests.ps1,tests/pester/EvidenceChain*.Tests.ps1"
+  },
+  "artifactReferences": [
+    {
+      "kind": "fixture",
+      "path": "tests/fixtures/evidence-chain/sample-report-inputs/pester-summary.json",
+      "private": false
+    }
+  ]
+}

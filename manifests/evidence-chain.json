@@ -1,0 +1,105 @@
+{
+  "$schema": "../schemas/evidence-chain.schema.json",
+  "manifestVersion": 1,
+  "chainId": "win11-image-kit-default",
+  "stages": [
+    "config",
+    "validate",
+    "build",
+    "capture",
+    "deploy",
+    "acceptance"
+  ],
+  "producers": [
+    {
+      "id": "effective-configuration",
+      "stage": "config",
+      "mode": "report-only",
+      "entrypoint": "scripts/validate/Test-EffectiveConfiguration.ps1",
+      "reportType": "effective-configuration-validation",
+      "required": true,
+      "notes": "Normalizes Issue 15 effective configuration reports into the evidence chain."
+    },
+    {
+      "id": "project-config",
+      "stage": "validate",
+      "mode": "report-only",
+      "entrypoint": "scripts/validate/Test-ProjectConfig.ps1",
+      "reportType": "project-config",
+      "required": true,
+      "notes": "Normalizes project configuration validation into the evidence chain."
+    },
+    {
+      "id": "build-lock",
+      "stage": "validate",
+      "mode": "report-only",
+      "entrypoint": "scripts/validate/Test-BuildLock.ps1",
+      "reportType": "build-lock",
+      "required": true,
+      "notes": "Normalizes Build Lock report-only validation into the evidence chain."
+    },
+    {
+      "id": "quality-gates",
+      "stage": "validate",
+      "mode": "report-only",
+      "entrypoint": "scripts/validate/Test-QualityGates.ps1",
+      "reportType": "quality-gates",
+      "required": true,
+      "notes": "Normalizes Quality Gates report-only validation into the evidence chain."
+    },
+    {
+      "id": "pester-summary",
+      "stage": "validate",
+      "mode": "fixture",
+      "entrypoint": "tests/pester",
+      "reportType": "pester-summary",
+      "required": true,
+      "notes": "Represents curated Pester fixture coverage without running true lifecycle actions."
+    },
+    {
+      "id": "real-build",
+      "stage": "build",
+      "mode": "manual",
+      "entrypoint": "manual://real-build",
+      "reportType": "build-evidence",
+      "required": false,
+      "notes": "Placeholder for a later approved image build producer.",
+      "manualReason": "Requires later issue scope, explicit approval, and true-execution boundary."
+    },
+    {
+      "id": "capture",
+      "stage": "capture",
+      "mode": "manual",
+      "entrypoint": "manual://capture",
+      "reportType": "capture-evidence",
+      "required": false,
+      "notes": "Placeholder for a later approved WIM capture producer.",
+      "manualReason": "Requires later issue scope, explicit approval, and true-execution boundary."
+    },
+    {
+      "id": "deploy",
+      "stage": "deploy",
+      "mode": "manual",
+      "entrypoint": "manual://deploy",
+      "reportType": "deploy-evidence",
+      "required": false,
+      "notes": "Placeholder for a later approved deployment producer.",
+      "manualReason": "Requires later issue scope, explicit approval, and true-execution boundary."
+    },
+    {
+      "id": "admin-vm-smoke",
+      "stage": "acceptance",
+      "mode": "manual",
+      "entrypoint": "manual://admin-vm-smoke",
+      "reportType": "acceptance-evidence",
+      "required": false,
+      "notes": "Placeholder for maintainer-provided admin or VM smoke evidence.",
+      "manualReason": "Manual maintainer evidence only; PR Fast CI is not a substitute."
+    }
+  ],
+  "artifactPolicy": {
+    "allowLocalArtifacts": true,
+    "allowPrivateLocalOverrides": false,
+    "redactLocalPrivateValues": true
+  }
+}

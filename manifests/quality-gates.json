@@ -135,6 +135,18 @@
       "notes": "Validates Issue 15 layered configuration with all tracked stacks, CLI override fixture, local static inputs, and failedCount=0."
     },
     {
+      "id": "evidence-chain",
+      "displayName": "Evidence chain report validation",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "scripts/validate/Test-EvidenceChain.ps1",
+      "evidence": "report",
+      "notes": "Validates Issue 16 evidence chain manifest, fixture reports, producer metadata, and safety flags without true execution."
+    },
+    {
       "id": "effective-configuration-consumer-integration",
       "displayName": "Effective configuration consumer integration",
       "layer": "pr-fast",
