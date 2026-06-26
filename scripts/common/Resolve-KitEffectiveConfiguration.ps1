@@ -27,6 +27,33 @@ function Read-KitJsonFile {
     Get-Content -LiteralPath $Path -Raw -Encoding UTF8 | ConvertFrom-Json
 }
 
+function ConvertTo-KitHashtable {
+    param(
+        [AllowNull()]
+        $InputObject
+    )
+
+    $result = @{}
+    if ($null -eq $InputObject) {
+        return $result
+    }
+
+    if ($InputObject -is [System.Collections.IDictionary]) {
+        foreach ($key in $InputObject.Keys) {
+            $result[[string]$key] = $InputObject[$key]
+        }
+        return $result
+    }
+
+    if ($InputObject.PSObject -and $InputObject.PSObject.Properties) {
+        foreach ($property in $InputObject.PSObject.Properties) {
+            $result[[string]$property.Name] = $property.Value
+        }
+    }
+
+    return $result
+}
+
 function Copy-KitJsonValue {
     param(
         [AllowNull()]
@@ -166,6 +193,35 @@ function ConvertTo-KitPathMap {
     return $map
 }
 
+function New-KitPathOverrideFragment {
+    param(
+        [AllowNull()]
+        [hashtable]$PathOverride
+    )
+
+    $paths = [pscustomobject]@{}
+    foreach ($key in @($PathOverride.Keys | Sort-Object)) {
+        Add-Member -InputObject $paths -NotePropertyName ([string]$key) -NotePropertyValue ([string]$PathOverride[$key])
+    }
+
+    return [pscustomobject]@{
+        layerId = "cli-explicit"
+        paths = $paths
+    }
+}
+
+function Get-KitConfigurationStackNames {
+    param(
+        [string]$ConfigLayersPath = "manifests/config-layers.json",
+
+        [string]$RepoRoot = (Resolve-Path -LiteralPath "$PSScriptRoot\..\..").Path
+    )
+
+    $resolvedManifestPath = Resolve-KitRepoPath -RepoRoot $RepoRoot -Path $ConfigLayersPath
+    $manifest = Read-KitJsonFile -Path $resolvedManifestPath
+    return @($manifest.stacks | ForEach-Object { [string]$_.name })
+}
+
 function Resolve-KitEffectiveConfiguration {
     param(
         [string]$ConfigLayersPath = "manifests/config-layers.json",
@@ -173,6 +229,10 @@ function Resolve-KitEffectiveConfiguration {
         [string]$StackName = "default",
 
         [switch]$IncludeLocal,
+
+        [hashtable]$PathOverride,
+
+        [switch]$RedactLocalValues,
 
         [string]$RepoRoot = (Resolve-Path -LiteralPath "$PSScriptRoot\..\..").Path
     )
@@ -226,6 +286,18 @@ function Resolve-KitEffectiveConfiguration {
         }
     }
 
+    $overrideMap = ConvertTo-KitHashtable -InputObject $PathOverride
+    if ($overrideMap.Count -gt 0) {
+        $overrideFragment = New-KitPathOverrideFragment -PathOverride $overrideMap
+        $effective = Merge-KitJsonObject -Base $effective -Overlay $overrideFragment -LayerId "cli-explicit" -Path "" -Sources $sources
+        $appliedLayers += [pscustomobject]@{
+            id = "cli-explicit"
+            kind = "cli"
+            path = "<command-line>"
+            tracked = $false
+        }
+    }
+
     if ($effective.PSObject.Properties["`$schema"]) {
         $effective.PSObject.Properties.Remove("`$schema")
     }
@@ -245,6 +317,7 @@ function Resolve-KitEffectiveConfiguration {
         $pathSources += [pscustomobject]@{
             key = [string]$key
             value = [string]$pathMap[$key]
+            redactedValue = $(if ($RedactLocalValues -and [string]$sources[$sourcePath] -eq "local-private") { "<redacted>" } else { [string]$pathMap[$key] })
             sourceLayer = [string]$sources[$sourcePath]
         }
     }
@@ -253,6 +326,7 @@ function Resolve-KitEffectiveConfiguration {
         reportType = "effective-configuration"
         stackName = $StackName
         includeLocal = [bool]$IncludeLocal
+        redactedLocalValues = [bool]$RedactLocalValues
         mergePolicy = $manifest.mergePolicy
         appliedLayers = $appliedLayers
         configuration = $effective

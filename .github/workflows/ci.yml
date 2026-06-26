@@ -66,7 +66,8 @@ jobs:
         shell: powershell
         run: |
           $ErrorActionPreference = "Stop"
-          & .\scripts\validate\Test-EffectiveConfiguration.ps1
+          & .\scripts\validate\Test-EffectiveConfiguration.ps1 -AllStacks
+          & .\scripts\validate\Test-EffectiveConfiguration.ps1 -StackName air15 -PathOverrideJson '{"ToolRoot":"D:\\tools","DataRoot":"D:\\data"}'
 
       - name: Run PSScriptAnalyzer with Windows PowerShell
         shell: powershell
@@ -162,6 +163,11 @@ jobs:
               "tests/pester/EffectiveConfigurationSchema.Tests.ps1",
               "tests/pester/EffectiveConfigurationReport.Tests.ps1",
               "tests/pester/EffectiveConfigurationValidation.Tests.ps1",
+              "tests/pester/EffectiveConfigurationMergePolicy.Tests.ps1",
+              "tests/pester/EffectiveConfigurationLocalOverride.Tests.ps1",
+              "tests/pester/EffectiveConfigurationTokenSafety.Tests.ps1",
+              "tests/pester/EffectiveConfigurationCliOverride.Tests.ps1",
+              "tests/pester/Issue15LayeredConfigurationAcceptance.Tests.ps1",
               "tests/pester/Issue11ClosePrep.Tests.ps1",
               "tests/pester/Issue11MainValidationEvidence.Tests.ps1",
               "tests/pester/UserExperienceStateVerification.Tests.ps1",

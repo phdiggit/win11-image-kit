@@ -443,6 +443,7 @@ function Test-JsonSchemaFiles {
         @{ Manifest = "defender-exclusions.json"; Schema = "defender-exclusions.schema.json" },
         @{ Manifest = "junctions.json"; Schema = "junctions.schema.json" },
         @{ Manifest = "paths.json"; Schema = "paths.schema.json" },
+        @{ Manifest = "paths.local.example.json"; Schema = "config-layer-fragment.schema.json" },
         @{ Manifest = "quality-gates.json"; Schema = "quality-gates.schema.json" },
         @{ Manifest = "services.json"; Schema = "services.schema.json" },
         @{ Manifest = "software.json"; Schema = "software.schema.json" },

@@ -2,6 +2,8 @@ param(
     [string]$ConfigLayersPath = "manifests/config-layers.json",
     [string]$StackName = "default",
     [switch]$IncludeLocal,
+    [string]$PathOverrideJson,
+    [switch]$RedactLocalValues,
     [string]$ReportPath
 )
 
@@ -11,10 +13,22 @@ $ErrorActionPreference = "Stop"
 . "$PSScriptRoot\..\common\Resolve-KitEffectiveConfiguration.ps1"
 
 $RepoRoot = (Resolve-Path -LiteralPath "$PSScriptRoot\..\..").Path
-$report = Resolve-KitEffectiveConfiguration -ConfigLayersPath $ConfigLayersPath -StackName $StackName -IncludeLocal:$IncludeLocal -RepoRoot $RepoRoot
+$pathOverride = @{}
+if (-not [string]::IsNullOrWhiteSpace($PathOverrideJson)) {
+    $pathOverride = ConvertTo-KitHashtable -InputObject ($PathOverrideJson | ConvertFrom-Json)
+}
+
+$report = Resolve-KitEffectiveConfiguration `
+    -ConfigLayersPath $ConfigLayersPath `
+    -StackName $StackName `
+    -IncludeLocal:$IncludeLocal `
+    -PathOverride $pathOverride `
+    -RedactLocalValues:$RedactLocalValues `
+    -RepoRoot $RepoRoot
 
 Write-KitLog ("Effective configuration stack: {0}" -f $report.stackName)
 Write-KitLog ("Include local private override: {0}" -f $report.includeLocal)
+Write-KitLog ("Redact local values: {0}" -f $report.redactedLocalValues)
 Write-KitLog "Applied layers:"
 foreach ($layer in @($report.appliedLayers)) {
     Write-KitLog ("  {0} ({1}) -> {2}" -f $layer.id, $layer.kind, $layer.path)
@@ -22,7 +36,8 @@ foreach ($layer in @($report.appliedLayers)) {
 
 Write-KitLog "Effective paths:"
 foreach ($path in @($report.pathSources)) {
-    Write-KitLog ("  {0} = {1} [{2}]" -f $path.key, $path.value, $path.sourceLayer)
+    $displayValue = if ($RedactLocalValues) { $path.redactedValue } else { $path.value }
+    Write-KitLog ("  {0} = {1} [{2}]" -f $path.key, $displayValue, $path.sourceLayer)
 }
 
 foreach ($warning in @($report.warnings)) {

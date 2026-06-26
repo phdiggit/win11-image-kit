@@ -1,7 +1,11 @@
 param(
     [string]$ConfigLayersPath = "manifests/config-layers.json",
     [string]$StackName = "default",
+    [switch]$AllStacks,
     [switch]$IncludeLocal,
+    [hashtable]$PathOverride,
+    [string]$PathOverrideJson,
+    [string]$RepoRoot,
     [string]$ReportPath
 )
 
@@ -9,37 +13,66 @@ $ErrorActionPreference = "Stop"
 . "$PSScriptRoot\..\common\Resolve-KitPath.ps1"
 . "$PSScriptRoot\..\common\Resolve-KitEffectiveConfiguration.ps1"
 
-$RepoRoot = (Resolve-Path -LiteralPath "$PSScriptRoot\..\..").Path
-$report = Resolve-KitEffectiveConfiguration -ConfigLayersPath $ConfigLayersPath -StackName $StackName -IncludeLocal:$IncludeLocal -RepoRoot $RepoRoot
-$failures = @()
-
-foreach ($path in @($report.pathSources)) {
-    if ($path.value -match '\$\{[^}]+\}') {
-        $failures += "Unresolved path token: $($path.key) -> $($path.value)"
-    }
-
-    foreach ($pattern in @($report.safety.forbiddenPathPatterns)) {
-        if ($path.value -match [string]$pattern) {
-            $failures += "Path matched forbidden pattern: $($path.key) -> $($path.value)"
-        }
-    }
+if ([string]::IsNullOrWhiteSpace($RepoRoot)) {
+    $RepoRoot = (Resolve-Path -LiteralPath "$PSScriptRoot\..\..").Path
+}
+$pathOverrideMap = @{}
+if ($null -ne $PathOverride) {
+    $pathOverrideMap = ConvertTo-KitHashtable -InputObject $PathOverride
+}
+if (-not [string]::IsNullOrWhiteSpace($PathOverrideJson)) {
+    $pathOverrideMap = ConvertTo-KitHashtable -InputObject ($PathOverrideJson | ConvertFrom-Json)
 }
 
-if ($report.safety.forbidTrackedLocalOverrides) {
-    foreach ($layer in @($report.appliedLayers)) {
-        if ($layer.kind -eq "local" -and $layer.tracked) {
-            $failures += "Local override layer must not be tracked: $($layer.id)"
+$stackNames = if ($AllStacks) {
+    Get-KitConfigurationStackNames -ConfigLayersPath $ConfigLayersPath -RepoRoot $RepoRoot
+} else {
+    @($StackName)
+}
+
+$reports = @()
+$failures = @()
+
+foreach ($name in @($stackNames)) {
+    $report = Resolve-KitEffectiveConfiguration `
+        -ConfigLayersPath $ConfigLayersPath `
+        -StackName $name `
+        -IncludeLocal:$IncludeLocal `
+        -PathOverride $pathOverrideMap `
+        -RepoRoot $RepoRoot
+    $reports += $report
+
+    foreach ($path in @($report.pathSources)) {
+        if ($path.value -match '\$\{[^}]+\}') {
+            $failures += "[$name] Unresolved path token: $($path.key) -> $($path.value)"
+        }
+
+        foreach ($pattern in @($report.safety.forbiddenPathPatterns)) {
+            if ($path.value -match [string]$pattern) {
+                $failures += "[$name] Path matched forbidden pattern: $($path.key) -> $($path.value)"
+            }
+        }
+    }
+
+    if ($report.safety.forbidTrackedLocalOverrides) {
+        foreach ($layer in @($report.appliedLayers)) {
+            if ($layer.kind -eq "local" -and $layer.tracked) {
+                $failures += "[$name] Local override layer must not be tracked: $($layer.id)"
+            }
         }
     }
 }
 
 $validationReport = [pscustomobject]@{
     reportType = "effective-configuration-validation"
-    stackName = $StackName
+    stackName = $(if ($AllStacks) { "all" } else { $StackName })
+    stackNames = @($stackNames)
     includeLocal = [bool]$IncludeLocal
+    allStacks = [bool]$AllStacks
     failedCount = $failures.Count
     failures = $failures
-    effectiveConfiguration = $report
+    effectiveConfigurations = $reports
+    effectiveConfiguration = @($reports)[0]
 }
 
 if (-not [string]::IsNullOrWhiteSpace($ReportPath)) {
@@ -64,4 +97,4 @@ if ($failures.Count -gt 0) {
     exit 1
 }
 
-Write-Host ("Effective configuration validation passed: {0}; failedCount=0." -f $StackName) -ForegroundColor Green
+Write-Host ("Effective configuration validation passed: {0}; failedCount=0." -f $validationReport.stackName) -ForegroundColor Green

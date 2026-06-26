@@ -198,7 +198,7 @@
       "path": "scripts/validate/Test-ProjectConfig.ps1",
       "category": "script",
       "required": true,
-      "hash": "e77280274b1931a63549a13a362b0cdba260ffd2e55c5b1e8d0e1c8365d25a3a",
+      "hash": "610662c10fcb27cef89dec630d8654b29f40b83dd7b6bfb6ea612d4383f7c867",
       "reason": "Project config validation now enforces quality gate and config layer manifest structure."
     },
     {
@@ -296,15 +296,15 @@
       "path": ".github/workflows/ci.yml",
       "category": "workflow",
       "required": true,
-      "hash": "086bb64514276a2e26225d52057e5aad9e5253401d65f2aa432853c5f12d867d",
-      "reason": "PR Fast CI wires Issue 15 effective configuration guardrails while preserving the Validate / Full Validate split."
+      "hash": "190411ee3dee131a22d81f08756fcb2fbbe19e5e7317d9fc2d036e137a868fa6",
+      "reason": "PR Fast CI wires Issue 15 hardening guardrails while preserving the Validate / Full Validate split."
     },
     {
       "path": "README.md",
       "category": "doc",
       "required": true,
-      "hash": "676d2165dc9f8ce85ccbb634c9e4ffc17618c0a09c23e2dda520ab433ddbe1b9",
-      "reason": "README quick entry links Issue 15 layered configuration intake and validation."
+      "hash": "2e9d6fc17344c345b10dec204c020916a466c030e00a095d880142d59f6b4ca6",
+      "reason": "README quick entry links Issue 15 layered configuration intake, acceptance, and validation."
     },
     {
       "path": "docs/37-issue13-ensure-state-acceptance.md",
@@ -394,7 +394,7 @@
       "path": "manifests/quality-gates.json",
       "category": "manifest",
       "required": true,
-      "hash": "80d1bd0c0daef463c6c787ef710b7907ad1feef526cc1d9d7e47b8352ad37213",
+      "hash": "9a1cf1fec9c2d0378dbb19f102553f19ea3a6e9846d53aad7bb18ad2d5144f5d",
       "reason": "Issue 14 and Issue 15 quality gate manifest is a trusted validation inventory."
     },
     {
@@ -471,106 +471,155 @@
       "path": ".gitignore",
       "category": "config",
       "required": true,
-      "hash": "3f1525489fd7bd3f3801949616036e12f2d25a0b8783d8ff06e9be9b082baec3",
+      "hash": "6f285f77eff0a0d4e23edb723cb21f11af35b4e15734afbad64f6af2c7ca0341",
       "reason": "Issue 15 local private override file must remain untracked."
     },
     {
       "path": "docs/44-issue15-layered-configuration.md",
       "category": "doc",
       "required": true,
-      "hash": "47ced1e346b1fb56c8105ae36876453e53d7efea2a70d9bf8e4df2d1f0a2102e",
-      "reason": "Issue 15 intake records real roadmap scope, non-goals, safety boundaries, and validation plan."
+      "hash": "ab56e5c156d9249f37e68dd4715dff43a704ffac5ece695ec71ffa27febf7657",
+      "reason": "Issue 15 intake records real roadmap scope, phase 2 hardening, non-goals, safety boundaries, and validation plan."
+    },
+    {
+      "path": "docs/45-issue15-layered-configuration-acceptance.md",
+      "category": "doc",
+      "required": true,
+      "hash": "9a447812e88ec47c9df9627f9fe7e6e94fce24769d8163ed5a84fe040557934e",
+      "reason": "Issue 15 acceptance scaffold records in-acceptance hardening status without close-prep claims."
+    },
+    {
+      "path": "manifests/paths.local.example.json",
+      "category": "manifest",
+      "required": true,
+      "hash": "5abf24715e18fef3c2da5cdffb08517dde5fd949a767265c4662fbaa244b7942",
+      "reason": "Issue 15 local override example is a safe tracked template for private paths."
     },
     {
       "path": "manifests/config-layers.json",
       "category": "manifest",
       "required": true,
-      "hash": "e5e2e492183851b37b401030897d2250e411a001a5d1a37966b9018160b642be",
+      "hash": "c8c38ca93de9ce49eb84967a52f1cfecc8b5c62cd1e1c47130502cfadb2265b8",
       "reason": "Issue 15 config layer manifest declares deterministic local layering."
     },
     {
       "path": "schemas/config-layers.schema.json",
       "category": "schema",
       "required": true,
-      "hash": "13d3c3812ecd0c1ead278056d114fa77798136090410a437102cecea8354a3db",
+      "hash": "b2b729e615a1380b09233c1ef27d8269a774654a81c594baa718d537798bfe19",
       "reason": "Issue 15 config layer schema constrains the layer inventory."
     },
     {
       "path": "schemas/config-layer-fragment.schema.json",
       "category": "schema",
       "required": true,
-      "hash": "d3ab81a94d3ab5160cf5b9cc0ac9804dda678567c1fc2682a1e90ad564f714dc",
+      "hash": "09fc2fe6e1477d4ef9119a9e6349164f74d24d5e01eb2be5c6bcae63808b5db9",
       "reason": "Issue 15 config layer fragment schema constrains profile and hardware overrides."
     },
     {
       "path": "profiles/default.json",
       "category": "manifest",
       "required": true,
-      "hash": "f92d9ca45d91d3c96aa99cb9396e1260c9cc1e7671556d9c1af3b2437fceb0ef",
+      "hash": "0f7d8129f6781691edaec4a2fb03d91d25b9da1d5bc3d1df32bc22f2e9cf72c2",
       "reason": "Issue 15 default profile fixture preserves current single-file behavior."
     },
     {
       "path": "profiles/release.json",
       "category": "manifest",
       "required": true,
-      "hash": "d4ee62e8e498ddd67ce9f8600b9c3a2ffb2888a752171425142aee1083103e60",
+      "hash": "95ca4fd2d95fc63964b44820fe2fc36d653f146d4fc43922cdf5c9e3017b75bc",
       "reason": "Issue 15 release profile fixture proves profile override precedence."
     },
     {
       "path": "hardware/air15.json",
       "category": "manifest",
       "required": true,
-      "hash": "ddc773a21a2f1cfd4dac3aec63dc7ec60b6bd166eed6e6995999d99089ae6a6d",
+      "hash": "ad2363d7a22f4a4abe448831940d210852eff8fc09a61b006d3904a36fec2942",
       "reason": "Issue 15 hardware fixture proves hardware override precedence."
     },
     {
       "path": "scripts/common/Resolve-KitEffectiveConfiguration.ps1",
       "category": "script",
       "required": true,
-      "hash": "4d21201728b31533926ea2e60c8d6eee0644bad44dc09773910761fb1f0874e7",
-      "reason": "Issue 15 effective configuration resolver produces static report-only evidence."
+      "hash": "ac731defe0cebc4c3983a4e00d8404e326bee712271663d19da6b5bcf3dbed1a",
+      "reason": "Issue 15 effective configuration resolver produces static report-only evidence with CLI and local override handling."
     },
     {
       "path": "scripts/config/Show-EffectiveConfiguration.ps1",
       "category": "script",
       "required": true,
-      "hash": "8b57c9a60b21b044c075aacb2d85230e7492817a1ef41ffe798ea6be06653eb4",
-      "reason": "Issue 15 effective configuration display entrypoint outputs value source layers."
+      "hash": "0e838c0459a56b8be3fa7bda6134a809864bf58a5b04423b63144574470a2bbd",
+      "reason": "Issue 15 effective configuration display entrypoint outputs value source layers and redacted local values."
     },
     {
       "path": "scripts/validate/Test-EffectiveConfiguration.ps1",
       "category": "script",
       "required": true,
-      "hash": "27a8ef823cd68ec6d73ddf4d55d75fab0b145ede6f0bf78e1e71fd0e15313552",
-      "reason": "Issue 15 effective configuration validation entrypoint writes failedCount=0 reports."
+      "hash": "ee95294222ac67220ad2e5fd719765b9b81982bc96202946bb7a6e88e146ea3a",
+      "reason": "Issue 15 effective configuration validation entrypoint writes failedCount=0 reports for selected or all stacks."
     },
     {
       "path": "tests/pester/Issue15LayeredConfiguration.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "871a88f43e2ac1c83e6fa9ca2aff12d382715e3d244b6e806157e8642635c232",
+      "hash": "247425ebf7060e3fe5bc676b0fb0608f515ba7526682e3d3e37d938dc1274225",
       "reason": "Issue 15 guardrail tests cover intake, wiring, Build Lock, and no auto-close wording."
     },
     {
       "path": "tests/pester/EffectiveConfigurationSchema.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "c8f623140edeeec0cb8c39b60fc396bc2a558e32f0554cf4367ec878f20c4ac8",
+      "hash": "22989abc58840420a857769ba818c2ee78319734ef68517cc26b2f0f269d495e",
       "reason": "Issue 15 schema tests guard closed local schemas and local override policy."
     },
     {
       "path": "tests/pester/EffectiveConfigurationReport.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "b26e2826b5d3c1751868c12507a683d8dc27675f6a3807f78b5facaa122b1937",
+      "hash": "715f7474d414247e46e12b3247e9eb69e4bfdde230d589b39cc701ffa89a0bd5",
       "reason": "Issue 15 report tests guard deterministic source-layer output."
     },
     {
       "path": "tests/pester/EffectiveConfigurationValidation.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "569d1a4dce34b8e6e979fc468959820be25b4e2f0d7f95efa64749c14f96e99d",
+      "hash": "72ef59df00c969fa20f585905398fec1e89626a916cc79a42e07cba99eb90c75",
       "reason": "Issue 15 validation tests guard report-only behavior and no mutation commands."
+    },
+    {
+      "path": "tests/pester/EffectiveConfigurationMergePolicy.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "7add7a6405351c76152b8d07b2acc94ca55a9a3511e82e37d4a0477e84067bcf",
+      "reason": "Issue 15 merge policy tests guard object, array, scalar, and null behavior."
+    },
+    {
+      "path": "tests/pester/EffectiveConfigurationLocalOverride.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "8649ee0d1224b32c386ff8b2332836946de716f476de1b89c9943dee36d82df3",
+      "reason": "Issue 15 local override tests guard missing, present, malformed, redacted, and untracked behavior."
+    },
+    {
+      "path": "tests/pester/EffectiveConfigurationTokenSafety.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "ad263dd13a0b940d546b53c4e1a744a9c7718d57ab2a3c6ba50cd3ba630ced7a",
+      "reason": "Issue 15 token safety tests guard unknown token, circular token, and forbidden old NAS failures."
+    },
+    {
+      "path": "tests/pester/EffectiveConfigurationCliOverride.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "f80a2b06c6f1910574da01df60c0ec73529b0e19c5e6cef071978badc97c328c",
+      "reason": "Issue 15 CLI override tests guard highest-precedence path override source attribution."
+    },
+    {
+      "path": "tests/pester/Issue15LayeredConfigurationAcceptance.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "a6c81ecca70a66a553ca85533b09743fd76a0a3742890f8350e3f14a51ad471f",
+      "reason": "Issue 15 acceptance tests guard in-acceptance scaffold and hardening wiring."
     },
     {
       "path": "tests/pester/Issue14ClosePrep.Tests.ps1",

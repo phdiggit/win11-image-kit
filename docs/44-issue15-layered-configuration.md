@@ -15,6 +15,7 @@ Status: `in-progress`
 - 新增 `manifests/config-layers.json` 作为层级声明，新增 `profiles/default.json`、`profiles/release.json` 和 `hardware/air15.json` 作为可测试覆盖层。
 - 新增 `Show-EffectiveConfiguration.ps1` 与 `Test-EffectiveConfiguration.ps1`，只读取本地 repo 文件并输出报告。
 - `manifests/paths.local.json` 被登记为可选本机私有覆盖，并加入 `.gitignore`，不应被 Git 跟踪。
+- Phase 2 hardening 增加 `-AllStacks`、`-PathOverrideJson`、local missing / malformed 检查、token / cycle / forbidden path 失败路径，以及 docs/45 acceptance scaffold。
 
 ## Non-goals
 
@@ -39,9 +40,15 @@ Status: `in-progress`
 2. Profile: `profiles/default.json` 与 `profiles/release.json`，用确定性深度合并覆盖默认值。
 3. Hardware: `hardware/air15.json`，表达硬件差异覆盖。
 4. Local private: `manifests/paths.local.json`，仅在显式 `-IncludeLocal` 时参与，且必须保持未跟踪。
-5. CLI explicit: 本阶段只在文档中保留优先级位置，后续任务再接入具体命令行覆盖。
+5. CLI explicit: `-PathOverride` / `-PathOverrideJson` 提供路径覆盖入口，来源层显示为 `cli-explicit`。
 
 合并策略固定为 object deep-merge、array replace、scalar replace、null remove。首批报告会输出每个有效 path 的最终值和来源层。
+
+Phase 2 后优先级固定为：
+
+```text
+repo-default < profile < hardware < local-private < cli-explicit
+```
 
 ## Safety Boundaries
 
@@ -50,11 +57,14 @@ Status: `in-progress`
 - 不执行真实 build、install、service mutation、network download、signing、registry/profile/hive 写入。
 - 有效配置验证会拒绝未解析 token 和已知旧 NAS 路径模式。
 - 本机私有覆盖文件不进入 Build Lock，不进入报告样例，不应被 Git 跟踪。
+- CI 不启用 `-IncludeLocal`，不上传 local override artifact；需要本地查看私有值时可使用 `-RedactLocalValues` 输出 `redactedValue`。
 
 ## Validation Plan
 
 - `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/validate/Test-ProjectConfig.ps1`
 - `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/validate/Test-EffectiveConfiguration.ps1 -ReportPath "$env:TEMP\effective-config-issue15-baseline.json"`
+- `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/validate/Test-EffectiveConfiguration.ps1 -AllStacks -ReportPath "$env:TEMP\effective-config-issue15-all.json"`
+- `powershell -NoProfile -ExecutionPolicy Bypass -Command "& .\scripts\validate\Test-EffectiveConfiguration.ps1 -StackName air15 -PathOverride @{ ToolRoot = 'D:\tools'; DataRoot = 'D:\data' }"`
 - `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/config/Show-EffectiveConfiguration.ps1 -StackName release -ReportPath "$env:TEMP\effective-config-release.json"`
 - `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/validate/Test-QualityGates.ps1 -ReportPath "$env:TEMP\quality-gates-issue15-baseline.json"`
 - `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/validate/Test-BuildLock.ps1 -ReportPath "$env:TEMP\build-lock-issue15-baseline.json"`
@@ -77,7 +87,8 @@ Status: `in-progress`
 - [x] 新增只读有效配置展示和验证入口。
 - [x] 新增 Pester guardrails 覆盖文档、schema、报告、CI、Build Lock、Quality Gates 和安全边界。
 - [x] 本机覆盖文件加入 `.gitignore`。
-- [ ] 后续任务继续接入更多 manifest 与 CLI explicit override。
+- [x] Phase 2 增加 CLI explicit path override、all stacks validation、local override 行为和 token/path safety 测试。
+- [ ] 后续任务继续接入更多 manifest。
 
 ## Related Documents
 
@@ -86,3 +97,4 @@ Status: `in-progress`
 - [定制范围与配置入口](07-定制范围与配置入口.md)
 - [Quality Gates](40-issue14-quality-gates.md)
 - [Build Lock](32-issue12-build-lock.md)
+- [Issue #15 Acceptance](45-issue15-layered-configuration-acceptance.md)
