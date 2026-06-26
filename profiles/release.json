@@ -1,0 +1,8 @@
+{
+  "$schema": "../schemas/config-layer-fragment.schema.json",
+  "layerId": "profile-release",
+  "paths": {
+    "WorkRoot": "${DeployRoot}\\work\\release"
+  },
+  "notes": "Release profile 首批只覆盖工作目录，后续任务可继续拆分镜像、驱动或报告路径。"
+}

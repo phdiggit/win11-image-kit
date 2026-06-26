@@ -1,0 +1,181 @@
+{
+  "title": "win11-image-kit configuration layering manifest",
+  "type": "object",
+  "required": [
+    "manifestVersion",
+    "mergePolicy",
+    "layers",
+    "stacks",
+    "localOverrideLayer",
+    "safety"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "manifestVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "mergePolicy": {
+      "$ref": "#/$defs/mergePolicy"
+    },
+    "layers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/layer"
+      }
+    },
+    "stacks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/stack"
+      }
+    },
+    "localOverrideLayer": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$"
+    },
+    "safety": {
+      "$ref": "#/$defs/safety"
+    }
+  },
+  "$defs": {
+    "mergePolicy": {
+      "type": "object",
+      "required": [
+        "object",
+        "array",
+        "scalar",
+        "null"
+      ],
+      "properties": {
+        "object": {
+          "type": "string",
+          "enum": [
+            "deep-merge"
+          ]
+        },
+        "array": {
+          "type": "string",
+          "enum": [
+            "replace"
+          ]
+        },
+        "scalar": {
+          "type": "string",
+          "enum": [
+            "replace"
+          ]
+        },
+        "null": {
+          "type": "string",
+          "enum": [
+            "remove"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "layerKind": {
+      "type": "string",
+      "enum": [
+        "repo-default",
+        "profile",
+        "hardware",
+        "local",
+        "cli"
+      ]
+    },
+    "layer": {
+      "type": "object",
+      "required": [
+        "id",
+        "kind",
+        "required",
+        "tracked",
+        "path",
+        "schema",
+        "description"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "kind": {
+          "$ref": "#/$defs/layerKind"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "tracked": {
+          "type": "boolean"
+        },
+        "path": {
+          "type": "string"
+        },
+        "schema": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "stack": {
+      "type": "object",
+      "required": [
+        "name",
+        "layers",
+        "description"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "layers": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]*$"
+          }
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "safety": {
+      "type": "object",
+      "required": [
+        "allowedPathTokens",
+        "forbiddenPathPatterns",
+        "forbidTrackedLocalOverrides"
+      ],
+      "properties": {
+        "allowedPathTokens": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9]*$"
+          }
+        },
+        "forbiddenPathPatterns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "forbidTrackedLocalOverrides": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

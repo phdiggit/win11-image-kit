@@ -1,0 +1,6 @@
+{
+  "$schema": "../schemas/config-layer-fragment.schema.json",
+  "layerId": "profile-default",
+  "paths": {},
+  "notes": "默认 profile 暂不覆盖仓库默认 paths.json，作为兼容迁移基线。"
+}

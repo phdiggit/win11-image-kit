@@ -27,6 +27,7 @@ __pycache__/
 *.pem
 *.ppk
 secrets/
+manifests/paths.local.json
 
 # Editor
 .idea/

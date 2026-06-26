@@ -121,6 +121,18 @@
       "entrypoint": "docs/41-issue14-quality-gates-acceptance.md",
       "evidence": "document",
       "notes": "Provides the in-acceptance scaffold without close-prep or main-evidence claims."
+    },
+    {
+      "id": "effective-configuration",
+      "displayName": "Effective configuration validation",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "scripts/validate/Test-EffectiveConfiguration.ps1",
+      "evidence": "report",
+      "notes": "Validates Issue 15 layered configuration with local static inputs and failedCount=0."
     }
   ]
 }
