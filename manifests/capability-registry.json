@@ -139,6 +139,36 @@
         "docs/32-issue12-build-lock.md"
       ],
       "notes": "Audit/report-only immutable input lock. It validates selected trusted inputs and does not build images or mutate the system."
+    },
+    {
+      "id": "ensure-state-convergence",
+      "issue": "#13",
+      "status": "implemented",
+      "context": "machine",
+      "mutationLevel": "plan-only",
+      "manifest": "manifests/software.json",
+      "schema": "schemas/software.schema.json",
+      "entrypoints": [
+        "scripts/common/Resolve-KitSoftwareState.ps1",
+        "scripts/common/Resolve-KitServiceState.ps1",
+        "scripts/common/New-KitEnsureStatePlan.ps1",
+        "scripts/common/Test-KitEnsureState.ps1",
+        "scripts/common/New-KitEnsureStateReport.ps1"
+      ],
+      "validateEntrypoints": [
+        "scripts/validate/Test-EnsureState.ps1"
+      ],
+      "tests": [
+        "tests/pester/EnsureStateSchema.Tests.ps1",
+        "tests/pester/EnsureStatePlan.Tests.ps1",
+        "tests/pester/EnsureStateReport.Tests.ps1",
+        "tests/pester/EnsureStateValidation.Tests.ps1",
+        "tests/pester/Issue13EnsureState.Tests.ps1"
+      ],
+      "docs": [
+        "docs/36-issue13-ensure-state.md"
+      ],
+      "notes": "Plan/report-only convergence for software and services. The software manifest is the primary registry anchor; services manifest is paired evidence. PR Fast CI uses fixtures and does not install software or mutate services."
     }
   ]
 }

@@ -1,142 +1,105 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "win11-image-kit software manifest",
+  "title": "win11-image-kit ensure-state software manifest",
   "type": "object",
-  "required": ["packages"],
+  "required": [
+    "manifestVersion",
+    "software"
+  ],
   "properties": {
-    "$schema": { "type": "string" },
-    "packages": {
+    "$schema": {
+      "type": "string"
+    },
+    "manifestVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "software": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["name", "version", "stage", "type"],
+        "required": [
+          "id",
+          "displayName",
+          "ensure",
+          "source",
+          "packageId",
+          "scope",
+          "installMode",
+          "priority",
+          "notes"
+        ],
         "properties": {
-          "name": { "type": "string" },
-          "version": { "type": "string" },
-          "enabled": { "type": "boolean" },
-          "category": { "type": "string" },
-          "stage": {
-            "type": "string",
-            "enum": ["golden-image", "post-deploy", "manual"]
+          "id": {
+            "type": "string"
           },
-          "type": {
-            "type": "string",
-            "enum": ["archive", "zip", "installer", "manual"]
+          "displayName": {
+            "type": "string"
           },
-          "required": { "type": "boolean" },
-          "failurePolicy": {
+          "ensure": {
             "type": "string",
-            "enum": ["fail", "skip", "manual"]
+            "enum": [
+              "present",
+              "absent",
+              "latest",
+              "pinned",
+              "manual"
+            ]
           },
-          "allowMissingSource": { "type": "boolean" },
-          "archiveFormat": {
+          "source": {
             "type": "string",
-            "enum": ["zip", "tar.gz"]
+            "enum": [
+              "winget",
+              "chocolatey",
+              "msi",
+              "powershell",
+              "manual",
+              "none"
+            ]
           },
-          "source": { "type": "string" },
-          "sha256": {
+          "packageId": {
+            "type": "string"
+          },
+          "version": {
             "anyOf": [
               {
-                "type": "string",
-                "pattern": "^[A-Fa-f0-9]{64}$"
+                "type": "string"
               },
-              { "type": "null" }
-            ]
-          },
-          "destination": { "type": "string" },
-          "installArgs": {
-            "type": "array",
-            "items": { "type": "string" }
-          },
-          "silentInstall": { "type": "boolean" },
-          "successExitCodes": {
-            "type": "array",
-            "items": { "type": "integer" }
-          },
-          "testCommand": {
-            "type": "object",
-            "required": ["command"],
-            "properties": {
-              "command": { "type": "string" },
-              "arguments": {
-                "type": "array",
-                "items": { "type": "string" }
-              },
-              "successExitCodes": {
-                "type": "array",
-                "items": { "type": "integer" }
-              },
-              "timeoutSeconds": {
-                "type": "integer",
-                "minimum": 1
-              },
-              "failurePolicy": {
-                "type": "string",
-                "enum": ["fail", "skip", "manual"]
+              {
+                "type": "null"
               }
-            },
-            "additionalProperties": false
-          },
-          "uninstall": {
-            "anyOf": [
-              { "type": "string" },
-              { "type": "null" }
             ]
           },
-          "env": {
-            "type": "object",
-            "additionalProperties": { "type": "string" }
+          "scope": {
+            "type": "string",
+            "enum": [
+              "machine",
+              "current-user",
+              "default-user",
+              "none"
+            ]
           },
-          "path": {
-            "type": "array",
-            "items": { "type": "string" }
+          "installMode": {
+            "type": "string",
+            "enum": [
+              "planned",
+              "manual",
+              "disabled"
+            ]
           },
-          "postInstall": {
+          "priority": {
+            "type": "integer"
+          },
+          "tags": {
             "type": "array",
             "items": {
-              "type": "object",
-              "required": ["action"],
-              "properties": {
-                "action": {
-                  "type": "string",
-                  "enum": ["ensure-directory"]
-                },
-                "path": { "type": "string" }
-              },
-              "additionalProperties": false
+              "type": "string"
             }
           },
-          "test": { "type": "string" }
-        },
-        "allOf": [
-          {
-            "if": {
-              "properties": { "type": { "const": "archive" } },
-              "required": ["type"]
-            },
-            "then": {
-              "required": ["source", "destination", "archiveFormat"]
-            }
-          },
-          {
-            "if": {
-              "properties": { "type": { "const": "zip" } },
-              "required": ["type"]
-            },
-            "then": {
-              "required": ["source", "destination"]
-            }
-          },
-          {
-            "if": {
-              "properties": { "type": { "const": "installer" } },
-              "required": ["type"]
-            },
-            "then": {
-              "required": ["source", "destination", "silentInstall"]
-            }
+          "notes": {
+            "type": "string"
           }
-        ],
+        },
         "additionalProperties": false
       }
     }

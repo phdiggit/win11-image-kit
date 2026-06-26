@@ -1,67 +1,38 @@
 {
   "$schema": "../schemas/software.schema.json",
-  "packages": [
+  "manifestVersion": 1,
+  "software": [
     {
-      "name": "maven",
-      "version": "3.9.16",
-      "enabled": true,
-      "category": "dev-runtime",
-      "stage": "golden-image",
-      "type": "archive",
-      "required": true,
-      "failurePolicy": "fail",
-      "allowMissingSource": false,
-      "archiveFormat": "tar.gz",
-      "source": "${PackageRoot}\\maven\\apache-maven-3.9.16-bin.tar.gz",
-      "sha256": null,
-      "destination": "${ToolRoot}\\apache-maven-3.9.16",
-      "env": {
-        "MAVEN_HOME": "${ToolRoot}\\apache-maven-3.9.16"
-      },
-      "path": [
-        "${ToolRoot}\\apache-maven-3.9.16\\bin"
+      "id": "baseline-vscode-portable",
+      "displayName": "VS Code Portable Baseline",
+      "ensure": "present",
+      "source": "manual",
+      "packageId": "baseline.vscode-portable",
+      "version": "fixture-1.0",
+      "scope": "machine",
+      "installMode": "planned",
+      "priority": 100,
+      "tags": [
+        "baseline",
+        "fixture"
       ],
-      "test": "mvn -v"
+      "notes": "Fixture-only ensure-state baseline. PR Fast CI plans actions but does not install software."
     },
     {
-      "name": "vscode-portable",
-      "version": "1.124.0",
-      "enabled": true,
-      "category": "editor",
-      "stage": "golden-image",
-      "type": "archive",
-      "required": true,
-      "failurePolicy": "fail",
-      "allowMissingSource": false,
-      "archiveFormat": "zip",
-      "source": "${PackageRoot}\\vscode\\VSCode-win32-x64-1.124.0.zip",
-      "sha256": null,
-      "destination": "${ToolRoot}\\vscode-portable",
-      "postInstall": [
-        {
-          "action": "ensure-directory",
-          "path": "${ToolRoot}\\vscode-portable\\data"
-        }
+      "id": "baseline-codex-cli",
+      "displayName": "Codex CLI",
+      "ensure": "manual",
+      "source": "manual",
+      "packageId": "baseline.codex-cli",
+      "version": null,
+      "scope": "machine",
+      "installMode": "manual",
+      "priority": 200,
+      "tags": [
+        "manual",
+        "fixture"
       ],
-      "test": "${ToolRoot}\\vscode-portable\\Code.exe --version"
-    },
-    {
-      "name": "codex",
-      "version": "latest",
-      "enabled": true,
-      "category": "ai-tools",
-      "stage": "post-deploy",
-      "type": "installer",
-      "required": false,
-      "failurePolicy": "manual",
-      "allowMissingSource": true,
-      "source": "${PackageRoot}\\ai-tools\\Codex Installer.exe",
-      "sha256": null,
-      "destination": "C:\\Program Files\\Codex",
-      "installArgs": [],
-      "silentInstall": false,
-      "uninstall": null,
-      "test": "where codex"
+      "notes": "Manual-only item used to exercise ensure-state planning and reporting without real package queries."
     }
   ]
 }

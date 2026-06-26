@@ -56,6 +56,7 @@ logs/                 仅保留 .gitkeep，本地日志不提交
 22. Issue #11 manifest capability registry 与实现一致性校验见 [Capability Registry](docs/28-issue11-capability-registry.md)，验收、关闭准备和 main 验证证据见 [Acceptance](docs/29-issue11-capability-registry-acceptance.md)、[Close Preparation](docs/30-issue11-close-preparation.md)、[Main Validation Evidence](docs/31-issue11-main-validation-evidence.md)
 23. Issue #12 immutable build lock 与供应链输入一致性校验见 [Build Lock](docs/32-issue12-build-lock.md)
 24. Issue #12 Immutable Build Lock 能力、验收与关闭准备见 [Acceptance](docs/33-issue12-build-lock-acceptance.md)、[Close Preparation](docs/34-issue12-close-preparation.md)、[Main Validation Evidence](docs/35-issue12-main-validation-evidence.md)
+25. Issue #13 software/service Ensure-State 收敛模型与静态验证见 [Ensure-State](docs/36-issue13-ensure-state.md)
 
 常规配置验证：
 

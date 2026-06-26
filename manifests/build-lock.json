@@ -9,7 +9,7 @@
       "path": "manifests/capability-registry.json",
       "category": "manifest",
       "required": true,
-      "hash": "82080427cc9fafb5a6310aa95d4710d12e994976a294f66446c683cd47aed4aa",
+      "hash": "286074448fb6820c87c263f7a8dd36f740da137f36347300968b6590e6a18d9f",
       "reason": "Capability registry is a supply-chain control plane input."
     },
     {
@@ -125,6 +125,83 @@
       "reason": "Build lock validate entrypoint writes explicit reports and exit codes."
     },
     {
+      "path": "manifests/software.json",
+      "category": "manifest",
+      "required": true,
+      "hash": "100b276d0247467b3945d3e82e73d76103e8272c4431cf814ac79cb10cbe9c2f",
+      "reason": "Ensure-State software manifest is a trusted desired-state ledger."
+    },
+    {
+      "path": "schemas/software.schema.json",
+      "category": "schema",
+      "required": true,
+      "hash": "8ec9ecc266537e582a4c0a3cbe720def6a782744993ef871bd97a6a76e763c97",
+      "reason": "Ensure-State software schema constrains desired-state software entries."
+    },
+    {
+      "path": "manifests/services.json",
+      "category": "manifest",
+      "required": true,
+      "hash": "b5f5012a784cc25b72e4b0a9af24987f8d3b372d1d13e2bb944a8cd323477d7b",
+      "reason": "Ensure-State services manifest is a trusted desired-state ledger."
+    },
+    {
+      "path": "schemas/services.schema.json",
+      "category": "schema",
+      "required": true,
+      "hash": "02f80aafa6e9e11f1cc388d91fa52452e4e39c6e24a26e331dbaab594f8e53d5",
+      "reason": "Ensure-State service schema constrains desired-state service entries."
+    },
+    {
+      "path": "scripts/common/Resolve-KitSoftwareState.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "0cd56d2d4e84ef90af5cba4a706b6785f8f27605e3574c21f5b7ab497db121dc",
+      "reason": "Ensure-State software resolver converts fixture or current data into reviewable state."
+    },
+    {
+      "path": "scripts/common/Resolve-KitServiceState.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "8022c12639f0ce1305be1c657310d85ab8e3eda487beffa1d3a54fa39f8d288f",
+      "reason": "Ensure-State service resolver converts fixture or current data into reviewable state."
+    },
+    {
+      "path": "scripts/common/New-KitEnsureStatePlan.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "444759c75cc3514131fa14f6183c82a5d6a1de013833d9d391c60e2238cffc97",
+      "reason": "Ensure-State plan generation is trusted CI evidence for convergence review."
+    },
+    {
+      "path": "scripts/common/Test-KitEnsureState.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "a5857ab12367af8bb35bcdf2f316e005ccd48b07cddbf117dbf671e1bee08980",
+      "reason": "Ensure-State validation maps plan items into passed, manual, or failed evidence."
+    },
+    {
+      "path": "scripts/common/New-KitEnsureStateReport.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "c6800079cc680231743aa1e61e198a2136420bfb78413b10907bc08e4cb3efce",
+      "reason": "Ensure-State report generation produces explicit JSON review evidence."
+    },
+    {
+      "path": "scripts/validate/Test-EnsureState.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "cd043a7e12703d3f44fa6b0941b9a1b98f124d38f433a990684f08883609d19e",
+      "reason": "Ensure-State validate entrypoint writes explicit reports and exit codes."
+    },
+    {
+      "path": "scripts/validate/Test-ProjectConfig.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "bb3925e81c5bb9b064680d2185bb75c80c025622e970e05b253e7ae508737b5e",
+      "reason": "Project config validation now enforces Ensure-State manifest structure."
+    },
+    {
       "path": "tests/pester/BuildLockSchema.Tests.ps1",
       "category": "test",
       "required": true,
@@ -160,6 +237,41 @@
       "reason": "Issue 12 guardrail tests keep CI, docs, and safety boundaries wired."
     },
     {
+      "path": "tests/pester/EnsureStateSchema.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "ce1847e6e160b1c59fab1dd2cc05f12f27762284f4564bd952a83ce3afdb58c5",
+      "reason": "Ensure-State schema tests guard manifest structure, registry wiring, and build lock coverage."
+    },
+    {
+      "path": "tests/pester/EnsureStatePlan.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "4943c0da775cd3ead3f17ab5a57cddc93e23a7f4faae5ec22329915f2557bdf1",
+      "reason": "Ensure-State plan tests guard fixture-only convergence planning without mutation."
+    },
+    {
+      "path": "tests/pester/EnsureStateReport.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "87695178fa2d604816e75c661c1e01eda8e11ebdd00420e167369760f0ddfcc2",
+      "reason": "Ensure-State report tests guard summary counts, serialization, and exit-code behavior."
+    },
+    {
+      "path": "tests/pester/EnsureStateValidation.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "55a2298d554ec4b02fcb8bf88f77f407ed9544c239122688162538801ad35616",
+      "reason": "Ensure-State validation tests guard fixture-only behavior and failure classification."
+    },
+    {
+      "path": "tests/pester/Issue13EnsureState.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "ba08160019ab7f3999dbd6607b472c155b49d43ec7424ad65f6bb11865f2ac1b",
+      "reason": "Issue 13 guardrail tests keep docs, CI wiring, and non-mutation boundaries aligned."
+    },
+    {
       "path": "docs/28-issue11-capability-registry.md",
       "category": "doc",
       "required": true,
@@ -174,11 +286,18 @@
       "reason": "Build lock runbook documents report-only supply-chain validation."
     },
     {
+      "path": "docs/36-issue13-ensure-state.md",
+      "category": "doc",
+      "required": true,
+      "hash": "e4b592ffb0590b72ecb39e130a79d1129baa651d5e392b88245c4caa602733f0",
+      "reason": "Ensure-State runbook documents static convergence planning and PR Fast CI boundaries."
+    },
+    {
       "path": ".github/workflows/ci.yml",
       "category": "workflow",
       "required": true,
-      "hash": "7df3418296a0d3b7e39ddfa334e991a8d98edeef98b39e0cfe5d4ce46cbbd147",
-      "reason": "PR Fast CI wiring is a trusted guardrail for build lock tests."
+      "hash": "78482dda665ff0dc226e0973a6baf6c87192fa2930fce3a15053840393c37d76",
+      "reason": "PR Fast CI wiring is a trusted guardrail for build lock and ensure-state tests."
     }
   ],
   "watchGlobs": [

@@ -1,21 +1,28 @@
 {
   "$schema": "../schemas/services.schema.json",
+  "manifestVersion": 1,
   "services": [
     {
-      "name": "MySQL",
-      "displayName": "MySQL",
-      "install": "\"${ToolRoot}\\mysql\\bin\\mysqld.exe\" --install MySQL --defaults-file=\"${ToolRoot}\\mysql\\my.ini\"",
-      "start": "net start MySQL",
-      "stop": "net stop MySQL",
-      "delete": "sc delete MySQL"
+      "name": "Spooler",
+      "displayName": "Print Spooler",
+      "ensure": "running",
+      "startupType": "automatic",
+      "scope": "machine",
+      "changeMode": "planned",
+      "priority": 100,
+      "reason": "Fixture-only baseline entry for ensure-state convergence. PR Fast CI never mutates real services.",
+      "notes": "Report-only in static and fixture validation paths."
     },
     {
-      "name": "MongoDB",
-      "displayName": "MongoDB",
-      "install": "\"${ToolRoot}\\mongodb\\bin\\mongod.exe\" --config \"${ToolRoot}\\mongodb\\mongod.cfg\" --install",
-      "start": "net start MongoDB",
-      "stop": "net stop MongoDB",
-      "delete": "sc delete MongoDB"
+      "name": "BITS",
+      "displayName": "Background Intelligent Transfer Service",
+      "ensure": "manual",
+      "startupType": "unchanged",
+      "scope": "machine",
+      "changeMode": "manual",
+      "priority": 200,
+      "reason": "Manual-only fixture entry to keep service convergence in report mode.",
+      "notes": "Used for manual status coverage without service mutation."
     }
   ]
 }

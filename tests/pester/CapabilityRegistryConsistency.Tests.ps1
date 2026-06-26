@@ -61,9 +61,9 @@ Describe "Capability registry consistency" {
         }
     }
 
-    It "reports orphan manifests without blocking non-strict consistency" {
+    It "registers software manifest to issue 13 and keeps non-strict orphan checks non-blocking" {
         $orphans = @(Get-KitCapabilityOrphanManifests -RepoRoot $script:RepoRoot -Registry $script:Registry)
-        Assert-KitEqual ($orphans -contains "manifests/software.json") $true
+        Assert-KitEqual ($orphans -contains "manifests/software.json") $false
 
         $results = @(Test-KitCapabilityConsistency -Registry $script:Registry -RepoRoot $script:RepoRoot)
         Assert-KitEqual @($results | Where-Object { $_.id -eq "orphan-manifest-check" }).Count 0

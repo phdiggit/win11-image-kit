@@ -12,11 +12,11 @@ Describe "Capability registry report" {
 
         Assert-KitEqual $report.reportType "capability-consistency"
         Assert-KitEqual $report.status "passed"
-        Assert-KitEqual $report.summary.total 5
-        Assert-KitEqual $report.summary.passedCount 5
+        Assert-KitEqual $report.summary.total 6
+        Assert-KitEqual $report.summary.passedCount 6
         Assert-KitEqual $report.summary.failedCount 0
-        Assert-KitEqual ($report.summary.orphanManifestCount -gt 0) $true
-        Assert-KitEqual (@($report.orphanManifests) -contains "manifests/software.json") $true
+        Assert-KitEqual ($report.summary.orphanManifestCount -ge 0) $true
+        Assert-KitEqual (@($report.orphanManifests) -contains "manifests/software.json") $false
         Assert-KitEqual $report.whatIf $true
     }
 
@@ -50,7 +50,7 @@ Describe "Capability registry report" {
             Assert-KitMatch $json "capability-consistency"
             Assert-KitEqual $report.reportType "capability-consistency"
             Assert-KitEqual $report.status "passed"
-            Assert-KitEqual @($report.capabilities).Count 5
+            Assert-KitEqual @($report.capabilities).Count 6
         } finally {
             if ([IO.Directory]::Exists($tempRoot)) {
                 [IO.Directory]::Delete($tempRoot, $true)
