@@ -296,15 +296,15 @@
       "path": ".github/workflows/ci.yml",
       "category": "workflow",
       "required": true,
-      "hash": "b97096a2ef96877d30cc5d97e56697b088c0b709c37626351db341cbf60067f1",
+      "hash": "190abeb0a4927a03ac21a9925d6d8e7791855990537476faefdc5501814f109b",
       "reason": "PR Fast CI wires Issue 14 close-prep and main-evidence guardrails while preserving the Validate / Full Validate split."
     },
     {
       "path": "README.md",
       "category": "doc",
       "required": true,
-      "hash": "14e52f3df1844c536d8fafcb4c8fd38e7086117a9b6f78cd7e5e73911a077923",
-      "reason": "README quick entry links Issue 14 acceptance, close-preparation candidate, and main-evidence scaffold."
+      "hash": "0012611776975722cd920da75237bcbf587bbf8f3f0cdbc1de4d09ba1f44206a",
+      "reason": "README quick entry links Issue 14 accepted readiness and main-validation evidence."
     },
     {
       "path": "docs/37-issue13-ensure-state-acceptance.md",
@@ -359,8 +359,8 @@
       "path": "docs/40-issue14-quality-gates.md",
       "category": "doc",
       "required": true,
-      "hash": "b6b549f1925d9457789fcba65f3235b6435ccf583b7c32215002e41081b3e093",
-      "reason": "Issue 14 quality gates runbook links acceptance, close-preparation candidate, and pending main evidence."
+      "hash": "c3e50a9360062877c3346e086b19730ae2536d6bd751477e9440ffbf62979451",
+      "reason": "Issue 14 quality gates runbook records accepted readiness and verified main evidence."
     },
     {
       "path": "tests/pester/Issue14QualityGates.Tests.ps1",
@@ -443,43 +443,43 @@
       "path": "tests/pester/Issue14QualityGateAcceptance.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "d1f719693c442783c1029d655b4198aa40ebca812131bd5605c89a4e0a04b2db",
-      "reason": "Issue 14 acceptance tests guard in-acceptance status, docs links, CI wiring, Build Lock, and report-only scope."
+      "hash": "1c69c3766a0f66a8b712a25282bdc977178a6e4ee48a7a64d242c933ba447c5b",
+      "reason": "Issue 14 acceptance tests guard pending and ready status without unsafe claims."
     },
     {
       "path": "docs/41-issue14-quality-gates-acceptance.md",
       "category": "doc",
       "required": true,
-      "hash": "176967f59d84619b207a4f2596954e3a26b203249f5546e33d170bc5e3035aad",
-      "reason": "Issue 14 acceptance hardening keeps runner/report scope and pending main-evidence boundaries explicit."
+      "hash": "a5adfb1a8dfb925f1ff0c6c0c41807fbaa532caf87f673754c059ca980d7c228",
+      "reason": "Issue 14 acceptance records accepted-ready-for-manual-closure status after main evidence backfill."
     },
     {
       "path": "docs/42-issue14-close-preparation.md",
       "category": "doc",
       "required": true,
-      "hash": "75d0f4c1415d275781c574e81d27471afcdf03bc1711faa9fe94d3d618711e1b",
-      "reason": "Issue 14 close-preparation candidate documents manual closure boundaries without final readiness."
+      "hash": "8a97e141cb2f1ae61708ff7c52bf3affc4d19da33a06acca3498b27ff92e4f50",
+      "reason": "Issue 14 close-preparation records ready-for-manual-closure after verified main evidence."
     },
     {
       "path": "docs/43-issue14-main-validation-evidence.md",
       "category": "doc",
       "required": true,
-      "hash": "a2dbacf2c0badbeda6f6feb46d44682d0e4ada73f94fa49586e728b776988524",
-      "reason": "Issue 14 main-validation evidence scaffold keeps all main/workflow fields pending."
+      "hash": "3d133b8264c81b6747ca3ff2e7d95a1939f7c9b69238d012b7f16d5343ee93c2",
+      "reason": "Issue 14 main-validation evidence records post-PR 73 Full Validate success."
     },
     {
       "path": "tests/pester/Issue14ClosePrep.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "ee0ddf173ff8843931e03ac4579a29e85d86510612ff22d67f7622e96843b1b2",
-      "reason": "Issue 14 close-preparation tests guard candidate semantics and safe validation policy."
+      "hash": "02f429a0628cdfc32f2afa04c4a719679caed296cf8931db9f93ae682a64d58c",
+      "reason": "Issue 14 close-preparation tests guard candidate and ready semantics."
     },
     {
       "path": "tests/pester/Issue14MainValidationEvidence.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "1deb3af71cf1e2d288ab826311c9370cd06f9d5d9150807c644066acd3298c43",
-      "reason": "Issue 14 main-evidence tests keep pending evidence honest and define ready-state rules."
+      "hash": "ce6ee623fad75317c4ba6c4f8087452bfcbe13615700cea8fd9eaa25d6966f61",
+      "reason": "Issue 14 main-evidence tests validate pending and ready evidence details."
     }
   ],
   "watchGlobs": [

@@ -4,12 +4,13 @@ Describe "Issue 14 close preparation" {
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
     }
 
-    It "records candidate status and manual closure sections" {
+    It "records candidate or ready status and manual closure sections" {
         $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\42-issue14-close-preparation.md") -Raw -Encoding UTF8
+        $statusMatch = [regex]::Match($doc, '(?m)^Status: `([^`]+)`')
 
-        Assert-KitMatch $doc ([regex]::Escape('Status: `ready-for-manual-closure-candidate`'))
+        Assert-KitEqual $statusMatch.Success $true
+        Assert-KitEqual (@("ready-for-manual-closure-candidate", "ready-for-manual-closure") -contains $statusMatch.Groups[1].Value) $true
         foreach ($term in @(
-            "## Final Scope Candidate",
             "## Evidence Chain",
             "## Validation Policy",
             "## Manual Closure Checklist",
@@ -19,23 +20,38 @@ Describe "Issue 14 close preparation" {
         )) {
             Assert-KitMatch $doc ([regex]::Escape($term))
         }
+
+        Assert-KitMatch $doc "## Final Scope"
     }
 
-    It "keeps closure as a candidate while main evidence is pending" {
+    It "keeps closure state aligned with main evidence" {
         $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\42-issue14-close-preparation.md") -Raw -Encoding UTF8
+        $status = ([regex]::Match($doc, '(?m)^Status: `([^`]+)`')).Groups[1].Value
 
-        foreach ($term in @(
-            'docs/43 is `pending-main-validation`',
-            "only a manual-closure candidate",
-            "PR Fast CI is not main/workflow evidence",
-            "Full Validate on pull requests remains skipped",
-            "main/workflow validation evidence must come from a later"
-        )) {
-            Assert-KitMatch $doc ([regex]::Escape($term))
+        if ($status -eq "ready-for-manual-closure-candidate") {
+            foreach ($term in @(
+                'docs/43 is `pending-main-validation`',
+                "only a manual-closure candidate",
+                "PR Fast CI is not main/workflow evidence",
+                "Full Validate on pull requests remains skipped",
+                "main/workflow validation evidence must come from a later"
+            )) {
+                Assert-KitMatch $doc ([regex]::Escape($term))
+            }
+
+            Assert-KitNotMatch $doc '(?m)^Status: `ready-for-manual-closure`'
+        } else {
+            foreach ($term in @(
+                'docs/43 records verified `main` push Full Validate evidence',
+                'docs/43 records verified `main` push or `workflow_dispatch` evidence',
+                "PR Fast CI is still not main/workflow evidence",
+                "does not automatically close Issue #14"
+            )) {
+                Assert-KitMatch $doc ([regex]::Escape($term))
+            }
         }
 
         Assert-KitNotMatch $doc "(?i)\b(close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved)\s+#14\b"
-        Assert-KitNotMatch $doc '(?m)^Status: `ready-for-manual-closure`'
     }
 
     It "does not claim real smoke or true execution success" {

@@ -109,15 +109,15 @@ The runner is not a build system and not a real execution engine. It does not ru
 
 ## Acceptance Scaffold Link
 
-Issue #14 acceptance tracking starts in [Quality Gates Acceptance](41-issue14-quality-gates-acceptance.md). That document is intentionally `in-acceptance`; it is not close-preparation or main-validation evidence.
+Issue #14 acceptance tracking is recorded in [Quality Gates Acceptance](41-issue14-quality-gates-acceptance.md). That document is now `accepted-ready-for-manual-closure` based on the main/workflow evidence in docs/43.
 
 ## Acceptance / Close Prep / Main Evidence
 
 Issue #14 close preparation is split across three documents:
 
-- [Acceptance](41-issue14-quality-gates-acceptance.md) remains `in-acceptance` until main/workflow validation evidence exists.
-- [Close Preparation](42-issue14-close-preparation.md) is a `ready-for-manual-closure-candidate` document only.
-- [Main Validation Evidence](43-issue14-main-validation-evidence.md) remains `pending-main-validation` until a later evidence backfill task records verified `main` push or `workflow_dispatch` Full Validate evidence.
+- [Acceptance](41-issue14-quality-gates-acceptance.md) is `accepted-ready-for-manual-closure`.
+- [Close Preparation](42-issue14-close-preparation.md) is `ready-for-manual-closure`.
+- [Main Validation Evidence](43-issue14-main-validation-evidence.md) is `ready-for-manual-closure` with verified `main` push Full Validate evidence.
 
 PR Fast CI is useful review evidence, but it is not a substitute for main/workflow evidence. Full Validate being skipped on pull requests remains expected.
 

@@ -4,11 +4,13 @@ Describe "Issue 14 quality gate acceptance" {
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
     }
 
-    It "documents acceptance without close-prep or main-evidence claims" {
+    It "documents acceptance state without unsafe claims" {
         $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\41-issue14-quality-gates-acceptance.md") -Raw -Encoding UTF8
+        $statusMatch = [regex]::Match($doc, '(?m)^Status: `([^`]+)`')
 
+        Assert-KitEqual $statusMatch.Success $true
+        Assert-KitEqual (@("in-acceptance", "accepted-ready-for-manual-closure") -contains $statusMatch.Groups[1].Value) $true
         foreach ($term in @(
-            'Status: `in-acceptance`',
             "## Acceptance Matrix",
             "## Acceptance Hardening Status",
             "## Evidence Chain",
@@ -34,9 +36,15 @@ Describe "Issue 14 quality gate acceptance" {
         }
 
         Assert-KitNotMatch $doc "(?i)\b(close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved)\s+#14\b"
-        Assert-KitNotMatch $doc "main validation evidence is complete"
-        Assert-KitNotMatch $doc "accepted-ready-for-manual-closure"
         Assert-KitNotMatch $doc '(?m)^Status: `ready-for-manual-closure`'
+        Assert-KitNotMatch $doc "(?i)real VM/admin smoke.*(success|passed|completed)"
+
+        if ($statusMatch.Groups[1].Value -eq "accepted-ready-for-manual-closure") {
+            Assert-KitMatch $doc ([regex]::Escape('records verified `main` push Full Validate success'))
+            Assert-KitMatch $doc ([regex]::Escape('Close Preparation](42-issue14-close-preparation.md) is also `ready-for-manual-closure`'))
+        } else {
+            Assert-KitMatch $doc "pending-main-validation"
+        }
     }
 
     It "wires runner and acceptance tests into CI" {
