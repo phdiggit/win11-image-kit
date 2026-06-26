@@ -9,7 +9,7 @@
       "path": "manifests/capability-registry.json",
       "category": "manifest",
       "required": true,
-      "hash": "286074448fb6820c87c263f7a8dd36f740da137f36347300968b6590e6a18d9f",
+      "hash": "cfd7dd56b2844601bbaf532f2dd2eebf40621ad3fb81f48dff2b2f5e4cb390cd",
       "reason": "Capability registry is a supply-chain control plane input."
     },
     {
@@ -128,77 +128,77 @@
       "path": "manifests/software.json",
       "category": "manifest",
       "required": true,
-      "hash": "100b276d0247467b3945d3e82e73d76103e8272c4431cf814ac79cb10cbe9c2f",
+      "hash": "a7e21c5e22935ea0846e39af1a4628b1aadb2dc17774bd251fce55ee736dc8c7",
       "reason": "Ensure-State software manifest is a trusted desired-state ledger."
     },
     {
       "path": "schemas/software.schema.json",
       "category": "schema",
       "required": true,
-      "hash": "8ec9ecc266537e582a4c0a3cbe720def6a782744993ef871bd97a6a76e763c97",
+      "hash": "600f699aa98625366cb68321d150c19caa858dc4f0ee2b1fa490dcb3cf7e1f26",
       "reason": "Ensure-State software schema constrains desired-state software entries."
     },
     {
       "path": "manifests/services.json",
       "category": "manifest",
       "required": true,
-      "hash": "b5f5012a784cc25b72e4b0a9af24987f8d3b372d1d13e2bb944a8cd323477d7b",
+      "hash": "18e63b9522540c4da7b4aad05322ce261be015fe7b37a4252532269fc02e773c",
       "reason": "Ensure-State services manifest is a trusted desired-state ledger."
     },
     {
       "path": "schemas/services.schema.json",
       "category": "schema",
       "required": true,
-      "hash": "02f80aafa6e9e11f1cc388d91fa52452e4e39c6e24a26e331dbaab594f8e53d5",
+      "hash": "bc4215b65adab2594c89106e6506a4b0399f503534cebd75a157d8bc532fb687",
       "reason": "Ensure-State service schema constrains desired-state service entries."
     },
     {
       "path": "scripts/common/Resolve-KitSoftwareState.ps1",
       "category": "script",
       "required": true,
-      "hash": "0cd56d2d4e84ef90af5cba4a706b6785f8f27605e3574c21f5b7ab497db121dc",
+      "hash": "7294922ab51731e4e489ba890ca1e8a6eb33f1199a4e0719fb5b4b2d30c100ac",
       "reason": "Ensure-State software resolver converts fixture or current data into reviewable state."
     },
     {
       "path": "scripts/common/Resolve-KitServiceState.ps1",
       "category": "script",
       "required": true,
-      "hash": "8022c12639f0ce1305be1c657310d85ab8e3eda487beffa1d3a54fa39f8d288f",
+      "hash": "60892a425ffc0c246815da61802f5a68a2ce08a78f8c1261bad5ef83e4857b81",
       "reason": "Ensure-State service resolver converts fixture or current data into reviewable state."
     },
     {
       "path": "scripts/common/New-KitEnsureStatePlan.ps1",
       "category": "script",
       "required": true,
-      "hash": "444759c75cc3514131fa14f6183c82a5d6a1de013833d9d391c60e2238cffc97",
+      "hash": "3b575c8ee66ba7f6d73bcb5ec425683026c023e1d61ceef0521b60cc1e5d22a2",
       "reason": "Ensure-State plan generation is trusted CI evidence for convergence review."
     },
     {
       "path": "scripts/common/Test-KitEnsureState.ps1",
       "category": "script",
       "required": true,
-      "hash": "a5857ab12367af8bb35bcdf2f316e005ccd48b07cddbf117dbf671e1bee08980",
+      "hash": "f5071bc6825beed29194a1fba7e10c9dad00eca9739ef2000feb2c3e28c898b8",
       "reason": "Ensure-State validation maps plan items into passed, manual, or failed evidence."
     },
     {
       "path": "scripts/common/New-KitEnsureStateReport.ps1",
       "category": "script",
       "required": true,
-      "hash": "c6800079cc680231743aa1e61e198a2136420bfb78413b10907bc08e4cb3efce",
+      "hash": "e213cb71b5c152dd589783afbac0c53ccb033ce0a92d0859ac8907b95c180d0a",
       "reason": "Ensure-State report generation produces explicit JSON review evidence."
     },
     {
       "path": "scripts/validate/Test-EnsureState.ps1",
       "category": "script",
       "required": true,
-      "hash": "cd043a7e12703d3f44fa6b0941b9a1b98f124d38f433a990684f08883609d19e",
+      "hash": "2b30922fc5da48eb05f133ae60542b936dd0f27e0fef189ceb75c2162c955a8f",
       "reason": "Ensure-State validate entrypoint writes explicit reports and exit codes."
     },
     {
       "path": "scripts/validate/Test-ProjectConfig.ps1",
       "category": "script",
       "required": true,
-      "hash": "bb3925e81c5bb9b064680d2185bb75c80c025622e970e05b253e7ae508737b5e",
+      "hash": "f397dead13215b94025527be5e9367a7ba2d7c2f116f4e725bea7d0d81f3e694",
       "reason": "Project config validation now enforces Ensure-State manifest structure."
     },
     {
@@ -240,35 +240,35 @@
       "path": "tests/pester/EnsureStateSchema.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "ce1847e6e160b1c59fab1dd2cc05f12f27762284f4564bd952a83ce3afdb58c5",
+      "hash": "a79491045bd03daa32a39eb2debff4880da044b2701401104d2c06acf2718ab5",
       "reason": "Ensure-State schema tests guard manifest structure, registry wiring, and build lock coverage."
     },
     {
       "path": "tests/pester/EnsureStatePlan.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "4943c0da775cd3ead3f17ab5a57cddc93e23a7f4faae5ec22329915f2557bdf1",
+      "hash": "520efbbe2969788957c1b0120730d23c99557100d8bb2889d26454aaa4dfb7be",
       "reason": "Ensure-State plan tests guard fixture-only convergence planning without mutation."
     },
     {
       "path": "tests/pester/EnsureStateReport.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "87695178fa2d604816e75c661c1e01eda8e11ebdd00420e167369760f0ddfcc2",
+      "hash": "860dc04bc772f95ed1bc8f7466a69fabb8e73eb02126ab99db60c7ffd9e6f299",
       "reason": "Ensure-State report tests guard summary counts, serialization, and exit-code behavior."
     },
     {
       "path": "tests/pester/EnsureStateValidation.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "55a2298d554ec4b02fcb8bf88f77f407ed9544c239122688162538801ad35616",
+      "hash": "5f0f5da49d7bc8379eab1b1b8e534d877f3e8b288382e4b7650c67742fcc3edd",
       "reason": "Ensure-State validation tests guard fixture-only behavior and failure classification."
     },
     {
       "path": "tests/pester/Issue13EnsureState.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "ba08160019ab7f3999dbd6607b472c155b49d43ec7424ad65f6bb11865f2ac1b",
+      "hash": "2f9bf5560a46b9228623270f42d65d0c89bed83d947539096d82852ffda14d17",
       "reason": "Issue 13 guardrail tests keep docs, CI wiring, and non-mutation boundaries aligned."
     },
     {
@@ -289,15 +289,64 @@
       "path": "docs/36-issue13-ensure-state.md",
       "category": "doc",
       "required": true,
-      "hash": "e4b592ffb0590b72ecb39e130a79d1129baa651d5e392b88245c4caa602733f0",
+      "hash": "3d5f810e1f78f6402c47fdd845d7db2b7e2bb5628bd6118d405af50b6ef1b9ae",
       "reason": "Ensure-State runbook documents static convergence planning and PR Fast CI boundaries."
     },
     {
       "path": ".github/workflows/ci.yml",
       "category": "workflow",
       "required": true,
-      "hash": "78482dda665ff0dc226e0973a6baf6c87192fa2930fce3a15053840393c37d76",
+      "hash": "46650589a190d20c1841da2efdeb54e467a9fd8c072d16504150605315caf3e1",
       "reason": "PR Fast CI wiring is a trusted guardrail for build lock and ensure-state tests."
+    },
+    {
+      "path": "README.md",
+      "category": "doc",
+      "required": true,
+      "hash": "1e70a9881a22e86d9d2708802b08ca756bbbab22e336a09a175501744b97b114",
+      "reason": "README quick entry links Issue 13 acceptance, close-preparation, and main-evidence docs."
+    },
+    {
+      "path": "docs/37-issue13-ensure-state-acceptance.md",
+      "category": "doc",
+      "required": true,
+      "hash": "1f8f0539e33650c67137de8c42620117cd778c52d5a8b16238a5b6b550ef96b5",
+      "reason": "Issue 13 acceptance matrix documents plan-only Ensure-State coverage and CI boundaries."
+    },
+    {
+      "path": "docs/38-issue13-close-preparation.md",
+      "category": "doc",
+      "required": true,
+      "hash": "fa9af9d006660c314a86cea1919d597b7af35cd1f8ff7baf75b949df23431142",
+      "reason": "Issue 13 close-preparation checklist documents manual closure boundaries."
+    },
+    {
+      "path": "docs/39-issue13-main-validation-evidence.md",
+      "category": "doc",
+      "required": true,
+      "hash": "5b29a3a91067f15f88a5444f1383ec082fd6703cadeb28a07a6109fa067a8f7c",
+      "reason": "Issue 13 main validation evidence scaffold prevents PR Fast CI evidence substitution."
+    },
+    {
+      "path": "tests/pester/Issue13EnsureStateAcceptance.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "7132695ccbbbd8cc489fd1534aaed6fe990e4af18ff3944e3cb97003b2d230bf",
+      "reason": "Issue 13 acceptance guardrails cover schema, safety, report contract, registry, Build Lock, docs, and CI wiring."
+    },
+    {
+      "path": "tests/pester/Issue13ClosePrep.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "3dcc230b9a05b2e458dfac81ceb54486a862e197d146df270bb0934f350846d3",
+      "reason": "Issue 13 close-preparation tests guard manual closure semantics and safe validation policy."
+    },
+    {
+      "path": "tests/pester/Issue13MainValidationEvidence.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "e7c6c38f6e2e153aa531332c9b6907e55365f708cc69735a96efc596cf9b3ed7",
+      "reason": "Issue 13 main-evidence tests keep pending evidence honest and define ready-state rules."
     }
   ],
   "watchGlobs": [
@@ -309,7 +358,9 @@
     "tests/pester/*BuildLock*.Tests.ps1",
     "docs/28-issue11-capability-registry.md",
     "docs/32-issue12-build-lock.md",
-    ".github/workflows/ci.yml"
+    ".github/workflows/ci.yml",
+    "tests/pester/*EnsureState*.Tests.ps1",
+    "docs/*issue13*.md"
   ],
   "policy": {
     "missingRequired": "fail",
