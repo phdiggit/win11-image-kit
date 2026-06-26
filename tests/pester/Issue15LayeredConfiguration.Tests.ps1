@@ -8,7 +8,6 @@ Describe "Issue 15 layered configuration intake" {
         $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\44-issue15-layered-configuration.md") -Raw -Encoding UTF8
 
         foreach ($term in @(
-            'Status: `in-progress`',
             "GitHub Issue #15",
             "Roadmap Issue #19",
             "Profile",
@@ -26,6 +25,8 @@ Describe "Issue 15 layered configuration intake" {
         )) {
             Assert-KitMatch $doc ([regex]::Escape($term))
         }
+
+        Assert-KitMatch $doc 'Status:\s*`(in-progress|accepted-ready-for-manual-closure)`'
 
         foreach ($term in @(
             "Windows image build",

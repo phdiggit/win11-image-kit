@@ -1,6 +1,6 @@
 # Issue #15 分层配置机制
 
-Status: `in-progress`
+Status: `accepted-ready-for-manual-closure`
 
 ## Source
 
@@ -105,10 +105,12 @@ repo-default < profile < hardware < local-private < cli-explicit
 - [x] 新增 Pester guardrails 覆盖文档、schema、报告、CI、Build Lock、Quality Gates 和安全边界。
 - [x] 本机覆盖文件加入 `.gitignore`。
 - [x] Phase 2 增加 CLI explicit path override、all stacks validation、local override 行为和 token/path safety 测试。
-- [x] Phase 3 增加 Show-CustomizationScope opt-in consumer integration、close-prep candidate 和 pending main evidence scaffold。
+- [x] Phase 3 增加 Show-CustomizationScope opt-in consumer integration、close-prep candidate 和 main evidence backfill。
 - [ ] 后续任务继续接入更多 manifest。
 
 ## Related Documents
+
+Issue #15 main/workflow validation evidence has been backfilled in [Issue #15 Main Validation Evidence](47-issue15-main-validation-evidence.md). Maintainer manual closure remains separate from this document status.
 
 - [Roadmap Issue #19](https://github.com/phdiggit/win11-image-kit/issues/19)
 - [Issue #15](https://github.com/phdiggit/win11-image-kit/issues/15)
