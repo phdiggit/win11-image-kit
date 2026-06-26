@@ -7,15 +7,17 @@ Describe "Evidence chain schema and manifest" {
     It "keeps evidence chain JSON parseable and schemas closed" {
         foreach ($relativePath in @(
             "manifests\evidence-chain.json",
+            "manifests\evidence-report-inputs.json",
             "schemas\evidence-chain.schema.json",
-            "schemas\evidence-chain-report.schema.json"
+            "schemas\evidence-chain-report.schema.json",
+            "schemas\evidence-report-inputs.schema.json"
         )) {
             Assert-KitDoesNotThrow {
                 Get-Content -LiteralPath (Join-Path $script:RepoRoot $relativePath) -Raw -Encoding UTF8 | ConvertFrom-Json | Out-Null
             }
         }
 
-        foreach ($schemaPath in @("schemas\evidence-chain.schema.json", "schemas\evidence-chain-report.schema.json")) {
+        foreach ($schemaPath in @("schemas\evidence-chain.schema.json", "schemas\evidence-chain-report.schema.json", "schemas\evidence-report-inputs.schema.json")) {
             $schemaText = Get-Content -LiteralPath (Join-Path $script:RepoRoot $schemaPath) -Raw -Encoding UTF8
             $schema = $schemaText | ConvertFrom-Json
             Assert-KitEqual $schema.additionalProperties $false

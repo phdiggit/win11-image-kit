@@ -13,6 +13,13 @@ Describe "Evidence chain producer normalization" {
             Assert-KitEqual $item.manual $false
             Assert-KitEqual $item.runId $report.runId
         }
+
+        Assert-KitEqual $report.producerNormalization.normalizedCount 5
+        Assert-KitEqual $report.producerNormalization.missingRequiredCount 0
+        Assert-KitEqual $report.producerNormalization.reportTypeMismatchCount 0
+        Assert-KitEqual $report.producerNormalization.disallowedManualCount 0
+        Assert-KitEqual $report.producerNormalization.disallowedNotCapturedCount 0
+        Assert-KitEqual $report.producerNormalization.inputPolicyViolationCount 0
     }
 
     It "keeps lifecycle placeholders out of passed counts" {

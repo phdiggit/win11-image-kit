@@ -36,6 +36,7 @@ Describe "Evidence chain redaction policy" {
                 "-NoProfile",
                 "-ExecutionPolicy", "Bypass",
                 "-File", (Join-Path $script:RepoRoot "scripts\validate\Test-EvidenceChain.ps1"),
+                "-InputManifestPath", "tests/fixtures/evidence-chain/no-such-input-index.json",
                 "-InputDirectory", $tempRoot
             ) -NoNewWindow -Wait -PassThru
 

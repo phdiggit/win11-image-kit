@@ -2,6 +2,8 @@
 
 . "$PSScriptRoot\New-KitEvidenceArtifactIndex.ps1"
 . "$PSScriptRoot\Test-KitEvidenceRedaction.ps1"
+. "$PSScriptRoot\Read-KitEvidenceReportInputs.ps1"
+. "$PSScriptRoot\ConvertTo-KitEvidenceProducerItem.ps1"
 
 function Get-KitEvidenceValue {
     param(
@@ -292,6 +294,8 @@ function New-KitEvidenceChainReport {
     param(
         [string]$ManifestPath = "manifests/evidence-chain.json",
 
+        [string]$InputManifestPath = "manifests/evidence-report-inputs.json",
+
         [string]$InputDirectory = "tests/fixtures/evidence-chain/sample-report-inputs",
 
         [ValidateSet("fixture", "local", "ci", "main", "workflow_dispatch", "manual")]
@@ -320,7 +324,6 @@ function New-KitEvidenceChainReport {
 
     $resolvedManifestPath = Resolve-KitEvidenceRepoPath -RepoRoot $RepoRoot -Path $ManifestPath
     $manifest = Read-KitEvidenceJsonFile -Path $resolvedManifestPath
-    $resolvedInputDirectory = Resolve-KitEvidenceRepoPath -RepoRoot $RepoRoot -Path $InputDirectory
     $generatedAt = (Get-Date).ToUniversalTime()
     if ([string]::IsNullOrWhiteSpace($RunId)) {
         $RunId = New-KitEvidenceRunId -GeneratedAt $generatedAt -SourceSha $SourceSha
@@ -328,19 +331,44 @@ function New-KitEvidenceChainReport {
 
     $defaultSource = New-KitEvidenceSource -SourceKind $SourceKind -SourceSha $SourceSha -WorkflowRunUrl $WorkflowRunUrl -JobUrl $JobUrl
     $evidenceItems = @()
-    $inputReports = @()
+    $inputReadResult = Read-KitEvidenceReportInputs -RepoRoot $RepoRoot -Manifest $manifest -InputManifestPath $InputManifestPath -InputDirectory $InputDirectory
+    $inputRecordsByProducer = @{}
+    foreach ($inputRecord in @($inputReadResult.inputs)) {
+        if (-not $inputRecordsByProducer.ContainsKey([string]$inputRecord.producerId)) {
+            $inputRecordsByProducer[[string]$inputRecord.producerId] = $inputRecord
+        }
+    }
+
+    $normalizationResults = @()
 
     foreach ($producer in @($manifest.producers)) {
-        $inputReport = $null
-        if (Test-Path -LiteralPath $resolvedInputDirectory) {
-            $candidatePath = Join-Path -Path $resolvedInputDirectory -ChildPath ("{0}.json" -f $producer.id)
-            if (Test-Path -LiteralPath $candidatePath) {
-                $inputReport = Read-KitEvidenceJsonFile -Path $candidatePath
-                $inputReports += $inputReport
+        $inputRecord = $null
+        if ($inputRecordsByProducer.ContainsKey([string]$producer.id)) {
+            $inputRecord = $inputRecordsByProducer[[string]$producer.id]
+        } elseif ([bool]$producer.required -and [string]$producer.mode -ne "manual") {
+            $inputRecord = [pscustomobject][ordered]@{
+                producerId = [string]$producer.id
+                path = ""
+                expectedReportType = [string]$producer.reportType
+                required = $true
+                allowMissing = $false
+                allowManual = $false
+                allowNotCaptured = $false
+                exists = $false
+                report = $null
+                errors = @()
             }
         }
 
-        $evidenceItems += New-KitEvidenceItem -Producer $producer -InputReport $inputReport -DefaultSource $defaultSource -GeneratedAt $generatedAt -RunId $RunId -UpstreamRunId $RunId
+        $normalization = ConvertTo-KitEvidenceProducerItem `
+            -Producer $producer `
+            -InputRecord $inputRecord `
+            -DefaultSource $defaultSource `
+            -GeneratedAt $generatedAt `
+            -RunId $RunId `
+            -UpstreamRunId $RunId
+        $normalizationResults += $normalization
+        $evidenceItems += $normalization.item
     }
 
     $stageSummaries = @()
@@ -369,8 +397,10 @@ function New-KitEvidenceChainReport {
     }
 
     $redactionResults = @()
-    foreach ($inputReport in @($inputReports)) {
-        $redactionResults += Test-KitEvidenceRedaction -InputObject $inputReport -ForbiddenFieldNames $forbiddenFieldNames -RedactedValue $redactedValue
+    foreach ($inputRecord in @($inputReadResult.inputs)) {
+        if ($null -ne $inputRecord.report) {
+            $redactionResults += Test-KitEvidenceRedaction -InputObject $inputRecord.report -ForbiddenFieldNames $forbiddenFieldNames -RedactedValue $redactedValue
+        }
     }
     $redactionResults += Test-KitEvidenceRedaction -InputObject $artifactIndex -ForbiddenFieldNames $forbiddenFieldNames -RedactedValue $redactedValue
     $artifactRedactedCount = @($artifactIndex | Where-Object { $_.redacted }).Count
@@ -388,6 +418,7 @@ function New-KitEvidenceChainReport {
         repository = $Repository
         chainId = [string]$manifest.chainId
         runId = $RunId
+        inputSetId = [string]$inputReadResult.inputSetId
         source = $defaultSource
         status = $status
         summary = [pscustomobject][ordered]@{
@@ -401,6 +432,29 @@ function New-KitEvidenceChainReport {
         }
         stages = @($stageSummaries)
         evidence = @($evidenceItems)
+        inputReports = @($inputReadResult.inputs | ForEach-Object {
+            [pscustomobject][ordered]@{
+                producerId = [string]$_.producerId
+                path = [string]$_.path
+                expectedReportType = [string]$_.expectedReportType
+                required = [bool]$_.required
+                allowMissing = [bool]$_.allowMissing
+                allowManual = [bool]$_.allowManual
+                allowNotCaptured = [bool]$_.allowNotCaptured
+                exists = [bool]$_.exists
+                reportType = if ($null -ne $_.report) { [string](Get-KitEvidenceValue -InputObject $_.report -Name "reportType" -DefaultValue "") } else { "" }
+                status = if ($null -ne $_.report) { [string](Get-KitEvidenceValue -InputObject $_.report -Name "status" -DefaultValue "") } else { "missing" }
+            }
+        })
+        producerNormalization = [pscustomobject][ordered]@{
+            normalizedCount = [int](@($normalizationResults | Measure-Object -Property normalizedCount -Sum).Sum)
+            missingRequiredCount = [int](@($normalizationResults | Measure-Object -Property missingRequiredCount -Sum).Sum)
+            reportTypeMismatchCount = [int](@($normalizationResults | Measure-Object -Property reportTypeMismatchCount -Sum).Sum)
+            disallowedManualCount = [int](@($normalizationResults | Measure-Object -Property disallowedManualCount -Sum).Sum)
+            disallowedNotCapturedCount = [int](@($normalizationResults | Measure-Object -Property disallowedNotCapturedCount -Sum).Sum)
+            inputPolicyViolationCount = [int](@($normalizationResults | Measure-Object -Property inputPolicyViolationCount -Sum).Sum) + [int]$inputReadResult.unmatchedInputCount
+            unmatchedInputCount = [int]$inputReadResult.unmatchedInputCount
+        }
         lifecycle = New-KitEvidenceLifecycle -RunId $RunId
         stageLinks = @(New-KitEvidenceStageLinks -RunId $RunId -UpstreamRunId $UpstreamRunId)
         artifactIndex = @($artifactIndex)

@@ -1,6 +1,7 @@
 [CmdletBinding()]
 param(
     [string]$ManifestPath = "manifests/evidence-chain.json",
+    [string]$InputManifestPath = "manifests/evidence-report-inputs.json",
     [string]$InputDirectory = "tests/fixtures/evidence-chain/sample-report-inputs",
     [ValidateSet("fixture", "local", "ci", "main", "workflow_dispatch", "manual")]
     [string]$SourceKind = "fixture",
@@ -18,6 +19,7 @@ $ErrorActionPreference = "Stop"
 $repoRoot = (Resolve-Path -LiteralPath "$PSScriptRoot\..\..").Path
 $report = New-KitEvidenceChainReport `
     -ManifestPath $ManifestPath `
+    -InputManifestPath $InputManifestPath `
     -InputDirectory $InputDirectory `
     -SourceKind $SourceKind `
     -SourceSha $SourceSha `
@@ -31,6 +33,7 @@ $report = New-KitEvidenceChainReport `
 Write-Host ("Evidence chain: {0}" -f $report.chainId)
 Write-Host ("Status: {0}" -f $report.status)
 Write-Host ("Run ID: {0}" -f $report.runId)
+Write-Host ("Input set: {0}" -f $report.inputSetId)
 if ($report.PSObject.Properties.Name -contains "upstreamRunId") {
     Write-Host ("Upstream Run ID: {0}" -f $report.upstreamRunId)
 }
@@ -44,6 +47,14 @@ Write-Host ("Summary: stages={0}; producers={1}; passed={2}; failed={3}; manual=
     $report.summary.notCapturedCount, `
     $report.summary.artifactCount)
 Write-Host ("Redactions: redacted={0}; blocked={1}" -f $report.redactions.redactedCount, $report.redactions.blockedCount)
+Write-Host ("Producer normalization: normalized={0}; missing={1}; mismatch={2}; disallowedManual={3}; disallowedNotCaptured={4}; inputPolicy={5}" -f `
+    $report.producerNormalization.normalizedCount, `
+    $report.producerNormalization.missingRequiredCount, `
+    $report.producerNormalization.reportTypeMismatchCount, `
+    $report.producerNormalization.disallowedManualCount, `
+    $report.producerNormalization.disallowedNotCapturedCount, `
+    $report.producerNormalization.inputPolicyViolationCount)
+Write-Host "Close-prep readiness: candidate only; pending main/workflow evidence"
 
 foreach ($stage in @($report.stages)) {
     Write-Host ("- {0}: {1} (runId={2}, producers={3}, passed={4}, failed={5}, manual={6}, not-captured={7})" -f `

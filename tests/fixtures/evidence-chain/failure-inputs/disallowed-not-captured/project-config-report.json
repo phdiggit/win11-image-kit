@@ -1,0 +1,17 @@
+{
+  "producerId": "project-config",
+  "reportType": "project-config",
+  "status": "not-captured",
+  "generatedAt": "2026-06-26T00:00:00Z",
+  "reproducible": false,
+  "sourceMetadata": {
+    "kind": "fixture"
+  },
+  "artifactReferences": [
+    {
+      "kind": "report",
+      "path": "tests/fixtures/evidence-chain/failure-inputs/disallowed-not-captured/project-config-report.json",
+      "private": false
+    }
+  ]
+}

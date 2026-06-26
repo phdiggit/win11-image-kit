@@ -442,6 +442,7 @@ function Test-JsonSchemaFiles {
         @{ Manifest = "customization-scope.json"; Schema = "customization-scope.schema.json" },
         @{ Manifest = "defender-exclusions.json"; Schema = "defender-exclusions.schema.json" },
         @{ Manifest = "evidence-chain.json"; Schema = "evidence-chain.schema.json" },
+        @{ Manifest = "evidence-report-inputs.json"; Schema = "evidence-report-inputs.schema.json" },
         @{ Manifest = "junctions.json"; Schema = "junctions.schema.json" },
         @{ Manifest = "paths.json"; Schema = "paths.schema.json" },
         @{ Manifest = "paths.local.example.json"; Schema = "config-layer-fragment.schema.json" },

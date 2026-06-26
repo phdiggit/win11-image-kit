@@ -1,0 +1,83 @@
+{
+  "title": "win11-image-kit evidence report input index",
+  "type": "object",
+  "required": [
+    "manifestVersion",
+    "inputSetId",
+    "sourceKind",
+    "inputs"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "manifestVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "inputSetId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$"
+    },
+    "sourceKind": {
+      "type": "string",
+      "enum": [
+        "fixture",
+        "local",
+        "ci",
+        "main",
+        "workflow_dispatch",
+        "manual"
+      ]
+    },
+    "inputs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/input"
+      }
+    }
+  },
+  "$defs": {
+    "input": {
+      "type": "object",
+      "required": [
+        "producerId",
+        "path",
+        "expectedReportType",
+        "required",
+        "allowMissing",
+        "allowManual",
+        "allowNotCaptured"
+      ],
+      "properties": {
+        "producerId": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expectedReportType": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "allowMissing": {
+          "type": "boolean"
+        },
+        "allowManual": {
+          "type": "boolean"
+        },
+        "allowNotCaptured": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

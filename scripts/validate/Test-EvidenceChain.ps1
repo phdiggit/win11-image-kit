@@ -1,6 +1,7 @@
 [CmdletBinding()]
 param(
     [string]$ManifestPath = "manifests/evidence-chain.json",
+    [string]$InputManifestPath = "manifests/evidence-report-inputs.json",
     [string]$InputDirectory = "tests/fixtures/evidence-chain/sample-report-inputs",
     [string]$ReportPath,
     [ValidateSet("fixture", "local", "ci", "main", "workflow_dispatch", "manual")]
@@ -229,6 +230,10 @@ function Test-KitEvidenceReport {
         Add-KitEvidenceValidationError "reportType must be evidence-chain"
     }
 
+    if ([string]::IsNullOrWhiteSpace([string](Get-KitEvidenceValue -InputObject $Report -Name "inputSetId" -DefaultValue ""))) {
+        Add-KitEvidenceValidationError "inputSetId is required"
+    }
+
     Test-KitEvidenceRunIdValue -Value ([string]$Report.runId) -Name "report.runId"
     Test-KitEvidenceRunIdValue -Value ([string](Get-KitEvidenceValue -InputObject $Report -Name "upstreamRunId" -DefaultValue "")) -Name "report.upstreamRunId"
 
@@ -263,6 +268,38 @@ function Test-KitEvidenceReport {
         if ($item.producerId -in @("real-build", "capture", "deploy", "admin-vm-smoke") -and $item.status -eq "passed") {
             Add-KitEvidenceValidationError "PR Fast baseline cannot mark lifecycle placeholder passed: $($item.producerId)"
         }
+    }
+
+    foreach ($inputReport in @($Report.inputReports)) {
+        Test-KitEvidenceArtifactReference -Artifact ([pscustomobject]@{
+            kind = "report"
+            path = [string]$inputReport.path
+            private = $false
+        })
+
+        $producerId = [string]$inputReport.producerId
+        $producer = @($Manifest.producers | Where-Object { [string]$_.id -eq $producerId })[0]
+        if ($null -eq $producer) {
+            Add-KitEvidenceValidationError "input report producerId is not declared: $producerId"
+        } elseif ([string]$inputReport.expectedReportType -ne [string]$producer.reportType) {
+            Add-KitEvidenceValidationError "input expectedReportType does not match producer $producerId"
+        }
+    }
+
+    if ($Report.producerNormalization.missingRequiredCount -gt 0) {
+        Add-KitEvidenceValidationError "producerNormalization.missingRequiredCount must be zero"
+    }
+    if ($Report.producerNormalization.reportTypeMismatchCount -gt 0) {
+        Add-KitEvidenceValidationError "producerNormalization.reportTypeMismatchCount must be zero"
+    }
+    if ($Report.producerNormalization.disallowedManualCount -gt 0) {
+        Add-KitEvidenceValidationError "producerNormalization.disallowedManualCount must be zero"
+    }
+    if ($Report.producerNormalization.disallowedNotCapturedCount -gt 0) {
+        Add-KitEvidenceValidationError "producerNormalization.disallowedNotCapturedCount must be zero"
+    }
+    if ($Report.producerNormalization.inputPolicyViolationCount -gt 0) {
+        Add-KitEvidenceValidationError "producerNormalization.inputPolicyViolationCount must be zero"
     }
 
     foreach ($name in @("configRunId", "validateRunId", "buildRunId", "captureRunId", "deployRunId", "acceptanceRunId")) {
@@ -326,6 +363,7 @@ Test-KitEvidenceManifest -Manifest $manifest -RepoRoot $repoRoot
 
 $report = New-KitEvidenceChainReport `
     -ManifestPath $ManifestPath `
+    -InputManifestPath $InputManifestPath `
     -InputDirectory $InputDirectory `
     -SourceKind $SourceKind `
     -SourceSha $SourceSha `
@@ -351,7 +389,16 @@ if (-not [string]::IsNullOrWhiteSpace($ReportPath)) {
 
 $report
 
-if ($script:ValidationErrors.Count -gt 0 -or $report.summary.failedCount -gt 0 -or $report.redactions.blockedCount -gt 0) {
+if (
+    $script:ValidationErrors.Count -gt 0 -or
+    $report.summary.failedCount -gt 0 -or
+    $report.redactions.blockedCount -gt 0 -or
+    $report.producerNormalization.missingRequiredCount -gt 0 -or
+    $report.producerNormalization.reportTypeMismatchCount -gt 0 -or
+    $report.producerNormalization.disallowedManualCount -gt 0 -or
+    $report.producerNormalization.disallowedNotCapturedCount -gt 0 -or
+    $report.producerNormalization.inputPolicyViolationCount -gt 0
+) {
     exit 1
 }
 
