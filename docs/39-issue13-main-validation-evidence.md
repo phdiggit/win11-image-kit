@@ -1,6 +1,6 @@
 # Issue #13 Main Validation Evidence
 
-Status: `pending-main-validation`
+Status: `ready-for-manual-closure`
 
 ## Evidence Sources
 
@@ -14,19 +14,20 @@ Pull request-only Fast CI is not a substitute for main validation evidence.
 
 | Field | Value |
 | --- | --- |
-| Trigger source | `pending` |
-| Main SHA | `pending` |
-| Workflow run | `pending` |
-| Result | `pending` |
-| Notes | `pending` |
+| Trigger source | `main push` |
+| Main SHA | `33a172c9e908759584a4d6b9869c65b341553a69` |
+| Workflow run | https://github.com/phdiggit/win11-image-kit/actions/runs/28225645172 |
+| Full Validate job | https://github.com/phdiggit/win11-image-kit/actions/runs/28225645172/job/83616819015 |
+| Result | `success` |
+| Notes | Windows CI / Full Validate succeeded on the main push after PR #69 was merged. PR Fast CI is not a substitute for this evidence. |
 
 ## Ensure-State Evidence
 
 | Field | Value |
 | --- | --- |
-| Report status | `pending` |
-| failedCount | `pending` |
-| plannedActionCount | `pending` |
+| Report status | `manual` |
+| failedCount | `0` |
+| plannedActionCount | `2` |
 
 Ensure-State report `manual` with `failedCount=0` is acceptable review evidence, not execution evidence.
 
@@ -46,8 +47,8 @@ Real VM/admin smoke is optional manual evidence. It is not required by PR Fast C
 
 | Field | Value |
 | --- | --- |
-| Current readiness | `pending-main-validation` |
-| Required next evidence | `main/workflow validation` |
+| Current readiness | `ready-for-manual-closure` |
+| Required next evidence | `none` |
 | PR Fast CI substitute allowed | `false` |
 
 ## Ready-State Rules
@@ -68,10 +69,10 @@ Issue #13 evidence has been reviewed by the maintainer:
 
 - Ensure-State implementation and acceptance guardrails are documented in docs/36 and docs/37.
 - Manual closure checklist is documented in docs/38.
-- Main/workflow evidence is recorded in docs/39 when this table is ready.
+- Main/workflow evidence is recorded in docs/39.
 - PR Fast CI is static/fixture/report-only and is not used as a substitute for main/workflow validation.
 
-The maintainer may perform final manual issue handling only after the evidence table above is ready.
+The maintainer may perform final manual issue handling after reviewing the evidence table above.
 
 ## Related Documents
 

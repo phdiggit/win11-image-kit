@@ -289,63 +289,63 @@
       "path": "docs/36-issue13-ensure-state.md",
       "category": "doc",
       "required": true,
-      "hash": "3d5f810e1f78f6402c47fdd845d7db2b7e2bb5628bd6118d405af50b6ef1b9ae",
+      "hash": "049a5a90d070f35328c5bc4d928ac8ad0c113a4c5dde8e744707ba4b22ab7a66",
       "reason": "Ensure-State runbook documents static convergence planning and PR Fast CI boundaries."
     },
     {
       "path": ".github/workflows/ci.yml",
       "category": "workflow",
       "required": true,
-      "hash": "46650589a190d20c1841da2efdeb54e467a9fd8c072d16504150605315caf3e1",
+      "hash": "89ee2de8544515700f7ff7e2bf603604acf8aae3d9836f63622b8afefc6108f0",
       "reason": "PR Fast CI wiring is a trusted guardrail for build lock and ensure-state tests."
     },
     {
       "path": "README.md",
       "category": "doc",
       "required": true,
-      "hash": "1e70a9881a22e86d9d2708802b08ca756bbbab22e336a09a175501744b97b114",
+      "hash": "3d0fc62f7120557202efb764a340b266b93d195f9798737e57e11f282f0c67df",
       "reason": "README quick entry links Issue 13 acceptance, close-preparation, and main-evidence docs."
     },
     {
       "path": "docs/37-issue13-ensure-state-acceptance.md",
       "category": "doc",
       "required": true,
-      "hash": "1f8f0539e33650c67137de8c42620117cd778c52d5a8b16238a5b6b550ef96b5",
+      "hash": "37eb051514e88009db3fe1010182a241831678ce48c8948309f68db7a4213184",
       "reason": "Issue 13 acceptance matrix documents plan-only Ensure-State coverage and CI boundaries."
     },
     {
       "path": "docs/38-issue13-close-preparation.md",
       "category": "doc",
       "required": true,
-      "hash": "fa9af9d006660c314a86cea1919d597b7af35cd1f8ff7baf75b949df23431142",
+      "hash": "401ba2b3cdb92a98eb836af98fc6a8a82335050ea779ec0447caa0c512912409",
       "reason": "Issue 13 close-preparation checklist documents manual closure boundaries."
     },
     {
       "path": "docs/39-issue13-main-validation-evidence.md",
       "category": "doc",
       "required": true,
-      "hash": "5b29a3a91067f15f88a5444f1383ec082fd6703cadeb28a07a6109fa067a8f7c",
+      "hash": "f2d498a13d354eb10eb2038b62c6e85b6d2f6bfb1a82cdf1535e88c497db5c0d",
       "reason": "Issue 13 main validation evidence scaffold prevents PR Fast CI evidence substitution."
     },
     {
       "path": "tests/pester/Issue13EnsureStateAcceptance.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "7132695ccbbbd8cc489fd1534aaed6fe990e4af18ff3944e3cb97003b2d230bf",
+      "hash": "735396c74714ff682bcd93fb4f46b604113a5242d546435b603f064c2cb6468f",
       "reason": "Issue 13 acceptance guardrails cover schema, safety, report contract, registry, Build Lock, docs, and CI wiring."
     },
     {
       "path": "tests/pester/Issue13ClosePrep.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "3dcc230b9a05b2e458dfac81ceb54486a862e197d146df270bb0934f350846d3",
+      "hash": "aee0a22408a49f616f13fda473df3b51554254d1afba3d7b99b2bbc08f86f0f6",
       "reason": "Issue 13 close-preparation tests guard manual closure semantics and safe validation policy."
     },
     {
       "path": "tests/pester/Issue13MainValidationEvidence.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "e7c6c38f6e2e153aa531332c9b6907e55365f708cc69735a96efc596cf9b3ed7",
+      "hash": "b3f5ade5b5cf0e6a41f5cede3d3edddd17f4839aef4b9e0d0ec1c42b17c74186",
       "reason": "Issue 13 main-evidence tests keep pending evidence honest and define ready-state rules."
     }
   ],

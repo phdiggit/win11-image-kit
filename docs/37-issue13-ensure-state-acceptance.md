@@ -1,6 +1,6 @@
 # Issue #13 Ensure-State Acceptance
 
-Status: `in-acceptance`
+Status: `accepted-ready-for-manual-closure`
 
 ## Scope
 
@@ -42,6 +42,12 @@ Status: `in-acceptance`
 | Registry | `ensure-state-convergence` capability is plan-only and registered | registry / Issue #13 Pester |
 | Build Lock | Issue #13 manifest/schema/script/test/doc/CI are locked or watched | Build Lock / Pester |
 | CI boundary | PR Fast CI uses static/fixture/report paths only | CI / Pester |
+
+## Acceptance Decision
+
+Issue #13 acceptance is complete for the plan/report-only Ensure-State layer. Main/workflow validation evidence is recorded in [Main Validation Evidence](39-issue13-main-validation-evidence.md) from the main push after PR #69 was merged.
+
+This acceptance does not convert report-only Ensure-State into real machine remediation. PR Fast CI remains static/fixture/report-only and is not a substitute for main/workflow validation evidence.
 
 ## True Execution Split Rules
 
