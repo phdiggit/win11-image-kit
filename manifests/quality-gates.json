@@ -132,7 +132,7 @@
       "blocking": true,
       "entrypoint": "scripts/validate/Test-EffectiveConfiguration.ps1",
       "evidence": "report",
-      "notes": "Validates Issue 15 layered configuration with local static inputs and failedCount=0."
+      "notes": "Validates Issue 15 layered configuration with all tracked stacks, CLI override fixture, local static inputs, and failedCount=0."
     }
   ]
 }

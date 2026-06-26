@@ -1,0 +1,10 @@
+{
+  "$schema": "../schemas/config-layer-fragment.schema.json",
+  "layerId": "local-private",
+  "paths": {
+    "NasProjectRoot": "\\\\example-nas\\share\\win11-image-kit",
+    "ToolRoot": "D:\\tools",
+    "DataRoot": "D:\\Data"
+  },
+  "notes": "Copy to manifests/paths.local.json for private local overrides. Keep the real file untracked."
+}
