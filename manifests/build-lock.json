@@ -394,7 +394,7 @@
       "path": "manifests/quality-gates.json",
       "category": "manifest",
       "required": true,
-      "hash": "e417ec766a9f37f7b0d487a248bb6ad8326c8cc723075f7b02ce90273e5594e6",
+      "hash": "e6797760658d16a9662fae085e27d33c042b566696aebacaac33dd6a835f6f4a",
       "reason": "Quality Gates include Issue 16 acceptance, close-prep, and main-evidence scaffold gates."
     },
     {
@@ -709,7 +709,7 @@
       "path": "docs/48-issue16-evidence-chain-report.md",
       "category": "doc",
       "required": true,
-      "hash": "84809b5e6e5cdf928c0f27f1f0966acf5f382e8d022672011b70af4dd51db993",
+      "hash": "5ee9c01d23c84094af2664e28b9483504f1937585162fe56b2c5d30deded40a6",
       "reason": "Issue 16 evidence chain design records producer adapter and close-prep scaffold scope."
     },
     {
@@ -835,7 +835,7 @@
       "path": "docs/49-issue16-evidence-chain-acceptance.md",
       "category": "doc",
       "required": true,
-      "hash": "21cf0d6bd8a1b2cc9428b8f60afc266d1dfaaee3bbc81057aa6fe7cfeee18e89",
+      "hash": "5651a7375b656cbdb01d5a36c3485f9a3e73181c08835177277fd5b1cc8f7648",
       "reason": "Issue 16 acceptance records accepted-pending-main-validation state."
     },
     {
@@ -856,7 +856,7 @@
       "path": "scripts/common/Test-KitEvidenceRedaction.ps1",
       "category": "script",
       "required": true,
-      "hash": "43dae11cd26b43a4055d7f3772366af5dba61e9cd16d40ebb12b4639c78d9ca0",
+      "hash": "c1b2c362b794812d32e7b5b60ebd5f8db7b407d43336809dfed146067537a9aa",
       "reason": "Evidence redaction helper blocks sensitive fields."
     },
     {
@@ -905,7 +905,7 @@
       "path": "tests/pester/EvidenceChainRedaction.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "723fe622271f64770efb0a1547473d46259f1ae07cfbe1ff54c595605f0b58a7",
+      "hash": "89ee8513335bf7bdb7d552d4a6820a3844d2392a79360e0f094900522cfcb494",
       "reason": "Evidence chain redaction tests guard sensitive-data policy."
     },
     {
@@ -919,21 +919,21 @@
       "path": "tests/pester/Issue16EvidenceChainAcceptance.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "370e125f0d5905bb51608bc0ad2df2507916b7119bd160d2f639234702142d97",
+      "hash": "60fa0c7b9f4f292a5334fa62302771bdeaecefdbc9b7d8b27e5c04f1ca1de16f",
       "reason": "Issue 16 acceptance tests guard accepted-pending-main-validation state."
     },
     {
       "path": "docs/50-issue16-close-preparation.md",
       "category": "doc",
       "required": true,
-      "hash": "e84c8bf2ad0cf915b15832616912e2f8ac2e8894215e39ad1140f2ef66f7984e",
+      "hash": "63a4f94070916543c16b81c09a4b9ff2018498b81cba983f6c83f6ffb0227fe9",
       "reason": "Issue 16 close-preparation candidate records manual closure boundaries."
     },
     {
       "path": "docs/51-issue16-main-validation-evidence.md",
       "category": "doc",
       "required": true,
-      "hash": "fdc4c5ad33bcc74b29b78323bffc6a613f6fb40853a685b9d5addc6672408750",
+      "hash": "6b1316e553abe1c4c582b8bbd7533283fc83bbda911a7274b1c0fdd9262d4c2a",
       "reason": "Issue 16 main validation evidence scaffold remains pending until real main evidence exists."
     },
     {
@@ -1045,7 +1045,7 @@
       "path": "tests/pester/EvidenceChainClosePrep.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "5e21fac314d86b0547cb456f764820ef1a74e13891e6c03b86d168c62848bb20",
+      "hash": "a40308bca3c0b2459da3c222bac65030bf7eab87ee1ea1a9037ddeadc966048a",
       "reason": "Evidence chain close-prep tests guard Quality Gates and Build Lock wiring."
     },
     {
@@ -1066,14 +1066,14 @@
       "path": "tests/pester/Issue16ClosePrep.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "aa566dd80fb3531cf4f75d86ca9e6fef2c481ba88937d51b8d59f7181e0119ee",
+      "hash": "d5d96daccdb75edea527994760bc96f107ba924f668e8b645bc40585bc4e1eda",
       "reason": "Issue 16 close-prep tests guard candidate-only manual closure boundaries."
     },
     {
       "path": "tests/pester/Issue16MainValidationEvidence.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "29d411fae791052ce0a9b58e5ce287404d44ff167362f0f2a1fab3d3421c5c6d",
+      "hash": "0988f840d3fd3e4f62725a97d2bdc50361053736baa7b64f9ffb22e52963c5de",
       "reason": "Issue 16 main evidence tests guard pending-only scaffold fields."
     }
   ],

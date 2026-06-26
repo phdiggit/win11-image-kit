@@ -44,6 +44,21 @@ Describe "Evidence chain redaction policy" {
         Assert-KitMatch ($result.blockedFields -join ";") "password"
     }
 
+    It "treats opaque CLR values as leaves" {
+        $fixture = [pscustomobject][ordered]@{
+            generatedAt = [datetime]"2026-06-26T00:00:00Z"
+            source = [pscustomobject][ordered]@{
+                token = "<redacted>"
+                marker = [guid]::NewGuid()
+            }
+        }
+
+        $result = Test-KitEvidenceRedaction -InputObject $fixture
+
+        Assert-KitEqual $result.blockedCount 0
+        Assert-KitEqual $result.redactedCount 2
+    }
+
     It "fails validation when blocked sensitive data is present in producer input" {
         $tempRoot = Join-Path ([IO.Path]::GetTempPath()) ("win11-evidence-redaction-{0}" -f ([guid]::NewGuid().ToString("N")))
         [IO.Directory]::CreateDirectory($tempRoot) | Out-Null

@@ -68,6 +68,8 @@ Manual and not-captured items are explicit review signals. They are not failures
 
 The second Issue #16 stage keeps this document `in-progress` and adds an acceptance scaffold in [Issue #16 Evidence Chain Acceptance](49-issue16-evidence-chain-acceptance.md). This stage hardens the report contract without claiming real lifecycle execution or closure readiness.
 
+The post-PR #82 main validation attempt is recorded in [Issue #16 Main Validation Evidence](51-issue16-main-validation-evidence.md) as blocked evidence only. Issue #16 remains pending main/workflow validation until a later `main` push or `workflow_dispatch` Full Validate run succeeds.
+
 ### Run ID Model
 
 Generated reports now include a required `runId` using:

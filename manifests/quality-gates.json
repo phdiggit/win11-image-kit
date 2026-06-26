@@ -144,7 +144,7 @@
       "blocking": true,
       "entrypoint": "scripts/validate/Test-EvidenceChain.ps1",
       "evidence": "report",
-      "notes": "Validates Issue 16 evidence chain runId inheritance, artifact index, report input index, producer normalization counters, redaction policy, accepted-pending scaffold, fixture reports, and safety flags without true execution."
+      "notes": "Validates Issue 16 evidence chain runId inheritance, artifact index, report input index, producer normalization counters, redaction policy including PowerShell 7 scalar leaf traversal, accepted-pending scaffold, fixture reports, and safety flags without true execution."
     },
     {
       "id": "issue16-acceptance",

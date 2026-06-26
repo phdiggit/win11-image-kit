@@ -32,6 +32,43 @@ function Get-KitEvidenceRedactionObjectProperties {
     return @()
 }
 
+function Test-KitEvidenceRedactionScalar {
+    param(
+        [AllowNull()]
+        $InputObject
+    )
+
+    if ($null -eq $InputObject) {
+        return $true
+    }
+
+    if ($InputObject -is [string]) {
+        return $true
+    }
+
+    if ($InputObject -is [bool]) {
+        return $true
+    }
+
+    if ($InputObject -is [char]) {
+        return $true
+    }
+
+    if ($InputObject -is [datetime]) {
+        return $true
+    }
+
+    if ($InputObject -is [guid]) {
+        return $true
+    }
+
+    if ($InputObject -is [System.ValueType]) {
+        return $true
+    }
+
+    return $false
+}
+
 function Test-KitEvidenceRedaction {
     [CmdletBinding()]
     param(
@@ -65,12 +102,14 @@ function Test-KitEvidenceRedaction {
             return
         }
 
+        if (Test-KitEvidenceRedactionScalar -InputObject $Node) {
+            return
+        }
+
         $objectProperties = @()
         if ($Node -is [System.Collections.IDictionary]) {
             $objectProperties = @(Get-KitEvidenceRedactionObjectProperties -InputObject $Node)
         } elseif ($Node.PSObject.TypeNames -contains "System.Management.Automation.PSCustomObject") {
-            $objectProperties = @(Get-KitEvidenceRedactionObjectProperties -InputObject $Node)
-        } elseif ($Node -isnot [System.Collections.IEnumerable]) {
             $objectProperties = @(Get-KitEvidenceRedactionObjectProperties -InputObject $Node)
         }
 
