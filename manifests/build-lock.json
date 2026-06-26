@@ -198,8 +198,8 @@
       "path": "scripts/validate/Test-ProjectConfig.ps1",
       "category": "script",
       "required": true,
-      "hash": "57d95425486b13446e00b9f854cf6c4f21db2bdc4c4ab4840ded2df5a6f1639b",
-      "reason": "Project config validation now enforces quality gate manifest structure."
+      "hash": "e77280274b1931a63549a13a362b0cdba260ffd2e55c5b1e8d0e1c8365d25a3a",
+      "reason": "Project config validation now enforces quality gate and config layer manifest structure."
     },
     {
       "path": "tests/pester/BuildLockSchema.Tests.ps1",
@@ -296,15 +296,15 @@
       "path": ".github/workflows/ci.yml",
       "category": "workflow",
       "required": true,
-      "hash": "190abeb0a4927a03ac21a9925d6d8e7791855990537476faefdc5501814f109b",
-      "reason": "PR Fast CI wires Issue 14 close-prep and main-evidence guardrails while preserving the Validate / Full Validate split."
+      "hash": "086bb64514276a2e26225d52057e5aad9e5253401d65f2aa432853c5f12d867d",
+      "reason": "PR Fast CI wires Issue 15 effective configuration guardrails while preserving the Validate / Full Validate split."
     },
     {
       "path": "README.md",
       "category": "doc",
       "required": true,
-      "hash": "0012611776975722cd920da75237bcbf587bbf8f3f0cdbc1de4d09ba1f44206a",
-      "reason": "README quick entry links Issue 14 accepted readiness and main-validation evidence."
+      "hash": "676d2165dc9f8ce85ccbb634c9e4ffc17618c0a09c23e2dda520ab433ddbe1b9",
+      "reason": "README quick entry links Issue 15 layered configuration intake and validation."
     },
     {
       "path": "docs/37-issue13-ensure-state-acceptance.md",
@@ -359,7 +359,7 @@
       "path": "docs/40-issue14-quality-gates.md",
       "category": "doc",
       "required": true,
-      "hash": "c3e50a9360062877c3346e086b19730ae2536d6bd751477e9440ffbf62979451",
+      "hash": "676ef94ed6be54969352c550e78efbd11462791399ef3f007544653417635a03",
       "reason": "Issue 14 quality gates runbook records accepted readiness and verified main evidence."
     },
     {
@@ -394,8 +394,8 @@
       "path": "manifests/quality-gates.json",
       "category": "manifest",
       "required": true,
-      "hash": "7f543c9bc4dc72a0a2e18d28bde89adc88121aa6bfc748186c939ae1abb621e7",
-      "reason": "Issue 14 quality gate manifest is a trusted validation inventory."
+      "hash": "80d1bd0c0daef463c6c787ef710b7907ad1feef526cc1d9d7e47b8352ad37213",
+      "reason": "Issue 14 and Issue 15 quality gate manifest is a trusted validation inventory."
     },
     {
       "path": "schemas/quality-gates.schema.json",
@@ -443,42 +443,147 @@
       "path": "tests/pester/Issue14QualityGateAcceptance.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "1c69c3766a0f66a8b712a25282bdc977178a6e4ee48a7a64d242c933ba447c5b",
+      "hash": "923b8e64101240bbeca8f128e66c6045f440787f16903743829b94ad264f90d7",
       "reason": "Issue 14 acceptance tests guard pending and ready status without unsafe claims."
     },
     {
       "path": "docs/41-issue14-quality-gates-acceptance.md",
       "category": "doc",
       "required": true,
-      "hash": "a5adfb1a8dfb925f1ff0c6c0c41807fbaa532caf87f673754c059ca980d7c228",
+      "hash": "24837a86229183838d190151819eb2d43560fa92f5706c1b94a7fddc026c4ada",
       "reason": "Issue 14 acceptance records accepted-ready-for-manual-closure status after main evidence backfill."
     },
     {
       "path": "docs/42-issue14-close-preparation.md",
       "category": "doc",
       "required": true,
-      "hash": "8a97e141cb2f1ae61708ff7c52bf3affc4d19da33a06acca3498b27ff92e4f50",
+      "hash": "a14a14aec49031d7d1a11501e9236047872ef7906ee223c2f505393e6e1632ae",
       "reason": "Issue 14 close-preparation records ready-for-manual-closure after verified main evidence."
     },
     {
       "path": "docs/43-issue14-main-validation-evidence.md",
       "category": "doc",
       "required": true,
-      "hash": "3d133b8264c81b6747ca3ff2e7d95a1939f7c9b69238d012b7f16d5343ee93c2",
+      "hash": "2d1d03362ee00203e95ba57f4f9e53dc2465b6db8e089747971783f3c9c37a40",
       "reason": "Issue 14 main-validation evidence records post-PR 73 Full Validate success."
+    },
+    {
+      "path": ".gitignore",
+      "category": "config",
+      "required": true,
+      "hash": "3f1525489fd7bd3f3801949616036e12f2d25a0b8783d8ff06e9be9b082baec3",
+      "reason": "Issue 15 local private override file must remain untracked."
+    },
+    {
+      "path": "docs/44-issue15-layered-configuration.md",
+      "category": "doc",
+      "required": true,
+      "hash": "47ced1e346b1fb56c8105ae36876453e53d7efea2a70d9bf8e4df2d1f0a2102e",
+      "reason": "Issue 15 intake records real roadmap scope, non-goals, safety boundaries, and validation plan."
+    },
+    {
+      "path": "manifests/config-layers.json",
+      "category": "manifest",
+      "required": true,
+      "hash": "e5e2e492183851b37b401030897d2250e411a001a5d1a37966b9018160b642be",
+      "reason": "Issue 15 config layer manifest declares deterministic local layering."
+    },
+    {
+      "path": "schemas/config-layers.schema.json",
+      "category": "schema",
+      "required": true,
+      "hash": "13d3c3812ecd0c1ead278056d114fa77798136090410a437102cecea8354a3db",
+      "reason": "Issue 15 config layer schema constrains the layer inventory."
+    },
+    {
+      "path": "schemas/config-layer-fragment.schema.json",
+      "category": "schema",
+      "required": true,
+      "hash": "d3ab81a94d3ab5160cf5b9cc0ac9804dda678567c1fc2682a1e90ad564f714dc",
+      "reason": "Issue 15 config layer fragment schema constrains profile and hardware overrides."
+    },
+    {
+      "path": "profiles/default.json",
+      "category": "manifest",
+      "required": true,
+      "hash": "f92d9ca45d91d3c96aa99cb9396e1260c9cc1e7671556d9c1af3b2437fceb0ef",
+      "reason": "Issue 15 default profile fixture preserves current single-file behavior."
+    },
+    {
+      "path": "profiles/release.json",
+      "category": "manifest",
+      "required": true,
+      "hash": "d4ee62e8e498ddd67ce9f8600b9c3a2ffb2888a752171425142aee1083103e60",
+      "reason": "Issue 15 release profile fixture proves profile override precedence."
+    },
+    {
+      "path": "hardware/air15.json",
+      "category": "manifest",
+      "required": true,
+      "hash": "ddc773a21a2f1cfd4dac3aec63dc7ec60b6bd166eed6e6995999d99089ae6a6d",
+      "reason": "Issue 15 hardware fixture proves hardware override precedence."
+    },
+    {
+      "path": "scripts/common/Resolve-KitEffectiveConfiguration.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "e45f8467be94f78a241a487f587a20235ca648b23a8a8a2300c6b5500212ee08",
+      "reason": "Issue 15 effective configuration resolver produces static report-only evidence."
+    },
+    {
+      "path": "scripts/config/Show-EffectiveConfiguration.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "8b57c9a60b21b044c075aacb2d85230e7492817a1ef41ffe798ea6be06653eb4",
+      "reason": "Issue 15 effective configuration display entrypoint outputs value source layers."
+    },
+    {
+      "path": "scripts/validate/Test-EffectiveConfiguration.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "0124d60e889738d88a4f410b8d0534ea4f4950960428f201eb9bc666977b4f3b",
+      "reason": "Issue 15 effective configuration validation entrypoint writes failedCount=0 reports."
+    },
+    {
+      "path": "tests/pester/Issue15LayeredConfiguration.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "871a88f43e2ac1c83e6fa9ca2aff12d382715e3d244b6e806157e8642635c232",
+      "reason": "Issue 15 guardrail tests cover intake, wiring, Build Lock, and no auto-close wording."
+    },
+    {
+      "path": "tests/pester/EffectiveConfigurationSchema.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "c8f623140edeeec0cb8c39b60fc396bc2a558e32f0554cf4367ec878f20c4ac8",
+      "reason": "Issue 15 schema tests guard closed local schemas and local override policy."
+    },
+    {
+      "path": "tests/pester/EffectiveConfigurationReport.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "b26e2826b5d3c1751868c12507a683d8dc27675f6a3807f78b5facaa122b1937",
+      "reason": "Issue 15 report tests guard deterministic source-layer output."
+    },
+    {
+      "path": "tests/pester/EffectiveConfigurationValidation.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "569d1a4dce34b8e6e979fc468959820be25b4e2f0d7f95efa64749c14f96e99d",
+      "reason": "Issue 15 validation tests guard report-only behavior and no mutation commands."
     },
     {
       "path": "tests/pester/Issue14ClosePrep.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "02f429a0628cdfc32f2afa04c4a719679caed296cf8931db9f93ae682a64d58c",
+      "hash": "d0117e8c964fc391f9bcf6ac30198093d4f82d9c1c3ea396a9b2a32e0f4f6738",
       "reason": "Issue 14 close-preparation tests guard candidate and ready semantics."
     },
     {
       "path": "tests/pester/Issue14MainValidationEvidence.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "ce6ee623fad75317c4ba6c4f8087452bfcbe13615700cea8fd9eaa25d6966f61",
+      "hash": "5c1f80f6d0a244364e434964f5a1de852c59601422e3d7522fe7d0d27c6aa7b5",
       "reason": "Issue 14 main-evidence tests validate pending and ready evidence details."
     }
   ],
@@ -501,7 +606,15 @@
     "schemas/quality-gates.schema.json",
     "scripts/common/*QualityGate*.ps1",
     "scripts/validate/*QualityGate*.ps1",
-    "tests/pester/*QualityGate*.Tests.ps1"
+    "tests/pester/*QualityGate*.Tests.ps1",
+    "profiles/*.json",
+    "hardware/*.json",
+    "docs/*issue15*.md",
+    "scripts/common/*EffectiveConfiguration*.ps1",
+    "scripts/config/*EffectiveConfiguration*.ps1",
+    "scripts/validate/*EffectiveConfiguration*.ps1",
+    "tests/pester/*EffectiveConfiguration*.Tests.ps1",
+    "tests/pester/Issue15*.Tests.ps1"
   ],
   "policy": {
     "missingRequired": "fail",

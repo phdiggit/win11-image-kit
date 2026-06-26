@@ -1,0 +1,8 @@
+{
+  "$schema": "../schemas/config-layer-fragment.schema.json",
+  "layerId": "hardware-air15",
+  "paths": {
+    "WorkRoot": "${DeployRoot}\\work\\air15"
+  },
+  "notes": "Air15 硬件层示例用于验证硬件覆盖优先级，不触发真实驱动或部署动作。"
+}

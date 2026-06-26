@@ -1,0 +1,27 @@
+{
+  "title": "win11-image-kit configuration layer fragment",
+  "type": "object",
+  "required": [
+    "layerId",
+    "paths"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "layerId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$"
+    },
+    "paths": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

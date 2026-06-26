@@ -62,6 +62,12 @@ jobs:
           $ErrorActionPreference = "Stop"
           & .\scripts\validate\Test-QualityGates.ps1
 
+      - name: Run effective configuration validation with Windows PowerShell
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+          & .\scripts\validate\Test-EffectiveConfiguration.ps1
+
       - name: Run PSScriptAnalyzer with Windows PowerShell
         shell: powershell
         run: |
@@ -152,6 +158,10 @@ jobs:
               "tests/pester/Issue14QualityGateAcceptance.Tests.ps1",
               "tests/pester/Issue14ClosePrep.Tests.ps1",
               "tests/pester/Issue14MainValidationEvidence.Tests.ps1",
+              "tests/pester/Issue15LayeredConfiguration.Tests.ps1",
+              "tests/pester/EffectiveConfigurationSchema.Tests.ps1",
+              "tests/pester/EffectiveConfigurationReport.Tests.ps1",
+              "tests/pester/EffectiveConfigurationValidation.Tests.ps1",
               "tests/pester/Issue11ClosePrep.Tests.ps1",
               "tests/pester/Issue11MainValidationEvidence.Tests.ps1",
               "tests/pester/UserExperienceStateVerification.Tests.ps1",
