@@ -604,7 +604,7 @@
       "path": "tests/pester/EffectiveConfigurationTokenSafety.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "9b173265398952a99413e3ab9cd418cfcd32f5e05683d90cdb9e7b421aebbc3a",
+      "hash": "ad263dd13a0b940d546b53c4e1a744a9c7718d57ab2a3c6ba50cd3ba630ced7a",
       "reason": "Issue 15 token safety tests guard unknown token, circular token, and forbidden old NAS failures."
     },
     {
