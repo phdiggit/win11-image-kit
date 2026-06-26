@@ -1,34 +1,84 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "win11-image-kit service manifest",
+  "title": "win11-image-kit ensure-state service manifest",
   "type": "object",
-  "required": ["services"],
+  "required": [
+    "manifestVersion",
+    "services"
+  ],
   "properties": {
-    "$schema": { "type": "string" },
+    "$schema": {
+      "type": "string"
+    },
+    "manifestVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
     "services": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["name", "displayName", "install", "start", "stop", "delete"],
+        "required": [
+          "name",
+          "displayName",
+          "ensure",
+          "startupType",
+          "scope",
+          "changeMode",
+          "priority",
+          "reason",
+          "notes"
+        ],
         "properties": {
-          "name": { "type": "string" },
-          "displayName": { "type": "string" },
-          "install": { "type": "string" },
-          "start": { "type": "string" },
-          "stop": { "type": "string" },
-          "delete": { "type": "string" },
-          "expectedState": {
-            "type": "string",
-            "enum": ["Running", "Stopped", "Paused"]
+          "name": {
+            "type": "string"
           },
-          "expectedStartType": {
-            "type": "string",
-            "enum": ["Automatic", "Manual", "Disabled"]
+          "displayName": {
+            "type": "string"
           },
-          "required": { "type": "boolean" },
-          "failurePolicy": {
+          "ensure": {
             "type": "string",
-            "enum": ["fail", "skip", "manual"]
+            "enum": [
+              "running",
+              "stopped",
+              "disabled",
+              "manual",
+              "absent",
+              "ignore"
+            ]
+          },
+          "startupType": {
+            "type": "string",
+            "enum": [
+              "automatic",
+              "manual",
+              "disabled",
+              "unchanged"
+            ]
+          },
+          "scope": {
+            "type": "string",
+            "enum": [
+              "machine",
+              "none"
+            ]
+          },
+          "changeMode": {
+            "type": "string",
+            "enum": [
+              "planned",
+              "manual",
+              "disabled"
+            ]
+          },
+          "priority": {
+            "type": "integer"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
           }
         },
         "additionalProperties": false

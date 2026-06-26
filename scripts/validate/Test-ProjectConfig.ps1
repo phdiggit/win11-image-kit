@@ -589,237 +589,153 @@ function Test-DisallowedPaths {
 function Test-SoftwareManifest {
     param(
         [Parameter(Mandatory)]
-        $SoftwareManifest,
-
-        [Parameter(Mandatory)]
-        [hashtable]$PathMap
+        $SoftwareManifest
     )
 
-    $allowedStages = @("golden-image", "post-deploy", "manual")
-    $allowedTypes = @("archive", "zip", "installer", "manual")
-    $allowedArchiveFormats = @("zip", "tar.gz")
-    $allowedFailurePolicies = @("fail", "skip", "manual")
+    $allowedEnsure = @("present", "absent", "latest", "pinned", "manual")
+    $allowedSource = @("winget", "chocolatey", "msi", "powershell", "manual", "none")
+    $allowedScope = @("machine", "current-user", "default-user", "none")
+    $allowedInstallMode = @("planned", "manual", "disabled")
 
-    foreach ($package in $SoftwareManifest.packages) {
-        if ([string]::IsNullOrWhiteSpace([string]$package.name)) {
-            Write-CheckResult -Level ERROR -Message "软件包缺少 name"
+    foreach ($package in @($SoftwareManifest.software)) {
+        if ([string]::IsNullOrWhiteSpace([string]$package.id)) {
+            Write-CheckResult -Level ERROR -Message "软件 Ensure-State 条目缺少 id"
             continue
         }
 
-        if ([string]::IsNullOrWhiteSpace([string]$package.version)) {
-            Write-CheckResult -Level ERROR -Message ("软件包缺少 version：{0}" -f $package.name)
+        if ([string]::IsNullOrWhiteSpace([string]$package.displayName)) {
+            Write-CheckResult -Level ERROR -Message ("软件 Ensure-State 条目缺少 displayName：{0}" -f $package.id)
         }
 
-        if ([string]::IsNullOrWhiteSpace([string]$package.stage)) {
-            Write-CheckResult -Level ERROR -Message ("软件包缺少 stage：{0}" -f $package.name)
-        } elseif ($allowedStages -notcontains [string]$package.stage) {
-            Write-CheckResult -Level ERROR -Message ("软件包 stage 无效：{0} -> {1}" -f $package.name, $package.stage)
+        if ([string]::IsNullOrWhiteSpace([string]$package.ensure)) {
+            Write-CheckResult -Level ERROR -Message ("软件 Ensure-State 条目缺少 ensure：{0}" -f $package.id)
+        } elseif ($allowedEnsure -notcontains [string]$package.ensure) {
+            Write-CheckResult -Level ERROR -Message ("软件 Ensure-State ensure 无效：{0} -> {1}" -f $package.id, $package.ensure)
         }
 
-        if ([string]::IsNullOrWhiteSpace([string]$package.type)) {
-            Write-CheckResult -Level ERROR -Message ("软件包缺少 type：{0}" -f $package.name)
-        } elseif ($allowedTypes -notcontains [string]$package.type) {
-            Write-CheckResult -Level ERROR -Message ("软件包 type 无效：{0} -> {1}" -f $package.name, $package.type)
+        if ([string]::IsNullOrWhiteSpace([string]$package.source)) {
+            Write-CheckResult -Level ERROR -Message ("软件 Ensure-State 条目缺少 source：{0}" -f $package.id)
+        } elseif ($allowedSource -notcontains [string]$package.source) {
+            Write-CheckResult -Level ERROR -Message ("软件 Ensure-State source 无效：{0} -> {1}" -f $package.id, $package.source)
         }
 
-        if ($package.type -eq "archive" -and [string]::IsNullOrWhiteSpace([string]$package.archiveFormat)) {
-            Write-CheckResult -Level ERROR -Message ("归档包缺少 archiveFormat：{0}" -f $package.name)
-        } elseif ($package.archiveFormat -and $allowedArchiveFormats -notcontains [string]$package.archiveFormat) {
-            Write-CheckResult -Level ERROR -Message ("归档格式无效：{0} -> {1}" -f $package.name, $package.archiveFormat)
+        if ([string]::IsNullOrWhiteSpace([string]$package.packageId)) {
+            Write-CheckResult -Level ERROR -Message ("软件 Ensure-State 条目缺少 packageId：{0}" -f $package.id)
         }
 
-        if ($package.type -eq "zip") {
-            Write-CheckResult -Level WARN -Message ("软件包仍使用旧 type=zip，建议改为 type=archive + archiveFormat=zip：{0}" -f $package.name)
+        if ([string]::IsNullOrWhiteSpace([string]$package.scope)) {
+            Write-CheckResult -Level ERROR -Message ("软件 Ensure-State 条目缺少 scope：{0}" -f $package.id)
+        } elseif ($allowedScope -notcontains [string]$package.scope) {
+            Write-CheckResult -Level ERROR -Message ("软件 Ensure-State scope 无效：{0} -> {1}" -f $package.id, $package.scope)
         }
 
-        if ($package.type -in @("archive", "zip", "installer")) {
-            if ([string]::IsNullOrWhiteSpace([string]$package.source)) {
-                Write-CheckResult -Level ERROR -Message ("软件包缺少 source：{0}" -f $package.name)
-            }
-
-            if ([string]::IsNullOrWhiteSpace([string]$package.destination)) {
-                Write-CheckResult -Level ERROR -Message ("软件包缺少 destination：{0}" -f $package.name)
-            }
+        if ([string]::IsNullOrWhiteSpace([string]$package.installMode)) {
+            Write-CheckResult -Level ERROR -Message ("软件 Ensure-State 条目缺少 installMode：{0}" -f $package.id)
+        } elseif ($allowedInstallMode -notcontains [string]$package.installMode) {
+            Write-CheckResult -Level ERROR -Message ("软件 Ensure-State installMode 无效：{0} -> {1}" -f $package.id, $package.installMode)
         }
 
-        $hasRequired = Test-JsonProperty -Object $package -Name "required"
-        $hasFailurePolicy = Test-JsonProperty -Object $package -Name "failurePolicy"
-        $hasAllowMissingSource = Test-JsonProperty -Object $package -Name "allowMissingSource"
-        $requiredValue = $null
-        $allowMissingSourceValue = $null
-        $failurePolicyValue = $null
-        $requiredIsBoolean = $false
-        $allowMissingSourceIsBoolean = $false
-        $failurePolicyIsValid = $false
+        try {
+            [void][int]$package.priority
+        } catch {
+            Write-CheckResult -Level ERROR -Message ("软件 Ensure-State priority 必须是整数：{0}" -f $package.id)
+        }
 
-        if ($package.type -in @("archive", "zip", "installer")) {
-            foreach ($policyField in @("required", "failurePolicy", "allowMissingSource")) {
-                if (-not (Test-JsonProperty -Object $package -Name $policyField)) {
-                    Write-CheckResult -Level WARN -Message ("软件包缺少策略字段 {0}：{1}" -f $policyField, $package.name)
+        if ([string]::IsNullOrWhiteSpace([string]$package.notes)) {
+            Write-CheckResult -Level ERROR -Message ("软件 Ensure-State 条目缺少 notes：{0}" -f $package.id)
+        }
+
+        if (Test-JsonProperty -Object $package -Name "tags") {
+            foreach ($tag in @($package.tags)) {
+                if ((Get-JsonTypeName -Value $tag) -ne "string") {
+                    Write-CheckResult -Level ERROR -Message ("软件 Ensure-State tags 必须是 string 数组：{0}" -f $package.id)
                 }
             }
         }
 
-        if ($hasRequired) {
-            $requiredValue = Get-JsonPropertyValue -Object $package -Name "required"
-            if ((Get-JsonTypeName -Value $requiredValue) -eq "boolean") {
-                $requiredIsBoolean = $true
-            } else {
-                Write-CheckResult -Level ERROR -Message ("软件包策略字段 required 必须是 boolean：{0} -> {1}" -f $package.name, (Get-JsonTypeName -Value $requiredValue))
-            }
+        if ($package.ensure -eq "pinned" -and [string]::IsNullOrWhiteSpace([string]$package.version)) {
+            Write-CheckResult -Level ERROR -Message ("软件 Ensure-State pinned 条目必须提供 version：{0}" -f $package.id)
         }
 
-        if ($hasAllowMissingSource) {
-            $allowMissingSourceValue = Get-JsonPropertyValue -Object $package -Name "allowMissingSource"
-            if ((Get-JsonTypeName -Value $allowMissingSourceValue) -eq "boolean") {
-                $allowMissingSourceIsBoolean = $true
-            } else {
-                Write-CheckResult -Level ERROR -Message ("软件包策略字段 allowMissingSource 必须是 boolean：{0} -> {1}" -f $package.name, (Get-JsonTypeName -Value $allowMissingSourceValue))
-            }
+        if ($package.installMode -eq "disabled" -and $package.ensure -eq "present") {
+            Write-CheckResult -Level WARN -Message ("禁用条目不会自动达到 present 状态：{0}" -f $package.id)
         }
 
-        if ($hasFailurePolicy) {
-            $failurePolicyValue = [string](Get-JsonPropertyValue -Object $package -Name "failurePolicy")
-            if ($allowedFailurePolicies -contains $failurePolicyValue) {
-                $failurePolicyIsValid = $true
-            } else {
-                Write-CheckResult -Level ERROR -Message ("软件包策略字段 failurePolicy 无效：{0} -> {1}" -f $package.name, $failurePolicyValue)
-            }
+        if ($package.installMode -eq "planned" -and $package.source -eq "none") {
+            Write-CheckResult -Level WARN -Message ("planned 条目 source=none 时只能输出人工计划：{0}" -f $package.id)
+        }
+    }
+}
+
+function Test-ServiceManifest {
+    param(
+        [Parameter(Mandatory)]
+        $ServiceManifest
+    )
+
+    $allowedEnsure = @("running", "stopped", "disabled", "manual", "absent", "ignore")
+    $allowedStartupType = @("automatic", "manual", "disabled", "unchanged")
+    $allowedScope = @("machine", "none")
+    $allowedChangeMode = @("planned", "manual", "disabled")
+
+    foreach ($service in @($ServiceManifest.services)) {
+        if ([string]::IsNullOrWhiteSpace([string]$service.name)) {
+            Write-CheckResult -Level ERROR -Message "服务 Ensure-State 条目缺少 name"
+            continue
         }
 
-        if ($requiredIsBoolean -and [bool]$requiredValue -and $allowMissingSourceIsBoolean -and [bool]$allowMissingSourceValue) {
-            Write-CheckResult -Level ERROR -Message ("软件包策略字段组合矛盾：required=true 时 allowMissingSource 必须为 false：{0}" -f $package.name)
+        if ([string]::IsNullOrWhiteSpace([string]$service.displayName)) {
+            Write-CheckResult -Level ERROR -Message ("服务 Ensure-State 条目缺少 displayName：{0}" -f $service.name)
         }
 
-        if ($requiredIsBoolean -and [bool]$requiredValue -and $failurePolicyIsValid -and $failurePolicyValue -ne "fail") {
-            Write-CheckResult -Level ERROR -Message ("软件包策略字段组合矛盾：required=true 时 failurePolicy 必须为 fail：{0}" -f $package.name)
+        if ([string]::IsNullOrWhiteSpace([string]$service.ensure)) {
+            Write-CheckResult -Level ERROR -Message ("服务 Ensure-State 条目缺少 ensure：{0}" -f $service.name)
+        } elseif ($allowedEnsure -notcontains [string]$service.ensure) {
+            Write-CheckResult -Level ERROR -Message ("服务 Ensure-State ensure 无效：{0} -> {1}" -f $service.name, $service.ensure)
         }
 
-        if ($allowMissingSourceIsBoolean -and [bool]$allowMissingSourceValue -and $failurePolicyIsValid -and $failurePolicyValue -eq "fail") {
-            Write-CheckResult -Level ERROR -Message ("软件包策略字段组合矛盾：allowMissingSource=true 时 failurePolicy 不能为 fail：{0}" -f $package.name)
+        if ([string]::IsNullOrWhiteSpace([string]$service.startupType)) {
+            Write-CheckResult -Level ERROR -Message ("服务 Ensure-State 条目缺少 startupType：{0}" -f $service.name)
+        } elseif ($allowedStartupType -notcontains [string]$service.startupType) {
+            Write-CheckResult -Level ERROR -Message ("服务 Ensure-State startupType 无效：{0} -> {1}" -f $service.name, $service.startupType)
         }
 
-        if ($package.type -eq "manual") {
-            if ($requiredIsBoolean -and [bool]$requiredValue) {
-                Write-CheckResult -Level WARN -Message ("手工软件包建议设置 required=false：{0}" -f $package.name)
-            }
-
-            if ($failurePolicyIsValid -and $failurePolicyValue -ne "manual") {
-                Write-CheckResult -Level WARN -Message ("手工软件包建议设置 failurePolicy=manual：{0}" -f $package.name)
-            }
-
-            if ($allowMissingSourceIsBoolean -and -not [bool]$allowMissingSourceValue) {
-                Write-CheckResult -Level WARN -Message ("手工软件包建议设置 allowMissingSource=true：{0}" -f $package.name)
-            }
+        if ([string]::IsNullOrWhiteSpace([string]$service.scope)) {
+            Write-CheckResult -Level ERROR -Message ("服务 Ensure-State 条目缺少 scope：{0}" -f $service.name)
+        } elseif ($allowedScope -notcontains [string]$service.scope) {
+            Write-CheckResult -Level ERROR -Message ("服务 Ensure-State scope 无效：{0} -> {1}" -f $service.name, $service.scope)
         }
 
-        if ($package.type -eq "installer" -and $package.silentInstall -eq $false) {
-            if (($requiredIsBoolean -and [bool]$requiredValue) -or
-                ($failurePolicyIsValid -and $failurePolicyValue -ne "manual") -or
-                ($allowMissingSourceIsBoolean -and -not [bool]$allowMissingSourceValue)) {
-                Write-CheckResult -Level WARN -Message ("silentInstall=false 的安装器建议设置为手工策略：{0}" -f $package.name)
-            }
+        if ([string]::IsNullOrWhiteSpace([string]$service.changeMode)) {
+            Write-CheckResult -Level ERROR -Message ("服务 Ensure-State 条目缺少 changeMode：{0}" -f $service.name)
+        } elseif ($allowedChangeMode -notcontains [string]$service.changeMode) {
+            Write-CheckResult -Level ERROR -Message ("服务 Ensure-State changeMode 无效：{0} -> {1}" -f $service.name, $service.changeMode)
         }
 
-        if ($package.type -eq "installer" -and $null -eq $package.silentInstall) {
-            Write-CheckResult -Level ERROR -Message ("安装器缺少 silentInstall：{0}" -f $package.name)
+        try {
+            [void][int]$service.priority
+        } catch {
+            Write-CheckResult -Level ERROR -Message ("服务 Ensure-State priority 必须是整数：{0}" -f $service.name)
         }
 
-        if ($null -ne $package.successExitCodes) {
-            $successExitCodes = @($package.successExitCodes)
-            if ($successExitCodes.Count -eq 0) {
-                Write-CheckResult -Level ERROR -Message ("安装器 successExitCodes 不能为空：{0}" -f $package.name)
-            }
-
-            foreach ($successExitCode in $successExitCodes) {
-                $numericExitCode = $null
-                try {
-                    $numericExitCode = [double]$successExitCode
-                } catch {
-                    Write-CheckResult -Level ERROR -Message ("安装器 successExitCodes 包含无效值：{0} -> {1}" -f $package.name, $successExitCode)
-                    continue
-                }
-
-                if ($numericExitCode -lt 0 -or $numericExitCode -ne [Math]::Floor($numericExitCode)) {
-                    Write-CheckResult -Level ERROR -Message ("安装器 successExitCodes 必须是非负整数：{0} -> {1}" -f $package.name, $successExitCode)
-                }
-            }
+        if ([string]::IsNullOrWhiteSpace([string]$service.reason)) {
+            Write-CheckResult -Level ERROR -Message ("服务 Ensure-State 条目缺少 reason：{0}" -f $service.name)
         }
 
-        if (Test-JsonProperty -Object $package -Name "testCommand") {
-            $testCommand = Get-JsonPropertyValue -Object $package -Name "testCommand"
-            if ((Get-JsonTypeName -Value $testCommand) -ne "object") {
-                Write-CheckResult -Level ERROR -Message ("软件包 testCommand 必须是 object：{0}" -f $package.name)
-            } else {
-                if (-not (Test-JsonProperty -Object $testCommand -Name "command") -or [string]::IsNullOrWhiteSpace([string]$testCommand.command)) {
-                    Write-CheckResult -Level ERROR -Message ("软件包 testCommand 缺少 command：{0}" -f $package.name)
-                }
-
-                if (Test-JsonProperty -Object $testCommand -Name "arguments") {
-                    foreach ($argument in @($testCommand.arguments)) {
-                        if ((Get-JsonTypeName -Value $argument) -ne "string") {
-                            Write-CheckResult -Level ERROR -Message ("软件包 testCommand.arguments 必须是 string 数组：{0}" -f $package.name)
-                        }
-                    }
-                }
-
-                if (Test-JsonProperty -Object $testCommand -Name "successExitCodes") {
-                    $testSuccessExitCodes = @($testCommand.successExitCodes)
-                    if ($testSuccessExitCodes.Count -eq 0) {
-                        Write-CheckResult -Level ERROR -Message ("软件包 testCommand.successExitCodes 不能为空：{0}" -f $package.name)
-                    }
-
-                    foreach ($successExitCode in $testSuccessExitCodes) {
-                        $numericExitCode = $null
-                        try {
-                            $numericExitCode = [double]$successExitCode
-                        } catch {
-                            Write-CheckResult -Level ERROR -Message ("软件包 testCommand.successExitCodes 包含无效值：{0} -> {1}" -f $package.name, $successExitCode)
-                            continue
-                        }
-
-                        if ($numericExitCode -lt 0 -or $numericExitCode -ne [Math]::Floor($numericExitCode)) {
-                            Write-CheckResult -Level ERROR -Message ("软件包 testCommand.successExitCodes 必须是非负整数：{0} -> {1}" -f $package.name, $successExitCode)
-                        }
-                    }
-                }
-
-                if (Test-JsonProperty -Object $testCommand -Name "timeoutSeconds") {
-                    $timeoutSeconds = [double]$testCommand.timeoutSeconds
-                    if ($timeoutSeconds -lt 1 -or $timeoutSeconds -ne [Math]::Floor($timeoutSeconds)) {
-                        Write-CheckResult -Level ERROR -Message ("软件包 testCommand.timeoutSeconds 必须是正整数：{0} -> {1}" -f $package.name, $testCommand.timeoutSeconds)
-                    }
-                }
-
-                if (Test-JsonProperty -Object $testCommand -Name "failurePolicy") {
-                    $testFailurePolicy = [string]$testCommand.failurePolicy
-                    if ($allowedFailurePolicies -notcontains $testFailurePolicy) {
-                        Write-CheckResult -Level ERROR -Message ("软件包 testCommand.failurePolicy 无效：{0} -> {1}" -f $package.name, $testFailurePolicy)
-                    }
-                }
-            }
+        if ([string]::IsNullOrWhiteSpace([string]$service.notes)) {
+            Write-CheckResult -Level ERROR -Message ("服务 Ensure-State 条目缺少 notes：{0}" -f $service.name)
         }
 
-        $expectedHash = [string]$package.sha256
-        if (-not [string]::IsNullOrWhiteSpace($expectedHash) -and $expectedHash -notmatch '^[A-Fa-f0-9]{64}$') {
-            Write-CheckResult -Level ERROR -Message ("SHA256 格式无效：{0}" -f $package.name)
+        if ($service.changeMode -eq "disabled" -and $service.ensure -eq "running") {
+            Write-CheckResult -Level WARN -Message ("禁用条目不会自动达到 running 状态：{0}" -f $service.name)
         }
 
-        if ($CheckPackageFiles) {
-            $source = Resolve-KitPath -Path $package.source -PathMap $PathMap
-            if (Test-Path -LiteralPath $source) {
-                Write-CheckResult -Level OK -Message ("安装介质存在：{0}" -f $package.name)
-                if (-not [string]::IsNullOrWhiteSpace($expectedHash)) {
-                    $actualHash = (Get-FileHash -LiteralPath $source -Algorithm SHA256).Hash.ToLowerInvariant()
-                    if ($actualHash -eq $expectedHash.ToLowerInvariant()) {
-                        Write-CheckResult -Level OK -Message ("SHA256 匹配：{0}" -f $package.name)
-                    } else {
-                        Write-CheckResult -Level ERROR -Message ("SHA256 不匹配：{0}" -f $package.name)
-                    }
-                }
-            } else {
-                Write-CheckResult -Level WARN -Message ("安装介质不存在或 NAS 不可达：{0} -> {1}" -f $package.name, $source)
-            }
+        if ($service.ensure -eq "disabled" -and $service.startupType -ne "disabled") {
+            Write-CheckResult -Level WARN -Message ("服务 ensure=disabled 时建议 startupType=disabled：{0}" -f $service.name)
+        }
+
+        if ($service.ensure -eq "ignore" -and $service.changeMode -eq "planned") {
+            Write-CheckResult -Level WARN -Message ("服务 ensure=ignore 时通常不需要 planned 变更：{0}" -f $service.name)
         }
     }
 }
@@ -960,7 +876,11 @@ Test-DisallowedPaths
 
 $softwareManifestPath = Resolve-RepoPath -Path $scope.applications.softwareManifest
 $softwareManifest = Read-JsonFile -Path $softwareManifestPath
-Test-SoftwareManifest -SoftwareManifest $softwareManifest -PathMap $pathMap
+Test-SoftwareManifest -SoftwareManifest $softwareManifest
+
+$servicesManifestPath = Resolve-RepoPath -Path $scope.applications.servicesManifest
+$servicesManifest = Read-JsonFile -Path $servicesManifestPath
+Test-ServiceManifest -ServiceManifest $servicesManifest
 
 Write-ValidationReport -Path $script:ValidationReportPath -Required:$script:ValidationReportRequired
 
