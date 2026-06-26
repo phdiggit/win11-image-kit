@@ -25,7 +25,7 @@ This page is a manual closure candidate only. It is not final ready while [Issue
 
 ## Validation Policy
 
-PR Fast CI may validate static, fixture, and report-only behavior only. It must not be treated as main/workflow evidence. The post-PR #81 and post-PR #82 main push runs failed in Full Validate and must not be treated as ready evidence.
+PR Fast CI may validate static, fixture, and report-only behavior only. It must not be treated as main/workflow evidence. The post-PR #81, post-PR #82, and post-PR #83 main push runs failed in Full Validate and must not be treated as ready evidence.
 
 The close-prep candidate requires:
 
@@ -45,7 +45,7 @@ The close-prep candidate requires:
 
 - Confirm docs/49 is `accepted-pending-main-validation`.
 - Confirm this page remains `ready-for-manual-closure-candidate`, not final ready.
-- Confirm docs/51 records pending main/workflow evidence until real successful evidence exists, including the post-PR #82 failed run only as blocked evidence.
+- Confirm docs/51 records pending main/workflow evidence until real successful evidence exists, including the post-PR #83 failed run only as blocked evidence.
 - Confirm PR Fast CI is not used as a substitute for main/workflow evidence.
 - Confirm No Issue #16 completion summary exists.
 - Confirm no automatic issue closure keyword is used for Issue #16.

@@ -63,7 +63,10 @@ Describe "Evidence chain redaction policy" {
         $tempRoot = Join-Path ([IO.Path]::GetTempPath()) ("win11-evidence-redaction-{0}" -f ([guid]::NewGuid().ToString("N")))
         [IO.Directory]::CreateDirectory($tempRoot) | Out-Null
         try {
-            Copy-Item -LiteralPath (Join-Path $script:RepoRoot "tests\fixtures\evidence-chain\sample-report-inputs\*") -Destination $tempRoot
+            $sampleInputRoot = Join-Path $script:RepoRoot "tests\fixtures\evidence-chain\sample-report-inputs"
+            Get-ChildItem -LiteralPath $sampleInputRoot -File | ForEach-Object {
+                Copy-Item -LiteralPath $_.FullName -Destination $tempRoot
+            }
             Copy-Item -LiteralPath (Join-Path $script:RepoRoot "tests\fixtures\evidence-chain\sample-blocked-sensitive-report.json") -Destination (Join-Path $tempRoot "project-config.json") -Force
             $process = Start-Process -FilePath "powershell" -ArgumentList @(
                 "-NoProfile",
