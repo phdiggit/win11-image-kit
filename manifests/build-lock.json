@@ -198,8 +198,8 @@
       "path": "scripts/validate/Test-ProjectConfig.ps1",
       "category": "script",
       "required": true,
-      "hash": "e06f0850d894eff8268e13a31346a0f6b13b1b0151a8a5c71c220b7d71579c21",
-      "reason": "Project config validation checks Issue 15 layered references and local override policy."
+      "hash": "9073fd4305dc1df62d44d6d2e265bcc5b796109b8ec4cffc3583147a670dfaeb",
+      "reason": "Project config validation includes evidence-chain manifest schema validation."
     },
     {
       "path": "tests/pester/BuildLockSchema.Tests.ps1",
@@ -296,15 +296,15 @@
       "path": ".github/workflows/ci.yml",
       "category": "workflow",
       "required": true,
-      "hash": "833026a32eb95fbcf00cc07aea0b55c7ec23b4dc7a3bcb4409578727bc6a8ee5",
-      "reason": "PR Fast CI wires Issue 15 consumer integration, close-prep, and main-evidence scaffold tests."
+      "hash": "0e3ef619b284125c7a3b653fcf42a534249a184a6601204dea234b3673f6e9a3",
+      "reason": "PR Fast CI wires evidence chain validation and Issue 16 Pester coverage."
     },
     {
       "path": "README.md",
       "category": "doc",
       "required": true,
-      "hash": "8fc4e248ba2f8bf81228a06380669eaf1cf61482587594fb1f27a768f6156c9a",
-      "reason": "README indexes Issue 15 acceptance, close-prep, and main-evidence scaffold."
+      "hash": "0a42c0765aa3e00695f17c27507e92cbbfa24b982e116f401eabd37a922e1fd8",
+      "reason": "README indexes the Issue 16 evidence chain report entry and validation command."
     },
     {
       "path": "docs/37-issue13-ensure-state-acceptance.md",
@@ -394,8 +394,8 @@
       "path": "manifests/quality-gates.json",
       "category": "manifest",
       "required": true,
-      "hash": "a640413065b532ac03c333208c09e12670b987f64b1404733859238732416d5b",
-      "reason": "Quality Gates declare Issue 15 consumer, acceptance, close-prep, and evidence scaffold gates."
+      "hash": "db7be8551ee57e6e687764370226aac6d5624c297a34b7ddc54e6f7dc326d225",
+      "reason": "Quality Gates declare the Issue 16 evidence-chain report-only gate."
     },
     {
       "path": "schemas/quality-gates.schema.json",
@@ -478,14 +478,14 @@
       "path": "docs/44-issue15-layered-configuration.md",
       "category": "doc",
       "required": true,
-      "hash": "25c9d2fc54a97ab1ab4e1b12a9c2797705fe5aca8e6ebef29ae355da2a538e80",
+      "hash": "400a831c59d5978c551039375c566feb88b9b9bb10afdea05afc2ed9e9b92fdf",
       "reason": "Issue 15 layered configuration design records consumer integration and close-prep links."
     },
     {
       "path": "docs/45-issue15-layered-configuration-acceptance.md",
       "category": "doc",
       "required": true,
-      "hash": "30275cd7820ac38aa1e294e1f8516a22005a7151c7e8943aaf7fce1137b0d0f6",
+      "hash": "c3ddc6e2fa95e3bb311231369071603ae5de5fe1e2a789b74a3203f06323b2eb",
       "reason": "Issue 15 acceptance records accepted-pending-main-validation status."
     },
     {
@@ -562,7 +562,7 @@
       "path": "tests/pester/Issue15LayeredConfiguration.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "2131968465684ad736afe29e10507c34a57c5957277f3eafc69d7245757de63b",
+      "hash": "6fa62c599e787a886663ce1d0b8e68ca9743b23efbe376fad7ee492a19fba46f",
       "reason": "Issue 15 guardrail tests cover intake, wiring, Build Lock, and no auto-close wording."
     },
     {
@@ -618,7 +618,7 @@
       "path": "tests/pester/Issue15LayeredConfigurationAcceptance.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "eef74d67d2506683bb2a0a65a89dcd6cdbc4da99e1fd5c3bca54290bf5957964",
+      "hash": "0e4bcd319ff6830fb04423726e17ca7ab2df0fcedf57e872d6e136528c99ac82",
       "reason": "Issue 15 acceptance tests guard accepted-pending-main-validation and wiring."
     },
     {
@@ -639,21 +639,21 @@
       "path": "docs/07-定制范围与配置入口.md",
       "category": "doc",
       "required": true,
-      "hash": "f9fd7ede966670ffea76e3eb3522919ddad729151b5ce45ddf9661921260b548",
+      "hash": "e91a96b1b0c6bff46f6aa055f7552bbf12f0f5a7d18e3a8891a481024cd53b8b",
       "reason": "Configuration entry documentation describes opt-in effective configuration migration."
     },
     {
       "path": "docs/46-issue15-close-preparation.md",
       "category": "doc",
       "required": true,
-      "hash": "9155d2cb2b9833f85bc8b9307d9910efc88d1800d5b87b8461a559af074f0f04",
+      "hash": "8f9a32542b6d0b74f2f8e751b7d3f5ea9630f2c27db576734af9402816f9068e",
       "reason": "Issue 15 close-prep candidate is a manual closure input."
     },
     {
       "path": "docs/47-issue15-main-validation-evidence.md",
       "category": "doc",
       "required": true,
-      "hash": "8af059029f0c287ca7ab3b99e344941776caf45f2b518b222090212ea64f2663",
+      "hash": "526682ff178924300badda935ecde4fbf23d4541abd55666e222dea516a28191",
       "reason": "Issue 15 main validation evidence scaffold must remain pending until real main evidence exists."
     },
     {
@@ -695,15 +695,141 @@
       "path": "tests/pester/Issue15ClosePrep.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "7900cb60ff4347ecc3f79362ee15d783ce2ab35bb61c626f72e2a10da79e6b98",
+      "hash": "04fdf3d656e8d1ca4c0cedcab187006075610b63f62259176667440cd7200402",
       "reason": "Issue 15 close-prep tests guard candidate-only closure semantics."
     },
     {
       "path": "tests/pester/Issue15MainValidationEvidence.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "0d3a22403b8025abc4dba550bbc830b0de3bc2c83d513bc79ce5b8e52b67204a",
+      "hash": "a25246729f642c4a932d8a6c301882cff0e045b520ae2bbfa7ebafca9d576acc",
       "reason": "Issue 15 main evidence tests guard pending-only evidence scaffold."
+    },
+    {
+      "path": "docs/48-issue16-evidence-chain-report.md",
+      "category": "doc",
+      "required": true,
+      "hash": "ad603353a749e9a23cf7656a62f3a288679a6f5e00a1bfc66bbd8a822b3f7d8a",
+      "reason": "Issue 16 intake documents the evidence chain scope, non-goals, report contract, producers, and safety boundaries."
+    },
+    {
+      "path": "manifests/evidence-chain.json",
+      "category": "manifest",
+      "required": true,
+      "hash": "cdfd9a6d357e7060ccf3f2390d5cd995dc36f79f8be56e83e7b617f8e18dd263",
+      "reason": "Evidence chain manifest declares stages, report-only producers, manual placeholders, and artifact policy."
+    },
+    {
+      "path": "schemas/evidence-chain.schema.json",
+      "category": "schema",
+      "required": true,
+      "hash": "e36b0ba7219b375e7ae3acdb176bb6058e0621ee558bed221289a9f5fdd76379",
+      "reason": "Evidence chain manifest schema constrains stages, modes, producers, and artifact policy."
+    },
+    {
+      "path": "schemas/evidence-chain-report.schema.json",
+      "category": "schema",
+      "required": true,
+      "hash": "5d36bb20a1d4671417648526280995477fbc9e1a96d443486bfa61f514112e39",
+      "reason": "Evidence chain report schema constrains summary counts, source metadata, artifacts, and safety flags."
+    },
+    {
+      "path": "scripts/common/New-KitEvidenceChainReport.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "e4aa663f59a754676baff1a340d624791556e02259f157c32c5bf17305f780f2",
+      "reason": "Evidence chain report builder normalizes fixture and report-only producer evidence without true execution."
+    },
+    {
+      "path": "scripts/validate/Test-EvidenceChain.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "027552ae5b833da3f084d5081cc22e082a9780de5da9e31af100ea438ee43463",
+      "reason": "Evidence chain validator enforces producer metadata, safety flags, artifact references, source metadata, and failedCount exit semantics."
+    },
+    {
+      "path": "scripts/config/Show-EvidenceChain.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "c27785355c5a64969e8df58181e92cb055e9112c8d67b54bcc4f1a4ee9bbbeea",
+      "reason": "Evidence chain display entrypoint shows report-only chain state without running producers."
+    },
+    {
+      "path": "tests/fixtures/evidence-chain/sample-build-capture-deploy.json",
+      "category": "test",
+      "required": true,
+      "hash": "99d5252734bf02947cc82945263b63307922fc6665bb1b3036d2be65222a0e52",
+      "reason": "Evidence chain sample report records passed report-only sources plus manual and not-captured lifecycle placeholders."
+    },
+    {
+      "path": "tests/fixtures/evidence-chain/sample-report-inputs/effective-configuration.json",
+      "category": "test",
+      "required": true,
+      "hash": "c621e08192137f7474a3635122eb6edc16be8fd431dcc3ce8b8f1e7766ad4d42",
+      "reason": "Fixture input normalizes effective configuration report-only evidence."
+    },
+    {
+      "path": "tests/fixtures/evidence-chain/sample-report-inputs/project-config.json",
+      "category": "test",
+      "required": true,
+      "hash": "12bce470b03a67bf07555a8d6f891475d8eef13e3a0f2284bcb9053c65ebf547",
+      "reason": "Fixture input normalizes project configuration report-only evidence."
+    },
+    {
+      "path": "tests/fixtures/evidence-chain/sample-report-inputs/build-lock.json",
+      "category": "test",
+      "required": true,
+      "hash": "de7abe2adbee48964aa2af524550ee30a80be42a1e4adb1fe58d990a0bb277b5",
+      "reason": "Fixture input normalizes Build Lock report-only evidence."
+    },
+    {
+      "path": "tests/fixtures/evidence-chain/sample-report-inputs/quality-gates.json",
+      "category": "test",
+      "required": true,
+      "hash": "c8d409836e7704059401ae8341e1f42295d791d9906eb0883c26e42aff3fadf6",
+      "reason": "Fixture input normalizes Quality Gates report-only evidence."
+    },
+    {
+      "path": "tests/fixtures/evidence-chain/sample-report-inputs/pester-summary.json",
+      "category": "test",
+      "required": true,
+      "hash": "2166e7c8693408345ecfdcf9c7577a543e2ed28a60a46e9f9f1c12a19a005dd7",
+      "reason": "Fixture input normalizes Pester summary evidence without true lifecycle execution."
+    },
+    {
+      "path": "tests/pester/EvidenceChainSchema.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "c5e5eb565bef39d362e451e2eb29f4b4c1fb42edf8efd28975cd462f462f58ca",
+      "reason": "Evidence chain schema tests guard closed schemas, stages, modes, and producer entrypoints."
+    },
+    {
+      "path": "tests/pester/EvidenceChainReport.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "654e2c6a6417ab3c91f0f801c74809bffe455790cc5f872b94a76ab9600936dc",
+      "reason": "Evidence chain report tests guard manual/not-captured semantics and artifact policy."
+    },
+    {
+      "path": "tests/pester/EvidenceChainValidation.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "da1a00c9c2db6a78b483b548b69ef73f70435482eafd30102761f259ee3d3ab7",
+      "reason": "Evidence chain validation tests guard report writing and failedCount exit behavior."
+    },
+    {
+      "path": "tests/pester/EvidenceChainSafety.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "673bdf2a618d05375da213ebd1bdc7aeeb519c75423f8d5832ea3c674f83aad0",
+      "reason": "Evidence chain safety tests guard false safety flags and no dangerous command names in new scripts."
+    },
+    {
+      "path": "tests/pester/Issue16EvidenceChain.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "7d56b5242a062933b89aea5d4f273bf032281b0ec41313757ff2a72790f3a536",
+      "reason": "Issue 16 tests guard intake docs, wiring, Build Lock coverage, and no auto-close wording."
     }
   ],
   "watchGlobs": [
@@ -733,7 +859,16 @@
     "scripts/config/*EffectiveConfiguration*.ps1",
     "scripts/validate/*EffectiveConfiguration*.ps1",
     "tests/pester/*EffectiveConfiguration*.Tests.ps1",
-    "tests/pester/Issue15*.Tests.ps1"
+    "tests/pester/Issue15*.Tests.ps1",
+    "manifests/evidence-chain.json",
+    "schemas/evidence-chain*.json",
+    "docs/*issue16*.md",
+    "scripts/common/*EvidenceChain*.ps1",
+    "scripts/config/*EvidenceChain*.ps1",
+    "scripts/validate/*EvidenceChain*.ps1",
+    "tests/fixtures/evidence-chain/*.json",
+    "tests/fixtures/evidence-chain/sample-report-inputs/*.json",
+    "tests/pester/*EvidenceChain*.Tests.ps1"
   ],
   "policy": {
     "missingRequired": "fail",

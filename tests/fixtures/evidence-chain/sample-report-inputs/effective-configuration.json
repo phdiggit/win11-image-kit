@@ -1,0 +1,19 @@
+{
+  "producerId": "effective-configuration",
+  "reportType": "effective-configuration-validation",
+  "status": "passed",
+  "generatedAt": "2026-06-26T00:00:00Z",
+  "reproducible": true,
+  "sourceMetadata": {
+    "kind": "fixture",
+    "sha": "5688a741e98a29572a99dc1e025b9f97c7876dc3",
+    "command": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/validate/Test-EffectiveConfiguration.ps1 -AllStacks"
+  },
+  "artifactReferences": [
+    {
+      "kind": "report",
+      "path": "tests/fixtures/evidence-chain/sample-report-inputs/effective-configuration.json",
+      "private": false
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "reportType": "evidence-chain",
+  "schemaVersion": 1,
+  "generatedAt": "2026-06-26T00:00:00Z",
+  "repository": "phdiggit/win11-image-kit",
+  "chainId": "win11-image-kit-default",
+  "source": {
+    "kind": "fixture",
+    "sha": "5688a741e98a29572a99dc1e025b9f97c7876dc3"
+  },
+  "status": "manual",
+  "summary": {
+    "stageCount": 6,
+    "producerCount": 9,
+    "passedCount": 5,
+    "failedCount": 0,
+    "manualCount": 1,
+    "notCapturedCount": 3
+  },
+  "stages": [
+    {
+      "stage": "config",
+      "status": "passed",
+      "producerCount": 1,
+      "passedCount": 1,
+      "failedCount": 0,
+      "manualCount": 0,
+      "notCapturedCount": 0
+    },
+    {
+      "stage": "validate",
+      "status": "passed",
+      "producerCount": 4,
+      "passedCount": 4,
+      "failedCount": 0,
+      "manualCount": 0,
+      "notCapturedCount": 0
+    },
+    {
+      "stage": "build",
+      "status": "not-captured",
+      "producerCount": 1,
+      "passedCount": 0,
+      "failedCount": 0,
+      "manualCount": 0,
+      "notCapturedCount": 1
+    },
+    {
+      "stage": "capture",
+      "status": "not-captured",
+      "producerCount": 1,
+      "passedCount": 0,
+      "failedCount": 0,
+      "manualCount": 0,
+      "notCapturedCount": 1
+    },
+    {
+      "stage": "deploy",
+      "status": "not-captured",
+      "producerCount": 1,
+      "passedCount": 0,
+      "failedCount": 0,
+      "manualCount": 0,
+      "notCapturedCount": 1
+    },
+    {
+      "stage": "acceptance",
+      "status": "manual",
+      "producerCount": 1,
+      "passedCount": 0,
+      "failedCount": 0,
+      "manualCount": 1,
+      "notCapturedCount": 0
+    }
+  ],
+  "evidence": [],
+  "safety": {
+    "trueExecution": false,
+    "localPrivateIncluded": false,
+    "networkUsed": false,
+    "mutationUsed": false
+  }
+}

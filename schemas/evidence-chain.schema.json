@@ -1,0 +1,123 @@
+{
+  "title": "win11-image-kit evidence chain manifest",
+  "type": "object",
+  "required": [
+    "manifestVersion",
+    "chainId",
+    "stages",
+    "producers",
+    "artifactPolicy"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "manifestVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "chainId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$"
+    },
+    "stages": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/stage"
+      }
+    },
+    "producers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/producer"
+      }
+    },
+    "artifactPolicy": {
+      "$ref": "#/$defs/artifactPolicy"
+    }
+  },
+  "$defs": {
+    "stage": {
+      "type": "string",
+      "enum": [
+        "config",
+        "validate",
+        "build",
+        "capture",
+        "deploy",
+        "acceptance"
+      ]
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "static",
+        "fixture",
+        "report-only",
+        "manual"
+      ]
+    },
+    "producer": {
+      "type": "object",
+      "required": [
+        "id",
+        "stage",
+        "mode",
+        "entrypoint",
+        "reportType",
+        "required",
+        "notes"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "stage": {
+          "$ref": "#/$defs/stage"
+        },
+        "mode": {
+          "$ref": "#/$defs/mode"
+        },
+        "entrypoint": {
+          "type": "string"
+        },
+        "reportType": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "notes": {
+          "type": "string"
+        },
+        "manualReason": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "artifactPolicy": {
+      "type": "object",
+      "required": [
+        "allowLocalArtifacts",
+        "allowPrivateLocalOverrides",
+        "redactLocalPrivateValues"
+      ],
+      "properties": {
+        "allowLocalArtifacts": {
+          "type": "boolean"
+        },
+        "allowPrivateLocalOverrides": {
+          "type": "boolean"
+        },
+        "redactLocalPrivateValues": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

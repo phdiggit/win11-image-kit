@@ -1,0 +1,309 @@
+{
+  "title": "win11-image-kit evidence chain report",
+  "type": "object",
+  "required": [
+    "reportType",
+    "schemaVersion",
+    "generatedAt",
+    "repository",
+    "source",
+    "status",
+    "summary",
+    "stages",
+    "evidence",
+    "safety"
+  ],
+  "properties": {
+    "reportType": {
+      "type": "string",
+      "const": "evidence-chain"
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "generatedAt": {
+      "type": "string"
+    },
+    "repository": {
+      "type": "string"
+    },
+    "chainId": {
+      "type": "string"
+    },
+    "source": {
+      "$ref": "#/$defs/source"
+    },
+    "status": {
+      "$ref": "#/$defs/status"
+    },
+    "summary": {
+      "$ref": "#/$defs/summary"
+    },
+    "stages": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/stageSummary"
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/evidenceItem"
+      }
+    },
+    "safety": {
+      "$ref": "#/$defs/safety"
+    }
+  },
+  "$defs": {
+    "status": {
+      "type": "string",
+      "enum": [
+        "passed",
+        "failed",
+        "manual",
+        "not-captured"
+      ]
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "fixture",
+            "local",
+            "ci",
+            "main",
+            "workflow_dispatch",
+            "manual"
+          ]
+        },
+        "sha": {
+          "type": "string",
+          "pattern": "^[A-Fa-f0-9]{40}$"
+        },
+        "workflowRun": {
+          "type": "string",
+          "pattern": "^https://github\\.com/.+/actions/runs/[0-9]+"
+        },
+        "job": {
+          "type": "string",
+          "pattern": "^https://github\\.com/.+/actions/runs/[0-9]+"
+        },
+        "command": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "summary": {
+      "type": "object",
+      "required": [
+        "stageCount",
+        "producerCount",
+        "passedCount",
+        "failedCount",
+        "manualCount",
+        "notCapturedCount"
+      ],
+      "properties": {
+        "stageCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "producerCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "passedCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "failedCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "manualCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "notCapturedCount": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "stageSummary": {
+      "type": "object",
+      "required": [
+        "stage",
+        "status",
+        "producerCount",
+        "passedCount",
+        "failedCount",
+        "manualCount",
+        "notCapturedCount"
+      ],
+      "properties": {
+        "stage": {
+          "type": "string",
+          "enum": [
+            "config",
+            "validate",
+            "build",
+            "capture",
+            "deploy",
+            "acceptance"
+          ]
+        },
+        "status": {
+          "$ref": "#/$defs/status"
+        },
+        "producerCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "passedCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "failedCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "manualCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "notCapturedCount": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "artifactReference": {
+      "type": "object",
+      "required": [
+        "kind",
+        "path",
+        "private"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "repo-file",
+            "fixture",
+            "report",
+            "manual-placeholder"
+          ]
+        },
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[A-Fa-f0-9]{64}$"
+        },
+        "private": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "evidenceItem": {
+      "type": "object",
+      "required": [
+        "id",
+        "stage",
+        "producerId",
+        "producerMode",
+        "entrypoint",
+        "reportType",
+        "status",
+        "generatedAt",
+        "manual",
+        "reproducible",
+        "sourceMetadata",
+        "artifactReferences"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "stage": {
+          "type": "string"
+        },
+        "producerId": {
+          "type": "string"
+        },
+        "producerMode": {
+          "type": "string"
+        },
+        "entrypoint": {
+          "type": "string"
+        },
+        "reportType": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/status"
+        },
+        "generatedAt": {
+          "type": "string"
+        },
+        "manual": {
+          "type": "boolean"
+        },
+        "reproducible": {
+          "type": "boolean"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "sourceMetadata": {
+          "$ref": "#/$defs/source"
+        },
+        "artifactReferences": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/artifactReference"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "safety": {
+      "type": "object",
+      "required": [
+        "trueExecution",
+        "localPrivateIncluded",
+        "networkUsed",
+        "mutationUsed"
+      ],
+      "properties": {
+        "trueExecution": {
+          "type": "boolean"
+        },
+        "localPrivateIncluded": {
+          "type": "boolean"
+        },
+        "networkUsed": {
+          "type": "boolean"
+        },
+        "mutationUsed": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
