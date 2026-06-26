@@ -19,7 +19,7 @@ Pull request-only Fast CI is not a substitute.
 | Workflow run | `pending` |
 | Full Validate job | `pending` |
 | Result | `pending` |
-| Notes | `Post-PR #81 main push run 28245123952 targeted 6a60122ce17b6c3c3198a62f485bc48ffe677b5c but failed in Full Validate, so it is not acceptable ready evidence.` |
+| Notes | `Post-PR #82 main push run 28246816830 targeted fb235d0a114c264decdbb46af08d1f29f38eca0d but failed in Full Validate, so it is not acceptable ready evidence.` |
 
 ## Evidence Chain Report Evidence
 
@@ -68,6 +68,8 @@ Pull request-only Fast CI is not a substitute.
 This document may be promoted only after real `main` or `workflow_dispatch` evidence exists. Do not fill these fields from pull request-only Fast CI, local fixture reports, or inferred success.
 
 ## Blocked Evidence Attempt
+
+The post-PR #82 `main` push run at `https://github.com/phdiggit/win11-image-kit/actions/runs/28246816830` targeted `fb235d0a114c264decdbb46af08d1f29f38eca0d`, but `Full Validate` failed in the PowerShell 7 evidence chain validation step. The failing job was `https://github.com/phdiggit/win11-image-kit/actions/runs/28246816830/job/83687873647`. The failure was `Test-KitEvidenceRedaction` call depth overflow from `scripts/common/New-KitEvidenceChainReport.ps1`, and this failed run is recorded only as a blocker, not ready evidence.
 
 The post-PR #81 `main` push run at `https://github.com/phdiggit/win11-image-kit/actions/runs/28245123952` targeted `6a60122ce17b6c3c3198a62f485bc48ffe677b5c`, but `Full Validate` failed in the PowerShell 7 evidence chain validation step. The failing job was `https://github.com/phdiggit/win11-image-kit/actions/runs/28245123952/job/83681950520`. This failed run is recorded only as a blocker and is not used as ready evidence.
 

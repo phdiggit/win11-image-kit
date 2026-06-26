@@ -135,7 +135,7 @@ PR Fast CI is not main/workflow evidence.
 
 ## Remaining Work
 
-- Backfill `docs/51-issue16-main-validation-evidence.md` only after real successful main push or workflow_dispatch evidence exists.
+- Backfill `docs/51-issue16-main-validation-evidence.md` only after real successful main push or workflow_dispatch evidence exists; the post-PR #82 main push failure remains blocked evidence only.
 - Maintainer review of [Issue #16 Close Preparation](50-issue16-close-preparation.md) remains manual.
 - Real build/capture/deploy/admin-smoke evidence remains not-run, not-captured, or not-provided unless maintainers explicitly perform it later.
 
