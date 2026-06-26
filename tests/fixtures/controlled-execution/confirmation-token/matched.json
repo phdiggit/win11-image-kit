@@ -1,0 +1,9 @@
+{
+  "reportType": "confirmation-token",
+  "schemaVersion": 1,
+  "targetDiskNumber": 0,
+  "targetDiskSerial": "SAMPLE-DISK-SERIAL-001",
+  "token": "DISK-0-SERIAL-SAMPLE-DISK-SERIAL-001",
+  "genericToken": false,
+  "status": "matched"
+}

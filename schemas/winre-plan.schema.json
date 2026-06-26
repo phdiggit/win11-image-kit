@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "win11-image-kit Windows RE plan fixture",
+  "type": "object",
+  "required": ["reportType", "schemaVersion", "windowsVolume", "efiVolume", "recoveryVolume", "winreWim", "plannedCommands", "status"],
+  "properties": {
+    "reportType": { "type": "string", "const": "winre-plan" },
+    "schemaVersion": { "type": "integer", "minimum": 1 },
+    "windowsVolume": { "$ref": "#/$defs/volume" },
+    "efiVolume": { "$ref": "#/$defs/volume" },
+    "recoveryVolume": { "$ref": "#/$defs/recoveryVolume" },
+    "winreWim": { "type": "string", "minLength": 1 },
+    "plannedCommands": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "status": { "type": "string", "enum": ["planned", "blocked"] }
+  },
+  "$defs": {
+    "volume": {
+      "type": "object",
+      "required": ["logicalName", "letter", "source"],
+      "properties": {
+        "logicalName": { "type": "string", "minLength": 1 },
+        "letter": { "type": "string", "pattern": "^[A-Z]$" },
+        "source": { "type": "string", "enum": ["fixture"] }
+      },
+      "additionalProperties": false
+    },
+    "recoveryVolume": {
+      "type": "object",
+      "required": ["logicalName", "letter", "gptType", "gptAttributes", "source"],
+      "properties": {
+        "logicalName": { "type": "string", "const": "Recovery" },
+        "letter": { "type": "string", "pattern": "^[A-Z]$" },
+        "gptType": { "type": "string", "minLength": 1 },
+        "gptAttributes": { "type": "string", "minLength": 1 },
+        "source": { "type": "string", "enum": ["fixture"] }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

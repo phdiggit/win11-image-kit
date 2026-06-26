@@ -1,0 +1,34 @@
+{
+  "reportType": "native-command-plan",
+  "schemaVersion": 1,
+  "commands": [
+    {
+      "commandName": "disk-layout-plan",
+      "plannedCommand": "diskpart /s <planned-script>",
+      "expectedExitCodes": [0],
+      "actualExitCode": "not-run",
+      "stdout": "not-captured",
+      "stderr": "not-captured",
+      "status": "planned"
+    },
+    {
+      "commandName": "image-apply-plan",
+      "plannedCommand": "dism /Apply-Image /ImageFile:fixture://install.wim /Index:1 /ApplyDir:W:\\",
+      "expectedExitCodes": [0],
+      "actualExitCode": "not-run",
+      "stdout": "not-captured",
+      "stderr": "not-captured",
+      "status": "planned"
+    },
+    {
+      "commandName": "boot-files-plan",
+      "plannedCommand": "bcdboot W:\\Windows /s S: /f UEFI",
+      "expectedExitCodes": [0],
+      "actualExitCode": "not-run",
+      "stdout": "not-captured",
+      "stderr": "not-captured",
+      "status": "planned"
+    }
+  ],
+  "status": "planned"
+}

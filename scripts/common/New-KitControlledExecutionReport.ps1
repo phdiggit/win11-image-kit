@@ -1,6 +1,11 @@
 #Requires -Version 5.1
 
 . "$PSScriptRoot\Test-KitControlledExecutionSafety.ps1"
+. "$PSScriptRoot\ConvertTo-KitDiskIdentityPlan.ps1"
+. "$PSScriptRoot\Test-KitConfirmationToken.ps1"
+. "$PSScriptRoot\ConvertTo-KitWimImagePlan.ps1"
+. "$PSScriptRoot\ConvertTo-KitWinREPlan.ps1"
+. "$PSScriptRoot\New-KitNativeCommandPlan.ps1"
 
 function Resolve-KitControlledExecutionRepoPath {
     param(
@@ -59,6 +64,21 @@ function New-KitControlledExecutionReport {
 
         [ValidateSet("dry-run", "what-if", "plan-only")]
         [string]$Mode,
+
+        [AllowNull()]
+        $DiskIdentity,
+
+        [AllowNull()]
+        $ConfirmationToken,
+
+        [AllowNull()]
+        $WimMetadata,
+
+        [AllowNull()]
+        $WinREPlan,
+
+        [AllowNull()]
+        $NativeCommandPlan,
 
         [switch]$WhatIf
     )
@@ -130,6 +150,22 @@ function New-KitControlledExecutionReport {
         $status = "failed"
     }
 
+    $diskIdentityPlan = ConvertTo-KitDiskIdentityPlan -InputObject $DiskIdentity
+    $confirmationTokenPlan = Test-KitConfirmationToken -InputObject $ConfirmationToken
+    $wimImagePlan = ConvertTo-KitWimImagePlan -InputObject $WimMetadata
+    $winREPlanResult = ConvertTo-KitWinREPlan -InputObject $WinREPlan
+    $nativeCommandPlanResult = New-KitNativeCommandPlan -InputObject $NativeCommandPlan
+
+    if (
+        $diskIdentityPlan.mismatchCount -gt 0 -or
+        $confirmationTokenPlan.failureCount -gt 0 -or
+        $wimImagePlan.failureCount -gt 0 -or
+        $winREPlanResult.failureCount -gt 0 -or
+        $nativeCommandPlanResult.failureCount -gt 0
+    ) {
+        $status = "failed"
+    }
+
     [pscustomobject][ordered]@{
         reportType = "controlled-execution"
         schemaVersion = 1
@@ -149,8 +185,20 @@ function New-KitControlledExecutionReport {
             requiresRebootCount = @($results | Where-Object { $_.requiresReboot }).Count
             requiresNetworkCount = @($results | Where-Object { $_.requiresNetwork }).Count
             mutationActionCount = $mutationCount
+            diskIdentityMismatchCount = [int]$diskIdentityPlan.mismatchCount
+            confirmationTokenFailureCount = [int]$confirmationTokenPlan.failureCount
+            wimValidationFailureCount = [int]$wimImagePlan.failureCount
+            winrePlanFailureCount = [int]$winREPlanResult.failureCount
+            nativeCommandFailureCount = [int]$nativeCommandPlanResult.failureCount
         }
         actions = @($results)
+        inputs = [pscustomobject][ordered]@{
+            diskIdentity = $diskIdentityPlan
+            confirmationToken = $confirmationTokenPlan
+            wimMetadata = $wimImagePlan
+            winrePlan = $winREPlanResult
+            nativeCommandPlan = $nativeCommandPlanResult
+        }
         safety = [pscustomobject][ordered]@{
             diskMutation = $false
             registryMutation = $false

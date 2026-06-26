@@ -156,7 +156,67 @@
       "blocking": true,
       "entrypoint": "scripts/validate/Test-ControlledExecution.ps1",
       "evidence": "report",
-      "notes": "Validates Issue 17 controlled execution manifest, dry-run report, safety policy, and blocked mutation semantics without true execution."
+      "notes": "Validates Issue 17 controlled execution manifest, dry-run report, disk identity, confirmation token, WIM metadata, WinRE plan, native command envelope, safety policy, and blocked fixture semantics without true execution."
+    },
+    {
+      "id": "controlled-execution-disk-identity",
+      "displayName": "Controlled execution disk identity fixture validation",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "fixture",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "tests/pester/ControlledExecutionDiskIdentity.Tests.ps1",
+      "evidence": "pester",
+      "notes": "Validates disk identity match and mismatch fixture semantics without querying real disks."
+    },
+    {
+      "id": "controlled-execution-confirmation-token",
+      "displayName": "Controlled execution confirmation token validation",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "fixture",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "tests/pester/ControlledExecutionConfirmationToken.Tests.ps1",
+      "evidence": "pester",
+      "notes": "Validates target-specific confirmation token semantics and blocks generic tokens."
+    },
+    {
+      "id": "controlled-execution-wim-plan",
+      "displayName": "Controlled execution WIM metadata fixture validation",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "fixture",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "tests/pester/ControlledExecutionWimPlan.Tests.ps1",
+      "evidence": "pester",
+      "notes": "Validates fixture-only image metadata, hash, index, architecture, source run ID, and non-private image path policy."
+    },
+    {
+      "id": "controlled-execution-winre-plan",
+      "displayName": "Controlled execution WinRE plan fixture validation",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "fixture",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "tests/pester/ControlledExecutionWinREPlan.Tests.ps1",
+      "evidence": "pester",
+      "notes": "Validates fixture-only EFI, Windows, and Recovery logical volume planning without recovery state mutation."
+    },
+    {
+      "id": "controlled-execution-native-command",
+      "displayName": "Controlled execution native command envelope validation",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "fixture",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "tests/pester/ControlledExecutionNativeCommand.Tests.ps1",
+      "evidence": "pester",
+      "notes": "Validates native command envelopes remain planned, not-run, and not-captured."
     },
     {
       "id": "issue17-intake",

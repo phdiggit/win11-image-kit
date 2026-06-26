@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "win11-image-kit controlled execution report",
   "type": "object",
-  "required": ["reportType", "schemaVersion", "generatedAt", "executionSetId", "mode", "whatIf", "trueExecution", "status", "summary", "actions", "safety"],
+  "required": ["reportType", "schemaVersion", "generatedAt", "executionSetId", "mode", "whatIf", "trueExecution", "status", "summary", "actions", "inputs", "safety"],
   "properties": {
     "reportType": {
       "type": "string",
@@ -40,7 +40,7 @@
   "$defs": {
     "summary": {
       "type": "object",
-      "required": ["actionCount", "plannedActionCount", "blockedActionCount", "failedCount", "requiresAdminCount", "requiresWinPECount", "requiresRebootCount", "requiresNetworkCount", "mutationActionCount"],
+      "required": ["actionCount", "plannedActionCount", "blockedActionCount", "failedCount", "requiresAdminCount", "requiresWinPECount", "requiresRebootCount", "requiresNetworkCount", "mutationActionCount", "diskIdentityMismatchCount", "confirmationTokenFailureCount", "wimValidationFailureCount", "winrePlanFailureCount", "nativeCommandFailureCount"],
       "properties": {
         "actionCount": { "type": "integer", "minimum": 0 },
         "plannedActionCount": { "type": "integer", "minimum": 0 },
@@ -50,9 +50,35 @@
         "requiresWinPECount": { "type": "integer", "minimum": 0 },
         "requiresRebootCount": { "type": "integer", "minimum": 0 },
         "requiresNetworkCount": { "type": "integer", "minimum": 0 },
-        "mutationActionCount": { "type": "integer", "minimum": 0 }
+        "mutationActionCount": { "type": "integer", "minimum": 0 },
+        "diskIdentityMismatchCount": { "type": "integer", "minimum": 0 },
+        "confirmationTokenFailureCount": { "type": "integer", "minimum": 0 },
+        "wimValidationFailureCount": { "type": "integer", "minimum": 0 },
+        "winrePlanFailureCount": { "type": "integer", "minimum": 0 },
+        "nativeCommandFailureCount": { "type": "integer", "minimum": 0 }
       },
       "additionalProperties": false
+    },
+    "inputs": {
+      "type": "object",
+      "required": ["diskIdentity", "confirmationToken", "wimMetadata", "winrePlan", "nativeCommandPlan"],
+      "properties": {
+        "diskIdentity": { "$ref": "#/$defs/inputResult" },
+        "confirmationToken": { "$ref": "#/$defs/inputResult" },
+        "wimMetadata": { "$ref": "#/$defs/inputResult" },
+        "winrePlan": { "$ref": "#/$defs/inputResult" },
+        "nativeCommandPlan": { "$ref": "#/$defs/inputResult" }
+      },
+      "additionalProperties": false
+    },
+    "inputResult": {
+      "type": "object",
+      "required": ["status", "reason"],
+      "properties": {
+        "status": { "type": "string", "minLength": 1 },
+        "reason": { "type": "string" }
+      },
+      "additionalProperties": true
     },
     "action": {
       "type": "object",

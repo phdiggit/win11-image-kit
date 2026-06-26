@@ -1,0 +1,25 @@
+{
+  "reportType": "winpe-disk-identity",
+  "schemaVersion": 1,
+  "target": {
+    "diskNumber": 0,
+    "serial": "SAMPLE-DISK-SERIAL-001",
+    "sizeBytes": 512110190592,
+    "model": "Sample NVMe",
+    "busType": "NVMe",
+    "partitionStyle": "GPT"
+  },
+  "expected": {
+    "diskNumber": 0,
+    "serial": "SAMPLE-DISK-SERIAL-001",
+    "sizeBytes": 512110190592,
+    "busType": "NVMe"
+  },
+  "candidateCount": 1,
+  "partitions": [
+    { "index": 1, "type": "EFI", "sizeBytes": 272629760 },
+    { "index": 2, "type": "Windows", "sizeBytes": 510000000000 },
+    { "index": 3, "type": "Recovery", "sizeBytes": 1073741824 }
+  ],
+  "status": "matched"
+}

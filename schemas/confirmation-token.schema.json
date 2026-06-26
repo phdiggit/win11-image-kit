@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "win11-image-kit confirmation token fixture",
+  "type": "object",
+  "required": ["reportType", "schemaVersion", "targetDiskNumber", "targetDiskSerial", "token", "genericToken", "status"],
+  "properties": {
+    "reportType": { "type": "string", "const": "confirmation-token" },
+    "schemaVersion": { "type": "integer", "minimum": 1 },
+    "targetDiskNumber": { "type": "integer", "minimum": 0 },
+    "targetDiskSerial": { "type": "string", "minLength": 1 },
+    "token": { "type": "string", "minLength": 1 },
+    "genericToken": { "type": "boolean" },
+    "status": { "type": "string", "enum": ["matched", "blocked"] }
+  },
+  "additionalProperties": false
+}

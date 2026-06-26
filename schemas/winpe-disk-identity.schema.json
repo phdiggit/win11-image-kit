@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "win11-image-kit WinPE disk identity fixture",
+  "type": "object",
+  "required": ["reportType", "schemaVersion", "target", "expected", "partitions", "status"],
+  "properties": {
+    "reportType": { "type": "string", "const": "winpe-disk-identity" },
+    "schemaVersion": { "type": "integer", "minimum": 1 },
+    "target": { "$ref": "#/$defs/disk" },
+    "expected": { "$ref": "#/$defs/expectedDisk" },
+    "candidateCount": { "type": "integer", "minimum": 1 },
+    "partitions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/partition" }
+    },
+    "status": { "type": "string", "enum": ["matched", "blocked"] }
+  },
+  "$defs": {
+    "disk": {
+      "type": "object",
+      "required": ["diskNumber", "serial", "sizeBytes", "model", "busType", "partitionStyle"],
+      "properties": {
+        "diskNumber": { "type": "integer", "minimum": 0 },
+        "serial": { "type": "string", "minLength": 1 },
+        "sizeBytes": { "type": "integer", "minimum": 1 },
+        "model": { "type": "string", "minLength": 1 },
+        "busType": { "type": "string", "minLength": 1 },
+        "partitionStyle": { "type": "string", "enum": ["GPT", "MBR", "RAW"] }
+      },
+      "additionalProperties": false
+    },
+    "expectedDisk": {
+      "type": "object",
+      "required": ["diskNumber", "serial", "sizeBytes", "busType"],
+      "properties": {
+        "diskNumber": { "type": "integer", "minimum": 0 },
+        "serial": { "type": "string", "minLength": 1 },
+        "sizeBytes": { "type": "integer", "minimum": 1 },
+        "busType": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "partition": {
+      "type": "object",
+      "required": ["index", "type", "sizeBytes"],
+      "properties": {
+        "index": { "type": "integer", "minimum": 1 },
+        "type": { "type": "string", "minLength": 1 },
+        "sizeBytes": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
