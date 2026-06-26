@@ -1,17 +1,67 @@
 ﻿param(
     [string]$ScopeManifestPath = "$PSScriptRoot\..\..\manifests\customization-scope.json",
-    [string]$PathsManifestPath = "$PSScriptRoot\..\..\manifests\paths.json"
+    [string]$PathsManifestPath = "$PSScriptRoot\..\..\manifests\paths.json",
+    [switch]$UseEffectiveConfiguration,
+    [string]$StackName,
+    [switch]$IncludeLocal,
+    [string]$PathOverrideJson
 )
 
 $ErrorActionPreference = "Stop"
 . "$PSScriptRoot\..\common\Write-Log.ps1"
 . "$PSScriptRoot\..\common\Resolve-KitPath.ps1"
+. "$PSScriptRoot\..\common\Resolve-KitEffectiveConfiguration.ps1"
 
+$RepoRoot = (Resolve-Path -LiteralPath "$PSScriptRoot\..\..").Path
 $scopeConfig = Get-Content -LiteralPath $ScopeManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
-$pathMap = Get-KitPathMap -ManifestPath $PathsManifestPath
+$effectiveReport = $null
+
+if ($UseEffectiveConfiguration) {
+    $configLayersPath = if ($scopeConfig.PSObject.Properties.Name -contains "configLayersManifest") {
+        [string]$scopeConfig.configLayersManifest
+    } else {
+        "manifests/config-layers.json"
+    }
+
+    $effectiveStackName = if (-not [string]::IsNullOrWhiteSpace($StackName)) {
+        $StackName
+    } elseif ($scopeConfig.PSObject.Properties.Name -contains "defaultStack" -and -not [string]::IsNullOrWhiteSpace([string]$scopeConfig.defaultStack)) {
+        [string]$scopeConfig.defaultStack
+    } else {
+        "default"
+    }
+
+    $pathOverride = @{}
+    if (-not [string]::IsNullOrWhiteSpace($PathOverrideJson)) {
+        $pathOverride = ConvertTo-KitHashtable -InputObject ($PathOverrideJson | ConvertFrom-Json)
+    }
+
+    $effectiveReport = Resolve-KitEffectiveConfiguration `
+        -ConfigLayersPath $configLayersPath `
+        -StackName $effectiveStackName `
+        -IncludeLocal:$IncludeLocal `
+        -PathOverride $pathOverride `
+        -RepoRoot $RepoRoot
+
+    $pathMap = @{}
+    foreach ($path in @($effectiveReport.pathSources)) {
+        $pathMap[[string]$path.key] = [string]$path.value
+    }
+} else {
+    $pathMap = Get-KitPathMap -ManifestPath $PathsManifestPath
+}
 
 Write-KitLog ("当前定制 profile：{0}" -f $scopeConfig.profile)
 Write-KitLog ("目标：{0}" -f $scopeConfig.goal)
+
+if ($UseEffectiveConfiguration) {
+    Write-KitLog ("Effective configuration stack: {0}" -f $effectiveReport.stackName)
+    Write-KitLog ("Include local private override: {0}" -f $effectiveReport.includeLocal)
+    Write-KitLog "Effective configuration source layers:"
+    foreach ($layer in @($effectiveReport.appliedLayers)) {
+        Write-KitLog ("  {0} ({1}) -> {2}" -f $layer.id, $layer.kind, $layer.path)
+    }
+}
 
 Write-KitLog "路径配置："
 foreach ($key in @($pathMap.Keys | Sort-Object)) {

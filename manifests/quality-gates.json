@@ -133,6 +133,54 @@
       "entrypoint": "scripts/validate/Test-EffectiveConfiguration.ps1",
       "evidence": "report",
       "notes": "Validates Issue 15 layered configuration with all tracked stacks, CLI override fixture, local static inputs, and failedCount=0."
+    },
+    {
+      "id": "effective-configuration-consumer-integration",
+      "displayName": "Effective configuration consumer integration",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "fixture",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "tests/pester/EffectiveConfigurationConsumerIntegration.Tests.ps1",
+      "evidence": "pester",
+      "notes": "Validates Show-CustomizationScope default compatibility and opt-in effective configuration source-layer display."
+    },
+    {
+      "id": "issue15-acceptance",
+      "displayName": "Issue 15 accepted pending main validation",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "docs/45-issue15-layered-configuration-acceptance.md",
+      "evidence": "document",
+      "notes": "Documents functional acceptance while keeping main/workflow evidence pending."
+    },
+    {
+      "id": "issue15-close-prep",
+      "displayName": "Issue 15 close-prep candidate",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "manual",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "docs/46-issue15-close-preparation.md",
+      "evidence": "document",
+      "notes": "Provides a manual closure candidate only; PR Fast CI is not main evidence."
+    },
+    {
+      "id": "issue15-main-evidence-scaffold",
+      "displayName": "Issue 15 main evidence scaffold",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "docs/47-issue15-main-validation-evidence.md",
+      "evidence": "document",
+      "notes": "Keeps main/workflow validation fields pending until real main or workflow_dispatch evidence exists."
     }
   ]
 }

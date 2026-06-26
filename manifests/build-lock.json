@@ -198,8 +198,8 @@
       "path": "scripts/validate/Test-ProjectConfig.ps1",
       "category": "script",
       "required": true,
-      "hash": "610662c10fcb27cef89dec630d8654b29f40b83dd7b6bfb6ea612d4383f7c867",
-      "reason": "Project config validation now enforces quality gate and config layer manifest structure."
+      "hash": "12301f2bf0eebfff211f3702abb91f6fcf10eed727c45f6623d1fe81eaa9f23c",
+      "reason": "Project config validation checks Issue 15 layered references and local override policy."
     },
     {
       "path": "tests/pester/BuildLockSchema.Tests.ps1",
@@ -296,15 +296,15 @@
       "path": ".github/workflows/ci.yml",
       "category": "workflow",
       "required": true,
-      "hash": "190411ee3dee131a22d81f08756fcb2fbbe19e5e7317d9fc2d036e137a868fa6",
-      "reason": "PR Fast CI wires Issue 15 hardening guardrails while preserving the Validate / Full Validate split."
+      "hash": "421f4ad59bab9086af8ef89376c0bd4763cb670af62f096ca027c02aae6e2e39",
+      "reason": "PR Fast CI wires Issue 15 consumer integration, close-prep, and main-evidence scaffold tests."
     },
     {
       "path": "README.md",
       "category": "doc",
       "required": true,
-      "hash": "2e9d6fc17344c345b10dec204c020916a466c030e00a095d880142d59f6b4ca6",
-      "reason": "README quick entry links Issue 15 layered configuration intake, acceptance, and validation."
+      "hash": "63ebafb05cf2960337957f5f179efe5a0806335aae4e113c5bd4cca4106c1df2",
+      "reason": "README indexes Issue 15 acceptance, close-prep, and main-evidence scaffold."
     },
     {
       "path": "docs/37-issue13-ensure-state-acceptance.md",
@@ -394,8 +394,8 @@
       "path": "manifests/quality-gates.json",
       "category": "manifest",
       "required": true,
-      "hash": "9a1cf1fec9c2d0378dbb19f102553f19ea3a6e9846d53aad7bb18ad2d5144f5d",
-      "reason": "Issue 14 and Issue 15 quality gate manifest is a trusted validation inventory."
+      "hash": "1c8df012adb6e34cf934e27c745c486caa59cc06fdd8c302617c06eee6252008",
+      "reason": "Quality Gates declare Issue 15 consumer, acceptance, close-prep, and evidence scaffold gates."
     },
     {
       "path": "schemas/quality-gates.schema.json",
@@ -478,21 +478,21 @@
       "path": "docs/44-issue15-layered-configuration.md",
       "category": "doc",
       "required": true,
-      "hash": "ab56e5c156d9249f37e68dd4715dff43a704ffac5ece695ec71ffa27febf7657",
-      "reason": "Issue 15 intake records real roadmap scope, phase 2 hardening, non-goals, safety boundaries, and validation plan."
+      "hash": "89f21e5046ecb8ce18fdf54f0dab828819457220cdbd7660617f8acf60b84e8c",
+      "reason": "Issue 15 layered configuration design records consumer integration and close-prep links."
     },
     {
       "path": "docs/45-issue15-layered-configuration-acceptance.md",
       "category": "doc",
       "required": true,
-      "hash": "9a447812e88ec47c9df9627f9fe7e6e94fce24769d8163ed5a84fe040557934e",
-      "reason": "Issue 15 acceptance scaffold records in-acceptance hardening status without close-prep claims."
+      "hash": "ba9dcd1e3150c1e9a0abc5bd4ab50a18648323235539265c4da0bb21e841f32e",
+      "reason": "Issue 15 acceptance records accepted-pending-main-validation status."
     },
     {
       "path": "manifests/paths.local.example.json",
       "category": "manifest",
       "required": true,
-      "hash": "5abf24715e18fef3c2da5cdffb08517dde5fd949a767265c4662fbaa244b7942",
+      "hash": "0cadacabe82b71dc3275e68bf76228eea469ff8737c0509a81114b42e4ff6d84",
       "reason": "Issue 15 local override example is a safe tracked template for private paths."
     },
     {
@@ -513,7 +513,7 @@
       "path": "schemas/config-layer-fragment.schema.json",
       "category": "schema",
       "required": true,
-      "hash": "09fc2fe6e1477d4ef9119a9e6349164f74d24d5e01eb2be5c6bcae63808b5db9",
+      "hash": "d0d5f1888a2a2894b7772c43ee633d9078c53d57b5cbe560999248c3aee24e66",
       "reason": "Issue 15 config layer fragment schema constrains profile and hardware overrides."
     },
     {
@@ -541,21 +541,21 @@
       "path": "scripts/common/Resolve-KitEffectiveConfiguration.ps1",
       "category": "script",
       "required": true,
-      "hash": "ac731defe0cebc4c3983a4e00d8404e326bee712271663d19da6b5bcf3dbed1a",
+      "hash": "5443051424955dd82bc87ac8be5cc49ebfcdf240f1653f44a45387a957bf163f",
       "reason": "Issue 15 effective configuration resolver produces static report-only evidence with CLI and local override handling."
     },
     {
       "path": "scripts/config/Show-EffectiveConfiguration.ps1",
       "category": "script",
       "required": true,
-      "hash": "0e838c0459a56b8be3fa7bda6134a809864bf58a5b04423b63144574470a2bbd",
+      "hash": "78608265535c6072d023279a4a8cb41ce4dc2dc671a24c9382b425474e4b40c4",
       "reason": "Issue 15 effective configuration display entrypoint outputs value source layers and redacted local values."
     },
     {
       "path": "scripts/validate/Test-EffectiveConfiguration.ps1",
       "category": "script",
       "required": true,
-      "hash": "ee95294222ac67220ad2e5fd719765b9b81982bc96202946bb7a6e88e146ea3a",
+      "hash": "0d3565eb252c826d67593e91c72097d7df967054404e995a8c09ecdfc26b0361",
       "reason": "Issue 15 effective configuration validation entrypoint writes failedCount=0 reports for selected or all stacks."
     },
     {
@@ -590,36 +590,36 @@
       "path": "tests/pester/EffectiveConfigurationMergePolicy.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "7add7a6405351c76152b8d07b2acc94ca55a9a3511e82e37d4a0477e84067bcf",
+      "hash": "2cc38c121389c141dcfe6a442a352f632284e242712c8f2e1256832dff44b16c",
       "reason": "Issue 15 merge policy tests guard object, array, scalar, and null behavior."
     },
     {
       "path": "tests/pester/EffectiveConfigurationLocalOverride.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "8649ee0d1224b32c386ff8b2332836946de716f476de1b89c9943dee36d82df3",
+      "hash": "ba84377299cdf73bc8c5b1bd48579820d655022cbe7b8ea5aa6945a086e266ff",
       "reason": "Issue 15 local override tests guard missing, present, malformed, redacted, and untracked behavior."
     },
     {
       "path": "tests/pester/EffectiveConfigurationTokenSafety.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "ad263dd13a0b940d546b53c4e1a744a9c7718d57ab2a3c6ba50cd3ba630ced7a",
+      "hash": "4034ed649e9abe0037b4fa5c61c573a4603d4024dfab4208993915ef35baa9aa",
       "reason": "Issue 15 token safety tests guard unknown token, circular token, and forbidden old NAS failures."
     },
     {
       "path": "tests/pester/EffectiveConfigurationCliOverride.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "f80a2b06c6f1910574da01df60c0ec73529b0e19c5e6cef071978badc97c328c",
+      "hash": "7cdf34203c83a815b61a4f9902dbcac334b06963c3fc35257cf6a3cb50cb8b3e",
       "reason": "Issue 15 CLI override tests guard highest-precedence path override source attribution."
     },
     {
       "path": "tests/pester/Issue15LayeredConfigurationAcceptance.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "a6c81ecca70a66a553ca85533b09743fd76a0a3742890f8350e3f14a51ad471f",
-      "reason": "Issue 15 acceptance tests guard in-acceptance scaffold and hardening wiring."
+      "hash": "c1fbe431abe30f1bbdefd2367a680cb863678ea7a953e2b14335811989d1b6e6",
+      "reason": "Issue 15 acceptance tests guard accepted-pending-main-validation and wiring."
     },
     {
       "path": "tests/pester/Issue14ClosePrep.Tests.ps1",
@@ -634,6 +634,76 @@
       "required": true,
       "hash": "5c1f80f6d0a244364e434964f5a1de852c59601422e3d7522fe7d0d27c6aa7b5",
       "reason": "Issue 14 main-evidence tests validate pending and ready evidence details."
+    },
+    {
+      "path": "docs/07-定制范围与配置入口.md",
+      "category": "doc",
+      "required": true,
+      "hash": "214e3fe901340b98558ac762438c16c27e271298969f1cede1f19d20732d3fb1",
+      "reason": "Configuration entry documentation describes opt-in effective configuration migration."
+    },
+    {
+      "path": "docs/46-issue15-close-preparation.md",
+      "category": "doc",
+      "required": true,
+      "hash": "331e5aed25194e18733a7fcd4c4cae58da547819f446dd627f1de60b6e0b2565",
+      "reason": "Issue 15 close-prep candidate is a manual closure input."
+    },
+    {
+      "path": "docs/47-issue15-main-validation-evidence.md",
+      "category": "doc",
+      "required": true,
+      "hash": "d9a1944d731edab8079df389dcc71167ec61e72b549dfe12645ce54a3b86f847",
+      "reason": "Issue 15 main validation evidence scaffold must remain pending until real main evidence exists."
+    },
+    {
+      "path": "manifests/customization-scope.json",
+      "category": "manifest",
+      "required": true,
+      "hash": "61be702bb70e06b65d8b8313604b73d6a677a7cf3fa69f5cd86aec38fd30f37a",
+      "reason": "Customization scope declares layered configuration manifest and default stack while preserving pathsManifest."
+    },
+    {
+      "path": "schemas/customization-scope.schema.json",
+      "category": "schema",
+      "required": true,
+      "hash": "3477cf564c32c718904c04ca15bab02f7b6b7e8e984e1cb6c8a9b2e7f59e5ee0",
+      "reason": "Customization scope schema allows layered configuration reference fields."
+    },
+    {
+      "path": "scripts/config/Show-CustomizationScope.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "d04737bdc263ae62375d9ffa53054a618f9a6b68100df9e69481ff92760515b5",
+      "reason": "Show-CustomizationScope is the opt-in effective configuration consumer entrypoint."
+    },
+    {
+      "path": "tests/pester/CustomizationScopeEffectiveConfiguration.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "b1ad86c59d38769ee830f20e680a5741dbe304e7de88f81579ef10eb49a836ed",
+      "reason": "Customization scope tests guard layered configuration metadata and local override policy."
+    },
+    {
+      "path": "tests/pester/EffectiveConfigurationConsumerIntegration.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "3c7dafef9af2e04edd5db7b7d61e1a2d90e0279cfbc50be35c8225272a030ff3",
+      "reason": "Consumer integration tests guard Show-CustomizationScope default compatibility and opt-in effective configuration display."
+    },
+    {
+      "path": "tests/pester/Issue15ClosePrep.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "36b3ee513598966f4aab7366bba02668ac833827fbc9e3e94d87b3281ecbb0ac",
+      "reason": "Issue 15 close-prep tests guard candidate-only closure semantics."
+    },
+    {
+      "path": "tests/pester/Issue15MainValidationEvidence.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "71d46bcfc98597936b7b90e13954e7b5f5f2e33fe79bb2c34a2437c7f7ed8b38",
+      "reason": "Issue 15 main evidence tests guard pending-only evidence scaffold."
     }
   ],
   "watchGlobs": [

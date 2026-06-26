@@ -3,6 +3,8 @@
   "profile": "default",
   "goal": "还原到新机后，只保留账号登录、授权激活和硬件相关确认等少量手工操作。",
   "pathsManifest": "manifests/paths.json",
+  "configLayersManifest": "manifests/config-layers.json",
+  "defaultStack": "default",
   "system": {
     "contextMenu": {
       "enabled": true,

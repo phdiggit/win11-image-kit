@@ -500,6 +500,89 @@ function Test-ReferencedPath {
     }
 }
 
+function Test-ConfigLayersReference {
+    param(
+        [Parameter(Mandatory)]
+        $ScopeConfig
+    )
+
+    $configLayersManifest = if ($ScopeConfig.PSObject.Properties.Name -contains "configLayersManifest" -and -not [string]::IsNullOrWhiteSpace([string]$ScopeConfig.configLayersManifest)) {
+        [string]$ScopeConfig.configLayersManifest
+    } else {
+        "manifests/config-layers.json"
+    }
+
+    Test-ReferencedPath -Description "configLayersManifest" -Path $configLayersManifest
+    $configLayersPath = Resolve-RepoPath -Path $configLayersManifest
+    if (-not (Test-Path -LiteralPath $configLayersPath)) {
+        return
+    }
+
+    $configLayers = Read-JsonFile -Path $configLayersPath
+    $defaultStack = if ($ScopeConfig.PSObject.Properties.Name -contains "defaultStack" -and -not [string]::IsNullOrWhiteSpace([string]$ScopeConfig.defaultStack)) {
+        [string]$ScopeConfig.defaultStack
+    } else {
+        "default"
+    }
+
+    $stackNames = @($configLayers.stacks | ForEach-Object { [string]$_.name })
+    if ($stackNames -contains $defaultStack) {
+        Write-CheckResult -Level OK -Message ("defaultStack 存在：{0}" -f $defaultStack)
+    } else {
+        Write-CheckResult -Level ERROR -Message ("defaultStack 不存在于 config-layers stacks：{0}" -f $defaultStack)
+    }
+
+    foreach ($layer in @($configLayers.layers)) {
+        if (-not [string]::IsNullOrWhiteSpace([string]$layer.path) -and $layer.required) {
+            Test-ReferencedPath -Description ("config layer {0}" -f $layer.id) -Path ([string]$layer.path)
+        }
+        if (-not [string]::IsNullOrWhiteSpace([string]$layer.schema)) {
+            Test-ReferencedPath -Description ("config layer schema {0}" -f $layer.id) -Path ([string]$layer.schema)
+        }
+    }
+}
+
+function Test-Issue15LocalOverridePolicy {
+    $examplePath = Resolve-RepoPath -Path "manifests/paths.local.example.json"
+    if (Test-Path -LiteralPath $examplePath) {
+        $exampleText = Get-Content -LiteralPath $examplePath -Raw -Encoding UTF8
+        $unsafePatterns = @(
+            "\\\\192\.168\.1\.37",
+            "token",
+            "secret",
+            "password",
+            "apikey",
+            "api_key"
+        )
+        $unsafeMatches = @($unsafePatterns | Where-Object { $exampleText -match $_ })
+        if ($unsafeMatches.Count -eq 0) {
+            Write-CheckResult -Level OK -Message "paths.local.example.json 未包含已知私有 NAS 或凭据模式"
+        } else {
+            Write-CheckResult -Level ERROR -Message ("paths.local.example.json 包含不安全示例模式：{0}" -f ($unsafeMatches -join ", "))
+        }
+    }
+
+    $buildLockPath = Resolve-RepoPath -Path "manifests/build-lock.json"
+    if (Test-Path -LiteralPath $buildLockPath) {
+        $buildLock = Read-JsonFile -Path $buildLockPath
+        $requiredLocalEntries = @($buildLock.entries | Where-Object {
+            $_.required -and [string]$_.path -eq "manifests/paths.local.json"
+        })
+        if ($requiredLocalEntries.Count -eq 0) {
+            Write-CheckResult -Level OK -Message "paths.local.json 未进入 Build Lock required entries"
+        } else {
+            Write-CheckResult -Level ERROR -Message "paths.local.json 不得进入 Build Lock required entries"
+        }
+    }
+
+    $trackedLocal = @(& git -C $RepoRoot ls-files -- "manifests/paths.local.json" 2>$null)
+    if ($trackedLocal.Count -eq 0) {
+        Write-CheckResult -Level OK -Message "paths.local.json 未被 Git 跟踪"
+    } else {
+        Write-CheckResult -Level ERROR -Message "paths.local.json 不得被 Git 跟踪"
+    }
+}
+
 function Get-ObjectStrings {
     param(
         [Parameter(ValueFromPipeline)]
@@ -831,6 +914,8 @@ Test-PowerShellFiles
 $scope = Read-JsonFile -Path $resolvedScopePath
 $pathsManifestPath = Resolve-RepoPath -Path $scope.pathsManifest
 Test-ReferencedPath -Description "pathsManifest" -Path $scope.pathsManifest
+Test-ConfigLayersReference -ScopeConfig $scope
+Test-Issue15LocalOverridePolicy
 
 $pathMap = Get-KitPathMap -ManifestPath $pathsManifestPath
 $reportingConfig = Get-KitReportingSection -ScopeConfig $scope -Name "validation"

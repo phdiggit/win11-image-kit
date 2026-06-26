@@ -34,6 +34,21 @@ Status: `in-progress`
 - `scripts/validate/Test-ProjectConfig.ps1` 是静态项目配置校验入口，本阶段接入 `config-layers.json` schema 校验。
 - `docs/40-issue14-quality-gates.md`、`.github/workflows/ci.yml`、`manifests/build-lock.json` 和 `manifests/quality-gates.json` 是本阶段质量门禁接线点。
 
+## Consumer Integration
+
+Issue #15 now keeps two compatible consumer paths:
+
+- Default compatibility path: existing callers continue to read `manifests/paths.json` through `pathsManifest`.
+- Opt-in effective configuration path: `Show-CustomizationScope.ps1 -UseEffectiveConfiguration` resolves a stack from `manifests/config-layers.json` and prints the effective paths plus source layers.
+
+The opt-in consumer entrypoint supports:
+
+- `-StackName`
+- `-IncludeLocal`
+- `-PathOverrideJson`
+
+`manifests/customization-scope.json` declares `configLayersManifest` and `defaultStack`, while preserving `pathsManifest` for older build, post-deploy, and validation callers. This is migration-compatible and report-only; it does not require all callers to switch to layered configuration in this stage.
+
 ## Proposed Implementation Layers
 
 1. Repo default: `manifests/paths.json`，保留当前默认路径意图。
@@ -62,6 +77,8 @@ repo-default < profile < hardware < local-private < cli-explicit
 ## Validation Plan
 
 - `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/validate/Test-ProjectConfig.ps1`
+- `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/config/Show-CustomizationScope.ps1`
+- `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/config/Show-CustomizationScope.ps1 -UseEffectiveConfiguration -StackName release`
 - `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/validate/Test-EffectiveConfiguration.ps1 -ReportPath "$env:TEMP\effective-config-issue15-baseline.json"`
 - `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/validate/Test-EffectiveConfiguration.ps1 -AllStacks -ReportPath "$env:TEMP\effective-config-issue15-all.json"`
 - `powershell -NoProfile -ExecutionPolicy Bypass -Command "& .\scripts\validate\Test-EffectiveConfiguration.ps1 -StackName air15 -PathOverride @{ ToolRoot = 'D:\tools'; DataRoot = 'D:\data' }"`
@@ -88,6 +105,7 @@ repo-default < profile < hardware < local-private < cli-explicit
 - [x] 新增 Pester guardrails 覆盖文档、schema、报告、CI、Build Lock、Quality Gates 和安全边界。
 - [x] 本机覆盖文件加入 `.gitignore`。
 - [x] Phase 2 增加 CLI explicit path override、all stacks validation、local override 行为和 token/path safety 测试。
+- [x] Phase 3 增加 Show-CustomizationScope opt-in consumer integration、close-prep candidate 和 pending main evidence scaffold。
 - [ ] 后续任务继续接入更多 manifest。
 
 ## Related Documents
@@ -98,3 +116,5 @@ repo-default < profile < hardware < local-private < cli-explicit
 - [Quality Gates](40-issue14-quality-gates.md)
 - [Build Lock](32-issue12-build-lock.md)
 - [Issue #15 Acceptance](45-issue15-layered-configuration-acceptance.md)
+- [Issue #15 Close Preparation](46-issue15-close-preparation.md)
+- [Issue #15 Main Validation Evidence](47-issue15-main-validation-evidence.md)

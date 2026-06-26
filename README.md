@@ -60,7 +60,7 @@ logs/                 仅保留 .gitkeep，本地日志不提交
 26. Issue #13 Software/Service Ensure-State 能力、验收与关闭准备见 [Acceptance](docs/37-issue13-ensure-state-acceptance.md)、[Close Preparation](docs/38-issue13-close-preparation.md)、[Main Validation Evidence](docs/39-issue13-main-validation-evidence.md)
 27. Issue #14 schema / Pester / PSScriptAnalyzer / CI 质量门禁总线见 [Quality Gates](docs/40-issue14-quality-gates.md)
 28. Issue #14 质量门禁 runner/report、验收与人工关闭准备见 [Acceptance](docs/41-issue14-quality-gates-acceptance.md)、[Close Preparation](docs/42-issue14-close-preparation.md)、[Main Validation Evidence](docs/43-issue14-main-validation-evidence.md)
-29. Issue #15 Profile、本机路径和硬件覆盖的分层配置机制见 [Layered Configuration](docs/44-issue15-layered-configuration.md)，验收硬化见 [Acceptance](docs/45-issue15-layered-configuration-acceptance.md)
+29. Issue #15 Profile、本机路径和硬件覆盖的分层配置机制见 [Layered Configuration](docs/44-issue15-layered-configuration.md)，验收硬化、关闭候选和 main 证据脚手架见 [Acceptance](docs/45-issue15-layered-configuration-acceptance.md)、[Close Preparation](docs/46-issue15-close-preparation.md)、[Main Validation Evidence](docs/47-issue15-main-validation-evidence.md)
 
 常规配置验证：
 

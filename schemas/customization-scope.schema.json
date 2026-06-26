@@ -8,6 +8,8 @@
     "profile": { "type": "string" },
     "goal": { "type": "string" },
     "pathsManifest": { "type": "string" },
+    "configLayersManifest": { "type": "string" },
+    "defaultStack": { "type": "string" },
     "system": {
       "type": "object",
       "required": ["contextMenu", "startMenu", "explorerOptions", "defaultApps", "windowsDefender", "huorong"],
