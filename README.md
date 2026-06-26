@@ -59,6 +59,7 @@ logs/                 仅保留 .gitkeep，本地日志不提交
 25. Issue #13 software/service Ensure-State 收敛模型与静态验证见 [Ensure-State](docs/36-issue13-ensure-state.md)
 26. Issue #13 Software/Service Ensure-State 能力、验收与关闭准备见 [Acceptance](docs/37-issue13-ensure-state-acceptance.md)、[Close Preparation](docs/38-issue13-close-preparation.md)、[Main Validation Evidence](docs/39-issue13-main-validation-evidence.md)
 27. Issue #14 schema / Pester / PSScriptAnalyzer / CI 质量门禁总线见 [Quality Gates](docs/40-issue14-quality-gates.md)
+28. Issue #14 质量门禁 runner/report 与验收脚手架见 [Acceptance](docs/41-issue14-quality-gates-acceptance.md)
 
 常规配置验证：
 

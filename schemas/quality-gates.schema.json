@@ -1,0 +1,114 @@
+{
+  "title": "win11-image-kit quality gates",
+  "type": "object",
+  "required": [
+    "manifestVersion",
+    "gates"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "manifestVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "gates": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/gate"
+      }
+    }
+  },
+  "$defs": {
+    "layer": {
+      "type": "string",
+      "enum": [
+        "pr-fast",
+        "full-validate",
+        "manual-evidence",
+        "future-true-execution"
+      ]
+    },
+    "trigger": {
+      "type": "string",
+      "enum": [
+        "pull_request",
+        "main-push",
+        "workflow_dispatch",
+        "manual",
+        "separate-issue"
+      ]
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "static",
+        "fixture",
+        "report-only",
+        "manual",
+        "true-execution"
+      ]
+    },
+    "evidence": {
+      "type": "string",
+      "enum": [
+        "workflow-step",
+        "pester",
+        "report",
+        "document",
+        "manual"
+      ]
+    },
+    "gate": {
+      "type": "object",
+      "required": [
+        "id",
+        "displayName",
+        "layer",
+        "trigger",
+        "mode",
+        "required",
+        "blocking",
+        "entrypoint",
+        "evidence",
+        "notes"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "layer": {
+          "$ref": "#/$defs/layer"
+        },
+        "trigger": {
+          "$ref": "#/$defs/trigger"
+        },
+        "mode": {
+          "$ref": "#/$defs/mode"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "blocking": {
+          "type": "boolean"
+        },
+        "entrypoint": {
+          "type": "string"
+        },
+        "evidence": {
+          "$ref": "#/$defs/evidence"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
