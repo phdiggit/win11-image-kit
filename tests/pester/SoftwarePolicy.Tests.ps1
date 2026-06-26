@@ -1,6 +1,6 @@
 $RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
 
-Describe "Software package policy validation" {
+Describe "Software ensure-state policy validation" {
     BeforeAll {
         $script:RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
@@ -13,55 +13,35 @@ Describe "Software package policy validation" {
         $script:ValidationScript = Join-Path $script:RepoRoot "scripts\validate\Test-ProjectConfig.ps1"
         $script:TempRoots = @()
 
-        $script:NewTestPackage = {
+        $script:NewTestSoftwareItem = {
             param(
-                [string]$Name = "test-package",
-                [string]$Type = "archive",
-                [bool]$SilentInstall = $true,
-                [hashtable]$Policy = @{
-                    required = $true
-                    failurePolicy = "fail"
-                    allowMissingSource = $false
-                }
+                [hashtable]$Overrides = @{}
             )
 
-            $package = [ordered]@{
-                name = $Name
-                version = "1.0.0"
-                enabled = $true
-                category = "test"
-                stage = "golden-image"
-                type = $Type
+            $item = [ordered]@{
+                id = "test-software"
+                displayName = "Test Software"
+                ensure = "present"
+                source = "manual"
+                packageId = "test.software"
+                version = $null
+                scope = "machine"
+                installMode = "planned"
+                priority = 100
+                tags = @("fixture")
+                notes = "fixture"
             }
 
-            foreach ($key in @("required", "failurePolicy", "allowMissingSource")) {
-                if ($Policy.ContainsKey($key)) {
-                    $package[$key] = $Policy[$key]
-                }
+            foreach ($entry in $Overrides.GetEnumerator()) {
+                $item[$entry.Key] = $entry.Value
             }
 
-            if ($Type -eq "archive") {
-                $package["archiveFormat"] = "zip"
-                $package["source"] = '${PackageRoot}\test\test.zip'
-                $package["destination"] = '${ToolRoot}\test-package'
-            } elseif ($Type -eq "zip") {
-                $package["source"] = '${PackageRoot}\test\test.zip'
-                $package["destination"] = '${ToolRoot}\test-package'
-            } elseif ($Type -eq "installer") {
-                $package["source"] = '${PackageRoot}\test\setup.exe'
-                $package["destination"] = 'C:\Program Files\TestPackage'
-                $package["installArgs"] = @()
-                $package["silentInstall"] = $SilentInstall
-            }
-
-            return $package
+            return $item
         }
 
         $script:InvokePolicyValidation = {
             param(
-                [hashtable]$Policy,
-                [string]$Type = "archive",
-                [bool]$SilentInstall = $true
+                [hashtable]$Overrides = @{}
             )
 
             $tempRoot = Join-Path ([IO.Path]::GetTempPath()) ("win11-image-kit-software-policy-{0}" -f ([guid]::NewGuid().ToString("N")))
@@ -75,7 +55,8 @@ Describe "Software package policy validation" {
 
             $software = [ordered]@{
                 '$schema' = '../schemas/software.schema.json'
-                packages = @((& $script:NewTestPackage -Policy $Policy -Type $Type -SilentInstall $SilentInstall))
+                manifestVersion = 1
+                software = @((& $script:NewTestSoftwareItem -Overrides $Overrides))
             }
             $software | ConvertTo-Json -Depth 12 | Set-Content -LiteralPath $softwarePath -Encoding UTF8
 
@@ -88,7 +69,7 @@ Describe "Software package policy validation" {
             $stdout = Get-Content -LiteralPath $stdoutPath -Raw -Encoding UTF8
             $stderr = Get-Content -LiteralPath $stderrPath -Raw -Encoding UTF8
 
-            return [pscustomobject]@{
+            [pscustomobject]@{
                 ExitCode = $exitCode
                 Stdout = $stdout
                 Stderr = $stderr
@@ -112,87 +93,71 @@ Describe "Software package policy validation" {
 
             Assert-KitEqual $LASTEXITCODE 0
             Assert-KitMatch $output "0 .*0"
-            Assert-KitNotMatch $output "failurePolicy|required|allowMissingSource"
             Assert-KitNotMatch $output "\[WARN\]"
         } finally {
             Remove-Item -LiteralPath $stdoutPath, $stderrPath -Force -ErrorAction SilentlyContinue
         }
     }
 
-    It "accepts required fail policy fields" {
-        $result = & $script:InvokePolicyValidation -Policy @{
-            required = $true
-            failurePolicy = "fail"
-            allowMissingSource = $false
-        }
+    It "accepts a valid ensure-state software item" {
+        $result = & $script:InvokePolicyValidation -Overrides @{}
 
         Assert-KitEqual $result.ExitCode 0
         Assert-KitMatch $result.Stdout "0 .*0"
     }
 
-    It "rejects invalid failurePolicy enum values" {
-        $result = & $script:InvokePolicyValidation -Policy @{
-            required = $true
-            failurePolicy = "continue"
-            allowMissingSource = $false
+    It "rejects invalid ensure enum values" {
+        $result = & $script:InvokePolicyValidation -Overrides @{
+            ensure = "install"
         }
 
         Assert-KitEqual $result.ExitCode 1
-        Assert-KitMatch $result.Stdout "failurePolicy"
+        Assert-KitMatch $result.Stdout "ensure"
     }
 
-    It "rejects invalid required field types" {
-        $result = & $script:InvokePolicyValidation -Policy @{
-            required = "true"
-            failurePolicy = "fail"
-            allowMissingSource = $false
+    It "rejects invalid installMode enum values" {
+        $result = & $script:InvokePolicyValidation -Overrides @{
+            installMode = "auto"
         }
 
         Assert-KitEqual $result.ExitCode 1
-        Assert-KitMatch $result.Stdout "required"
-        Assert-KitMatch $result.Stdout "boolean"
+        Assert-KitMatch $result.Stdout "installMode"
     }
 
-    It "rejects invalid allowMissingSource field types" {
-        $result = & $script:InvokePolicyValidation -Policy @{
-            required = $false
-            failurePolicy = "skip"
-            allowMissingSource = "yes"
+    It "rejects invalid priority field types" {
+        $result = & $script:InvokePolicyValidation -Overrides @{
+            priority = "high"
         }
 
         Assert-KitEqual $result.ExitCode 1
-        Assert-KitMatch $result.Stdout "allowMissingSource"
-        Assert-KitMatch $result.Stdout "boolean"
+        Assert-KitMatch $result.Stdout "priority"
     }
 
-    It "rejects contradictory policy combinations" {
-        $result = & $script:InvokePolicyValidation -Policy @{
-            required = $true
-            failurePolicy = "skip"
-            allowMissingSource = $true
+    It "rejects non-string tags" {
+        $result = & $script:InvokePolicyValidation -Overrides @{
+            tags = @(1, 2)
         }
 
         Assert-KitEqual $result.ExitCode 1
-        Assert-KitMatch $result.Stdout "required=true"
-        Assert-KitMatch $result.Stdout "allowMissingSource"
+        Assert-KitMatch $result.Stdout "tags"
     }
 
-    It "accepts optional skip policy" {
-        $result = & $script:InvokePolicyValidation -Policy @{
-            required = $false
-            failurePolicy = "skip"
-            allowMissingSource = $true
+    It "rejects pinned items without version" {
+        $result = & $script:InvokePolicyValidation -Overrides @{
+            ensure = "pinned"
+            version = $null
         }
 
-        Assert-KitEqual $result.ExitCode 0
-        Assert-KitMatch $result.Stdout "0 .*0"
+        Assert-KitEqual $result.ExitCode 1
+        Assert-KitMatch $result.Stdout "pinned"
+        Assert-KitMatch $result.Stdout "version"
     }
 
-    It "accepts manual policy for silentInstall false installers" {
-        $result = & $script:InvokePolicyValidation -Type "installer" -SilentInstall $false -Policy @{
-            required = $false
-            failurePolicy = "manual"
-            allowMissingSource = $true
+    It "accepts manual installMode with null version" {
+        $result = & $script:InvokePolicyValidation -Overrides @{
+            ensure = "manual"
+            installMode = "manual"
+            version = $null
         }
 
         Assert-KitEqual $result.ExitCode 0
