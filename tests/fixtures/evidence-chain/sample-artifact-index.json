@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "runId": "kit-run-20260626T123456Z-a659a041",
+  "artifacts": [
+    {
+      "kind": "report-json",
+      "path": "tests/fixtures/evidence-chain/sample-report-inputs/project-config.json",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "sizeBytes": 512,
+      "producerId": "project-config",
+      "stage": "validate",
+      "runId": "kit-run-20260626T123456Z-a659a041",
+      "status": "passed",
+      "private": false,
+      "redacted": false
+    },
+    {
+      "kind": "manifest-snapshot",
+      "path": "manifests/evidence-chain.json",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "sizeBytes": 4096,
+      "producerId": "project-config",
+      "stage": "validate",
+      "runId": "kit-run-20260626T123456Z-a659a041",
+      "upstreamRunId": "kit-run-20260626T123456Z-a659a041",
+      "status": "passed",
+      "private": false,
+      "redacted": false
+    },
+    {
+      "kind": "wim-placeholder",
+      "logicalName": "golden-image-wim-not-captured",
+      "producerId": "capture",
+      "stage": "capture",
+      "runId": "not-captured",
+      "upstreamRunId": "kit-run-20260626T123456Z-a659a041",
+      "status": "not-captured",
+      "private": false,
+      "redacted": false
+    },
+    {
+      "kind": "effective-configuration",
+      "path": "tests/fixtures/evidence-chain/sample-redacted-report.json",
+      "producerId": "effective-configuration",
+      "stage": "config",
+      "runId": "kit-run-20260626T123456Z-a659a041",
+      "status": "passed",
+      "private": false,
+      "redacted": true
+    }
+  ]
+}

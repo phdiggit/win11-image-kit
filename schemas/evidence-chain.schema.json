@@ -6,6 +6,7 @@
     "chainId",
     "stages",
     "producers",
+    "runIdPolicy",
     "artifactPolicy"
   ],
   "properties": {
@@ -34,6 +35,12 @@
     },
     "artifactPolicy": {
       "$ref": "#/$defs/artifactPolicy"
+    },
+    "runIdPolicy": {
+      "$ref": "#/$defs/runIdPolicy"
+    },
+    "redactionPolicy": {
+      "$ref": "#/$defs/redactionPolicy"
     }
   },
   "$defs": {
@@ -103,7 +110,8 @@
       "required": [
         "allowLocalArtifacts",
         "allowPrivateLocalOverrides",
-        "redactLocalPrivateValues"
+        "redactLocalPrivateValues",
+        "forbiddenArtifactPatterns"
       ],
       "properties": {
         "allowLocalArtifacts": {
@@ -114,6 +122,51 @@
         },
         "redactLocalPrivateValues": {
           "type": "boolean"
+        },
+        "forbiddenArtifactPatterns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "runIdPolicy": {
+      "type": "object",
+      "required": [
+        "format",
+        "allowUpstreamRunId",
+        "requireStageRunIds"
+      ],
+      "properties": {
+        "format": {
+          "type": "string"
+        },
+        "allowUpstreamRunId": {
+          "type": "boolean"
+        },
+        "requireStageRunIds": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "redactionPolicy": {
+      "type": "object",
+      "required": [
+        "forbiddenFieldNames",
+        "redactedValue"
+      ],
+      "properties": {
+        "forbiddenFieldNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "redactedValue": {
+          "type": "string"
         }
       },
       "additionalProperties": false

@@ -7,7 +7,10 @@ param(
     [string]$SourceKind = "fixture",
     [string]$SourceSha,
     [string]$WorkflowRunUrl,
-    [string]$JobUrl
+    [string]$JobUrl,
+    [string]$RunId,
+    [string]$UpstreamRunId,
+    [string]$ArtifactIndexPath = "tests/fixtures/evidence-chain/sample-artifact-index.json"
 )
 
 $ErrorActionPreference = "Stop"
@@ -57,6 +60,30 @@ function Test-KitEvidenceGithubActionsUrl {
     }
 }
 
+function Test-KitEvidenceRunIdValue {
+    param(
+        [AllowEmptyString()]
+        [string]$Value,
+
+        [Parameter(Mandatory)]
+        [string]$Name,
+
+        [switch]$AllowLifecyclePlaceholder
+    )
+
+    if ([string]::IsNullOrWhiteSpace($Value)) {
+        return
+    }
+
+    if ($AllowLifecyclePlaceholder -and $Value -in @("manual", "not-captured")) {
+        return
+    }
+
+    if ($Value -notmatch '^kit-run-[0-9]{8}T[0-9]{6}Z-[A-Fa-f0-9]{7,12}$') {
+        Add-KitEvidenceValidationError "$Name must be a valid kit run id: $Value"
+    }
+}
+
 function Test-KitEvidenceArtifactReference {
     param(
         [Parameter(Mandatory)]
@@ -78,6 +105,52 @@ function Test-KitEvidenceArtifactReference {
     )) {
         if ($path -match $pattern) {
             Add-KitEvidenceValidationError "artifact reference is not allowed in evidence chain: $path"
+        }
+    }
+}
+
+function Test-KitEvidenceArtifactIndexItem {
+    param(
+        [Parameter(Mandatory)]
+        $Artifact,
+
+        [string[]]$ForbiddenArtifactPatterns = @()
+    )
+
+    $path = [string](Get-KitEvidenceValue -InputObject $Artifact -Name "path" -DefaultValue "")
+    $logicalName = [string](Get-KitEvidenceValue -InputObject $Artifact -Name "logicalName" -DefaultValue "")
+    $private = [bool](Get-KitEvidenceValue -InputObject $Artifact -Name "private" -DefaultValue $false)
+    $sha256 = [string](Get-KitEvidenceValue -InputObject $Artifact -Name "sha256" -DefaultValue "")
+    $sizeBytes = Get-KitEvidenceValue -InputObject $Artifact -Name "sizeBytes" -DefaultValue $null
+
+    if ([string]::IsNullOrWhiteSpace($path) -and [string]::IsNullOrWhiteSpace($logicalName)) {
+        Add-KitEvidenceValidationError "artifact index item must include path or logicalName"
+    }
+
+    if ($private) {
+        Add-KitEvidenceValidationError "artifact index item must not be private: $path$logicalName"
+    }
+
+    if (-not [string]::IsNullOrWhiteSpace($sha256) -and $sha256 -notmatch '^[A-Fa-f0-9]{64}$') {
+        Add-KitEvidenceValidationError "artifact sha256 must be 64 hex: $path$logicalName"
+    }
+
+    if ($null -ne $sizeBytes) {
+        try {
+            if ([int64]$sizeBytes -lt 0) {
+                Add-KitEvidenceValidationError "artifact sizeBytes must be >= 0: $path$logicalName"
+            }
+        } catch {
+            Add-KitEvidenceValidationError "artifact sizeBytes must be an integer: $path$logicalName"
+        }
+    }
+
+    Test-KitEvidenceRunIdValue -Value ([string]$Artifact.runId) -Name "artifact.runId" -AllowLifecyclePlaceholder
+    Test-KitEvidenceRunIdValue -Value ([string](Get-KitEvidenceValue -InputObject $Artifact -Name "upstreamRunId" -DefaultValue "")) -Name "artifact.upstreamRunId" -AllowLifecyclePlaceholder
+
+    foreach ($pattern in @($ForbiddenArtifactPatterns)) {
+        if (-not [string]::IsNullOrWhiteSpace($path) -and $path -match $pattern) {
+            Add-KitEvidenceValidationError "artifact index path is not allowed: $path"
         }
     }
 }
@@ -146,12 +219,18 @@ function Test-KitEvidenceManifest {
 function Test-KitEvidenceReport {
     param(
         [Parameter(Mandatory)]
-        $Report
+        $Report,
+
+        [Parameter(Mandatory)]
+        $Manifest
     )
 
     if ([string]$Report.reportType -ne "evidence-chain") {
         Add-KitEvidenceValidationError "reportType must be evidence-chain"
     }
+
+    Test-KitEvidenceRunIdValue -Value ([string]$Report.runId) -Name "report.runId"
+    Test-KitEvidenceRunIdValue -Value ([string](Get-KitEvidenceValue -InputObject $Report -Name "upstreamRunId" -DefaultValue "")) -Name "report.upstreamRunId"
 
     if ($Report.summary.failedCount -ne @($Report.evidence | Where-Object { $_.status -eq "failed" }).Count) {
         Add-KitEvidenceValidationError "failedCount does not match failed evidence"
@@ -177,6 +256,38 @@ function Test-KitEvidenceReport {
         foreach ($artifact in @($item.artifactReferences)) {
             Test-KitEvidenceArtifactReference -Artifact $artifact
         }
+
+        Test-KitEvidenceRunIdValue -Value ([string]$item.runId) -Name ("evidence.runId[{0}]" -f $item.producerId) -AllowLifecyclePlaceholder
+        Test-KitEvidenceRunIdValue -Value ([string](Get-KitEvidenceValue -InputObject $item -Name "upstreamRunId" -DefaultValue "")) -Name ("evidence.upstreamRunId[{0}]" -f $item.producerId) -AllowLifecyclePlaceholder
+
+        if ($item.producerId -in @("real-build", "capture", "deploy", "admin-vm-smoke") -and $item.status -eq "passed") {
+            Add-KitEvidenceValidationError "PR Fast baseline cannot mark lifecycle placeholder passed: $($item.producerId)"
+        }
+    }
+
+    foreach ($name in @("configRunId", "validateRunId", "buildRunId", "captureRunId", "deployRunId", "acceptanceRunId")) {
+        Test-KitEvidenceRunIdValue -Value ([string]$Report.lifecycle.$name) -Name "lifecycle.$name" -AllowLifecyclePlaceholder
+    }
+
+    foreach ($stageLink in @($Report.stageLinks)) {
+        Test-KitEvidenceRunIdValue -Value ([string]$stageLink.runId) -Name ("stageLinks.runId[{0}]" -f $stageLink.stage) -AllowLifecyclePlaceholder
+        Test-KitEvidenceRunIdValue -Value ([string](Get-KitEvidenceValue -InputObject $stageLink -Name "upstreamRunId" -DefaultValue "")) -Name ("stageLinks.upstreamRunId[{0}]" -f $stageLink.stage) -AllowLifecyclePlaceholder
+    }
+
+    $forbiddenArtifactPatterns = @()
+    if ($null -ne $Manifest.artifactPolicy -and $null -ne $Manifest.artifactPolicy.forbiddenArtifactPatterns) {
+        $forbiddenArtifactPatterns = @($Manifest.artifactPolicy.forbiddenArtifactPatterns | ForEach-Object { [string]$_ })
+    }
+    foreach ($artifact in @($Report.artifactIndex)) {
+        Test-KitEvidenceArtifactIndexItem -Artifact $artifact -ForbiddenArtifactPatterns $forbiddenArtifactPatterns
+    }
+
+    if ($Report.summary.artifactCount -ne @($Report.artifactIndex).Count) {
+        Add-KitEvidenceValidationError "summary.artifactCount does not match artifactIndex"
+    }
+
+    if ($Report.redactions.blockedCount -gt 0) {
+        Add-KitEvidenceValidationError "redactions.blockedCount must be zero"
     }
 
     if ($Report.safety.trueExecution) {
@@ -199,6 +310,8 @@ $script:ValidationErrors = @()
 if (-not [string]::IsNullOrWhiteSpace($SourceSha) -and $SourceSha -notmatch '^[A-Fa-f0-9]{40}$') {
     Add-KitEvidenceValidationError "SourceSha must be a 40-character Git SHA: $SourceSha"
 }
+Test-KitEvidenceRunIdValue -Value $RunId -Name "RunId"
+Test-KitEvidenceRunIdValue -Value $UpstreamRunId -Name "UpstreamRunId"
 Test-KitEvidenceGithubActionsUrl -Url $WorkflowRunUrl -Name "WorkflowRunUrl"
 Test-KitEvidenceGithubActionsUrl -Url $JobUrl -Name "JobUrl"
 
@@ -218,9 +331,12 @@ $report = New-KitEvidenceChainReport `
     -SourceSha $SourceSha `
     -WorkflowRunUrl $WorkflowRunUrl `
     -JobUrl $JobUrl `
+    -RunId $RunId `
+    -UpstreamRunId $UpstreamRunId `
+    -ArtifactIndexPath $ArtifactIndexPath `
     -RepoRoot $repoRoot
 
-Test-KitEvidenceReport -Report $report
+Test-KitEvidenceReport -Report $report -Manifest $manifest
 
 if (-not [string]::IsNullOrWhiteSpace($ReportPath)) {
     $resolvedReportPath = Resolve-KitEvidenceValidationPath -RepoRoot $repoRoot -Path $ReportPath
@@ -235,7 +351,7 @@ if (-not [string]::IsNullOrWhiteSpace($ReportPath)) {
 
 $report
 
-if ($script:ValidationErrors.Count -gt 0 -or $report.summary.failedCount -gt 0) {
+if ($script:ValidationErrors.Count -gt 0 -or $report.summary.failedCount -gt 0 -or $report.redactions.blockedCount -gt 0) {
     exit 1
 }
 

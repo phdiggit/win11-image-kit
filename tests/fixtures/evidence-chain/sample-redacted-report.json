@@ -1,0 +1,17 @@
+{
+  "producerId": "effective-configuration",
+  "reportType": "redaction-fixture",
+  "status": "passed",
+  "generatedAt": "2026-06-26T00:00:00Z",
+  "pathValue": "<redacted>",
+  "redactedFields": [
+    "username"
+  ],
+  "artifactReferences": [
+    {
+      "kind": "report",
+      "path": "tests/fixtures/evidence-chain/sample-redacted-report.json",
+      "private": false
+    }
+  ]
+}

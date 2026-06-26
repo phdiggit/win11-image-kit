@@ -1,5 +1,8 @@
 #Requires -Version 5.1
 
+. "$PSScriptRoot\New-KitEvidenceArtifactIndex.ps1"
+. "$PSScriptRoot\Test-KitEvidenceRedaction.ps1"
+
 function Get-KitEvidenceValue {
     param(
         [AllowNull()]
@@ -89,6 +92,21 @@ function New-KitEvidenceSource {
     [pscustomobject]$source
 }
 
+function New-KitEvidenceRunId {
+    param(
+        [datetime]$GeneratedAt,
+
+        [string]$SourceSha
+    )
+
+    $shortSha = "0000000"
+    if (-not [string]::IsNullOrWhiteSpace($SourceSha) -and $SourceSha -match '^[A-Fa-f0-9]{7,40}$') {
+        $shortSha = $SourceSha.Substring(0, [Math]::Min(8, $SourceSha.Length)).ToLowerInvariant()
+    }
+
+    "kit-run-{0}-{1}" -f $GeneratedAt.ToUniversalTime().ToString("yyyyMMddTHHmmssZ"), $shortSha
+}
+
 function Get-KitEvidenceStatus {
     param(
         [object[]]$Items
@@ -126,6 +144,7 @@ function New-KitEvidenceStageSummary {
         failedCount = @($items | Where-Object { $_.status -eq "failed" }).Count
         manualCount = @($items | Where-Object { $_.status -eq "manual" }).Count
         notCapturedCount = @($items | Where-Object { $_.status -eq "not-captured" }).Count
+        runId = if ($items.Count -gt 0) { [string]@($items)[0].runId } else { "not-captured" }
     }
 }
 
@@ -141,7 +160,12 @@ function New-KitEvidenceItem {
         $DefaultSource,
 
         [Parameter(Mandatory)]
-        [datetime]$GeneratedAt
+        [datetime]$GeneratedAt,
+
+        [Parameter(Mandatory)]
+        [string]$RunId,
+
+        [string]$UpstreamRunId
     )
 
     $producerId = [string]$Producer.id
@@ -179,8 +203,14 @@ function New-KitEvidenceItem {
     $manual = $status -eq "manual" -or $status -eq "not-captured"
     $reproducibleDefault = -not $manual
     $reproducible = [bool](Get-KitEvidenceValue -InputObject $InputReport -Name "reproducible" -DefaultValue $reproducibleDefault)
+    $itemRunId = $RunId
+    if ($status -eq "not-captured") {
+        $itemRunId = "not-captured"
+    } elseif ($status -eq "manual") {
+        $itemRunId = "manual"
+    }
 
-    [pscustomobject][ordered]@{
+    $item = [ordered]@{
         id = "evidence.$producerId"
         stage = [string]$Producer.stage
         producerId = $producerId
@@ -189,12 +219,72 @@ function New-KitEvidenceItem {
         reportType = [string]$Producer.reportType
         status = $status
         generatedAt = $inputGeneratedAt
+        runId = $itemRunId
         manual = [bool]$manual
         reproducible = $reproducible
         reason = [string](Get-KitEvidenceValue -InputObject $Producer -Name "manualReason" -DefaultValue ([string]$Producer.notes))
         sourceMetadata = $source
         artifactReferences = @($artifactReferences)
     }
+
+    if (-not [string]::IsNullOrWhiteSpace($UpstreamRunId) -and $itemRunId -ne $RunId) {
+        $item["upstreamRunId"] = $UpstreamRunId
+    }
+
+    [pscustomobject]$item
+}
+
+function New-KitEvidenceLifecycle {
+    param(
+        [Parameter(Mandatory)]
+        [string]$RunId
+    )
+
+    [pscustomobject][ordered]@{
+        configRunId = $RunId
+        validateRunId = $RunId
+        buildRunId = "not-captured"
+        captureRunId = "not-captured"
+        deployRunId = "not-captured"
+        acceptanceRunId = "manual"
+    }
+}
+
+function New-KitEvidenceStageLinks {
+    param(
+        [Parameter(Mandatory)]
+        [string]$RunId,
+
+        [string]$UpstreamRunId
+    )
+
+    $links = @()
+    foreach ($stage in @("config", "validate")) {
+        $entry = [ordered]@{
+            stage = $stage
+            runId = $RunId
+        }
+        if (-not [string]::IsNullOrWhiteSpace($UpstreamRunId)) {
+            $entry["upstreamRunId"] = $UpstreamRunId
+        }
+        $links += [pscustomobject]$entry
+    }
+
+    foreach ($stage in @("build", "capture", "deploy")) {
+        $links += [pscustomobject][ordered]@{
+            stage = $stage
+            runId = "not-captured"
+            upstreamRunId = $RunId
+        }
+    }
+
+    $links += [pscustomobject][ordered]@{
+        stage = "acceptance"
+        runId = "manual"
+        upstreamRunId = $RunId
+    }
+
+    @($links)
 }
 
 function New-KitEvidenceChainReport {
@@ -213,6 +303,12 @@ function New-KitEvidenceChainReport {
 
         [string]$JobUrl,
 
+        [string]$RunId,
+
+        [string]$UpstreamRunId,
+
+        [string]$ArtifactIndexPath = "tests/fixtures/evidence-chain/sample-artifact-index.json",
+
         [string]$Repository = "phdiggit/win11-image-kit",
 
         [string]$RepoRoot
@@ -225,9 +321,14 @@ function New-KitEvidenceChainReport {
     $resolvedManifestPath = Resolve-KitEvidenceRepoPath -RepoRoot $RepoRoot -Path $ManifestPath
     $manifest = Read-KitEvidenceJsonFile -Path $resolvedManifestPath
     $resolvedInputDirectory = Resolve-KitEvidenceRepoPath -RepoRoot $RepoRoot -Path $InputDirectory
-    $generatedAt = Get-Date
+    $generatedAt = (Get-Date).ToUniversalTime()
+    if ([string]::IsNullOrWhiteSpace($RunId)) {
+        $RunId = New-KitEvidenceRunId -GeneratedAt $generatedAt -SourceSha $SourceSha
+    }
+
     $defaultSource = New-KitEvidenceSource -SourceKind $SourceKind -SourceSha $SourceSha -WorkflowRunUrl $WorkflowRunUrl -JobUrl $JobUrl
     $evidenceItems = @()
+    $inputReports = @()
 
     foreach ($producer in @($manifest.producers)) {
         $inputReport = $null
@@ -235,10 +336,11 @@ function New-KitEvidenceChainReport {
             $candidatePath = Join-Path -Path $resolvedInputDirectory -ChildPath ("{0}.json" -f $producer.id)
             if (Test-Path -LiteralPath $candidatePath) {
                 $inputReport = Read-KitEvidenceJsonFile -Path $candidatePath
+                $inputReports += $inputReport
             }
         }
 
-        $evidenceItems += New-KitEvidenceItem -Producer $producer -InputReport $inputReport -DefaultSource $defaultSource -GeneratedAt $generatedAt
+        $evidenceItems += New-KitEvidenceItem -Producer $producer -InputReport $inputReport -DefaultSource $defaultSource -GeneratedAt $generatedAt -RunId $RunId -UpstreamRunId $RunId
     }
 
     $stageSummaries = @()
@@ -258,12 +360,34 @@ function New-KitEvidenceChainReport {
         $status = "not-captured"
     }
 
-    [pscustomobject][ordered]@{
+    $artifactIndex = @(New-KitEvidenceArtifactIndex -ArtifactIndexPath $ArtifactIndexPath -RunId $RunId -UpstreamRunId $UpstreamRunId -RepoRoot $RepoRoot)
+    $forbiddenFieldNames = @("password", "token", "secret", "privateKey", "credential", "username")
+    $redactedValue = "<redacted>"
+    if ($null -ne $manifest.redactionPolicy) {
+        $forbiddenFieldNames = @($manifest.redactionPolicy.forbiddenFieldNames | ForEach-Object { [string]$_ })
+        $redactedValue = [string]$manifest.redactionPolicy.redactedValue
+    }
+
+    $redactionResults = @()
+    foreach ($inputReport in @($inputReports)) {
+        $redactionResults += Test-KitEvidenceRedaction -InputObject $inputReport -ForbiddenFieldNames $forbiddenFieldNames -RedactedValue $redactedValue
+    }
+    $redactionResults += Test-KitEvidenceRedaction -InputObject $artifactIndex -ForbiddenFieldNames $forbiddenFieldNames -RedactedValue $redactedValue
+    $artifactRedactedCount = @($artifactIndex | Where-Object { $_.redacted }).Count
+    $blockedFields = @($redactionResults | ForEach-Object { $_.blockedFields })
+    $redactions = [pscustomobject][ordered]@{
+        redactedCount = ([int](@($redactionResults | Measure-Object -Property redactedCount -Sum).Sum) + $artifactRedactedCount)
+        blockedCount = @($blockedFields).Count
+        blockedFields = @($blockedFields)
+    }
+
+    $report = [ordered]@{
         reportType = "evidence-chain"
         schemaVersion = 1
         generatedAt = $generatedAt.ToString("s")
         repository = $Repository
         chainId = [string]$manifest.chainId
+        runId = $RunId
         source = $defaultSource
         status = $status
         summary = [pscustomobject][ordered]@{
@@ -273,9 +397,14 @@ function New-KitEvidenceChainReport {
             failedCount = $failedCount
             manualCount = $manualCount
             notCapturedCount = $notCapturedCount
+            artifactCount = $artifactIndex.Count
         }
         stages = @($stageSummaries)
         evidence = @($evidenceItems)
+        lifecycle = New-KitEvidenceLifecycle -RunId $RunId
+        stageLinks = @(New-KitEvidenceStageLinks -RunId $RunId -UpstreamRunId $UpstreamRunId)
+        artifactIndex = @($artifactIndex)
+        redactions = $redactions
         safety = [pscustomobject][ordered]@{
             trueExecution = $false
             localPrivateIncluded = $false
@@ -283,4 +412,10 @@ function New-KitEvidenceChainReport {
             mutationUsed = $false
         }
     }
+
+    if (-not [string]::IsNullOrWhiteSpace($UpstreamRunId)) {
+        $report["upstreamRunId"] = $UpstreamRunId
+    }
+
+    [pscustomobject]$report
 }

@@ -1,0 +1,14 @@
+{
+  "producerId": "project-config",
+  "reportType": "blocked-sensitive-fixture",
+  "status": "passed",
+  "generatedAt": "2026-06-26T00:00:00Z",
+  "password": "blocked-fixture-value",
+  "artifactReferences": [
+    {
+      "kind": "report",
+      "path": "tests/fixtures/evidence-chain/sample-blocked-sensitive-report.json",
+      "private": false
+    }
+  ]
+}

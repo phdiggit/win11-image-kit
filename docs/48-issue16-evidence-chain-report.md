@@ -64,6 +64,28 @@ Evidence items record:
 
 Manual and not-captured items are explicit review signals. They are not failures, and they are not counted as passed.
 
+## Phase 2 Acceptance Hardening
+
+The second Issue #16 stage keeps this document `in-progress` and adds an acceptance scaffold in [Issue #16 Evidence Chain Acceptance](49-issue16-evidence-chain-acceptance.md). This stage hardens the report contract without claiming real lifecycle execution or closure readiness.
+
+### Run ID Model
+
+Generated reports now include a required `runId` using:
+
+```text
+kit-run-<yyyyMMddTHHmmssZ>-<shortSha>
+```
+
+`upstreamRunId` is optional and must use the same format when present. Stage-level links keep `config` and `validate` tied to the current run while `build`, `capture`, and `deploy` remain `not-captured`; `acceptance` remains `manual`.
+
+### Artifact Index Model
+
+The report includes a lightweight `artifactIndex` for report JSON, manifest snapshots, effective configuration artifacts, and logical WIM placeholders. A valid artifact records its producer, stage, run ID, optional upstream run ID, identity fields, and private/redacted flags. Real WIM SHA256 and DISM image details remain out of scope until a later approved lifecycle stage.
+
+### Redaction Policy
+
+The manifest declares forbidden sensitive field names and artifact path patterns. `paths.local.json`, secrets, user-profile paths, absolute drive paths, UNC paths, credentials, private keys, tokens, and unredacted usernames must not become evidence artifacts. Redacted values are counted; blocked sensitive fields fail validation.
+
 ## Report Contract
 
 The report contract is defined by `schemas/evidence-chain-report.schema.json`.
@@ -82,6 +104,8 @@ Required top-level fields:
 - `safety`
 
 `summary.failedCount > 0` is a validator failure and returns exit code 1. `manualCount` and `notCapturedCount` are allowed in the baseline because real build, capture, deploy, and admin or VM smoke evidence require a later explicit approval boundary.
+
+`redactions.blockedCount > 0` is also a validator failure and returns exit code 1. Artifact index entries must not be private. `sha256`, when present, must be 64 hex characters; `sizeBytes`, when present, must be greater than or equal to zero.
 
 ## Producer Map
 
@@ -170,3 +194,4 @@ Artifact references must be repo-relative review artifacts or documented manual 
 - [Issue #14 Quality Gates](40-issue14-quality-gates.md)
 - [Issue #15 Layered Configuration](44-issue15-layered-configuration.md)
 - [Codex Workflow](codex-workflow.md)
+- [Issue #16 Evidence Chain Acceptance](49-issue16-evidence-chain-acceptance.md)

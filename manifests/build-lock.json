@@ -198,7 +198,7 @@
       "path": "scripts/validate/Test-ProjectConfig.ps1",
       "category": "script",
       "required": true,
-      "hash": "9073fd4305dc1df62d44d6d2e265bcc5b796109b8ec4cffc3583147a670dfaeb",
+      "hash": "392190b3e900eecfd71a28808d09b1eaa3bdf3d7874d73a3d4a64518818d7bb8",
       "reason": "Project config validation includes evidence-chain manifest schema validation."
     },
     {
@@ -296,15 +296,15 @@
       "path": ".github/workflows/ci.yml",
       "category": "workflow",
       "required": true,
-      "hash": "0e3ef619b284125c7a3b653fcf42a534249a184a6601204dea234b3673f6e9a3",
-      "reason": "PR Fast CI wires evidence chain validation and Issue 16 Pester coverage."
+      "hash": "51be3dff0c4aea1d4d4783777097ef029f874ad67e9a5f5174799c2a90baa575",
+      "reason": "PR Fast CI wires evidence chain validation and Issue 16 acceptance hardening Pester coverage."
     },
     {
       "path": "README.md",
       "category": "doc",
       "required": true,
-      "hash": "0a42c0765aa3e00695f17c27507e92cbbfa24b982e116f401eabd37a922e1fd8",
-      "reason": "README indexes the Issue 16 evidence chain report entry and validation command."
+      "hash": "64caa5382a0e5456f7c1fb8774609c9d4fef819654a1ae40580b907808a0d8c8",
+      "reason": "README indexes Issue 16 evidence chain report and acceptance scaffold entries."
     },
     {
       "path": "docs/37-issue13-ensure-state-acceptance.md",
@@ -394,8 +394,8 @@
       "path": "manifests/quality-gates.json",
       "category": "manifest",
       "required": true,
-      "hash": "db7be8551ee57e6e687764370226aac6d5624c297a34b7ddc54e6f7dc326d225",
-      "reason": "Quality Gates declare the Issue 16 evidence-chain report-only gate."
+      "hash": "2f3d3588d35a202d173b07c2a64f4685c263e3c7c93a7575c86cb68957dbb169",
+      "reason": "Quality Gates declare the Issue 16 evidence-chain report-only gate with run ID, artifact index, producer normalization, redaction, and acceptance coverage."
     },
     {
       "path": "schemas/quality-gates.schema.json",
@@ -709,127 +709,218 @@
       "path": "docs/48-issue16-evidence-chain-report.md",
       "category": "doc",
       "required": true,
-      "hash": "ad603353a749e9a23cf7656a62f3a288679a6f5e00a1bfc66bbd8a822b3f7d8a",
-      "reason": "Issue 16 intake documents the evidence chain scope, non-goals, report contract, producers, and safety boundaries."
+      "hash": "6f49b06c7b962b708a2cbb152ffdf3e58075f3b0eff6d0178b3d23b9f66fdd69",
+      "reason": "Issue 16 evidence chain report documents Phase 2 run ID, artifact index, and redaction policy hardening."
     },
     {
       "path": "manifests/evidence-chain.json",
       "category": "manifest",
       "required": true,
-      "hash": "cdfd9a6d357e7060ccf3f2390d5cd995dc36f79f8be56e83e7b617f8e18dd263",
-      "reason": "Evidence chain manifest declares stages, report-only producers, manual placeholders, and artifact policy."
+      "hash": "eb92a74c13e768ac0491544b306c3331baa2b45264276c5653f7a9514cc2a328",
+      "reason": "Evidence chain manifest declares run ID policy, artifact policy, redaction policy, report-only producers, and manual placeholders."
     },
     {
       "path": "schemas/evidence-chain.schema.json",
       "category": "schema",
       "required": true,
-      "hash": "e36b0ba7219b375e7ae3acdb176bb6058e0621ee558bed221289a9f5fdd76379",
-      "reason": "Evidence chain manifest schema constrains stages, modes, producers, and artifact policy."
+      "hash": "4734fe2825c2601a715f55aa797fcbbf608730c841a29a1f86cc25983ebf6d9a",
+      "reason": "Evidence chain manifest schema constrains run ID policy, artifact policy, redaction policy, stages, modes, and producers."
     },
     {
       "path": "schemas/evidence-chain-report.schema.json",
       "category": "schema",
       "required": true,
-      "hash": "5d36bb20a1d4671417648526280995477fbc9e1a96d443486bfa61f514112e39",
-      "reason": "Evidence chain report schema constrains summary counts, source metadata, artifacts, and safety flags."
+      "hash": "5e8f23d3b3e1dc64e8639d2d81c869c70cf99fbf50ed8aee4156bf11840dc43a",
+      "reason": "Evidence chain report schema constrains run ID, lifecycle, artifact index, redactions, source metadata, and safety flags."
     },
     {
       "path": "scripts/common/New-KitEvidenceChainReport.ps1",
       "category": "script",
       "required": true,
-      "hash": "e4aa663f59a754676baff1a340d624791556e02259f157c32c5bf17305f780f2",
-      "reason": "Evidence chain report builder normalizes fixture and report-only producer evidence without true execution."
+      "hash": "391091b0775d7b977123b1319d5e9c2f0c54cbe5d224e1421a86ee72555e1e04",
+      "reason": "Evidence chain report builder emits run ID, lifecycle links, artifact index, redaction summary, and normalized producer evidence without true execution."
     },
     {
       "path": "scripts/validate/Test-EvidenceChain.ps1",
       "category": "script",
       "required": true,
-      "hash": "027552ae5b833da3f084d5081cc22e082a9780de5da9e31af100ea438ee43463",
-      "reason": "Evidence chain validator enforces producer metadata, safety flags, artifact references, source metadata, and failedCount exit semantics."
+      "hash": "ca336491c10f2c32b4115d8c53a20ce9eeabe30ea0ca4dbaaa4768ca7db762ef",
+      "reason": "Evidence chain validator enforces run IDs, artifact index, redaction policy, producer metadata, safety flags, and failed/blocked exit semantics."
     },
     {
       "path": "scripts/config/Show-EvidenceChain.ps1",
       "category": "script",
       "required": true,
-      "hash": "c27785355c5a64969e8df58181e92cb055e9112c8d67b54bcc4f1a4ee9bbbeea",
-      "reason": "Evidence chain display entrypoint shows report-only chain state without running producers."
+      "hash": "5a72f20a7a1baa15a647bfbbf8034eea5fe10a8b95de1b0cd8eb35cea6708b0e",
+      "reason": "Evidence chain display entrypoint shows run ID, artifact summary, stage links, and redaction summary without running producers."
     },
     {
       "path": "tests/fixtures/evidence-chain/sample-build-capture-deploy.json",
       "category": "test",
       "required": true,
-      "hash": "99d5252734bf02947cc82945263b63307922fc6665bb1b3036d2be65222a0e52",
+      "hash": "8335d5ca47448598cd30c1ad15a9059a4f64df83490a08edd50361ddafd76261",
       "reason": "Evidence chain sample report records passed report-only sources plus manual and not-captured lifecycle placeholders."
     },
     {
       "path": "tests/fixtures/evidence-chain/sample-report-inputs/effective-configuration.json",
       "category": "test",
       "required": true,
-      "hash": "c621e08192137f7474a3635122eb6edc16be8fd431dcc3ce8b8f1e7766ad4d42",
+      "hash": "a4f026b6276a31d2e4e42b30c34e877afb792aaf600d70a0070cb75a2caee723",
       "reason": "Fixture input normalizes effective configuration report-only evidence."
     },
     {
       "path": "tests/fixtures/evidence-chain/sample-report-inputs/project-config.json",
       "category": "test",
       "required": true,
-      "hash": "12bce470b03a67bf07555a8d6f891475d8eef13e3a0f2284bcb9053c65ebf547",
+      "hash": "016656a29ffcac0980fa822a2faf8d82c2c4c38c447171ad2c94b0c28fef987e",
       "reason": "Fixture input normalizes project configuration report-only evidence."
     },
     {
       "path": "tests/fixtures/evidence-chain/sample-report-inputs/build-lock.json",
       "category": "test",
       "required": true,
-      "hash": "de7abe2adbee48964aa2af524550ee30a80be42a1e4adb1fe58d990a0bb277b5",
+      "hash": "5251ebab17ac11ef67b1b18b9e1ecb57ceafc21cbc30830ab8139a69405e3faf",
       "reason": "Fixture input normalizes Build Lock report-only evidence."
     },
     {
       "path": "tests/fixtures/evidence-chain/sample-report-inputs/quality-gates.json",
       "category": "test",
       "required": true,
-      "hash": "c8d409836e7704059401ae8341e1f42295d791d9906eb0883c26e42aff3fadf6",
+      "hash": "b40d0609d418a3f628235b89a0ef8b4e238c8b4459c571c941ac653de0dda85e",
       "reason": "Fixture input normalizes Quality Gates report-only evidence."
     },
     {
       "path": "tests/fixtures/evidence-chain/sample-report-inputs/pester-summary.json",
       "category": "test",
       "required": true,
-      "hash": "2166e7c8693408345ecfdcf9c7577a543e2ed28a60a46e9f9f1c12a19a005dd7",
+      "hash": "e7bbfed46382e992706857ae60540813a5d00b0d05b663933f162be4667322cc",
       "reason": "Fixture input normalizes Pester summary evidence without true lifecycle execution."
     },
     {
       "path": "tests/pester/EvidenceChainSchema.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "c5e5eb565bef39d362e451e2eb29f4b4c1fb42edf8efd28975cd462f462f58ca",
+      "hash": "02231200b8f9617933b499e0634f3382b7d01021ae313ac20b4af08239d5371e",
       "reason": "Evidence chain schema tests guard closed schemas, stages, modes, and producer entrypoints."
     },
     {
       "path": "tests/pester/EvidenceChainReport.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "654e2c6a6417ab3c91f0f801c74809bffe455790cc5f872b94a76ab9600936dc",
+      "hash": "f91e18decbeb4aa754d2cddc0546e2ac02386fdb81dbacea864c4ffe0b02dbae",
       "reason": "Evidence chain report tests guard manual/not-captured semantics and artifact policy."
     },
     {
       "path": "tests/pester/EvidenceChainValidation.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "da1a00c9c2db6a78b483b548b69ef73f70435482eafd30102761f259ee3d3ab7",
+      "hash": "1eb1b0f118c25a9f03cdd294131a01e8e5047505dd08aa8cae3b18ba61069146",
       "reason": "Evidence chain validation tests guard report writing and failedCount exit behavior."
     },
     {
       "path": "tests/pester/EvidenceChainSafety.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "673bdf2a618d05375da213ebd1bdc7aeeb519c75423f8d5832ea3c674f83aad0",
-      "reason": "Evidence chain safety tests guard false safety flags and no dangerous command names in new scripts."
+      "hash": "b6b38a72b5b480986505c43902d2309f67674dad2b2eb1eab3900b4ecfa63e9f",
+      "reason": "Evidence chain safety tests guard false safety flags and no dangerous command names in Issue 16 scripts."
     },
     {
       "path": "tests/pester/Issue16EvidenceChain.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "7d56b5242a062933b89aea5d4f273bf032281b0ec41313757ff2a72790f3a536",
-      "reason": "Issue 16 tests guard intake docs, wiring, Build Lock coverage, and no auto-close wording."
+      "hash": "fbd9a61b7c3a24c686fa284b16619a7745bb6f15adeaf293161951e91cb1d9db",
+      "reason": "Issue 16 baseline tests guard intake docs, wiring, Build Lock coverage, and no auto-close wording."
+    },
+    {
+      "path": "docs/49-issue16-evidence-chain-acceptance.md",
+      "category": "doc",
+      "required": true,
+      "hash": "a7fca398e6a691e3565700d796d0aaee578371c5700b00a140b39ba97fb214ea",
+      "reason": "Issue 16 acceptance scaffold records in-acceptance coverage without close-prep or main-evidence claims."
+    },
+    {
+      "path": "schemas/evidence-artifact-index.schema.json",
+      "category": "schema",
+      "required": true,
+      "hash": "cab5b604192c5a0160678154c22414fdc4df98f35c1083cc90c044db13f3da1d",
+      "reason": "Evidence artifact index schema constrains artifact identity, run linkage, private flags, sha256, and size fields."
+    },
+    {
+      "path": "scripts/common/New-KitEvidenceArtifactIndex.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "6b9ca9e7636e58e09f3e5efb795986a83a41da91773d48ec64c353521005579e",
+      "reason": "Evidence artifact index helper loads fixture artifact identity without touching private local artifacts."
+    },
+    {
+      "path": "scripts/common/Test-KitEvidenceRedaction.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "670f865d176efc85f895b14521a548b3b338ab8bfb4da50744fca1b6c49f8b2f",
+      "reason": "Evidence redaction helper blocks sensitive fields and counts redacted fixture values."
+    },
+    {
+      "path": "tests/fixtures/evidence-chain/sample-artifact-index.json",
+      "category": "test",
+      "required": true,
+      "hash": "d02f067dc9c09d7125f9d6fc4ae8661342dc263d347627295628ecd442598c5d",
+      "reason": "Fixture artifact index covers repo-relative reports, manifest snapshots, redacted artifacts, and WIM not-captured placeholders."
+    },
+    {
+      "path": "tests/fixtures/evidence-chain/sample-run-linkage.json",
+      "category": "test",
+      "required": true,
+      "hash": "4799fa2608e7faa4bf8b9d88f12d2502e91b5b0ba35ac7af9e91baff641ed4a9",
+      "reason": "Fixture run linkage covers runId, upstreamRunId, lifecycle IDs, and stage links."
+    },
+    {
+      "path": "tests/fixtures/evidence-chain/sample-redacted-report.json",
+      "category": "test",
+      "required": true,
+      "hash": "a16c4566fc300659f1ad2addfb38f7c83f833fd9a10ee7462e00d1cb9e73579e",
+      "reason": "Fixture redacted report proves allowed redaction counting without real sensitive data."
+    },
+    {
+      "path": "tests/fixtures/evidence-chain/sample-blocked-sensitive-report.json",
+      "category": "test",
+      "required": true,
+      "hash": "d318598029e77cdf0ba744b4c0fb5a9e40732be190854a6bbed9af13c961a1a7",
+      "reason": "Fixture blocked sensitive report proves failure-path redaction validation."
+    },
+    {
+      "path": "tests/pester/EvidenceChainRunId.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "cc0a91dc821c6e21f8ed49f881c515cdb16932f850090be3652d0fb9881206f4",
+      "reason": "Evidence chain Run ID tests guard generated IDs, upstream linkage, lifecycle IDs, and display output."
+    },
+    {
+      "path": "tests/pester/EvidenceChainArtifactIndex.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "e422b72b8d0c649bc8b1dd49863047b4015327aadf5b81ab94ca8417bcdcd3cb",
+      "reason": "Evidence chain artifact index tests guard artifact identity and private path rejection."
+    },
+    {
+      "path": "tests/pester/EvidenceChainRedaction.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "185b4177f0115b1c3502b286cd6fa9f6db82c2eed5eed47af2e1c483a919fb48",
+      "reason": "Evidence chain redaction tests guard redacted counts and blocked sensitive failure paths."
+    },
+    {
+      "path": "tests/pester/EvidenceChainProducerNormalization.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "1646a57f7ef0d7414f7cf96bcbad67e09f3c1d4a62b34f51c9fc2646827919a9",
+      "reason": "Evidence chain producer normalization tests guard report-only producers and lifecycle placeholders."
+    },
+    {
+      "path": "tests/pester/Issue16EvidenceChainAcceptance.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "b78de2c158144a2da1d68d7a0d3969b6276b0e4a9d838721dff9faf18b6c2d3f",
+      "reason": "Issue 16 acceptance tests guard docs/49, hardening wiring, and no close artifacts."
     }
   ],
   "watchGlobs": [
@@ -868,7 +959,11 @@
     "scripts/validate/*EvidenceChain*.ps1",
     "tests/fixtures/evidence-chain/*.json",
     "tests/fixtures/evidence-chain/sample-report-inputs/*.json",
-    "tests/pester/*EvidenceChain*.Tests.ps1"
+    "tests/pester/*EvidenceChain*.Tests.ps1",
+    "schemas/evidence-artifact-index.schema.json",
+    "scripts/common/*EvidenceArtifact*.ps1",
+    "scripts/common/*EvidenceRedaction*.ps1",
+    "tests/pester/Issue16*.Tests.ps1"
   ],
   "policy": {
     "missingRequired": "fail",
