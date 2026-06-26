@@ -97,9 +97,32 @@
       "manualReason": "Manual maintainer evidence only; PR Fast CI is not a substitute."
     }
   ],
+  "runIdPolicy": {
+    "format": "kit-run-<yyyyMMddTHHmmssZ>-<shortSha>",
+    "allowUpstreamRunId": true,
+    "requireStageRunIds": true
+  },
   "artifactPolicy": {
     "allowLocalArtifacts": true,
     "allowPrivateLocalOverrides": false,
-    "redactLocalPrivateValues": true
+    "redactLocalPrivateValues": true,
+    "forbiddenArtifactPatterns": [
+      "(^|[\\\\/])paths\\.local\\.json$",
+      "(^|[\\\\/])secrets[\\\\/]",
+      "^[A-Za-z]:[\\\\/]",
+      "^\\\\\\\\",
+      "(^|[\\\\/])Users[\\\\/]"
+    ]
+  },
+  "redactionPolicy": {
+    "forbiddenFieldNames": [
+      "password",
+      "token",
+      "secret",
+      "privateKey",
+      "credential",
+      "username"
+    ],
+    "redactedValue": "<redacted>"
   }
 }

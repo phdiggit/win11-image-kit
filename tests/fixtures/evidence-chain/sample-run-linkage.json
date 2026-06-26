@@ -1,0 +1,43 @@
+{
+  "runId": "kit-run-20260626T123456Z-a659a041",
+  "upstreamRunId": null,
+  "lifecycle": {
+    "configRunId": "kit-run-20260626T123456Z-a659a041",
+    "validateRunId": "kit-run-20260626T123456Z-a659a041",
+    "buildRunId": "not-captured",
+    "captureRunId": "not-captured",
+    "deployRunId": "not-captured",
+    "acceptanceRunId": "manual"
+  },
+  "stageLinks": [
+    {
+      "stage": "config",
+      "runId": "kit-run-20260626T123456Z-a659a041"
+    },
+    {
+      "stage": "validate",
+      "runId": "kit-run-20260626T123456Z-a659a041",
+      "upstreamRunId": "kit-run-20260626T123456Z-a659a041"
+    },
+    {
+      "stage": "build",
+      "runId": "not-captured",
+      "upstreamRunId": "kit-run-20260626T123456Z-a659a041"
+    },
+    {
+      "stage": "capture",
+      "runId": "not-captured",
+      "upstreamRunId": "kit-run-20260626T123456Z-a659a041"
+    },
+    {
+      "stage": "deploy",
+      "runId": "not-captured",
+      "upstreamRunId": "kit-run-20260626T123456Z-a659a041"
+    },
+    {
+      "stage": "acceptance",
+      "runId": "manual",
+      "upstreamRunId": "kit-run-20260626T123456Z-a659a041"
+    }
+  ]
+}

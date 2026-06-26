@@ -144,7 +144,7 @@
       "blocking": true,
       "entrypoint": "scripts/validate/Test-EvidenceChain.ps1",
       "evidence": "report",
-      "notes": "Validates Issue 16 evidence chain manifest, fixture reports, producer metadata, and safety flags without true execution."
+      "notes": "Validates Issue 16 evidence chain runId inheritance, artifact index, producer normalization, redaction policy, acceptance scaffold, fixture reports, and safety flags without true execution."
     },
     {
       "id": "effective-configuration-consumer-integration",

@@ -6,11 +6,15 @@
     "schemaVersion",
     "generatedAt",
     "repository",
+    "runId",
     "source",
     "status",
     "summary",
     "stages",
     "evidence",
+    "lifecycle",
+    "artifactIndex",
+    "redactions",
     "safety"
   ],
   "properties": {
@@ -30,6 +34,14 @@
     },
     "chainId": {
       "type": "string"
+    },
+    "runId": {
+      "type": "string",
+      "pattern": "^kit-run-[0-9]{8}T[0-9]{6}Z-[A-Fa-f0-9]{7,12}$"
+    },
+    "upstreamRunId": {
+      "type": "string",
+      "pattern": "^kit-run-[0-9]{8}T[0-9]{6}Z-[A-Fa-f0-9]{7,12}$"
     },
     "source": {
       "$ref": "#/$defs/source"
@@ -51,6 +63,24 @@
       "items": {
         "$ref": "#/$defs/evidenceItem"
       }
+    },
+    "lifecycle": {
+      "$ref": "#/$defs/lifecycle"
+    },
+    "stageLinks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/stageLink"
+      }
+    },
+    "artifactIndex": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/artifactIndexItem"
+      }
+    },
+    "redactions": {
+      "$ref": "#/$defs/redactions"
     },
     "safety": {
       "$ref": "#/$defs/safety"
@@ -135,6 +165,10 @@
         "notCapturedCount": {
           "type": "integer",
           "minimum": 0
+        },
+        "artifactCount": {
+          "type": "integer",
+          "minimum": 0
         }
       },
       "additionalProperties": false
@@ -184,6 +218,10 @@
         "notCapturedCount": {
           "type": "integer",
           "minimum": 0
+        },
+        "runId": {
+          "type": "string",
+          "pattern": "^(kit-run-[0-9]{8}T[0-9]{6}Z-[A-Fa-f0-9]{7,12}|manual|not-captured)$"
         }
       },
       "additionalProperties": false
@@ -259,6 +297,14 @@
         "generatedAt": {
           "type": "string"
         },
+        "runId": {
+          "type": "string",
+          "pattern": "^(kit-run-[0-9]{8}T[0-9]{6}Z-[A-Fa-f0-9]{7,12}|manual|not-captured)$"
+        },
+        "upstreamRunId": {
+          "type": "string",
+          "pattern": "^kit-run-[0-9]{8}T[0-9]{6}Z-[A-Fa-f0-9]{7,12}$"
+        },
         "manual": {
           "type": "boolean"
         },
@@ -275,6 +321,133 @@
           "type": "array",
           "items": {
             "$ref": "#/$defs/artifactReference"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "lifecycle": {
+      "type": "object",
+      "required": [
+        "configRunId",
+        "validateRunId",
+        "buildRunId",
+        "captureRunId",
+        "deployRunId",
+        "acceptanceRunId"
+      ],
+      "properties": {
+        "configRunId": {
+          "type": "string"
+        },
+        "validateRunId": {
+          "type": "string"
+        },
+        "buildRunId": {
+          "type": "string"
+        },
+        "captureRunId": {
+          "type": "string"
+        },
+        "deployRunId": {
+          "type": "string"
+        },
+        "acceptanceRunId": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "stageLink": {
+      "type": "object",
+      "required": [
+        "stage",
+        "runId"
+      ],
+      "properties": {
+        "stage": {
+          "type": "string"
+        },
+        "runId": {
+          "type": "string"
+        },
+        "upstreamRunId": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "artifactIndexItem": {
+      "type": "object",
+      "required": [
+        "kind",
+        "producerId",
+        "stage",
+        "runId",
+        "private",
+        "redacted"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "logicalName": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[A-Fa-f0-9]{64}$"
+        },
+        "sizeBytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "producerId": {
+          "type": "string"
+        },
+        "stage": {
+          "type": "string"
+        },
+        "runId": {
+          "type": "string"
+        },
+        "upstreamRunId": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/$defs/status"
+        },
+        "private": {
+          "type": "boolean"
+        },
+        "redacted": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "redactions": {
+      "type": "object",
+      "required": [
+        "redactedCount",
+        "blockedCount"
+      ],
+      "properties": {
+        "redactedCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "blockedCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "blockedFields": {
+          "type": "array",
+          "items": {
+            "type": "string"
           }
         }
       },

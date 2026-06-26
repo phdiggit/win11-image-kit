@@ -1,0 +1,86 @@
+{
+  "title": "win11-image-kit evidence artifact index",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "runId",
+    "artifacts"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "runId": {
+      "type": "string",
+      "pattern": "^kit-run-[0-9]{8}T[0-9]{6}Z-[A-Fa-f0-9]{7,12}$"
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/artifact"
+      }
+    }
+  },
+  "$defs": {
+    "artifact": {
+      "type": "object",
+      "required": [
+        "kind",
+        "producerId",
+        "stage",
+        "runId",
+        "private",
+        "redacted"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "logicalName": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[A-Fa-f0-9]{64}$"
+        },
+        "sizeBytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "producerId": {
+          "type": "string"
+        },
+        "stage": {
+          "type": "string"
+        },
+        "runId": {
+          "type": "string"
+        },
+        "upstreamRunId": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "passed",
+            "failed",
+            "manual",
+            "not-captured"
+          ]
+        },
+        "private": {
+          "type": "boolean"
+        },
+        "redacted": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
