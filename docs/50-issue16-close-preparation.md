@@ -25,7 +25,7 @@ This page is a manual closure candidate only. It is not final ready while [Issue
 
 ## Validation Policy
 
-PR Fast CI may validate static, fixture, and report-only behavior only. It must not be treated as main/workflow evidence.
+PR Fast CI may validate static, fixture, and report-only behavior only. It must not be treated as main/workflow evidence. The post-PR #81 main push run failed in Full Validate and must not be treated as ready evidence.
 
 The close-prep candidate requires:
 
@@ -45,10 +45,11 @@ The close-prep candidate requires:
 
 - Confirm docs/49 is `accepted-pending-main-validation`.
 - Confirm this page remains `ready-for-manual-closure-candidate`, not final ready.
-- Confirm docs/51 records pending main/workflow evidence until real evidence exists.
+- Confirm docs/51 records pending main/workflow evidence until real successful evidence exists.
 - Confirm PR Fast CI is not used as a substitute for main/workflow evidence.
 - Confirm No Issue #16 completion summary exists.
 - Confirm no automatic issue closure keyword is used for Issue #16.
+- Confirm local private overrides such as `paths.local.json` stay out of Git and Build Lock required entries.
 
 ## Optional Manual Validation Evidence
 
@@ -63,7 +64,7 @@ Until then, build/capture/deploy/admin-smoke remain manual, not-run, not-capture
 
 ## Closure Note Draft
 
-Issue #16 has a report-only evidence chain and close-prep candidate. Manual closure should wait until the pending main/workflow validation evidence in docs/51 is backfilled from a real `main` push or `workflow_dispatch` run.
+Issue #16 has a report-only evidence chain and close-prep candidate. Manual closure should wait until the pending main/workflow validation evidence in docs/51 is backfilled from a real successful `main` push or `workflow_dispatch` run.
 
 ## Related Documents
 

@@ -18,6 +18,24 @@ Describe "Evidence chain redaction policy" {
         Assert-KitEqual $report.redactions.blockedCount 0
     }
 
+    It "walks PSCustomObject properties before generic enumerable handling" {
+        $fixture = [pscustomobject][ordered]@{
+            nested = [pscustomobject][ordered]@{
+                username = "<redacted>"
+                values = @(
+                    [pscustomobject][ordered]@{
+                        token = "<redacted>"
+                    }
+                )
+            }
+        }
+
+        $result = Test-KitEvidenceRedaction -InputObject $fixture
+
+        Assert-KitEqual $result.blockedCount 0
+        Assert-KitEqual $result.redactedCount 4
+    }
+
     It "detects blocked sensitive field names" {
         $fixture = Get-Content -LiteralPath (Join-Path $script:RepoRoot "tests\fixtures\evidence-chain\sample-blocked-sensitive-report.json") -Raw -Encoding UTF8 | ConvertFrom-Json
         $result = Test-KitEvidenceRedaction -InputObject $fixture

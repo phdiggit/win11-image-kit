@@ -16,6 +16,7 @@ Describe "Evidence chain close-prep wiring" {
         Assert-KitEqual $evidenceGate.mode "report-only"
         Assert-KitMatch $evidenceGate.notes "report input index"
         Assert-KitMatch $evidenceGate.notes "producer normalization counters"
+        Assert-KitNotMatch ($qualityGates | ConvertTo-Json -Depth 10) "true-execution"
     }
 
     It "keeps Build Lock and README linked to close-prep scaffold files" {

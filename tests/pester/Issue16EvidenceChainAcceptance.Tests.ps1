@@ -4,10 +4,12 @@ Describe "Issue 16 evidence chain acceptance scaffold" {
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
     }
 
-    It "promotes docs 49 to accepted pending main validation" {
+    It "tracks accepted state with close-prep and main evidence documents" {
         $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\49-issue16-evidence-chain-acceptance.md") -Raw -Encoding UTF8
 
-        Assert-KitMatch $doc 'Status:\s*`accepted-pending-main-validation`'
+        $statusMatch = [regex]::Match($doc, 'Status:\s*`([^`]+)`')
+        Assert-KitEqual $statusMatch.Success $true
+        Assert-KitEqual (@("accepted-pending-main-validation", "accepted-ready-for-manual-closure") -contains $statusMatch.Groups[1].Value) $true
         foreach ($term in @(
             "## Scope",
             "## Acceptance Matrix",
@@ -25,7 +27,12 @@ Describe "Issue 16 evidence chain acceptance scaffold" {
             Assert-KitMatch $doc ([regex]::Escape($term))
         }
 
-        Assert-KitNotMatch $doc "Status:\s*`ready"
+        if ($statusMatch.Groups[1].Value -eq "accepted-ready-for-manual-closure") {
+            Assert-KitMatch $doc "main/workflow evidence has been backfilled|main/workflow evidence.*backfilled|Main Validation Evidence"
+            Assert-KitMatch $doc "51-issue16-main-validation-evidence\.md"
+        } else {
+            Assert-KitMatch $doc "pending main/workflow evidence|main/workflow evidence.*pending"
+        }
         Assert-KitMatch $doc "not a final closure page"
         Assert-KitMatch $doc "not a main validation evidence page"
         Assert-KitMatch $doc "not a completion summary"
