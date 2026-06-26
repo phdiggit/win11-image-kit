@@ -15,12 +15,12 @@ $failures = @()
 
 foreach ($path in @($report.pathSources)) {
     if ($path.value -match '\$\{[^}]+\}') {
-        $failures += "路径变量未解析：$($path.key) -> $($path.value)"
+        $failures += "Unresolved path token: $($path.key) -> $($path.value)"
     }
 
     foreach ($pattern in @($report.safety.forbiddenPathPatterns)) {
         if ($path.value -match [string]$pattern) {
-            $failures += "路径命中禁止模式：$($path.key) -> $($path.value)"
+            $failures += "Path matched forbidden pattern: $($path.key) -> $($path.value)"
         }
     }
 }
@@ -28,7 +28,7 @@ foreach ($path in @($report.pathSources)) {
 if ($report.safety.forbidTrackedLocalOverrides) {
     foreach ($layer in @($report.appliedLayers)) {
         if ($layer.kind -eq "local" -and $layer.tracked) {
-            $failures += "本机覆盖层不得声明为 tracked：$($layer.id)"
+            $failures += "Local override layer must not be tracked: $($layer.id)"
         }
     }
 }

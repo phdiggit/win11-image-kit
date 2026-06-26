@@ -181,7 +181,7 @@ function Resolve-KitEffectiveConfiguration {
     $manifest = Read-KitJsonFile -Path $resolvedManifestPath
     $stack = @($manifest.stacks | Where-Object { $_.name -eq $StackName })[0]
     if ($null -eq $stack) {
-        throw "配置层级 stack 不存在：$StackName"
+        throw "Configuration stack not found: $StackName"
     }
 
     $layerIndex = @{}
@@ -201,7 +201,7 @@ function Resolve-KitEffectiveConfiguration {
 
     foreach ($layerId in $layerIds) {
         if (-not $layerIndex.ContainsKey([string]$layerId)) {
-            throw "配置层级引用未知 layer：$layerId"
+            throw "Configuration stack references unknown layer: $layerId"
         }
 
         $layer = $layerIndex[[string]$layerId]
@@ -209,10 +209,10 @@ function Resolve-KitEffectiveConfiguration {
         $exists = Test-Path -LiteralPath $layerPath
         if (-not $exists) {
             if ($layer.required) {
-                throw "必需配置层不存在：$($layer.path)"
+                throw "Required configuration layer is missing: $($layer.path)"
             }
 
-            $warnings += "可选配置层不存在，已跳过：$($layer.path)"
+            $warnings += "Optional configuration layer is missing and was skipped: $($layer.path)"
             continue
         }
 

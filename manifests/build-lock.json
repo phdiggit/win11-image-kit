@@ -527,7 +527,7 @@
       "path": "scripts/common/Resolve-KitEffectiveConfiguration.ps1",
       "category": "script",
       "required": true,
-      "hash": "e45f8467be94f78a241a487f587a20235ca648b23a8a8a2300c6b5500212ee08",
+      "hash": "4d21201728b31533926ea2e60c8d6eee0644bad44dc09773910761fb1f0874e7",
       "reason": "Issue 15 effective configuration resolver produces static report-only evidence."
     },
     {
@@ -541,7 +541,7 @@
       "path": "scripts/validate/Test-EffectiveConfiguration.ps1",
       "category": "script",
       "required": true,
-      "hash": "0124d60e889738d88a4f410b8d0534ea4f4950960428f201eb9bc666977b4f3b",
+      "hash": "27a8ef823cd68ec6d73ddf4d55d75fab0b145ede6f0bf78e1e71fd0e15313552",
       "reason": "Issue 15 effective configuration validation entrypoint writes failedCount=0 reports."
     },
     {
