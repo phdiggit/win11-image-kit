@@ -87,3 +87,13 @@ PR Fast CI 只做 static、fixture、report-only 验证：
 - no real build
 
 这保证 Issue #13 的 CI 证明是静态收敛能力的证据，而不是机器变更证据。
+
+## 收口文档
+
+本文件是 Issue #13 Ensure-State runbook / design note。后续收口证据分成三层：
+
+- [Acceptance Matrix](37-issue13-ensure-state-acceptance.md)：记录 software/service manifest/schema、resolver、plan、result mapping、report、validate entrypoint、Capability Registry、Build Lock 和 CI guardrails 的验收矩阵。
+- [Close Preparation](38-issue13-close-preparation.md)：记录人工关闭前 checklist、证据链和真实执行边界。
+- [Main Validation Evidence](39-issue13-main-validation-evidence.md)：记录 main/workflow validation evidence；没有真实 evidence 时保持 `pending-main-validation`。
+
+真实软件安装、卸载、升级和真实服务启停、禁用、删除必须另开 task/issue，并提供 admin/VM evidence、rollback、dry-run、allowlist 和 explicit approval。Issue #13 的 PR Fast CI 只证明 plan/report-only 收敛模型，不证明真实机器 remediation。
