@@ -1,12 +1,12 @@
 # Issue #14 Close Preparation
 
-Status: `ready-for-manual-closure-candidate`
+Status: `ready-for-manual-closure`
 
-## Final Scope Candidate
+## Final Scope
 
 Issue #14 covers the schema / Pester / PSScriptAnalyzer / CI quality-gates layer for this repository.
 
-The implemented candidate scope is:
+The implemented scope is:
 
 - quality-gates manifest and schema
 - report-only quality-gates runner and structured report
@@ -44,12 +44,12 @@ PR Fast CI remains static / fixture / report-only. It may run JSON parse checks,
 
 PR Fast CI is not main/workflow evidence. Full Validate on pull requests remains skipped and is not a failure.
 
-While docs/43 is `pending-main-validation`, this document is only a manual-closure candidate. Main/workflow validation evidence must come from a later `main` push or `workflow_dispatch` Full Validate run after this PR is merged.
+docs/43 records verified `main` push Full Validate evidence and is `ready-for-manual-closure`. PR Fast CI is still not main/workflow evidence. Full Validate on pull requests remains skipped and is not a failure.
 
 ## Manual Closure Checklist
 
-- Confirm docs/41 remains `in-acceptance` until main/workflow evidence is backfilled.
-- Confirm docs/43 records verified `main` push or `workflow_dispatch` evidence before final closure readiness is claimed.
+- Confirm docs/41 is `accepted-ready-for-manual-closure`.
+- Confirm docs/43 records verified `main` push or `workflow_dispatch` evidence before manual issue handling.
 - Confirm quality-gates report evidence is `passed` or `manual` with `failedCount=0`.
 - Confirm PR Fast CI has not been used as a substitute for main/workflow evidence.
 - Confirm no real build, true execution, installer/service mutation, network download, signing, registry/profile/hive mutation, or fake admin/VM smoke evidence was introduced.
@@ -57,17 +57,17 @@ While docs/43 is `pending-main-validation`, this document is only a manual-closu
 
 ## Optional Manual Validation Evidence
 
-Real VM/admin smoke is optional manual evidence. It is not required for this Issue #14 close-preparation candidate and must not be invented.
+Real VM/admin smoke is optional manual evidence. It is not required for this Issue #14 ready state and must not be invented.
 
 If a maintainer explicitly performs manual smoke later, record the environment, operator, date, scope, result, and supporting notes in docs/43 or a follow-up evidence task.
 
 ## Closure Note Draft
 
-Manual closure candidate:
+Manual closure note draft:
 
 Issue #14 established the quality-gates layer for schema/JSON validation, Pester inventory, PSScriptAnalyzer baseline policy, PR Fast CI / Full Validate split, report-only quality-gates runner, and Build Lock coverage.
 
-Main/workflow evidence is tracked separately in docs/43. If docs/43 is still pending, keep this note as a candidate and do not use it for final manual issue handling.
+Main/workflow evidence is recorded in docs/43. Use this note only for manual issue handling; this document does not automatically close Issue #14.
 
 ## Related Documents
 

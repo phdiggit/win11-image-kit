@@ -1,6 +1,6 @@
 # Issue #14 Main Validation Evidence
 
-Status: `pending-main-validation`
+Status: `ready-for-manual-closure`
 
 ## Evidence Sources
 
@@ -14,21 +14,23 @@ Pull request-only Fast CI is not a substitute for main validation evidence. Full
 
 | Field | Value |
 | --- | --- |
-| Trigger source | `pending` |
-| Main SHA | `pending` |
-| Workflow run | `pending` |
-| Full Validate job | `pending` |
-| Result | `pending` |
-| Notes | `pending` |
+| Trigger source | `main push` |
+| Main SHA | `3d1c70b9f221ce1fa9cf010c8b6bbe652c69e0ef` |
+| Workflow run | https://github.com/phdiggit/win11-image-kit/actions/runs/28232035996 |
+| Full Validate job | https://github.com/phdiggit/win11-image-kit/actions/runs/28232035996/job/83637867155 |
+| Result | `success` |
+| Notes | Post-PR #73 main push Windows CI / Full Validate completed successfully. |
 
 ## Quality Gate Evidence
 
 | Field | Value |
 | --- | --- |
-| Report status | `pending` |
-| failedCount | `pending` |
-| manualCount | `pending` |
-| gateCount | `pending` |
+| Report status | `manual` |
+| failedCount | `0` |
+| manualCount | `1` |
+| gateCount | `10` |
+
+Quality-gates report evidence uses `Test-QualityGates.ps1 -ReportPath "$env:TEMP\quality-gates-issue14-ready.json"` run locally at the same main SHA, after verifying the main push Full Validate job completed successfully. This is same-SHA local report evidence, not a GitHub artifact.
 
 ## Real VM/Admin Smoke
 
@@ -44,13 +46,13 @@ Pull request-only Fast CI is not a substitute for main validation evidence. Full
 
 | Field | Value |
 | --- | --- |
-| Current readiness | `pending-main-validation` |
-| Required next evidence | `main/workflow validation` |
+| Current readiness | `ready-for-manual-closure` |
+| Required next evidence | `none` |
 | PR Fast CI substitute allowed | `false` |
 
 ## Ready-State Rules
 
-Only a later evidence backfill task may promote this document out of `pending-main-validation`.
+This document is ready because the main push Full Validate evidence above has been recorded and verified.
 
 Ready state requires:
 
@@ -66,7 +68,7 @@ Ready state requires:
 
 ## Copyable Manual Closure Comment Draft
 
-Pending. Do not use a final closure comment until main/workflow validation evidence has been recorded.
+Issue #14 is ready for manual closure. The quality-gates manifest/schema, report-only runner, PR Fast CI / Full Validate split, Pester/PSScriptAnalyzer policy, and Build Lock coverage are documented and guarded. Main push Full Validate succeeded at the evidence links above. Real VM/admin smoke remains optional and was not run for this evidence record.
 
 ## Related Documents
 
