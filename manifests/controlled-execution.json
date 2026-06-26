@@ -1,0 +1,83 @@
+{
+  "$schema": "../schemas/controlled-execution.schema.json",
+  "manifestVersion": 1,
+  "executionSetId": "issue17-dry-run-baseline",
+  "defaultMode": "dry-run",
+  "allowTrueExecution": false,
+  "actions": [
+    {
+      "id": "preflight-project-config",
+      "stage": "preflight",
+      "mode": "report-only",
+      "entrypoint": "scripts/validate/Test-ProjectConfig.ps1",
+      "requiresAdmin": false,
+      "requiresWinPE": false,
+      "requiresNetwork": false,
+      "requiresReboot": false,
+      "mutationKind": "none",
+      "riskLevel": "low",
+      "evidenceProducer": "project-config"
+    },
+    {
+      "id": "preflight-quality-gates",
+      "stage": "preflight",
+      "mode": "report-only",
+      "entrypoint": "scripts/validate/Test-QualityGates.ps1",
+      "requiresAdmin": false,
+      "requiresWinPE": false,
+      "requiresNetwork": false,
+      "requiresReboot": false,
+      "mutationKind": "none",
+      "riskLevel": "low",
+      "evidenceProducer": "quality-gates"
+    },
+    {
+      "id": "preflight-build-lock",
+      "stage": "preflight",
+      "mode": "report-only",
+      "entrypoint": "scripts/validate/Test-BuildLock.ps1",
+      "requiresAdmin": false,
+      "requiresWinPE": false,
+      "requiresNetwork": false,
+      "requiresReboot": false,
+      "mutationKind": "none",
+      "riskLevel": "low",
+      "evidenceProducer": "build-lock"
+    },
+    {
+      "id": "preflight-evidence-chain",
+      "stage": "preflight",
+      "mode": "report-only",
+      "entrypoint": "scripts/validate/Test-EvidenceChain.ps1",
+      "requiresAdmin": false,
+      "requiresWinPE": false,
+      "requiresNetwork": false,
+      "requiresReboot": false,
+      "mutationKind": "none",
+      "riskLevel": "low",
+      "evidenceProducer": "evidence-chain"
+    },
+    {
+      "id": "winpe-controlled-execution-intake",
+      "stage": "intake",
+      "mode": "manual",
+      "entrypoint": "docs/52-issue17-controlled-execution-intake.md",
+      "requiresAdmin": false,
+      "requiresWinPE": true,
+      "requiresNetwork": false,
+      "requiresReboot": false,
+      "mutationKind": "none",
+      "riskLevel": "medium",
+      "evidenceProducer": "controlled-execution"
+    }
+  ],
+  "safety": {
+    "trueExecutionDefault": false,
+    "allowDiskMutation": false,
+    "allowRegistryMutation": false,
+    "allowNetworkDownload": false,
+    "allowServiceMutation": false,
+    "allowProfileMutation": false,
+    "allowHiveMutation": false
+  }
+}

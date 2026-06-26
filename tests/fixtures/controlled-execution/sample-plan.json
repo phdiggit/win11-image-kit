@@ -1,0 +1,31 @@
+{
+  "$schema": "../../../schemas/controlled-execution.schema.json",
+  "manifestVersion": 1,
+  "executionSetId": "fixture-plan",
+  "defaultMode": "plan-only",
+  "allowTrueExecution": false,
+  "actions": [
+    {
+      "id": "fixture-plan-action",
+      "stage": "preflight",
+      "mode": "report-only",
+      "entrypoint": "docs/52-issue17-controlled-execution-intake.md",
+      "requiresAdmin": false,
+      "requiresWinPE": false,
+      "requiresNetwork": false,
+      "requiresReboot": false,
+      "mutationKind": "none",
+      "riskLevel": "low",
+      "evidenceProducer": "controlled-execution"
+    }
+  ],
+  "safety": {
+    "trueExecutionDefault": false,
+    "allowDiskMutation": false,
+    "allowRegistryMutation": false,
+    "allowNetworkDownload": false,
+    "allowServiceMutation": false,
+    "allowProfileMutation": false,
+    "allowHiveMutation": false
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../../schemas/controlled-execution.schema.json",
+  "manifestVersion": 1,
+  "executionSetId": "fixture-true-execution-enabled",
+  "defaultMode": "dry-run",
+  "allowTrueExecution": true,
+  "actions": [],
+  "safety": {
+    "trueExecutionDefault": false,
+    "allowDiskMutation": false,
+    "allowRegistryMutation": false,
+    "allowNetworkDownload": false,
+    "allowServiceMutation": false,
+    "allowProfileMutation": false,
+    "allowHiveMutation": false
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "../../../../schemas/controlled-execution.schema.json",
+  "manifestVersion": 1,
+  "executionSetId": "fixture-network-download-action",
+  "defaultMode": "dry-run",
+  "allowTrueExecution": false,
+  "actions": [
+    {
+      "id": "blocked-network-download",
+      "stage": "preflight",
+      "mode": "manual",
+      "entrypoint": "docs/52-issue17-controlled-execution-intake.md",
+      "requiresAdmin": false,
+      "requiresWinPE": false,
+      "requiresNetwork": true,
+      "requiresReboot": false,
+      "mutationKind": "none",
+      "riskLevel": "high",
+      "evidenceProducer": "controlled-execution"
+    }
+  ],
+  "safety": {
+    "trueExecutionDefault": false,
+    "allowDiskMutation": false,
+    "allowRegistryMutation": false,
+    "allowNetworkDownload": false,
+    "allowServiceMutation": false,
+    "allowProfileMutation": false,
+    "allowHiveMutation": false
+  }
+}

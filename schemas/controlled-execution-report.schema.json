@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "win11-image-kit controlled execution report",
+  "type": "object",
+  "required": ["reportType", "schemaVersion", "generatedAt", "executionSetId", "mode", "whatIf", "trueExecution", "status", "summary", "actions", "safety"],
+  "properties": {
+    "reportType": {
+      "type": "string",
+      "const": "controlled-execution"
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "generatedAt": { "type": "string" },
+    "executionSetId": { "type": "string", "minLength": 1 },
+    "mode": {
+      "type": "string",
+      "enum": ["dry-run", "what-if", "plan-only", "manual"]
+    },
+    "whatIf": {
+      "type": "boolean",
+      "const": true
+    },
+    "trueExecution": {
+      "type": "boolean",
+      "const": false
+    },
+    "status": {
+      "type": "string",
+      "enum": ["passed", "failed"]
+    },
+    "summary": { "$ref": "#/$defs/summary" },
+    "actions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/action" }
+    },
+    "safety": { "$ref": "#/$defs/safety" }
+  },
+  "$defs": {
+    "summary": {
+      "type": "object",
+      "required": ["actionCount", "plannedActionCount", "blockedActionCount", "failedCount", "requiresAdminCount", "requiresWinPECount", "requiresRebootCount", "requiresNetworkCount", "mutationActionCount"],
+      "properties": {
+        "actionCount": { "type": "integer", "minimum": 0 },
+        "plannedActionCount": { "type": "integer", "minimum": 0 },
+        "blockedActionCount": { "type": "integer", "minimum": 0 },
+        "failedCount": { "type": "integer", "minimum": 0 },
+        "requiresAdminCount": { "type": "integer", "minimum": 0 },
+        "requiresWinPECount": { "type": "integer", "minimum": 0 },
+        "requiresRebootCount": { "type": "integer", "minimum": 0 },
+        "requiresNetworkCount": { "type": "integer", "minimum": 0 },
+        "mutationActionCount": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "action": {
+      "type": "object",
+      "required": ["id", "stage", "mode", "entrypoint", "status", "reason", "riskLevel", "requiresAdmin", "requiresWinPE", "requiresNetwork", "requiresReboot", "mutationKind", "evidenceProducer", "executed"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "stage": { "type": "string", "minLength": 1 },
+        "mode": { "type": "string", "minLength": 1 },
+        "entrypoint": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "enum": ["planned", "blocked", "failed"] },
+        "reason": { "type": "string" },
+        "riskLevel": { "type": "string", "minLength": 1 },
+        "requiresAdmin": { "type": "boolean" },
+        "requiresWinPE": { "type": "boolean" },
+        "requiresNetwork": { "type": "boolean" },
+        "requiresReboot": { "type": "boolean" },
+        "mutationKind": { "type": "string", "minLength": 1 },
+        "evidenceProducer": { "type": "string", "minLength": 1 },
+        "executed": {
+          "type": "boolean",
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "safety": {
+      "type": "object",
+      "required": ["diskMutation", "registryMutation", "networkDownload", "serviceMutation", "profileMutation", "hiveMutation"],
+      "properties": {
+        "diskMutation": { "type": "boolean", "const": false },
+        "registryMutation": { "type": "boolean", "const": false },
+        "networkDownload": { "type": "boolean", "const": false },
+        "serviceMutation": { "type": "boolean", "const": false },
+        "profileMutation": { "type": "boolean", "const": false },
+        "hiveMutation": { "type": "boolean", "const": false }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

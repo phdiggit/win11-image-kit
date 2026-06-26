@@ -437,6 +437,7 @@ function Test-JsonSchemaFiles {
         @{ Manifest = "appx-cleanup.json"; Schema = "appx-cleanup.schema.json" },
         @{ Manifest = "build-lock.json"; Schema = "build-lock.schema.json" },
         @{ Manifest = "capability-registry.json"; Schema = "capability-registry.schema.json" },
+        @{ Manifest = "controlled-execution.json"; Schema = "controlled-execution.schema.json" },
         @{ Manifest = "config-layers.json"; Schema = "config-layers.schema.json" },
         @{ Manifest = "context-scope.json"; Schema = "context-scope.schema.json" },
         @{ Manifest = "customization-scope.json"; Schema = "customization-scope.schema.json" },

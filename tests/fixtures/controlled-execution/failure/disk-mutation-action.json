@@ -1,0 +1,31 @@
+{
+  "$schema": "../../../../schemas/controlled-execution.schema.json",
+  "manifestVersion": 1,
+  "executionSetId": "fixture-disk-mutation-action",
+  "defaultMode": "dry-run",
+  "allowTrueExecution": false,
+  "actions": [
+    {
+      "id": "blocked-disk-mutation",
+      "stage": "winpe",
+      "mode": "manual",
+      "entrypoint": "docs/52-issue17-controlled-execution-intake.md",
+      "requiresAdmin": true,
+      "requiresWinPE": true,
+      "requiresNetwork": false,
+      "requiresReboot": true,
+      "mutationKind": "disk",
+      "riskLevel": "critical",
+      "evidenceProducer": "controlled-execution"
+    }
+  ],
+  "safety": {
+    "trueExecutionDefault": false,
+    "allowDiskMutation": false,
+    "allowRegistryMutation": false,
+    "allowNetworkDownload": false,
+    "allowServiceMutation": false,
+    "allowProfileMutation": false,
+    "allowHiveMutation": false
+  }
+}
