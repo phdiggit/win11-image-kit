@@ -1,6 +1,6 @@
 # Issue #15 Close Preparation
 
-Status: `ready-for-manual-closure-candidate`
+Status: `ready-for-manual-closure`
 
 ## Final Scope Candidate
 
@@ -15,16 +15,16 @@ Issue #15 scope is the layered configuration mechanism for profile, local path, 
 - Effective configuration resolver, display entrypoint, validator, reports, and Pester guardrails
 - Opt-in consumer integration through `Show-CustomizationScope.ps1 -UseEffectiveConfiguration`
 
-This is a manual closure candidate only. It is not final closure while `docs/47-issue15-main-validation-evidence.md` remains pending.
+This is ready for maintainer manual closure because `docs/47-issue15-main-validation-evidence.md` records post-PR #77 main push Full Validate success. It is still not an automatic Issue #15 closure.
 
 ## Evidence Chain
 
 - `docs/44-issue15-layered-configuration.md` records the design, safety boundaries, and migration-compatible consumer integration.
-- `docs/45-issue15-layered-configuration-acceptance.md` records functional acceptance and pending main evidence.
-- `docs/47-issue15-main-validation-evidence.md` is the pending evidence scaffold.
+- `docs/45-issue15-layered-configuration-acceptance.md` records functional acceptance and ready manual-closure status.
+- `docs/47-issue15-main-validation-evidence.md` records the post-PR #77 main push Full Validate evidence.
 - PR Fast CI validates static configuration, effective configuration, and fixture tests for the PR branch.
 
-PR Fast CI is not main/workflow evidence. Main push or `workflow_dispatch` evidence must be backfilled separately after this scaffold is merged.
+PR Fast CI is not main/workflow evidence. The recorded evidence source is the `main` push Windows CI run after PR #77 merged.
 
 ## Validation Policy
 
@@ -41,7 +41,7 @@ PR Fast CI is not main/workflow evidence. Main push or `workflow_dispatch` evide
 | Functional acceptance documented | `complete` |
 | Consumer integration documented | `complete` |
 | Close-prep candidate created | `complete` |
-| Main/workflow validation evidence | `pending` |
+| Main/workflow validation evidence | `complete` |
 | PR Fast CI used as main evidence | `false` |
 | Completion summary created | `false` |
 | Issue auto-close wording used | `false` |
@@ -52,7 +52,7 @@ Real VM/admin smoke is optional and not required for this scaffold. If it is per
 
 ## Closure Note Draft
 
-Issue #15 has a layered configuration baseline, acceptance hardening, opt-in consumer integration, and close-prep candidate documentation. Main/workflow validation evidence remains pending and should be backfilled before a maintainer manually closes the issue.
+Issue #15 has a layered configuration baseline, acceptance hardening, opt-in consumer integration, close-prep documentation, and post-PR #77 main push Full Validate evidence. Maintainer manual closure may proceed after review.
 
 Do not use auto-close keywords in PR bodies or commits for this staged work.
 

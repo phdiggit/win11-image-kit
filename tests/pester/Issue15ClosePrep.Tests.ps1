@@ -6,13 +6,22 @@ Describe "Issue 15 close preparation candidate" {
         $script:Doc = Get-Content -LiteralPath $script:DocPath -Raw -Encoding UTF8
     }
 
-    It "adds a manual closure candidate without final closure claims" {
-        Assert-KitMatch $script:Doc 'Status:\s*`ready-for-manual-closure-candidate`'
+    It "adds manual closure readiness without final closure claims" {
+        Assert-KitMatch $script:Doc 'Status:\s*`(ready-for-manual-closure-candidate|ready-for-manual-closure)`'
         Assert-KitMatch $script:Doc "PR Fast CI is not main/workflow evidence"
-        Assert-KitMatch $script:Doc "manual closure candidate only"
+        Assert-KitMatch $script:Doc "(manual closure candidate only|maintainer manual closure)"
         Assert-KitMatch $script:Doc "paths\.local\.json.*Build Lock"
         Assert-KitMatch $script:Doc "Do not use auto-close keywords"
         Assert-KitNotMatch $script:Doc "(?i)(Fixes|Closes|Resolves)\s+#15"
+    }
+
+    It "requires main validation evidence when close prep is ready" {
+        if ($script:Doc -match 'Status:\s*`ready-for-manual-closure`') {
+            Assert-KitMatch $script:Doc "post-PR #77 main push Full Validate"
+            $evidenceDoc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\47-issue15-main-validation-evidence.md") -Raw -Encoding UTF8
+            Assert-KitMatch $evidenceDoc 'Status:\s*`ready-for-manual-closure`'
+            Assert-KitMatch $evidenceDoc '\| Result \| `success` \|'
+        }
     }
 
     It "does not add an Issue 15 completion summary" {

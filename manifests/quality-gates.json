@@ -148,7 +148,7 @@
     },
     {
       "id": "issue15-acceptance",
-      "displayName": "Issue 15 accepted pending main validation",
+      "displayName": "Issue 15 accepted ready for manual closure",
       "layer": "pr-fast",
       "trigger": "pull_request",
       "mode": "report-only",
@@ -156,11 +156,11 @@
       "blocking": true,
       "entrypoint": "docs/45-issue15-layered-configuration-acceptance.md",
       "evidence": "document",
-      "notes": "Documents functional acceptance while keeping main/workflow evidence pending."
+      "notes": "Documents functional acceptance after post-merge main/workflow validation evidence is recorded."
     },
     {
       "id": "issue15-close-prep",
-      "displayName": "Issue 15 close-prep candidate",
+      "displayName": "Issue 15 ready close-prep",
       "layer": "pr-fast",
       "trigger": "pull_request",
       "mode": "manual",
@@ -168,11 +168,11 @@
       "blocking": true,
       "entrypoint": "docs/46-issue15-close-preparation.md",
       "evidence": "document",
-      "notes": "Provides a manual closure candidate only; PR Fast CI is not main evidence."
+      "notes": "Provides manual closure readiness only; PR Fast CI is not main evidence."
     },
     {
-      "id": "issue15-main-evidence-scaffold",
-      "displayName": "Issue 15 main evidence scaffold",
+      "id": "issue15-main-evidence",
+      "displayName": "Issue 15 main evidence",
       "layer": "pr-fast",
       "trigger": "pull_request",
       "mode": "report-only",
@@ -180,7 +180,7 @@
       "blocking": true,
       "entrypoint": "docs/47-issue15-main-validation-evidence.md",
       "evidence": "document",
-      "notes": "Keeps main/workflow validation fields pending until real main or workflow_dispatch evidence exists."
+      "notes": "Records real main push or workflow_dispatch Full Validate evidence for manual closure review."
     }
   ]
 }

@@ -4,11 +4,14 @@ Describe "Issue 15 layered configuration acceptance" {
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
     }
 
-    It "tracks accepted-pending-main-validation state with close-prep scaffold" {
+    It "tracks accepted state with close-prep and main evidence documents" {
         $doc45 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\45-issue15-layered-configuration-acceptance.md") -Raw -Encoding UTF8
 
+        $statusMatch = [regex]::Match($doc45, 'Status:\s*`([^`]+)`')
+        Assert-KitEqual $statusMatch.Success $true
+        Assert-KitEqual (@("accepted-pending-main-validation", "accepted-ready-for-manual-closure") -contains $statusMatch.Groups[1].Value) $true
+
         foreach ($term in @(
-            'Status: `accepted-pending-main-validation`',
             "## Scope",
             "## Acceptance Matrix",
             "## Evidence Chain",
@@ -28,7 +31,12 @@ Describe "Issue 15 layered configuration acceptance" {
             Assert-KitMatch $doc45 ([regex]::Escape($term))
         }
 
-        Assert-KitMatch $doc45 "main/workflow evidence is still pending"
+        if ($statusMatch.Groups[1].Value -eq "accepted-ready-for-manual-closure") {
+            Assert-KitMatch $doc45 "main/workflow evidence has been backfilled"
+            Assert-KitMatch $doc45 "docs/47-issue15-main-validation-evidence\.md"
+        } else {
+            Assert-KitMatch $doc45 "main/workflow evidence is still pending"
+        }
         Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot "docs\46-issue15-close-preparation.md")) $true
         Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot "docs\47-issue15-main-validation-evidence.md")) $true
     }
@@ -40,6 +48,7 @@ Describe "Issue 15 layered configuration acceptance" {
         $buildLock = Get-Content -LiteralPath (Join-Path $script:RepoRoot "manifests\build-lock.json") -Raw -Encoding UTF8 | ConvertFrom-Json
         $paths = @($buildLock.entries.path)
         $gate = @($qualityGates.gates | Where-Object { $_.id -eq "effective-configuration" })[0]
+        $mainEvidenceGate = @($qualityGates.gates | Where-Object { $_.id -in @("issue15-main-evidence-scaffold", "issue15-main-evidence") })[0]
 
         Assert-KitMatch $readme "docs/45-issue15-layered-configuration-acceptance\.md"
         Assert-KitMatch $readme "docs/46-issue15-close-preparation\.md"
@@ -51,6 +60,7 @@ Describe "Issue 15 layered configuration acceptance" {
         Assert-KitMatch $ci "Issue15ClosePrep\.Tests\.ps1"
         Assert-KitMatch $ci "Issue15MainValidationEvidence\.Tests\.ps1"
         Assert-KitEqual $gate.mode "report-only"
+        Assert-KitEqual $mainEvidenceGate.evidence "document"
         Assert-KitNotMatch ($qualityGates | ConvertTo-Json -Depth 10) "true-execution"
 
         foreach ($path in @(

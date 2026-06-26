@@ -198,7 +198,7 @@
       "path": "scripts/validate/Test-ProjectConfig.ps1",
       "category": "script",
       "required": true,
-      "hash": "12301f2bf0eebfff211f3702abb91f6fcf10eed727c45f6623d1fe81eaa9f23c",
+      "hash": "e06f0850d894eff8268e13a31346a0f6b13b1b0151a8a5c71c220b7d71579c21",
       "reason": "Project config validation checks Issue 15 layered references and local override policy."
     },
     {
@@ -296,14 +296,14 @@
       "path": ".github/workflows/ci.yml",
       "category": "workflow",
       "required": true,
-      "hash": "421f4ad59bab9086af8ef89376c0bd4763cb670af62f096ca027c02aae6e2e39",
+      "hash": "833026a32eb95fbcf00cc07aea0b55c7ec23b4dc7a3bcb4409578727bc6a8ee5",
       "reason": "PR Fast CI wires Issue 15 consumer integration, close-prep, and main-evidence scaffold tests."
     },
     {
       "path": "README.md",
       "category": "doc",
       "required": true,
-      "hash": "63ebafb05cf2960337957f5f179efe5a0806335aae4e113c5bd4cca4106c1df2",
+      "hash": "8fc4e248ba2f8bf81228a06380669eaf1cf61482587594fb1f27a768f6156c9a",
       "reason": "README indexes Issue 15 acceptance, close-prep, and main-evidence scaffold."
     },
     {
@@ -394,7 +394,7 @@
       "path": "manifests/quality-gates.json",
       "category": "manifest",
       "required": true,
-      "hash": "1c8df012adb6e34cf934e27c745c486caa59cc06fdd8c302617c06eee6252008",
+      "hash": "a640413065b532ac03c333208c09e12670b987f64b1404733859238732416d5b",
       "reason": "Quality Gates declare Issue 15 consumer, acceptance, close-prep, and evidence scaffold gates."
     },
     {
@@ -478,14 +478,14 @@
       "path": "docs/44-issue15-layered-configuration.md",
       "category": "doc",
       "required": true,
-      "hash": "89f21e5046ecb8ce18fdf54f0dab828819457220cdbd7660617f8acf60b84e8c",
+      "hash": "25c9d2fc54a97ab1ab4e1b12a9c2797705fe5aca8e6ebef29ae355da2a538e80",
       "reason": "Issue 15 layered configuration design records consumer integration and close-prep links."
     },
     {
       "path": "docs/45-issue15-layered-configuration-acceptance.md",
       "category": "doc",
       "required": true,
-      "hash": "ba9dcd1e3150c1e9a0abc5bd4ab50a18648323235539265c4da0bb21e841f32e",
+      "hash": "30275cd7820ac38aa1e294e1f8516a22005a7151c7e8943aaf7fce1137b0d0f6",
       "reason": "Issue 15 acceptance records accepted-pending-main-validation status."
     },
     {
@@ -562,7 +562,7 @@
       "path": "tests/pester/Issue15LayeredConfiguration.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "247425ebf7060e3fe5bc676b0fb0608f515ba7526682e3d3e37d938dc1274225",
+      "hash": "2131968465684ad736afe29e10507c34a57c5957277f3eafc69d7245757de63b",
       "reason": "Issue 15 guardrail tests cover intake, wiring, Build Lock, and no auto-close wording."
     },
     {
@@ -618,7 +618,7 @@
       "path": "tests/pester/Issue15LayeredConfigurationAcceptance.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "c1fbe431abe30f1bbdefd2367a680cb863678ea7a953e2b14335811989d1b6e6",
+      "hash": "eef74d67d2506683bb2a0a65a89dcd6cdbc4da99e1fd5c3bca54290bf5957964",
       "reason": "Issue 15 acceptance tests guard accepted-pending-main-validation and wiring."
     },
     {
@@ -639,70 +639,70 @@
       "path": "docs/07-定制范围与配置入口.md",
       "category": "doc",
       "required": true,
-      "hash": "214e3fe901340b98558ac762438c16c27e271298969f1cede1f19d20732d3fb1",
+      "hash": "f9fd7ede966670ffea76e3eb3522919ddad729151b5ce45ddf9661921260b548",
       "reason": "Configuration entry documentation describes opt-in effective configuration migration."
     },
     {
       "path": "docs/46-issue15-close-preparation.md",
       "category": "doc",
       "required": true,
-      "hash": "331e5aed25194e18733a7fcd4c4cae58da547819f446dd627f1de60b6e0b2565",
+      "hash": "9155d2cb2b9833f85bc8b9307d9910efc88d1800d5b87b8461a559af074f0f04",
       "reason": "Issue 15 close-prep candidate is a manual closure input."
     },
     {
       "path": "docs/47-issue15-main-validation-evidence.md",
       "category": "doc",
       "required": true,
-      "hash": "d9a1944d731edab8079df389dcc71167ec61e72b549dfe12645ce54a3b86f847",
+      "hash": "8af059029f0c287ca7ab3b99e344941776caf45f2b518b222090212ea64f2663",
       "reason": "Issue 15 main validation evidence scaffold must remain pending until real main evidence exists."
     },
     {
       "path": "manifests/customization-scope.json",
       "category": "manifest",
       "required": true,
-      "hash": "61be702bb70e06b65d8b8313604b73d6a677a7cf3fa69f5cd86aec38fd30f37a",
+      "hash": "0a174bccaa56ac1c2764b7ccf0770603f06743705e710c7a8d3736b04c4555fa",
       "reason": "Customization scope declares layered configuration manifest and default stack while preserving pathsManifest."
     },
     {
       "path": "schemas/customization-scope.schema.json",
       "category": "schema",
       "required": true,
-      "hash": "3477cf564c32c718904c04ca15bab02f7b6b7e8e984e1cb6c8a9b2e7f59e5ee0",
+      "hash": "ffd897b9e8dd4f72a2035b9d32a399a7b78143f738bf744dffee8456b537c707",
       "reason": "Customization scope schema allows layered configuration reference fields."
     },
     {
       "path": "scripts/config/Show-CustomizationScope.ps1",
       "category": "script",
       "required": true,
-      "hash": "d04737bdc263ae62375d9ffa53054a618f9a6b68100df9e69481ff92760515b5",
+      "hash": "7903bded9a198c688151e5aab9198f1e3dad0bdb704334a010cd946df59d27f8",
       "reason": "Show-CustomizationScope is the opt-in effective configuration consumer entrypoint."
     },
     {
       "path": "tests/pester/CustomizationScopeEffectiveConfiguration.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "b1ad86c59d38769ee830f20e680a5741dbe304e7de88f81579ef10eb49a836ed",
+      "hash": "f198c1f034a5289312cc70b7dedf8eb285e221731a8e44f7db9ce3ed51576352",
       "reason": "Customization scope tests guard layered configuration metadata and local override policy."
     },
     {
       "path": "tests/pester/EffectiveConfigurationConsumerIntegration.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "3c7dafef9af2e04edd5db7b7d61e1a2d90e0279cfbc50be35c8225272a030ff3",
+      "hash": "a0313802be7a331cbb61bdbc662cef0688ad47476bcae8817bdd3727fec14cd8",
       "reason": "Consumer integration tests guard Show-CustomizationScope default compatibility and opt-in effective configuration display."
     },
     {
       "path": "tests/pester/Issue15ClosePrep.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "36b3ee513598966f4aab7366bba02668ac833827fbc9e3e94d87b3281ecbb0ac",
+      "hash": "7900cb60ff4347ecc3f79362ee15d783ce2ab35bb61c626f72e2a10da79e6b98",
       "reason": "Issue 15 close-prep tests guard candidate-only closure semantics."
     },
     {
       "path": "tests/pester/Issue15MainValidationEvidence.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "71d46bcfc98597936b7b90e13954e7b5f5f2e33fe79bb2c34a2437c7f7ed8b38",
+      "hash": "0d3a22403b8025abc4dba550bbc830b0de3bc2c83d513bc79ce5b8e52b67204a",
       "reason": "Issue 15 main evidence tests guard pending-only evidence scaffold."
     }
   ],

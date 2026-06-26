@@ -1,6 +1,6 @@
 # Issue #15 Layered Configuration Acceptance
 
-Status: `accepted-pending-main-validation`
+Status: `accepted-ready-for-manual-closure`
 
 ## Scope
 
@@ -17,14 +17,14 @@ Status: `accepted-pending-main-validation`
 | Token / path safety | `covered` | `EffectiveConfigurationTokenSafety.Tests.ps1`, `Test-EffectiveConfiguration.ps1` |
 | Report contract | `covered` | `pathSources.key/value/redactedValue/sourceLayer`, `failedCount` |
 | Consumer integration | `covered` | `Show-CustomizationScope.ps1 -UseEffectiveConfiguration`, `CustomizationScopeEffectiveConfiguration.Tests.ps1` |
-| Close readiness | `candidate` | `docs/46-issue15-close-preparation.md` is a manual closure candidate only. |
-| Main evidence | `pending` | `docs/47-issue15-main-validation-evidence.md` is pending; PR Fast CI is not a substitute. |
+| Close readiness | `ready` | `docs/46-issue15-close-preparation.md` is ready for manual closure only. |
+| Main evidence | `ready` | `docs/47-issue15-main-validation-evidence.md` records post-PR #77 main push Full Validate success; PR Fast CI is not a substitute. |
 
 ## Evidence Chain
 
-Evidence remains local and PR Fast CI only until the close-prep PR is merged. PR Fast CI runs static JSON / PowerShell parse, project config validation, quality gates validation, effective configuration validation for all stacks, and curated Pester tests. Full Validate remains limited to `main` push / `workflow_dispatch`.
+Evidence now includes the post-PR #77 `main` push Windows CI Full Validate run recorded in `docs/47-issue15-main-validation-evidence.md`. PR Fast CI runs static JSON / PowerShell parse, project config validation, quality gates validation, effective configuration validation for all stacks, and curated Pester tests. Full Validate remains limited to `main` push / `workflow_dispatch`.
 
-Functional acceptance is complete, but main/workflow evidence is still pending. This document does not mean Issue #15 is closed, and close-prep is only a candidate while `docs/47-issue15-main-validation-evidence.md` remains pending.
+Functional acceptance is complete and main/workflow evidence has been backfilled. This document does not mean Issue #15 is closed; maintainer manual closure remains separate.
 
 ## Layer Priority
 
@@ -99,14 +99,13 @@ Supported opt-in parameters:
 - No install / uninstall / upgrade.
 - No service, Defender, AppX, Junction, Sysprep, DISM, registry, profile, or hive mutation.
 - No network package lookup or download.
-- No final closure.
+- No automatic final closure.
 - No completion summary.
-- No main/workflow evidence backfill in this stage.
 - No real VM/admin smoke claim unless explicitly performed later.
 
 ## Remaining Work
 
-- Backfill main/workflow validation evidence after this close-prep scaffold is merged.
+- Maintainer manually closes Issue #15 after reviewing the ready evidence.
 - Decide whether more manifests should consume effective configuration directly.
 - Decide whether CLI explicit should support non-path sections after more use.
 
