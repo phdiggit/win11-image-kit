@@ -1,0 +1,26 @@
+{
+  "$schema": "../../../../schemas/evidence-report-inputs.schema.json",
+  "manifestVersion": 1,
+  "inputSetId": "issue16-bad-paths",
+  "sourceKind": "fixture",
+  "inputs": [
+    {
+      "producerId": "project-config",
+      "path": "manifests/paths.local.json",
+      "expectedReportType": "project-config",
+      "required": true,
+      "allowMissing": false,
+      "allowManual": false,
+      "allowNotCaptured": false
+    },
+    {
+      "producerId": "build-lock",
+      "path": "C:/private/build-lock.json",
+      "expectedReportType": "build-lock",
+      "required": true,
+      "allowMissing": false,
+      "allowManual": false,
+      "allowNotCaptured": false
+    }
+  ]
+}

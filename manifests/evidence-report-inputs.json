@@ -1,0 +1,53 @@
+{
+  "$schema": "../schemas/evidence-report-inputs.schema.json",
+  "manifestVersion": 1,
+  "inputSetId": "issue16-pr-fast-fixture",
+  "sourceKind": "fixture",
+  "inputs": [
+    {
+      "producerId": "effective-configuration",
+      "path": "tests/fixtures/evidence-chain/sample-report-inputs/effective-configuration.json",
+      "expectedReportType": "effective-configuration-validation",
+      "required": true,
+      "allowMissing": false,
+      "allowManual": false,
+      "allowNotCaptured": false
+    },
+    {
+      "producerId": "project-config",
+      "path": "tests/fixtures/evidence-chain/sample-report-inputs/project-config.json",
+      "expectedReportType": "project-config",
+      "required": true,
+      "allowMissing": false,
+      "allowManual": false,
+      "allowNotCaptured": false
+    },
+    {
+      "producerId": "build-lock",
+      "path": "tests/fixtures/evidence-chain/sample-report-inputs/build-lock.json",
+      "expectedReportType": "build-lock",
+      "required": true,
+      "allowMissing": false,
+      "allowManual": false,
+      "allowNotCaptured": false
+    },
+    {
+      "producerId": "quality-gates",
+      "path": "tests/fixtures/evidence-chain/sample-report-inputs/quality-gates.json",
+      "expectedReportType": "quality-gates",
+      "required": true,
+      "allowMissing": false,
+      "allowManual": false,
+      "allowNotCaptured": false
+    },
+    {
+      "producerId": "pester-summary",
+      "path": "tests/fixtures/evidence-chain/sample-report-inputs/pester-summary.json",
+      "expectedReportType": "pester-summary",
+      "required": true,
+      "allowMissing": false,
+      "allowManual": false,
+      "allowNotCaptured": false
+    }
+  ]
+}

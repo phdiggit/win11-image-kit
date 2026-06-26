@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../../schemas/evidence-report-inputs.schema.json",
+  "manifestVersion": 1,
+  "inputSetId": "issue16-disallowed-manual",
+  "sourceKind": "fixture",
+  "inputs": [
+    {
+      "producerId": "project-config",
+      "path": "tests/fixtures/evidence-chain/failure-inputs/disallowed-manual/project-config-report.json",
+      "expectedReportType": "project-config",
+      "required": true,
+      "allowMissing": false,
+      "allowManual": false,
+      "allowNotCaptured": false
+    }
+  ]
+}

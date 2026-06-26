@@ -7,11 +7,14 @@
     "generatedAt",
     "repository",
     "runId",
+    "inputSetId",
     "source",
     "status",
     "summary",
     "stages",
     "evidence",
+    "inputReports",
+    "producerNormalization",
     "lifecycle",
     "artifactIndex",
     "redactions",
@@ -43,6 +46,10 @@
       "type": "string",
       "pattern": "^kit-run-[0-9]{8}T[0-9]{6}Z-[A-Fa-f0-9]{7,12}$"
     },
+    "inputSetId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$"
+    },
     "source": {
       "$ref": "#/$defs/source"
     },
@@ -63,6 +70,15 @@
       "items": {
         "$ref": "#/$defs/evidenceItem"
       }
+    },
+    "inputReports": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/inputReport"
+      }
+    },
+    "producerNormalization": {
+      "$ref": "#/$defs/producerNormalization"
     },
     "lifecycle": {
       "$ref": "#/$defs/lifecycle"
@@ -252,6 +268,97 @@
         },
         "private": {
           "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "inputReport": {
+      "type": "object",
+      "required": [
+        "producerId",
+        "path",
+        "expectedReportType",
+        "required",
+        "allowMissing",
+        "allowManual",
+        "allowNotCaptured",
+        "exists",
+        "reportType",
+        "status"
+      ],
+      "properties": {
+        "producerId": {
+          "type": "string"
+        },
+        "path": {
+          "type": "string"
+        },
+        "expectedReportType": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "allowMissing": {
+          "type": "boolean"
+        },
+        "allowManual": {
+          "type": "boolean"
+        },
+        "allowNotCaptured": {
+          "type": "boolean"
+        },
+        "exists": {
+          "type": "boolean"
+        },
+        "reportType": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "producerNormalization": {
+      "type": "object",
+      "required": [
+        "normalizedCount",
+        "missingRequiredCount",
+        "reportTypeMismatchCount",
+        "disallowedManualCount",
+        "disallowedNotCapturedCount",
+        "inputPolicyViolationCount",
+        "unmatchedInputCount"
+      ],
+      "properties": {
+        "normalizedCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "missingRequiredCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "reportTypeMismatchCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "disallowedManualCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "disallowedNotCapturedCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "inputPolicyViolationCount": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unmatchedInputCount": {
+          "type": "integer",
+          "minimum": 0
         }
       },
       "additionalProperties": false

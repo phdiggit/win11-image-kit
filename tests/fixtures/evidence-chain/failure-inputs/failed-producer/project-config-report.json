@@ -1,0 +1,17 @@
+{
+  "producerId": "project-config",
+  "reportType": "project-config",
+  "status": "failed",
+  "generatedAt": "2026-06-26T00:00:00Z",
+  "reproducible": false,
+  "sourceMetadata": {
+    "kind": "fixture"
+  },
+  "artifactReferences": [
+    {
+      "kind": "report",
+      "path": "tests/fixtures/evidence-chain/failure-inputs/failed-producer/project-config-report.json",
+      "private": false
+    }
+  ]
+}

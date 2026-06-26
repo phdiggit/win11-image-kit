@@ -144,7 +144,43 @@
       "blocking": true,
       "entrypoint": "scripts/validate/Test-EvidenceChain.ps1",
       "evidence": "report",
-      "notes": "Validates Issue 16 evidence chain runId inheritance, artifact index, producer normalization, redaction policy, acceptance scaffold, fixture reports, and safety flags without true execution."
+      "notes": "Validates Issue 16 evidence chain runId inheritance, artifact index, report input index, producer normalization counters, redaction policy, accepted-pending scaffold, fixture reports, and safety flags without true execution."
+    },
+    {
+      "id": "issue16-acceptance",
+      "displayName": "Issue 16 acceptance",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "docs/49-issue16-evidence-chain-acceptance.md",
+      "evidence": "document",
+      "notes": "Records accepted-pending-main-validation without final closure."
+    },
+    {
+      "id": "issue16-close-prep",
+      "displayName": "Issue 16 close-prep candidate",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "manual",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "docs/50-issue16-close-preparation.md",
+      "evidence": "document",
+      "notes": "Manual closure candidate only; PR Fast CI is not main evidence."
+    },
+    {
+      "id": "issue16-main-evidence-scaffold",
+      "displayName": "Issue 16 main evidence scaffold",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "docs/51-issue16-main-validation-evidence.md",
+      "evidence": "document",
+      "notes": "Keeps main/workflow evidence pending until real main or workflow_dispatch evidence exists."
     },
     {
       "id": "effective-configuration-consumer-integration",

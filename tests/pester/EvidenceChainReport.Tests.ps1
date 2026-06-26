@@ -10,6 +10,7 @@ Describe "Evidence chain report builder" {
 
         Assert-KitEqual $report.reportType "evidence-chain"
         Assert-KitEqual $report.schemaVersion 1
+        Assert-KitEqual $report.inputSetId "issue16-pr-fast-fixture"
         Assert-KitEqual $report.summary.stageCount 6
         Assert-KitEqual $report.summary.producerCount 9
         Assert-KitEqual $report.summary.passedCount 5
@@ -17,6 +18,9 @@ Describe "Evidence chain report builder" {
         Assert-KitEqual $report.summary.manualCount 1
         Assert-KitEqual $report.summary.notCapturedCount 3
         Assert-KitEqual $report.status "manual"
+        Assert-KitEqual @($report.inputReports).Count 5
+        Assert-KitEqual $report.producerNormalization.normalizedCount 5
+        Assert-KitEqual $report.producerNormalization.missingRequiredCount 0
 
         foreach ($producerId in @("real-build", "capture", "deploy")) {
             $item = @($report.evidence | Where-Object { $_.producerId -eq $producerId })[0]

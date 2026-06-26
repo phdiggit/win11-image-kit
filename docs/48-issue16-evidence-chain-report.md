@@ -86,6 +86,43 @@ The report includes a lightweight `artifactIndex` for report JSON, manifest snap
 
 The manifest declares forbidden sensitive field names and artifact path patterns. `paths.local.json`, secrets, user-profile paths, absolute drive paths, UNC paths, credentials, private keys, tokens, and unredacted usernames must not become evidence artifacts. Redacted values are counted; blocked sensitive fields fail validation.
 
+## Phase 3 Producer Adapter And Close-Prep Scaffold
+
+The third Issue #16 stage promotes [Issue #16 Evidence Chain Acceptance](49-issue16-evidence-chain-acceptance.md) to `accepted-pending-main-validation` and adds:
+
+- [Issue #16 Close Preparation](50-issue16-close-preparation.md) as a `ready-for-manual-closure-candidate` note.
+- [Issue #16 Main Validation Evidence](51-issue16-main-validation-evidence.md) as a `pending-main-validation` scaffold.
+- `manifests/evidence-report-inputs.json` as the report input index.
+- `schemas/evidence-report-inputs.schema.json` as the closed input index contract.
+- producer adapter helpers for reading declared report inputs and normalizing them into evidence items.
+
+This stage still does not claim real lifecycle evidence. Real build, capture, deploy, and admin/VM smoke producers remain manual or not-captured, and PR Fast CI remains static/report-only evidence rather than main/workflow evidence.
+
+### Report Input Index
+
+The report input index declares each report-only or fixture producer input:
+
+- producer ID;
+- repo-relative report path;
+- expected report type;
+- whether the input is required;
+- whether missing, manual, or not-captured values are allowed.
+
+Private paths, absolute drive paths, UNC paths, user-profile paths, `secrets/`, and `manifests/paths.local.json` are rejected. A producer ID must match `manifests/evidence-chain.json`.
+
+### Producer Adapter Contract
+
+The adapter layer converts declared report inputs into evidence items without running any producer. Required report-only inputs must be present, match the expected report type, avoid failed status, and avoid disallowed manual or not-captured status. Failure counters are surfaced in `producerNormalization`:
+
+- `missingRequiredCount`
+- `reportTypeMismatchCount`
+- `disallowedManualCount`
+- `disallowedNotCapturedCount`
+- `inputPolicyViolationCount`
+- `unmatchedInputCount`
+
+All failure counters must be zero for the baseline validator to exit successfully.
+
 ## Report Contract
 
 The report contract is defined by `schemas/evidence-chain-report.schema.json`.
@@ -98,6 +135,9 @@ Required top-level fields:
 - `repository`
 - `source`
 - `status`
+- `inputSetId`
+- `inputReports`
+- `producerNormalization`
 - `summary`
 - `stages`
 - `evidence`

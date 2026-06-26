@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../../schemas/evidence-report-inputs.schema.json",
+  "manifestVersion": 1,
+  "inputSetId": "issue16-missing-required",
+  "sourceKind": "fixture",
+  "inputs": [
+    {
+      "producerId": "project-config",
+      "path": "tests/fixtures/evidence-chain/failure-inputs/missing-required/not-present.json",
+      "expectedReportType": "project-config",
+      "required": true,
+      "allowMissing": false,
+      "allowManual": false,
+      "allowNotCaptured": false
+    }
+  ]
+}

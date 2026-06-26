@@ -61,7 +61,7 @@ logs/                 仅保留 .gitkeep，本地日志不提交
 27. Issue #14 schema / Pester / PSScriptAnalyzer / CI 质量门禁总线见 [Quality Gates](docs/40-issue14-quality-gates.md)
 28. Issue #14 质量门禁 runner/report、验收与人工关闭准备见 [Acceptance](docs/41-issue14-quality-gates-acceptance.md)、[Close Preparation](docs/42-issue14-close-preparation.md)、[Main Validation Evidence](docs/43-issue14-main-validation-evidence.md)
 29. Issue #15 Profile、本机路径和硬件覆盖的分层配置机制见 [Layered Configuration](docs/44-issue15-layered-configuration.md)，验收硬化、手动关闭准备和 main 证据见 [Acceptance](docs/45-issue15-layered-configuration-acceptance.md)、[Close Preparation](docs/46-issue15-close-preparation.md)、[Main Validation Evidence](docs/47-issue15-main-validation-evidence.md)
-30. Issue #16 构建、捕获、部署和验收证据链报告基线见 [Evidence Chain Report](docs/48-issue16-evidence-chain-report.md)，Run ID / Artifact Index / Redaction acceptance 见 [Evidence Chain Acceptance](docs/49-issue16-evidence-chain-acceptance.md)
+30. Issue #16 构建、捕获、部署和验收证据链报告见 [Evidence Chain Report](docs/48-issue16-evidence-chain-report.md)、[Evidence Chain Acceptance](docs/49-issue16-evidence-chain-acceptance.md)、[Close Preparation](docs/50-issue16-close-preparation.md)、[Main Validation Evidence](docs/51-issue16-main-validation-evidence.md)
 
 常规配置验证：
 

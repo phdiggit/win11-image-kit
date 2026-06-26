@@ -17,7 +17,7 @@ Describe "Evidence chain validation runner" {
 
             $psi = New-Object System.Diagnostics.ProcessStartInfo
             $psi.FileName = "powershell"
-            $psi.Arguments = "-NoProfile -ExecutionPolicy Bypass -File `"$script:RepoRoot\scripts\validate\Test-EvidenceChain.ps1`" -InputDirectory `"$InputDirectory`" -ReportPath `"$ReportPath`" -SourceSha `"$SourceSha`""
+            $psi.Arguments = "-NoProfile -ExecutionPolicy Bypass -File `"$script:RepoRoot\scripts\validate\Test-EvidenceChain.ps1`" -InputManifestPath `"`" -InputDirectory `"$InputDirectory`" -ReportPath `"$ReportPath`" -SourceSha `"$SourceSha`""
             $psi.RedirectStandardOutput = $true
             $psi.RedirectStandardError = $true
             $psi.UseShellExecute = $false

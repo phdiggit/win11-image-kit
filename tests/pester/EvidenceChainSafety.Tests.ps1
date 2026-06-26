@@ -39,6 +39,8 @@ Describe "Evidence chain safety policy" {
 
         foreach ($relativePath in @(
             "scripts\common\New-KitEvidenceChainReport.ps1",
+            "scripts\common\Read-KitEvidenceReportInputs.ps1",
+            "scripts\common\ConvertTo-KitEvidenceProducerItem.ps1",
             "scripts\validate\Test-EvidenceChain.ps1",
             "scripts\config\Show-EvidenceChain.ps1"
         )) {

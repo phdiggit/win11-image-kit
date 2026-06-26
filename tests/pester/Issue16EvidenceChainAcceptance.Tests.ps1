@@ -4,15 +4,16 @@ Describe "Issue 16 evidence chain acceptance scaffold" {
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
     }
 
-    It "adds docs 49 as in-acceptance and keeps it out of ready closure states" {
+    It "promotes docs 49 to accepted pending main validation" {
         $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\49-issue16-evidence-chain-acceptance.md") -Raw -Encoding UTF8
 
-        Assert-KitMatch $doc 'Status:\s*`in-acceptance`'
+        Assert-KitMatch $doc 'Status:\s*`accepted-pending-main-validation`'
         foreach ($term in @(
             "## Scope",
             "## Acceptance Matrix",
             "## Run ID / Upstream Linkage",
             "## Artifact Index",
+            "## Producer Adapter / Report Input Index",
             "## Producer Normalization",
             "## Redaction Policy",
             "## Evidence Chain Report Contract",
@@ -25,7 +26,7 @@ Describe "Issue 16 evidence chain acceptance scaffold" {
         }
 
         Assert-KitNotMatch $doc "Status:\s*`ready"
-        Assert-KitMatch $doc "not a close-prep page"
+        Assert-KitMatch $doc "not a final closure page"
         Assert-KitMatch $doc "not a main validation evidence page"
         Assert-KitMatch $doc "not a completion summary"
         Assert-KitMatch $doc "PR Fast CI is not main/workflow evidence"
@@ -40,19 +41,26 @@ Describe "Issue 16 evidence chain acceptance scaffold" {
         $evidenceGate = @($qualityGates.gates | Where-Object { $_.id -eq "evidence-chain" })[0]
 
         Assert-KitMatch $readme "docs/49-issue16-evidence-chain-acceptance\.md"
-        foreach ($testName in @("EvidenceChainRunId", "EvidenceChainArtifactIndex", "EvidenceChainRedaction", "EvidenceChainProducerNormalization", "Issue16EvidenceChainAcceptance")) {
+        foreach ($testName in @("EvidenceChainRunId", "EvidenceChainArtifactIndex", "EvidenceChainRedaction", "EvidenceChainProducerNormalization", "EvidenceChainInputIndex", "EvidenceChainProducerAdapter", "EvidenceChainClosePrep", "Issue16EvidenceChainAcceptance", "Issue16ClosePrep", "Issue16MainValidationEvidence")) {
             Assert-KitMatch $ci ("tests/pester/{0}\.Tests\.ps1" -f $testName)
         }
         Assert-KitEqual $evidenceGate.mode "report-only"
         Assert-KitMatch $evidenceGate.notes "runId inheritance"
         Assert-KitMatch $evidenceGate.notes "artifact index"
+        Assert-KitMatch $evidenceGate.notes "report input index"
         Assert-KitMatch $evidenceGate.notes "redaction policy"
 
         foreach ($path in @(
             "docs/49-issue16-evidence-chain-acceptance.md",
+            "docs/50-issue16-close-preparation.md",
+            "docs/51-issue16-main-validation-evidence.md",
+            "manifests/evidence-report-inputs.json",
+            "schemas/evidence-report-inputs.schema.json",
             "schemas/evidence-artifact-index.schema.json",
             "scripts/common/New-KitEvidenceArtifactIndex.ps1",
             "scripts/common/Test-KitEvidenceRedaction.ps1",
+            "scripts/common/Read-KitEvidenceReportInputs.ps1",
+            "scripts/common/ConvertTo-KitEvidenceProducerItem.ps1",
             "tests/fixtures/evidence-chain/sample-artifact-index.json",
             "tests/fixtures/evidence-chain/sample-run-linkage.json",
             "tests/fixtures/evidence-chain/sample-redacted-report.json",
@@ -61,24 +69,31 @@ Describe "Issue 16 evidence chain acceptance scaffold" {
             "tests/pester/EvidenceChainArtifactIndex.Tests.ps1",
             "tests/pester/EvidenceChainRedaction.Tests.ps1",
             "tests/pester/EvidenceChainProducerNormalization.Tests.ps1",
-            "tests/pester/Issue16EvidenceChainAcceptance.Tests.ps1"
+            "tests/pester/EvidenceChainInputIndex.Tests.ps1",
+            "tests/pester/EvidenceChainProducerAdapter.Tests.ps1",
+            "tests/pester/EvidenceChainClosePrep.Tests.ps1",
+            "tests/pester/Issue16EvidenceChainAcceptance.Tests.ps1",
+            "tests/pester/Issue16ClosePrep.Tests.ps1",
+            "tests/pester/Issue16MainValidationEvidence.Tests.ps1"
         )) {
             Assert-KitEqual ($paths -contains $path) $true
         }
     }
 
-    It "does not introduce Issue 16 close artifacts or auto-close wording" {
+    It "keeps Issue 16 close artifacts as candidate or pending only with no auto-close wording" {
         foreach ($path in @(
             "docs\50-issue16-close-preparation.md",
-            "docs\50-issue16-main-validation-evidence.md",
-            "docs\50-issue16-completion-summary.md"
+            "docs\51-issue16-main-validation-evidence.md"
         )) {
-            Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot $path)) $false
+            Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot $path)) $true
         }
+        Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot "docs\52-issue16-completion-summary.md")) $false
 
         $text = @(
             Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\48-issue16-evidence-chain-report.md") -Raw -Encoding UTF8
             Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\49-issue16-evidence-chain-acceptance.md") -Raw -Encoding UTF8
+            Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\50-issue16-close-preparation.md") -Raw -Encoding UTF8
+            Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\51-issue16-main-validation-evidence.md") -Raw -Encoding UTF8
             Get-Content -LiteralPath (Join-Path $script:RepoRoot "README.md") -Raw -Encoding UTF8
         ) -join "`n"
         Assert-KitNotMatch $text "(?i)\b(fixes|closes|resolves)\s+#16\b"

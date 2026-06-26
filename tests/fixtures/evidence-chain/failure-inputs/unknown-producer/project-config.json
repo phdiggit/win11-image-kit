@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../../schemas/evidence-report-inputs.schema.json",
+  "manifestVersion": 1,
+  "inputSetId": "issue16-unknown-producer",
+  "sourceKind": "fixture",
+  "inputs": [
+    {
+      "producerId": "not-a-producer",
+      "path": "tests/fixtures/evidence-chain/sample-report-inputs/project-config.json",
+      "expectedReportType": "project-config",
+      "required": true,
+      "allowMissing": false,
+      "allowManual": false,
+      "allowNotCaptured": false
+    }
+  ]
+}
