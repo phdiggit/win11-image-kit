@@ -23,6 +23,14 @@ Status: `in-acceptance`
 | Failed gate | failed gate can mark report failed and exit 1 | `QualityGateValidation.Tests.ps1` |
 | CI boundary | PR Fast CI runs the runner and QualityGate Pester without real mutation | workflow / Pester |
 | Build Lock | new manifest/schema/scripts/docs/tests are locked or watched | Build Lock / Pester |
+| Close-prep candidate | closure preparation is documented only as a candidate while main evidence is pending | `Issue14ClosePrep.Tests.ps1` |
+| Main evidence scaffold | main/workflow validation fields remain pending until a later evidence backfill task | `Issue14MainValidationEvidence.Tests.ps1` |
+
+## Acceptance Hardening Status
+
+This acceptance document remains `in-acceptance`. Issue #14 has local schema, Pester, analyzer policy, CI wiring, quality-gates runner/report, and Build Lock guardrails, but it does not yet have main/workflow validation evidence.
+
+The close-preparation document is only a candidate while [Main Validation Evidence](43-issue14-main-validation-evidence.md) is `pending-main-validation`. This acceptance record must not move to final manual-closure readiness in this task.
 
 ## Evidence Chain
 
@@ -32,10 +40,14 @@ Status: `in-acceptance`
 - scripts/validate/Test-QualityGates.ps1
 - docs/40-issue14-quality-gates.md
 - docs/41-issue14-quality-gates-acceptance.md
+- docs/42-issue14-close-preparation.md
+- docs/43-issue14-main-validation-evidence.md
 - tests/pester/QualityGateSchema.Tests.ps1
 - tests/pester/QualityGateReport.Tests.ps1
 - tests/pester/QualityGateValidation.Tests.ps1
 - tests/pester/Issue14QualityGateAcceptance.Tests.ps1
+- tests/pester/Issue14ClosePrep.Tests.ps1
+- tests/pester/Issue14MainValidationEvidence.Tests.ps1
 
 ## Runner / Report Contract
 
@@ -55,6 +67,14 @@ PSScriptAnalyzer remains governed by `PSScriptAnalyzerSettings.psd1`. Missing an
 
 Build Lock covers Issue #14 manifest/schema/scripts/docs/tests and changed workflow/README inputs. `manual / failedCount=0` remains a review signal, not a failed validation.
 
+## Close Preparation Boundary
+
+[Close Preparation](42-issue14-close-preparation.md) is a manual-closure candidate only. It can prepare the scope, checklist, and future closure note draft, but it cannot claim final readiness while [Main Validation Evidence](43-issue14-main-validation-evidence.md) is still pending.
+
+## Main Evidence Boundary
+
+[Main Validation Evidence](43-issue14-main-validation-evidence.md) is a scaffold for a later backfill task. Pull request-only Fast CI is not a substitute for main push or `workflow_dispatch` Full Validate evidence.
+
 ## Non-goals
 
 - real Windows image build
@@ -68,11 +88,13 @@ Build Lock covers Issue #14 manifest/schema/scripts/docs/tests and changed workf
 
 ## Remaining Work
 
-- Decide whether Issue #14 needs additional gate types before close preparation.
-- Record future main/workflow evidence only in a later task card.
+- Backfill main/workflow validation evidence only after this close-preparation PR is merged.
+- Promote close-preparation readiness only after docs/43 records verified main/workflow evidence.
 - Keep true execution split into separate task/issue scope.
 
 ## Related Documents
 
 - [Quality Gates](40-issue14-quality-gates.md)
+- [Close Preparation](42-issue14-close-preparation.md)
+- [Main Validation Evidence](43-issue14-main-validation-evidence.md)
 - [Build Lock](32-issue12-build-lock.md)

@@ -198,7 +198,7 @@
       "path": "scripts/validate/Test-ProjectConfig.ps1",
       "category": "script",
       "required": true,
-      "hash": "7a914d836beebf9a09cd4a9f5febe4966727bb9ac9728dc91cc0de474cd64172",
+      "hash": "57d95425486b13446e00b9f854cf6c4f21db2bdc4c4ab4840ded2df5a6f1639b",
       "reason": "Project config validation now enforces quality gate manifest structure."
     },
     {
@@ -296,15 +296,15 @@
       "path": ".github/workflows/ci.yml",
       "category": "workflow",
       "required": true,
-      "hash": "eb97642792c411f91777d8f32006521862982600c3a9603025a7ccdcea7c3410",
-      "reason": "PR Fast CI and Full Validate wire the Issue 14 quality gate runner and acceptance tests."
+      "hash": "b97096a2ef96877d30cc5d97e56697b088c0b709c37626351db341cbf60067f1",
+      "reason": "PR Fast CI wires Issue 14 close-prep and main-evidence guardrails while preserving the Validate / Full Validate split."
     },
     {
       "path": "README.md",
       "category": "doc",
       "required": true,
-      "hash": "e9557ddd127efae7c37b1f95910e3d5781762a054552ad034c7a15df120602c7",
-      "reason": "README quick entry links Issue 14 quality gate runner and acceptance scaffold."
+      "hash": "14e52f3df1844c536d8fafcb4c8fd38e7086117a9b6f78cd7e5e73911a077923",
+      "reason": "README quick entry links Issue 14 acceptance, close-preparation candidate, and main-evidence scaffold."
     },
     {
       "path": "docs/37-issue13-ensure-state-acceptance.md",
@@ -359,8 +359,8 @@
       "path": "docs/40-issue14-quality-gates.md",
       "category": "doc",
       "required": true,
-      "hash": "a7fb590f454251def6a80815b8caf40ade8fcd6ab1efe0169a763c9d4a4ab6b5",
-      "reason": "Issue 14 quality gates runbook documents schema, Pester, analyzer, CI, runner/report, and safety boundaries."
+      "hash": "b6b549f1925d9457789fcba65f3235b6435ccf583b7c32215002e41081b3e093",
+      "reason": "Issue 14 quality gates runbook links acceptance, close-preparation candidate, and pending main evidence."
     },
     {
       "path": "tests/pester/Issue14QualityGates.Tests.ps1",
@@ -394,64 +394,92 @@
       "path": "manifests/quality-gates.json",
       "category": "manifest",
       "required": true,
-      "hash": "6e66c4771864ebeda65a7a2147bd9fea3673b077991bce0ad3e5785894b0ba74",
+      "hash": "7f543c9bc4dc72a0a2e18d28bde89adc88121aa6bfc748186c939ae1abb621e7",
       "reason": "Issue 14 quality gate manifest is a trusted validation inventory."
     },
     {
       "path": "schemas/quality-gates.schema.json",
       "category": "schema",
       "required": true,
-      "hash": "7f1da53d1225357a05472813371e4bb693a154c98f10d99bf027e259b83279bc",
+      "hash": "7f9f0b23090a5be3cefad740945af7e4a5afce9319a52f192c5b57517210ad4a",
       "reason": "Issue 14 quality gate schema constrains runner inventory structure."
     },
     {
       "path": "scripts/common/New-KitQualityGateReport.ps1",
       "category": "script",
       "required": true,
-      "hash": "6d07d2b4ca4662e8b9c7b9cb379b953c94a17f4c6942d1307d0d7cc04ca6b31d",
+      "hash": "ead2c11390f4edda74391f67101c18d8a169fac2e72f095e6b0fe11117cba2a5",
       "reason": "Quality gate report builder produces report-only validation evidence."
     },
     {
       "path": "scripts/validate/Test-QualityGates.ps1",
       "category": "script",
       "required": true,
-      "hash": "d96ffa849858ea4a8051522ea743e2d469d8b6ce4cefae2fe0aceae5b33224e3",
+      "hash": "6d763061c842dd02d4c85286a95ac937fa1f052e72dfa07a9cd8a58b465aaa20",
       "reason": "Quality gate validate entrypoint writes explicit reports and exit codes."
     },
     {
       "path": "tests/pester/QualityGateSchema.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "3f7350ef222ac4ef4ae1701a65ffcdd0babc512359d93b1493d84978ddfa12e7",
+      "hash": "f9eea5b2e749818590f5aede8dd3fb27c9f10732577b7799d6869047d9755ef1",
       "reason": "Quality gate schema tests guard manifest structure and validator wiring."
     },
     {
       "path": "tests/pester/QualityGateReport.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "9d58105ef04ef91a5dbe9a98b3f9559d3d0a7ff9cf18824e19778f1322801d9b",
+      "hash": "8d8f626bb816411cf8bbc1d98c4b30b8a45deb3926bf0562e0112af6896cbd27",
       "reason": "Quality gate report tests guard summary, safety, and manual policy fields."
     },
     {
       "path": "tests/pester/QualityGateValidation.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "96f1918d612f1a338e0d695419a8ea3e5dca53a9d132e7ee63f64710395cb472",
+      "hash": "0425084983093f9253df402f8e9ea33f119b3834ddf847f7dfdfc447a49aa652",
       "reason": "Quality gate validation tests guard report writing and failure exit codes."
     },
     {
       "path": "tests/pester/Issue14QualityGateAcceptance.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "628a355aa17df712beed6c7f68a2e52350be6f20582a4f950498a0df71f144f2",
-      "reason": "Issue 14 acceptance tests guard docs, CI wiring, Build Lock coverage, and report-only scope."
+      "hash": "d1f719693c442783c1029d655b4198aa40ebca812131bd5605c89a4e0a04b2db",
+      "reason": "Issue 14 acceptance tests guard in-acceptance status, docs links, CI wiring, Build Lock, and report-only scope."
     },
     {
       "path": "docs/41-issue14-quality-gates-acceptance.md",
       "category": "doc",
       "required": true,
-      "hash": "74bed0c44570b3f864aaf37f6393e9867e7e7198e6ba7628a2848307a0a00de9",
-      "reason": "Issue 14 acceptance scaffold documents runner, report, CI, analyzer, and Build Lock boundaries."
+      "hash": "176967f59d84619b207a4f2596954e3a26b203249f5546e33d170bc5e3035aad",
+      "reason": "Issue 14 acceptance hardening keeps runner/report scope and pending main-evidence boundaries explicit."
+    },
+    {
+      "path": "docs/42-issue14-close-preparation.md",
+      "category": "doc",
+      "required": true,
+      "hash": "75d0f4c1415d275781c574e81d27471afcdf03bc1711faa9fe94d3d618711e1b",
+      "reason": "Issue 14 close-preparation candidate documents manual closure boundaries without final readiness."
+    },
+    {
+      "path": "docs/43-issue14-main-validation-evidence.md",
+      "category": "doc",
+      "required": true,
+      "hash": "a2dbacf2c0badbeda6f6feb46d44682d0e4ada73f94fa49586e728b776988524",
+      "reason": "Issue 14 main-validation evidence scaffold keeps all main/workflow fields pending."
+    },
+    {
+      "path": "tests/pester/Issue14ClosePrep.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "ee0ddf173ff8843931e03ac4579a29e85d86510612ff22d67f7622e96843b1b2",
+      "reason": "Issue 14 close-preparation tests guard candidate semantics and safe validation policy."
+    },
+    {
+      "path": "tests/pester/Issue14MainValidationEvidence.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "1deb3af71cf1e2d288ab826311c9370cd06f9d5d9150807c644066acd3298c43",
+      "reason": "Issue 14 main-evidence tests keep pending evidence honest and define ready-state rules."
     }
   ],
   "watchGlobs": [
