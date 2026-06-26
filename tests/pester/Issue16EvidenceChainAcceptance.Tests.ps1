@@ -32,9 +32,9 @@ Describe "Issue 16 evidence chain acceptance scaffold" {
             Assert-KitMatch $doc "51-issue16-main-validation-evidence\.md"
         } else {
             Assert-KitMatch $doc "pending main/workflow evidence|main/workflow evidence.*pending"
+            Assert-KitMatch $doc "not a final closure page"
+            Assert-KitMatch $doc "not a main validation evidence page"
         }
-        Assert-KitMatch $doc "not a final closure page"
-        Assert-KitMatch $doc "not a main validation evidence page"
         Assert-KitMatch $doc "not a completion summary"
         Assert-KitMatch $doc "PR Fast CI is not main/workflow evidence"
     }

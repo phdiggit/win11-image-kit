@@ -1,12 +1,12 @@
 # Issue #16 Close Preparation
 
-Status: `ready-for-manual-closure-candidate`
+Status: `ready-for-manual-closure`
 
 ## Final Scope Candidate
 
 Issue #16 has a report-only evidence chain, fixture-backed acceptance, producer adapter contract, report input index, artifact index, redaction policy, and PR Fast CI guardrails.
 
-This page is a manual closure candidate only. It is not final ready while [Issue #16 Main Validation Evidence](51-issue16-main-validation-evidence.md) remains `pending-main-validation`.
+This page is ready for maintainer manual closure because [Issue #16 Main Validation Evidence](51-issue16-main-validation-evidence.md) records verified post-PR #84 `main` push Full Validate success. It is still not an automatic Issue #16 closure.
 
 ## Evidence Chain Scope
 
@@ -25,7 +25,7 @@ This page is a manual closure candidate only. It is not final ready while [Issue
 
 ## Validation Policy
 
-PR Fast CI may validate static, fixture, and report-only behavior only. It must not be treated as main/workflow evidence. The post-PR #81, post-PR #82, and post-PR #83 main push runs failed in Full Validate and must not be treated as ready evidence.
+PR Fast CI may validate static, fixture, and report-only behavior only. It must not be treated as main/workflow evidence. The post-PR #81, post-PR #82, and post-PR #83 main push runs failed in Full Validate and must not be treated as ready evidence. The post-PR #84 `main` push Full Validate run succeeded and is recorded in docs/51 as the ready evidence source.
 
 The close-prep candidate requires:
 
@@ -43,9 +43,9 @@ The close-prep candidate requires:
 
 ## Manual Closure Checklist
 
-- Confirm docs/49 is `accepted-pending-main-validation`.
-- Confirm this page remains `ready-for-manual-closure-candidate`, not final ready.
-- Confirm docs/51 records pending main/workflow evidence until real successful evidence exists, including the post-PR #83 failed run only as blocked evidence.
+- Confirm docs/49 is `accepted-ready-for-manual-closure`.
+- Confirm this page remains `ready-for-manual-closure`, not an automatic closure.
+- Confirm docs/51 records the post-PR #84 successful main/workflow evidence and keeps post-PR #81/#82/#83 failed runs only as blocked evidence.
 - Confirm PR Fast CI is not used as a substitute for main/workflow evidence.
 - Confirm No Issue #16 completion summary exists.
 - Confirm no automatic issue closure keyword is used for Issue #16.
@@ -64,7 +64,7 @@ Until then, build/capture/deploy/admin-smoke remain manual, not-run, not-capture
 
 ## Closure Note Draft
 
-Issue #16 has a report-only evidence chain and close-prep candidate. Manual closure should wait until the pending main/workflow validation evidence in docs/51 is backfilled from a real successful `main` push or `workflow_dispatch` run.
+Issue #16 has a report-only evidence chain, accepted ready-state documentation, and post-PR #84 `main` push Full Validate evidence recorded in docs/51. Maintainers may manually review Issue #16 for closure, while real build, capture, deploy, and admin/VM smoke evidence remain not-run, not-captured, or not-provided.
 
 ## Related Documents
 

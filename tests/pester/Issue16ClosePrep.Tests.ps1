@@ -20,7 +20,7 @@ Describe "Issue 16 close-prep candidate" {
         )) {
             Assert-KitMatch $script:Doc ([regex]::Escape($term))
         }
-        Assert-KitMatch $script:Doc "candidate only|manual closure candidate only|maintainer manual closure"
+        Assert-KitMatch $script:Doc "candidate only|manual closure candidate only|maintainer manual closure|ready for maintainer manual closure"
         Assert-KitMatch $script:Doc "PR Fast CI is not used as a substitute"
         Assert-KitMatch $script:Doc "not-captured"
         Assert-KitMatch $script:Doc "true execution|real build|real deploy|service mutation"
@@ -31,7 +31,7 @@ Describe "Issue 16 close-prep candidate" {
 
     It "requires main validation evidence when close prep is ready" {
         if ($script:Doc -match 'Status:\s*`ready-for-manual-closure`') {
-            Assert-KitMatch $script:Doc "post-PR #81 main push Full Validate"
+            Assert-KitMatch $script:Doc "post-PR #84.*Full Validate"
             $evidenceDoc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\51-issue16-main-validation-evidence.md") -Raw -Encoding UTF8
             Assert-KitMatch $evidenceDoc 'Status:\s*`ready-for-manual-closure`'
             Assert-KitMatch $evidenceDoc '\| Result \| `success` \|'
