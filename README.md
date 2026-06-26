@@ -68,9 +68,12 @@ logs/                 仅保留 .gitkeep，本地日志不提交
 ```powershell
 scripts/validate/Test-ProjectConfig.ps1
 scripts/validate/Test-EvidenceChain.ps1
+scripts/validate/Test-ControlledExecution.ps1
 scripts/validate/Test-EffectiveConfiguration.ps1 -AllStacks
 scripts/tests/Test-PostDeploy.ps1 -SkipCommandTests -SkipServiceStatus
 ```
+
+Issue #17 WinPE 受控执行开篇 intake 与 dry-run baseline 见 [Controlled Execution Intake](docs/52-issue17-controlled-execution-intake.md) 和 [Controlled Execution Acceptance](docs/53-issue17-controlled-execution-acceptance.md)。
 
 按需归档日志和轻量报告时：
 

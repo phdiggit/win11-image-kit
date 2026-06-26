@@ -147,6 +147,42 @@
       "notes": "Validates Issue 16 evidence chain runId inheritance, artifact index, report input index, producer normalization counters, redaction policy including PowerShell 7 scalar leaf traversal, ready-state scaffold, fixture reports, and safety flags without true execution."
     },
     {
+      "id": "controlled-execution",
+      "displayName": "Controlled execution dry-run validation",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "scripts/validate/Test-ControlledExecution.ps1",
+      "evidence": "report",
+      "notes": "Validates Issue 17 controlled execution manifest, dry-run report, safety policy, and blocked mutation semantics without true execution."
+    },
+    {
+      "id": "issue17-intake",
+      "displayName": "Issue 17 intake",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "docs/52-issue17-controlled-execution-intake.md",
+      "evidence": "document",
+      "notes": "Records real Issue 17 and Roadmap intake without close-prep or auto-close."
+    },
+    {
+      "id": "issue17-acceptance",
+      "displayName": "Issue 17 acceptance scaffold",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "docs/53-issue17-controlled-execution-acceptance.md",
+      "evidence": "document",
+      "notes": "Records in-acceptance dry-run coverage without final closure."
+    },
+    {
       "id": "issue16-acceptance",
       "displayName": "Issue 16 acceptance",
       "layer": "pr-fast",

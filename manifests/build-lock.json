@@ -1,1128 +1,1292 @@
-{
-  "$schema": "../schemas/build-lock.schema.json",
-  "lockVersion": 1,
-  "algorithm": "SHA256",
-  "mode": "verify",
-  "generatedBy": "win11-image-kit",
-  "entries": [
-    {
-      "path": "manifests/capability-registry.json",
-      "category": "manifest",
-      "required": true,
-      "hash": "cfd7dd56b2844601bbaf532f2dd2eebf40621ad3fb81f48dff2b2f5e4cb390cd",
-      "reason": "Capability registry is a supply-chain control plane input."
-    },
-    {
-      "path": "schemas/capability-registry.schema.json",
-      "category": "schema",
-      "required": true,
-      "hash": "bc619fd8f099a18b47ff136e7728dcc273876d2cb8f571df2d193be3e8367ed1",
-      "reason": "Capability registry schema constrains supply-chain metadata."
-    },
-    {
-      "path": "manifests/context-scope.json",
-      "category": "manifest",
-      "required": true,
-      "hash": "8f3621d8e3fd87efaa55e2f541624d95b00775f7b98e0c94c9b9a01a3764da7e",
-      "reason": "Context scope manifest is a trusted routing input."
-    },
-    {
-      "path": "schemas/context-scope.schema.json",
-      "category": "schema",
-      "required": true,
-      "hash": "adc78103ca7fbb83e2f4b7dd680334d2aa73f1c38a775cdebc0f9c6f6ae40103",
-      "reason": "Context scope schema constrains routing input structure."
-    },
-    {
-      "path": "manifests/sysprep-appx-gate.json",
-      "category": "manifest",
-      "required": true,
-      "hash": "52a1b556f110d790a35f87dde62250613d0d95c5460c40621d3cd1f239386b0d",
-      "reason": "Sysprep AppX gate manifest is a trusted readiness input."
-    },
-    {
-      "path": "schemas/sysprep-appx-gate.schema.json",
-      "category": "schema",
-      "required": true,
-      "hash": "a4324cc705b0ba57868f1bce57d3c6b45cd31062120c33354f38f87eae58ab00",
-      "reason": "Sysprep AppX gate schema constrains readiness input structure."
-    },
-    {
-      "path": "schemas/build-lock.schema.json",
-      "category": "schema",
-      "required": true,
-      "hash": "a8bcb03d90d55290112d78177e21f662243999b9de63df35509057a5dd05747c",
-      "reason": "Build lock schema constrains immutable input lock metadata."
-    },
-    {
-      "path": "scripts/validate/Test-CapabilityRegistry.ps1",
-      "category": "script",
-      "required": true,
-      "hash": "7d0d55509166deb938e704b923359fcf8b2715c5029df38f454278d05dff436a",
-      "reason": "Capability registry validation is part of supply-chain consistency checks."
-    },
-    {
-      "path": "scripts/validate/Test-ContextScope.ps1",
-      "category": "script",
-      "required": true,
-      "hash": "e00e7fbda8936b4eba51292753c3ec32ecbe53b3ae21849cff6a219684297722",
-      "reason": "Context scope validation is a trusted static guardrail."
-    },
-    {
-      "path": "scripts/validate/Test-SysprepReadiness.ps1",
-      "category": "script",
-      "required": true,
-      "hash": "54b1cf7d2e24dc93911e48d3341fbe6cb4cf0a41c5e9a25a70cbdd68177c59b9",
-      "reason": "Sysprep readiness validation is a trusted static guardrail."
-    },
-    {
-      "path": "scripts/common/New-KitCapabilityConsistencyReport.ps1",
-      "category": "script",
-      "required": true,
-      "hash": "48cb55b7e08e9d33066fc003078f3e0f3e85e0bdf1e2e080796c7e3998e4af88",
-      "reason": "Capability consistency report generation feeds static evidence."
-    },
-    {
-      "path": "scripts/common/New-KitContextPlan.ps1",
-      "category": "script",
-      "required": true,
-      "hash": "3d1bedb892218d676228b937d725c687fb64c7d1d740fffd398500f26fdbd26f",
-      "reason": "Context planning report generation feeds static evidence."
-    },
-    {
-      "path": "scripts/common/Get-KitFileHash.ps1",
-      "category": "script",
-      "required": true,
-      "hash": "31fad619dccc118cdda52fd2b8d3df710f75b7a199dbf05dfea3895c7c0e9279",
-      "reason": "Build lock hash helper computes immutable input digests."
-    },
-    {
-      "path": "scripts/common/Get-KitBuildLock.ps1",
-      "category": "script",
-      "required": true,
-      "hash": "0088197ec329363e20db1c6ec0661252e077cffeaec2093c52d2caaec941561c",
-      "reason": "Build lock loader enforces manifest parsing and duplicate path checks."
-    },
-    {
-      "path": "scripts/common/Test-KitBuildLock.ps1",
-      "category": "script",
-      "required": true,
-      "hash": "7f254183dc2bacab9566efbe3b760d7a9aa143dbbab89521770664ced97e9c03",
-      "reason": "Build lock validator checks hashes and watched files."
-    },
-    {
-      "path": "scripts/common/New-KitBuildLockReport.ps1",
-      "category": "script",
-      "required": true,
-      "hash": "5d2583d3006acbc3d3a6e95ad5b066a36eb8191ff89d50f9f01b82317698dd65",
-      "reason": "Build lock report builder produces CI and review evidence."
-    },
-    {
-      "path": "scripts/validate/Test-BuildLock.ps1",
-      "category": "script",
-      "required": true,
-      "hash": "5da3071ef6a04fac9b47120ef85a3fce3d3557dd55203c72be13d82fcc0ada33",
-      "reason": "Build lock validate entrypoint writes explicit reports and exit codes."
-    },
-    {
-      "path": "manifests/software.json",
-      "category": "manifest",
-      "required": true,
-      "hash": "a7e21c5e22935ea0846e39af1a4628b1aadb2dc17774bd251fce55ee736dc8c7",
-      "reason": "Ensure-State software manifest is a trusted desired-state ledger."
-    },
-    {
-      "path": "schemas/software.schema.json",
-      "category": "schema",
-      "required": true,
-      "hash": "600f699aa98625366cb68321d150c19caa858dc4f0ee2b1fa490dcb3cf7e1f26",
-      "reason": "Ensure-State software schema constrains desired-state software entries."
-    },
-    {
-      "path": "manifests/services.json",
-      "category": "manifest",
-      "required": true,
-      "hash": "18e63b9522540c4da7b4aad05322ce261be015fe7b37a4252532269fc02e773c",
-      "reason": "Ensure-State services manifest is a trusted desired-state ledger."
-    },
-    {
-      "path": "schemas/services.schema.json",
-      "category": "schema",
-      "required": true,
-      "hash": "bc4215b65adab2594c89106e6506a4b0399f503534cebd75a157d8bc532fb687",
-      "reason": "Ensure-State service schema constrains desired-state service entries."
-    },
-    {
-      "path": "scripts/common/Resolve-KitSoftwareState.ps1",
-      "category": "script",
-      "required": true,
-      "hash": "7294922ab51731e4e489ba890ca1e8a6eb33f1199a4e0719fb5b4b2d30c100ac",
-      "reason": "Ensure-State software resolver converts fixture or current data into reviewable state."
-    },
-    {
-      "path": "scripts/common/Resolve-KitServiceState.ps1",
-      "category": "script",
-      "required": true,
-      "hash": "60892a425ffc0c246815da61802f5a68a2ce08a78f8c1261bad5ef83e4857b81",
-      "reason": "Ensure-State service resolver converts fixture or current data into reviewable state."
-    },
-    {
-      "path": "scripts/common/New-KitEnsureStatePlan.ps1",
-      "category": "script",
-      "required": true,
-      "hash": "3b575c8ee66ba7f6d73bcb5ec425683026c023e1d61ceef0521b60cc1e5d22a2",
-      "reason": "Ensure-State plan generation is trusted CI evidence for convergence review."
-    },
-    {
-      "path": "scripts/common/Test-KitEnsureState.ps1",
-      "category": "script",
-      "required": true,
-      "hash": "f5071bc6825beed29194a1fba7e10c9dad00eca9739ef2000feb2c3e28c898b8",
-      "reason": "Ensure-State validation maps plan items into passed, manual, or failed evidence."
-    },
-    {
-      "path": "scripts/common/New-KitEnsureStateReport.ps1",
-      "category": "script",
-      "required": true,
-      "hash": "e213cb71b5c152dd589783afbac0c53ccb033ce0a92d0859ac8907b95c180d0a",
-      "reason": "Ensure-State report generation produces explicit JSON review evidence."
-    },
-    {
-      "path": "scripts/validate/Test-EnsureState.ps1",
-      "category": "script",
-      "required": true,
-      "hash": "2b30922fc5da48eb05f133ae60542b936dd0f27e0fef189ceb75c2162c955a8f",
-      "reason": "Ensure-State validate entrypoint writes explicit reports and exit codes."
-    },
-    {
-      "path": "scripts/validate/Test-ProjectConfig.ps1",
-      "category": "script",
-      "required": true,
-      "hash": "176873983696209279692f82a16811812952c5203f92e705080d1e8c03462743",
-      "reason": "Project config validation includes the evidence report input schema pair."
-    },
-    {
-      "path": "tests/pester/BuildLockSchema.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "a71f9efc9f39e310ed43d0d3efbe94b217c4dffe52c493e8d76d494b983e364a",
-      "reason": "Build lock schema tests guard manifest structure."
-    },
-    {
-      "path": "tests/pester/BuildLockHash.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "b6a89266cab2dcf1ca2c82d415dc24169f7c227730c24a22bd98192ce75cd267",
-      "reason": "Build lock hash tests guard deterministic digest behavior."
-    },
-    {
-      "path": "tests/pester/BuildLockValidation.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "54912d397e3afd6679f5d7268c664367ada46535c24a2418000429dfe5edb779",
-      "reason": "Build lock validation tests guard missing, mismatch, and watched-file behavior."
-    },
-    {
-      "path": "tests/pester/BuildLockReport.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "68f4edb1f9270b4462abaf508cca24e149590aebf9ee6b532195ff7acc581dcc",
-      "reason": "Build lock report tests guard report evidence structure."
-    },
-    {
-      "path": "tests/pester/Issue12BuildLock.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "9c78cce1b34023bb63c4e6f4c70a8ac5b4f7afdc79714ef2533d7ca020df86f3",
-      "reason": "Issue 12 guardrail tests keep CI, docs, and safety boundaries wired."
-    },
-    {
-      "path": "tests/pester/EnsureStateSchema.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "a79491045bd03daa32a39eb2debff4880da044b2701401104d2c06acf2718ab5",
-      "reason": "Ensure-State schema tests guard manifest structure, registry wiring, and build lock coverage."
-    },
-    {
-      "path": "tests/pester/EnsureStatePlan.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "520efbbe2969788957c1b0120730d23c99557100d8bb2889d26454aaa4dfb7be",
-      "reason": "Ensure-State plan tests guard fixture-only convergence planning without mutation."
-    },
-    {
-      "path": "tests/pester/EnsureStateReport.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "860dc04bc772f95ed1bc8f7466a69fabb8e73eb02126ab99db60c7ffd9e6f299",
-      "reason": "Ensure-State report tests guard summary counts, serialization, and exit-code behavior."
-    },
-    {
-      "path": "tests/pester/EnsureStateValidation.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "5f0f5da49d7bc8379eab1b1b8e534d877f3e8b288382e4b7650c67742fcc3edd",
-      "reason": "Ensure-State validation tests guard fixture-only behavior and failure classification."
-    },
-    {
-      "path": "tests/pester/Issue13EnsureState.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "2f9bf5560a46b9228623270f42d65d0c89bed83d947539096d82852ffda14d17",
-      "reason": "Issue 13 guardrail tests keep docs, CI wiring, and non-mutation boundaries aligned."
-    },
-    {
-      "path": "docs/28-issue11-capability-registry.md",
-      "category": "doc",
-      "required": true,
-      "hash": "24f3b7c976c9dca89f108e3e271d4cbe78aaf02ded3dd67d187e289710593b43",
-      "reason": "Capability registry runbook defines the upstream control plane."
-    },
-    {
-      "path": "docs/32-issue12-build-lock.md",
-      "category": "doc",
-      "required": true,
-      "hash": "90c8c9e6cf24aa9801018c2570c7c2697e7d37d72f7728cbdb6a39e275ac8d80",
-      "reason": "Build lock runbook documents report-only supply-chain validation."
-    },
-    {
-      "path": "docs/36-issue13-ensure-state.md",
-      "category": "doc",
-      "required": true,
-      "hash": "049a5a90d070f35328c5bc4d928ac8ad0c113a4c5dde8e744707ba4b22ab7a66",
-      "reason": "Ensure-State runbook documents static convergence planning and PR Fast CI boundaries."
-    },
-    {
-      "path": ".github/workflows/ci.yml",
-      "category": "workflow",
-      "required": true,
-      "hash": "dba6c69f7305d09e606914439782918973cc281879cc98a3049cd594c6f1931a",
-      "reason": "Windows CI must run Issue 16 producer adapter and close-prep guardrails in PR Fast CI."
-    },
-    {
-      "path": "README.md",
-      "category": "doc",
-      "required": true,
-      "hash": "532776b82fff7fc500ffb2f005bceece2a31d81cd736414163508e8526d8c8c3",
-      "reason": "README links the Issue 16 evidence chain acceptance, close-prep, and pending main evidence documents."
-    },
-    {
-      "path": "docs/37-issue13-ensure-state-acceptance.md",
-      "category": "doc",
-      "required": true,
-      "hash": "aaa96e5cd404dc239ab2733ee8f376d160bb4cf368429b36de7c54db1b51701f",
-      "reason": "Issue 13 acceptance matrix documents plan-only Ensure-State coverage and CI boundaries."
-    },
-    {
-      "path": "docs/38-issue13-close-preparation.md",
-      "category": "doc",
-      "required": true,
-      "hash": "41c30662ad790b01fd5419774e49256f7114ee210274816001a28672b5ee122a",
-      "reason": "Issue 13 close-preparation checklist documents manual closure boundaries."
-    },
-    {
-      "path": "docs/39-issue13-main-validation-evidence.md",
-      "category": "doc",
-      "required": true,
-      "hash": "1395979db658dc3c5f696ccf2667ffd272927d0ddd1eac97ae8dd68b6984976e",
-      "reason": "Issue 13 main validation evidence scaffold prevents PR Fast CI evidence substitution."
-    },
-    {
-      "path": "tests/pester/Issue13EnsureStateAcceptance.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "60c19e2ed8d4e9857cb43fc24b0b2c5ab025b57ca51cd6ae0b097d6219b0b180",
-      "reason": "Issue 13 acceptance guardrails cover schema, safety, report contract, registry, Build Lock, docs, and CI wiring."
-    },
-    {
-      "path": "tests/pester/Issue13ClosePrep.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "5357cfd5fa4b19a25f2f5f8528ec5a92f9f163884768c75875515a43103f22f6",
-      "reason": "Issue 13 close-preparation tests guard manual closure semantics and safe validation policy."
-    },
-    {
-      "path": "tests/pester/Issue13MainValidationEvidence.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "a781fe6ed25c727d904c3bab47723616ec7891ec0d6f32637c50aa53a9413934",
-      "reason": "Issue 13 main-evidence tests keep pending evidence honest and define ready-state rules."
-    },
-    {
-      "path": "PSScriptAnalyzerSettings.psd1",
-      "category": "config",
-      "required": true,
-      "hash": "51f44d11ac694c7042c3a5307c2b587b0b10ae58d2324cfcb14b6f610bb71ab3",
-      "reason": "PSScriptAnalyzer settings define the local analyzer baseline for quality gates."
-    },
-    {
-      "path": "docs/40-issue14-quality-gates.md",
-      "category": "doc",
-      "required": true,
-      "hash": "676ef94ed6be54969352c550e78efbd11462791399ef3f007544653417635a03",
-      "reason": "Issue 14 quality gates runbook records accepted readiness and verified main evidence."
-    },
-    {
-      "path": "tests/pester/Issue14QualityGates.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "8ea15ec212afcc48fc5c9c8e692c50203bc50bff76786cf516f99516af1caa32",
-      "reason": "Issue 14 quality gate tests guard docs, README, Build Lock, and no auto-close wording."
-    },
-    {
-      "path": "tests/pester/Issue14CiPolicy.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "dbd4f9782500f3b89a7ce117dec513200de40e645b29307156517321360fb1dd",
-      "reason": "Issue 14 CI policy tests guard PR fast and Full Validate split plus no-mutation workflow policy."
-    },
-    {
-      "path": "tests/pester/Issue14PesterInventory.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "d95bb34393ae81e64cd863bf5c2083fc101b08d610476cf12bdb422b7572ef30",
-      "reason": "Issue 14 Pester inventory tests guard fast-path issue test coverage."
-    },
-    {
-      "path": "tests/pester/Issue14AnalyzerPolicy.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "0a215988e286dc504d0ff3f69840bb3d7796ddec60e5bf72f749132de798cd91",
-      "reason": "Issue 14 analyzer policy tests guard PSScriptAnalyzer settings and non-blocking workflow behavior."
-    },
-    {
-      "path": "manifests/quality-gates.json",
-      "category": "manifest",
-      "required": true,
-      "hash": "4f52c22e85566e1d39e9f3ab317ba94b1fcfbd0d31c9614e8af6cdfdd07d8b3c",
-      "reason": "Quality Gates include Issue 16 acceptance, close-prep, and main-evidence scaffold gates."
-    },
-    {
-      "path": "schemas/quality-gates.schema.json",
-      "category": "schema",
-      "required": true,
-      "hash": "7f9f0b23090a5be3cefad740945af7e4a5afce9319a52f192c5b57517210ad4a",
-      "reason": "Issue 14 quality gate schema constrains runner inventory structure."
-    },
-    {
-      "path": "scripts/common/New-KitQualityGateReport.ps1",
-      "category": "script",
-      "required": true,
-      "hash": "ead2c11390f4edda74391f67101c18d8a169fac2e72f095e6b0fe11117cba2a5",
-      "reason": "Quality gate report builder produces report-only validation evidence."
-    },
-    {
-      "path": "scripts/validate/Test-QualityGates.ps1",
-      "category": "script",
-      "required": true,
-      "hash": "6d763061c842dd02d4c85286a95ac937fa1f052e72dfa07a9cd8a58b465aaa20",
-      "reason": "Quality gate validate entrypoint writes explicit reports and exit codes."
-    },
-    {
-      "path": "tests/pester/QualityGateSchema.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "f9eea5b2e749818590f5aede8dd3fb27c9f10732577b7799d6869047d9755ef1",
-      "reason": "Quality gate schema tests guard manifest structure and validator wiring."
-    },
-    {
-      "path": "tests/pester/QualityGateReport.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "8d8f626bb816411cf8bbc1d98c4b30b8a45deb3926bf0562e0112af6896cbd27",
-      "reason": "Quality gate report tests guard summary, safety, and manual policy fields."
-    },
-    {
-      "path": "tests/pester/QualityGateValidation.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "0425084983093f9253df402f8e9ea33f119b3834ddf847f7dfdfc447a49aa652",
-      "reason": "Quality gate validation tests guard report writing and failure exit codes."
-    },
-    {
-      "path": "tests/pester/Issue14QualityGateAcceptance.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "923b8e64101240bbeca8f128e66c6045f440787f16903743829b94ad264f90d7",
-      "reason": "Issue 14 acceptance tests guard pending and ready status without unsafe claims."
-    },
-    {
-      "path": "docs/41-issue14-quality-gates-acceptance.md",
-      "category": "doc",
-      "required": true,
-      "hash": "24837a86229183838d190151819eb2d43560fa92f5706c1b94a7fddc026c4ada",
-      "reason": "Issue 14 acceptance records accepted-ready-for-manual-closure status after main evidence backfill."
-    },
-    {
-      "path": "docs/42-issue14-close-preparation.md",
-      "category": "doc",
-      "required": true,
-      "hash": "a14a14aec49031d7d1a11501e9236047872ef7906ee223c2f505393e6e1632ae",
-      "reason": "Issue 14 close-preparation records ready-for-manual-closure after verified main evidence."
-    },
-    {
-      "path": "docs/43-issue14-main-validation-evidence.md",
-      "category": "doc",
-      "required": true,
-      "hash": "2d1d03362ee00203e95ba57f4f9e53dc2465b6db8e089747971783f3c9c37a40",
-      "reason": "Issue 14 main-validation evidence records post-PR 73 Full Validate success."
-    },
-    {
-      "path": ".gitignore",
-      "category": "config",
-      "required": true,
-      "hash": "6f285f77eff0a0d4e23edb723cb21f11af35b4e15734afbad64f6af2c7ca0341",
-      "reason": "Issue 15 local private override file must remain untracked."
-    },
-    {
-      "path": "docs/44-issue15-layered-configuration.md",
-      "category": "doc",
-      "required": true,
-      "hash": "400a831c59d5978c551039375c566feb88b9b9bb10afdea05afc2ed9e9b92fdf",
-      "reason": "Issue 15 layered configuration design records consumer integration and close-prep links."
-    },
-    {
-      "path": "docs/45-issue15-layered-configuration-acceptance.md",
-      "category": "doc",
-      "required": true,
-      "hash": "c3ddc6e2fa95e3bb311231369071603ae5de5fe1e2a789b74a3203f06323b2eb",
-      "reason": "Issue 15 acceptance records accepted-pending-main-validation status."
-    },
-    {
-      "path": "manifests/paths.local.example.json",
-      "category": "manifest",
-      "required": true,
-      "hash": "0cadacabe82b71dc3275e68bf76228eea469ff8737c0509a81114b42e4ff6d84",
-      "reason": "Issue 15 local override example is a safe tracked template for private paths."
-    },
-    {
-      "path": "manifests/config-layers.json",
-      "category": "manifest",
-      "required": true,
-      "hash": "c8c38ca93de9ce49eb84967a52f1cfecc8b5c62cd1e1c47130502cfadb2265b8",
-      "reason": "Issue 15 config layer manifest declares deterministic local layering."
-    },
-    {
-      "path": "schemas/config-layers.schema.json",
-      "category": "schema",
-      "required": true,
-      "hash": "b2b729e615a1380b09233c1ef27d8269a774654a81c594baa718d537798bfe19",
-      "reason": "Issue 15 config layer schema constrains the layer inventory."
-    },
-    {
-      "path": "schemas/config-layer-fragment.schema.json",
-      "category": "schema",
-      "required": true,
-      "hash": "d0d5f1888a2a2894b7772c43ee633d9078c53d57b5cbe560999248c3aee24e66",
-      "reason": "Issue 15 config layer fragment schema constrains profile and hardware overrides."
-    },
-    {
-      "path": "profiles/default.json",
-      "category": "manifest",
-      "required": true,
-      "hash": "0f7d8129f6781691edaec4a2fb03d91d25b9da1d5bc3d1df32bc22f2e9cf72c2",
-      "reason": "Issue 15 default profile fixture preserves current single-file behavior."
-    },
-    {
-      "path": "profiles/release.json",
-      "category": "manifest",
-      "required": true,
-      "hash": "95ca4fd2d95fc63964b44820fe2fc36d653f146d4fc43922cdf5c9e3017b75bc",
-      "reason": "Issue 15 release profile fixture proves profile override precedence."
-    },
-    {
-      "path": "hardware/air15.json",
-      "category": "manifest",
-      "required": true,
-      "hash": "ad2363d7a22f4a4abe448831940d210852eff8fc09a61b006d3904a36fec2942",
-      "reason": "Issue 15 hardware fixture proves hardware override precedence."
-    },
-    {
-      "path": "scripts/common/Resolve-KitEffectiveConfiguration.ps1",
-      "category": "script",
-      "required": true,
-      "hash": "5443051424955dd82bc87ac8be5cc49ebfcdf240f1653f44a45387a957bf163f",
-      "reason": "Issue 15 effective configuration resolver produces static report-only evidence with CLI and local override handling."
-    },
-    {
-      "path": "scripts/config/Show-EffectiveConfiguration.ps1",
-      "category": "script",
-      "required": true,
-      "hash": "78608265535c6072d023279a4a8cb41ce4dc2dc671a24c9382b425474e4b40c4",
-      "reason": "Issue 15 effective configuration display entrypoint outputs value source layers and redacted local values."
-    },
-    {
-      "path": "scripts/validate/Test-EffectiveConfiguration.ps1",
-      "category": "script",
-      "required": true,
-      "hash": "0d3565eb252c826d67593e91c72097d7df967054404e995a8c09ecdfc26b0361",
-      "reason": "Issue 15 effective configuration validation entrypoint writes failedCount=0 reports for selected or all stacks."
-    },
-    {
-      "path": "tests/pester/Issue15LayeredConfiguration.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "6fa62c599e787a886663ce1d0b8e68ca9743b23efbe376fad7ee492a19fba46f",
-      "reason": "Issue 15 guardrail tests cover intake, wiring, Build Lock, and no auto-close wording."
-    },
-    {
-      "path": "tests/pester/EffectiveConfigurationSchema.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "22989abc58840420a857769ba818c2ee78319734ef68517cc26b2f0f269d495e",
-      "reason": "Issue 15 schema tests guard closed local schemas and local override policy."
-    },
-    {
-      "path": "tests/pester/EffectiveConfigurationReport.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "715f7474d414247e46e12b3247e9eb69e4bfdde230d589b39cc701ffa89a0bd5",
-      "reason": "Issue 15 report tests guard deterministic source-layer output."
-    },
-    {
-      "path": "tests/pester/EffectiveConfigurationValidation.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "72ef59df00c969fa20f585905398fec1e89626a916cc79a42e07cba99eb90c75",
-      "reason": "Issue 15 validation tests guard report-only behavior and no mutation commands."
-    },
-    {
-      "path": "tests/pester/EffectiveConfigurationMergePolicy.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "2cc38c121389c141dcfe6a442a352f632284e242712c8f2e1256832dff44b16c",
-      "reason": "Issue 15 merge policy tests guard object, array, scalar, and null behavior."
-    },
-    {
-      "path": "tests/pester/EffectiveConfigurationLocalOverride.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "ba84377299cdf73bc8c5b1bd48579820d655022cbe7b8ea5aa6945a086e266ff",
-      "reason": "Issue 15 local override tests guard missing, present, malformed, redacted, and untracked behavior."
-    },
-    {
-      "path": "tests/pester/EffectiveConfigurationTokenSafety.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "4034ed649e9abe0037b4fa5c61c573a4603d4024dfab4208993915ef35baa9aa",
-      "reason": "Issue 15 token safety tests guard unknown token, circular token, and forbidden old NAS failures."
-    },
-    {
-      "path": "tests/pester/EffectiveConfigurationCliOverride.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "7cdf34203c83a815b61a4f9902dbcac334b06963c3fc35257cf6a3cb50cb8b3e",
-      "reason": "Issue 15 CLI override tests guard highest-precedence path override source attribution."
-    },
-    {
-      "path": "tests/pester/Issue15LayeredConfigurationAcceptance.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "0e4bcd319ff6830fb04423726e17ca7ab2df0fcedf57e872d6e136528c99ac82",
-      "reason": "Issue 15 acceptance tests guard accepted-pending-main-validation and wiring."
-    },
-    {
-      "path": "tests/pester/Issue14ClosePrep.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "d0117e8c964fc391f9bcf6ac30198093d4f82d9c1c3ea396a9b2a32e0f4f6738",
-      "reason": "Issue 14 close-preparation tests guard candidate and ready semantics."
-    },
-    {
-      "path": "tests/pester/Issue14MainValidationEvidence.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "5c1f80f6d0a244364e434964f5a1de852c59601422e3d7522fe7d0d27c6aa7b5",
-      "reason": "Issue 14 main-evidence tests validate pending and ready evidence details."
-    },
-    {
-      "path": "docs/07-定制范围与配置入口.md",
-      "category": "doc",
-      "required": true,
-      "hash": "e91a96b1b0c6bff46f6aa055f7552bbf12f0f5a7d18e3a8891a481024cd53b8b",
-      "reason": "Configuration entry documentation describes opt-in effective configuration migration."
-    },
-    {
-      "path": "docs/46-issue15-close-preparation.md",
-      "category": "doc",
-      "required": true,
-      "hash": "8f9a32542b6d0b74f2f8e751b7d3f5ea9630f2c27db576734af9402816f9068e",
-      "reason": "Issue 15 close-prep candidate is a manual closure input."
-    },
-    {
-      "path": "docs/47-issue15-main-validation-evidence.md",
-      "category": "doc",
-      "required": true,
-      "hash": "526682ff178924300badda935ecde4fbf23d4541abd55666e222dea516a28191",
-      "reason": "Issue 15 main validation evidence scaffold must remain pending until real main evidence exists."
-    },
-    {
-      "path": "manifests/customization-scope.json",
-      "category": "manifest",
-      "required": true,
-      "hash": "0a174bccaa56ac1c2764b7ccf0770603f06743705e710c7a8d3736b04c4555fa",
-      "reason": "Customization scope declares layered configuration manifest and default stack while preserving pathsManifest."
-    },
-    {
-      "path": "schemas/customization-scope.schema.json",
-      "category": "schema",
-      "required": true,
-      "hash": "ffd897b9e8dd4f72a2035b9d32a399a7b78143f738bf744dffee8456b537c707",
-      "reason": "Customization scope schema allows layered configuration reference fields."
-    },
-    {
-      "path": "scripts/config/Show-CustomizationScope.ps1",
-      "category": "script",
-      "required": true,
-      "hash": "7903bded9a198c688151e5aab9198f1e3dad0bdb704334a010cd946df59d27f8",
-      "reason": "Show-CustomizationScope is the opt-in effective configuration consumer entrypoint."
-    },
-    {
-      "path": "tests/pester/CustomizationScopeEffectiveConfiguration.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "f198c1f034a5289312cc70b7dedf8eb285e221731a8e44f7db9ce3ed51576352",
-      "reason": "Customization scope tests guard layered configuration metadata and local override policy."
-    },
-    {
-      "path": "tests/pester/EffectiveConfigurationConsumerIntegration.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "a0313802be7a331cbb61bdbc662cef0688ad47476bcae8817bdd3727fec14cd8",
-      "reason": "Consumer integration tests guard Show-CustomizationScope default compatibility and opt-in effective configuration display."
-    },
-    {
-      "path": "tests/pester/Issue15ClosePrep.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "04fdf3d656e8d1ca4c0cedcab187006075610b63f62259176667440cd7200402",
-      "reason": "Issue 15 close-prep tests guard candidate-only closure semantics."
-    },
-    {
-      "path": "tests/pester/Issue15MainValidationEvidence.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "a25246729f642c4a932d8a6c301882cff0e045b520ae2bbfa7ebafca9d576acc",
-      "reason": "Issue 15 main evidence tests guard pending-only evidence scaffold."
-    },
-    {
-      "path": "docs/48-issue16-evidence-chain-report.md",
-      "category": "doc",
-      "required": true,
-      "hash": "f7149f11e2ae9b2f7f3e7734ba021a68968eee489624395a6758c7fbcb3fbc22",
-      "reason": "Issue 16 evidence chain design records producer adapter and close-prep scaffold scope."
-    },
-    {
-      "path": "manifests/evidence-chain.json",
-      "category": "manifest",
-      "required": true,
-      "hash": "8d51f9f99a1deedd6aebd317f80655bb1a828c137e2c77471f7dd3efc53d67c4",
-      "reason": "Evidence chain manifest is the trusted producer and safety policy input."
-    },
-    {
-      "path": "schemas/evidence-chain.schema.json",
-      "category": "schema",
-      "required": true,
-      "hash": "09d0e89f968732ad3ef965fa4d4c9baaaac431a57898e993d161c8f780b4bb31",
-      "reason": "Evidence chain schema constrains producer and safety manifest metadata."
-    },
-    {
-      "path": "schemas/evidence-chain-report.schema.json",
-      "category": "schema",
-      "required": true,
-      "hash": "7564c6c22367236e65786e60f5d50528b0300f529c5a1b8ec8a0325a7509327c",
-      "reason": "Evidence chain report schema constrains input reports and normalization counters."
-    },
-    {
-      "path": "scripts/common/New-KitEvidenceChainReport.ps1",
-      "category": "script",
-      "required": true,
-      "hash": "981a6b3789595bd50d3cb278e1ca57249942a5e5f6cf35c86e1a24db86acb105",
-      "reason": "Evidence chain report builder normalizes report input index producers."
-    },
-    {
-      "path": "scripts/validate/Test-EvidenceChain.ps1",
-      "category": "script",
-      "required": true,
-      "hash": "e9451b95576109bbe6d5fa64fa5f01c48d926ef1d587b22994c8c0cb71b2aed7",
-      "reason": "Evidence chain validator enforces report input and normalization failure counters."
-    },
-    {
-      "path": "scripts/config/Show-EvidenceChain.ps1",
-      "category": "script",
-      "required": true,
-      "hash": "b764d0ca42bd0acaf5a522a4a2c2926726070348b4a94862bfdd02f70892f5b2",
-      "reason": "Evidence chain display shows input set and normalization summary."
-    },
-    {
-      "path": "tests/fixtures/evidence-chain/sample-build-capture-deploy.json",
-      "category": "test",
-      "required": true,
-      "hash": "5d0ecd5669c09fea8d285d124e527522efc6aff9c814eb173c05ebf29482be25",
-      "reason": "Build/capture/deploy placeholder fixture backs Issue 16 lifecycle non-execution tests."
-    },
-    {
-      "path": "tests/fixtures/evidence-chain/sample-report-inputs/effective-configuration.json",
-      "category": "test",
-      "required": true,
-      "hash": "a4f026b6276a31d2e4e42b30c34e877afb792aaf600d70a0070cb75a2caee723",
-      "reason": "EffectiveConfiguration report fixture backs Issue 16 producer adapter baseline."
-    },
-    {
-      "path": "tests/fixtures/evidence-chain/sample-report-inputs/project-config.json",
-      "category": "test",
-      "required": true,
-      "hash": "016656a29ffcac0980fa822a2faf8d82c2c4c38c447171ad2c94b0c28fef987e",
-      "reason": "ProjectConfig report fixture backs Issue 16 producer adapter baseline."
-    },
-    {
-      "path": "tests/fixtures/evidence-chain/sample-report-inputs/build-lock.json",
-      "category": "test",
-      "required": true,
-      "hash": "5251ebab17ac11ef67b1b18b9e1ecb57ceafc21cbc30830ab8139a69405e3faf",
-      "reason": "BuildLock report fixture backs Issue 16 producer adapter baseline."
-    },
-    {
-      "path": "tests/fixtures/evidence-chain/sample-report-inputs/quality-gates.json",
-      "category": "test",
-      "required": true,
-      "hash": "b40d0609d418a3f628235b89a0ef8b4e238c8b4459c571c941ac653de0dda85e",
-      "reason": "QualityGates report fixture backs Issue 16 producer adapter baseline."
-    },
-    {
-      "path": "tests/fixtures/evidence-chain/sample-report-inputs/pester-summary.json",
-      "category": "test",
-      "required": true,
-      "hash": "e7bbfed46382e992706857ae60540813a5d00b0d05b663933f162be4667322cc",
-      "reason": "Pester summary fixture backs Issue 16 producer adapter baseline."
-    },
-    {
-      "path": "tests/pester/EvidenceChainSchema.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "f44c3de4bed8cbf7287a2611b5ea2a216ba51f99ca7a1afe71bae491e9171667",
-      "reason": "Evidence chain schema tests include report input index coverage."
-    },
-    {
-      "path": "tests/pester/EvidenceChainReport.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "a286b49dcebcbe1319205909e71794efe799637e17a9aeb0b46bdebbcc66159c",
-      "reason": "Evidence chain report tests cover input reports and normalization summary."
-    },
-    {
-      "path": "tests/pester/EvidenceChainValidation.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "0defed78b78b103fa200553036b43f464dfc00afe7437d35a4fc8a3a25aa2da2",
-      "reason": "Evidence chain validation tests cover baseline and failure exit codes."
-    },
-    {
-      "path": "tests/pester/EvidenceChainSafety.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "ab10a7f4466b16909dddb11e015ae6a5ec581b8fe0c0bbb6141defb519d83d21",
-      "reason": "Evidence chain safety tests guard adapter scripts against dangerous commands."
-    },
-    {
-      "path": "tests/pester/Issue16EvidenceChain.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "fbd9a61b7c3a24c686fa284b16619a7745bb6f15adeaf293161951e91cb1d9db",
-      "reason": "Issue 16 evidence chain tests guard baseline document and no auto-close boundaries."
-    },
-    {
-      "path": "docs/49-issue16-evidence-chain-acceptance.md",
-      "category": "doc",
-      "required": true,
-      "hash": "f115395cbf5c7820cd5f32f168862503a7c3a7d31f53598e5abbb61f638e1fd7",
-      "reason": "Issue 16 acceptance records accepted-pending-main-validation state."
-    },
-    {
-      "path": "schemas/evidence-artifact-index.schema.json",
-      "category": "schema",
-      "required": true,
-      "hash": "31048a4208de1d71d497ed604346ba69d42b00ba84308804433a4694181eaa9e",
-      "reason": "Evidence artifact index schema constrains artifact identity metadata."
-    },
-    {
-      "path": "scripts/common/New-KitEvidenceArtifactIndex.ps1",
-      "category": "script",
-      "required": true,
-      "hash": "1ad36fa82fe583038f1df2cf7dbf17ab22d941f1c555f05fb2ff98aa3a4a2012",
-      "reason": "Evidence artifact index helper feeds Issue 16 report artifacts."
-    },
-    {
-      "path": "scripts/common/Test-KitEvidenceRedaction.ps1",
-      "category": "script",
-      "required": true,
-      "hash": "6c11b2412b72a212541fb7efce57a45953b140040d317f1e19d9b0c25c9e812e",
-      "reason": "Evidence redaction helper blocks sensitive fields."
-    },
-    {
-      "path": "tests/fixtures/evidence-chain/sample-artifact-index.json",
-      "category": "test",
-      "required": true,
-      "hash": "e7d0d5e9d1173f5858461801a9ee1e3d54aa10535a0bc2a1592193daeb3ec937",
-      "reason": "Sample artifact index fixture backs Issue 16 artifact identity tests."
-    },
-    {
-      "path": "tests/fixtures/evidence-chain/sample-run-linkage.json",
-      "category": "test",
-      "required": true,
-      "hash": "0986223c7cb70050858812e90d98472b7169a1f7837595ab25b0c4b28cb39230",
-      "reason": "Sample run linkage fixture backs Issue 16 run ID tests."
-    },
-    {
-      "path": "tests/fixtures/evidence-chain/sample-redacted-report.json",
-      "category": "test",
-      "required": true,
-      "hash": "1363bcaa632b74b5ca558fd7199d8ff817da9363213f0b4852baa670afc8b687",
-      "reason": "Sample redacted report fixture backs Issue 16 redaction tests."
-    },
-    {
-      "path": "tests/fixtures/evidence-chain/sample-blocked-sensitive-report.json",
-      "category": "test",
-      "required": true,
-      "hash": "96e502b88a0e5f876152e01cbf57ae06e9395fb269fcae2a2465c72865dddcc3",
-      "reason": "Blocked sensitive report fixture backs Issue 16 redaction failure tests."
-    },
-    {
-      "path": "tests/pester/EvidenceChainRunId.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "3d360dc395bd46573f8789be59f870d6dd603ca63ddc6693cb6488870577a9aa",
-      "reason": "Evidence chain run ID tests guard linkage behavior."
-    },
-    {
-      "path": "tests/pester/EvidenceChainArtifactIndex.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "6b379a63e89933937ce765af31f6489b82f4816a946e1e36c9e6bb9e4738ee3b",
-      "reason": "Evidence chain artifact index tests guard artifact identity behavior."
-    },
-    {
-      "path": "tests/pester/EvidenceChainRedaction.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "5d97dd5b7a141f0a980d90ac1e6ed6f492a20921eb906ea7d47c26ed1264a4e8",
-      "reason": "Evidence chain redaction tests guard sensitive-data policy."
-    },
-    {
-      "path": "tests/pester/EvidenceChainProducerNormalization.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "d842dc575fb5551c0fae0fd942db59e89fd50847da4552a047a271975356c078",
-      "reason": "Evidence chain producer normalization tests guard report-only producers."
-    },
-    {
-      "path": "tests/pester/Issue16EvidenceChainAcceptance.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "26d4b7f6309d7a747de95c25c924e4ab5b9d84ecfd9da476410a081b9d553cdb",
-      "reason": "Issue 16 acceptance tests guard accepted-pending-main-validation state."
-    },
-    {
-      "path": "docs/50-issue16-close-preparation.md",
-      "category": "doc",
-      "required": true,
-      "hash": "6f0205af38240b2273624a8fd6466fe599bd2df4260f101cc8fc77b4ee15a5b5",
-      "reason": "Issue 16 close-preparation candidate records manual closure boundaries."
-    },
-    {
-      "path": "docs/51-issue16-main-validation-evidence.md",
-      "category": "doc",
-      "required": true,
-      "hash": "599c7c469709efaaa16983aec411462a3859df7df5671e265828d8342077d049",
-      "reason": "Issue 16 main validation evidence scaffold remains pending until real main evidence exists."
-    },
-    {
-      "path": "manifests/evidence-report-inputs.json",
-      "category": "manifest",
-      "required": true,
-      "hash": "9e08c1c87c98b4c249290f72c3b66b8ead2e2dd608cdfcd617f2fd39f59998e4",
-      "reason": "Evidence report input index declares report-only producer inputs."
-    },
-    {
-      "path": "schemas/evidence-report-inputs.schema.json",
-      "category": "schema",
-      "required": true,
-      "hash": "00a5e35900ac3993cd867b0f67ffbaa274a97f3c44b66f6a1c3c511acddcc7e5",
-      "reason": "Evidence report input index schema constrains producer report input declarations."
-    },
-    {
-      "path": "scripts/common/ConvertTo-KitEvidenceProducerItem.ps1",
-      "category": "script",
-      "required": true,
-      "hash": "17ccffdaec1631b8710ce68ecd246f94a9e4620da5050de6d397e615c54dcf73",
-      "reason": "Evidence producer adapter converts input reports into normalized evidence items."
-    },
-    {
-      "path": "scripts/common/Read-KitEvidenceReportInputs.ps1",
-      "category": "script",
-      "required": true,
-      "hash": "034c1390532ca3036980dd7b04b7912ae68ea4023a5b6af9725067a925faef46",
-      "reason": "Evidence report input reader validates declared producer input paths."
-    },
-    {
-      "path": "tests/fixtures/evidence-chain/failure-inputs/bad-paths/project-config.json",
-      "category": "test",
-      "required": true,
-      "hash": "9cbd6ea378f05c7e91c40599fb2ef131989d648f53c52fcc43b2140107e48c77",
-      "reason": "Bad input path fixture proves producer adapter path policy."
-    },
-    {
-      "path": "tests/fixtures/evidence-chain/failure-inputs/disallowed-manual/project-config-report.json",
-      "category": "test",
-      "required": true,
-      "hash": "28ba780648793079ea1b366db26ff624518abf54d7fcb0b0fc08ed6b5937d7d2",
-      "reason": "Disallowed manual report fixture proves producer adapter failure handling."
-    },
-    {
-      "path": "tests/fixtures/evidence-chain/failure-inputs/disallowed-manual/project-config.json",
-      "category": "test",
-      "required": true,
-      "hash": "d763f5f81d099fe37e204fed4710bce659efdc86a0895bd1756060fc9a50053d",
-      "reason": "Disallowed manual input index fixture proves producer adapter failure handling."
-    },
-    {
-      "path": "tests/fixtures/evidence-chain/failure-inputs/disallowed-not-captured/project-config-report.json",
-      "category": "test",
-      "required": true,
-      "hash": "9ced5274aecb9f2e1a0c088a46e9f0d11bf9bde323a34bc29af1b55512b98978",
-      "reason": "Disallowed not-captured report fixture proves producer adapter failure handling."
-    },
-    {
-      "path": "tests/fixtures/evidence-chain/failure-inputs/disallowed-not-captured/project-config.json",
-      "category": "test",
-      "required": true,
-      "hash": "e09c226b9cf60222e892e0bcbe0e4e6a422ebc4fbf14272d592cffe1463919a2",
-      "reason": "Disallowed not-captured input index fixture proves producer adapter failure handling."
-    },
-    {
-      "path": "tests/fixtures/evidence-chain/failure-inputs/failed-producer/project-config-report.json",
-      "category": "test",
-      "required": true,
-      "hash": "d45e6a2f5a86986973b23db61f527d149f817954a037633d7e1b8fd050c80156",
-      "reason": "Failed producer report fixture proves producer adapter failure handling."
-    },
-    {
-      "path": "tests/fixtures/evidence-chain/failure-inputs/failed-producer/project-config.json",
-      "category": "test",
-      "required": true,
-      "hash": "419a51442cd39c09c3fa326d6e7fe5921d3b04a98fa7698af5cb5fb7cb73a59c",
-      "reason": "Failed producer input index fixture proves producer adapter failure handling."
-    },
-    {
-      "path": "tests/fixtures/evidence-chain/failure-inputs/missing-required/project-config.json",
-      "category": "test",
-      "required": true,
-      "hash": "efda2cc66c3a7eac3f979ee0da7df429c0f679b34d56fc10dfeaa8fb5fe222e7",
-      "reason": "Missing required input fixture proves producer adapter failure handling."
-    },
-    {
-      "path": "tests/fixtures/evidence-chain/failure-inputs/report-type-mismatch/project-config.json",
-      "category": "test",
-      "required": true,
-      "hash": "58c911640bbedc6831d2993168d9d979d22dcd08ec48f306c86bb77bb164ed3d",
-      "reason": "Report type mismatch fixture proves producer adapter failure handling."
-    },
-    {
-      "path": "tests/fixtures/evidence-chain/failure-inputs/unknown-producer/project-config.json",
-      "category": "test",
-      "required": true,
-      "hash": "a0157c26e98983aceeeda6c8c45d2da68df60b6b8082ea9aff7a09c1b88d2340",
-      "reason": "Unknown producer fixture proves input index manifest matching."
-    },
-    {
-      "path": "tests/fixtures/evidence-chain/sample-report-input-index.json",
-      "category": "test",
-      "required": true,
-      "hash": "ee822c37a5dcd904d7b557dba70c9cad5ddfa43080c9d959ac064190636b8e41",
-      "reason": "Sample report input index fixture backs PR Fast evidence chain tests."
-    },
-    {
-      "path": "tests/pester/EvidenceChainClosePrep.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "a40308bca3c0b2459da3c222bac65030bf7eab87ee1ea1a9037ddeadc966048a",
-      "reason": "Evidence chain close-prep tests guard Quality Gates and Build Lock wiring."
-    },
-    {
-      "path": "tests/pester/EvidenceChainInputIndex.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "4f7bfeb89c4a3d39ca30e59d6c9cbb4757eb8751d9dbc91d9b3eba0cb84857a8",
-      "reason": "Evidence chain input index tests guard manifest and path policy."
-    },
-    {
-      "path": "tests/pester/EvidenceChainProducerAdapter.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "f3275208d3d0d747a6b4795c90996a9163b73ed878975474292125df71664016",
-      "reason": "Evidence chain producer adapter tests guard failure-path normalization."
-    },
-    {
-      "path": "tests/pester/Issue16ClosePrep.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "2ac8c4630e665c7af69898689a7c55d20161c2837d27b05ccd76d91f4804eda9",
-      "reason": "Issue 16 close-prep tests guard candidate-only manual closure boundaries."
-    },
-    {
-      "path": "tests/pester/Issue16MainValidationEvidence.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "0988f840d3fd3e4f62725a97d2bdc50361053736baa7b64f9ffb22e52963c5de",
-      "reason": "Issue 16 main evidence tests guard pending-only scaffold fields."
-    }
-  ],
-  "watchGlobs": [
-    "manifests/*.json",
-    "schemas/*.json",
-    "scripts/common/*.ps1",
-    "scripts/validate/*.ps1",
-    "tests/pester/*Registry*.Tests.ps1",
-    "tests/pester/*BuildLock*.Tests.ps1",
-    "docs/28-issue11-capability-registry.md",
-    "docs/32-issue12-build-lock.md",
-    ".github/workflows/ci.yml",
-    "tests/pester/*EnsureState*.Tests.ps1",
-    "docs/*issue13*.md",
-    "tests/pester/Issue14*.Tests.ps1",
-    "docs/*issue14*.md",
-    "PSScriptAnalyzerSettings.psd1",
-    "manifests/quality-gates.json",
-    "schemas/quality-gates.schema.json",
-    "scripts/common/*QualityGate*.ps1",
-    "scripts/validate/*QualityGate*.ps1",
-    "tests/pester/*QualityGate*.Tests.ps1",
-    "profiles/*.json",
-    "hardware/*.json",
-    "docs/*issue15*.md",
-    "scripts/common/*EffectiveConfiguration*.ps1",
-    "scripts/config/*EffectiveConfiguration*.ps1",
-    "scripts/validate/*EffectiveConfiguration*.ps1",
-    "tests/pester/*EffectiveConfiguration*.Tests.ps1",
-    "tests/pester/Issue15*.Tests.ps1",
-    "manifests/evidence-chain.json",
-    "schemas/evidence-chain*.json",
-    "docs/*issue16*.md",
-    "scripts/common/*EvidenceChain*.ps1",
-    "scripts/config/*EvidenceChain*.ps1",
-    "scripts/validate/*EvidenceChain*.ps1",
-    "tests/fixtures/evidence-chain/*.json",
-    "tests/fixtures/evidence-chain/sample-report-inputs/*.json",
-    "tests/pester/*EvidenceChain*.Tests.ps1",
-    "schemas/evidence-artifact-index.schema.json",
-    "scripts/common/*EvidenceArtifact*.ps1",
-    "scripts/common/*EvidenceRedaction*.ps1",
-    "tests/pester/Issue16*.Tests.ps1"
-  ],
-  "policy": {
-    "missingRequired": "fail",
-    "hashMismatch": "fail",
-    "untrackedWatchedFile": "manual",
-    "unsupportedAlgorithm": "fail"
-  }
+﻿{
+    "$schema":  "../schemas/build-lock.schema.json",
+    "lockVersion":  1,
+    "algorithm":  "SHA256",
+    "mode":  "verify",
+    "generatedBy":  "win11-image-kit",
+    "entries":  [
+                    {
+                        "path":  "manifests/capability-registry.json",
+                        "category":  "manifest",
+                        "required":  true,
+                        "hash":  "cfd7dd56b2844601bbaf532f2dd2eebf40621ad3fb81f48dff2b2f5e4cb390cd",
+                        "reason":  "Capability registry is a supply-chain control plane input."
+                    },
+                    {
+                        "path":  "schemas/capability-registry.schema.json",
+                        "category":  "schema",
+                        "required":  true,
+                        "hash":  "bc619fd8f099a18b47ff136e7728dcc273876d2cb8f571df2d193be3e8367ed1",
+                        "reason":  "Capability registry schema constrains supply-chain metadata."
+                    },
+                    {
+                        "path":  "manifests/context-scope.json",
+                        "category":  "manifest",
+                        "required":  true,
+                        "hash":  "8f3621d8e3fd87efaa55e2f541624d95b00775f7b98e0c94c9b9a01a3764da7e",
+                        "reason":  "Context scope manifest is a trusted routing input."
+                    },
+                    {
+                        "path":  "schemas/context-scope.schema.json",
+                        "category":  "schema",
+                        "required":  true,
+                        "hash":  "adc78103ca7fbb83e2f4b7dd680334d2aa73f1c38a775cdebc0f9c6f6ae40103",
+                        "reason":  "Context scope schema constrains routing input structure."
+                    },
+                    {
+                        "path":  "manifests/sysprep-appx-gate.json",
+                        "category":  "manifest",
+                        "required":  true,
+                        "hash":  "52a1b556f110d790a35f87dde62250613d0d95c5460c40621d3cd1f239386b0d",
+                        "reason":  "Sysprep AppX gate manifest is a trusted readiness input."
+                    },
+                    {
+                        "path":  "schemas/sysprep-appx-gate.schema.json",
+                        "category":  "schema",
+                        "required":  true,
+                        "hash":  "a4324cc705b0ba57868f1bce57d3c6b45cd31062120c33354f38f87eae58ab00",
+                        "reason":  "Sysprep AppX gate schema constrains readiness input structure."
+                    },
+                    {
+                        "path":  "schemas/build-lock.schema.json",
+                        "category":  "schema",
+                        "required":  true,
+                        "hash":  "a8bcb03d90d55290112d78177e21f662243999b9de63df35509057a5dd05747c",
+                        "reason":  "Build lock schema constrains immutable input lock metadata."
+                    },
+                    {
+                        "path":  "scripts/validate/Test-CapabilityRegistry.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "7d0d55509166deb938e704b923359fcf8b2715c5029df38f454278d05dff436a",
+                        "reason":  "Capability registry validation is part of supply-chain consistency checks."
+                    },
+                    {
+                        "path":  "scripts/validate/Test-ContextScope.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "e00e7fbda8936b4eba51292753c3ec32ecbe53b3ae21849cff6a219684297722",
+                        "reason":  "Context scope validation is a trusted static guardrail."
+                    },
+                    {
+                        "path":  "scripts/validate/Test-SysprepReadiness.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "54b1cf7d2e24dc93911e48d3341fbe6cb4cf0a41c5e9a25a70cbdd68177c59b9",
+                        "reason":  "Sysprep readiness validation is a trusted static guardrail."
+                    },
+                    {
+                        "path":  "scripts/common/New-KitCapabilityConsistencyReport.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "48cb55b7e08e9d33066fc003078f3e0f3e85e0bdf1e2e080796c7e3998e4af88",
+                        "reason":  "Capability consistency report generation feeds static evidence."
+                    },
+                    {
+                        "path":  "scripts/common/New-KitContextPlan.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "3d1bedb892218d676228b937d725c687fb64c7d1d740fffd398500f26fdbd26f",
+                        "reason":  "Context planning report generation feeds static evidence."
+                    },
+                    {
+                        "path":  "scripts/common/Get-KitFileHash.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "31fad619dccc118cdda52fd2b8d3df710f75b7a199dbf05dfea3895c7c0e9279",
+                        "reason":  "Build lock hash helper computes immutable input digests."
+                    },
+                    {
+                        "path":  "scripts/common/Get-KitBuildLock.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "0088197ec329363e20db1c6ec0661252e077cffeaec2093c52d2caaec941561c",
+                        "reason":  "Build lock loader enforces manifest parsing and duplicate path checks."
+                    },
+                    {
+                        "path":  "scripts/common/Test-KitBuildLock.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "7f254183dc2bacab9566efbe3b760d7a9aa143dbbab89521770664ced97e9c03",
+                        "reason":  "Build lock validator checks hashes and watched files."
+                    },
+                    {
+                        "path":  "scripts/common/New-KitBuildLockReport.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "5d2583d3006acbc3d3a6e95ad5b066a36eb8191ff89d50f9f01b82317698dd65",
+                        "reason":  "Build lock report builder produces CI and review evidence."
+                    },
+                    {
+                        "path":  "scripts/validate/Test-BuildLock.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "5da3071ef6a04fac9b47120ef85a3fce3d3557dd55203c72be13d82fcc0ada33",
+                        "reason":  "Build lock validate entrypoint writes explicit reports and exit codes."
+                    },
+                    {
+                        "path":  "manifests/software.json",
+                        "category":  "manifest",
+                        "required":  true,
+                        "hash":  "a7e21c5e22935ea0846e39af1a4628b1aadb2dc17774bd251fce55ee736dc8c7",
+                        "reason":  "Ensure-State software manifest is a trusted desired-state ledger."
+                    },
+                    {
+                        "path":  "schemas/software.schema.json",
+                        "category":  "schema",
+                        "required":  true,
+                        "hash":  "600f699aa98625366cb68321d150c19caa858dc4f0ee2b1fa490dcb3cf7e1f26",
+                        "reason":  "Ensure-State software schema constrains desired-state software entries."
+                    },
+                    {
+                        "path":  "manifests/services.json",
+                        "category":  "manifest",
+                        "required":  true,
+                        "hash":  "18e63b9522540c4da7b4aad05322ce261be015fe7b37a4252532269fc02e773c",
+                        "reason":  "Ensure-State services manifest is a trusted desired-state ledger."
+                    },
+                    {
+                        "path":  "schemas/services.schema.json",
+                        "category":  "schema",
+                        "required":  true,
+                        "hash":  "bc4215b65adab2594c89106e6506a4b0399f503534cebd75a157d8bc532fb687",
+                        "reason":  "Ensure-State service schema constrains desired-state service entries."
+                    },
+                    {
+                        "path":  "scripts/common/Resolve-KitSoftwareState.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "7294922ab51731e4e489ba890ca1e8a6eb33f1199a4e0719fb5b4b2d30c100ac",
+                        "reason":  "Ensure-State software resolver converts fixture or current data into reviewable state."
+                    },
+                    {
+                        "path":  "scripts/common/Resolve-KitServiceState.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "60892a425ffc0c246815da61802f5a68a2ce08a78f8c1261bad5ef83e4857b81",
+                        "reason":  "Ensure-State service resolver converts fixture or current data into reviewable state."
+                    },
+                    {
+                        "path":  "scripts/common/New-KitEnsureStatePlan.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "3b575c8ee66ba7f6d73bcb5ec425683026c023e1d61ceef0521b60cc1e5d22a2",
+                        "reason":  "Ensure-State plan generation is trusted CI evidence for convergence review."
+                    },
+                    {
+                        "path":  "scripts/common/Test-KitEnsureState.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "f5071bc6825beed29194a1fba7e10c9dad00eca9739ef2000feb2c3e28c898b8",
+                        "reason":  "Ensure-State validation maps plan items into passed, manual, or failed evidence."
+                    },
+                    {
+                        "path":  "scripts/common/New-KitEnsureStateReport.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "e213cb71b5c152dd589783afbac0c53ccb033ce0a92d0859ac8907b95c180d0a",
+                        "reason":  "Ensure-State report generation produces explicit JSON review evidence."
+                    },
+                    {
+                        "path":  "scripts/validate/Test-EnsureState.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "2b30922fc5da48eb05f133ae60542b936dd0f27e0fef189ceb75c2162c955a8f",
+                        "reason":  "Ensure-State validate entrypoint writes explicit reports and exit codes."
+                    },
+                    {
+                        "path":  "scripts/validate/Test-ProjectConfig.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "f14869d365c3c4219acb55834dce890453f9928677a084132ad235f186da9e06",
+                        "reason":  "Project config validation includes the controlled execution manifest/schema pair."
+                    },
+                    {
+                        "path":  "tests/pester/BuildLockSchema.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "a71f9efc9f39e310ed43d0d3efbe94b217c4dffe52c493e8d76d494b983e364a",
+                        "reason":  "Build lock schema tests guard manifest structure."
+                    },
+                    {
+                        "path":  "tests/pester/BuildLockHash.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "b6a89266cab2dcf1ca2c82d415dc24169f7c227730c24a22bd98192ce75cd267",
+                        "reason":  "Build lock hash tests guard deterministic digest behavior."
+                    },
+                    {
+                        "path":  "tests/pester/BuildLockValidation.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "54912d397e3afd6679f5d7268c664367ada46535c24a2418000429dfe5edb779",
+                        "reason":  "Build lock validation tests guard missing, mismatch, and watched-file behavior."
+                    },
+                    {
+                        "path":  "tests/pester/BuildLockReport.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "68f4edb1f9270b4462abaf508cca24e149590aebf9ee6b532195ff7acc581dcc",
+                        "reason":  "Build lock report tests guard report evidence structure."
+                    },
+                    {
+                        "path":  "tests/pester/Issue12BuildLock.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "9c78cce1b34023bb63c4e6f4c70a8ac5b4f7afdc79714ef2533d7ca020df86f3",
+                        "reason":  "Issue 12 guardrail tests keep CI, docs, and safety boundaries wired."
+                    },
+                    {
+                        "path":  "tests/pester/EnsureStateSchema.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "a79491045bd03daa32a39eb2debff4880da044b2701401104d2c06acf2718ab5",
+                        "reason":  "Ensure-State schema tests guard manifest structure, registry wiring, and build lock coverage."
+                    },
+                    {
+                        "path":  "tests/pester/EnsureStatePlan.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "520efbbe2969788957c1b0120730d23c99557100d8bb2889d26454aaa4dfb7be",
+                        "reason":  "Ensure-State plan tests guard fixture-only convergence planning without mutation."
+                    },
+                    {
+                        "path":  "tests/pester/EnsureStateReport.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "860dc04bc772f95ed1bc8f7466a69fabb8e73eb02126ab99db60c7ffd9e6f299",
+                        "reason":  "Ensure-State report tests guard summary counts, serialization, and exit-code behavior."
+                    },
+                    {
+                        "path":  "tests/pester/EnsureStateValidation.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "5f0f5da49d7bc8379eab1b1b8e534d877f3e8b288382e4b7650c67742fcc3edd",
+                        "reason":  "Ensure-State validation tests guard fixture-only behavior and failure classification."
+                    },
+                    {
+                        "path":  "tests/pester/Issue13EnsureState.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "2f9bf5560a46b9228623270f42d65d0c89bed83d947539096d82852ffda14d17",
+                        "reason":  "Issue 13 guardrail tests keep docs, CI wiring, and non-mutation boundaries aligned."
+                    },
+                    {
+                        "path":  "docs/28-issue11-capability-registry.md",
+                        "category":  "doc",
+                        "required":  true,
+                        "hash":  "24f3b7c976c9dca89f108e3e271d4cbe78aaf02ded3dd67d187e289710593b43",
+                        "reason":  "Capability registry runbook defines the upstream control plane."
+                    },
+                    {
+                        "path":  "docs/32-issue12-build-lock.md",
+                        "category":  "doc",
+                        "required":  true,
+                        "hash":  "90c8c9e6cf24aa9801018c2570c7c2697e7d37d72f7728cbdb6a39e275ac8d80",
+                        "reason":  "Build lock runbook documents report-only supply-chain validation."
+                    },
+                    {
+                        "path":  "docs/36-issue13-ensure-state.md",
+                        "category":  "doc",
+                        "required":  true,
+                        "hash":  "049a5a90d070f35328c5bc4d928ac8ad0c113a4c5dde8e744707ba4b22ab7a66",
+                        "reason":  "Ensure-State runbook documents static convergence planning and PR Fast CI boundaries."
+                    },
+                    {
+                        "path":  ".github/workflows/ci.yml",
+                        "category":  "workflow",
+                        "required":  true,
+                        "hash":  "5fc105997f66489b71c404b61058c6d30d96b9c443dc029275dad9912ef45d2c",
+                        "reason":  "Windows CI must run Issue 17 controlled execution validation and Pester guardrails in PR Fast CI."
+                    },
+                    {
+                        "path":  "README.md",
+                        "category":  "doc",
+                        "required":  true,
+                        "hash":  "ebdf44551918d1e593f5c3503fad8778cd1a7d82b70ef4c1301a7dbf701b8b13",
+                        "reason":  "README links the Issue 17 controlled execution intake and validation entrypoint."
+                    },
+                    {
+                        "path":  "docs/37-issue13-ensure-state-acceptance.md",
+                        "category":  "doc",
+                        "required":  true,
+                        "hash":  "aaa96e5cd404dc239ab2733ee8f376d160bb4cf368429b36de7c54db1b51701f",
+                        "reason":  "Issue 13 acceptance matrix documents plan-only Ensure-State coverage and CI boundaries."
+                    },
+                    {
+                        "path":  "docs/38-issue13-close-preparation.md",
+                        "category":  "doc",
+                        "required":  true,
+                        "hash":  "41c30662ad790b01fd5419774e49256f7114ee210274816001a28672b5ee122a",
+                        "reason":  "Issue 13 close-preparation checklist documents manual closure boundaries."
+                    },
+                    {
+                        "path":  "docs/39-issue13-main-validation-evidence.md",
+                        "category":  "doc",
+                        "required":  true,
+                        "hash":  "1395979db658dc3c5f696ccf2667ffd272927d0ddd1eac97ae8dd68b6984976e",
+                        "reason":  "Issue 13 main validation evidence scaffold prevents PR Fast CI evidence substitution."
+                    },
+                    {
+                        "path":  "tests/pester/Issue13EnsureStateAcceptance.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "60c19e2ed8d4e9857cb43fc24b0b2c5ab025b57ca51cd6ae0b097d6219b0b180",
+                        "reason":  "Issue 13 acceptance guardrails cover schema, safety, report contract, registry, Build Lock, docs, and CI wiring."
+                    },
+                    {
+                        "path":  "tests/pester/Issue13ClosePrep.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "5357cfd5fa4b19a25f2f5f8528ec5a92f9f163884768c75875515a43103f22f6",
+                        "reason":  "Issue 13 close-preparation tests guard manual closure semantics and safe validation policy."
+                    },
+                    {
+                        "path":  "tests/pester/Issue13MainValidationEvidence.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "a781fe6ed25c727d904c3bab47723616ec7891ec0d6f32637c50aa53a9413934",
+                        "reason":  "Issue 13 main-evidence tests keep pending evidence honest and define ready-state rules."
+                    },
+                    {
+                        "path":  "PSScriptAnalyzerSettings.psd1",
+                        "category":  "config",
+                        "required":  true,
+                        "hash":  "51f44d11ac694c7042c3a5307c2b587b0b10ae58d2324cfcb14b6f610bb71ab3",
+                        "reason":  "PSScriptAnalyzer settings define the local analyzer baseline for quality gates."
+                    },
+                    {
+                        "path":  "docs/40-issue14-quality-gates.md",
+                        "category":  "doc",
+                        "required":  true,
+                        "hash":  "676ef94ed6be54969352c550e78efbd11462791399ef3f007544653417635a03",
+                        "reason":  "Issue 14 quality gates runbook records accepted readiness and verified main evidence."
+                    },
+                    {
+                        "path":  "tests/pester/Issue14QualityGates.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "8ea15ec212afcc48fc5c9c8e692c50203bc50bff76786cf516f99516af1caa32",
+                        "reason":  "Issue 14 quality gate tests guard docs, README, Build Lock, and no auto-close wording."
+                    },
+                    {
+                        "path":  "tests/pester/Issue14CiPolicy.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "dbd4f9782500f3b89a7ce117dec513200de40e645b29307156517321360fb1dd",
+                        "reason":  "Issue 14 CI policy tests guard PR fast and Full Validate split plus no-mutation workflow policy."
+                    },
+                    {
+                        "path":  "tests/pester/Issue14PesterInventory.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "d95bb34393ae81e64cd863bf5c2083fc101b08d610476cf12bdb422b7572ef30",
+                        "reason":  "Issue 14 Pester inventory tests guard fast-path issue test coverage."
+                    },
+                    {
+                        "path":  "tests/pester/Issue14AnalyzerPolicy.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "0a215988e286dc504d0ff3f69840bb3d7796ddec60e5bf72f749132de798cd91",
+                        "reason":  "Issue 14 analyzer policy tests guard PSScriptAnalyzer settings and non-blocking workflow behavior."
+                    },
+                    {
+                        "path":  "manifests/quality-gates.json",
+                        "category":  "manifest",
+                        "required":  true,
+                        "hash":  "87a5acb6260ac8d49ce95c2997f28dc6c52ee45a1dce849c4c5eafbd76feccbe",
+                        "reason":  "Quality Gates include Issue 17 controlled execution, intake, and acceptance gates."
+                    },
+                    {
+                        "path":  "schemas/quality-gates.schema.json",
+                        "category":  "schema",
+                        "required":  true,
+                        "hash":  "7f9f0b23090a5be3cefad740945af7e4a5afce9319a52f192c5b57517210ad4a",
+                        "reason":  "Issue 14 quality gate schema constrains runner inventory structure."
+                    },
+                    {
+                        "path":  "scripts/common/New-KitQualityGateReport.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "ead2c11390f4edda74391f67101c18d8a169fac2e72f095e6b0fe11117cba2a5",
+                        "reason":  "Quality gate report builder produces report-only validation evidence."
+                    },
+                    {
+                        "path":  "scripts/validate/Test-QualityGates.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "6d763061c842dd02d4c85286a95ac937fa1f052e72dfa07a9cd8a58b465aaa20",
+                        "reason":  "Quality gate validate entrypoint writes explicit reports and exit codes."
+                    },
+                    {
+                        "path":  "tests/pester/QualityGateSchema.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "f9eea5b2e749818590f5aede8dd3fb27c9f10732577b7799d6869047d9755ef1",
+                        "reason":  "Quality gate schema tests guard manifest structure and validator wiring."
+                    },
+                    {
+                        "path":  "tests/pester/QualityGateReport.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "8d8f626bb816411cf8bbc1d98c4b30b8a45deb3926bf0562e0112af6896cbd27",
+                        "reason":  "Quality gate report tests guard summary, safety, and manual policy fields."
+                    },
+                    {
+                        "path":  "tests/pester/QualityGateValidation.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "0425084983093f9253df402f8e9ea33f119b3834ddf847f7dfdfc447a49aa652",
+                        "reason":  "Quality gate validation tests guard report writing and failure exit codes."
+                    },
+                    {
+                        "path":  "tests/pester/Issue14QualityGateAcceptance.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "923b8e64101240bbeca8f128e66c6045f440787f16903743829b94ad264f90d7",
+                        "reason":  "Issue 14 acceptance tests guard pending and ready status without unsafe claims."
+                    },
+                    {
+                        "path":  "docs/41-issue14-quality-gates-acceptance.md",
+                        "category":  "doc",
+                        "required":  true,
+                        "hash":  "24837a86229183838d190151819eb2d43560fa92f5706c1b94a7fddc026c4ada",
+                        "reason":  "Issue 14 acceptance records accepted-ready-for-manual-closure status after main evidence backfill."
+                    },
+                    {
+                        "path":  "docs/42-issue14-close-preparation.md",
+                        "category":  "doc",
+                        "required":  true,
+                        "hash":  "a14a14aec49031d7d1a11501e9236047872ef7906ee223c2f505393e6e1632ae",
+                        "reason":  "Issue 14 close-preparation records ready-for-manual-closure after verified main evidence."
+                    },
+                    {
+                        "path":  "docs/43-issue14-main-validation-evidence.md",
+                        "category":  "doc",
+                        "required":  true,
+                        "hash":  "2d1d03362ee00203e95ba57f4f9e53dc2465b6db8e089747971783f3c9c37a40",
+                        "reason":  "Issue 14 main-validation evidence records post-PR 73 Full Validate success."
+                    },
+                    {
+                        "path":  ".gitignore",
+                        "category":  "config",
+                        "required":  true,
+                        "hash":  "6f285f77eff0a0d4e23edb723cb21f11af35b4e15734afbad64f6af2c7ca0341",
+                        "reason":  "Issue 15 local private override file must remain untracked."
+                    },
+                    {
+                        "path":  "docs/44-issue15-layered-configuration.md",
+                        "category":  "doc",
+                        "required":  true,
+                        "hash":  "400a831c59d5978c551039375c566feb88b9b9bb10afdea05afc2ed9e9b92fdf",
+                        "reason":  "Issue 15 layered configuration design records consumer integration and close-prep links."
+                    },
+                    {
+                        "path":  "docs/45-issue15-layered-configuration-acceptance.md",
+                        "category":  "doc",
+                        "required":  true,
+                        "hash":  "c3ddc6e2fa95e3bb311231369071603ae5de5fe1e2a789b74a3203f06323b2eb",
+                        "reason":  "Issue 15 acceptance records accepted-pending-main-validation status."
+                    },
+                    {
+                        "path":  "manifests/paths.local.example.json",
+                        "category":  "manifest",
+                        "required":  true,
+                        "hash":  "0cadacabe82b71dc3275e68bf76228eea469ff8737c0509a81114b42e4ff6d84",
+                        "reason":  "Issue 15 local override example is a safe tracked template for private paths."
+                    },
+                    {
+                        "path":  "manifests/config-layers.json",
+                        "category":  "manifest",
+                        "required":  true,
+                        "hash":  "c8c38ca93de9ce49eb84967a52f1cfecc8b5c62cd1e1c47130502cfadb2265b8",
+                        "reason":  "Issue 15 config layer manifest declares deterministic local layering."
+                    },
+                    {
+                        "path":  "schemas/config-layers.schema.json",
+                        "category":  "schema",
+                        "required":  true,
+                        "hash":  "b2b729e615a1380b09233c1ef27d8269a774654a81c594baa718d537798bfe19",
+                        "reason":  "Issue 15 config layer schema constrains the layer inventory."
+                    },
+                    {
+                        "path":  "schemas/config-layer-fragment.schema.json",
+                        "category":  "schema",
+                        "required":  true,
+                        "hash":  "d0d5f1888a2a2894b7772c43ee633d9078c53d57b5cbe560999248c3aee24e66",
+                        "reason":  "Issue 15 config layer fragment schema constrains profile and hardware overrides."
+                    },
+                    {
+                        "path":  "profiles/default.json",
+                        "category":  "manifest",
+                        "required":  true,
+                        "hash":  "0f7d8129f6781691edaec4a2fb03d91d25b9da1d5bc3d1df32bc22f2e9cf72c2",
+                        "reason":  "Issue 15 default profile fixture preserves current single-file behavior."
+                    },
+                    {
+                        "path":  "profiles/release.json",
+                        "category":  "manifest",
+                        "required":  true,
+                        "hash":  "95ca4fd2d95fc63964b44820fe2fc36d653f146d4fc43922cdf5c9e3017b75bc",
+                        "reason":  "Issue 15 release profile fixture proves profile override precedence."
+                    },
+                    {
+                        "path":  "hardware/air15.json",
+                        "category":  "manifest",
+                        "required":  true,
+                        "hash":  "ad2363d7a22f4a4abe448831940d210852eff8fc09a61b006d3904a36fec2942",
+                        "reason":  "Issue 15 hardware fixture proves hardware override precedence."
+                    },
+                    {
+                        "path":  "scripts/common/Resolve-KitEffectiveConfiguration.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "5443051424955dd82bc87ac8be5cc49ebfcdf240f1653f44a45387a957bf163f",
+                        "reason":  "Issue 15 effective configuration resolver produces static report-only evidence with CLI and local override handling."
+                    },
+                    {
+                        "path":  "scripts/config/Show-EffectiveConfiguration.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "78608265535c6072d023279a4a8cb41ce4dc2dc671a24c9382b425474e4b40c4",
+                        "reason":  "Issue 15 effective configuration display entrypoint outputs value source layers and redacted local values."
+                    },
+                    {
+                        "path":  "scripts/validate/Test-EffectiveConfiguration.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "0d3565eb252c826d67593e91c72097d7df967054404e995a8c09ecdfc26b0361",
+                        "reason":  "Issue 15 effective configuration validation entrypoint writes failedCount=0 reports for selected or all stacks."
+                    },
+                    {
+                        "path":  "tests/pester/Issue15LayeredConfiguration.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "6fa62c599e787a886663ce1d0b8e68ca9743b23efbe376fad7ee492a19fba46f",
+                        "reason":  "Issue 15 guardrail tests cover intake, wiring, Build Lock, and no auto-close wording."
+                    },
+                    {
+                        "path":  "tests/pester/EffectiveConfigurationSchema.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "22989abc58840420a857769ba818c2ee78319734ef68517cc26b2f0f269d495e",
+                        "reason":  "Issue 15 schema tests guard closed local schemas and local override policy."
+                    },
+                    {
+                        "path":  "tests/pester/EffectiveConfigurationReport.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "715f7474d414247e46e12b3247e9eb69e4bfdde230d589b39cc701ffa89a0bd5",
+                        "reason":  "Issue 15 report tests guard deterministic source-layer output."
+                    },
+                    {
+                        "path":  "tests/pester/EffectiveConfigurationValidation.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "72ef59df00c969fa20f585905398fec1e89626a916cc79a42e07cba99eb90c75",
+                        "reason":  "Issue 15 validation tests guard report-only behavior and no mutation commands."
+                    },
+                    {
+                        "path":  "tests/pester/EffectiveConfigurationMergePolicy.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "2cc38c121389c141dcfe6a442a352f632284e242712c8f2e1256832dff44b16c",
+                        "reason":  "Issue 15 merge policy tests guard object, array, scalar, and null behavior."
+                    },
+                    {
+                        "path":  "tests/pester/EffectiveConfigurationLocalOverride.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "ba84377299cdf73bc8c5b1bd48579820d655022cbe7b8ea5aa6945a086e266ff",
+                        "reason":  "Issue 15 local override tests guard missing, present, malformed, redacted, and untracked behavior."
+                    },
+                    {
+                        "path":  "tests/pester/EffectiveConfigurationTokenSafety.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "4034ed649e9abe0037b4fa5c61c573a4603d4024dfab4208993915ef35baa9aa",
+                        "reason":  "Issue 15 token safety tests guard unknown token, circular token, and forbidden old NAS failures."
+                    },
+                    {
+                        "path":  "tests/pester/EffectiveConfigurationCliOverride.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "7cdf34203c83a815b61a4f9902dbcac334b06963c3fc35257cf6a3cb50cb8b3e",
+                        "reason":  "Issue 15 CLI override tests guard highest-precedence path override source attribution."
+                    },
+                    {
+                        "path":  "tests/pester/Issue15LayeredConfigurationAcceptance.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "0e4bcd319ff6830fb04423726e17ca7ab2df0fcedf57e872d6e136528c99ac82",
+                        "reason":  "Issue 15 acceptance tests guard accepted-pending-main-validation and wiring."
+                    },
+                    {
+                        "path":  "tests/pester/Issue14ClosePrep.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "d0117e8c964fc391f9bcf6ac30198093d4f82d9c1c3ea396a9b2a32e0f4f6738",
+                        "reason":  "Issue 14 close-preparation tests guard candidate and ready semantics."
+                    },
+                    {
+                        "path":  "tests/pester/Issue14MainValidationEvidence.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "5c1f80f6d0a244364e434964f5a1de852c59601422e3d7522fe7d0d27c6aa7b5",
+                        "reason":  "Issue 14 main-evidence tests validate pending and ready evidence details."
+                    },
+                    {
+                        "path":  "docs/07-定制范围与配置入口.md",
+                        "category":  "doc",
+                        "required":  true,
+                        "hash":  "e91a96b1b0c6bff46f6aa055f7552bbf12f0f5a7d18e3a8891a481024cd53b8b",
+                        "reason":  "Configuration entry documentation describes opt-in effective configuration migration."
+                    },
+                    {
+                        "path":  "docs/46-issue15-close-preparation.md",
+                        "category":  "doc",
+                        "required":  true,
+                        "hash":  "8f9a32542b6d0b74f2f8e751b7d3f5ea9630f2c27db576734af9402816f9068e",
+                        "reason":  "Issue 15 close-prep candidate is a manual closure input."
+                    },
+                    {
+                        "path":  "docs/47-issue15-main-validation-evidence.md",
+                        "category":  "doc",
+                        "required":  true,
+                        "hash":  "526682ff178924300badda935ecde4fbf23d4541abd55666e222dea516a28191",
+                        "reason":  "Issue 15 main validation evidence scaffold must remain pending until real main evidence exists."
+                    },
+                    {
+                        "path":  "manifests/customization-scope.json",
+                        "category":  "manifest",
+                        "required":  true,
+                        "hash":  "0a174bccaa56ac1c2764b7ccf0770603f06743705e710c7a8d3736b04c4555fa",
+                        "reason":  "Customization scope declares layered configuration manifest and default stack while preserving pathsManifest."
+                    },
+                    {
+                        "path":  "schemas/customization-scope.schema.json",
+                        "category":  "schema",
+                        "required":  true,
+                        "hash":  "ffd897b9e8dd4f72a2035b9d32a399a7b78143f738bf744dffee8456b537c707",
+                        "reason":  "Customization scope schema allows layered configuration reference fields."
+                    },
+                    {
+                        "path":  "scripts/config/Show-CustomizationScope.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "7903bded9a198c688151e5aab9198f1e3dad0bdb704334a010cd946df59d27f8",
+                        "reason":  "Show-CustomizationScope is the opt-in effective configuration consumer entrypoint."
+                    },
+                    {
+                        "path":  "tests/pester/CustomizationScopeEffectiveConfiguration.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "f198c1f034a5289312cc70b7dedf8eb285e221731a8e44f7db9ce3ed51576352",
+                        "reason":  "Customization scope tests guard layered configuration metadata and local override policy."
+                    },
+                    {
+                        "path":  "tests/pester/EffectiveConfigurationConsumerIntegration.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "a0313802be7a331cbb61bdbc662cef0688ad47476bcae8817bdd3727fec14cd8",
+                        "reason":  "Consumer integration tests guard Show-CustomizationScope default compatibility and opt-in effective configuration display."
+                    },
+                    {
+                        "path":  "tests/pester/Issue15ClosePrep.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "04fdf3d656e8d1ca4c0cedcab187006075610b63f62259176667440cd7200402",
+                        "reason":  "Issue 15 close-prep tests guard candidate-only closure semantics."
+                    },
+                    {
+                        "path":  "tests/pester/Issue15MainValidationEvidence.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "a25246729f642c4a932d8a6c301882cff0e045b520ae2bbfa7ebafca9d576acc",
+                        "reason":  "Issue 15 main evidence tests guard pending-only evidence scaffold."
+                    },
+                    {
+                        "path":  "docs/48-issue16-evidence-chain-report.md",
+                        "category":  "doc",
+                        "required":  true,
+                        "hash":  "4342989847dcd850063d63a352f5df94103cec608a99485c3f030f7d85f09901",
+                        "reason":  "Issue 16 evidence chain design records producer adapter and close-prep scaffold scope."
+                    },
+                    {
+                        "path":  "manifests/evidence-chain.json",
+                        "category":  "manifest",
+                        "required":  true,
+                        "hash":  "8d51f9f99a1deedd6aebd317f80655bb1a828c137e2c77471f7dd3efc53d67c4",
+                        "reason":  "Evidence chain manifest is the trusted producer and safety policy input."
+                    },
+                    {
+                        "path":  "schemas/evidence-chain.schema.json",
+                        "category":  "schema",
+                        "required":  true,
+                        "hash":  "09d0e89f968732ad3ef965fa4d4c9baaaac431a57898e993d161c8f780b4bb31",
+                        "reason":  "Evidence chain schema constrains producer and safety manifest metadata."
+                    },
+                    {
+                        "path":  "schemas/evidence-chain-report.schema.json",
+                        "category":  "schema",
+                        "required":  true,
+                        "hash":  "7564c6c22367236e65786e60f5d50528b0300f529c5a1b8ec8a0325a7509327c",
+                        "reason":  "Evidence chain report schema constrains input reports and normalization counters."
+                    },
+                    {
+                        "path":  "scripts/common/New-KitEvidenceChainReport.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "981a6b3789595bd50d3cb278e1ca57249942a5e5f6cf35c86e1a24db86acb105",
+                        "reason":  "Evidence chain report builder normalizes report input index producers."
+                    },
+                    {
+                        "path":  "scripts/validate/Test-EvidenceChain.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "e9451b95576109bbe6d5fa64fa5f01c48d926ef1d587b22994c8c0cb71b2aed7",
+                        "reason":  "Evidence chain validator enforces report input and normalization failure counters."
+                    },
+                    {
+                        "path":  "scripts/config/Show-EvidenceChain.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "3ed3d0b40aef4b7ab2246e6d78bcfbe18e03230c1111c1897860739a736739cd",
+                        "reason":  "Evidence chain display shows input set and normalization summary."
+                    },
+                    {
+                        "path":  "tests/fixtures/evidence-chain/sample-build-capture-deploy.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "5d0ecd5669c09fea8d285d124e527522efc6aff9c814eb173c05ebf29482be25",
+                        "reason":  "Build/capture/deploy placeholder fixture backs Issue 16 lifecycle non-execution tests."
+                    },
+                    {
+                        "path":  "tests/fixtures/evidence-chain/sample-report-inputs/effective-configuration.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "a4f026b6276a31d2e4e42b30c34e877afb792aaf600d70a0070cb75a2caee723",
+                        "reason":  "EffectiveConfiguration report fixture backs Issue 16 producer adapter baseline."
+                    },
+                    {
+                        "path":  "tests/fixtures/evidence-chain/sample-report-inputs/project-config.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "016656a29ffcac0980fa822a2faf8d82c2c4c38c447171ad2c94b0c28fef987e",
+                        "reason":  "ProjectConfig report fixture backs Issue 16 producer adapter baseline."
+                    },
+                    {
+                        "path":  "tests/fixtures/evidence-chain/sample-report-inputs/build-lock.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "5251ebab17ac11ef67b1b18b9e1ecb57ceafc21cbc30830ab8139a69405e3faf",
+                        "reason":  "BuildLock report fixture backs Issue 16 producer adapter baseline."
+                    },
+                    {
+                        "path":  "tests/fixtures/evidence-chain/sample-report-inputs/quality-gates.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "b40d0609d418a3f628235b89a0ef8b4e238c8b4459c571c941ac653de0dda85e",
+                        "reason":  "QualityGates report fixture backs Issue 16 producer adapter baseline."
+                    },
+                    {
+                        "path":  "tests/fixtures/evidence-chain/sample-report-inputs/pester-summary.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "e7bbfed46382e992706857ae60540813a5d00b0d05b663933f162be4667322cc",
+                        "reason":  "Pester summary fixture backs Issue 16 producer adapter baseline."
+                    },
+                    {
+                        "path":  "tests/pester/EvidenceChainSchema.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "f44c3de4bed8cbf7287a2611b5ea2a216ba51f99ca7a1afe71bae491e9171667",
+                        "reason":  "Evidence chain schema tests include report input index coverage."
+                    },
+                    {
+                        "path":  "tests/pester/EvidenceChainReport.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "a286b49dcebcbe1319205909e71794efe799637e17a9aeb0b46bdebbcc66159c",
+                        "reason":  "Evidence chain report tests cover input reports and normalization summary."
+                    },
+                    {
+                        "path":  "tests/pester/EvidenceChainValidation.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "0defed78b78b103fa200553036b43f464dfc00afe7437d35a4fc8a3a25aa2da2",
+                        "reason":  "Evidence chain validation tests cover baseline and failure exit codes."
+                    },
+                    {
+                        "path":  "tests/pester/EvidenceChainSafety.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "ab10a7f4466b16909dddb11e015ae6a5ec581b8fe0c0bbb6141defb519d83d21",
+                        "reason":  "Evidence chain safety tests guard adapter scripts against dangerous commands."
+                    },
+                    {
+                        "path":  "tests/pester/Issue16EvidenceChain.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "fbd9a61b7c3a24c686fa284b16619a7745bb6f15adeaf293161951e91cb1d9db",
+                        "reason":  "Issue 16 evidence chain tests guard baseline document and no auto-close boundaries."
+                    },
+                    {
+                        "path":  "docs/49-issue16-evidence-chain-acceptance.md",
+                        "category":  "doc",
+                        "required":  true,
+                        "hash":  "467fbc80f331f6f0b4312c8e587e66fd6b386f1f05de3a606e6fa7243ff06c68",
+                        "reason":  "Issue 16 acceptance records accepted-pending-main-validation state."
+                    },
+                    {
+                        "path":  "schemas/evidence-artifact-index.schema.json",
+                        "category":  "schema",
+                        "required":  true,
+                        "hash":  "31048a4208de1d71d497ed604346ba69d42b00ba84308804433a4694181eaa9e",
+                        "reason":  "Evidence artifact index schema constrains artifact identity metadata."
+                    },
+                    {
+                        "path":  "scripts/common/New-KitEvidenceArtifactIndex.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "1ad36fa82fe583038f1df2cf7dbf17ab22d941f1c555f05fb2ff98aa3a4a2012",
+                        "reason":  "Evidence artifact index helper feeds Issue 16 report artifacts."
+                    },
+                    {
+                        "path":  "scripts/common/Test-KitEvidenceRedaction.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "6c11b2412b72a212541fb7efce57a45953b140040d317f1e19d9b0c25c9e812e",
+                        "reason":  "Evidence redaction helper blocks sensitive fields."
+                    },
+                    {
+                        "path":  "tests/fixtures/evidence-chain/sample-artifact-index.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "e7d0d5e9d1173f5858461801a9ee1e3d54aa10535a0bc2a1592193daeb3ec937",
+                        "reason":  "Sample artifact index fixture backs Issue 16 artifact identity tests."
+                    },
+                    {
+                        "path":  "tests/fixtures/evidence-chain/sample-run-linkage.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "0986223c7cb70050858812e90d98472b7169a1f7837595ab25b0c4b28cb39230",
+                        "reason":  "Sample run linkage fixture backs Issue 16 run ID tests."
+                    },
+                    {
+                        "path":  "tests/fixtures/evidence-chain/sample-redacted-report.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "1363bcaa632b74b5ca558fd7199d8ff817da9363213f0b4852baa670afc8b687",
+                        "reason":  "Sample redacted report fixture backs Issue 16 redaction tests."
+                    },
+                    {
+                        "path":  "tests/fixtures/evidence-chain/sample-blocked-sensitive-report.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "96e502b88a0e5f876152e01cbf57ae06e9395fb269fcae2a2465c72865dddcc3",
+                        "reason":  "Blocked sensitive report fixture backs Issue 16 redaction failure tests."
+                    },
+                    {
+                        "path":  "tests/pester/EvidenceChainRunId.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "3d360dc395bd46573f8789be59f870d6dd603ca63ddc6693cb6488870577a9aa",
+                        "reason":  "Evidence chain run ID tests guard linkage behavior."
+                    },
+                    {
+                        "path":  "tests/pester/EvidenceChainArtifactIndex.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "6b379a63e89933937ce765af31f6489b82f4816a946e1e36c9e6bb9e4738ee3b",
+                        "reason":  "Evidence chain artifact index tests guard artifact identity behavior."
+                    },
+                    {
+                        "path":  "tests/pester/EvidenceChainRedaction.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "5d97dd5b7a141f0a980d90ac1e6ed6f492a20921eb906ea7d47c26ed1264a4e8",
+                        "reason":  "Evidence chain redaction tests guard sensitive-data policy."
+                    },
+                    {
+                        "path":  "tests/pester/EvidenceChainProducerNormalization.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "d842dc575fb5551c0fae0fd942db59e89fd50847da4552a047a271975356c078",
+                        "reason":  "Evidence chain producer normalization tests guard report-only producers."
+                    },
+                    {
+                        "path":  "tests/pester/Issue16EvidenceChainAcceptance.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "710afecf73ce7fbd4d395fe2ba7478e6a876d8b10672e03e84074f30152ebace",
+                        "reason":  "Issue 16 acceptance tests guard accepted-pending-main-validation state."
+                    },
+                    {
+                        "path":  "docs/50-issue16-close-preparation.md",
+                        "category":  "doc",
+                        "required":  true,
+                        "hash":  "270fa3924f5597130d4ab6df324f497e6050305ab792d3e223b19660a1ea8705",
+                        "reason":  "Issue 16 close-preparation candidate records manual closure boundaries."
+                    },
+                    {
+                        "path":  "docs/51-issue16-main-validation-evidence.md",
+                        "category":  "doc",
+                        "required":  true,
+                        "hash":  "2a3942cf495201f755f1e7032c54701235b3405c0aefd28e9ba0793de1e0a502",
+                        "reason":  "Issue 16 main validation evidence scaffold remains pending until real main evidence exists."
+                    },
+                    {
+                        "path":  "manifests/evidence-report-inputs.json",
+                        "category":  "manifest",
+                        "required":  true,
+                        "hash":  "9e08c1c87c98b4c249290f72c3b66b8ead2e2dd608cdfcd617f2fd39f59998e4",
+                        "reason":  "Evidence report input index declares report-only producer inputs."
+                    },
+                    {
+                        "path":  "schemas/evidence-report-inputs.schema.json",
+                        "category":  "schema",
+                        "required":  true,
+                        "hash":  "00a5e35900ac3993cd867b0f67ffbaa274a97f3c44b66f6a1c3c511acddcc7e5",
+                        "reason":  "Evidence report input index schema constrains producer report input declarations."
+                    },
+                    {
+                        "path":  "scripts/common/ConvertTo-KitEvidenceProducerItem.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "17ccffdaec1631b8710ce68ecd246f94a9e4620da5050de6d397e615c54dcf73",
+                        "reason":  "Evidence producer adapter converts input reports into normalized evidence items."
+                    },
+                    {
+                        "path":  "scripts/common/Read-KitEvidenceReportInputs.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "034c1390532ca3036980dd7b04b7912ae68ea4023a5b6af9725067a925faef46",
+                        "reason":  "Evidence report input reader validates declared producer input paths."
+                    },
+                    {
+                        "path":  "tests/fixtures/evidence-chain/failure-inputs/bad-paths/project-config.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "9cbd6ea378f05c7e91c40599fb2ef131989d648f53c52fcc43b2140107e48c77",
+                        "reason":  "Bad input path fixture proves producer adapter path policy."
+                    },
+                    {
+                        "path":  "tests/fixtures/evidence-chain/failure-inputs/disallowed-manual/project-config-report.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "28ba780648793079ea1b366db26ff624518abf54d7fcb0b0fc08ed6b5937d7d2",
+                        "reason":  "Disallowed manual report fixture proves producer adapter failure handling."
+                    },
+                    {
+                        "path":  "tests/fixtures/evidence-chain/failure-inputs/disallowed-manual/project-config.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "d763f5f81d099fe37e204fed4710bce659efdc86a0895bd1756060fc9a50053d",
+                        "reason":  "Disallowed manual input index fixture proves producer adapter failure handling."
+                    },
+                    {
+                        "path":  "tests/fixtures/evidence-chain/failure-inputs/disallowed-not-captured/project-config-report.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "9ced5274aecb9f2e1a0c088a46e9f0d11bf9bde323a34bc29af1b55512b98978",
+                        "reason":  "Disallowed not-captured report fixture proves producer adapter failure handling."
+                    },
+                    {
+                        "path":  "tests/fixtures/evidence-chain/failure-inputs/disallowed-not-captured/project-config.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "e09c226b9cf60222e892e0bcbe0e4e6a422ebc4fbf14272d592cffe1463919a2",
+                        "reason":  "Disallowed not-captured input index fixture proves producer adapter failure handling."
+                    },
+                    {
+                        "path":  "tests/fixtures/evidence-chain/failure-inputs/failed-producer/project-config-report.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "d45e6a2f5a86986973b23db61f527d149f817954a037633d7e1b8fd050c80156",
+                        "reason":  "Failed producer report fixture proves producer adapter failure handling."
+                    },
+                    {
+                        "path":  "tests/fixtures/evidence-chain/failure-inputs/failed-producer/project-config.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "419a51442cd39c09c3fa326d6e7fe5921d3b04a98fa7698af5cb5fb7cb73a59c",
+                        "reason":  "Failed producer input index fixture proves producer adapter failure handling."
+                    },
+                    {
+                        "path":  "tests/fixtures/evidence-chain/failure-inputs/missing-required/project-config.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "efda2cc66c3a7eac3f979ee0da7df429c0f679b34d56fc10dfeaa8fb5fe222e7",
+                        "reason":  "Missing required input fixture proves producer adapter failure handling."
+                    },
+                    {
+                        "path":  "tests/fixtures/evidence-chain/failure-inputs/report-type-mismatch/project-config.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "58c911640bbedc6831d2993168d9d979d22dcd08ec48f306c86bb77bb164ed3d",
+                        "reason":  "Report type mismatch fixture proves producer adapter failure handling."
+                    },
+                    {
+                        "path":  "tests/fixtures/evidence-chain/failure-inputs/unknown-producer/project-config.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "a0157c26e98983aceeeda6c8c45d2da68df60b6b8082ea9aff7a09c1b88d2340",
+                        "reason":  "Unknown producer fixture proves input index manifest matching."
+                    },
+                    {
+                        "path":  "tests/fixtures/evidence-chain/sample-report-input-index.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "ee822c37a5dcd904d7b557dba70c9cad5ddfa43080c9d959ac064190636b8e41",
+                        "reason":  "Sample report input index fixture backs PR Fast evidence chain tests."
+                    },
+                    {
+                        "path":  "tests/pester/EvidenceChainClosePrep.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "a40308bca3c0b2459da3c222bac65030bf7eab87ee1ea1a9037ddeadc966048a",
+                        "reason":  "Evidence chain close-prep tests guard Quality Gates and Build Lock wiring."
+                    },
+                    {
+                        "path":  "tests/pester/EvidenceChainInputIndex.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "4f7bfeb89c4a3d39ca30e59d6c9cbb4757eb8751d9dbc91d9b3eba0cb84857a8",
+                        "reason":  "Evidence chain input index tests guard manifest and path policy."
+                    },
+                    {
+                        "path":  "tests/pester/EvidenceChainProducerAdapter.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "f3275208d3d0d747a6b4795c90996a9163b73ed878975474292125df71664016",
+                        "reason":  "Evidence chain producer adapter tests guard failure-path normalization."
+                    },
+                    {
+                        "path":  "tests/pester/Issue16ClosePrep.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "a0a5853971e4b14ef237709762eabd53460d3f6c38925cc29920661e031e188c",
+                        "reason":  "Issue 16 close-prep tests guard candidate-only manual closure boundaries."
+                    },
+                    {
+                        "path":  "tests/pester/Issue16MainValidationEvidence.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "0988f840d3fd3e4f62725a97d2bdc50361053736baa7b64f9ffb22e52963c5de",
+                        "reason":  "Issue 16 main evidence tests guard pending-only scaffold fields."
+                    },
+                    {
+                        "path":  "docs/52-issue17-controlled-execution-intake.md",
+                        "category":  "doc",
+                        "required":  true,
+                        "hash":  "b417e8542bc181c9e790ca69138e5f92ef5848c17599fccb1367b4eb0811f1b3",
+                        "reason":  "Issue 17 intake records the real GitHub Issue and Roadmap source."
+                    },
+                    {
+                        "path":  "docs/53-issue17-controlled-execution-acceptance.md",
+                        "category":  "doc",
+                        "required":  true,
+                        "hash":  "e3eec4b57d74eac37b6e2ab5a7925badebe478142635dd0a71ec8c53bd0ef62c",
+                        "reason":  "Issue 17 acceptance scaffold documents dry-run/report-only coverage and safety boundaries."
+                    },
+                    {
+                        "path":  "manifests/controlled-execution.json",
+                        "category":  "manifest",
+                        "required":  true,
+                        "hash":  "480e5d4af0397dadc7898a522545edc3a6d72c372f959bd74e373e99e3847c23",
+                        "reason":  "Controlled execution manifest is the trusted dry-run execution plan input."
+                    },
+                    {
+                        "path":  "schemas/controlled-execution.schema.json",
+                        "category":  "schema",
+                        "required":  true,
+                        "hash":  "5fb5749f8c0eac49194ff489226ccbe17e067ecbdf77c82f8c1c4d74609046f3",
+                        "reason":  "Controlled execution schema constrains dry-run modes, action metadata, and safety policy."
+                    },
+                    {
+                        "path":  "schemas/controlled-execution-report.schema.json",
+                        "category":  "schema",
+                        "required":  true,
+                        "hash":  "28fc1626a8af446298f4c5f81c5e8ff960de48dcceae48636a32380e9c958691",
+                        "reason":  "Controlled execution report schema constrains WhatIf and trueExecution=false evidence."
+                    },
+                    {
+                        "path":  "scripts/common/New-KitControlledExecutionReport.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "93cc10bee343c5a44d9ad8207c691358b9f2efd28c46de422fb7525e004b23c1",
+                        "reason":  "Controlled execution report builder produces report-only plan evidence."
+                    },
+                    {
+                        "path":  "scripts/common/Test-KitControlledExecutionSafety.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "4581d61a8600e3ae7bb937bcd2798ad2bcced64af89e845f41f74fb6738defd9",
+                        "reason":  "Controlled execution safety helper enforces disabled true execution and mutation policy."
+                    },
+                    {
+                        "path":  "scripts/validate/Test-ControlledExecution.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "ab448771fda8e6d2ac1cefdbbd807108d8e8d823d73664f9f4b1a0b12252b253",
+                        "reason":  "Controlled execution validator writes reports and fails blocked mutation fixtures."
+                    },
+                    {
+                        "path":  "scripts/config/Show-ControlledExecutionPlan.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "85159d29d7f80d2f4e0aee3c47b0828b867712dbc866e2cd86b604c7c6d8ec67",
+                        "reason":  "Controlled execution display entrypoint prints plan-only JSON without invoking actions."
+                    },
+                    {
+                        "path":  "tests/fixtures/controlled-execution/sample-plan.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "e1734b33afb1a718ee7f68b754a18b7a55021048374f9713bbd172cc59ddcec2",
+                        "reason":  "Controlled execution plan fixture backs report-only baseline tests."
+                    },
+                    {
+                        "path":  "tests/fixtures/controlled-execution/sample-blocked-mutation.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "b9f054c4c20b413e94c010d2cb7445708383ce846778f6df188789b94f78efa4",
+                        "reason":  "Controlled execution blocked mutation fixture proves validator failure behavior."
+                    },
+                    {
+                        "path":  "tests/fixtures/controlled-execution/sample-report.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "e32fb1ad966c10360a088bd3c60376e98c1ff60bee8cce582dbe42b247a60e0f",
+                        "reason":  "Controlled execution report fixture documents expected trueExecution=false output."
+                    },
+                    {
+                        "path":  "tests/fixtures/controlled-execution/failure/true-execution-enabled.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "36aec5304d780f5ee5cf47bc839d9165883b93f37bf702c72ab9c2a082b25910",
+                        "reason":  "Controlled execution failure fixture proves true execution remains disabled."
+                    },
+                    {
+                        "path":  "tests/fixtures/controlled-execution/failure/network-download-action.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "1215afd067f38c79e10635c4f2577976d5f0b58e7adadd901a20d5064902f9c3",
+                        "reason":  "Controlled execution failure fixture proves network actions are blocked."
+                    },
+                    {
+                        "path":  "tests/fixtures/controlled-execution/failure/registry-mutation-action.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "2cfa174e93318a9c4eb89e1c1c1a600bbb7822208415b2227ae9ad196fdef39e",
+                        "reason":  "Controlled execution failure fixture proves registry mutation is blocked."
+                    },
+                    {
+                        "path":  "tests/fixtures/controlled-execution/failure/disk-mutation-action.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "56768f00ec8f5c2a6178844d7440fd01aa2a573dddf585d1e070af2c2c15db64",
+                        "reason":  "Controlled execution failure fixture proves disk mutation is blocked."
+                    },
+                    {
+                        "path":  "tests/pester/Issue17ControlledExecution.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "71b67a91cb19cb13b8186e2e2968d9e72d1620284e298949d8bf9cba880252b2",
+                        "reason":  "Issue 17 intake tests guard source records and no auto-close boundaries."
+                    },
+                    {
+                        "path":  "tests/pester/Issue17ControlledExecutionAcceptance.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "d25b5bc0344ed0a1fa2aa21ae1569f66137e56cbc97f53df117f2169b5325d5e",
+                        "reason":  "Issue 17 acceptance tests guard in-acceptance status and safety boundaries."
+                    },
+                    {
+                        "path":  "tests/pester/ControlledExecutionSchema.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "a4b1e4385de879e381606ab539adb51de662a2b6705a18be87d6ba3336c6a092",
+                        "reason":  "Controlled execution schema tests guard closed schema and disabled true execution."
+                    },
+                    {
+                        "path":  "tests/pester/ControlledExecutionReport.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "2a4a7e854ffd69a5309a71a8be0de5e09d7ed24fd1d06ffead0e21c279c91294",
+                        "reason":  "Controlled execution report tests guard planned-only non-execution output."
+                    },
+                    {
+                        "path":  "tests/pester/ControlledExecutionValidation.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "9097cd306a8a4f8373f8c86220dd9ef40dbd551dccd51d2f19a48a8bbe8a4ab5",
+                        "reason":  "Controlled execution validation tests guard report writing and failure exit codes."
+                    },
+                    {
+                        "path":  "tests/pester/ControlledExecutionSafety.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "a4130895bf776e2c4bceea97d12905d2011aa7b3f23b6a1def881d5bb8da4d56",
+                        "reason":  "Controlled execution safety tests guard blocked mutation and dangerous command patterns."
+                    }
+                ],
+    "watchGlobs":  [
+                       "manifests/*.json",
+                       "schemas/*.json",
+                       "scripts/common/*.ps1",
+                       "scripts/validate/*.ps1",
+                       "tests/pester/*Registry*.Tests.ps1",
+                       "tests/pester/*BuildLock*.Tests.ps1",
+                       "docs/28-issue11-capability-registry.md",
+                       "docs/32-issue12-build-lock.md",
+                       ".github/workflows/ci.yml",
+                       "tests/pester/*EnsureState*.Tests.ps1",
+                       "docs/*issue13*.md",
+                       "tests/pester/Issue14*.Tests.ps1",
+                       "docs/*issue14*.md",
+                       "PSScriptAnalyzerSettings.psd1",
+                       "manifests/quality-gates.json",
+                       "schemas/quality-gates.schema.json",
+                       "scripts/common/*QualityGate*.ps1",
+                       "scripts/validate/*QualityGate*.ps1",
+                       "tests/pester/*QualityGate*.Tests.ps1",
+                       "profiles/*.json",
+                       "hardware/*.json",
+                       "docs/*issue15*.md",
+                       "scripts/common/*EffectiveConfiguration*.ps1",
+                       "scripts/config/*EffectiveConfiguration*.ps1",
+                       "scripts/validate/*EffectiveConfiguration*.ps1",
+                       "tests/pester/*EffectiveConfiguration*.Tests.ps1",
+                       "tests/pester/Issue15*.Tests.ps1",
+                       "manifests/evidence-chain.json",
+                       "schemas/evidence-chain*.json",
+                       "docs/*issue16*.md",
+                       "scripts/common/*EvidenceChain*.ps1",
+                       "scripts/config/*EvidenceChain*.ps1",
+                       "scripts/validate/*EvidenceChain*.ps1",
+                       "tests/fixtures/evidence-chain/*.json",
+                       "tests/fixtures/evidence-chain/sample-report-inputs/*.json",
+                       "tests/pester/*EvidenceChain*.Tests.ps1",
+                       "schemas/evidence-artifact-index.schema.json",
+                       "scripts/common/*EvidenceArtifact*.ps1",
+                       "scripts/common/*EvidenceRedaction*.ps1",
+                       "tests/pester/Issue16*.Tests.ps1",
+                       "docs/*issue17*.md",
+                       "manifests/controlled-execution.json",
+                       "schemas/controlled-execution*.json",
+                       "scripts/common/*ControlledExecution*.ps1",
+                       "scripts/config/*ControlledExecution*.ps1",
+                       "scripts/validate/*ControlledExecution*.ps1",
+                       "tests/fixtures/controlled-execution/*.json",
+                       "tests/fixtures/controlled-execution/failure/*.json",
+                       "tests/pester/*ControlledExecution*.Tests.ps1",
+                       "tests/pester/Issue17*.Tests.ps1"
+                   ],
+    "policy":  {
+                   "missingRequired":  "fail",
+                   "hashMismatch":  "fail",
+                   "untrackedWatchedFile":  "manual",
+                   "unsupportedAlgorithm":  "fail"
+               }
 }

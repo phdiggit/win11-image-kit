@@ -1,0 +1,47 @@
+{
+  "reportType": "controlled-execution",
+  "schemaVersion": 1,
+  "generatedAt": "2026-06-26T00:00:00",
+  "executionSetId": "issue17-dry-run-baseline",
+  "mode": "dry-run",
+  "whatIf": true,
+  "trueExecution": false,
+  "status": "passed",
+  "summary": {
+    "actionCount": 1,
+    "plannedActionCount": 1,
+    "blockedActionCount": 0,
+    "failedCount": 0,
+    "requiresAdminCount": 0,
+    "requiresWinPECount": 0,
+    "requiresRebootCount": 0,
+    "requiresNetworkCount": 0,
+    "mutationActionCount": 0
+  },
+  "actions": [
+    {
+      "id": "preflight-project-config",
+      "stage": "preflight",
+      "mode": "report-only",
+      "entrypoint": "scripts/validate/Test-ProjectConfig.ps1",
+      "status": "planned",
+      "reason": "planned only; entrypoint is not invoked",
+      "riskLevel": "low",
+      "requiresAdmin": false,
+      "requiresWinPE": false,
+      "requiresNetwork": false,
+      "requiresReboot": false,
+      "mutationKind": "none",
+      "evidenceProducer": "project-config",
+      "executed": false
+    }
+  ],
+  "safety": {
+    "diskMutation": false,
+    "registryMutation": false,
+    "networkDownload": false,
+    "serviceMutation": false,
+    "profileMutation": false,
+    "hiveMutation": false
+  }
+}
