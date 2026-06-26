@@ -198,7 +198,7 @@
       "path": "scripts/validate/Test-ProjectConfig.ps1",
       "category": "script",
       "required": true,
-      "hash": "1d2f5b1dd293a689a6d4b02a91d6b9fecc515136eb6e0e7e8bdb390543a6427f",
+      "hash": "176873983696209279692f82a16811812952c5203f92e705080d1e8c03462743",
       "reason": "Project config validation includes the evidence report input schema pair."
     },
     {
@@ -296,7 +296,7 @@
       "path": ".github/workflows/ci.yml",
       "category": "workflow",
       "required": true,
-      "hash": "65a7355c8a68074caf8f28c7827e94162043fe9cc49d2c888f34f68f3b8caee4",
+      "hash": "dba6c69f7305d09e606914439782918973cc281879cc98a3049cd594c6f1931a",
       "reason": "Windows CI must run Issue 16 producer adapter and close-prep guardrails in PR Fast CI."
     },
     {
@@ -394,7 +394,7 @@
       "path": "manifests/quality-gates.json",
       "category": "manifest",
       "required": true,
-      "hash": "40c3df67a87e5878f18f97ff9532549127b4486329142e730372c04807cc6d57",
+      "hash": "e417ec766a9f37f7b0d487a248bb6ad8326c8cc723075f7b02ce90273e5594e6",
       "reason": "Quality Gates include Issue 16 acceptance, close-prep, and main-evidence scaffold gates."
     },
     {
@@ -709,7 +709,7 @@
       "path": "docs/48-issue16-evidence-chain-report.md",
       "category": "doc",
       "required": true,
-      "hash": "f9c91aecc32ceed1207f12f319fa3cd9bef7a43ebd775c8e5364bf9a7db91459",
+      "hash": "84809b5e6e5cdf928c0f27f1f0966acf5f382e8d022672011b70af4dd51db993",
       "reason": "Issue 16 evidence chain design records producer adapter and close-prep scaffold scope."
     },
     {
@@ -730,28 +730,28 @@
       "path": "schemas/evidence-chain-report.schema.json",
       "category": "schema",
       "required": true,
-      "hash": "80012f894b58785d15f92e7df391806c849b8c72176926a1ed010ece8519653c",
+      "hash": "7564c6c22367236e65786e60f5d50528b0300f529c5a1b8ec8a0325a7509327c",
       "reason": "Evidence chain report schema constrains input reports and normalization counters."
     },
     {
       "path": "scripts/common/New-KitEvidenceChainReport.ps1",
       "category": "script",
       "required": true,
-      "hash": "be4f8893609d6d1503da88e0ceb180e873cf4df5b7289c2a3b30aa3296120141",
+      "hash": "981a6b3789595bd50d3cb278e1ca57249942a5e5f6cf35c86e1a24db86acb105",
       "reason": "Evidence chain report builder normalizes report input index producers."
     },
     {
       "path": "scripts/validate/Test-EvidenceChain.ps1",
       "category": "script",
       "required": true,
-      "hash": "e6eae3583b73b209be9cddad45218340604ed5fc6adb7484625616ce886b2ea3",
+      "hash": "e9451b95576109bbe6d5fa64fa5f01c48d926ef1d587b22994c8c0cb71b2aed7",
       "reason": "Evidence chain validator enforces report input and normalization failure counters."
     },
     {
       "path": "scripts/config/Show-EvidenceChain.ps1",
       "category": "script",
       "required": true,
-      "hash": "71afce1cdf6a05ae70eec5b0be332a6f2b222755d43e8f05407c938e4693e5ae",
+      "hash": "53cd2b5ea70a489dc81c57b6cf9013f68d0bd41352cc26810a78ba01075e22b8",
       "reason": "Evidence chain display shows input set and normalization summary."
     },
     {
@@ -800,28 +800,28 @@
       "path": "tests/pester/EvidenceChainSchema.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "c4ef6846e4bd383d3359ad41006d14d5355fe4104b6ac09d626bd16f4331589e",
+      "hash": "f44c3de4bed8cbf7287a2611b5ea2a216ba51f99ca7a1afe71bae491e9171667",
       "reason": "Evidence chain schema tests include report input index coverage."
     },
     {
       "path": "tests/pester/EvidenceChainReport.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "4c68e10ace20f4fd1c9f3081deaea00321c6f16a0d75f3ed69b932aca1e9850d",
+      "hash": "a286b49dcebcbe1319205909e71794efe799637e17a9aeb0b46bdebbcc66159c",
       "reason": "Evidence chain report tests cover input reports and normalization summary."
     },
     {
       "path": "tests/pester/EvidenceChainValidation.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "a987dd05c58cd5bf9edddd1c5b8def6f13ed31f5022635fda5c9837ba2d1dad5",
+      "hash": "0defed78b78b103fa200553036b43f464dfc00afe7437d35a4fc8a3a25aa2da2",
       "reason": "Evidence chain validation tests cover baseline and failure exit codes."
     },
     {
       "path": "tests/pester/EvidenceChainSafety.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "ef7df59b8b221c8a7c8899ddf932c18f0464a4ef13f3efcf1498dc31f6718f18",
+      "hash": "ab10a7f4466b16909dddb11e015ae6a5ec581b8fe0c0bbb6141defb519d83d21",
       "reason": "Evidence chain safety tests guard adapter scripts against dangerous commands."
     },
     {
@@ -835,7 +835,7 @@
       "path": "docs/49-issue16-evidence-chain-acceptance.md",
       "category": "doc",
       "required": true,
-      "hash": "cf48e4a72abbe0dc0e92edb17dcba775bcdf841c512506830d8d00fe09264dc8",
+      "hash": "21cf0d6bd8a1b2cc9428b8f60afc266d1dfaaee3bbc81057aa6fe7cfeee18e89",
       "reason": "Issue 16 acceptance records accepted-pending-main-validation state."
     },
     {
@@ -856,7 +856,7 @@
       "path": "scripts/common/Test-KitEvidenceRedaction.ps1",
       "category": "script",
       "required": true,
-      "hash": "fb4abcb7344966616fefc6aa75786833f324c10bcf4439a40413fed43b81c795",
+      "hash": "43dae11cd26b43a4055d7f3772366af5dba61e9cd16d40ebb12b4639c78d9ca0",
       "reason": "Evidence redaction helper blocks sensitive fields."
     },
     {
@@ -905,175 +905,175 @@
       "path": "tests/pester/EvidenceChainRedaction.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "9508551bf0a2a97a38cd1adb9fd77531daedf5edb01161faddaa8ef3bfdad8c8",
+      "hash": "723fe622271f64770efb0a1547473d46259f1ae07cfbe1ff54c595605f0b58a7",
       "reason": "Evidence chain redaction tests guard sensitive-data policy."
     },
     {
       "path": "tests/pester/EvidenceChainProducerNormalization.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "ce1956ca7bbbf669866d44c4e0f583ef54da61be536066df39c5b0482d4c55fa",
+      "hash": "d842dc575fb5551c0fae0fd942db59e89fd50847da4552a047a271975356c078",
       "reason": "Evidence chain producer normalization tests guard report-only producers."
     },
     {
       "path": "tests/pester/Issue16EvidenceChainAcceptance.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "93bdeb5c182e0ea8914476f97d4f863e0f0b29b63a7225d43d3493d1032b52fc",
+      "hash": "370e125f0d5905bb51608bc0ad2df2507916b7119bd160d2f639234702142d97",
       "reason": "Issue 16 acceptance tests guard accepted-pending-main-validation state."
     },
     {
       "path": "docs/50-issue16-close-preparation.md",
       "category": "doc",
       "required": true,
-      "hash": "5eba073cddc99710592fef3be780b5af5032e8df4f4137e6bfb0f8536d69e4af",
+      "hash": "e84c8bf2ad0cf915b15832616912e2f8ac2e8894215e39ad1140f2ef66f7984e",
       "reason": "Issue 16 close-preparation candidate records manual closure boundaries."
     },
     {
       "path": "docs/51-issue16-main-validation-evidence.md",
       "category": "doc",
       "required": true,
-      "hash": "fee9a0cfa17673fb3f01ef0e6b8cd5be0fe855b158199948ddda5007fd32a6c8",
+      "hash": "fdc4c5ad33bcc74b29b78323bffc6a613f6fb40853a685b9d5addc6672408750",
       "reason": "Issue 16 main validation evidence scaffold remains pending until real main evidence exists."
     },
     {
       "path": "manifests/evidence-report-inputs.json",
       "category": "manifest",
       "required": true,
-      "hash": "eb0a541088aff3c33bc4566265f62a73f76b4c5195586a0adfb466870c6d548e",
+      "hash": "9e08c1c87c98b4c249290f72c3b66b8ead2e2dd608cdfcd617f2fd39f59998e4",
       "reason": "Evidence report input index declares report-only producer inputs."
     },
     {
       "path": "schemas/evidence-report-inputs.schema.json",
       "category": "schema",
       "required": true,
-      "hash": "eac9f2435522a3ba06ecb4dbff3a0bbcc91dc1baf76fec92bb574fe354f2d447",
+      "hash": "00a5e35900ac3993cd867b0f67ffbaa274a97f3c44b66f6a1c3c511acddcc7e5",
       "reason": "Evidence report input index schema constrains producer report input declarations."
     },
     {
       "path": "scripts/common/ConvertTo-KitEvidenceProducerItem.ps1",
       "category": "script",
       "required": true,
-      "hash": "9c829aed12ccde73e8a2214c765406e67a66bce689bbcc010c60e4b25b3c5648",
+      "hash": "17ccffdaec1631b8710ce68ecd246f94a9e4620da5050de6d397e615c54dcf73",
       "reason": "Evidence producer adapter converts input reports into normalized evidence items."
     },
     {
       "path": "scripts/common/Read-KitEvidenceReportInputs.ps1",
       "category": "script",
       "required": true,
-      "hash": "c739f71ad5bb245847bd3ca597ca78a8d3703118b33c980f3a464e685e97742b",
+      "hash": "034c1390532ca3036980dd7b04b7912ae68ea4023a5b6af9725067a925faef46",
       "reason": "Evidence report input reader validates declared producer input paths."
     },
     {
       "path": "tests/fixtures/evidence-chain/failure-inputs/bad-paths/project-config.json",
       "category": "test",
       "required": true,
-      "hash": "4bdc536015bc8dce7409fb5c21fc2d9113742b3d3abde6b34d08b5bb793e94ea",
+      "hash": "9cbd6ea378f05c7e91c40599fb2ef131989d648f53c52fcc43b2140107e48c77",
       "reason": "Bad input path fixture proves producer adapter path policy."
     },
     {
       "path": "tests/fixtures/evidence-chain/failure-inputs/disallowed-manual/project-config-report.json",
       "category": "test",
       "required": true,
-      "hash": "fb1d7914d17833a52ea5676a2dbd2c9069a44a12cfb651c5390b411e2aff180e",
+      "hash": "28ba780648793079ea1b366db26ff624518abf54d7fcb0b0fc08ed6b5937d7d2",
       "reason": "Disallowed manual report fixture proves producer adapter failure handling."
     },
     {
       "path": "tests/fixtures/evidence-chain/failure-inputs/disallowed-manual/project-config.json",
       "category": "test",
       "required": true,
-      "hash": "325c68eb8d69bbbd3514a73c6f68ddaec97882616de16573fc09ee1d6e453e93",
+      "hash": "d763f5f81d099fe37e204fed4710bce659efdc86a0895bd1756060fc9a50053d",
       "reason": "Disallowed manual input index fixture proves producer adapter failure handling."
     },
     {
       "path": "tests/fixtures/evidence-chain/failure-inputs/disallowed-not-captured/project-config-report.json",
       "category": "test",
       "required": true,
-      "hash": "214d3b72b0364280a869438158dd145d8fd3356a4a4a89f727bd23f05fec7651",
+      "hash": "9ced5274aecb9f2e1a0c088a46e9f0d11bf9bde323a34bc29af1b55512b98978",
       "reason": "Disallowed not-captured report fixture proves producer adapter failure handling."
     },
     {
       "path": "tests/fixtures/evidence-chain/failure-inputs/disallowed-not-captured/project-config.json",
       "category": "test",
       "required": true,
-      "hash": "9b0bdf88777638f7296b813a661921a2bfff45966d911acca3060b5cea978730",
+      "hash": "e09c226b9cf60222e892e0bcbe0e4e6a422ebc4fbf14272d592cffe1463919a2",
       "reason": "Disallowed not-captured input index fixture proves producer adapter failure handling."
     },
     {
       "path": "tests/fixtures/evidence-chain/failure-inputs/failed-producer/project-config-report.json",
       "category": "test",
       "required": true,
-      "hash": "b1adf9afad85b123c9d9686f99812557cd7a5a70c5e7b3cd5a6fac6a0e5ccaa0",
+      "hash": "d45e6a2f5a86986973b23db61f527d149f817954a037633d7e1b8fd050c80156",
       "reason": "Failed producer report fixture proves producer adapter failure handling."
     },
     {
       "path": "tests/fixtures/evidence-chain/failure-inputs/failed-producer/project-config.json",
       "category": "test",
       "required": true,
-      "hash": "278be4a057186b949e369d8591dba048cfe629bf84ad8b2745200a04ae750484",
+      "hash": "419a51442cd39c09c3fa326d6e7fe5921d3b04a98fa7698af5cb5fb7cb73a59c",
       "reason": "Failed producer input index fixture proves producer adapter failure handling."
     },
     {
       "path": "tests/fixtures/evidence-chain/failure-inputs/missing-required/project-config.json",
       "category": "test",
       "required": true,
-      "hash": "cb101c9867b3eeebf7caca876c0bd271e1c8e68bc41d77503e6f06df3ae7894c",
+      "hash": "efda2cc66c3a7eac3f979ee0da7df429c0f679b34d56fc10dfeaa8fb5fe222e7",
       "reason": "Missing required input fixture proves producer adapter failure handling."
     },
     {
       "path": "tests/fixtures/evidence-chain/failure-inputs/report-type-mismatch/project-config.json",
       "category": "test",
       "required": true,
-      "hash": "bb1c531e3fd88af4ba5fab9fd69ab2870bfd9314cd30f116c3376eabac1f6fa0",
+      "hash": "58c911640bbedc6831d2993168d9d979d22dcd08ec48f306c86bb77bb164ed3d",
       "reason": "Report type mismatch fixture proves producer adapter failure handling."
     },
     {
       "path": "tests/fixtures/evidence-chain/failure-inputs/unknown-producer/project-config.json",
       "category": "test",
       "required": true,
-      "hash": "a735005c4c6f63120b323209ad67e167c5faee4c80dea8c453ecf89705406d47",
+      "hash": "a0157c26e98983aceeeda6c8c45d2da68df60b6b8082ea9aff7a09c1b88d2340",
       "reason": "Unknown producer fixture proves input index manifest matching."
     },
     {
       "path": "tests/fixtures/evidence-chain/sample-report-input-index.json",
       "category": "test",
       "required": true,
-      "hash": "213ed2282d1844c77ed2cf0ad1ee058293b1a308ce641222f945f7f7f37176d5",
+      "hash": "ee822c37a5dcd904d7b557dba70c9cad5ddfa43080c9d959ac064190636b8e41",
       "reason": "Sample report input index fixture backs PR Fast evidence chain tests."
     },
     {
       "path": "tests/pester/EvidenceChainClosePrep.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "8d51db46486f8ea9193b21cc51d58833f913e5cfa97a90a617d5b7ec884fdbc5",
+      "hash": "5e21fac314d86b0547cb456f764820ef1a74e13891e6c03b86d168c62848bb20",
       "reason": "Evidence chain close-prep tests guard Quality Gates and Build Lock wiring."
     },
     {
       "path": "tests/pester/EvidenceChainInputIndex.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "100a2aaea7046b5faa47eee671b613a19793401b24bfd2c06050be1c20d03a4f",
+      "hash": "4f7bfeb89c4a3d39ca30e59d6c9cbb4757eb8751d9dbc91d9b3eba0cb84857a8",
       "reason": "Evidence chain input index tests guard manifest and path policy."
     },
     {
       "path": "tests/pester/EvidenceChainProducerAdapter.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "f79a67ad622a226af1f65cefff189e0bcaa56f5a1ad4f00b7632180641c0f7b3",
+      "hash": "f3275208d3d0d747a6b4795c90996a9163b73ed878975474292125df71664016",
       "reason": "Evidence chain producer adapter tests guard failure-path normalization."
     },
     {
       "path": "tests/pester/Issue16ClosePrep.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "edbfb062b3d13365ba02ed20b681c2bc2680b288fb1ed940ffe2e20f2105b6d8",
+      "hash": "aa566dd80fb3531cf4f75d86ca9e6fef2c481ba88937d51b8d59f7181e0119ee",
       "reason": "Issue 16 close-prep tests guard candidate-only manual closure boundaries."
     },
     {
       "path": "tests/pester/Issue16MainValidationEvidence.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "21b67e82cb828064d896bf13e249a80a5a709394087be38d75fdce51046038ff",
+      "hash": "29d411fae791052ce0a9b58e5ce287404d44ff167362f0f2a1fab3d3421c5c6d",
       "reason": "Issue 16 main evidence tests guard pending-only scaffold fields."
     }
   ],

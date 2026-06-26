@@ -88,7 +88,7 @@ The manifest declares forbidden sensitive field names and artifact path patterns
 
 ## Phase 3 Producer Adapter And Close-Prep Scaffold
 
-The third Issue #16 stage promotes [Issue #16 Evidence Chain Acceptance](49-issue16-evidence-chain-acceptance.md) to `accepted-pending-main-validation` and adds:
+The third Issue #16 stage originally promoted [Issue #16 Evidence Chain Acceptance](49-issue16-evidence-chain-acceptance.md) to `accepted-pending-main-validation` and added:
 
 - [Issue #16 Close Preparation](50-issue16-close-preparation.md) as a `ready-for-manual-closure-candidate` note.
 - [Issue #16 Main Validation Evidence](51-issue16-main-validation-evidence.md) as a `pending-main-validation` scaffold.
@@ -96,7 +96,17 @@ The third Issue #16 stage promotes [Issue #16 Evidence Chain Acceptance](49-issu
 - `schemas/evidence-report-inputs.schema.json` as the closed input index contract.
 - producer adapter helpers for reading declared report inputs and normalizing them into evidence items.
 
-This stage still does not claim real lifecycle evidence. Real build, capture, deploy, and admin/VM smoke producers remain manual or not-captured, and PR Fast CI remains static/report-only evidence rather than main/workflow evidence.
+Docs/49 remains `accepted-pending-main-validation`, docs/50 remains `ready-for-manual-closure-candidate`, and docs/51 remains `pending-main-validation` until a real successful main/workflow Full Validate run exists. This stage still does not claim real lifecycle evidence. Real build, capture, deploy, and admin/VM smoke producers remain manual or not-captured, and PR Fast CI remains static/report-only evidence rather than main/workflow evidence.
+
+## Main Validation Blocker
+
+Issue #16 is not ready for manual closure yet. The acceptance, close-prep, and main validation evidence pages are:
+
+- [Issue #16 Evidence Chain Acceptance](49-issue16-evidence-chain-acceptance.md)
+- [Issue #16 Close Preparation](50-issue16-close-preparation.md)
+- [Issue #16 Main Validation Evidence](51-issue16-main-validation-evidence.md)
+
+The post-PR #81 `main` push run failed in the PowerShell 7 evidence chain validation step and cannot be used as ready evidence. The report-only evidence chain, producer adapters, report input index, Quality Gates notes, and Build Lock coverage remain reviewable, but manual closure must wait for a later successful `main` push or `workflow_dispatch` Full Validate run. Real build, capture, deploy, WIM SHA256, DISM image info, and admin/VM smoke remain not-run, not-captured, or not-provided unless maintainers explicitly perform them later. Local private overrides and machine-only artifacts remain excluded from Git and Build Lock required entries.
 
 ### Report Input Index
 

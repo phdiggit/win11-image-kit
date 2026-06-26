@@ -14,12 +14,15 @@ function Get-KitEvidenceRedactionObjectProperties {
         return @()
     }
 
-    if ($InputObject -is [System.Collections.IEnumerable]) {
-        $results = @()
-        foreach ($item in $InputObject) {
-            $results += @(Get-KitEvidenceRedactionObjectProperties -InputObject $item)
+    if ($InputObject -is [System.Collections.IDictionary]) {
+        $properties = @()
+        foreach ($key in $InputObject.Keys) {
+            $properties += [pscustomobject][ordered]@{
+                Name = [string]$key
+                Value = $InputObject[$key]
+            }
         }
-        return @($results)
+        return @($properties)
     }
 
     if ($null -ne $InputObject.PSObject -and $null -ne $InputObject.PSObject.Properties) {
@@ -62,16 +65,16 @@ function Test-KitEvidenceRedaction {
             return
         }
 
-        if ($Node -is [System.Collections.IEnumerable]) {
-            $index = 0
-            foreach ($item in $Node) {
-                Visit-Node -Node $item -Path ("{0}[{1}]" -f $Path, $index)
-                $index++
-            }
-            return
+        $objectProperties = @()
+        if ($Node -is [System.Collections.IDictionary]) {
+            $objectProperties = @(Get-KitEvidenceRedactionObjectProperties -InputObject $Node)
+        } elseif ($Node.PSObject.TypeNames -contains "System.Management.Automation.PSCustomObject") {
+            $objectProperties = @(Get-KitEvidenceRedactionObjectProperties -InputObject $Node)
+        } elseif ($Node -isnot [System.Collections.IEnumerable]) {
+            $objectProperties = @(Get-KitEvidenceRedactionObjectProperties -InputObject $Node)
         }
 
-        foreach ($property in @(Get-KitEvidenceRedactionObjectProperties -InputObject $Node)) {
+        foreach ($property in $objectProperties) {
             $propertyPath = "{0}.{1}" -f $Path, $property.Name
             $isForbidden = @($ForbiddenFieldNames | Where-Object { $_.ToLowerInvariant() -eq $property.Name.ToLowerInvariant() }).Count -gt 0
             if ($isForbidden) {
@@ -83,6 +86,19 @@ function Test-KitEvidenceRedaction {
             }
 
             Visit-Node -Node $property.Value -Path $propertyPath
+        }
+
+        if ($objectProperties.Count -gt 0) {
+            return
+        }
+
+        if ($Node -is [System.Collections.IEnumerable]) {
+            $index = 0
+            foreach ($item in $Node) {
+                Visit-Node -Node $item -Path ("{0}[{1}]" -f $Path, $index)
+                $index++
+            }
+            return
         }
     }
 
