@@ -10,18 +10,33 @@ Describe "Issue 14 quality gate acceptance" {
         foreach ($term in @(
             'Status: `in-acceptance`',
             "## Acceptance Matrix",
+            "## Acceptance Hardening Status",
             "## Evidence Chain",
             "## Runner / Report Contract",
             "## CI Boundary",
             "## PSScriptAnalyzer Boundary",
             "## Build Lock Boundary",
+            "## Close Preparation Boundary",
+            "## Main Evidence Boundary",
             "## Non-goals"
+        )) {
+            Assert-KitMatch $doc ([regex]::Escape($term))
+        }
+
+        foreach ($term in @(
+            "42-issue14-close-preparation.md",
+            "43-issue14-main-validation-evidence.md",
+            "Pull request-only Fast CI is not a substitute",
+            "report-only",
+            "does not execute true build"
         )) {
             Assert-KitMatch $doc ([regex]::Escape($term))
         }
 
         Assert-KitNotMatch $doc "(?i)\b(close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved)\s+#14\b"
         Assert-KitNotMatch $doc "main validation evidence is complete"
+        Assert-KitNotMatch $doc "accepted-ready-for-manual-closure"
+        Assert-KitNotMatch $doc '(?m)^Status: `ready-for-manual-closure`'
     }
 
     It "wires runner and acceptance tests into CI" {
@@ -32,7 +47,9 @@ Describe "Issue 14 quality gate acceptance" {
             "tests/pester/QualityGateSchema.Tests.ps1",
             "tests/pester/QualityGateReport.Tests.ps1",
             "tests/pester/QualityGateValidation.Tests.ps1",
-            "tests/pester/Issue14QualityGateAcceptance.Tests.ps1"
+            "tests/pester/Issue14QualityGateAcceptance.Tests.ps1",
+            "tests/pester/Issue14ClosePrep.Tests.ps1",
+            "tests/pester/Issue14MainValidationEvidence.Tests.ps1"
         )) {
             Assert-KitMatch $workflow ([regex]::Escape($path))
         }
@@ -52,10 +69,14 @@ Describe "Issue 14 quality gate acceptance" {
             "scripts/common/New-KitQualityGateReport.ps1",
             "scripts/validate/Test-QualityGates.ps1",
             "docs/41-issue14-quality-gates-acceptance.md",
+            "docs/42-issue14-close-preparation.md",
+            "docs/43-issue14-main-validation-evidence.md",
             "tests/pester/QualityGateSchema.Tests.ps1",
             "tests/pester/QualityGateReport.Tests.ps1",
             "tests/pester/QualityGateValidation.Tests.ps1",
-            "tests/pester/Issue14QualityGateAcceptance.Tests.ps1"
+            "tests/pester/Issue14QualityGateAcceptance.Tests.ps1",
+            "tests/pester/Issue14ClosePrep.Tests.ps1",
+            "tests/pester/Issue14MainValidationEvidence.Tests.ps1"
         )) {
             Assert-KitEqual ($paths -contains $path) $true
         }
@@ -80,7 +101,7 @@ Describe "Issue 14 quality gate acceptance" {
         foreach ($pattern in @(
             "(?im)^\s*Start-Process\b",
             "(?im)^\s*Invoke-Expression\b",
-            "(?im)^\s*&\s*(winget|choco|msiexec|dism|sysprep)\b",
+            '(?im)^\s*&\s*(winget|choco|msiexec|dism|sysprep)\b',
             "(?im)^\s*(Set-Service|Start-Service|Stop-Service)\b",
             "(?im)^\s*reg\s+(load|unload|add|delete)\b"
         )) {

@@ -111,6 +111,16 @@ The runner is not a build system and not a real execution engine. It does not ru
 
 Issue #14 acceptance tracking starts in [Quality Gates Acceptance](41-issue14-quality-gates-acceptance.md). That document is intentionally `in-acceptance`; it is not close-preparation or main-validation evidence.
 
+## Acceptance / Close Prep / Main Evidence
+
+Issue #14 close preparation is split across three documents:
+
+- [Acceptance](41-issue14-quality-gates-acceptance.md) remains `in-acceptance` until main/workflow validation evidence exists.
+- [Close Preparation](42-issue14-close-preparation.md) is a `ready-for-manual-closure-candidate` document only.
+- [Main Validation Evidence](43-issue14-main-validation-evidence.md) remains `pending-main-validation` until a later evidence backfill task records verified `main` push or `workflow_dispatch` Full Validate evidence.
+
+PR Fast CI is useful review evidence, but it is not a substitute for main/workflow evidence. Full Validate being skipped on pull requests remains expected.
+
 ## Safety Boundaries
 
 Issue #14 is a quality-gates and validation-orchestration issue. It is not a true execution issue.
@@ -133,4 +143,7 @@ PR Fast CI is not main/workflow evidence. Main/workflow evidence must come from 
 
 - [Build Lock](32-issue12-build-lock.md)
 - [Issue #13 Ensure-State](36-issue13-ensure-state.md)
+- [Issue #14 Quality Gates Acceptance](41-issue14-quality-gates-acceptance.md)
+- [Issue #14 Close Preparation](42-issue14-close-preparation.md)
+- [Issue #14 Main Validation Evidence](43-issue14-main-validation-evidence.md)
 - [Codex Workflow](codex-workflow.md)
