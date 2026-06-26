@@ -1,12 +1,12 @@
 # Issue #13 Close Preparation
 
-Status: `ready-for-manual-closure-candidate`
+Status: `ready-for-manual-closure`
 
 ## Final Scope
 
 Issue #13 establishes a plan/report-only Ensure-State convergence layer for software and services. The shipped scope is manifest/schema validation, fixture/current-state resolution, convergence plan generation, result mapping, JSON report generation, explicit validate entrypoint, capability registry wiring, Build Lock coverage, PR Fast CI guardrails, and documentation.
 
-This close-preparation note is a candidate for maintainer manual issue handling. It does not claim main/workflow validation success and does not claim real VM/admin smoke validation while docs/39 remains pending.
+This close-preparation note is ready for maintainer manual issue handling. Main/workflow validation evidence is recorded in docs/39. It does not claim real VM/admin smoke validation.
 
 ## Evidence Chain
 
@@ -27,7 +27,7 @@ This close-preparation note is a candidate for maintainer manual issue handling.
 
 - PR Fast CI validates schema, resolver, plan, report, validate entrypoint, acceptance guardrails, close-preparation guardrails, and main-evidence guardrails.
 - PR Fast CI must not run real install/uninstall/upgrade, service mutation, network access, signing, registry/profile/hive mutation, or image build.
-- Main/workflow evidence is recorded in docs/39; without real evidence, this document remains only a candidate.
+- Main/workflow evidence is recorded in docs/39; PR Fast CI is not used as a substitute.
 - Real VM/admin smoke is optional manual evidence, not a PR Fast CI requirement.
 
 ## Manual Closure Checklist
@@ -40,14 +40,14 @@ This close-preparation note is a candidate for maintainer manual issue handling.
 - manual status exits 0; failed exits 1.
 - capability registry contains the Issue #13 entry.
 - Build Lock covers Issue #13 inputs and reports `failedCount=0`.
-- docs/39 remains pending until real main/workflow evidence exists.
+- docs/39 records real main/workflow evidence before manual issue handling.
 - Issue #13 is handled manually by the maintainer after evidence review.
 
 ## Optional Manual Validation Evidence
 
 | Evidence | Status | Notes |
 | --- | --- | --- |
-| main/workflow validation | pending | Record in docs/39 after the close-preparation PR is merged and main/workflow evidence exists. |
+| main/workflow validation | success | Recorded in docs/39 from the main push after PR #69 was merged. |
 | real VM/admin smoke | not-run | Optional manual evidence; not required by PR-safe validation. |
 
 ## Closure Note Draft
@@ -56,8 +56,9 @@ Manual review candidate for Issue #13:
 
 - Ensure-State manifest/schema, resolver, plan, result mapping, report, CLI, registry wiring, Build Lock coverage, Pester guardrails, and docs are in place.
 - PR Fast CI covers static, fixture, and report-only paths.
+- Main push Windows CI / Full Validate succeeded and is recorded in docs/39.
 - Real software install/uninstall/upgrade, service mutation, network access, signing, registry/profile/hive mutation, and image build remain outside this scope.
-- Main/workflow evidence should be recorded in docs/39 before maintainer final manual issue handling.
+- Main/workflow evidence should be reviewed in docs/39 before maintainer final manual issue handling.
 
 ## Related Documents
 

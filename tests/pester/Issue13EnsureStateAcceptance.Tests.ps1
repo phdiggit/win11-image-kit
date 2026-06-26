@@ -9,17 +9,31 @@ Describe "Issue 13 ensure-state acceptance" {
 
     It "records acceptance status, scope, non-goals, matrix, split rules, and CI boundary" {
         $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\37-issue13-ensure-state-acceptance.md") -Raw -Encoding UTF8
+        $statusMatch = [regex]::Match($doc, '(?m)^Status: `([^`]+)`')
 
+        Assert-KitEqual $statusMatch.Success $true
+        Assert-KitEqual (@("in-acceptance", "accepted-ready-for-manual-closure") -contains $statusMatch.Groups[1].Value) $true
         foreach ($term in @(
-            'Status: `in-acceptance`',
             "## Scope",
             "## Non-goals",
             "## Acceptance Matrix",
+            "## Acceptance Decision",
             "## True Execution Split Rules",
             "## CI Boundary",
             "36-issue13-ensure-state.md"
         )) {
             Assert-KitMatch $doc ([regex]::Escape($term))
+        }
+
+        if ($statusMatch.Groups[1].Value -eq "accepted-ready-for-manual-closure") {
+            foreach ($term in @(
+                "Main/workflow validation evidence is recorded",
+                "39-issue13-main-validation-evidence.md",
+                "PR Fast CI remains static/fixture/report-only",
+                "not a substitute for main/workflow validation evidence"
+            )) {
+                Assert-KitMatch $doc ([regex]::Escape($term))
+            }
         }
     }
 
@@ -131,6 +145,7 @@ Describe "Issue 13 ensure-state acceptance" {
 
         foreach ($path in @(
             "docs/37-issue13-ensure-state-acceptance.md",
+            "docs/39-issue13-main-validation-evidence.md",
             "tests/pester/Issue13EnsureStateAcceptance.Tests.ps1"
         )) {
             Assert-KitEqual ($lockedPaths -contains $path) $true
