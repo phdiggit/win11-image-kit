@@ -62,11 +62,12 @@ This acceptance scaffold confirms:
 ## Remaining Work
 
 - Design the future explicit WinPE authorization flow.
-- Add disk identity and WIM hash adapters using fixtures before any real execution.
-- Add Windows RE partition and reagentc validation as a later controlled stage.
+- Extend the fixture adapters into a fuller execution-set matrix.
+- Add real execution authorization only in a later, explicitly approved stage.
 - Produce close-prep and main-evidence documents only after a later task explicitly reaches that stage.
 
 ## Related Documents
 
 - [Issue #17 Controlled Execution Intake](52-issue17-controlled-execution-intake.md)
+- [Issue #17 Controlled Execution Safety Hardening](54-issue17-controlled-execution-safety-hardening.md)
 - [Issue #16 Evidence Chain Acceptance](49-issue16-evidence-chain-acceptance.md)

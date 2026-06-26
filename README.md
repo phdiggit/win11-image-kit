@@ -74,6 +74,7 @@ scripts/tests/Test-PostDeploy.ps1 -SkipCommandTests -SkipServiceStatus
 ```
 
 Issue #17 WinPE 受控执行开篇 intake 与 dry-run baseline 见 [Controlled Execution Intake](docs/52-issue17-controlled-execution-intake.md) 和 [Controlled Execution Acceptance](docs/53-issue17-controlled-execution-acceptance.md)。
+Issue #17 disk identity / WIM / WinRE / native command fixture hardening 见 [Controlled Execution Safety Hardening](docs/54-issue17-controlled-execution-safety-hardening.md)。
 
 按需归档日志和轻量报告时：
 

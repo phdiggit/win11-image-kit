@@ -8,7 +8,12 @@ Describe "Controlled execution schema and manifest" {
         foreach ($path in @(
             "manifests\controlled-execution.json",
             "schemas\controlled-execution.schema.json",
-            "schemas\controlled-execution-report.schema.json"
+            "schemas\controlled-execution-report.schema.json",
+            "schemas\winpe-disk-identity.schema.json",
+            "schemas\confirmation-token.schema.json",
+            "schemas\wim-image-metadata.schema.json",
+            "schemas\winre-plan.schema.json",
+            "schemas\native-command-plan.schema.json"
         )) {
             $json = Get-Content -LiteralPath (Join-Path $script:RepoRoot $path) -Raw -Encoding UTF8 | ConvertFrom-Json
             Assert-KitNotNullOrEmpty $json
@@ -24,6 +29,7 @@ Describe "Controlled execution schema and manifest" {
         Assert-KitEqual $manifestSchema.'$defs'.safety.additionalProperties $false
         Assert-KitEqual $reportSchema.additionalProperties $false
         Assert-KitEqual $reportSchema.'$defs'.action.additionalProperties $false
+        Assert-KitEqual $reportSchema.'$defs'.inputs.additionalProperties $false
         Assert-KitEqual $manifestSchema.properties.allowTrueExecution.const $false
 
         $modes = @($manifestSchema.'$defs'.executionMode.enum)

@@ -1,0 +1,21 @@
+{
+  "reportType": "winpe-disk-identity",
+  "schemaVersion": 1,
+  "target": {
+    "diskNumber": 0,
+    "serial": "SAMPLE-DISK-SERIAL-001",
+    "sizeBytes": 256060514304,
+    "model": "Sample NVMe",
+    "busType": "NVMe",
+    "partitionStyle": "GPT"
+  },
+  "expected": {
+    "diskNumber": 0,
+    "serial": "SAMPLE-DISK-SERIAL-001",
+    "sizeBytes": 512110190592,
+    "busType": "NVMe"
+  },
+  "candidateCount": 1,
+  "partitions": [],
+  "status": "blocked"
+}

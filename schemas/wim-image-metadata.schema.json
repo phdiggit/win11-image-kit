@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "win11-image-kit WIM image metadata fixture",
+  "type": "object",
+  "required": ["reportType", "schemaVersion", "imagePath", "expectedSha256", "actualSha256", "expectedImageIndex", "imageIndex", "expectedArchitecture", "architecture", "edition", "sourceRunId", "status"],
+  "properties": {
+    "reportType": { "type": "string", "const": "wim-image-metadata" },
+    "schemaVersion": { "type": "integer", "minimum": 1 },
+    "imagePath": { "type": "string", "minLength": 1 },
+    "expectedSha256": { "type": "string", "pattern": "^[A-Fa-f0-9]{64}$" },
+    "actualSha256": { "type": "string", "pattern": "^[A-Fa-f0-9]{64}$" },
+    "expectedImageIndex": { "type": "integer", "minimum": 1 },
+    "imageIndex": { "type": "integer", "minimum": 1 },
+    "expectedArchitecture": { "type": "string", "minLength": 1 },
+    "architecture": { "type": "string", "minLength": 1 },
+    "edition": { "type": "string", "minLength": 1 },
+    "sourceRunId": { "type": "string", "minLength": 1 },
+    "status": { "type": "string", "enum": ["matched", "blocked"] }
+  },
+  "additionalProperties": false
+}

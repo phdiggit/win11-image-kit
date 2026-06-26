@@ -198,7 +198,7 @@
                         "path":  "scripts/validate/Test-ProjectConfig.ps1",
                         "category":  "script",
                         "required":  true,
-                        "hash":  "f14869d365c3c4219acb55834dce890453f9928677a084132ad235f186da9e06",
+                        "hash":  "56392a152c15f448e1c6d5f2eb1db9fc6e204f38d74ec9e4316ceb5523581e17",
                         "reason":  "Project config validation includes the controlled execution manifest/schema pair."
                     },
                     {
@@ -296,15 +296,15 @@
                         "path":  ".github/workflows/ci.yml",
                         "category":  "workflow",
                         "required":  true,
-                        "hash":  "5fc105997f66489b71c404b61058c6d30d96b9c443dc029275dad9912ef45d2c",
-                        "reason":  "Windows CI must run Issue 17 controlled execution validation and Pester guardrails in PR Fast CI."
+                        "hash":  "1da9e1fa955cf2eae1774cae88306c2172cb1216117839951c7fa57382149476",
+                        "reason":  "Windows CI must run Issue 17 controlled execution hardening validation and Pester guardrails in PR Fast CI."
                     },
                     {
                         "path":  "README.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "ebdf44551918d1e593f5c3503fad8778cd1a7d82b70ef4c1301a7dbf701b8b13",
-                        "reason":  "README links the Issue 17 controlled execution intake and validation entrypoint."
+                        "hash":  "93db7c5da7c27544a505faa051ea7d05bbc4a2d13b942eb182aa9a6e75637065",
+                        "reason":  "README links the Issue 17 controlled execution hardening document."
                     },
                     {
                         "path":  "docs/37-issue13-ensure-state-acceptance.md",
@@ -394,8 +394,8 @@
                         "path":  "manifests/quality-gates.json",
                         "category":  "manifest",
                         "required":  true,
-                        "hash":  "87a5acb6260ac8d49ce95c2997f28dc6c52ee45a1dce849c4c5eafbd76feccbe",
-                        "reason":  "Quality Gates include Issue 17 controlled execution, intake, and acceptance gates."
+                        "hash":  "523ca1a2848f2ad61dd9ee4e8d267946307c8a01a848d8e85875630b4fdc7d89",
+                        "reason":  "Quality Gates include Issue 17 controlled execution hardening fixture sub-gates."
                     },
                     {
                         "path":  "schemas/quality-gates.schema.json",
@@ -1080,155 +1080,386 @@
                         "path":  "docs/52-issue17-controlled-execution-intake.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "b417e8542bc181c9e790ca69138e5f92ef5848c17599fccb1367b4eb0811f1b3",
+                        "hash":  "cb6960a68d31c5d19fe43951eac832eecaf25c26360d05465a2a219bab1b35fb",
                         "reason":  "Issue 17 intake records the real GitHub Issue and Roadmap source."
                     },
                     {
                         "path":  "docs/53-issue17-controlled-execution-acceptance.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "e3eec4b57d74eac37b6e2ab5a7925badebe478142635dd0a71ec8c53bd0ef62c",
-                        "reason":  "Issue 17 acceptance scaffold documents dry-run/report-only coverage and safety boundaries."
+                        "hash":  "426672f9ed9c56920976c5b3a370c1845039ae6e753b13c79e18a25d4ed6b231",
+                        "reason":  "Issue 17 acceptance links the safety hardening scaffold while remaining in-acceptance."
                     },
                     {
                         "path":  "manifests/controlled-execution.json",
                         "category":  "manifest",
                         "required":  true,
-                        "hash":  "480e5d4af0397dadc7898a522545edc3a6d72c372f959bd74e373e99e3847c23",
+                        "hash":  "0961ea2e1f887cb1cd4891e01d0b2b6b4159e1bf823893dde815726b8e70e8d4",
                         "reason":  "Controlled execution manifest is the trusted dry-run execution plan input."
                     },
                     {
                         "path":  "schemas/controlled-execution.schema.json",
                         "category":  "schema",
                         "required":  true,
-                        "hash":  "5fb5749f8c0eac49194ff489226ccbe17e067ecbdf77c82f8c1c4d74609046f3",
+                        "hash":  "38c4feaccd8f83b01451c4b48b42e89e180504fb8ffd7f286f8f71828accae41",
                         "reason":  "Controlled execution schema constrains dry-run modes, action metadata, and safety policy."
                     },
                     {
                         "path":  "schemas/controlled-execution-report.schema.json",
                         "category":  "schema",
                         "required":  true,
-                        "hash":  "28fc1626a8af446298f4c5f81c5e8ff960de48dcceae48636a32380e9c958691",
-                        "reason":  "Controlled execution report schema constrains WhatIf and trueExecution=false evidence."
+                        "hash":  "0a5fd530e4190eb05adadc572401172ad70c741c6a81028ce6d5469dfe76437a",
+                        "reason":  "Controlled execution report schema constrains hardening input summaries and trueExecution=false evidence."
                     },
                     {
                         "path":  "scripts/common/New-KitControlledExecutionReport.ps1",
                         "category":  "script",
                         "required":  true,
-                        "hash":  "93cc10bee343c5a44d9ad8207c691358b9f2efd28c46de422fb7525e004b23c1",
-                        "reason":  "Controlled execution report builder produces report-only plan evidence."
+                        "hash":  "500bd81f8be71e91bc74c8696b01b23034ddaf0d6c7a5e9b893994f1cc9cb9a0",
+                        "reason":  "Controlled execution report builder includes hardening input summaries and blocked counts."
                     },
                     {
                         "path":  "scripts/common/Test-KitControlledExecutionSafety.ps1",
                         "category":  "script",
                         "required":  true,
-                        "hash":  "4581d61a8600e3ae7bb937bcd2798ad2bcced64af89e845f41f74fb6738defd9",
+                        "hash":  "406e3f2242f3ae62da0cf8f8e5b1ba31792a481b75c8df2e32b4bf31c2e12cc5",
                         "reason":  "Controlled execution safety helper enforces disabled true execution and mutation policy."
                     },
                     {
                         "path":  "scripts/validate/Test-ControlledExecution.ps1",
                         "category":  "script",
                         "required":  true,
-                        "hash":  "ab448771fda8e6d2ac1cefdbbd807108d8e8d823d73664f9f4b1a0b12252b253",
-                        "reason":  "Controlled execution validator writes reports and fails blocked mutation fixtures."
+                        "hash":  "b295d6ff1c76cb2f3acf443bea99d0503aff446ba553169087b013610e766e7e",
+                        "reason":  "Controlled execution validator accepts hardening fixture inputs and fails blocked counts."
                     },
                     {
                         "path":  "scripts/config/Show-ControlledExecutionPlan.ps1",
                         "category":  "script",
                         "required":  true,
-                        "hash":  "85159d29d7f80d2f4e0aee3c47b0828b867712dbc866e2cd86b604c7c6d8ec67",
-                        "reason":  "Controlled execution display entrypoint prints plan-only JSON without invoking actions."
+                        "hash":  "3c92f064409092f4b4b934f2deb3e3455de7c74d53339986aa2253c3a1bee734",
+                        "reason":  "Controlled execution display shows plan-only and trueExecution=false output."
                     },
                     {
                         "path":  "tests/fixtures/controlled-execution/sample-plan.json",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "e1734b33afb1a718ee7f68b754a18b7a55021048374f9713bbd172cc59ddcec2",
+                        "hash":  "7a57ace35a391d31883b1df1b827ea0a39c727d34094f89e02cae987a141d85e",
                         "reason":  "Controlled execution plan fixture backs report-only baseline tests."
                     },
                     {
                         "path":  "tests/fixtures/controlled-execution/sample-blocked-mutation.json",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "b9f054c4c20b413e94c010d2cb7445708383ce846778f6df188789b94f78efa4",
+                        "hash":  "280c1ce739e117575b51bcfd71cfa56045501e71f3e4b3982e4cd297aeb5b744",
                         "reason":  "Controlled execution blocked mutation fixture proves validator failure behavior."
                     },
                     {
                         "path":  "tests/fixtures/controlled-execution/sample-report.json",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "e32fb1ad966c10360a088bd3c60376e98c1ff60bee8cce582dbe42b247a60e0f",
-                        "reason":  "Controlled execution report fixture documents expected trueExecution=false output."
+                        "hash":  "1c13dd27da9b6d3d134a4cfaa6b2949836af9946601620c3e7dc6556d0826772",
+                        "reason":  "Controlled execution sample report documents hardening summary counters and inputs."
                     },
                     {
                         "path":  "tests/fixtures/controlled-execution/failure/true-execution-enabled.json",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "36aec5304d780f5ee5cf47bc839d9165883b93f37bf702c72ab9c2a082b25910",
+                        "hash":  "63e3116d7a98d6dcaf5559df4c77742c499b15706b2d1f231df6583d2f5e05d7",
                         "reason":  "Controlled execution failure fixture proves true execution remains disabled."
                     },
                     {
                         "path":  "tests/fixtures/controlled-execution/failure/network-download-action.json",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "1215afd067f38c79e10635c4f2577976d5f0b58e7adadd901a20d5064902f9c3",
+                        "hash":  "4bfa5be239b3ea8251546808f22c53669331cedda188f9a06c1fd70c019df3cd",
                         "reason":  "Controlled execution failure fixture proves network actions are blocked."
                     },
                     {
                         "path":  "tests/fixtures/controlled-execution/failure/registry-mutation-action.json",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "2cfa174e93318a9c4eb89e1c1c1a600bbb7822208415b2227ae9ad196fdef39e",
+                        "hash":  "b44bf1759055d5e08390fe7c866030e109b93eaba844dc508bd7b7e136dd792b",
                         "reason":  "Controlled execution failure fixture proves registry mutation is blocked."
                     },
                     {
                         "path":  "tests/fixtures/controlled-execution/failure/disk-mutation-action.json",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "56768f00ec8f5c2a6178844d7440fd01aa2a573dddf585d1e070af2c2c15db64",
+                        "hash":  "db5ca311e291b5b3f60c413b8ce1c425c8249c1c45739aa3b8b1d1f26cc0db12",
                         "reason":  "Controlled execution failure fixture proves disk mutation is blocked."
                     },
                     {
                         "path":  "tests/pester/Issue17ControlledExecution.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "71b67a91cb19cb13b8186e2e2968d9e72d1620284e298949d8bf9cba880252b2",
+                        "hash":  "2e842c073633a7235ac4bf85f8dc589d350b0f5d659d65f3ea7dd1501e560f69",
                         "reason":  "Issue 17 intake tests guard source records and no auto-close boundaries."
                     },
                     {
                         "path":  "tests/pester/Issue17ControlledExecutionAcceptance.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "d25b5bc0344ed0a1fa2aa21ae1569f66137e56cbc97f53df117f2169b5325d5e",
+                        "hash":  "32279130b3ed4b54140090382caf3d98bbcb7ef812d0526ea340a07814e9b0a2",
                         "reason":  "Issue 17 acceptance tests guard in-acceptance status and safety boundaries."
                     },
                     {
                         "path":  "tests/pester/ControlledExecutionSchema.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "a4b1e4385de879e381606ab539adb51de662a2b6705a18be87d6ba3336c6a092",
-                        "reason":  "Controlled execution schema tests guard closed schema and disabled true execution."
+                        "hash":  "4aab252155983a18b6992a32105ca8afef6ccfa12e4df6a16db95786336bec7c",
+                        "reason":  "Controlled execution schema tests include hardening schema coverage."
                     },
                     {
                         "path":  "tests/pester/ControlledExecutionReport.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "2a4a7e854ffd69a5309a71a8be0de5e09d7ed24fd1d06ffead0e21c279c91294",
-                        "reason":  "Controlled execution report tests guard planned-only non-execution output."
+                        "hash":  "0596b653c870ae95a3907a1170822bec641afdfcf76ff6a8aa7c74d83c1c5da6",
+                        "reason":  "Controlled execution report tests cover hardening inputs and summary counts."
                     },
                     {
                         "path":  "tests/pester/ControlledExecutionValidation.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "9097cd306a8a4f8373f8c86220dd9ef40dbd551dccd51d2f19a48a8bbe8a4ab5",
-                        "reason":  "Controlled execution validation tests guard report writing and failure exit codes."
+                        "hash":  "c7a76548dbe519c72a9187bd8d19b137cb561ea44b6bc39f084e096e5f0d298c",
+                        "reason":  "Controlled execution validation tests cover hardening failure fixture exit codes."
                     },
                     {
                         "path":  "tests/pester/ControlledExecutionSafety.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "a4130895bf776e2c4bceea97d12905d2011aa7b3f23b6a1def881d5bb8da4d56",
-                        "reason":  "Controlled execution safety tests guard blocked mutation and dangerous command patterns."
+                        "hash":  "42a75c92dc5a4b8dbedd3fcfafafd9f2fd2acd8f95f38ba095c51afedf15fc51",
+                        "reason":  "Controlled execution safety tests guard scripts against executable native calls."
+                    },
+                    {
+                        "path":  "docs/54-issue17-controlled-execution-safety-hardening.md",
+                        "category":  "doc",
+                        "required":  true,
+                        "hash":  "85eee723cdeb8c37ffdadcc4550059c1b6322d40e812455add29c5f5aa157d26",
+                        "reason":  "Issue 17 safety hardening documents disk identity, confirmation token, WIM, WinRE, and native command models."
+                    },
+                    {
+                        "path":  "schemas/winpe-disk-identity.schema.json",
+                        "category":  "schema",
+                        "required":  true,
+                        "hash":  "10401be195cd6a223b22a40f09aa33dfaf8f01f7482c9c4a5c2b473ab85aa333",
+                        "reason":  "Disk identity schema constrains fixture-only target and expected disk metadata."
+                    },
+                    {
+                        "path":  "schemas/confirmation-token.schema.json",
+                        "category":  "schema",
+                        "required":  true,
+                        "hash":  "ed3d43748b60ec735f5b25ad909bd0cf87da317065a88b474a1ffc63d60d0db3",
+                        "reason":  "Confirmation token schema constrains target-specific token fixtures."
+                    },
+                    {
+                        "path":  "schemas/wim-image-metadata.schema.json",
+                        "category":  "schema",
+                        "required":  true,
+                        "hash":  "2a3e342dee94a5599b832fb4524abae14aeb3f1f361b1d59a359fe1dbbfc3b8b",
+                        "reason":  "WIM image metadata schema constrains fixture-only image validation inputs."
+                    },
+                    {
+                        "path":  "schemas/winre-plan.schema.json",
+                        "category":  "schema",
+                        "required":  true,
+                        "hash":  "0e106f0b19ff529e1ac64360cbd2c874c0869b95d6f566483eee07465a78c6ac",
+                        "reason":  "WinRE plan schema constrains fixture-only recovery logical volume planning."
+                    },
+                    {
+                        "path":  "schemas/native-command-plan.schema.json",
+                        "category":  "schema",
+                        "required":  true,
+                        "hash":  "0f77442f37e03e3f8b109085659a3f1a87ad161e9e4fc6aeb54977f147ab35c1",
+                        "reason":  "Native command plan schema constrains not-run and not-captured envelopes."
+                    },
+                    {
+                        "path":  "scripts/common/ConvertTo-KitDiskIdentityPlan.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "14db40ac370a7c496aca3f5365bb7184d3c658035e748d9f98e4614dd9006594",
+                        "reason":  "Disk identity adapter validates fixture target identity without querying real disks."
+                    },
+                    {
+                        "path":  "scripts/common/Test-KitConfirmationToken.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "68e6835b1db84aa07048e09b0842aaab07711f52b2d81b550166cea286462fa4",
+                        "reason":  "Confirmation token helper blocks generic or mismatched dry-run tokens."
+                    },
+                    {
+                        "path":  "scripts/common/ConvertTo-KitWimImagePlan.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "45d1afe02bc75e4df082622c8504903becdecaec6ec9f6fc6a9847359c96b984",
+                        "reason":  "WIM metadata adapter validates fixture-only image metadata without reading real WIM files."
+                    },
+                    {
+                        "path":  "scripts/common/ConvertTo-KitWinREPlan.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "cf49e730bab3204d60f211d04ab518b1e54e3baa3292a0b03c341f42cf61b0d3",
+                        "reason":  "WinRE plan adapter validates fixture-only recovery planning without mutation."
+                    },
+                    {
+                        "path":  "scripts/common/New-KitNativeCommandPlan.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "3bfc1d3102e5915795fff5cecb526ff37517a91fc176c37ab44e3237e4b30536",
+                        "reason":  "Native command envelope helper enforces planned not-run and not-captured semantics."
+                    },
+                    {
+                        "path":  "tests/fixtures/controlled-execution/disk-identity/matched.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "72fd2e056a03eb06955407cf9e99228250464186edf36945da9cca29e6042859",
+                        "reason":  "Disk identity matched fixture backs baseline hardening validation."
+                    },
+                    {
+                        "path":  "tests/fixtures/controlled-execution/disk-identity/serial-mismatch.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "64c766a3e6d7acf291a6ce572e00b11e97998dbebc7ef889415ba130837ff920",
+                        "reason":  "Disk identity serial mismatch fixture proves blocked planning."
+                    },
+                    {
+                        "path":  "tests/fixtures/controlled-execution/disk-identity/size-mismatch.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "8abe7a4fe3dc60102fd8ed8a3765f24414a80c3ccec75f012d40860f0d2e7233",
+                        "reason":  "Disk identity size mismatch fixture proves blocked planning."
+                    },
+                    {
+                        "path":  "tests/fixtures/controlled-execution/disk-identity/disk-number-mismatch.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "b2c830c465cdb574b6e918b01d5113d4dbbd9d06dfa4165f6186ceb6e1da42ea",
+                        "reason":  "Disk identity number mismatch fixture proves blocked planning."
+                    },
+                    {
+                        "path":  "tests/fixtures/controlled-execution/confirmation-token/matched.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "9e9bea4f496b001309c3ac84987aa24037a5d8163c52ce2c743cc7c445dab5a3",
+                        "reason":  "Confirmation token matched fixture backs baseline hardening validation."
+                    },
+                    {
+                        "path":  "tests/fixtures/controlled-execution/confirmation-token/generic-yes.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "68c650de658da4ac1180258b065cc99c059f0f933a0042eb8e4ff4c643906973",
+                        "reason":  "Generic token fixture proves blocked confirmation semantics."
+                    },
+                    {
+                        "path":  "tests/fixtures/controlled-execution/confirmation-token/serial-mismatch.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "92c164f39aa1a5668a4b7ca61b8774640d55707c4b530e48b1a6ff5851587135",
+                        "reason":  "Mismatched token fixture proves target identity enforcement."
+                    },
+                    {
+                        "path":  "tests/fixtures/controlled-execution/wim-image/matched.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "b170e2a452a50ae68b793c88e7c98629209e46aa2698f021075ec189f43a7b10",
+                        "reason":  "WIM metadata matched fixture backs baseline hardening validation."
+                    },
+                    {
+                        "path":  "tests/fixtures/controlled-execution/wim-image/hash-mismatch.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "d41876c930d73f26b535bd1a42ccc3e22c99518d1b9016441d5f4492f497bb3f",
+                        "reason":  "WIM hash mismatch fixture proves blocked planning."
+                    },
+                    {
+                        "path":  "tests/fixtures/controlled-execution/wim-image/index-mismatch.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "cb0f26581e6fce2ea865dc43fc7b980b44c48046f2fac1fa07c0b0110baf9f43",
+                        "reason":  "WIM index mismatch fixture proves blocked planning."
+                    },
+                    {
+                        "path":  "tests/fixtures/controlled-execution/wim-image/local-private-path.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "3d77617f8bf895de50227da6433bd02483dd919fa14cd337e3a889782b4e4ca4",
+                        "reason":  "WIM local private path fixture proves path blocking."
+                    },
+                    {
+                        "path":  "tests/fixtures/controlled-execution/winre-plan/planned.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "8021af21966186e8e0c7ec5c957fb5899cff6f1aa5fc0c04464486aac3bce755",
+                        "reason":  "WinRE planned fixture backs baseline hardening validation."
+                    },
+                    {
+                        "path":  "tests/fixtures/controlled-execution/winre-plan/missing-recovery-volume.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "ab3154e6316c12f9a0c706e76df1d7512b04fc94417e62af345f1e1b5bce3dc5",
+                        "reason":  "WinRE missing recovery fixture proves blocked planning."
+                    },
+                    {
+                        "path":  "tests/fixtures/controlled-execution/winre-plan/wrong-gpt-type.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "d0cd8792c2ab60ee495cf815e7c7f9e10936966d79813f744a7ff4400aa16958",
+                        "reason":  "WinRE wrong GPT type fixture proves blocked planning."
+                    },
+                    {
+                        "path":  "tests/fixtures/controlled-execution/native-command/planned.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "9dde1c412e5c031918d71cf712712bbc77c1e8becb2950ec28c7ec539c24c72b",
+                        "reason":  "Native command planned fixture backs not-run envelope validation."
+                    },
+                    {
+                        "path":  "tests/fixtures/controlled-execution/native-command/actual-exitcode-present.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "7fb2643d50153d1d89b9876f7c891964d63a80e7c4b75549f861fe666667d159",
+                        "reason":  "Native command captured exit code fixture proves blocked planning."
+                    },
+                    {
+                        "path":  "tests/pester/ControlledExecutionDiskIdentity.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "4cded768327c3643030b85c2b07d38aa1d4dca9fb9226effc06ac313727fa23a",
+                        "reason":  "Disk identity Pester tests cover match and mismatch fixture semantics."
+                    },
+                    {
+                        "path":  "tests/pester/ControlledExecutionConfirmationToken.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "93e2c8b9dbefe6d127a47815b0ed370a191655b08ee29b0a2845144819d2e3fe",
+                        "reason":  "Confirmation token Pester tests cover generic and mismatched token blocking."
+                    },
+                    {
+                        "path":  "tests/pester/ControlledExecutionWimPlan.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "7c8c430a0144ad3d6c1b31a9c647c5a27a34c74041f5422fd576b21f57ba83e6",
+                        "reason":  "WIM metadata Pester tests cover fixture-only hash, index, and path blocking."
+                    },
+                    {
+                        "path":  "tests/pester/ControlledExecutionWinREPlan.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "16d8b31514b58d30572e810b6a3c7152fcae45ddf748028a0dec62a4199c8545",
+                        "reason":  "WinRE plan Pester tests cover logical volumes and recovery partition metadata."
+                    },
+                    {
+                        "path":  "tests/pester/ControlledExecutionNativeCommand.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "5df7ac600afef057a40a29a5d3db7b2eb3531c25ada703e924abfd385bce7da8",
+                        "reason":  "Native command Pester tests cover not-run and not-captured envelopes."
+                    },
+                    {
+                        "path":  "tests/pester/Issue17ControlledExecutionHardening.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "3a86455d637322cd310cd61678f9da4a06aaba2ad8680f1fb15068738090a465",
+                        "reason":  "Issue 17 hardening acceptance tests guard docs, QG, and no closure documents."
                     }
                 ],
     "watchGlobs":  [
@@ -1281,7 +1512,22 @@
                        "tests/fixtures/controlled-execution/*.json",
                        "tests/fixtures/controlled-execution/failure/*.json",
                        "tests/pester/*ControlledExecution*.Tests.ps1",
-                       "tests/pester/Issue17*.Tests.ps1"
+                       "tests/pester/Issue17*.Tests.ps1",
+                       "schemas/winpe-disk-identity.schema.json",
+                       "schemas/confirmation-token.schema.json",
+                       "schemas/wim-image-metadata.schema.json",
+                       "schemas/winre-plan.schema.json",
+                       "schemas/native-command-plan.schema.json",
+                       "scripts/common/*DiskIdentity*.ps1",
+                       "scripts/common/*ConfirmationToken*.ps1",
+                       "scripts/common/*WimImage*.ps1",
+                       "scripts/common/*WinRE*.ps1",
+                       "scripts/common/*NativeCommand*.ps1",
+                       "tests/fixtures/controlled-execution/disk-identity/*.json",
+                       "tests/fixtures/controlled-execution/confirmation-token/*.json",
+                       "tests/fixtures/controlled-execution/wim-image/*.json",
+                       "tests/fixtures/controlled-execution/winre-plan/*.json",
+                       "tests/fixtures/controlled-execution/native-command/*.json"
                    ],
     "policy":  {
                    "missingRequired":  "fail",

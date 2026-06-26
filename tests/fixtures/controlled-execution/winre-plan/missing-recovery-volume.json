@@ -1,0 +1,26 @@
+{
+  "reportType": "winre-plan",
+  "schemaVersion": 1,
+  "windowsVolume": {
+    "logicalName": "Windows",
+    "letter": "W",
+    "source": "fixture"
+  },
+  "efiVolume": {
+    "logicalName": "EFI",
+    "letter": "S",
+    "source": "fixture"
+  },
+  "recoveryVolume": {
+    "logicalName": "Recovery",
+    "letter": "",
+    "gptType": "",
+    "gptAttributes": "",
+    "source": "fixture"
+  },
+  "winreWim": "R:\\Recovery\\WindowsRE\\winre.wim",
+  "plannedCommands": [
+    "reagentc /info /target W:\\Windows"
+  ],
+  "status": "blocked"
+}

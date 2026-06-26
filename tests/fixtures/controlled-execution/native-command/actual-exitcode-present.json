@@ -1,0 +1,16 @@
+{
+  "reportType": "native-command-plan",
+  "schemaVersion": 1,
+  "commands": [
+    {
+      "commandName": "image-apply-plan",
+      "plannedCommand": "dism /Apply-Image /ImageFile:fixture://install.wim /Index:1 /ApplyDir:W:\\",
+      "expectedExitCodes": [0],
+      "actualExitCode": "1",
+      "stdout": "not-captured",
+      "stderr": "not-captured",
+      "status": "blocked"
+    }
+  ],
+  "status": "blocked"
+}

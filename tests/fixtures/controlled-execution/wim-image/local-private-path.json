@@ -1,0 +1,14 @@
+{
+  "reportType": "wim-image-metadata",
+  "schemaVersion": 1,
+  "imagePath": "C:\\private\\install.wim",
+  "expectedSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "actualSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "expectedImageIndex": 1,
+  "imageIndex": 1,
+  "expectedArchitecture": "amd64",
+  "architecture": "amd64",
+  "edition": "Windows 11 Pro",
+  "sourceRunId": "kit-run-issue17-fixture",
+  "status": "blocked"
+}

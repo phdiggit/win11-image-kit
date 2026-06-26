@@ -16,7 +16,12 @@
     "requiresWinPECount": 0,
     "requiresRebootCount": 0,
     "requiresNetworkCount": 0,
-    "mutationActionCount": 0
+    "mutationActionCount": 0,
+    "diskIdentityMismatchCount": 0,
+    "confirmationTokenFailureCount": 0,
+    "wimValidationFailureCount": 0,
+    "winrePlanFailureCount": 0,
+    "nativeCommandFailureCount": 0
   },
   "actions": [
     {
@@ -36,6 +41,33 @@
       "executed": false
     }
   ],
+  "inputs": {
+    "diskIdentity": {
+      "status": "matched",
+      "reason": "disk identity matched fixture expectations",
+      "mismatchCount": 0
+    },
+    "confirmationToken": {
+      "status": "matched",
+      "reason": "confirmation token matched fixture target",
+      "failureCount": 0
+    },
+    "wimMetadata": {
+      "status": "matched",
+      "reason": "image metadata matched fixture expectations",
+      "failureCount": 0
+    },
+    "winrePlan": {
+      "status": "planned",
+      "reason": "recovery plan contains required logical volumes",
+      "failureCount": 0
+    },
+    "nativeCommandPlan": {
+      "status": "planned",
+      "reason": "native command envelope is plan-only",
+      "failureCount": 0
+    }
+  },
   "safety": {
     "diskMutation": false,
     "registryMutation": false,
