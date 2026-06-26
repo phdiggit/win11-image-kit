@@ -1,12 +1,12 @@
 # Issue #16 Evidence Chain Acceptance
 
-Status: `accepted-pending-main-validation`
+Status: `accepted-ready-for-manual-closure`
 
 ## Scope
 
 This page records the Issue #16 report-only and fixture-backed acceptance state for the evidence chain report. Run ID linkage, artifact identity, redaction policy, producer normalization, producer adapters, and report input index guardrails are accepted for PR Fast CI review.
 
-This is still not a final closure page, not a main validation evidence page, and not a completion summary. Issue #16 remains open until maintainers review the pending main/workflow evidence scaffold and decide whether manual closure is appropriate.
+This is still not a completion summary and does not automatically close Issue #16. Main/workflow evidence has been backfilled in [Issue #16 Main Validation Evidence](51-issue16-main-validation-evidence.md), so maintainers may decide whether manual closure is appropriate.
 
 ## Acceptance Matrix
 
@@ -20,8 +20,8 @@ This is still not a final closure page, not a main validation evidence page, and
 | Report input index | Required producer inputs, report types, and path policy are validated. | accepted |
 | Manual lifecycle placeholders | build/capture/deploy/admin-smoke are manual or not-captured only. | accepted |
 | Redaction policy | Redacted values are counted and blocked sensitive fields fail validation. | accepted |
-| Real WIM evidence | No real WIM hash or DISM image info is claimed. | pending main/manual evidence |
-| Real deployment evidence | No real target hardware, disk, or deployment report is claimed. | pending main/manual evidence |
+| Real WIM evidence | No real WIM hash or DISM image info is claimed. | not-captured |
+| Real deployment evidence | No real target hardware, disk, or deployment report is claimed. | not-provided |
 
 ## Run ID / Upstream Linkage
 
@@ -135,8 +135,7 @@ PR Fast CI is not main/workflow evidence.
 
 ## Remaining Work
 
-- Backfill `docs/51-issue16-main-validation-evidence.md` only after real successful main push or workflow_dispatch evidence exists; the post-PR #83 main push failure remains blocked evidence only.
-- Maintainer review of [Issue #16 Close Preparation](50-issue16-close-preparation.md) remains manual.
+- Maintainer review of [Issue #16 Close Preparation](50-issue16-close-preparation.md) remains manual after the post-PR #84 main push Full Validate success backfill.
 - Real build/capture/deploy/admin-smoke evidence remains not-run, not-captured, or not-provided unless maintainers explicitly perform it later.
 
 ## Related Documents

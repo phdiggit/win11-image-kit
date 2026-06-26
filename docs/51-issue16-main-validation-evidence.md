@@ -1,6 +1,6 @@
 # Issue #16 Main Validation Evidence
 
-Status: `pending-main-validation`
+Status: `ready-for-manual-closure`
 
 ## Evidence Sources
 
@@ -14,31 +14,31 @@ Pull request-only Fast CI is not a substitute.
 
 | Field | Value |
 |---|---|
-| Trigger source | `pending` |
-| Main SHA | `pending` |
-| Workflow run | `pending` |
-| Full Validate job | `pending` |
-| Result | `pending` |
-| Notes | `Post-PR #83 main push run 28248115903 targeted 73861de486f3cf70c470548f1d446334f2f33481 but failed in Full Validate, so it is not acceptable ready evidence.` |
+| Trigger source | `main push` |
+| Main SHA | `48c13ac5a66cdcb733363546af03f98cb85ac50a` |
+| Workflow run | `https://github.com/phdiggit/win11-image-kit/actions/runs/28250101014` |
+| Full Validate job | `https://github.com/phdiggit/win11-image-kit/actions/runs/28250101014/job/83699160541` |
+| Result | `success` |
+| Notes | `Post-PR #84 main push Full Validate completed successfully. The checkout log fetched 48c13ac5a66cdcb733363546af03f98cb85ac50a and printed the same checkout SHA; local git log -1 on the same SHA confirms 48c13ac5a66cdcb733363546af03f98cb85ac50a.` |
 
 ## Evidence Chain Report Evidence
 
 | Field | Value |
 |---|---|
-| Report status | `pending` |
-| failedCount | `pending` |
-| blockedCount | `pending` |
-| runId | `pending` |
-| artifactCount | `pending` |
-| producerCount | `pending` |
-| normalizedCount | `pending` |
-| missingRequiredCount | `pending` |
-| reportTypeMismatchCount | `pending` |
-| disallowedManualCount | `pending` |
-| disallowedNotCapturedCount | `pending` |
-| inputPolicyViolationCount | `pending` |
-| manualCount | `pending` |
-| notCapturedCount | `pending` |
+| Report status | `manual` |
+| failedCount | `0` |
+| blockedCount | `0` |
+| runId | `kit-run-20260626T161726Z-0000000` |
+| artifactCount | `4` |
+| producerCount | `9` |
+| normalizedCount | `5` |
+| missingRequiredCount | `0` |
+| reportTypeMismatchCount | `0` |
+| disallowedManualCount | `0` |
+| disallowedNotCapturedCount | `0` |
+| inputPolicyViolationCount | `0` |
+| manualCount | `1` |
+| notCapturedCount | `3` |
 | trueExecution | `false` |
 | localPrivateIncluded | `false` |
 | networkUsed | `false` |
@@ -59,13 +59,17 @@ Pull request-only Fast CI is not a substitute.
 
 | Field | Value |
 |---|---|
-| Current readiness | `pending-main-validation` |
-| Required next evidence | `main/workflow validation` |
+| Current readiness | `ready-for-manual-closure` |
+| Required next evidence | `maintainer manual review` |
 | PR Fast CI substitute allowed | `false` |
 
 ## Ready-State Rules
 
-This document may be promoted only after real `main` or `workflow_dispatch` evidence exists. Do not fill these fields from pull request-only Fast CI, local fixture reports, or inferred success.
+This document is promoted because real `main` push Full Validate evidence exists and was verified against the checkout SHA. Pull request-only Fast CI is still not a substitute, and same-SHA local report evidence is recorded only for report counters, not as a GitHub artifact.
+
+## Same-SHA Local Report Evidence
+
+The Evidence Chain Report Evidence table uses `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/validate/Test-EvidenceChain.ps1 -ReportPath "$env:TEMP\evidence-chain-issue16-post84.json"` run locally at the same main SHA, after verifying the post-PR #84 Full Validate job completed successfully. This is same-SHA local report evidence, not a GitHub artifact.
 
 ## Blocked Evidence Attempt
 

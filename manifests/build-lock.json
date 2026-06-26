@@ -303,7 +303,7 @@
       "path": "README.md",
       "category": "doc",
       "required": true,
-      "hash": "9b62c146cf8a6b58c86694e4df5cfe0436d114965599d756b2e60fe4de39f1e1",
+      "hash": "532776b82fff7fc500ffb2f005bceece2a31d81cd736414163508e8526d8c8c3",
       "reason": "README links the Issue 16 evidence chain acceptance, close-prep, and pending main evidence documents."
     },
     {
@@ -394,7 +394,7 @@
       "path": "manifests/quality-gates.json",
       "category": "manifest",
       "required": true,
-      "hash": "4a771a57a065e929899cc9b085cbfbfbfc4d755433749cc1f39258cc296bb3bf",
+      "hash": "4f52c22e85566e1d39e9f3ab317ba94b1fcfbd0d31c9614e8af6cdfdd07d8b3c",
       "reason": "Quality Gates include Issue 16 acceptance, close-prep, and main-evidence scaffold gates."
     },
     {
@@ -709,7 +709,7 @@
       "path": "docs/48-issue16-evidence-chain-report.md",
       "category": "doc",
       "required": true,
-      "hash": "ae234338a742b11160e0b04deb5344f1b7ff7f0c0a6079e8d91e3c9f58ca2793",
+      "hash": "f7149f11e2ae9b2f7f3e7734ba021a68968eee489624395a6758c7fbcb3fbc22",
       "reason": "Issue 16 evidence chain design records producer adapter and close-prep scaffold scope."
     },
     {
@@ -751,7 +751,7 @@
       "path": "scripts/config/Show-EvidenceChain.ps1",
       "category": "script",
       "required": true,
-      "hash": "53cd2b5ea70a489dc81c57b6cf9013f68d0bd41352cc26810a78ba01075e22b8",
+      "hash": "b764d0ca42bd0acaf5a522a4a2c2926726070348b4a94862bfdd02f70892f5b2",
       "reason": "Evidence chain display shows input set and normalization summary."
     },
     {
@@ -835,7 +835,7 @@
       "path": "docs/49-issue16-evidence-chain-acceptance.md",
       "category": "doc",
       "required": true,
-      "hash": "f5b5f3ee6a889deed483868d6ad484b0f3ca8fdd1006a479590b79f9c5bb9a28",
+      "hash": "f115395cbf5c7820cd5f32f168862503a7c3a7d31f53598e5abbb61f638e1fd7",
       "reason": "Issue 16 acceptance records accepted-pending-main-validation state."
     },
     {
@@ -905,7 +905,7 @@
       "path": "tests/pester/EvidenceChainRedaction.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "1606f487989d99bce72d6d1eb906b26912e71b7f1ade52323a93099cc0f9e89f",
+      "hash": "5d97dd5b7a141f0a980d90ac1e6ed6f492a20921eb906ea7d47c26ed1264a4e8",
       "reason": "Evidence chain redaction tests guard sensitive-data policy."
     },
     {
@@ -919,21 +919,21 @@
       "path": "tests/pester/Issue16EvidenceChainAcceptance.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "60fa0c7b9f4f292a5334fa62302771bdeaecefdbc9b7d8b27e5c04f1ca1de16f",
+      "hash": "26d4b7f6309d7a747de95c25c924e4ab5b9d84ecfd9da476410a081b9d553cdb",
       "reason": "Issue 16 acceptance tests guard accepted-pending-main-validation state."
     },
     {
       "path": "docs/50-issue16-close-preparation.md",
       "category": "doc",
       "required": true,
-      "hash": "ca1ad0110683938715642a4f313e033d941e6dcc0cb08a6b583bf6b59acb8ce9",
+      "hash": "6f0205af38240b2273624a8fd6466fe599bd2df4260f101cc8fc77b4ee15a5b5",
       "reason": "Issue 16 close-preparation candidate records manual closure boundaries."
     },
     {
       "path": "docs/51-issue16-main-validation-evidence.md",
       "category": "doc",
       "required": true,
-      "hash": "d2dcb62c9efacabb27cc7c045d8594b3f53bfc0afe5ad3362727807073e6a211",
+      "hash": "599c7c469709efaaa16983aec411462a3859df7df5671e265828d8342077d049",
       "reason": "Issue 16 main validation evidence scaffold remains pending until real main evidence exists."
     },
     {
@@ -1066,7 +1066,7 @@
       "path": "tests/pester/Issue16ClosePrep.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "d5d96daccdb75edea527994760bc96f107ba924f668e8b645bc40585bc4e1eda",
+      "hash": "2ac8c4630e665c7af69898689a7c55d20161c2837d27b05ccd76d91f4804eda9",
       "reason": "Issue 16 close-prep tests guard candidate-only manual closure boundaries."
     },
     {

@@ -144,7 +144,7 @@
       "blocking": true,
       "entrypoint": "scripts/validate/Test-EvidenceChain.ps1",
       "evidence": "report",
-      "notes": "Validates Issue 16 evidence chain runId inheritance, artifact index, report input index, producer normalization counters, redaction policy including PowerShell 7 scalar leaf traversal, accepted-pending scaffold, fixture reports, and safety flags without true execution."
+      "notes": "Validates Issue 16 evidence chain runId inheritance, artifact index, report input index, producer normalization counters, redaction policy including PowerShell 7 scalar leaf traversal, ready-state scaffold, fixture reports, and safety flags without true execution."
     },
     {
       "id": "issue16-acceptance",
@@ -156,11 +156,11 @@
       "blocking": true,
       "entrypoint": "docs/49-issue16-evidence-chain-acceptance.md",
       "evidence": "document",
-      "notes": "Records accepted-pending-main-validation without final closure."
+      "notes": "Records accepted-ready-for-manual-closure without automatic closure."
     },
     {
       "id": "issue16-close-prep",
-      "displayName": "Issue 16 close-prep candidate",
+      "displayName": "Issue 16 ready close-prep",
       "layer": "pr-fast",
       "trigger": "pull_request",
       "mode": "manual",
@@ -168,11 +168,11 @@
       "blocking": true,
       "entrypoint": "docs/50-issue16-close-preparation.md",
       "evidence": "document",
-      "notes": "Manual closure candidate only; PR Fast CI is not main evidence."
+      "notes": "Provides manual closure readiness only; PR Fast CI is not main evidence."
     },
     {
       "id": "issue16-main-evidence-scaffold",
-      "displayName": "Issue 16 main evidence scaffold",
+      "displayName": "Issue 16 main evidence",
       "layer": "pr-fast",
       "trigger": "pull_request",
       "mode": "report-only",
@@ -180,7 +180,7 @@
       "blocking": true,
       "entrypoint": "docs/51-issue16-main-validation-evidence.md",
       "evidence": "document",
-      "notes": "Keeps main/workflow evidence pending until real main or workflow_dispatch evidence exists."
+      "notes": "Records real post-PR #84 main push Full Validate evidence for manual closure review."
     },
     {
       "id": "effective-configuration-consumer-integration",
