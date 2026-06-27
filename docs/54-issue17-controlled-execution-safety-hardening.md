@@ -1,6 +1,6 @@
 # Issue #17 Controlled Execution Safety Hardening
 
-Status: `accepted-pending-main-validation`
+Status: `accepted-ready-for-manual-closure`
 
 ## Scope
 
@@ -87,7 +87,7 @@ The report summary now includes:
 
 ## CI / Quality Gates / Build Lock
 
-PR Fast CI keeps running controlled execution validation and includes the safety hardening Pester files. It is not main/workflow evidence and is not real lifecycle evidence.
+PR Fast CI keeps running controlled execution validation and includes the safety hardening Pester files. It is not main/workflow evidence and is not real lifecycle evidence. Post-PR #89 main push Full Validate evidence is recorded in `docs/57` for manual closure review of the current planning/simulation stage.
 
 Quality Gates add fixture-only gates for disk identity, confirmation token, WIM planning, WinRE planning, and native command envelopes.
 
@@ -100,7 +100,7 @@ Build Lock covers this document, schemas, scripts, fixtures, tests, CI, Quality 
 - No real build, capture, deploy, WinPE build, or boot media creation.
 - No real boot/recovery tooling execution.
 - No registry, profile, hive, service, AppX, Defender, Junction, install, network, or signing action.
-- Issue #17 close-prep is candidate-only in `docs/56`; main evidence remains pending in `docs/57`.
+- Issue #17 close-prep is ready for manual closure review in `docs/56`; main evidence for the planning/simulation stage is recorded in `docs/57`.
 - No Issue #17 completion summary.
 - No automatic Issue #17 closure.
 - No Issue #6-#16 close-prep, main-evidence, or completion summary edits.
@@ -110,7 +110,6 @@ Build Lock covers this document, schemas, scripts, fixtures, tests, CI, Quality 
 - Expand the execution-set matrix only with more fixture or plan-only stages.
 - Design the later human authorization flow for any real execution stage.
 - Keep true execution behind a later manual safety gate.
-- Backfill main/workflow validation evidence only in a later task.
 - Keep true execution behind a separate controlled task with explicit human authorization.
 
 ## Related Documents

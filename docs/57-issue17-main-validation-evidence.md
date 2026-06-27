@@ -1,6 +1,6 @@
 # Issue #17 Main Validation Evidence
 
-Status: `pending-main-validation`
+Status: `ready-for-manual-closure`
 
 ## Evidence Sources
 
@@ -14,26 +14,32 @@ Pull request-only Fast CI is not a substitute. Native command simulation is not 
 
 | Field | Value |
 |---|---|
-| Trigger source | `pending` |
-| Main SHA | `pending` |
-| Workflow run | `pending` |
-| Full Validate job | `pending` |
-| Result | `pending` |
-| Notes | `pending post-PR main/workflow evidence` |
+| Trigger source | `main push` |
+| Main SHA | `b9dd20762886fa8a5e431393cf186f1cea1a4ccc` |
+| Workflow run | `https://github.com/phdiggit/win11-image-kit/actions/runs/28278167308` |
+| Full Validate job | `https://github.com/phdiggit/win11-image-kit/actions/runs/28278167308/job/83788796920` |
+| Result | `success` |
+| Notes | `post-PR #89 Full Validate completed successfully; checkout log fetched b9dd20762886fa8a5e431393cf186f1cea1a4ccc, checked out refs/remotes/origin/main, and printed b9dd20762886fa8a5e431393cf186f1cea1a4ccc; local git log -1 confirmed b9dd20762886fa8a5e431393cf186f1cea1a4ccc` |
 
 ## Controlled Execution Report Evidence
 
 | Field | Value |
 |---|---|
-| Report status | `pending` |
-| failedCount | `pending` |
-| blockedCount | `pending` |
-| authorizationFailureCount | `pending` |
-| executeRequestBlockedCount | `pending` |
-| simulatedFailureCount | `pending` |
-| dependencyBlockedCount | `pending` |
+| Report status | `passed` |
+| failedCount | `0` |
+| blockedCount | `0` |
+| authorizationFailureCount | `0` |
+| executeRequestBlockedCount | `0` |
+| simulatedFailureCount | `0` |
+| dependencyBlockedCount | `0` |
+| diskIdentityMismatchCount | `0` |
+| confirmationTokenFailureCount | `0` |
+| wimValidationFailureCount | `0` |
+| winrePlanFailureCount | `0` |
+| nativeCommandFailureCount | `0` |
 | trueExecution | `false` |
 | whatIf | `true` |
+| executedActionCount | `0` |
 
 ## Real Lifecycle Evidence
 
@@ -52,14 +58,18 @@ Pull request-only Fast CI is not a substitute. Native command simulation is not 
 
 | Field | Value |
 |---|---|
-| Current readiness | `pending-main-validation` |
-| Required next evidence | `main/workflow validation` |
+| Current readiness | `ready-for-manual-closure` |
+| Required next evidence | `maintainer manual review` |
 | PR Fast CI substitute allowed | `false` |
 | Simulation substitute allowed | `false` |
 
-## Pending-State Rules
+## Ready-State Rules
 
-This document must remain pending until a later task records real main push or workflow_dispatch Full Validate evidence. Local report output, PR Fast CI, fixture results, and simulated native command results may support review, but they do not promote this page to ready evidence.
+This document is promoted because a real post-PR #89 `main` push Full Validate job completed successfully and the checkout SHA matches the local `main` SHA. Pull request-only Fast CI is still not a substitute. Native command simulation is still not real lifecycle evidence.
+
+## Same-SHA Local Report Evidence
+
+The Controlled Execution Report Evidence table uses `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/validate/Test-ControlledExecution.ps1 -ReportPath "$env:TEMP\controlled-execution-issue17-main-b9dd207.json"` run locally at the same main SHA after verifying the post-PR #89 Full Validate job completed successfully. This is same-SHA local report evidence, not a GitHub artifact.
 
 ## Related Documents
 

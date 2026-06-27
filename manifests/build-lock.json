@@ -296,14 +296,14 @@
                         "path":  ".github/workflows/ci.yml",
                         "category":  "workflow",
                         "required":  true,
-                        "hash":  "bd715c254cd1eb1da74594d90214e0a4911218679d70d19b02475eadb9f48022",
+                        "hash":  "28799f9d25094df3441396388f61b91d333664a1e9c7225b11493ccaf13fe23b",
                         "reason":  "Windows CI must run Issue 17 close-prep and main-evidence scaffold guardrails in PR Fast CI."
                     },
                     {
                         "path":  "README.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "47bd8da442425436a484fecdabf6592b384f768b822929f98f13676423149e8b",
+                        "hash":  "336a70107eb47c5677174726f1041a0b1dbd513078d41d43c0d367078e754d18",
                         "reason":  "README links the Issue 17 close-prep and pending main evidence documents."
                     },
                     {
@@ -394,7 +394,7 @@
                         "path":  "manifests/quality-gates.json",
                         "category":  "manifest",
                         "required":  true,
-                        "hash":  "cfb08b17089c99d35db85be900a66b0fa1dfffc01832bda6e705933532a1137b",
+                        "hash":  "65d05a2220c1b76c7dff05dcda882fda731907b1496c02968ed38564ba362684",
                         "reason":  "Quality Gates include Issue 17 close-prep and pending main-evidence scaffold gates."
                     },
                     {
@@ -1087,7 +1087,7 @@
                         "path":  "docs/53-issue17-controlled-execution-acceptance.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "1e79782a7ff89201e77b7a0494bdfa9a91a1436c26cf798fe26ac0d4f05e9f33",
+                        "hash":  "c5c38355d73a66f0607d731a3c6c14e4675b7204a25eeec56837a603f18ad4b6",
                         "reason":  "Issue 17 acceptance consolidation stays synchronized with close-prep and pending main evidence scaffolds."
                     },
                     {
@@ -1192,14 +1192,14 @@
                         "path":  "tests/pester/Issue17ControlledExecution.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "b74f651f9debf7a2889052b0152494b41b6261238db9ed62077220e4f22f1cd7",
+                        "hash":  "e37bd1e210f61479569d94aa914717d007aa1f407d6fadff1c3f760159f8fde2",
                         "reason":  "Issue 17 intake tests guard auto-close boundaries across all Issue 17 docs."
                     },
                     {
                         "path":  "tests/pester/Issue17ControlledExecutionAcceptance.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "74036997d19893334ee53caae267c0f3eb5f34770d643adb1c515f16cef540c6",
+                        "hash":  "67fb7d6da7af904258aa8e0bf50f4a5566b00b5c639dde51bf24e61e06ceeec6",
                         "reason":  "Issue 17 acceptance tests guard accepted-pending-main-validation state."
                     },
                     {
@@ -1234,7 +1234,7 @@
                         "path":  "docs/54-issue17-controlled-execution-safety-hardening.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "c14789440b1c02f9a8e275c8f3d8938a88d124e6b2a79638ba0a30ad5b02f959",
+                        "hash":  "a76d7824e27bc7fd15ce2a88c42b584eb8dc39002cdebbfea04a30ad05d2fc77",
                         "reason":  "Issue 17 safety hardening remains accepted while real execution evidence stays pending."
                     },
                     {
@@ -1458,7 +1458,7 @@
                         "path":  "tests/pester/Issue17ControlledExecutionHardening.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "7a23b9b82c54c38e8bbf16131c8bf3e04d96eb6144283892623145a56782d01e",
+                        "hash":  "9a71c2ed86dc96a4052b6345824f6817a43df1b0fd2092718d49957c7fb8d15c",
                         "reason":  "Issue 17 hardening tests guard candidate and pending scaffold boundaries."
                     },
                     {
@@ -1472,7 +1472,7 @@
                         "path":  "docs/55-issue17-controlled-execution-authorization.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "f4fb40a134a5dd50f915b993dbec550c9b44d64b262625194cb4d37fc957e1fe",
+                        "hash":  "448ef566a0928528c784932f79fd385dedc88994c90e75bf864102be9cfb353a",
                         "reason":  "Issue 17 authorization and simulation acceptance remains pending main validation."
                     },
                     {
@@ -1633,7 +1633,7 @@
                         "path":  "tests/pester/Issue17ControlledExecutionAuthorization.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "50ed5c32f748a4234b9ae2a10c0b9bb17a18bf17c797876110bb6eb68e7e766c",
+                        "hash":  "869143dd7d875d036e50571c331be62e2b6e75def8becb552982cc46ef5bf8a5",
                         "reason":  "Issue 17 authorization tests guard accepted-pending-main-validation state."
                     },
                     {
@@ -1647,28 +1647,28 @@
                         "path":  "docs/56-issue17-close-preparation.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "860aa23afe41bb1ed4ef7f8e45e263cb7e6b10c3bb90bf13689dba7be8242f2a",
+                        "hash":  "8fa27c9a00640825d934673834120409efd526a2384f1a9a44701202d4122470",
                         "reason":  "Issue 17 close-prep candidate records manual review scope without final readiness."
                     },
                     {
                         "path":  "docs/57-issue17-main-validation-evidence.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "9b4f1a9e796babef8aba9fdf0b1cf9e11e8a413bae3d5b4b98d56e199250bf56",
+                        "hash":  "ce72057fe304f575f64ef372b1debad8f410026a946187c3f26276b06a847b7a",
                         "reason":  "Issue 17 main validation evidence scaffold remains pending until real main or workflow evidence exists."
                     },
                     {
                         "path":  "tests/pester/Issue17ClosePrep.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "c0f16ad4a644fad3dc275d095efae15275bfc0fdde3f75097cf54de2ac6c184c",
+                        "hash":  "67e04174a29f4a7b409698470cf948aade8829b698ca3f8071a6f66b20ee88a2",
                         "reason":  "Issue 17 close-prep tests guard candidate-only manual closure boundaries."
                     },
                     {
                         "path":  "tests/pester/Issue17MainValidationEvidence.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "2d2423de2a03edfcde35357fc5534d70f034c6c7425dc57f44c1d09f60e4a1f9",
+                        "hash":  "ebf5a09f94b6c893fc73251f359fb1f9210a833a2086ccc7cc8905d669865a06",
                         "reason":  "Issue 17 main evidence tests guard pending-only scaffold fields."
                     }
                 ],

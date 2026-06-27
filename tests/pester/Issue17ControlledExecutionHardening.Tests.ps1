@@ -4,18 +4,18 @@ Describe "Issue 17 controlled execution hardening acceptance" {
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
     }
 
-    It "keeps docs/54 accepted but pending main validation" {
+    It "keeps docs/54 accepted and ready for manual closure" {
         $doc52 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\52-issue17-controlled-execution-intake.md") -Raw -Encoding UTF8
         $doc53 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\53-issue17-controlled-execution-acceptance.md") -Raw -Encoding UTF8
         $doc54 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\54-issue17-controlled-execution-safety-hardening.md") -Raw -Encoding UTF8
 
         Assert-KitMatch $doc52 'Status: `in-progress`'
-        Assert-KitMatch $doc53 'Status: `accepted-pending-main-validation`'
-        Assert-KitMatch $doc54 'Status: `accepted-pending-main-validation`'
-        Assert-KitNotMatch $doc54 'ready-for-manual-closure'
+        Assert-KitMatch $doc53 'Status: `accepted-ready-for-manual-closure`'
+        Assert-KitMatch $doc54 'Status: `accepted-ready-for-manual-closure`'
+        Assert-KitMatch $doc54 'Post-PR #89 main push Full Validate evidence'
     }
 
-    It "creates only candidate close-prep and pending main evidence documents" {
+    It "creates only ready close-prep and ready main evidence documents" {
         foreach ($path in @(
             "docs\56-issue17-close-preparation.md",
             "docs\57-issue17-main-validation-evidence.md"
@@ -24,6 +24,11 @@ Describe "Issue 17 controlled execution hardening acceptance" {
                 throw "Issue 17 scaffold document should exist: $path"
             }
         }
+
+        $closePrep = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\56-issue17-close-preparation.md") -Raw -Encoding UTF8
+        $mainEvidence = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\57-issue17-main-validation-evidence.md") -Raw -Encoding UTF8
+        Assert-KitMatch $closePrep 'Status: `ready-for-manual-closure`'
+        Assert-KitMatch $mainEvidence 'Status: `ready-for-manual-closure`'
 
         foreach ($path in @(
             "docs\55-issue17-close-preparation.md",

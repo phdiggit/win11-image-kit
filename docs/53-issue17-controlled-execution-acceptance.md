@@ -1,17 +1,17 @@
 # Issue #17 Controlled Execution Acceptance
 
-Status: `accepted-pending-main-validation`
+Status: `accepted-ready-for-manual-closure`
 
 ## Acceptance Matrix
 
 | Area | Baseline expectation | Status |
 |---|---|---|
-| Intake | Issue #17 and Roadmap #19 source are recorded in `docs/52`. | `accepted-pending-main-validation` |
-| Scope | This stage is intake plus dry-run / report-only baseline only. | `accepted-pending-main-validation` |
-| Authorization | Explicit authorization and simulation are planned only; `-Execute` is blocked. | `accepted-pending-main-validation` |
-| Closure candidate | `docs/56` records manual closure candidate scope only. | `ready-for-manual-closure-candidate` |
-| Main evidence | `docs/57` is a pending scaffold and does not use PR Fast CI or simulation as a substitute. | `pending-main-validation` |
-| PR semantics | PR body must use `Refs #17`, not auto-close keywords. | `accepted-pending-main-validation` |
+| Intake | Issue #17 and Roadmap #19 source are recorded in `docs/52`. | `accepted-ready-for-manual-closure` |
+| Scope | This stage is intake plus dry-run / report-only baseline only. | `accepted-ready-for-manual-closure` |
+| Authorization | Explicit authorization and simulation are planned only; `-Execute` is blocked. | `accepted-ready-for-manual-closure` |
+| Closure readiness | `docs/56` records manual closure readiness for the current planning stage only. | `ready-for-manual-closure` |
+| Main evidence | `docs/57` records post-PR #89 main push Full Validate success and does not use PR Fast CI or simulation as a substitute. | `ready-for-manual-closure` |
+| PR semantics | PR body must use `Refs #17`, not auto-close keywords. | `accepted-ready-for-manual-closure` |
 
 ## Dry-run / WhatIf Coverage
 
@@ -49,7 +49,7 @@ The report contract records:
 
 ## Evidence Chain Linkage
 
-The execution plan report is a future evidence-chain producer placeholder. Current mode is only `report-only` / fixture. This stage does not claim real lifecycle evidence or main/workflow evidence for Issue #17. Manual closure review is candidate-only until main/workflow validation evidence is recorded.
+The execution plan report is a future evidence-chain producer placeholder. Current mode is only `report-only` / fixture. This stage does not claim real lifecycle execution evidence for Issue #17. Post-PR #89 main push Full Validate evidence is recorded in `docs/57` for the current planning/simulation stage.
 
 ## Safety Boundaries
 
@@ -69,8 +69,8 @@ This acceptance scaffold confirms:
 - Design the future explicit WinPE authorization flow.
 - Extend the fixture adapters into a fuller execution-set matrix.
 - Add real execution authorization only in a later, explicitly approved stage.
-- Backfill post-PR main/workflow validation evidence in a later task.
-- Promote manual closure readiness only after that evidence exists and is reviewed.
+- Keep true execution behind a later explicitly approved task.
+- Treat manual closure readiness as limited to the current planning/simulation stage.
 
 ## Related Documents
 
