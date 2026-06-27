@@ -1,6 +1,6 @@
 # Issue #18 User Experience Capability Matrix
 
-Status: `accepted-pending-main-validation`
+Status: `accepted-ready-for-manual-closure`
 
 ## Scope
 
@@ -75,7 +75,7 @@ Unsupported or future-only matrix rows should produce a clear manual checklist i
 
 ## CI / Quality Gates / Build Lock
 
-PR Fast CI runs the Issue #18 UX restore validator and the UserExperience Pester subset. Quality Gates include capability matrix, template metadata, scope semantics, verification plan, close-prep candidate, pending main evidence scaffold, and this document. Build Lock tracks the docs, manifest, schemas, helper scripts, fixtures, tests, workflow, README, and Quality Gates inputs.
+PR Fast CI runs the Issue #18 UX restore validator and the UserExperience Pester subset, but it is not main/workflow evidence. Quality Gates include capability matrix, template metadata, scope semantics, verification plan, close-prep readiness, main validation evidence, and this document. Build Lock tracks the docs, manifest, schemas, helper scripts, fixtures, tests, workflow, README, and Quality Gates inputs. Post-PR #96 main/workflow Full Validate success satisfies the current stage's manual closure readiness evidence.
 
 ## Non-goals
 
@@ -87,8 +87,8 @@ PR Fast CI runs the Issue #18 UX restore validator and the UserExperience Pester
 - no DISM import
 - no network download
 - no install/uninstall/upgrade
-- no final ready close-prep
-- no ready main evidence
+- ready close-prep for the current report-only / handler-adapter stage
+- ready main evidence for the current report-only / handler-adapter stage
 - no Issue #18 completion summary
 - no automatic Issue #18 closure
 

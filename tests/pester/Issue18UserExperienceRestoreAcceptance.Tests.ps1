@@ -7,7 +7,8 @@ Describe "Issue 18 user experience restore acceptance scaffold" {
     It "keeps acceptance in the current report-only stage" {
         $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\59-issue18-user-experience-restore-acceptance.md") -Raw -Encoding UTF8
 
-        Assert-KitMatch $doc 'Status: `accepted-pending-main-validation`'
+        Assert-KitMatch $doc 'Status: `accepted-ready-for-manual-closure`'
+        Assert-KitMatch $doc "post-PR #96 main/workflow success evidence"
         Assert-KitMatch $doc "PR Fast CI is not main/workflow evidence"
         Assert-KitMatch $doc "Fixture/report-only validation is not real UX restore evidence"
         Assert-KitMatch $doc "handler reports are not real UX restore evidence"

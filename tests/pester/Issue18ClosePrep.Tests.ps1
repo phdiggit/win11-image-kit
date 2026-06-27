@@ -6,8 +6,8 @@ Describe "Issue 18 close-prep candidate" {
         $script:Doc = Get-Content -LiteralPath $script:DocPath -Raw -Encoding UTF8
     }
 
-    It "keeps docs/62 as a candidate, not final ready" {
-        Assert-KitMatch $script:Doc 'Status:\s*`ready-for-manual-closure-candidate`'
+    It "keeps docs/62 ready for manual closure of the current stage" {
+        Assert-KitMatch $script:Doc 'Status:\s*`ready-for-manual-closure`'
         foreach ($term in @(
             "## Final Scope Candidate",
             "## Accepted Report-only / Fixture / Handler Capabilities",
@@ -23,7 +23,7 @@ Describe "Issue 18 close-prep candidate" {
             Assert-KitMatch $script:Doc ([regex]::Escape($term))
         }
 
-        Assert-KitMatch $script:Doc "not final ready"
+        Assert-KitMatch $script:Doc "manual closure readiness"
         Assert-KitMatch $script:Doc "must not be automatically closed"
         Assert-KitNotMatch $script:Doc "(?i)\b(fixes|closes|resolves)\s+#18\b"
     }

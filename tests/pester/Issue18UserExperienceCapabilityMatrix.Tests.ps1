@@ -7,12 +7,12 @@ Describe "Issue 18 user experience capability matrix docs" {
     It "adds docs/60 with scope and evidence semantics" {
         $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\60-issue18-user-experience-capability-matrix.md") -Raw -Encoding UTF8
 
-        Assert-KitMatch $doc 'Status: `accepted-pending-main-validation`'
+        Assert-KitMatch $doc 'Status: `accepted-ready-for-manual-closure`'
         Assert-KitMatch $doc "default-user.*not.*current-user"
         Assert-KitMatch $doc "Writing Default Profile does not modify the current user"
         Assert-KitMatch $doc "Command exit code is not enough UX evidence"
-        Assert-KitMatch $doc "no final ready close-prep"
-        Assert-KitMatch $doc "no ready main evidence"
+        Assert-KitMatch $doc "ready close-prep"
+        Assert-KitMatch $doc "ready main evidence"
     }
 
     It "keeps Issue 18 out of completion summary docs" {
