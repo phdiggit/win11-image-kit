@@ -288,7 +288,31 @@
       "blocking": true,
       "entrypoint": "docs/53-issue17-controlled-execution-acceptance.md",
       "evidence": "document",
-      "notes": "Records in-acceptance dry-run coverage without final closure."
+      "notes": "Records accepted-pending-main-validation dry-run coverage without final closure."
+    },
+    {
+      "id": "issue17-close-prep",
+      "displayName": "Issue 17 close-prep candidate",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "docs/56-issue17-close-preparation.md",
+      "evidence": "document",
+      "notes": "Records manual closure candidate only; PR Fast CI and simulation are not main/workflow evidence."
+    },
+    {
+      "id": "issue17-main-evidence-scaffold",
+      "displayName": "Issue 17 main evidence scaffold",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "docs/57-issue17-main-validation-evidence.md",
+      "evidence": "document",
+      "notes": "Keeps main/workflow evidence pending until real main or workflow_dispatch evidence exists."
     },
     {
       "id": "issue16-acceptance",

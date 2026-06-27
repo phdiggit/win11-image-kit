@@ -76,6 +76,7 @@ scripts/tests/Test-PostDeploy.ps1 -SkipCommandTests -SkipServiceStatus
 Issue #17 WinPE 受控执行开篇 intake 与 dry-run baseline 见 [Controlled Execution Intake](docs/52-issue17-controlled-execution-intake.md) 和 [Controlled Execution Acceptance](docs/53-issue17-controlled-execution-acceptance.md)。
 Issue #17 disk identity / WIM / WinRE / native command fixture hardening 见 [Controlled Execution Safety Hardening](docs/54-issue17-controlled-execution-safety-hardening.md)。
 Issue #17 authorization / execution-set matrix / native simulation / WinPE plan entrypoint 见 [Controlled Execution Authorization and Simulation](docs/55-issue17-controlled-execution-authorization.md)。
+Issue #17 acceptance consolidation、人工收口候选和 pending main 验证证据脚手架见 [Close Preparation](docs/56-issue17-close-preparation.md) 和 [Main Validation Evidence](docs/57-issue17-main-validation-evidence.md)；PR Fast CI 和 simulation 不作为 main/workflow 或真实生命周期 evidence。
 
 按需归档日志和轻量报告时：
 

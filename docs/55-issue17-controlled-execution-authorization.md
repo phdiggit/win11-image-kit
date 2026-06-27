@@ -1,6 +1,6 @@
 # Issue #17 Controlled Execution Authorization and Simulation
 
-Status: `in-acceptance`
+Status: `accepted-pending-main-validation`
 
 ## Scope
 
@@ -97,11 +97,11 @@ Summary counts now include authorization failures, execute-request blocks, simul
 
 ## CI / Quality Gates / Build Lock
 
-PR Fast CI continues to run `scripts/validate/Test-ControlledExecution.ps1` and adds authorization, execution-set, native simulation, and WinPE plan Pester coverage.
+PR Fast CI continues to run `scripts/validate/Test-ControlledExecution.ps1` and includes authorization, execution-set, native simulation, WinPE plan, close-prep candidate, and pending main-evidence Pester coverage.
 
 Quality Gates include the new controlled-execution sub-gates. Build Lock covers the touched docs, schemas, scripts, fixtures, tests, workflow, Quality Gates, and README. It does not include `manifests/paths.local.json`, real disk reports, real WIM artifacts, real WinPE logs, or private machine paths.
 
-PR Fast CI is not main/workflow lifecycle evidence.
+PR Fast CI is not main/workflow lifecycle evidence. Native command simulation is not real lifecycle evidence.
 
 ## Non-goals
 
@@ -111,17 +111,21 @@ PR Fast CI is not main/workflow lifecycle evidence.
 - No native command execution.
 - No registry, profile, hive, service, AppX, Defender, Junction, Sysprep, install, network, signing, build, capture, deploy, WinPE media, or boot action.
 - No automatic Issue #17 closure.
+- No Issue #17 completion summary.
 - No Issue #6-#16 closure document edits.
 
 ## Remaining Work
 
 - Decide the later human authorization and review model for any real execution stage.
 - Define how true execution evidence would be collected after separate approval.
-- Keep Issue #17 in acceptance until a later task explicitly reaches closure preparation.
+- Backfill main/workflow validation evidence in a later task before any final manual closure decision.
+- Keep real execution behind a later controlled task with separate human authorization.
 
 ## Related Documents
 
 - [Issue #17 Controlled Execution Intake](52-issue17-controlled-execution-intake.md)
 - [Issue #17 Controlled Execution Acceptance](53-issue17-controlled-execution-acceptance.md)
 - [Issue #17 Controlled Execution Safety Hardening](54-issue17-controlled-execution-safety-hardening.md)
+- [Issue #17 Close Preparation](56-issue17-close-preparation.md)
+- [Issue #17 Main Validation Evidence](57-issue17-main-validation-evidence.md)
 - [WinPE Capture and Restore](03-WinPE捕获与还原.md)

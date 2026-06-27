@@ -14,14 +14,16 @@ Describe "Issue 17 controlled execution intake" {
         Assert-KitMatch $doc "Roadmap entry"
     }
 
-    It "does not create Issue 17 closure documents" {
+    It "does not create obsolete Issue 17 closure documents or completion summaries" {
         $forbidden = @(
             "docs\54-issue17-close-preparation.md",
             "docs\54-issue17-main-validation-evidence.md",
             "docs\54-issue17-completion-summary.md",
             "docs\55-issue17-close-preparation.md",
             "docs\55-issue17-main-validation-evidence.md",
-            "docs\55-issue17-completion-summary.md"
+            "docs\55-issue17-completion-summary.md",
+            "docs\56-issue17-completion-summary.md",
+            "docs\57-issue17-completion-summary.md"
         )
 
         foreach ($path in $forbidden) {
@@ -35,6 +37,10 @@ Describe "Issue 17 controlled execution intake" {
         $combined = @(
             Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\52-issue17-controlled-execution-intake.md") -Raw -Encoding UTF8
             Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\53-issue17-controlled-execution-acceptance.md") -Raw -Encoding UTF8
+            Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\54-issue17-controlled-execution-safety-hardening.md") -Raw -Encoding UTF8
+            Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\55-issue17-controlled-execution-authorization.md") -Raw -Encoding UTF8
+            Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\56-issue17-close-preparation.md") -Raw -Encoding UTF8
+            Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\57-issue17-main-validation-evidence.md") -Raw -Encoding UTF8
         ) -join "`n"
 
         Assert-KitNotMatch $combined '(?im)^\s*(Fixes|Closes|Resolves)\s+#17\b'

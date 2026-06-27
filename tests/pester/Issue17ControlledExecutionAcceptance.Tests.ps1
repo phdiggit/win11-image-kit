@@ -4,11 +4,12 @@ Describe "Issue 17 controlled execution acceptance scaffold" {
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
     }
 
-    It "keeps docs/53 in acceptance without final evidence claims" {
+    It "keeps docs/53 accepted but pending main validation" {
         $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\53-issue17-controlled-execution-acceptance.md") -Raw -Encoding UTF8
 
-        Assert-KitMatch $doc 'Status: `in-acceptance`'
-        Assert-KitMatch $doc "does not claim real lifecycle evidence, main evidence"
+        Assert-KitMatch $doc 'Status: `accepted-pending-main-validation`'
+        Assert-KitMatch $doc "does not claim real lifecycle evidence or main/workflow evidence"
+        Assert-KitMatch $doc "manual closure review is candidate-only"
         Assert-KitMatch $doc "no automatic Issue #17 closure"
         Assert-KitNotMatch $doc 'Status: `ready-for-manual-closure`'
     }
