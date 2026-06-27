@@ -38,6 +38,13 @@ function Get-KitUserExperienceStrings {
             return
         }
 
+        if ($InputObject -is [System.Collections.IDictionary]) {
+            foreach ($value in $InputObject.Values) {
+                Get-KitUserExperienceStrings -InputObject $value
+            }
+            return
+        }
+
         if ($InputObject -is [System.Collections.IEnumerable] -and -not ($InputObject -is [string])) {
             foreach ($item in $InputObject) {
                 Get-KitUserExperienceStrings -InputObject $item
@@ -45,8 +52,9 @@ function Get-KitUserExperienceStrings {
             return
         }
 
-        if ($InputObject.PSObject -and $InputObject.PSObject.Properties) {
-            foreach ($property in $InputObject.PSObject.Properties) {
+        $dataProperties = @($InputObject.PSObject.Properties | Where-Object { $_.MemberType -eq "NoteProperty" })
+        if ($dataProperties.Count -gt 0) {
+            foreach ($property in $dataProperties) {
                 Get-KitUserExperienceStrings -InputObject $property.Value
             }
         }

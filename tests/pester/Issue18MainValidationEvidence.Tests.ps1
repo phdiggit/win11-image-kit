@@ -20,13 +20,25 @@ Describe "Issue 18 main validation evidence scaffold" {
         Assert-KitNotMatch $script:Doc "(?i)\b(fixes|closes|resolves)\s+#18\b"
     }
 
-    It "records the post-94 failed run as blocked evidence only" {
+    It "records the post-95 failed run as blocked evidence only" {
         Assert-KitMatch $script:Doc "## Blocked Evidence Attempt"
+        Assert-KitMatch $script:Doc "actions/runs/28284104911"
+        Assert-KitMatch $script:Doc "bcda2cfd9598b6f445a186e03bc3a849506c9a92"
+        Assert-KitMatch $script:Doc "actions/runs/28284104911/job/83804976569"
+        Assert-KitMatch $script:Doc "Run Pester tests with PowerShell 7"
+        Assert-KitMatch $script:Doc "30-minute step timeout"
+        Assert-KitMatch $script:Doc "non-data object adapter properties"
+        Assert-KitMatch $script:Doc "failed run is recorded only as blocked evidence"
+        Assert-KitMatch $script:Doc "not used as ready evidence"
+    }
+
+    It "keeps the post-94 failed run as previous blocked evidence only" {
+        Assert-KitMatch $script:Doc "## Previous Blocked Evidence Attempt"
         Assert-KitMatch $script:Doc "actions/runs/28281913558"
         Assert-KitMatch $script:Doc "c634998b4d050601f72183f3114d463639518b9b"
         Assert-KitMatch $script:Doc "Run Pester tests with PowerShell 7"
         Assert-KitMatch $script:Doc "conclusion ``failure``"
-        Assert-KitMatch $script:Doc "failed run is recorded only as blocked evidence"
+        Assert-KitMatch $script:Doc "historical blocked evidence only"
         Assert-KitMatch $script:Doc "not used as ready evidence"
     }
 

@@ -39,4 +39,34 @@ Describe "User experience template metadata" {
             }
         }
     }
+
+    It "scans only data properties for private paths" {
+        $metadata = [pscustomobject][ordered]@{
+            schemaVersion = 1
+            templateId = "scalar-property-regression"
+            templateType = "default-app-associations"
+            expectedTemplateType = "default-app-associations"
+            targetScope = "current-user"
+            expectedScope = "current-user"
+            generatedAt = [datetime]"2026-06-27T00:00:00Z"
+            sourceWindows = [pscustomobject][ordered]@{
+                displayVersion = "24H2"
+                buildNumber = 26100
+            }
+            targetApps = @(
+                [pscustomobject][ordered]@{
+                    appId = "browser"
+                    required = $true
+                    knownCapability = $true
+                }
+            )
+        }
+
+        $privatePaths = @(Test-KitUserExperiencePrivatePath -InputObject $metadata)
+        $result = Test-KitUserExperienceTemplateMetadata -InputObject $metadata
+
+        Assert-KitEqual $privatePaths.Count 0
+        Assert-KitEqual $result.status "passed"
+        Assert-KitEqual $result.localPrivatePathCount 0
+    }
 }

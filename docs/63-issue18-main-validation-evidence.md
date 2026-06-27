@@ -19,9 +19,13 @@ This scaffold is reserved for post-PR main/workflow validation evidence. PR Fast
 
 ## Blocked Evidence Attempt
 
-The post-PR #94 `main` push run at `https://github.com/phdiggit/win11-image-kit/actions/runs/28281913558` targeted `c634998b4d050601f72183f3114d463639518b9b`, but `Full Validate` completed with conclusion `failure`. The job `https://github.com/phdiggit/win11-image-kit/actions/runs/28281913558/job/83799151961` failed in `Run Pester tests with PowerShell 7`. This failed run is recorded only as blocked evidence and is not used as ready evidence.
+The post-PR #95 `main` push run at `https://github.com/phdiggit/win11-image-kit/actions/runs/28284104911` targeted `bcda2cfd9598b6f445a186e03bc3a849506c9a92`, but `Full Validate` completed with conclusion `failure`. The job `https://github.com/phdiggit/win11-image-kit/actions/runs/28284104911/job/83804976569` failed in `Run Pester tests with PowerShell 7` after the 30-minute step timeout. The failure was caused by the PowerShell 7 Pester run recursing through non-data object adapter properties while scanning user-experience template metadata for private paths. This failed run is recorded only as blocked evidence and is not used as ready evidence.
 
-Blocked reason: post-PR #94 main Full Validate completed with conclusion `failure`, and the failed run is not eligible as ready evidence.
+Blocked reason: post-PR #95 main Full Validate completed with conclusion `failure`, and the failed run is not eligible as ready evidence.
+
+## Previous Blocked Evidence Attempt
+
+The post-PR #94 `main` push run at `https://github.com/phdiggit/win11-image-kit/actions/runs/28281913558` targeted `c634998b4d050601f72183f3114d463639518b9b`, but `Full Validate` completed with conclusion `failure`. The job `https://github.com/phdiggit/win11-image-kit/actions/runs/28281913558/job/83799151961` failed in `Run Pester tests with PowerShell 7`. This earlier failed run remains recorded as historical blocked evidence only and is not used as ready evidence.
 
 ## UX Restore Report Evidence
 
