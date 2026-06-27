@@ -4,11 +4,11 @@ Describe "Issue 18 restore handler integration" {
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
     }
 
-    It "keeps docs/61 accepted but not final ready" {
+    It "keeps docs/61 accepted and ready for manual closure" {
         $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\61-issue18-restore-handler-integration.md") -Raw -Encoding UTF8
-        Assert-KitMatch $doc 'Status: `accepted-pending-main-validation`'
+        Assert-KitMatch $doc 'Status: `accepted-ready-for-manual-closure`'
         Assert-KitMatch $doc "report-only"
-        Assert-KitMatch $doc "no final ready close-prep"
+        Assert-KitMatch $doc "post-PR #96 main/workflow Full Validate success"
         Assert-KitMatch $doc "handler report.*real UX restore evidence"
 
         $docs = @(Get-ChildItem -LiteralPath (Join-Path $script:RepoRoot "docs") -File | Where-Object {

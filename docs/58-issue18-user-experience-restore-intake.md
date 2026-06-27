@@ -65,7 +65,7 @@ Report 必须包含：
 
 ## CI / Quality Gates / Build Lock
 
-PR Fast CI 运行 `scripts/validate/Test-UserExperienceRestore.ps1` 和 Issue #18 Pester。Quality Gates 新增 `user-experience-restore`、`issue18-intake`、`issue18-acceptance`、`user-experience-default-apps-plan` 和 `user-experience-start-menu-plan`。Build Lock 纳入本阶段文档、manifest、schema、scripts、fixtures、tests、workflow、README 和 Quality Gates。
+PR Fast CI 运行 `scripts/validate/Test-UserExperienceRestore.ps1` 和 Issue #18 Pester。Post-PR #96 main/workflow Full Validate success 已记录为当前 report-only / handler-adapter stage 的 ready evidence。Quality Gates 纳入 `user-experience-restore`、`issue18-intake`、`issue18-acceptance`、`user-experience-default-apps-plan`、`user-experience-start-menu-plan`、close-prep 和 main evidence 文档。Build Lock 纳入本阶段文档、manifest、schema、scripts、fixtures、tests、workflow、README 和 Quality Gates。
 
 ## Acceptance Checklist
 
@@ -74,7 +74,7 @@ PR Fast CI 运行 `scripts/validate/Test-UserExperienceRestore.ps1` 和 Issue #1
 - [x] 默认应用和开始菜单计划是 version-aware。
 - [x] baseline fixture 可生成 passing report。
 - [x] unsupported version、missing build、unknown ProgId、profile write request、registry write request 和 local private path fixtures 被阻断。
-- [x] 不生成 close-prep / main-evidence / completion summary。
+- [x] 生成 ready close-prep 和 main-evidence 文档，但不生成 completion summary。
 - [x] 不自动关闭 Issue #18。
 
 ## Related Documents

@@ -1,18 +1,18 @@
 # Issue #18 User Experience Restore Acceptance
 
-Status: `accepted-pending-main-validation`
+Status: `accepted-ready-for-manual-closure`
 
 ## Acceptance Matrix
 
 | Area | Current result | Status |
 |---|---|---|
-| Intake | Real Issue #18 and Roadmap #19 source are recorded in docs/58. | `accepted-pending-main-validation` |
-| Scope | This stage is intake plus report-only / fixture baseline. | `accepted-pending-main-validation` |
-| Manifest/schema | UX restore manifest and closed schemas define plan-only behavior. | `accepted-pending-main-validation` |
-| Validator | Baseline report passes; failure fixtures block or fail. | `accepted-pending-main-validation` |
-| Safety | Registry, profile, default app, Start menu, taskbar, network and true execution flags remain false. | `accepted-pending-main-validation` |
-| CI/QG/Build Lock | PR Fast CI, Quality Gates and Build Lock include Issue #18 artifacts. | `accepted-pending-main-validation` |
-| Capability matrix | Version capability, template metadata, scope semantics, and verification plan are fixture-backed and report-only. | `accepted-pending-main-validation` |
+| Intake | Real Issue #18 and Roadmap #19 source are recorded in docs/58. | `accepted-ready-for-manual-closure` |
+| Scope | This stage is intake plus report-only / fixture baseline. | `accepted-ready-for-manual-closure` |
+| Manifest/schema | UX restore manifest and closed schemas define plan-only behavior. | `accepted-ready-for-manual-closure` |
+| Validator | Baseline report passes; failure fixtures block or fail. | `accepted-ready-for-manual-closure` |
+| Safety | Registry, profile, default app, Start menu, taskbar, network and true execution flags remain false. | `accepted-ready-for-manual-closure` |
+| CI/QG/Build Lock | Quality Gates and Build Lock include Issue #18 artifacts; post-PR #96 main/workflow Full Validate succeeded. | `accepted-ready-for-manual-closure` |
+| Capability matrix | Version capability, template metadata, scope semantics, and verification plan are fixture-backed and report-only. | `accepted-ready-for-manual-closure` |
 
 ## Version-Aware Coverage
 
@@ -45,7 +45,7 @@ PR Fast CI is not main/workflow evidence. Fixture/report-only validation is not 
 
 ## Main Validation Boundary
 
-This acceptance state is not final ready. It remains pending main/workflow validation and maintainer manual closure review. PR Fast CI is not main/workflow evidence, fixture/report-only validation is not real UX restore evidence, handler reports are not real UX restore evidence, and manual checklist rows are not success evidence.
+This acceptance state is ready for maintainer manual closure review of the current report-only / handler-adapter stage based on docs/63 post-PR #96 main/workflow success evidence. PR Fast CI is not main/workflow evidence, fixture/report-only validation is not real UX restore evidence, handler reports are not real UX restore evidence, and manual checklist rows are not success evidence.
 
 ## Remaining Work
 

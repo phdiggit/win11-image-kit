@@ -1,10 +1,10 @@
 # Issue #18 Close Preparation
 
-Status: `ready-for-manual-closure-candidate`
+Status: `ready-for-manual-closure`
 
 ## Final Scope Candidate
 
-This document is a manual closure candidate scaffold, not final ready. Issue #18 can be evaluated for whether the current report-only / handler-adapter stage is complete, but it must not be automatically closed by this PR.
+This document records manual closure readiness for the current report-only / handler-adapter stage. Issue #18 can be evaluated for maintainer manual closure of this stage, but it must not be automatically closed by this PR.
 
 The candidate scope covers version-aware and scope-aware UX restore planning, template metadata validation, handler adapters, manual checklist generation, false-success guardrails, and report-only safety boundaries.
 
@@ -21,8 +21,8 @@ The candidate scope covers version-aware and scope-aware UX restore planning, te
 
 - No automatic Issue #18 closure.
 - No Issue #18 completion summary.
-- No final ready close-prep state.
-- No ready main-validation evidence.
+- Ready is limited to current report-only / handler-adapter manual closure readiness.
+- Real UX restore execution remains future authorized work.
 - No registry write.
 - No profile write.
 - No default user hive write.
@@ -41,9 +41,9 @@ The current acceptance can only prove that planning, blocking, schema validation
 
 ## Manual Closure Checklist
 
-- Confirm docs/59, docs/60, and docs/61 are `accepted-pending-main-validation`.
-- Confirm this document remains `ready-for-manual-closure-candidate`, not final ready.
-- Confirm docs/63 remains `pending-main-validation`.
+- Confirm docs/59, docs/60, and docs/61 are `accepted-ready-for-manual-closure`.
+- Confirm this document is `ready-for-manual-closure`.
+- Confirm docs/63 is `ready-for-manual-closure`.
 - Confirm no Issue #18 completion summary exists.
 - Confirm `Restore-UserExperience.ps1 -Apply` and `-Execute` remain blocked.
 - Confirm baseline mutation counters remain zero.
@@ -63,7 +63,7 @@ Checked-in metadata may describe reference templates and target capabilities. It
 
 ## Closure Note Draft
 
-Issue #18 has completed the report-only UX restore planning, version capability, scope semantics, template metadata, handler adapter, manual checklist, and false-success guardrail stages. Real UX restore execution and post-PR main/workflow validation evidence remain separate follow-up work.
+Issue #18 has completed the report-only UX restore planning, version capability, scope semantics, template metadata, handler adapter, manual checklist, false-success guardrail, and post-PR #96 main/workflow validation evidence requirements for this stage. Real UX restore execution remains separate future authorized work.
 
 Refs #18
 

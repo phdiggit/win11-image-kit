@@ -1,6 +1,6 @@
 # Issue #18 Restore Handler Integration
 
-Status: `accepted-pending-main-validation`
+Status: `accepted-ready-for-manual-closure`
 
 ## Scope
 
@@ -70,8 +70,8 @@ manual checklist 是未来授权验证的待办清单：
 
 ## Current Non-goals
 
-- no final ready close-prep
-- no ready main-validation evidence
+- ready is limited to current report-only / handler-adapter manual closure readiness
+- real UX restore execution remains future authorized work
 - no Issue #18 completion summary
 - no Issue #18 auto-close
 - no registry/profile/default app/Start menu/taskbar mutation
@@ -81,7 +81,7 @@ manual checklist 是未来授权验证的待办清单：
 
 ## Validation
 
-本阶段验收以 fixture、schema、Pester、Quality Gates 和 Build Lock 为主。`Restore-UserExperience.ps1 -WhatIf -ReportPath ...` 只能证明 handler report 结构和安全边界，不能证明真实用户体验已恢复。PR Fast CI 不是 main/workflow evidence，handler report 不是 real UX restore evidence，manual checklist 不是 success evidence。
+本阶段验收以 fixture、schema、Pester、Quality Gates、Build Lock 和 post-PR #96 main/workflow Full Validate success 为主。`Restore-UserExperience.ps1 -WhatIf -ReportPath ...` 只能证明 handler report 结构和安全边界，不能证明真实用户体验已恢复。PR Fast CI 不是 main/workflow evidence，handler report 不是 real UX restore evidence，manual checklist 不是 success evidence。
 
 ## Remaining Work
 
