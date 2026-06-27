@@ -1,0 +1,10 @@
+{
+  "reportType": "user-experience-private-path-fixture",
+  "schemaVersion": 1,
+  "source": "fixture",
+  "paths": [
+    "C:\\Users\\ExampleUser\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs",
+    "\\\\192.168.1.37\\private\\user-experience\\layout.json"
+  ],
+  "expectedStatus": "blocked"
+}

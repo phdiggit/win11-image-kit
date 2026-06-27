@@ -1,0 +1,10 @@
+{
+  "id": "fixture-windows-11-23h2",
+  "source": "fixture",
+  "productName": "Windows 11",
+  "displayVersion": "23H2",
+  "buildNumber": 22631,
+  "edition": "Pro",
+  "architecture": "amd64",
+  "scope": "current-user"
+}

@@ -450,7 +450,8 @@ function Test-JsonSchemaFiles {
         @{ Manifest = "quality-gates.json"; Schema = "quality-gates.schema.json" },
         @{ Manifest = "services.json"; Schema = "services.schema.json" },
         @{ Manifest = "software.json"; Schema = "software.schema.json" },
-        @{ Manifest = "sysprep-appx-gate.json"; Schema = "sysprep-appx-gate.schema.json" }
+        @{ Manifest = "sysprep-appx-gate.json"; Schema = "sysprep-appx-gate.schema.json" },
+        @{ Manifest = "user-experience-restore.json"; Schema = "user-experience-restore.schema.json" }
     )
 
     foreach ($pair in $schemaPairs) {

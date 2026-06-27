@@ -1,0 +1,31 @@
+{
+  "reportType": "default-app-plan",
+  "schemaVersion": 1,
+  "planId": "default-app-browser-mail-media",
+  "scope": "default-user",
+  "source": "fixture",
+  "mutationRequested": false,
+  "associations": [
+    {
+      "kind": "protocol",
+      "name": "mailto",
+      "desiredProgId": "Sample.Mail.URL",
+      "appIdentity": "Sample Mail",
+      "knownCapability": true,
+      "source": "fixture",
+      "status": "planned",
+      "executed": false
+    },
+    {
+      "kind": "extension",
+      "name": ".mp4",
+      "desiredProgId": "Sample.Media.Player",
+      "appIdentity": "Sample Media Player",
+      "knownCapability": true,
+      "source": "fixture",
+      "status": "planned",
+      "executed": false
+    }
+  ],
+  "executed": false
+}

@@ -1,0 +1,10 @@
+{
+  "id": "fixture-windows-11-unsupported",
+  "source": "fixture",
+  "productName": "Windows 11",
+  "displayVersion": "22H2",
+  "buildNumber": 22621,
+  "edition": "Pro",
+  "architecture": "amd64",
+  "scope": "current-user"
+}
