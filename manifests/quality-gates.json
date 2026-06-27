@@ -375,6 +375,30 @@
       "notes": "Records post-PR #96 main/workflow Full Validate success evidence for current report-only / handler-adapter stage readiness."
     },
     {
+      "id": "issue18-manual-closure-handoff",
+      "displayName": "Issue 18 manual closure handoff",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "docs/64-issue18-manual-closure-handoff.md",
+      "evidence": "document",
+      "notes": "Provides manual closure handoff only; no completion summary, no auto-close, no real UX restore execution."
+    },
+    {
+      "id": "future-true-ux-restore-split",
+      "displayName": "Future true UX restore split",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "docs/65-future-true-ux-restore-execution-split.md",
+      "evidence": "document",
+      "notes": "Separates future true UX mutation from Issue 18 ready report-only stage and requires explicit authorization."
+    },
+    {
       "id": "controlled-execution-disk-identity",
       "displayName": "Controlled execution disk identity fixture validation",
       "layer": "pr-fast",

@@ -67,6 +67,8 @@ Report 必须包含：
 
 PR Fast CI 运行 `scripts/validate/Test-UserExperienceRestore.ps1` 和 Issue #18 Pester。Post-PR #96 main/workflow Full Validate success 已记录为当前 report-only / handler-adapter stage 的 ready evidence。Quality Gates 纳入 `user-experience-restore`、`issue18-intake`、`issue18-acceptance`、`user-experience-default-apps-plan`、`user-experience-start-menu-plan`、close-prep 和 main evidence 文档。Build Lock 纳入本阶段文档、manifest、schema、scripts、fixtures、tests、workflow、README 和 Quality Gates。
 
+Current report-only / handler-adapter stage manual closure handoff is recorded in [Issue #18 Manual Closure Handoff](64-issue18-manual-closure-handoff.md). Future true UX restore execution remains split into [Future True UX Restore Execution Split](65-future-true-ux-restore-execution-split.md). This intake remains source/background, not a completion summary.
+
 ## Acceptance Checklist
 
 - [x] 真实 Issue #18 和 Roadmap #19 source 已记录。
@@ -82,4 +84,6 @@ PR Fast CI 运行 `scripts/validate/Test-UserExperienceRestore.ps1` 和 Issue #1
 - [Issue #18 User Experience Restore Acceptance](59-issue18-user-experience-restore-acceptance.md)
 - [Issue #18 User Experience Capability Matrix](60-issue18-user-experience-capability-matrix.md)
 - [Issue #18 Restore Handler Integration](61-issue18-restore-handler-integration.md)
+- [Issue #18 Manual Closure Handoff](64-issue18-manual-closure-handoff.md)
+- [Future True UX Restore Execution Split](65-future-true-ux-restore-execution-split.md)
 - [Codex 工作流](codex-workflow.md)

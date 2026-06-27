@@ -8,6 +8,8 @@ This document records the Issue #18 capability matrix and scope semantics for ve
 
 No real user experience mutation is executed in this stage.
 
+Manual closure handoff is recorded in [Issue #18 Manual Closure Handoff](64-issue18-manual-closure-handoff.md). Future true UX restore execution remains split into [Future True UX Restore Execution Split](65-future-true-ux-restore-execution-split.md).
+
 ## Windows Version Capability Matrix
 
 | Windows version | Build range | Scope | Feature | Support status | Verification mode |
@@ -105,3 +107,5 @@ PR Fast CI runs the Issue #18 UX restore validator and the UserExperience Pester
 - [Issue #18 Restore Handler Integration](61-issue18-restore-handler-integration.md)
 - [Issue #18 Close Preparation](62-issue18-close-preparation.md)
 - [Issue #18 Main Validation Evidence](63-issue18-main-validation-evidence.md)
+- [Issue #18 Manual Closure Handoff](64-issue18-manual-closure-handoff.md)
+- [Future True UX Restore Execution Split](65-future-true-ux-restore-execution-split.md)

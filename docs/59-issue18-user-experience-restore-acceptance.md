@@ -47,6 +47,8 @@ PR Fast CI is not main/workflow evidence. Fixture/report-only validation is not 
 
 This acceptance state is ready for maintainer manual closure review of the current report-only / handler-adapter stage based on docs/63 post-PR #96 main/workflow success evidence. PR Fast CI is not main/workflow evidence, fixture/report-only validation is not real UX restore evidence, handler reports are not real UX restore evidence, and manual checklist rows are not success evidence.
 
+Manual closure handoff is recorded in [Issue #18 Manual Closure Handoff](64-issue18-manual-closure-handoff.md). Future true UX restore execution remains split into [Future True UX Restore Execution Split](65-future-true-ux-restore-execution-split.md).
+
 ## Remaining Work
 
 - Expand default-app association matrix beyond sample extensions and protocols.
@@ -62,3 +64,5 @@ This acceptance state is ready for maintainer manual closure review of the curre
 - [Issue #18 Restore Handler Integration](61-issue18-restore-handler-integration.md)
 - [Issue #18 Close Preparation](62-issue18-close-preparation.md)
 - [Issue #18 Main Validation Evidence](63-issue18-main-validation-evidence.md)
+- [Issue #18 Manual Closure Handoff](64-issue18-manual-closure-handoff.md)
+- [Future True UX Restore Execution Split](65-future-true-ux-restore-execution-split.md)

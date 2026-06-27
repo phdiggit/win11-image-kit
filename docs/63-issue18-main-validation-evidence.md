@@ -6,6 +6,8 @@ Status: `ready-for-manual-closure`
 
 This scaffold is reserved for post-PR main/workflow validation evidence. PR Fast CI output, fixture runs, report-only plans, handler reports, command exit codes, and manual checklist rows are not substitutes for main/workflow evidence or real UX restore evidence.
 
+Manual closure handoff is recorded in [Issue #18 Manual Closure Handoff](64-issue18-manual-closure-handoff.md). Future true UX restore execution remains split into [Future True UX Restore Execution Split](65-future-true-ux-restore-execution-split.md).
+
 ## Current Evidence
 
 | Field | Value |
@@ -108,3 +110,5 @@ Handler report validates report shape and safety boundaries only; it is not real
 - [Issue #18 User Experience Capability Matrix](60-issue18-user-experience-capability-matrix.md)
 - [Issue #18 Restore Handler Integration](61-issue18-restore-handler-integration.md)
 - [Issue #18 Close Preparation](62-issue18-close-preparation.md)
+- [Issue #18 Manual Closure Handoff](64-issue18-manual-closure-handoff.md)
+- [Future True UX Restore Execution Split](65-future-true-ux-restore-execution-split.md)

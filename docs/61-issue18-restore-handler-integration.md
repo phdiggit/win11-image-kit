@@ -6,6 +6,8 @@ Status: `accepted-ready-for-manual-closure`
 
 本阶段把 `Restore-UserExperience.ps1` 与 Issue #18 的 scope-aware / version-aware planner 接起来，但仍保持 report-only。入口读取 `customization-scope.json`、`configs/default-apps/*.metadata.json` 和 `configs/start-menu/*.metadata.json`，输出 handler report、manual checklist 与 legacy `userExperienceSummary`。
 
+Manual closure handoff is recorded in [Issue #18 Manual Closure Handoff](64-issue18-manual-closure-handoff.md). Future true UX restore execution remains split into [Future True UX Restore Execution Split](65-future-true-ux-restore-execution-split.md).
+
 ## Restore-UserExperience Entry Point
 
 `scripts/postdeploy/Restore-UserExperience.ps1` 默认输出 `restore-user-experience` 报告：
@@ -97,3 +99,5 @@ manual checklist 是未来授权验证的待办清单：
 - [Issue #18 capability matrix](60-issue18-user-experience-capability-matrix.md)
 - [Issue #18 close preparation](62-issue18-close-preparation.md)
 - [Issue #18 main validation evidence](63-issue18-main-validation-evidence.md)
+- [Issue #18 manual closure handoff](64-issue18-manual-closure-handoff.md)
+- [Future true UX restore execution split](65-future-true-ux-restore-execution-split.md)
