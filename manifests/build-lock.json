@@ -296,14 +296,14 @@
                         "path":  ".github/workflows/ci.yml",
                         "category":  "workflow",
                         "required":  true,
-                        "hash":  "08c5ab696da7bf8b376ef7479bda38ad30aaa16b1ab0abe1e306b72fa87bb2fa",
+                        "hash":  "3194944f22b0fdad4f574148f52cbb5770a326072e40a9f83f239d35ff076497",
                         "reason":  "PR Fast CI runs Issue 18 UX restore validation and Pester coverage."
                     },
                     {
                         "path":  "README.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "23df5b0f0e48c1e29ac226a774968e17095258e2de563a987262492a843c6814",
+                        "hash":  "592f4a4e4ad52370ddd063f2e5afcd4793b72fa95fe5bb96bc463bb88b65053a",
                         "reason":  "README links Issue 18 UX restore intake and validation entrypoint."
                     },
                     {
@@ -394,7 +394,7 @@
                         "path":  "manifests/quality-gates.json",
                         "category":  "manifest",
                         "required":  true,
-                        "hash":  "64ceb8c56fd57e1a568402d1d46d4a60b3cd9c4128e65e080237025149a56e40",
+                        "hash":  "f071e11bbc72b498ea39cb1c0d419474ab7017f596dbbf336b5d58d672884bb9",
                         "reason":  "Quality Gates include Issue 18 UX restore plan and acceptance gates."
                     },
                     {
@@ -1682,7 +1682,7 @@
                         "path":  "docs/59-issue18-user-experience-restore-acceptance.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "3194784693d63a2ce8b885177d238d3f46855dc635904fd1ae39cb18e811f000",
+                        "hash":  "eac3f1587a53b657ed38133e21ecf2ec632076e5aef7186eafdfaf8cba9851f9",
                         "reason":  "Issue 18 acceptance scaffold records report-only fixture coverage and safety boundaries."
                     },
                     {
@@ -1780,7 +1780,7 @@
                         "path":  "tests/pester/Issue18UserExperienceRestoreAcceptance.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "bec03ca4e5584e7ece64e2fb25e3603a32d55f0e48fa4037634161076b92be31",
+                        "hash":  "365a27cbcf842e87bddc8e3a11802fb5e0e3cea2d9da702740edf8655925732e",
                         "reason":  "Issue 18 acceptance tests guard QG and Build Lock wiring."
                     },
                     {
@@ -1843,7 +1843,7 @@
                         "path":  "tests/pester/Issue18UserExperienceRestore.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "94423b4e89843c0448b501a0f8138fd1621b0973a299b2587d726c3d2a5e2d6a",
+                        "hash":  "755415f0e4853d442613a7baf67c8e1b7d7e07ad9cb5d17578fa73fa7f7b9d4b",
                         "reason":  "Issue 18 intake tests guard source recording and no close-prep docs."
                     },
                     {
@@ -1899,21 +1899,21 @@
                         "path":  "docs/04-部署后恢复.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "37a69935f17cf075538ae63aeffee86c74d76069ee818a553b3061e1e0b63394",
+                        "hash":  "7bd5fecd00b08712ed9e24b38b95324515230fb46e6d020e720d2bf58898b8b4",
                         "reason":  "Issue 18 UX restore documentation records report-only capability and safety boundaries."
                     },
                     {
                         "path":  "docs/06-已知问题与决策.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "f81921ace0b181b9bd78dfe221bac17fa826b3a1cce2411ba7af64e72a1d264c",
+                        "hash":  "73bf50047a32be2287fd3e842a62c63010ad91177e628349fdac1b817e08e011",
                         "reason":  "Issue 18 UX restore documentation records report-only capability and safety boundaries."
                     },
                     {
                         "path":  "docs/60-issue18-user-experience-capability-matrix.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "845a4a0ec4754e499377dace5b1c11809171ba4918dbd135305eca454f176c36",
+                        "hash":  "90029351339ebb40174b129416a87b844cf3790a66dd588a0f79e198378dca86",
                         "reason":  "Issue 18 capability matrix runbook documents version-aware UX restore boundaries and verification evidence."
                     },
                     {
@@ -2095,7 +2095,7 @@
                         "path":  "tests/pester/Issue18UserExperienceCapabilityMatrix.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "a72923cc8f59b394997ac7dbd4010feaeaebc6fd064f834fd377af3a18de3206",
+                        "hash":  "b22ede265fdd0635ee421e90da6334340b480e946317c3a1d1636bb06123db5e",
                         "reason":  "Issue 18 capability matrix tests guard support status and build awareness."
                     },
                     {
@@ -2158,7 +2158,7 @@
                         "path":  "docs/61-issue18-restore-handler-integration.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "5b4ec3fdc0752718ba17fc0232bcaef6def55452a6f0ae0aacff23cb709056a9",
+                        "hash":  "47fb5e6d1bae374a04ad1984c5d99eb8b206d048b9d942da71d0219ea4df3e3f",
                         "reason":  "Issue 18 restore handler integration runbook documents report-only handler wiring and non-goals."
                     },
                     {
@@ -2312,7 +2312,7 @@
                         "path":  "tests/pester/Issue18RestoreHandlerIntegration.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "d323060f75315225f77b1672216203b506a0ec35420c830609920c8d918f0853",
+                        "hash":  "74a1b0c0ae62fe081527b083734072b27438c6a905255ccb85c44feacb8a65bf",
                         "reason":  "Issue 18 handler Pester tests guard report-only adapters and safety boundaries."
                     },
                     {
@@ -2354,28 +2354,28 @@
                         "path":  "docs/62-issue18-close-preparation.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "6f7714f6209f7f03d98cdc6806977a987e2aaa2e06cf4ff19468b2432a0acbe2",
+                        "hash":  "3930b6dfe7ba532cbfd94d85aa88d0fbf9eb1560d87dbec298964b49656da5e6",
                         "reason":  "Issue 18 acceptance consolidation and close-prep scaffold input."
                     },
                     {
                         "path":  "docs/63-issue18-main-validation-evidence.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "54d35571b496d37289affbea7f86d93de49e1a4db37b78c79c856f5dd932ccc5",
+                        "hash":  "5d58fc1cdb8d7203430ab530f8c3c45764ea69fc6ed6e4e50928faadd8269e6e",
                         "reason":  "Issue 18 acceptance consolidation and close-prep scaffold input."
                     },
                     {
                         "path":  "tests/pester/Issue18ClosePrep.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "d6cc2910dfe77ef5e32a6f1bc33ed6eaff9cec35c6f4c4013ba47adac19556d7",
+                        "hash":  "8520a0f3d3d10379830518223776172bb6b634e2e3064498528ee8124abec73a",
                         "reason":  "Issue 18 acceptance consolidation and close-prep scaffold input."
                     },
                     {
                         "path":  "tests/pester/Issue18MainValidationEvidence.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "773946dd499a9ee03499bf87ffed65b3415254534101321f1f065780be51e22b",
+                        "hash":  "10297e5c21d1b3d115833009006a156393276f1695f2247838ee735e5270492e",
                         "reason":  "Issue 18 acceptance consolidation and close-prep scaffold input."
                     }
                 ],

@@ -20,6 +20,22 @@ Describe "Issue 18 main validation evidence scaffold" {
         Assert-KitNotMatch $script:Doc "(?i)\b(fixes|closes|resolves)\s+#18\b"
     }
 
+    It "records the post-94 in-progress run as blocked evidence only" {
+        Assert-KitMatch $script:Doc "## Blocked Evidence Attempt"
+        Assert-KitMatch $script:Doc "actions/runs/28281913558"
+        Assert-KitMatch $script:Doc "c634998b4d050601f72183f3114d463639518b9b"
+        Assert-KitMatch $script:Doc "Run Pester tests with PowerShell 7"
+        Assert-KitMatch $script:Doc "recorded only as a blocker"
+        Assert-KitMatch $script:Doc "not used as ready evidence"
+        Assert-KitMatch $script:Doc "no completed success or failure conclusion"
+    }
+
+    It "keeps the PowerShell 7 full Pester step bounded" {
+        $workflow = Get-Content -LiteralPath (Join-Path $script:RepoRoot ".github\workflows\ci.yml") -Raw -Encoding UTF8
+        Assert-KitMatch $workflow "Run Pester tests with PowerShell 7"
+        Assert-KitMatch $workflow "(?s)- name: Run Pester tests with PowerShell 7\s+timeout-minutes: 30\s+shell: pwsh"
+    }
+
     It "keeps UX restore report evidence pending and report-only" {
         foreach ($field in @(
             "Report status",
