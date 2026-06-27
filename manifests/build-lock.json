@@ -198,7 +198,7 @@
                         "path":  "scripts/validate/Test-ProjectConfig.ps1",
                         "category":  "script",
                         "required":  true,
-                        "hash":  "55fc2552680e0a27be3fb669c347a16b32279b5e5731e1a58bf06d9b4772ad3e",
+                        "hash":  "a67935c510d662d085f490b6f4514dc3846fbfb68ff8a15e3bf32f3aaef888be",
                         "reason":  "Project config validation includes the user experience restore manifest/schema pair."
                     },
                     {
@@ -296,14 +296,14 @@
                         "path":  ".github/workflows/ci.yml",
                         "category":  "workflow",
                         "required":  true,
-                        "hash":  "a069b0efea9f447021ee0dc17a1f2ecbb0fbe2452c6cc532d22a19c4a5413e66",
+                        "hash":  "8b1b0486470b2ecb518ef98da6ac7e60b0023f763a68cbef6f3188861f25fc01",
                         "reason":  "PR Fast CI runs Issue 18 UX restore validation and Pester coverage."
                     },
                     {
                         "path":  "README.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "da9679f670f76996545231594915f2b4bceb4b9a260408f365fb1a2505d49886",
+                        "hash":  "7727c270d6bb20d190a0dedf48eb83b7e1a07fa5e42928426a6e3c2f3e49c9f8",
                         "reason":  "README links Issue 18 UX restore intake and validation entrypoint."
                     },
                     {
@@ -394,7 +394,7 @@
                         "path":  "manifests/quality-gates.json",
                         "category":  "manifest",
                         "required":  true,
-                        "hash":  "1cb54c760448c6de078e4b9bb660ca756dac3d9b49dc36101859fc9573fdca61",
+                        "hash":  "52520f2a3da23ed18c866df2ede0d61333a426e7a3c4c3afb5b6809cf71a09d9",
                         "reason":  "Quality Gates include Issue 18 UX restore plan and acceptance gates."
                     },
                     {
@@ -1682,7 +1682,7 @@
                         "path":  "docs/59-issue18-user-experience-restore-acceptance.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "8bda802cd7b48378daccd38e183df1bd22f3051a986532eddb86155daba74dfa",
+                        "hash":  "bfc4e3c939f20bfc9c743cb22dc852f5547a37ee35086a86c2636daf97e62218",
                         "reason":  "Issue 18 acceptance scaffold records report-only fixture coverage and safety boundaries."
                     },
                     {
@@ -1773,7 +1773,7 @@
                         "path":  "docs/58-issue18-user-experience-restore-intake.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "0fe400f705aed4e97b9a94087796feb6fc3311c2c62e6d1c9d35d2eb30c97d25",
+                        "hash":  "1d4625b746763a6f48332a58c0a15d4bc2df7715f88f91806db7d8b031786214",
                         "reason":  "Issue 18 intake records real Issue and Roadmap scope for UX restore planning."
                     },
                     {
@@ -1899,21 +1899,21 @@
                         "path":  "docs/04-部署后恢复.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "28b82cb0833c9f56fb866ffcd26b8c67db8d51d1cc0cf6e632dd9362f516c260",
+                        "hash":  "728e00e896b03985b78ffe401d8fd1c4a3eabb4caa41362e0a1e25b3119ec5d9",
                         "reason":  "Issue 18 UX restore documentation records report-only capability and safety boundaries."
                     },
                     {
                         "path":  "docs/06-已知问题与决策.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "6901dd82d7ee993ae29e9cd4833b5e5c8ed4e783fb890266cf6bef813f74981f",
+                        "hash":  "b54c09c0c4e8b90bbe0f4343ceb1e8144fd3213f8cce35b463477ce5d36c5b33",
                         "reason":  "Issue 18 UX restore documentation records report-only capability and safety boundaries."
                     },
                     {
                         "path":  "docs/60-issue18-user-experience-capability-matrix.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "098c65e9a02d7511c4ededc3ad6a149503f14caf433f057e5ed809db854e4c87",
+                        "hash":  "fa15d3e35c6ae51b15cc02503eaee6bcfdd445c111abeda5b02e117db4e7212d",
                         "reason":  "Issue 18 capability matrix runbook documents version-aware UX restore boundaries and verification evidence."
                     },
                     {
@@ -2158,7 +2158,7 @@
                         "path":  "docs/61-issue18-restore-handler-integration.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "c1d7d0d938c73a489c82d9a934a49fe7810223f380dfd2e8577de3108b5619a1",
+                        "hash":  "f4daa1c4237679e6dc87b635ef31449181a0bec25f232521d96f9ef36eb9c009",
                         "reason":  "Issue 18 restore handler integration runbook documents report-only handler wiring and non-goals."
                     },
                     {
@@ -2354,14 +2354,14 @@
                         "path":  "docs/62-issue18-close-preparation.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "6cee207a6a74d972b23aa4cb1ed059762e155e6569f04fc48ad39b74d4c750a9",
+                        "hash":  "6bdb001531f1a95920827aada53703ea2a7d4daf8f04421b372bff710b8d38ca",
                         "reason":  "Issue 18 acceptance consolidation and close-prep scaffold input."
                     },
                     {
                         "path":  "docs/63-issue18-main-validation-evidence.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "ae2e3706dcec95c5dc586f21dc41ff8998dc00d87c0b2421d62bdb76ccfbecb8",
+                        "hash":  "150dcc9c8e14cf6f93c4e64f7a4e4c66c40c0a993fea107a4833e7523d6d9e3a",
                         "reason":  "Issue 18 acceptance consolidation and close-prep scaffold input."
                     },
                     {
@@ -2382,29 +2382,176 @@
                         "path":  "docs/64-issue18-manual-closure-handoff.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "07ad3b9c966aec5652524add310d008d58ffb83c8339e11b0c5a5ca245fcc3e0",
+                        "hash":  "dfe3e893e1c2e68e2166fa5d30a697638b60a9bf624e9deeee263a4fa2e248f7",
                         "reason":  "Issue 18 manual closure handoff keeps ready state scoped and non-closing."
                     },
                     {
                         "path":  "docs/65-future-true-ux-restore-execution-split.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "b60aeba59e06ab17a73a0b979ea7144303cd2d4a98ec90ddac7ec3d8b8e17257",
+                        "hash":  "47e627dfacf3457c995addfe3cc9428ff3e5129c0c34a5d468ded2493def5a6d",
                         "reason":  "Issue 18 future true UX restore split requires explicit authorization before mutation."
                     },
                     {
                         "path":  "tests/pester/Issue18ManualClosureHandoff.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "cfb81f179303f9ddd0f09551de824f1336f4b9597d2b241ac9fcae74263b4437",
+                        "hash":  "181068a312882fc1701bce93ea97ca31ead818d9b11bb8e7266304ded51b58ee",
                         "reason":  "Issue 18 handoff tests guard no auto-close, no completion summary, and build-lock wiring."
                     },
                     {
                         "path":  "tests/pester/Issue18FutureTrueUxRestoreSplit.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "8d28da723f4101bd7e8ef0ac76bbfbf50ba5cc43a5fe3163ad889d604c880421",
+                        "hash":  "f07476787c8c1a88e186cca30d6cf1cc43821a1a6c8695c1e10dbb5f4d970663",
                         "reason":  "Issue 18 future split tests guard explicit authorization and no true UX mutation."
+                    },
+                    {
+                        "path":  "docs/66-future-true-ux-restore-authorization-intake.md",
+                        "category":  "doc",
+                        "required":  true,
+                        "hash":  "28bb6c443fb7cabb21fa4369e2b26b99ef869fdf53a187dd4c623a9700eb3dad",
+                        "reason":  "Future true UX restore authorization intake documentation and dry-run boundaries."
+                    },
+                    {
+                        "path":  "docs/67-future-true-ux-restore-evidence-model.md",
+                        "category":  "doc",
+                        "required":  true,
+                        "hash":  "b1cabb08688cc78cf85414ff4faea5e101664eb4b62e8fcf2317c38f0b09fea5",
+                        "reason":  "Future true UX restore authorization intake documentation and dry-run boundaries."
+                    },
+                    {
+                        "path":  "docs/68-future-true-ux-restore-dry-run-plan.md",
+                        "category":  "doc",
+                        "required":  true,
+                        "hash":  "3aa14b432dfa1a54941aaa934c5b535a4aa3b3cc719ba9023c5f02aa52bc37cb",
+                        "reason":  "Future true UX restore authorization intake documentation and dry-run boundaries."
+                    },
+                    {
+                        "path":  "manifests/future-true-ux-restore-authorization.json",
+                        "category":  "manifest",
+                        "required":  true,
+                        "hash":  "94384d5694409cfb66f93de2f2ce798f8fccaff96b88a8933047fe89f18c9a53",
+                        "reason":  "Future true UX restore authorization intake manifest or synchronized gate manifest."
+                    },
+                    {
+                        "path":  "schemas/future-true-ux-restore-authorization.schema.json",
+                        "category":  "schema",
+                        "required":  true,
+                        "hash":  "c3984c103627ae355d2f2f5ded9dfec737921b189168cd0a84c03433f3028e6d",
+                        "reason":  "Future true UX restore authorization and evidence schema contract."
+                    },
+                    {
+                        "path":  "schemas/future-true-ux-restore-evidence.schema.json",
+                        "category":  "schema",
+                        "required":  true,
+                        "hash":  "d189dc62927419ccf11444f6572b7665527483851310e599ba38d918a58d22db",
+                        "reason":  "Future true UX restore authorization and evidence schema contract."
+                    },
+                    {
+                        "path":  "scripts/common/New-FutureTrueUxRestoreAuthorizationReport.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "02acefb247c5358a2ee8fdd8ec79dce1ae199d916aeca9aa0422991c8d45e5da",
+                        "reason":  "Future true UX restore authorization intake report, plan, or validation entrypoint."
+                    },
+                    {
+                        "path":  "scripts/config/Show-FutureTrueUxRestoreAuthorizationPlan.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "2e102e80e5cda6a68c5bd1ceb6ea154ce277cc96a233c40dfdd584a6251cff56",
+                        "reason":  "Future true UX restore authorization intake report, plan, or validation entrypoint."
+                    },
+                    {
+                        "path":  "scripts/validate/Test-FutureTrueUxRestoreAuthorization.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "e18afe353fa4e60654a3b9de62463cdf2aa15d570ba3a4591480838c35874304",
+                        "reason":  "Future true UX restore authorization intake report, plan, or validation entrypoint."
+                    },
+                    {
+                        "path":  "tests/fixtures/user-experience/future-true-restore/authorization/baseline-blocked.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "93950b5bc6bf8e77fa795a4dbae0e7b33c9ea344801a13b7ce967f0122d239b8",
+                        "reason":  "Future true UX restore authorization fixtures and Pester coverage."
+                    },
+                    {
+                        "path":  "tests/fixtures/user-experience/future-true-restore/authorization/current-user-missing-rollback.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "a01cb89ca6bb18e1ce60bb87926dc4828e1f274cdcaadcfd90aec127eaa2021d",
+                        "reason":  "Future true UX restore authorization fixtures and Pester coverage."
+                    },
+                    {
+                        "path":  "tests/fixtures/user-experience/future-true-restore/authorization/default-user-scope-mismatch.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "5c9dc59a443a5b71e9179ef8251219d57e3b515cbc222bf36262a97428a30179",
+                        "reason":  "Future true UX restore authorization fixtures and Pester coverage."
+                    },
+                    {
+                        "path":  "tests/fixtures/user-experience/future-true-restore/authorization/offline-image-missing-identity.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "dbbfccdd9bb09fb006abd6bd1220ab73729de2bf0e663deed4f7d9152d0a5dbc",
+                        "reason":  "Future true UX restore authorization fixtures and Pester coverage."
+                    },
+                    {
+                        "path":  "tests/fixtures/user-experience/future-true-restore/authorization/mutation-requested-blocked.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "38319e6fb7a37edcb560329a1ec652362517eece0f475401db17616ce877e071",
+                        "reason":  "Future true UX restore authorization fixtures and Pester coverage."
+                    },
+                    {
+                        "path":  "tests/fixtures/user-experience/future-true-restore/authorization/exit-code-only-success-blocked.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "88764ab05555f6e58490c3d28c6d3fa277f2772fd294f1ccaab0c7af1656be1c",
+                        "reason":  "Future true UX restore authorization fixtures and Pester coverage."
+                    },
+                    {
+                        "path":  "tests/fixtures/user-experience/future-true-restore/evidence/baseline-report.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "a18bb0aa0a4b5ffebb354e62c79a76af3c0632dc5d6a60585a88ec1050d9d148",
+                        "reason":  "Future true UX restore authorization fixtures and Pester coverage."
+                    },
+                    {
+                        "path":  "tests/fixtures/user-experience/future-true-restore/evidence/private-path-blocked.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "4b95da1e18eb4b5b0ec0c79941469e7d632d5585cc3c4012eaff04b4bb18f12b",
+                        "reason":  "Future true UX restore authorization fixtures and Pester coverage."
+                    },
+                    {
+                        "path":  "tests/pester/FutureTrueUxRestoreAuthorization.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "e25d0535db762d2c22d63462d9b4437eb96507b995eb914acdfc3965efff51de",
+                        "reason":  "Future true UX restore authorization fixtures and Pester coverage."
+                    },
+                    {
+                        "path":  "tests/pester/FutureTrueUxRestoreEvidence.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "b3b21972d9a24f8a858fdc8119f76a5e777bcd13173db09613cae5ad21d3e16e",
+                        "reason":  "Future true UX restore authorization fixtures and Pester coverage."
+                    },
+                    {
+                        "path":  "tests/pester/FutureTrueUxRestoreSafety.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "07d1c7b624f9ee0d843b33a5210377cbcca99b8e54252aca21bc59ab41fb11ec",
+                        "reason":  "Future true UX restore authorization fixtures and Pester coverage."
+                    },
+                    {
+                        "path":  "tests/pester/FutureTrueUxRestoreValidation.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "99f1dcabdf901f8f1d654472bbfde11b64e20dfc20c5e72e173d706a97345711",
+                        "reason":  "Future true UX restore authorization fixtures and Pester coverage."
                     }
                 ],
     "watchGlobs":  [
@@ -2486,7 +2633,10 @@
                        "scripts/validate/*UserExperience*.ps1",
                        "tests/fixtures/user-experience/**/*.json",
                        "tests/pester/*UserExperience*.Tests.ps1",
-                       "tests/pester/Issue18*.Tests.ps1"
+                       "tests/pester/Issue18*.Tests.ps1",
+                       "tests/pester/Issue18*.Tests.ps1",
+                       "tests/pester/Issue18*.Tests.ps1",
+                       "tests/pester/FutureTrueUxRestore*.Tests.ps1"
                    ],
     "policy":  {
                    "missingRequired":  "fail",

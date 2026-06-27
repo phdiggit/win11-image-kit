@@ -1,0 +1,23 @@
+{
+  "reportType": "future-true-ux-restore-evidence",
+  "schemaVersion": 1,
+  "mode": "evidence-model-draft",
+  "decision": "blocked",
+  "scope": "current-user",
+  "trueExecution": false,
+  "mutationCount": 0,
+  "commandExitCodeSufficient": false,
+  "userConfigurationConfirmed": false,
+  "evidenceLayers": {
+    "beforeEvidence": "required-before-evidence",
+    "executionEvidence": "required-authorized-command-envelope",
+    "afterEvidence": "required-after-evidence",
+    "independentVerification": "required-independent-verification"
+  },
+  "scopeVerification": {
+    "targetIdentity": "redacted-target-identity",
+    "rollbackPlan": "required-rollback-plan",
+    "scopeBoundary": "must-prove-current-user-default-user-offline-image-or-machine-boundary"
+  },
+  "privatePathRedacted": true
+}

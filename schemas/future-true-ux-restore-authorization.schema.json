@@ -1,0 +1,174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "win11-image-kit future true UX restore authorization intake",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "mode",
+    "defaultDecision",
+    "allowRegistryMutation",
+    "allowProfileMutation",
+    "allowDefaultUserHiveMutation",
+    "allowDefaultAppMutation",
+    "allowStartMenuMutation",
+    "allowTaskbarMutation",
+    "allowDismMutation",
+    "allowAppxMutation",
+    "allowNetworkDownload",
+    "requiredAuthorizationFields"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "mode": {
+      "const": "authorization-intake"
+    },
+    "defaultDecision": {
+      "$ref": "#/$defs/decision"
+    },
+    "allowRegistryMutation": {
+      "const": false,
+      "default": false
+    },
+    "allowProfileMutation": {
+      "const": false,
+      "default": false
+    },
+    "allowDefaultUserHiveMutation": {
+      "const": false,
+      "default": false
+    },
+    "allowDefaultAppMutation": {
+      "const": false,
+      "default": false
+    },
+    "allowStartMenuMutation": {
+      "const": false,
+      "default": false
+    },
+    "allowTaskbarMutation": {
+      "const": false,
+      "default": false
+    },
+    "allowDismMutation": {
+      "const": false,
+      "default": false
+    },
+    "allowAppxMutation": {
+      "const": false,
+      "default": false
+    },
+    "allowNetworkDownload": {
+      "const": false,
+      "default": false
+    },
+    "requiredAuthorizationFields": {
+      "type": "array",
+      "minItems": 11,
+      "items": {
+        "$ref": "#/$defs/authorizationField"
+      }
+    }
+  },
+  "$defs": {
+    "scope": {
+      "type": "string",
+      "enum": [
+        "current-user",
+        "default-user",
+        "offline-image",
+        "machine"
+      ]
+    },
+    "decision": {
+      "type": "string",
+      "enum": [
+        "blocked",
+        "dry-run-ready",
+        "authorized-pending-review"
+      ]
+    },
+    "authorizationField": {
+      "type": "string",
+      "enum": [
+        "scope",
+        "targetIdentity",
+        "mutationType",
+        "expectedBeforeState",
+        "allowedCommand",
+        "rollbackPlan",
+        "beforeEvidence",
+        "afterEvidence",
+        "independentVerification",
+        "failurePropagation",
+        "reviewCheckpoint"
+      ]
+    },
+    "authorizationRequest": {
+      "type": "object",
+      "required": [
+        "scope",
+        "targetIdentity",
+        "mutationType",
+        "expectedBeforeState",
+        "allowedCommand",
+        "rollbackPlan",
+        "beforeEvidence",
+        "afterEvidence",
+        "independentVerification",
+        "failurePropagation",
+        "reviewCheckpoint"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/scope"
+        },
+        "targetIdentity": {
+          "type": "string"
+        },
+        "mutationType": {
+          "type": "string"
+        },
+        "expectedBeforeState": {
+          "type": "string"
+        },
+        "allowedCommand": {
+          "type": "string"
+        },
+        "rollbackPlan": {
+          "type": "string"
+        },
+        "beforeEvidence": {
+          "type": "string"
+        },
+        "afterEvidence": {
+          "type": "string"
+        },
+        "independentVerification": {
+          "type": "string"
+        },
+        "failurePropagation": {
+          "type": "string"
+        },
+        "reviewCheckpoint": {
+          "type": "string"
+        },
+        "decision": {
+          "$ref": "#/$defs/decision"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "not": {
+    "required": [
+      "executed"
+    ]
+  },
+  "additionalProperties": false
+}

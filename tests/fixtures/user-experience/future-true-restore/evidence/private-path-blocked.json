@@ -1,0 +1,14 @@
+{
+  "requestId": "private-path-blocked",
+  "scope": "current-user",
+  "targetIdentity": "redacted-user-sid:S-1-5-21-redacted",
+  "mutationType": "start-menu",
+  "expectedBeforeState": "fixture-before-state",
+  "allowedCommand": "future-approved-command-envelope",
+  "rollbackPlan": "fixture-current-user-rollback",
+  "beforeEvidence": "C:\\Users\\Alice\\AppData\\Local\\PrivateState.json",
+  "afterEvidence": "fixture-after-evidence",
+  "independentVerification": "fixture-independent-user-verification",
+  "failurePropagation": "stop-on-failure",
+  "reviewCheckpoint": "maintainer-review-required"
+}

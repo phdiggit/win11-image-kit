@@ -1,0 +1,28 @@
+{
+  "$schema": "../schemas/future-true-ux-restore-authorization.schema.json",
+  "schemaVersion": 1,
+  "mode": "authorization-intake",
+  "defaultDecision": "blocked",
+  "allowRegistryMutation": false,
+  "allowProfileMutation": false,
+  "allowDefaultUserHiveMutation": false,
+  "allowDefaultAppMutation": false,
+  "allowStartMenuMutation": false,
+  "allowTaskbarMutation": false,
+  "allowDismMutation": false,
+  "allowAppxMutation": false,
+  "allowNetworkDownload": false,
+  "requiredAuthorizationFields": [
+    "scope",
+    "targetIdentity",
+    "mutationType",
+    "expectedBeforeState",
+    "allowedCommand",
+    "rollbackPlan",
+    "beforeEvidence",
+    "afterEvidence",
+    "independentVerification",
+    "failurePropagation",
+    "reviewCheckpoint"
+  ]
+}

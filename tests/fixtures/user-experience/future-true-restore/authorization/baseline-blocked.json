@@ -1,0 +1,14 @@
+{
+  "requestId": "baseline-blocked",
+  "scope": "",
+  "targetIdentity": "",
+  "mutationType": "",
+  "expectedBeforeState": "",
+  "allowedCommand": "",
+  "rollbackPlan": "",
+  "beforeEvidence": "",
+  "afterEvidence": "",
+  "independentVerification": "",
+  "failurePropagation": "",
+  "reviewCheckpoint": ""
+}
