@@ -1,0 +1,36 @@
+{
+  "$schema": "../../schemas/user-experience-template-metadata.schema.json",
+  "reportType": "ux-template-metadata",
+  "schemaVersion": 1,
+  "templateId": "default-apps-reference-24h2",
+  "templateType": "default-apps",
+  "expectedTemplateType": "default-apps",
+  "source": "config-metadata",
+  "targetScope": "default-user",
+  "expectedScope": "default-user",
+  "sourceRunId": "sample-reference-run",
+  "exportedAt": "2026-06-27T00:00:00",
+  "sourceWindows": {
+    "edition": "Pro",
+    "displayVersion": "24H2",
+    "buildNumber": 26100,
+    "architecture": "amd64"
+  },
+  "targetApps": [
+    {
+      "logicalName": "Sample Browser",
+      "progId": "Sample.Browser.HTML",
+      "packageFamilyName": "Sample.Browser_12345",
+      "required": true,
+      "knownCapability": true
+    },
+    {
+      "logicalName": "Sample PDF Reader",
+      "progId": "Sample.Pdf.Reader",
+      "packageFamilyName": "Sample.Pdf_12345",
+      "required": true,
+      "knownCapability": true
+    }
+  ],
+  "status": "planned"
+}

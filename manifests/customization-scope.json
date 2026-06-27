@@ -124,6 +124,22 @@
       "reportDirectory": "${DeployRoot}\\reports\\validation"
     }
   },
+  "userExperienceRestore": {
+    "defaultMode": "plan-only",
+    "scopes": [
+      "default-user",
+      "current-user",
+      "offline-image",
+      "machine"
+    ],
+    "defaultUserIsCurrentUser": false,
+    "offlineImageIsCurrentMachine": false,
+    "allowRegistryMutation": false,
+    "allowProfileMutation": false,
+    "allowDefaultAppMutation": false,
+    "allowStartMenuMutation": false,
+    "allowTaskbarMutation": false
+  },
   "userInteraction": {
     "editableBeforeRun": true,
     "allowedChanges": [

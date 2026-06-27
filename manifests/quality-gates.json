@@ -279,6 +279,78 @@
       "notes": "Documents Issue 18 capability matrix, scope semantics, template metadata, and verification evidence boundaries without close-prep."
     },
     {
+      "id": "user-experience-restore-handler",
+      "displayName": "User experience restore handler validation",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "tests/pester/UserExperienceRestoreHandler.Tests.ps1",
+      "evidence": "pester",
+      "notes": "Validates Restore-UserExperience remains scope-aware, version-aware, report-only, and does not mutate registry, profile, default apps, Start menu, or taskbar."
+    },
+    {
+      "id": "user-experience-default-app-handler",
+      "displayName": "User experience default app handler validation",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "fixture",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "tests/pester/UserExperienceDefaultAppHandler.Tests.ps1",
+      "evidence": "pester",
+      "notes": "Validates default app handlers remain fixture-only and block missing ProgId, requested apply, and false current-user claims."
+    },
+    {
+      "id": "user-experience-start-menu-handler",
+      "displayName": "User experience Start menu handler validation",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "fixture",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "tests/pester/UserExperienceStartMenuHandler.Tests.ps1",
+      "evidence": "pester",
+      "notes": "Validates Start menu handlers distinguish default-user from current-user and block profile writes."
+    },
+    {
+      "id": "user-experience-taskbar-handler",
+      "displayName": "User experience taskbar handler validation",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "fixture",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "tests/pester/UserExperienceTaskbarHandler.Tests.ps1",
+      "evidence": "pester",
+      "notes": "Validates taskbar handlers remain manual/report-only and block registry writes."
+    },
+    {
+      "id": "user-experience-manual-checklist",
+      "displayName": "User experience manual checklist validation",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "tests/pester/UserExperienceManualChecklist.Tests.ps1",
+      "evidence": "pester",
+      "notes": "Validates manual checklist output is not success evidence."
+    },
+    {
+      "id": "issue18-restore-handler-integration",
+      "displayName": "Issue 18 restore handler integration documentation",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "docs/61-issue18-restore-handler-integration.md",
+      "evidence": "document",
+      "notes": "Documents Restore-UserExperience handler integration without close-prep, main evidence, completion summary, or true execution."
+    },
+    {
       "id": "controlled-execution-disk-identity",
       "displayName": "Controlled execution disk identity fixture validation",
       "layer": "pr-fast",

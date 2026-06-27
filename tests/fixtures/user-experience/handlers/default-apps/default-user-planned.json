@@ -1,0 +1,19 @@
+{
+  "$schema": "../../../../schemas/user-experience-handler-plan.schema.json",
+  "schemaVersion": 1,
+  "handlerId": "default-apps-default-user",
+  "handlerType": "default-apps",
+  "scope": "default-user",
+  "mode": "fixture",
+  "source": "fixture",
+  "templateMetadataId": "default-apps-reference-24h2",
+  "supportStatus": "planned-supported",
+  "verificationMode": "future-real-verification",
+  "requestedApply": false,
+  "executed": false,
+  "status": "planned",
+  "associations": [
+    { "progId": "Sample.Browser.HTML", "knownCapability": true },
+    { "progId": "Sample.Pdf.Reader", "knownCapability": true }
+  ]
+}

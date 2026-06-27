@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../../schemas/user-experience-handler-plan.schema.json",
+  "schemaVersion": 1,
+  "handlerId": "taskbar-requested-apply",
+  "handlerType": "taskbar",
+  "scope": "current-user",
+  "mode": "fixture",
+  "source": "fixture",
+  "templateMetadataId": "",
+  "supportStatus": "manual-or-future",
+  "verificationMode": "manual-checklist",
+  "requestedApply": true,
+  "executed": false,
+  "status": "blocked",
+  "pins": []
+}

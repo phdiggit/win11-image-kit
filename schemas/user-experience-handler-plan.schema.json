@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "win11-image-kit user experience handler plan",
+  "type": "object",
+  "required": [
+    "handlerId",
+    "handlerType",
+    "scope",
+    "mode",
+    "source",
+    "supportStatus",
+    "verificationMode",
+    "requestedApply",
+    "executed",
+    "status"
+  ],
+  "properties": {
+    "$schema": { "type": "string" },
+    "schemaVersion": { "type": "integer", "minimum": 1 },
+    "handlerId": { "type": "string" },
+    "handlerType": {
+      "type": "string",
+      "enum": ["default-apps", "start-menu", "taskbar", "app-visibility", "manual-checklist", "verification"]
+    },
+    "scope": {
+      "type": "string",
+      "enum": ["default-user", "current-user", "offline-image", "machine"]
+    },
+    "mode": {
+      "type": "string",
+      "enum": ["plan-only", "report-only", "fixture"]
+    },
+    "source": {
+      "type": "string",
+      "enum": ["fixture", "config-metadata", "manual-checklist", "request"]
+    },
+    "templateMetadataId": { "type": "string" },
+    "supportStatus": {
+      "type": "string",
+      "enum": ["planned-supported", "manual-or-future", "blocked", "unsupported"]
+    },
+    "verificationMode": {
+      "type": "string",
+      "enum": ["future-real-verification", "manual-checklist", "blocked"]
+    },
+    "requestedApply": { "type": "boolean" },
+    "mutationRequested": { "type": "boolean" },
+    "profileWriteRequested": { "type": "boolean" },
+    "registryWriteRequested": { "type": "boolean" },
+    "claimsCurrentUserConfigured": { "type": "boolean" },
+    "commandExitCodeSufficient": { "type": "boolean" },
+    "executed": { "const": false },
+    "status": {
+      "type": "string",
+      "enum": ["planned", "manual", "blocked", "failed"]
+    },
+    "reason": { "type": "string" },
+    "associations": { "type": "array", "items": { "type": "object" } },
+    "pins": { "type": "array", "items": { "type": "object" } }
+  },
+  "additionalProperties": false
+}

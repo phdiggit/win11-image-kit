@@ -1,0 +1,18 @@
+{
+  "$schema": "../../../../schemas/user-experience-handler-plan.schema.json",
+  "schemaVersion": 1,
+  "handlerId": "start-menu-default-user",
+  "handlerType": "start-menu",
+  "scope": "default-user",
+  "mode": "fixture",
+  "source": "fixture",
+  "templateMetadataId": "start-menu-reference-24h2",
+  "supportStatus": "planned-supported",
+  "verificationMode": "future-real-verification",
+  "requestedApply": false,
+  "executed": false,
+  "status": "planned",
+  "pins": [
+    { "displayName": "Sample Browser", "appUserModelId": "Sample.Browser_12345!App" }
+  ]
+}

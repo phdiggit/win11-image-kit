@@ -54,3 +54,4 @@ PR Fast CI is not main/workflow evidence. Fixture/report-only validation is not 
 
 - [Issue #18 User Experience Restore Intake](58-issue18-user-experience-restore-intake.md)
 - [Issue #18 User Experience Capability Matrix](60-issue18-user-experience-capability-matrix.md)
+- [Issue #18 Restore Handler Integration](61-issue18-restore-handler-integration.md)

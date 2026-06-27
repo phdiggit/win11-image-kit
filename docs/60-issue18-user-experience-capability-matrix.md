@@ -101,3 +101,4 @@ PR Fast CI runs the Issue #18 UX restore validator and the UserExperience Pester
 
 - [Issue #18 User Experience Restore Intake](58-issue18-user-experience-restore-intake.md)
 - [Issue #18 User Experience Restore Acceptance](59-issue18-user-experience-restore-acceptance.md)
+- [Issue #18 Restore Handler Integration](61-issue18-restore-handler-integration.md)

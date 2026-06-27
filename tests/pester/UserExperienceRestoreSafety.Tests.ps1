@@ -26,6 +26,8 @@ Describe "User experience restore safety" {
             '\bImport-StartLayout\b',
             '\bExport-StartLayout\b',
             '\bGet-StartApps\b',
+            '\bGet-AppxPackage\b',
+            '\bGet-AppxProvisionedPackage\b',
             '\bStart-Process\b',
             '\bInvoke-Expression\b',
             '\bInvoke-WebRequest\b',
@@ -42,6 +44,13 @@ Describe "User experience restore safety" {
             "scripts\common\Test-KitUserExperienceTemplateMetadata.ps1",
             "scripts\common\Test-KitUserExperienceScopeSemantics.ps1",
             "scripts\common\New-KitUserExperienceVerificationPlan.ps1",
+            "scripts\common\ConvertTo-KitUserExperienceHandlerPlan.ps1",
+            "scripts\common\ConvertTo-KitDefaultAppAssociationPlan.ps1",
+            "scripts\common\ConvertTo-KitStartMenuLayoutPlan.ps1",
+            "scripts\common\ConvertTo-KitTaskbarPlan.ps1",
+            "scripts\common\New-KitUserExperienceManualChecklist.ps1",
+            "scripts\common\New-KitUserExperienceHandlerReport.ps1",
+            "scripts\postdeploy\Restore-UserExperience.ps1",
             "scripts\validate\Test-UserExperienceRestore.ps1",
             "scripts\config\Show-UserExperienceRestorePlan.ps1"
         )
