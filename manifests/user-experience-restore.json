@@ -1,0 +1,63 @@
+{
+  "$schema": "../schemas/user-experience-restore.schema.json",
+  "manifestVersion": 1,
+  "restoreSetId": "issue18-ux-restore-plan-baseline",
+  "defaultMode": "plan-only",
+  "allowProfileMutation": false,
+  "allowRegistryMutation": false,
+  "allowStartMenuMutation": false,
+  "allowTaskbarMutation": false,
+  "allowDefaultAppMutation": false,
+  "allowNetworkDownload": false,
+  "contexts": [
+    {
+      "id": "fixture-windows-11-24h2",
+      "source": "fixture",
+      "productName": "Windows 11",
+      "displayVersion": "24H2",
+      "buildNumber": 26100,
+      "edition": "Pro",
+      "architecture": "amd64",
+      "scope": "default-user"
+    },
+    {
+      "id": "fixture-windows-11-23h2",
+      "source": "fixture",
+      "productName": "Windows 11",
+      "displayVersion": "23H2",
+      "buildNumber": 22631,
+      "edition": "Pro",
+      "architecture": "amd64",
+      "scope": "current-user"
+    }
+  ],
+  "plans": [
+    {
+      "id": "default-app-associations-plan",
+      "type": "default-apps",
+      "mode": "report-only",
+      "scope": "default-user",
+      "entrypoint": "tests/fixtures/user-experience/default-apps/baseline.json",
+      "mutationKind": "none",
+      "riskLevel": "medium"
+    },
+    {
+      "id": "start-menu-layout-plan",
+      "type": "start-menu",
+      "mode": "report-only",
+      "scope": "current-user",
+      "entrypoint": "tests/fixtures/user-experience/start-menu/baseline.json",
+      "mutationKind": "none",
+      "riskLevel": "medium"
+    },
+    {
+      "id": "taskbar-visibility-plan",
+      "type": "taskbar",
+      "mode": "report-only",
+      "scope": "current-user",
+      "entrypoint": "tests/fixtures/user-experience/taskbar/baseline.json",
+      "mutationKind": "none",
+      "riskLevel": "medium"
+    }
+  ]
+}

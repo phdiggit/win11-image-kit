@@ -74,6 +74,12 @@ jobs:
           $ErrorActionPreference = "Stop"
           & .\scripts\validate\Test-ControlledExecution.ps1
 
+      - name: Run user experience restore validation with Windows PowerShell
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+          & .\scripts\validate\Test-UserExperienceRestore.ps1
+
       - name: Run effective configuration validation with Windows PowerShell
         shell: powershell
         run: |
@@ -218,6 +224,14 @@ jobs:
               "tests/pester/Issue17ControlledExecutionAuthorization.Tests.ps1",
               "tests/pester/Issue17ClosePrep.Tests.ps1",
               "tests/pester/Issue17MainValidationEvidence.Tests.ps1",
+              "tests/pester/Issue18UserExperienceRestore.Tests.ps1",
+              "tests/pester/Issue18UserExperienceRestoreAcceptance.Tests.ps1",
+              "tests/pester/UserExperienceRestoreSchema.Tests.ps1",
+              "tests/pester/UserExperienceRestoreReport.Tests.ps1",
+              "tests/pester/UserExperienceRestoreValidation.Tests.ps1",
+              "tests/pester/UserExperienceRestoreSafety.Tests.ps1",
+              "tests/pester/UserExperienceDefaultAppsPlan.Tests.ps1",
+              "tests/pester/UserExperienceStartMenuPlan.Tests.ps1",
               "tests/pester/Issue11ClosePrep.Tests.ps1",
               "tests/pester/Issue11MainValidationEvidence.Tests.ps1",
               "tests/pester/UserExperienceStateVerification.Tests.ps1",

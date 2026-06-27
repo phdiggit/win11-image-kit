@@ -1,0 +1,21 @@
+{
+  "reportType": "default-app-plan",
+  "schemaVersion": 1,
+  "planId": "default-app-unknown-progid",
+  "scope": "default-user",
+  "source": "fixture",
+  "mutationRequested": false,
+  "associations": [
+    {
+      "kind": "extension",
+      "name": ".sample",
+      "desiredProgId": "Sample.Unknown.ProgId",
+      "appIdentity": "Missing Sample App",
+      "knownCapability": false,
+      "source": "fixture",
+      "status": "planned",
+      "executed": false
+    }
+  ],
+  "executed": false
+}

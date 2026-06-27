@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "win11-image-kit user experience restore report",
+  "type": "object",
+  "required": [
+    "reportType",
+    "schemaVersion",
+    "restoreSetId",
+    "mode",
+    "whatIf",
+    "trueExecution",
+    "status",
+    "summary",
+    "contexts",
+    "plans",
+    "safety"
+  ],
+  "properties": {
+    "reportType": {
+      "const": "user-experience-restore"
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "generatedAt": {
+      "type": "string"
+    },
+    "restoreSetId": {
+      "type": "string"
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "plan-only",
+        "report-only",
+        "fixture"
+      ]
+    },
+    "whatIf": {
+      "const": true
+    },
+    "trueExecution": {
+      "const": false
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "passed",
+        "failed"
+      ]
+    },
+    "summary": {
+      "$ref": "#/$defs/summary"
+    },
+    "contexts": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "plans": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "safety": {
+      "$ref": "#/$defs/safety"
+    }
+  },
+  "$defs": {
+    "summary": {
+      "type": "object",
+      "required": [
+        "planCount",
+        "plannedChangeCount",
+        "blockedCount",
+        "failedCount",
+        "registryWriteCount",
+        "profileWriteCount",
+        "defaultAppMutationCount",
+        "startMenuMutationCount",
+        "taskbarMutationCount",
+        "unsupportedVersionCount",
+        "missingBuildCount",
+        "missingCapabilityCount",
+        "localPrivatePathCount"
+      ],
+      "properties": {
+        "planCount": {
+          "type": "integer"
+        },
+        "plannedChangeCount": {
+          "type": "integer"
+        },
+        "blockedCount": {
+          "type": "integer"
+        },
+        "failedCount": {
+          "type": "integer"
+        },
+        "registryWriteCount": {
+          "const": 0
+        },
+        "profileWriteCount": {
+          "const": 0
+        },
+        "defaultAppMutationCount": {
+          "const": 0
+        },
+        "startMenuMutationCount": {
+          "const": 0
+        },
+        "taskbarMutationCount": {
+          "const": 0
+        },
+        "unsupportedVersionCount": {
+          "type": "integer"
+        },
+        "missingBuildCount": {
+          "type": "integer"
+        },
+        "missingCapabilityCount": {
+          "type": "integer"
+        },
+        "localPrivatePathCount": {
+          "type": "integer"
+        }
+      },
+      "additionalProperties": false
+    },
+    "safety": {
+      "type": "object",
+      "required": [
+        "registryMutation",
+        "profileMutation",
+        "defaultAppMutation",
+        "startMenuMutation",
+        "taskbarMutation",
+        "networkDownload"
+      ],
+      "properties": {
+        "registryMutation": {
+          "const": false
+        },
+        "profileMutation": {
+          "const": false
+        },
+        "defaultAppMutation": {
+          "const": false
+        },
+        "startMenuMutation": {
+          "const": false
+        },
+        "taskbarMutation": {
+          "const": false
+        },
+        "networkDownload": {
+          "const": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

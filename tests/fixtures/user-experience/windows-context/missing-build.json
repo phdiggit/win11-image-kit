@@ -1,0 +1,9 @@
+{
+  "id": "fixture-windows-11-missing-build",
+  "source": "fixture",
+  "productName": "Windows 11",
+  "displayVersion": "24H2",
+  "edition": "Pro",
+  "architecture": "amd64",
+  "scope": "current-user"
+}

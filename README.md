@@ -69,6 +69,7 @@ logs/                 仅保留 .gitkeep，本地日志不提交
 scripts/validate/Test-ProjectConfig.ps1
 scripts/validate/Test-EvidenceChain.ps1
 scripts/validate/Test-ControlledExecution.ps1
+scripts/validate/Test-UserExperienceRestore.ps1
 scripts/validate/Test-EffectiveConfiguration.ps1 -AllStacks
 scripts/tests/Test-PostDeploy.ps1 -SkipCommandTests -SkipServiceStatus
 ```
@@ -77,6 +78,7 @@ Issue #17 WinPE 受控执行开篇 intake 与 dry-run baseline 见 [Controlled E
 Issue #17 disk identity / WIM / WinRE / native command fixture hardening 见 [Controlled Execution Safety Hardening](docs/54-issue17-controlled-execution-safety-hardening.md)。
 Issue #17 authorization / execution-set matrix / native simulation / WinPE plan entrypoint 见 [Controlled Execution Authorization and Simulation](docs/55-issue17-controlled-execution-authorization.md)。
 Issue #17 acceptance consolidation、当前 planning/simulation stage 人工收口准备和 post-PR #89 main 验证证据见 [Close Preparation](docs/56-issue17-close-preparation.md) 和 [Main Validation Evidence](docs/57-issue17-main-validation-evidence.md)；true execution split 仍是后续工作，PR Fast CI 和 simulation 不作为 main/workflow 或真实生命周期 evidence。
+Issue #18 version-aware default apps / Start menu restore intake and report-only acceptance scaffold 见 [User Experience Restore Intake](docs/58-issue18-user-experience-restore-intake.md) 和 [User Experience Restore Acceptance](docs/59-issue18-user-experience-restore-acceptance.md)。
 
 按需归档日志和轻量报告时：
 

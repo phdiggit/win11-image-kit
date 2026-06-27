@@ -159,6 +159,66 @@
       "notes": "Validates Issue 17 controlled execution manifest, dry-run report, disk identity, confirmation token, WIM metadata, WinRE plan, native command envelope, safety policy, and blocked fixture semantics without true execution."
     },
     {
+      "id": "user-experience-restore",
+      "displayName": "User experience restore plan validation",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "scripts/validate/Test-UserExperienceRestore.ps1",
+      "evidence": "report",
+      "notes": "Validates Issue 18 version-aware default app and Start menu restore planning without registry, profile, taskbar, default app, or Start menu mutation."
+    },
+    {
+      "id": "issue18-intake",
+      "displayName": "Issue 18 user experience restore intake",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "docs/58-issue18-user-experience-restore-intake.md",
+      "evidence": "document",
+      "notes": "Records real Issue 18 and Roadmap 19 source while keeping this stage intake and report-only."
+    },
+    {
+      "id": "issue18-acceptance",
+      "displayName": "Issue 18 user experience restore acceptance",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "docs/59-issue18-user-experience-restore-acceptance.md",
+      "evidence": "document",
+      "notes": "Records in-acceptance fixture coverage without close-prep, main-evidence, completion summary, or real UX restore claims."
+    },
+    {
+      "id": "user-experience-default-apps-plan",
+      "displayName": "User experience default apps plan validation",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "fixture",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "tests/pester/UserExperienceDefaultAppsPlan.Tests.ps1",
+      "evidence": "pester",
+      "notes": "Validates extension and protocol default app planning with executed=false and missing capability blocking."
+    },
+    {
+      "id": "user-experience-start-menu-plan",
+      "displayName": "User experience Start menu plan validation",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "fixture",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "tests/pester/UserExperienceStartMenuPlan.Tests.ps1",
+      "evidence": "pester",
+      "notes": "Validates Start menu and taskbar plan fixtures with executed=false and no profile or registry mutation."
+    },
+    {
       "id": "controlled-execution-disk-identity",
       "displayName": "Controlled execution disk identity fixture validation",
       "layer": "pr-fast",

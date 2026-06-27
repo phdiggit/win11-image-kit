@@ -1,0 +1,20 @@
+{
+  "reportType": "taskbar-plan",
+  "schemaVersion": 1,
+  "planId": "taskbar-registry-write-request",
+  "scope": "current-user",
+  "source": "fixture",
+  "mutationRequested": false,
+  "registryWriteRequested": true,
+  "pins": [
+    {
+      "position": 1,
+      "displayName": "Sample Browser",
+      "appUserModelId": "Sample.Browser_12345!App",
+      "source": "fixture",
+      "status": "planned",
+      "executed": false
+    }
+  ],
+  "executed": false
+}

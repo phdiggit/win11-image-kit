@@ -1,0 +1,36 @@
+{
+  "reportType": "start-menu-plan",
+  "schemaVersion": 1,
+  "planId": "start-menu-pinned-apps",
+  "scope": "default-user",
+  "source": "fixture",
+  "mutationRequested": false,
+  "profileWriteRequested": false,
+  "unsupportedLayoutVersion": false,
+  "targetWindows": {
+    "displayVersion": "23H2",
+    "buildNumber": 22631
+  },
+  "pins": [
+    {
+      "position": 1,
+      "displayName": "Sample Terminal",
+      "appUserModelId": "Sample.Terminal_12345!App",
+      "source": "fixture",
+      "status": "planned",
+      "executed": false
+    },
+    {
+      "position": 2,
+      "displayName": "Sample Editor",
+      "appUserModelId": "Sample.Editor_12345!App",
+      "source": "fixture",
+      "status": "planned",
+      "executed": false
+    }
+  ],
+  "taskbar": {
+    "pins": []
+  },
+  "executed": false
+}

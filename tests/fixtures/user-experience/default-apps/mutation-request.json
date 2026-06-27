@@ -1,0 +1,21 @@
+{
+  "reportType": "default-app-plan",
+  "schemaVersion": 1,
+  "planId": "default-app-mutation-request",
+  "scope": "current-user",
+  "source": "fixture",
+  "mutationRequested": true,
+  "associations": [
+    {
+      "kind": "extension",
+      "name": ".html",
+      "desiredProgId": "Sample.Browser.HTML",
+      "appIdentity": "Sample Browser",
+      "knownCapability": true,
+      "source": "fixture",
+      "status": "planned",
+      "executed": false
+    }
+  ],
+  "executed": false
+}

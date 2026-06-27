@@ -1,0 +1,31 @@
+{
+  "reportType": "default-app-plan",
+  "schemaVersion": 1,
+  "planId": "default-app-baseline",
+  "scope": "default-user",
+  "source": "fixture",
+  "mutationRequested": false,
+  "associations": [
+    {
+      "kind": "extension",
+      "name": ".pdf",
+      "desiredProgId": "Sample.Pdf.Reader",
+      "appIdentity": "Sample PDF Reader",
+      "knownCapability": true,
+      "source": "fixture",
+      "status": "planned",
+      "executed": false
+    },
+    {
+      "kind": "protocol",
+      "name": "https",
+      "desiredProgId": "Sample.Browser.HTML",
+      "appIdentity": "Sample Browser",
+      "knownCapability": true,
+      "source": "fixture",
+      "status": "planned",
+      "executed": false
+    }
+  ],
+  "executed": false
+}

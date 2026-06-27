@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "win11-image-kit user experience restore plan",
+  "type": "object",
+  "required": [
+    "manifestVersion",
+    "restoreSetId",
+    "defaultMode",
+    "allowProfileMutation",
+    "allowRegistryMutation",
+    "allowStartMenuMutation",
+    "allowTaskbarMutation",
+    "allowDefaultAppMutation",
+    "allowNetworkDownload",
+    "contexts",
+    "plans"
+  ],
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "manifestVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "restoreSetId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$"
+    },
+    "defaultMode": {
+      "type": "string",
+      "enum": [
+        "plan-only",
+        "report-only",
+        "fixture"
+      ]
+    },
+    "allowProfileMutation": {
+      "const": false
+    },
+    "allowRegistryMutation": {
+      "const": false
+    },
+    "allowStartMenuMutation": {
+      "const": false
+    },
+    "allowTaskbarMutation": {
+      "const": false
+    },
+    "allowDefaultAppMutation": {
+      "const": false
+    },
+    "allowNetworkDownload": {
+      "const": false
+    },
+    "contexts": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/windowsContext"
+      }
+    },
+    "plans": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/plan"
+      }
+    }
+  },
+  "$defs": {
+    "scope": {
+      "type": "string",
+      "enum": [
+        "machine",
+        "default-user",
+        "current-user",
+        "offline-image"
+      ]
+    },
+    "windowsContext": {
+      "type": "object",
+      "required": [
+        "id",
+        "source",
+        "productName",
+        "displayVersion",
+        "buildNumber",
+        "edition",
+        "architecture",
+        "scope"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "source": {
+          "type": "string",
+          "enum": [
+            "fixture"
+          ]
+        },
+        "productName": {
+          "type": "string"
+        },
+        "displayVersion": {
+          "type": "string"
+        },
+        "buildNumber": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "edition": {
+          "type": "string"
+        },
+        "architecture": {
+          "type": "string",
+          "enum": [
+            "amd64",
+            "arm64"
+          ]
+        },
+        "scope": {
+          "$ref": "#/$defs/scope"
+        }
+      },
+      "additionalProperties": false
+    },
+    "plan": {
+      "type": "object",
+      "required": [
+        "id",
+        "type",
+        "mode",
+        "scope",
+        "entrypoint",
+        "mutationKind",
+        "riskLevel"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "default-apps",
+            "start-menu",
+            "taskbar"
+          ]
+        },
+        "mode": {
+          "type": "string",
+          "enum": [
+            "report-only",
+            "plan-only",
+            "fixture"
+          ]
+        },
+        "scope": {
+          "$ref": "#/$defs/scope"
+        },
+        "entrypoint": {
+          "type": "string"
+        },
+        "mutationKind": {
+          "const": "none"
+        },
+        "riskLevel": {
+          "type": "string",
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

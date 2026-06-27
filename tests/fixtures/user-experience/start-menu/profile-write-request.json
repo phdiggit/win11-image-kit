@@ -1,0 +1,28 @@
+{
+  "reportType": "start-menu-plan",
+  "schemaVersion": 1,
+  "planId": "start-menu-profile-write-request",
+  "scope": "current-user",
+  "source": "fixture",
+  "mutationRequested": false,
+  "profileWriteRequested": true,
+  "unsupportedLayoutVersion": false,
+  "targetWindows": {
+    "displayVersion": "24H2",
+    "buildNumber": 26100
+  },
+  "pins": [
+    {
+      "position": 1,
+      "displayName": "Sample Browser",
+      "appUserModelId": "Sample.Browser_12345!App",
+      "source": "fixture",
+      "status": "planned",
+      "executed": false
+    }
+  ],
+  "taskbar": {
+    "pins": []
+  },
+  "executed": false
+}
