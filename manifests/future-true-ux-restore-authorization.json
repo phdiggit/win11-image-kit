@@ -45,5 +45,73 @@
       "failurePropagation",
       "reviewCheckpoint"
     ]
+  },
+  "defaultUserDryRun": {
+    "enabled": true,
+    "scope": "default-user",
+    "authorizationApproved": false,
+    "executionApproved": false,
+    "defaultDecision": "blocked",
+    "allowDefaultUserMutation": false,
+    "allowCurrentUserFallback": false,
+    "allowMachineFallback": false,
+    "allowOfflineImageFallback": false,
+    "requiredEvidence": [
+      "templateSource",
+      "defaultUserTargetIdentity",
+      "beforeEvidence",
+      "dryRunCommandEnvelope",
+      "rollbackPlan",
+      "afterEvidencePlaceholder",
+      "independentVerificationPlaceholder",
+      "failurePropagation",
+      "reviewCheckpoint"
+    ]
+  },
+  "offlineImageDryRun": {
+    "enabled": true,
+    "scope": "offline-image",
+    "authorizationApproved": false,
+    "executionApproved": false,
+    "defaultDecision": "blocked",
+    "allowOfflineImageMutation": false,
+    "allowCurrentMachineFallback": false,
+    "allowCurrentUserFallback": false,
+    "allowDefaultUserFallback": false,
+    "requiredEvidence": [
+      "imageIdentity",
+      "imageIndex",
+      "mountPathPlaceholder",
+      "beforeEvidence",
+      "dryRunCommandEnvelope",
+      "rollbackOrUnmountPlan",
+      "afterEvidencePlaceholder",
+      "independentVerificationPlaceholder",
+      "failurePropagation",
+      "reviewCheckpoint"
+    ]
+  },
+  "machineDryRun": {
+    "enabled": true,
+    "scope": "machine",
+    "authorizationApproved": false,
+    "executionApproved": false,
+    "defaultDecision": "blocked",
+    "allowMachineMutation": false,
+    "allowCurrentUserFallback": false,
+    "allowDefaultUserFallback": false,
+    "allowOfflineImageFallback": false,
+    "requiredEvidence": [
+      "machineIdentity",
+      "machineSettingTarget",
+      "beforeEvidence",
+      "dryRunCommandEnvelope",
+      "rollbackPlan",
+      "afterEvidencePlaceholder",
+      "independentVerificationPlaceholder",
+      "adminOrVmSmokeBoundary",
+      "failurePropagation",
+      "reviewCheckpoint"
+    ]
   }
 }

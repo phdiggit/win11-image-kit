@@ -1,0 +1,14 @@
+{
+  "requestId": "machine-baseline-blocked",
+  "scope": "machine",
+  "machineIdentity": "",
+  "machineSettingTarget": "",
+  "beforeEvidence": "",
+  "dryRunCommandEnvelope": "",
+  "rollbackPlan": "",
+  "afterEvidencePlaceholder": "",
+  "independentVerificationPlaceholder": "",
+  "adminOrVmSmokeBoundary": "",
+  "failurePropagation": "",
+  "reviewCheckpoint": ""
+}

@@ -435,6 +435,30 @@
       "notes": "Validates current-user UX restore dry-run gate without allowing true mutation."
     },
     {
+      "id": "future-true-ux-scope-dry-run",
+      "displayName": "Future true UX scope dry-run gates",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "scripts/validate/Test-FutureTrueUxRestoreScopeDryRun.ps1",
+      "evidence": "report",
+      "notes": "Validates default-user, offline-image, and machine dry-run gates without allowing true mutation."
+    },
+    {
+      "id": "future-true-ux-scope-guard-matrix",
+      "displayName": "Future true UX scope guard matrix",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "docs/75-future-true-ux-restore-scope-guard-matrix.md",
+      "evidence": "document",
+      "notes": "Prevents evidence substitution across current-user, default-user, offline-image, and machine scopes."
+    },
+    {
       "id": "future-true-ux-execute-gate",
       "displayName": "Future true UX execute gate dual approval",
       "layer": "pr-fast",

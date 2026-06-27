@@ -52,4 +52,21 @@ Describe "Issue 18 future true UX restore split" {
         Assert-KitMatch $doc "dry-run-ready"
         Assert-KitMatch $doc "cannot execute mutation"
     }
+
+    It "keeps remaining scope gates as dry-run only" {
+        $docs = @(
+            @{ Path = "docs\72-future-true-ux-restore-default-user-dry-run-gate.md"; Status = "default-user-dry-run-gate"; Scope = "default-user" },
+            @{ Path = "docs\73-future-true-ux-restore-offline-image-dry-run-gate.md"; Status = "offline-image-dry-run-gate"; Scope = "offline-image" },
+            @{ Path = "docs\74-future-true-ux-restore-machine-dry-run-gate.md"; Status = "machine-dry-run-gate"; Scope = "machine" },
+            @{ Path = "docs\75-future-true-ux-restore-scope-guard-matrix.md"; Status = "scope-guard-matrix"; Scope = "scope" }
+        )
+
+        foreach ($docInfo in $docs) {
+            $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot $docInfo.Path) -Raw -Encoding UTF8
+            Assert-KitMatch $doc ('Status:\s*`{0}`' -f [regex]::Escape($docInfo.Status))
+            Assert-KitMatch $doc "AuthorizationApproved=false"
+            Assert-KitMatch $doc "ExecutionApproved=false"
+            Assert-KitNotMatch $doc "(?i)\b(fixes|closes|resolves)\s+#18\b"
+        }
+    }
 }
