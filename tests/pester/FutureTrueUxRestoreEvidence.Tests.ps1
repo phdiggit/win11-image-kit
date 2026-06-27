@@ -19,10 +19,19 @@ Describe "Future true UX restore evidence model" {
         Assert-KitEqual $evidenceSchema.properties.commandExitCodeSufficient.const $false
         Assert-KitEqual $evidenceSchema.properties.userConfigurationConfirmed.const $false
         Assert-KitEqual ($evidenceSchema.required -contains "currentUserEvidenceContract") $true
+        Assert-KitEqual ($evidenceSchema.required -contains "defaultUserEvidenceContract") $true
+        Assert-KitEqual ($evidenceSchema.required -contains "offlineImageEvidenceContract") $true
+        Assert-KitEqual ($evidenceSchema.required -contains "machineEvidenceContract") $true
+        Assert-KitEqual ($evidenceSchema.required -contains "scopeEvidenceContracts") $true
         Assert-KitEqual $evidenceFixture.trueExecution $false
         Assert-KitEqual $evidenceFixture.mutationCount 0
         Assert-KitEqual $evidenceFixture.commandExitCodeSufficient $false
         Assert-KitEqual $evidenceFixture.userConfigurationConfirmed $false
+        foreach ($contractName in @("currentUserEvidenceContract", "defaultUserEvidenceContract", "offlineImageEvidenceContract", "machineEvidenceContract")) {
+            Assert-KitEqual $evidenceFixture.$contractName.trueExecution $false
+            Assert-KitEqual $evidenceFixture.$contractName.mutationCount 0
+            Assert-KitEqual $evidenceFixture.$contractName.privatePathRedacted $true
+        }
     }
 
     It "documents per-scope evidence requirements" {

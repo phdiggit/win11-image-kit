@@ -44,7 +44,11 @@ Describe "Future true UX restore validation runner" {
             "docs\68-future-true-ux-restore-dry-run-plan.md",
             "docs\69-future-true-ux-restore-current-user-dry-run-gate.md",
             "docs\70-future-true-ux-restore-current-user-evidence-contract.md",
-            "docs\71-future-true-ux-restore-execute-gate-dual-approval.md"
+            "docs\71-future-true-ux-restore-execute-gate-dual-approval.md",
+            "docs\72-future-true-ux-restore-default-user-dry-run-gate.md",
+            "docs\73-future-true-ux-restore-offline-image-dry-run-gate.md",
+            "docs\74-future-true-ux-restore-machine-dry-run-gate.md",
+            "docs\75-future-true-ux-restore-scope-guard-matrix.md"
         )) {
             Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot $doc)) $true
         }
@@ -55,18 +59,28 @@ Describe "Future true UX restore validation runner" {
         $doc69 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\69-future-true-ux-restore-current-user-dry-run-gate.md") -Raw -Encoding UTF8
         $doc70 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\70-future-true-ux-restore-current-user-evidence-contract.md") -Raw -Encoding UTF8
         $doc71 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\71-future-true-ux-restore-execute-gate-dual-approval.md") -Raw -Encoding UTF8
+        $doc72 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\72-future-true-ux-restore-default-user-dry-run-gate.md") -Raw -Encoding UTF8
+        $doc73 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\73-future-true-ux-restore-offline-image-dry-run-gate.md") -Raw -Encoding UTF8
+        $doc74 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\74-future-true-ux-restore-machine-dry-run-gate.md") -Raw -Encoding UTF8
+        $doc75 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\75-future-true-ux-restore-scope-guard-matrix.md") -Raw -Encoding UTF8
         Assert-KitMatch $doc66 'Status:\s*`authorization-intake`'
         Assert-KitMatch $doc67 'Status:\s*`evidence-model-draft`'
         Assert-KitMatch $doc68 'Status:\s*`dry-run-plan`'
         Assert-KitMatch $doc69 'Status:\s*`current-user-dry-run-gate`'
         Assert-KitMatch $doc70 'Status:\s*`evidence-contract-draft`'
         Assert-KitMatch $doc71 'Status:\s*`execute-gate-draft`'
+        Assert-KitMatch $doc72 'Status:\s*`default-user-dry-run-gate`'
+        Assert-KitMatch $doc73 'Status:\s*`offline-image-dry-run-gate`'
+        Assert-KitMatch $doc74 'Status:\s*`machine-dry-run-gate`'
+        Assert-KitMatch $doc75 'Status:\s*`scope-guard-matrix`'
 
         $qualityGates = Get-Content -LiteralPath (Join-Path $script:RepoRoot "manifests\quality-gates.json") -Raw -Encoding UTF8 | ConvertFrom-Json
         $gateIds = @($qualityGates.gates.id)
         Assert-KitEqual ($gateIds -contains "future-true-ux-restore-authorization") $true
         Assert-KitEqual ($gateIds -contains "future-true-ux-restore-evidence-model") $true
         Assert-KitEqual ($gateIds -contains "future-true-ux-current-user-dry-run") $true
+        Assert-KitEqual ($gateIds -contains "future-true-ux-scope-dry-run") $true
+        Assert-KitEqual ($gateIds -contains "future-true-ux-scope-guard-matrix") $true
         Assert-KitEqual ($gateIds -contains "future-true-ux-execute-gate") $true
     }
 
@@ -81,7 +95,11 @@ Describe "Future true UX restore validation runner" {
         foreach ($path in @(
             "docs\66-future-true-ux-restore-authorization-intake.md",
             "docs\67-future-true-ux-restore-evidence-model.md",
-            "docs\68-future-true-ux-restore-dry-run-plan.md"
+            "docs\68-future-true-ux-restore-dry-run-plan.md",
+            "docs\72-future-true-ux-restore-default-user-dry-run-gate.md",
+            "docs\73-future-true-ux-restore-offline-image-dry-run-gate.md",
+            "docs\74-future-true-ux-restore-machine-dry-run-gate.md",
+            "docs\75-future-true-ux-restore-scope-guard-matrix.md"
         )) {
             $text = Get-Content -LiteralPath (Join-Path $script:RepoRoot $path) -Raw -Encoding UTF8
             Assert-KitNotMatch $text "(?i)\b(fixes|closes|resolves)\s+#18\b"

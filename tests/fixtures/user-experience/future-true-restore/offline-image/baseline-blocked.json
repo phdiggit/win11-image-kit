@@ -1,0 +1,14 @@
+{
+  "requestId": "offline-image-baseline-blocked",
+  "scope": "offline-image",
+  "imageIdentity": "",
+  "imageIndex": "",
+  "mountPathPlaceholder": "",
+  "beforeEvidence": "",
+  "dryRunCommandEnvelope": "",
+  "rollbackOrUnmountPlan": "",
+  "afterEvidencePlaceholder": "",
+  "independentVerificationPlaceholder": "",
+  "failurePropagation": "",
+  "reviewCheckpoint": ""
+}

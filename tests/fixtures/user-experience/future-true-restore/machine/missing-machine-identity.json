@@ -1,0 +1,15 @@
+{
+  "requestId": "machine-missing-machine-identity",
+  "scope": "machine",
+  "claimedScope": "machine",
+  "machineIdentity": "",
+  "machineSettingTarget": "fixture-machine-policy-target",
+  "beforeEvidence": "fixture-machine-before-state",
+  "dryRunCommandEnvelope": "future-machine-command-envelope",
+  "rollbackPlan": "fixture-machine-rollback-plan",
+  "afterEvidencePlaceholder": "future-machine-after-evidence-required",
+  "independentVerificationPlaceholder": "future-machine-independent-verification-required",
+  "adminOrVmSmokeBoundary": "fixture-admin-or-vm-smoke-boundary",
+  "failurePropagation": "stop-on-failure",
+  "reviewCheckpoint": "maintainer-review-required"
+}

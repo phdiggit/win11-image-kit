@@ -1,0 +1,17 @@
+{
+  "requestId": "default-user-dry-run-ready-no-execute",
+  "scope": "default-user",
+  "claimedScope": "default-user",
+  "templateSource": "fixture-default-user-template-source",
+  "defaultUserTargetIdentity": "default-user-template-token:redacted",
+  "beforeEvidence": "fixture-default-user-before-state",
+  "dryRunCommandEnvelope": "future-default-user-command-envelope",
+  "rollbackPlan": "fixture-default-user-rollback-plan",
+  "afterEvidencePlaceholder": "future-default-user-after-evidence-required",
+  "independentVerificationPlaceholder": "future-default-user-independent-verification-required",
+  "failurePropagation": "stop-on-failure",
+  "reviewCheckpoint": "maintainer-review-required",
+  "authorizationApproved": false,
+  "executionApproved": false,
+  "mutationRequested": false
+}

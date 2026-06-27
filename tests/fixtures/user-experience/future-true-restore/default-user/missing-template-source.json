@@ -1,0 +1,14 @@
+{
+  "requestId": "default-user-missing-template-source",
+  "scope": "default-user",
+  "claimedScope": "default-user",
+  "templateSource": "",
+  "defaultUserTargetIdentity": "default-user-template-token:redacted",
+  "beforeEvidence": "fixture-default-user-before-state",
+  "dryRunCommandEnvelope": "future-default-user-command-envelope",
+  "rollbackPlan": "fixture-default-user-rollback-plan",
+  "afterEvidencePlaceholder": "future-default-user-after-evidence-required",
+  "independentVerificationPlaceholder": "future-default-user-independent-verification-required",
+  "failurePropagation": "stop-on-failure",
+  "reviewCheckpoint": "maintainer-review-required"
+}

@@ -16,7 +16,10 @@
     "allowAppxMutation",
     "allowNetworkDownload",
     "requiredAuthorizationFields",
-    "currentUserDryRun"
+    "currentUserDryRun",
+    "defaultUserDryRun",
+    "offlineImageDryRun",
+    "machineDryRun"
   ],
   "properties": {
     "$schema": {
@@ -77,6 +80,15 @@
     },
     "currentUserDryRun": {
       "$ref": "#/$defs/currentUserDryRun"
+    },
+    "defaultUserDryRun": {
+      "$ref": "#/$defs/defaultUserDryRun"
+    },
+    "offlineImageDryRun": {
+      "$ref": "#/$defs/offlineImageDryRun"
+    },
+    "machineDryRun": {
+      "$ref": "#/$defs/machineDryRun"
     }
   },
   "$defs": {
@@ -122,6 +134,50 @@
         "rollbackPlan",
         "afterEvidencePlaceholder",
         "independentVerificationPlaceholder",
+        "failurePropagation",
+        "reviewCheckpoint"
+      ]
+    },
+    "defaultUserEvidenceField": {
+      "type": "string",
+      "enum": [
+        "templateSource",
+        "defaultUserTargetIdentity",
+        "beforeEvidence",
+        "dryRunCommandEnvelope",
+        "rollbackPlan",
+        "afterEvidencePlaceholder",
+        "independentVerificationPlaceholder",
+        "failurePropagation",
+        "reviewCheckpoint"
+      ]
+    },
+    "offlineImageEvidenceField": {
+      "type": "string",
+      "enum": [
+        "imageIdentity",
+        "imageIndex",
+        "mountPathPlaceholder",
+        "beforeEvidence",
+        "dryRunCommandEnvelope",
+        "rollbackOrUnmountPlan",
+        "afterEvidencePlaceholder",
+        "independentVerificationPlaceholder",
+        "failurePropagation",
+        "reviewCheckpoint"
+      ]
+    },
+    "machineEvidenceField": {
+      "type": "string",
+      "enum": [
+        "machineIdentity",
+        "machineSettingTarget",
+        "beforeEvidence",
+        "dryRunCommandEnvelope",
+        "rollbackPlan",
+        "afterEvidencePlaceholder",
+        "independentVerificationPlaceholder",
+        "adminOrVmSmokeBoundary",
         "failurePropagation",
         "reviewCheckpoint"
       ]
@@ -179,6 +235,180 @@
           "minItems": 8,
           "items": {
             "$ref": "#/$defs/currentUserEvidenceField"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "defaultUserDryRun": {
+      "type": "object",
+      "required": [
+        "enabled",
+        "scope",
+        "authorizationApproved",
+        "executionApproved",
+        "defaultDecision",
+        "allowDefaultUserMutation",
+        "allowCurrentUserFallback",
+        "allowMachineFallback",
+        "allowOfflineImageFallback",
+        "requiredEvidence"
+      ],
+      "properties": {
+        "enabled": {
+          "const": true
+        },
+        "scope": {
+          "const": "default-user"
+        },
+        "authorizationApproved": {
+          "const": false,
+          "default": false
+        },
+        "executionApproved": {
+          "const": false,
+          "default": false
+        },
+        "defaultDecision": {
+          "const": "blocked"
+        },
+        "allowDefaultUserMutation": {
+          "const": false,
+          "default": false
+        },
+        "allowCurrentUserFallback": {
+          "const": false,
+          "default": false
+        },
+        "allowMachineFallback": {
+          "const": false,
+          "default": false
+        },
+        "allowOfflineImageFallback": {
+          "const": false,
+          "default": false
+        },
+        "requiredEvidence": {
+          "type": "array",
+          "minItems": 9,
+          "items": {
+            "$ref": "#/$defs/defaultUserEvidenceField"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "offlineImageDryRun": {
+      "type": "object",
+      "required": [
+        "enabled",
+        "scope",
+        "authorizationApproved",
+        "executionApproved",
+        "defaultDecision",
+        "allowOfflineImageMutation",
+        "allowCurrentMachineFallback",
+        "allowCurrentUserFallback",
+        "allowDefaultUserFallback",
+        "requiredEvidence"
+      ],
+      "properties": {
+        "enabled": {
+          "const": true
+        },
+        "scope": {
+          "const": "offline-image"
+        },
+        "authorizationApproved": {
+          "const": false,
+          "default": false
+        },
+        "executionApproved": {
+          "const": false,
+          "default": false
+        },
+        "defaultDecision": {
+          "const": "blocked"
+        },
+        "allowOfflineImageMutation": {
+          "const": false,
+          "default": false
+        },
+        "allowCurrentMachineFallback": {
+          "const": false,
+          "default": false
+        },
+        "allowCurrentUserFallback": {
+          "const": false,
+          "default": false
+        },
+        "allowDefaultUserFallback": {
+          "const": false,
+          "default": false
+        },
+        "requiredEvidence": {
+          "type": "array",
+          "minItems": 10,
+          "items": {
+            "$ref": "#/$defs/offlineImageEvidenceField"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "machineDryRun": {
+      "type": "object",
+      "required": [
+        "enabled",
+        "scope",
+        "authorizationApproved",
+        "executionApproved",
+        "defaultDecision",
+        "allowMachineMutation",
+        "allowCurrentUserFallback",
+        "allowDefaultUserFallback",
+        "allowOfflineImageFallback",
+        "requiredEvidence"
+      ],
+      "properties": {
+        "enabled": {
+          "const": true
+        },
+        "scope": {
+          "const": "machine"
+        },
+        "authorizationApproved": {
+          "const": false,
+          "default": false
+        },
+        "executionApproved": {
+          "const": false,
+          "default": false
+        },
+        "defaultDecision": {
+          "const": "blocked"
+        },
+        "allowMachineMutation": {
+          "const": false,
+          "default": false
+        },
+        "allowCurrentUserFallback": {
+          "const": false,
+          "default": false
+        },
+        "allowDefaultUserFallback": {
+          "const": false,
+          "default": false
+        },
+        "allowOfflineImageFallback": {
+          "const": false,
+          "default": false
+        },
+        "requiredEvidence": {
+          "type": "array",
+          "minItems": 10,
+          "items": {
+            "$ref": "#/$defs/machineEvidenceField"
           }
         }
       },

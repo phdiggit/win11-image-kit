@@ -1,0 +1,18 @@
+{
+  "requestId": "offline-image-dry-run-ready-no-execute",
+  "scope": "offline-image",
+  "claimedScope": "offline-image",
+  "imageIdentity": "image-token:redacted",
+  "imageIndex": "1",
+  "mountPathPlaceholder": "mount-path-placeholder:redacted",
+  "beforeEvidence": "fixture-offline-image-before-state",
+  "dryRunCommandEnvelope": "future-offline-image-command-envelope",
+  "rollbackOrUnmountPlan": "fixture-offline-image-rollback-or-unmount-plan",
+  "afterEvidencePlaceholder": "future-offline-image-after-evidence-required",
+  "independentVerificationPlaceholder": "future-offline-image-independent-verification-required",
+  "failurePropagation": "stop-on-failure",
+  "reviewCheckpoint": "maintainer-review-required",
+  "authorizationApproved": false,
+  "executionApproved": false,
+  "mutationRequested": false
+}

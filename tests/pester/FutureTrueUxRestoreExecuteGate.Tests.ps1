@@ -14,6 +14,9 @@ Describe "Future true UX restore execute gate dual approval" {
         Assert-KitMatch $doc "AuthorizationApproved=false"
         Assert-KitMatch $doc "ExecutionApproved=false"
         Assert-KitMatch $doc "Without both approvals true"
+        foreach ($scope in @("current-user", "default-user", "offline-image", "machine")) {
+            Assert-KitMatch $doc ([regex]::Escape($scope))
+        }
     }
 
     It "blocks one-sided approvals and keeps report frozen false" {

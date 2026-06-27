@@ -1,0 +1,14 @@
+{
+  "requestId": "default-user-private-profile-path-blocked",
+  "scope": "default-user",
+  "claimedScope": "default-user",
+  "templateSource": "fixture-default-user-template-source",
+  "defaultUserTargetIdentity": "default-user-template-token:redacted",
+  "beforeEvidence": "C:\\Users\\RealUser\\DefaultTemplateEvidence",
+  "dryRunCommandEnvelope": "future-default-user-command-envelope",
+  "rollbackPlan": "fixture-default-user-rollback-plan",
+  "afterEvidencePlaceholder": "future-default-user-after-evidence-required",
+  "independentVerificationPlaceholder": "future-default-user-independent-verification-required",
+  "failurePropagation": "stop-on-failure",
+  "reviewCheckpoint": "maintainer-review-required"
+}

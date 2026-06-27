@@ -1,0 +1,13 @@
+{
+  "requestId": "default-user-baseline-blocked",
+  "scope": "default-user",
+  "templateSource": "",
+  "defaultUserTargetIdentity": "",
+  "beforeEvidence": "",
+  "dryRunCommandEnvelope": "",
+  "rollbackPlan": "",
+  "afterEvidencePlaceholder": "",
+  "independentVerificationPlaceholder": "",
+  "failurePropagation": "",
+  "reviewCheckpoint": ""
+}

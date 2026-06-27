@@ -15,7 +15,11 @@
     "evidenceLayers",
     "scopeVerification",
     "privatePathRedacted",
-    "currentUserEvidenceContract"
+    "currentUserEvidenceContract",
+    "defaultUserEvidenceContract",
+    "offlineImageEvidenceContract",
+    "machineEvidenceContract",
+    "scopeEvidenceContracts"
   ],
   "properties": {
     "reportType": {
@@ -105,6 +109,39 @@
     },
     "currentUserEvidenceContract": {
       "$ref": "#/$defs/currentUserEvidenceContract"
+    },
+    "defaultUserEvidenceContract": {
+      "$ref": "#/$defs/defaultUserEvidenceContract"
+    },
+    "offlineImageEvidenceContract": {
+      "$ref": "#/$defs/offlineImageEvidenceContract"
+    },
+    "machineEvidenceContract": {
+      "$ref": "#/$defs/machineEvidenceContract"
+    },
+    "scopeEvidenceContracts": {
+      "type": "object",
+      "required": [
+        "currentUser",
+        "defaultUser",
+        "offlineImage",
+        "machine"
+      ],
+      "properties": {
+        "currentUser": {
+          "$ref": "#/$defs/currentUserEvidenceContract"
+        },
+        "defaultUser": {
+          "$ref": "#/$defs/defaultUserEvidenceContract"
+        },
+        "offlineImage": {
+          "$ref": "#/$defs/offlineImageEvidenceContract"
+        },
+        "machine": {
+          "$ref": "#/$defs/machineEvidenceContract"
+        }
+      },
+      "additionalProperties": false
     }
   },
   "$defs": {
@@ -163,6 +200,206 @@
           "default": true
         },
         "currentUserConfirmed": {
+          "const": false,
+          "default": false
+        },
+        "trueExecution": {
+          "const": false,
+          "default": false
+        },
+        "mutationCount": {
+          "const": 0,
+          "default": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "defaultUserEvidenceContract": {
+      "type": "object",
+      "required": [
+        "templateSource",
+        "defaultUserTargetIdentity",
+        "beforeEvidence",
+        "dryRunCommandEnvelope",
+        "rollbackPlan",
+        "afterEvidencePlaceholder",
+        "independentVerificationPlaceholder",
+        "failurePropagation",
+        "reviewCheckpoint",
+        "privatePathRedacted",
+        "defaultUserConfirmed",
+        "trueExecution",
+        "mutationCount"
+      ],
+      "properties": {
+        "templateSource": {
+          "type": "string"
+        },
+        "defaultUserTargetIdentity": {
+          "type": "string"
+        },
+        "beforeEvidence": {
+          "type": "string"
+        },
+        "dryRunCommandEnvelope": {
+          "type": "string"
+        },
+        "rollbackPlan": {
+          "type": "string"
+        },
+        "afterEvidencePlaceholder": {
+          "type": "string"
+        },
+        "independentVerificationPlaceholder": {
+          "type": "string"
+        },
+        "failurePropagation": {
+          "type": "string"
+        },
+        "reviewCheckpoint": {
+          "type": "string"
+        },
+        "privatePathRedacted": {
+          "const": true,
+          "default": true
+        },
+        "defaultUserConfirmed": {
+          "const": false,
+          "default": false
+        },
+        "trueExecution": {
+          "const": false,
+          "default": false
+        },
+        "mutationCount": {
+          "const": 0,
+          "default": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "offlineImageEvidenceContract": {
+      "type": "object",
+      "required": [
+        "imageIdentity",
+        "imageIndex",
+        "mountPathPlaceholder",
+        "beforeEvidence",
+        "dryRunCommandEnvelope",
+        "rollbackOrUnmountPlan",
+        "afterEvidencePlaceholder",
+        "independentVerificationPlaceholder",
+        "failurePropagation",
+        "reviewCheckpoint",
+        "privatePathRedacted",
+        "offlineImageConfirmed",
+        "trueExecution",
+        "mutationCount"
+      ],
+      "properties": {
+        "imageIdentity": {
+          "type": "string"
+        },
+        "imageIndex": {
+          "type": "string"
+        },
+        "mountPathPlaceholder": {
+          "type": "string"
+        },
+        "beforeEvidence": {
+          "type": "string"
+        },
+        "dryRunCommandEnvelope": {
+          "type": "string"
+        },
+        "rollbackOrUnmountPlan": {
+          "type": "string"
+        },
+        "afterEvidencePlaceholder": {
+          "type": "string"
+        },
+        "independentVerificationPlaceholder": {
+          "type": "string"
+        },
+        "failurePropagation": {
+          "type": "string"
+        },
+        "reviewCheckpoint": {
+          "type": "string"
+        },
+        "privatePathRedacted": {
+          "const": true,
+          "default": true
+        },
+        "offlineImageConfirmed": {
+          "const": false,
+          "default": false
+        },
+        "trueExecution": {
+          "const": false,
+          "default": false
+        },
+        "mutationCount": {
+          "const": 0,
+          "default": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "machineEvidenceContract": {
+      "type": "object",
+      "required": [
+        "machineIdentity",
+        "machineSettingTarget",
+        "beforeEvidence",
+        "dryRunCommandEnvelope",
+        "rollbackPlan",
+        "afterEvidencePlaceholder",
+        "independentVerificationPlaceholder",
+        "adminOrVmSmokeBoundary",
+        "failurePropagation",
+        "reviewCheckpoint",
+        "privatePathRedacted",
+        "machineConfirmed",
+        "trueExecution",
+        "mutationCount"
+      ],
+      "properties": {
+        "machineIdentity": {
+          "type": "string"
+        },
+        "machineSettingTarget": {
+          "type": "string"
+        },
+        "beforeEvidence": {
+          "type": "string"
+        },
+        "dryRunCommandEnvelope": {
+          "type": "string"
+        },
+        "rollbackPlan": {
+          "type": "string"
+        },
+        "afterEvidencePlaceholder": {
+          "type": "string"
+        },
+        "independentVerificationPlaceholder": {
+          "type": "string"
+        },
+        "adminOrVmSmokeBoundary": {
+          "type": "string"
+        },
+        "failurePropagation": {
+          "type": "string"
+        },
+        "reviewCheckpoint": {
+          "type": "string"
+        },
+        "privatePathRedacted": {
+          "const": true,
+          "default": true
+        },
+        "machineConfirmed": {
           "const": false,
           "default": false
         },
