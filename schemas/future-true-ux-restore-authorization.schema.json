@@ -19,7 +19,8 @@
     "currentUserDryRun",
     "defaultUserDryRun",
     "offlineImageDryRun",
-    "machineDryRun"
+    "machineDryRun",
+    "authorizationReview"
   ],
   "properties": {
     "$schema": {
@@ -89,6 +90,9 @@
     },
     "machineDryRun": {
       "$ref": "#/$defs/machineDryRun"
+    },
+    "authorizationReview": {
+      "$ref": "#/$defs/authorizationReview"
     }
   },
   "$defs": {
@@ -106,7 +110,19 @@
       "enum": [
         "blocked",
         "dry-run-ready",
-        "authorized-pending-review"
+        "authorized-pending-review",
+        "needs-more-evidence",
+        "authorization-review-ready",
+        "rejected"
+      ]
+    },
+    "reviewDecision": {
+      "type": "string",
+      "enum": [
+        "blocked",
+        "needs-more-evidence",
+        "authorization-review-ready",
+        "rejected"
       ]
     },
     "authorizationField": {
@@ -410,6 +426,184 @@
           "items": {
             "$ref": "#/$defs/machineEvidenceField"
           }
+        }
+      },
+      "additionalProperties": false
+    },
+    "authorizationReviewField": {
+      "type": "string",
+      "enum": [
+        "scope",
+        "targetIdentity",
+        "requestedMutationType",
+        "dryRunCommandEnvelope",
+        "rollbackPlan",
+        "beforeEvidence",
+        "afterEvidencePlaceholder",
+        "independentVerificationPlaceholder",
+        "scopeGuardAssertion",
+        "privacyRedactionStatement",
+        "failurePropagation",
+        "reviewerChecklist"
+      ]
+    },
+    "authorizationReview": {
+      "type": "object",
+      "required": [
+        "enabled",
+        "authorizationApproved",
+        "executionApproved",
+        "executeReady",
+        "allowedReviewDecisions",
+        "forbiddenReviewDecisions",
+        "requiredPacketFields"
+      ],
+      "properties": {
+        "enabled": {
+          "const": true
+        },
+        "authorizationApproved": {
+          "const": false,
+          "default": false
+        },
+        "executionApproved": {
+          "const": false,
+          "default": false
+        },
+        "executeReady": {
+          "const": false,
+          "default": false
+        },
+        "allowedReviewDecisions": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "$ref": "#/$defs/reviewDecision"
+          },
+          "not": {
+            "contains": {
+              "const": "execute-ready"
+            }
+          }
+        },
+        "forbiddenReviewDecisions": {
+          "type": "array",
+          "contains": {
+            "const": "execute-ready"
+          },
+          "items": {
+            "type": "string"
+          }
+        },
+        "requiredPacketFields": {
+          "type": "array",
+          "minItems": 12,
+          "items": {
+            "$ref": "#/$defs/authorizationReviewField"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "evidencePacket": {
+      "type": "object",
+      "required": [
+        "scope",
+        "targetIdentity",
+        "requestedMutationType",
+        "dryRunCommandEnvelope",
+        "rollbackPlan",
+        "beforeEvidence",
+        "afterEvidencePlaceholder",
+        "independentVerificationPlaceholder",
+        "scopeGuardAssertion",
+        "privacyRedactionStatement",
+        "failurePropagation",
+        "reviewerChecklist"
+      ],
+      "properties": {
+        "scope": {
+          "$ref": "#/$defs/scope"
+        },
+        "targetIdentity": {
+          "type": "string"
+        },
+        "requestedMutationType": {
+          "type": "string"
+        },
+        "dryRunCommandEnvelope": {
+          "type": "string"
+        },
+        "rollbackPlan": {
+          "type": "string"
+        },
+        "beforeEvidence": {
+          "type": "string"
+        },
+        "afterEvidencePlaceholder": {
+          "type": "string"
+        },
+        "independentVerificationPlaceholder": {
+          "type": "string"
+        },
+        "scopeGuardAssertion": {
+          "$ref": "#/$defs/scope"
+        },
+        "privacyRedactionStatement": {
+          "type": "string"
+        },
+        "failurePropagation": {
+          "type": "string"
+        },
+        "reviewerChecklist": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "authorizationReviewRequest": {
+      "type": "object",
+      "required": [
+        "requestId",
+        "scope",
+        "reviewDecision",
+        "evidencePacket",
+        "executionNotApprovedStatement",
+        "authorizationApproved",
+        "executionApproved",
+        "executeReady"
+      ],
+      "properties": {
+        "requestId": {
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/scope"
+        },
+        "reviewDecision": {
+          "$ref": "#/$defs/reviewDecision"
+        },
+        "evidencePacket": {
+          "$ref": "#/$defs/evidencePacket"
+        },
+        "executionNotApprovedStatement": {
+          "type": "string"
+        },
+        "authorizationApproved": {
+          "const": false,
+          "default": false
+        },
+        "executionApproved": {
+          "const": false,
+          "default": false
+        },
+        "executeReady": {
+          "const": false,
+          "default": false
         }
       },
       "additionalProperties": false

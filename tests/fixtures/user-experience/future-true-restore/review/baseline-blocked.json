@@ -1,0 +1,11 @@
+{
+  "scope": "current-user",
+  "reviewDecision": "blocked",
+  "authorizationApproved": false,
+  "executionApproved": false,
+  "executeReady": false,
+  "evidencePacket": {
+    "scope": "current-user",
+    "scopeGuardAssertion": "current-user"
+  }
+}

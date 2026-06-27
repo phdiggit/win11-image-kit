@@ -1,0 +1,24 @@
+{
+  "scope": "current-user",
+  "reviewDecision": "authorization-review-ready",
+  "authorizationApproved": false,
+  "executionApproved": false,
+  "executeReady": false,
+  "reviewNote": "Fixes \u002318 is intentionally blocked in review artifacts.",
+  "evidencePacket": {
+    "scope": "current-user",
+    "targetIdentity": "user-token:redacted-current-user",
+    "requestedMutationType": "future-current-user-ux-restore",
+    "dryRunCommandEnvelope": "scripts/config/Show-FutureTrueUxRestoreCurrentUserDryRunPlan.ps1 -Scope current-user",
+    "rollbackPlan": "Restore from captured current-user profile backup before any future mutation.",
+    "beforeEvidence": "Redacted current-user baseline packet.",
+    "afterEvidencePlaceholder": "Future after-state packet required before execution can be approved.",
+    "independentVerificationPlaceholder": "Future independent verification packet required before execution can be approved.",
+    "scopeGuardAssertion": "current-user",
+    "privacyRedactionStatement": "Private local user paths are redacted.",
+    "failurePropagation": "Auto-close keywords keep the packet blocked.",
+    "reviewerChecklist": [
+      "No execution approval is requested."
+    ]
+  }
+}

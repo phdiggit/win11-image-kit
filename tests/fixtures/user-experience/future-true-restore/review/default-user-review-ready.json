@@ -1,0 +1,31 @@
+{
+  "scope": "default-user",
+  "reviewDecision": "authorization-review-ready",
+  "authorizationApproved": false,
+  "executionApproved": false,
+  "executeReady": false,
+  "evidencePacket": {
+    "scope": "default-user",
+    "targetIdentity": "default-profile-template:redacted",
+    "requestedMutationType": "future-default-user-ux-restore",
+    "dryRunCommandEnvelope": "scripts/config/Show-FutureTrueUxRestoreScopeDryRunPlan.ps1 -Scope default-user",
+    "rollbackPlan": "Restore Default User hive and template backup before any future mutation.",
+    "beforeEvidence": "Redacted Default User template baseline packet.",
+    "afterEvidencePlaceholder": "Future after-state packet required before execution can be approved.",
+    "independentVerificationPlaceholder": "Future independent verification packet required before execution can be approved.",
+    "scopeGuardAssertion": "default-user",
+    "privacyRedactionStatement": "Default User template paths are redacted.",
+    "failurePropagation": "Any missing default-user evidence keeps the decision blocked.",
+    "reviewerChecklist": [
+      "Scope is default-user only.",
+      "Rollback plan exists.",
+      "No execution approval is requested."
+    ],
+    "authorizationApproved": false,
+    "executionApproved": false,
+    "executeReady": false,
+    "trueExecution": false,
+    "mutationCount": 0,
+    "userConfigurationConfirmed": false
+  }
+}

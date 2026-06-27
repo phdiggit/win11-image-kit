@@ -8,6 +8,8 @@
   "mutationCount": 0,
   "commandExitCodeSufficient": false,
   "userConfigurationConfirmed": false,
+  "reviewDecision": "blocked",
+  "executeReady": false,
   "evidenceLayers": {
     "beforeEvidence": "required-before-evidence",
     "executionEvidence": "required-authorized-command-envelope",
@@ -143,5 +145,27 @@
       "trueExecution": false,
       "mutationCount": 0
     }
+  },
+  "evidencePacket": {
+    "scope": "current-user",
+    "targetIdentity": "user-token:redacted-current-user",
+    "requestedMutationType": "future-current-user-ux-restore",
+    "dryRunCommandEnvelope": "future-current-user-command-envelope",
+    "rollbackPlan": "required-current-user-rollback-plan",
+    "beforeEvidence": "required-current-user-before-evidence",
+    "afterEvidencePlaceholder": "required-current-user-after-evidence-placeholder",
+    "independentVerificationPlaceholder": "required-current-user-independent-verification-placeholder",
+    "scopeGuardAssertion": "current-user",
+    "privacyRedactionStatement": "private paths and identities are redacted",
+    "failurePropagation": "stop-on-failure",
+    "reviewerChecklist": [
+      "scope matched",
+      "private paths redacted",
+      "execution not approved"
+    ],
+    "executeReady": false,
+    "trueExecution": false,
+    "mutationCount": 0,
+    "userConfigurationConfirmed": false
   }
 }
