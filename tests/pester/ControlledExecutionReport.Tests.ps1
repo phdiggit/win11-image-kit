@@ -13,18 +13,22 @@ Describe "Controlled execution report builder" {
         Assert-KitEqual $report.whatIf $true
         Assert-KitEqual $report.trueExecution $false
         Assert-KitEqual $report.status "failed"
-        Assert-KitEqual $report.summary.failedCount 0
-        Assert-KitEqual $report.summary.blockedActionCount 0
+        if ($report.summary.failedCount -lt 1) {
+            throw "Expected a failed action when native simulation input is missing."
+        }
+        if ($report.summary.blockedActionCount -lt 1) {
+            throw "Expected blocked actions when authorization input is missing."
+        }
         Assert-KitEqual $report.summary.diskIdentityMismatchCount 1
         Assert-KitEqual $report.summary.confirmationTokenFailureCount 1
         Assert-KitEqual $report.summary.wimValidationFailureCount 1
         Assert-KitEqual $report.summary.winrePlanFailureCount 1
         Assert-KitEqual $report.summary.nativeCommandFailureCount 1
-        Assert-KitEqual $report.summary.plannedActionCount $report.summary.actionCount
+        Assert-KitEqual $report.summary.authorizationFailureCount 1
+        Assert-KitEqual $report.summary.simulatedCommandCount 0
         Assert-KitEqual $report.inputs.diskIdentity.status "blocked"
         foreach ($action in @($report.actions)) {
             Assert-KitEqual $action.executed $false
-            Assert-KitEqual $action.status "planned"
         }
     }
 
@@ -35,6 +39,8 @@ Describe "Controlled execution report builder" {
         $wimMetadata = Get-Content -LiteralPath (Join-Path $script:RepoRoot "tests\fixtures\controlled-execution\wim-image\matched.json") -Raw -Encoding UTF8 | ConvertFrom-Json
         $winrePlan = Get-Content -LiteralPath (Join-Path $script:RepoRoot "tests\fixtures\controlled-execution\winre-plan\planned.json") -Raw -Encoding UTF8 | ConvertFrom-Json
         $nativeCommandPlan = Get-Content -LiteralPath (Join-Path $script:RepoRoot "tests\fixtures\controlled-execution\native-command\planned.json") -Raw -Encoding UTF8 | ConvertFrom-Json
+        $authorization = Get-Content -LiteralPath (Join-Path $script:RepoRoot "tests\fixtures\controlled-execution\authorization\matched.json") -Raw -Encoding UTF8 | ConvertFrom-Json
+        $nativeCommandSimulation = Get-Content -LiteralPath (Join-Path $script:RepoRoot "tests\fixtures\controlled-execution\native-command-simulation\baseline-success.json") -Raw -Encoding UTF8 | ConvertFrom-Json
 
         $report = New-KitControlledExecutionReport `
             -Manifest $manifest `
@@ -44,6 +50,8 @@ Describe "Controlled execution report builder" {
             -WimMetadata $wimMetadata `
             -WinREPlan $winrePlan `
             -NativeCommandPlan $nativeCommandPlan `
+            -Authorization $authorization `
+            -NativeCommandSimulation $nativeCommandSimulation `
             -WhatIf
 
         Assert-KitEqual $report.status "passed"
@@ -52,15 +60,16 @@ Describe "Controlled execution report builder" {
         Assert-KitEqual $report.inputs.wimMetadata.status "matched"
         Assert-KitEqual $report.inputs.winrePlan.status "planned"
         Assert-KitEqual $report.inputs.nativeCommandPlan.status "planned"
+        Assert-KitEqual $report.authorization.status "planned"
+        Assert-KitEqual $report.simulation.status "simulated-success"
     }
 
-    It "keeps WinPE actions planned rather than executed" {
+    It "keeps WinPE actions unexecuted even when missing inputs block planning" {
         $manifest = Get-Content -LiteralPath (Join-Path $script:RepoRoot "manifests\controlled-execution.json") -Raw -Encoding UTF8 | ConvertFrom-Json
         $report = New-KitControlledExecutionReport -Manifest $manifest -RepoRoot $script:RepoRoot -WhatIf
         $winpeAction = @($report.actions | Where-Object { $_.requiresWinPE })[0]
 
         Assert-KitNotNullOrEmpty $winpeAction
-        Assert-KitEqual $winpeAction.status "planned"
         Assert-KitEqual $winpeAction.executed $false
     }
 }

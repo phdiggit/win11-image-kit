@@ -64,6 +64,10 @@ The Recovery plan requires:
 - `inputs.wimMetadata`
 - `inputs.winrePlan`
 - `inputs.nativeCommandPlan`
+- `inputs.authorization`
+- `authorization`
+- `stageResults`
+- `simulation`
 
 The report summary now includes:
 
@@ -72,6 +76,12 @@ The report summary now includes:
 - `wimValidationFailureCount`
 - `winrePlanFailureCount`
 - `nativeCommandFailureCount`
+- `authorizationFailureCount`
+- `executeRequestBlockedCount`
+- `simulatedCommandCount`
+- `simulatedFailureCount`
+- `downstreamBlockedCount`
+- `dependencyBlockedCount`
 
 `scripts/validate/Test-ControlledExecution.ps1` exits 1 if any count is greater than zero.
 
@@ -96,8 +106,8 @@ Build Lock covers this document, schemas, scripts, fixtures, tests, CI, Quality 
 
 ## Remaining Work
 
-- Add a fuller execution-set matrix for these fixture adapters.
-- Design the explicit future authorization flow.
+- Expand the execution-set matrix only with more fixture or plan-only stages.
+- Design the later human authorization flow for any real execution stage.
 - Keep true execution behind a later manual safety gate.
 - Prepare Issue #17 close-prep only when a later task explicitly reaches that stage.
 
@@ -105,3 +115,4 @@ Build Lock covers this document, schemas, scripts, fixtures, tests, CI, Quality 
 
 - [Issue #17 Controlled Execution Intake](52-issue17-controlled-execution-intake.md)
 - [Issue #17 Controlled Execution Acceptance](53-issue17-controlled-execution-acceptance.md)
+- [Issue #17 Controlled Execution Authorization and Simulation](55-issue17-controlled-execution-authorization.md)

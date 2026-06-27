@@ -1,0 +1,16 @@
+{
+  "reportType": "controlled-execution-authorization",
+  "schemaVersion": 1,
+  "requestedMode": "plan-only",
+  "executeRequested": false,
+  "allowTrueExecution": false,
+  "targetDiskNumber": 0,
+  "targetDiskSerial": "SAMPLE-DISK-SERIAL-001",
+  "confirmationTokenStatus": "matched",
+  "diskIdentityStatus": "matched",
+  "wimValidationStatus": "matched",
+  "sourceRunId": "kit-run-20260626T000000Z-0000000",
+  "expectedSourceRunId": "kit-run-20260626T000000Z-0000000",
+  "authorizationStatus": "planned",
+  "trueExecutionAllowed": false
+}

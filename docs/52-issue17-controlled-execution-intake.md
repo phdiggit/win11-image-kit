@@ -112,6 +112,7 @@ The report schema is `schemas/controlled-execution-report.schema.json`; it is cl
 ## Related Documents
 
 - [Issue #17 Controlled Execution Acceptance](53-issue17-controlled-execution-acceptance.md)
+- [Issue #17 Controlled Execution Authorization and Simulation](55-issue17-controlled-execution-authorization.md)
 - [Issue #16 Evidence Chain Acceptance](49-issue16-evidence-chain-acceptance.md)
 - [Issue #16 Close Preparation](50-issue16-close-preparation.md)
 - [Issue #16 Main Validation Evidence](51-issue16-main-validation-evidence.md)

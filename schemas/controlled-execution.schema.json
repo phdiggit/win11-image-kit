@@ -58,7 +58,15 @@
         "requiresReboot": { "type": "boolean" },
         "mutationKind": { "$ref": "#/$defs/mutationKind" },
         "riskLevel": { "$ref": "#/$defs/riskLevel" },
-        "evidenceProducer": { "type": "string", "minLength": 1 }
+        "evidenceProducer": { "type": "string", "minLength": 1 },
+        "dependsOn": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "executionPolicy": {
+          "type": "string",
+          "enum": ["plan-only", "simulation", "report-only", "manual"]
+        }
       },
       "additionalProperties": false
     },

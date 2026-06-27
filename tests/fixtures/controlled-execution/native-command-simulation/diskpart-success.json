@@ -1,0 +1,10 @@
+{
+  "reportType": "native-command-simulation",
+  "schemaVersion": 1,
+  "commandId": "partition-plan-diskpart",
+  "commandName": "diskpart",
+  "plannedCommand": "diskpart /s X:\\kit\\plans\\partition.txt",
+  "simulatedExitCode": 0,
+  "simulatedStdout": "simulated disk partition plan completed",
+  "simulatedStderr": ""
+}

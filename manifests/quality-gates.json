@@ -219,6 +219,54 @@
       "notes": "Validates native command envelopes remain planned, not-run, and not-captured."
     },
     {
+      "id": "controlled-execution-authorization",
+      "displayName": "Controlled execution authorization validation",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "fixture",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "tests/pester/ControlledExecutionAuthorization.Tests.ps1",
+      "evidence": "pester",
+      "notes": "Validates explicit authorization fixtures and blocks execute requests, missing identity inputs, and stale run IDs."
+    },
+    {
+      "id": "controlled-execution-execution-set",
+      "displayName": "Controlled execution execution-set matrix validation",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "fixture",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "tests/pester/ControlledExecutionExecutionSet.Tests.ps1",
+      "evidence": "pester",
+      "notes": "Validates stage dependencies, fail-fast blocking, and executed=false for all planned actions."
+    },
+    {
+      "id": "controlled-execution-native-simulation",
+      "displayName": "Controlled execution native command simulation validation",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "fixture",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "tests/pester/ControlledExecutionNativeSimulation.Tests.ps1",
+      "evidence": "pester",
+      "notes": "Validates fixture-only simulated native command results and scans controlled execution scripts for executable native calls."
+    },
+    {
+      "id": "winpe-controlled-execution-plan",
+      "displayName": "WinPE controlled execution plan entrypoint validation",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "tests/pester/WinPEControlledExecutionPlan.Tests.ps1",
+      "evidence": "pester",
+      "notes": "Validates the WinPE plan entrypoint emits JSON, defaults plan-only, and blocks Execute without native command execution."
+    },
+    {
       "id": "issue17-intake",
       "displayName": "Issue 17 intake",
       "layer": "pr-fast",

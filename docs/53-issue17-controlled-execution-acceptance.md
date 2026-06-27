@@ -8,6 +8,7 @@ Status: `in-acceptance`
 |---|---|---|
 | Intake | Issue #17 and Roadmap #19 source are recorded in `docs/52`. | `in-acceptance` |
 | Scope | This stage is intake plus dry-run / report-only baseline only. | `in-acceptance` |
+| Authorization | Explicit authorization and simulation are planned only; `-Execute` is blocked. | `in-acceptance` |
 | Closure | No close-prep, main-evidence, or completion summary is generated. | `in-acceptance` |
 | PR semantics | PR body must use `Refs #17`, not auto-close keywords. | `in-acceptance` |
 
@@ -18,6 +19,7 @@ Status: `in-acceptance`
 - `scripts/config/Show-ControlledExecutionPlan.ps1` prints a plan only.
 - `scripts/validate/Test-ControlledExecution.ps1` generates report-only evidence and does not invoke action entrypoints.
 - The generated report keeps `whatIf=true` and `trueExecution=false`.
+- `scripts/winpe/New-WinPEControlledExecutionPlan.ps1` parses future WinPE parameters but returns a blocked report for `-Execute`.
 
 ## Preflight Coverage
 
@@ -70,4 +72,5 @@ This acceptance scaffold confirms:
 
 - [Issue #17 Controlled Execution Intake](52-issue17-controlled-execution-intake.md)
 - [Issue #17 Controlled Execution Safety Hardening](54-issue17-controlled-execution-safety-hardening.md)
+- [Issue #17 Controlled Execution Authorization and Simulation](55-issue17-controlled-execution-authorization.md)
 - [Issue #16 Evidence Chain Acceptance](49-issue16-evidence-chain-acceptance.md)

@@ -1,0 +1,10 @@
+{
+  "reportType": "native-command-simulation",
+  "schemaVersion": 1,
+  "commandId": "apply-plan-dism",
+  "commandName": "dism",
+  "plannedCommand": "DISM /Apply-Image /ImageFile:X:\\kit\\images\\win11.wim /Index:1 /ApplyDir:W:\\",
+  "simulatedExitCode": 0,
+  "simulatedStdout": "simulated image apply plan completed",
+  "simulatedStderr": ""
+}

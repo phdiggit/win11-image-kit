@@ -79,7 +79,9 @@ Describe "Controlled execution validation runner" {
             @{ Name = "token"; Args = "-ConfirmationTokenPath `"tests\fixtures\controlled-execution\confirmation-token\generic-yes.json`""; Count = "confirmationTokenFailureCount" },
             @{ Name = "image"; Args = "-WimMetadataPath `"tests\fixtures\controlled-execution\wim-image\hash-mismatch.json`""; Count = "wimValidationFailureCount" },
             @{ Name = "recovery"; Args = "-WinREPlanPath `"tests\fixtures\controlled-execution\winre-plan\wrong-gpt-type.json`""; Count = "winrePlanFailureCount" },
-            @{ Name = "native"; Args = "-NativeCommandPlanPath `"tests\fixtures\controlled-execution\native-command\actual-exitcode-present.json`""; Count = "nativeCommandFailureCount" }
+            @{ Name = "native"; Args = "-NativeCommandPlanPath `"tests\fixtures\controlled-execution\native-command\actual-exitcode-present.json`""; Count = "nativeCommandFailureCount" },
+            @{ Name = "authorization"; Args = "-AuthorizationPath `"tests\fixtures\controlled-execution\authorization\missing-token.json`""; Count = "authorizationFailureCount" },
+            @{ Name = "simulation"; Args = "-NativeCommandSimulationPath `"tests\fixtures\controlled-execution\native-command-simulation\reagentc-failure.json`""; Count = "simulatedFailureCount" }
         )
 
         foreach ($case in $cases) {
