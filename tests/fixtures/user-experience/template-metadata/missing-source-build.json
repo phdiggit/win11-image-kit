@@ -1,0 +1,18 @@
+{
+  "reportType": "ux-template-metadata",
+  "schemaVersion": 1,
+  "templateId": "missing-source-build",
+  "templateType": "default-apps",
+  "expectedTemplateType": "default-apps",
+  "source": "fixture",
+  "sourceWindows": {
+    "edition": "Pro",
+    "displayVersion": "24H2",
+    "architecture": "amd64"
+  },
+  "exportedAt": "2026-06-27T00:00:00Z",
+  "targetScope": "default-user",
+  "expectedScope": "default-user",
+  "targetApps": [],
+  "status": "planned"
+}

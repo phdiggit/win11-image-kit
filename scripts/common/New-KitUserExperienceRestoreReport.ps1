@@ -1,6 +1,10 @@
 #Requires -Version 5.1
 
 . "$PSScriptRoot\Test-KitUserExperienceRestoreSafety.ps1"
+. "$PSScriptRoot\ConvertTo-KitUserExperienceCapabilityMatrix.ps1"
+. "$PSScriptRoot\Test-KitUserExperienceTemplateMetadata.ps1"
+. "$PSScriptRoot\Test-KitUserExperienceScopeSemantics.ps1"
+. "$PSScriptRoot\New-KitUserExperienceVerificationPlan.ps1"
 
 function Resolve-KitUserExperienceRestoreRepoPath {
     param(
@@ -166,6 +170,18 @@ function New-KitUserExperienceRestoreReport {
         [AllowNull()]
         $LocalPrivatePathFixture,
 
+        [AllowNull()]
+        $CapabilityMatrix,
+
+        [AllowNull()]
+        $TemplateMetadata,
+
+        [AllowNull()]
+        $ScopeSemantics,
+
+        [AllowNull()]
+        $VerificationPlan,
+
         [switch]$WhatIf
     )
 
@@ -302,6 +318,85 @@ function New-KitUserExperienceRestoreReport {
         }
     }
 
+    $capabilityMatrixResult = if ($null -ne $CapabilityMatrix) {
+        ConvertTo-KitUserExperienceCapabilityMatrix -InputObject $CapabilityMatrix
+    } else {
+        [pscustomobject][ordered]@{
+            reportType = "ux-capability-matrix"
+            schemaVersion = 1
+            matrixId = ""
+            status = "passed"
+            unsupportedCapabilityCount = 0
+            manualChecklistCount = 0
+            futureRealVerificationCount = 0
+            capabilities = @()
+        }
+    }
+
+    $templateMetadataResult = if ($null -ne $TemplateMetadata) {
+        Test-KitUserExperienceTemplateMetadata -InputObject $TemplateMetadata
+    } else {
+        [pscustomobject][ordered]@{
+            reportType = "ux-template-metadata"
+            schemaVersion = 1
+            templateId = ""
+            templateType = ""
+            targetScope = ""
+            status = "passed"
+            reason = "no template metadata fixture supplied"
+            failureCount = 0
+            scopeMismatchCount = 0
+            missingCapabilityCount = 0
+            localPrivatePathCount = 0
+            sourceWindows = $null
+            targetApps = @()
+            executed = $false
+        }
+    }
+
+    $scopeSemanticsResult = if ($null -ne $ScopeSemantics) {
+        Test-KitUserExperienceScopeSemantics -InputObject $ScopeSemantics
+    } else {
+        [pscustomobject][ordered]@{
+            reportType = "ux-scope-semantics"
+            schemaVersion = 1
+            semanticsId = ""
+            sourceScope = ""
+            targetScope = ""
+            status = "passed"
+            reason = "no scope semantics fixture supplied"
+            scopeMismatchCount = 0
+            userConfigurationConfirmed = $false
+            executed = $false
+        }
+    }
+
+    $verificationPlanResult = if ($null -ne $VerificationPlan) {
+        New-KitUserExperienceVerificationPlan -InputObject $VerificationPlan
+    } else {
+        [pscustomobject][ordered]@{
+            reportType = "ux-verification-plan"
+            schemaVersion = 1
+            verificationId = ""
+            scope = ""
+            feature = ""
+            currentStage = "report-only"
+            evidenceType = "planned"
+            successSignal = "future-real-verification-required"
+            commandExitCodeSufficient = $false
+            userConfigurationConfirmed = $false
+            trueExecution = $false
+            status = "planned"
+            reason = "no verification fixture supplied"
+            verificationFailureCount = 0
+            exitCodeOnlySuccessClaimCount = 0
+            userConfigurationFalseClaimCount = 0
+            manualChecklistCount = 0
+            futureRealVerificationCount = 0
+            executed = $false
+        }
+    }
+
     $blockedCount = @($plans | Where-Object { $_.status -eq "blocked" }).Count
     $failedCount = @($plans | Where-Object { $_.status -eq "failed" }).Count
     $plannedChangeCount = 0
@@ -317,7 +412,31 @@ function New-KitUserExperienceRestoreReport {
     }
 
     $status = "passed"
-    if ($blockedCount -gt 0 -or $failedCount -gt 0 -or $unsupportedVersionCount -gt 0 -or $missingBuildCount -gt 0 -or $missingCapabilityCount -gt 0) {
+    $unsupportedCapabilityCount = [int]$capabilityMatrixResult.unsupportedCapabilityCount
+    $scopeMismatchCount = [int]$templateMetadataResult.scopeMismatchCount + [int]$scopeSemanticsResult.scopeMismatchCount
+    $templateMetadataFailureCount = [int]$templateMetadataResult.failureCount
+    $verificationFailureCount = [int]$verificationPlanResult.verificationFailureCount
+    $exitCodeOnlySuccessClaimCount = [int]$verificationPlanResult.exitCodeOnlySuccessClaimCount
+    $userConfigurationFalseClaimCount = [int]$verificationPlanResult.userConfigurationFalseClaimCount
+    $manualChecklistCount = [int]$capabilityMatrixResult.manualChecklistCount + [int]$verificationPlanResult.manualChecklistCount
+    $futureRealVerificationCount = [int]$capabilityMatrixResult.futureRealVerificationCount + [int]$verificationPlanResult.futureRealVerificationCount
+    $localPrivatePathTotal = $localPrivatePathMatches.Count + [int]$templateMetadataResult.localPrivatePathCount
+    $missingCapabilityTotal = $missingCapabilityCount + [int]$templateMetadataResult.missingCapabilityCount
+
+    if (
+        $blockedCount -gt 0 -or
+        $failedCount -gt 0 -or
+        $unsupportedVersionCount -gt 0 -or
+        $missingBuildCount -gt 0 -or
+        $missingCapabilityTotal -gt 0 -or
+        $unsupportedCapabilityCount -gt 0 -or
+        $scopeMismatchCount -gt 0 -or
+        $templateMetadataFailureCount -gt 0 -or
+        $verificationFailureCount -gt 0 -or
+        $exitCodeOnlySuccessClaimCount -gt 0 -or
+        $userConfigurationFalseClaimCount -gt 0 -or
+        $localPrivatePathTotal -gt 0
+    ) {
         $status = "failed"
     }
 
@@ -342,11 +461,23 @@ function New-KitUserExperienceRestoreReport {
             taskbarMutationCount = 0
             unsupportedVersionCount = $unsupportedVersionCount
             missingBuildCount = $missingBuildCount
-            missingCapabilityCount = $missingCapabilityCount
-            localPrivatePathCount = $localPrivatePathMatches.Count
+            missingCapabilityCount = $missingCapabilityTotal
+            localPrivatePathCount = $localPrivatePathTotal
+            unsupportedCapabilityCount = $unsupportedCapabilityCount
+            scopeMismatchCount = $scopeMismatchCount
+            templateMetadataFailureCount = $templateMetadataFailureCount
+            verificationFailureCount = $verificationFailureCount
+            exitCodeOnlySuccessClaimCount = $exitCodeOnlySuccessClaimCount
+            userConfigurationFalseClaimCount = $userConfigurationFalseClaimCount
+            manualChecklistCount = $manualChecklistCount
+            futureRealVerificationCount = $futureRealVerificationCount
         }
         contexts = @($contexts)
         plans = @($plans)
+        capabilityMatrix = $capabilityMatrixResult
+        templateMetadata = $templateMetadataResult
+        scopeSemantics = $scopeSemanticsResult
+        verification = $verificationPlanResult
         safety = [pscustomobject][ordered]@{
             registryMutation = $false
             profileMutation = $false
@@ -354,6 +485,7 @@ function New-KitUserExperienceRestoreReport {
             startMenuMutation = $false
             taskbarMutation = $false
             networkDownload = $false
+            trueExecution = $false
         }
     }
 }

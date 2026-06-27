@@ -38,6 +38,10 @@ Describe "User experience restore safety" {
         $files = @(
             "scripts\common\New-KitUserExperienceRestoreReport.ps1",
             "scripts\common\Test-KitUserExperienceRestoreSafety.ps1",
+            "scripts\common\ConvertTo-KitUserExperienceCapabilityMatrix.ps1",
+            "scripts\common\Test-KitUserExperienceTemplateMetadata.ps1",
+            "scripts\common\Test-KitUserExperienceScopeSemantics.ps1",
+            "scripts\common\New-KitUserExperienceVerificationPlan.ps1",
             "scripts\validate\Test-UserExperienceRestore.ps1",
             "scripts\config\Show-UserExperienceRestorePlan.ps1"
         )
@@ -48,5 +52,13 @@ Describe "User experience restore safety" {
                 Assert-KitNotMatch $text $pattern
             }
         }
+    }
+
+    It "prints no-real-evidence markers from the Show script" {
+        $output = & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $script:RepoRoot "scripts\config\Show-UserExperienceRestorePlan.ps1") | Out-String
+
+        Assert-KitMatch $output "Taskbar mutation: false"
+        Assert-KitMatch $output "Command exit code sufficient: false"
+        Assert-KitMatch $output "User configuration confirmed: false"
     }
 }

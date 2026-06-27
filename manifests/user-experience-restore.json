@@ -31,6 +31,41 @@
       "scope": "current-user"
     }
   ],
+  "capabilityMatrix": [
+    {
+      "id": "win11-24h2-default-user-default-apps",
+      "displayVersion": "24H2",
+      "buildMin": 26100,
+      "buildMax": 26199,
+      "scope": "default-user",
+      "feature": "default-apps",
+      "supportStatus": "planned-supported",
+      "verificationMode": "future-real-verification",
+      "mutationAllowed": false
+    },
+    {
+      "id": "win11-24h2-current-user-start-menu",
+      "displayVersion": "24H2",
+      "buildMin": 26100,
+      "buildMax": 26199,
+      "scope": "current-user",
+      "feature": "start-menu",
+      "supportStatus": "manual-or-future",
+      "verificationMode": "manual-checklist",
+      "mutationAllowed": false
+    },
+    {
+      "id": "win11-23h2-offline-image-default-apps",
+      "displayVersion": "23H2",
+      "buildMin": 22631,
+      "buildMax": 22699,
+      "scope": "offline-image",
+      "feature": "default-apps",
+      "supportStatus": "report-only",
+      "verificationMode": "fixture",
+      "mutationAllowed": false
+    }
+  ],
   "plans": [
     {
       "id": "default-app-associations-plan",

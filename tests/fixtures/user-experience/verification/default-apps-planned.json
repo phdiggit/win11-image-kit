@@ -1,0 +1,13 @@
+{
+  "reportType": "ux-verification-plan",
+  "schemaVersion": 1,
+  "verificationId": "default-apps-default-user-report-only",
+  "scope": "default-user",
+  "feature": "default-apps",
+  "currentStage": "report-only",
+  "evidenceType": "planned",
+  "successSignal": "future-real-verification-required",
+  "commandExitCodeSufficient": false,
+  "userConfigurationConfirmed": false,
+  "status": "planned"
+}

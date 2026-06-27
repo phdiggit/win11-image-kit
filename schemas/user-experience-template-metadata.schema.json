@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "win11-image-kit user experience template metadata fixture",
+  "type": "object",
+  "required": ["reportType", "schemaVersion", "templateId", "templateType", "source", "sourceWindows", "exportedAt", "targetScope", "targetApps", "status"],
+  "properties": {
+    "reportType": { "const": "ux-template-metadata" },
+    "schemaVersion": { "type": "integer", "minimum": 1 },
+    "templateId": { "type": "string" },
+    "templateType": { "type": "string", "enum": ["default-apps", "start-menu", "taskbar"] },
+    "expectedTemplateType": { "type": "string", "enum": ["default-apps", "start-menu", "taskbar"] },
+    "source": { "type": "string", "enum": ["fixture"] },
+    "sourceWindows": { "$ref": "#/$defs/windows" },
+    "exportedAt": { "type": "string" },
+    "targetScope": { "$ref": "#/$defs/scope" },
+    "expectedScope": { "$ref": "#/$defs/scope" },
+    "layoutFormat": { "type": "string" },
+    "targetApps": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/targetApp" }
+    },
+    "templatePath": { "type": "string" },
+    "status": { "type": "string", "enum": ["planned", "blocked", "failed"] }
+  },
+  "$defs": {
+    "scope": {
+      "type": "string",
+      "enum": ["machine", "default-user", "current-user", "offline-image"]
+    },
+    "windows": {
+      "type": "object",
+      "required": ["edition", "displayVersion", "buildNumber", "architecture"],
+      "properties": {
+        "edition": { "type": "string" },
+        "displayVersion": { "type": "string" },
+        "buildNumber": { "type": "integer", "minimum": 1 },
+        "architecture": { "type": "string", "enum": ["amd64", "arm64"] }
+      },
+      "additionalProperties": false
+    },
+    "targetApp": {
+      "type": "object",
+      "required": ["logicalName", "required", "knownCapability"],
+      "properties": {
+        "logicalName": { "type": "string" },
+        "progId": { "type": "string" },
+        "packageFamilyName": { "type": "string" },
+        "appUserModelId": { "type": "string" },
+        "required": { "type": "boolean" },
+        "knownCapability": { "type": "boolean" },
+        "unknownProgId": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

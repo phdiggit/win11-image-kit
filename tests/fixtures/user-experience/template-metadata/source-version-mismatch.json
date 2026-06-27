@@ -1,0 +1,19 @@
+{
+  "reportType": "ux-template-metadata",
+  "schemaVersion": 1,
+  "templateId": "source-version-mismatch",
+  "templateType": "default-apps",
+  "expectedTemplateType": "default-apps",
+  "source": "fixture",
+  "sourceWindows": {
+    "edition": "Pro",
+    "displayVersion": "22H2",
+    "buildNumber": 22621,
+    "architecture": "amd64"
+  },
+  "exportedAt": "2026-06-27T00:00:00Z",
+  "targetScope": "default-user",
+  "expectedScope": "default-user",
+  "targetApps": [],
+  "status": "planned"
+}

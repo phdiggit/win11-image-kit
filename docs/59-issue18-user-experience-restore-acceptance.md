@@ -12,6 +12,7 @@ Status: `in-acceptance`
 | Validator | Baseline report passes; failure fixtures block or fail. | `in-acceptance` |
 | Safety | Registry, profile, default app, Start menu, taskbar, network and true execution flags remain false. | `in-acceptance` |
 | CI/QG/Build Lock | PR Fast CI, Quality Gates and Build Lock include Issue #18 artifacts. | `in-acceptance` |
+| Capability matrix | Version capability, template metadata, scope semantics, and verification plan are fixture-backed and report-only. | `in-acceptance` |
 
 ## Version-Aware Coverage
 
@@ -52,3 +53,4 @@ PR Fast CI is not main/workflow evidence. Fixture/report-only validation is not 
 ## Related Documents
 
 - [Issue #18 User Experience Restore Intake](58-issue18-user-experience-restore-intake.md)
+- [Issue #18 User Experience Capability Matrix](60-issue18-user-experience-capability-matrix.md)

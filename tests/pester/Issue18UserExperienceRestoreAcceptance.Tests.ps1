@@ -24,7 +24,12 @@ Describe "Issue 18 user experience restore acceptance scaffold" {
             "issue18-intake",
             "issue18-acceptance",
             "user-experience-default-apps-plan",
-            "user-experience-start-menu-plan"
+            "user-experience-start-menu-plan",
+            "user-experience-capability-matrix",
+            "user-experience-template-metadata",
+            "user-experience-scope-semantics",
+            "user-experience-verification-plan",
+            "issue18-capability-matrix"
         )) {
             Assert-KitEqual ($gateIds -contains $id) $true
         }
@@ -32,8 +37,11 @@ Describe "Issue 18 user experience restore acceptance scaffold" {
         foreach ($path in @(
             "docs/58-issue18-user-experience-restore-intake.md",
             "docs/59-issue18-user-experience-restore-acceptance.md",
+            "docs/60-issue18-user-experience-capability-matrix.md",
             "manifests/user-experience-restore.json",
-            "scripts/validate/Test-UserExperienceRestore.ps1"
+            "scripts/validate/Test-UserExperienceRestore.ps1",
+            "tests/pester/UserExperienceCapabilityMatrix.Tests.ps1",
+            "tests/pester/UserExperienceVerificationPlan.Tests.ps1"
         )) {
             Assert-KitEqual ($lockedPaths -contains $path) $true
         }

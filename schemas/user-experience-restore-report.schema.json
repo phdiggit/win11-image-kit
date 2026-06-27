@@ -13,6 +13,10 @@
     "summary",
     "contexts",
     "plans",
+    "capabilityMatrix",
+    "templateMetadata",
+    "scopeSemantics",
+    "verification",
     "safety"
   ],
   "properties": {
@@ -65,6 +69,18 @@
         "type": "object"
       }
     },
+    "capabilityMatrix": {
+      "type": "object"
+    },
+    "templateMetadata": {
+      "type": "object"
+    },
+    "scopeSemantics": {
+      "type": "object"
+    },
+    "verification": {
+      "type": "object"
+    },
     "safety": {
       "$ref": "#/$defs/safety"
     }
@@ -85,7 +101,15 @@
         "unsupportedVersionCount",
         "missingBuildCount",
         "missingCapabilityCount",
-        "localPrivatePathCount"
+        "localPrivatePathCount",
+        "unsupportedCapabilityCount",
+        "scopeMismatchCount",
+        "templateMetadataFailureCount",
+        "verificationFailureCount",
+        "exitCodeOnlySuccessClaimCount",
+        "userConfigurationFalseClaimCount",
+        "manualChecklistCount",
+        "futureRealVerificationCount"
       ],
       "properties": {
         "planCount": {
@@ -126,6 +150,30 @@
         },
         "localPrivatePathCount": {
           "type": "integer"
+        },
+        "unsupportedCapabilityCount": {
+          "type": "integer"
+        },
+        "scopeMismatchCount": {
+          "type": "integer"
+        },
+        "templateMetadataFailureCount": {
+          "type": "integer"
+        },
+        "verificationFailureCount": {
+          "type": "integer"
+        },
+        "exitCodeOnlySuccessClaimCount": {
+          "type": "integer"
+        },
+        "userConfigurationFalseClaimCount": {
+          "type": "integer"
+        },
+        "manualChecklistCount": {
+          "type": "integer"
+        },
+        "futureRealVerificationCount": {
+          "type": "integer"
         }
       },
       "additionalProperties": false
@@ -138,7 +186,8 @@
         "defaultAppMutation",
         "startMenuMutation",
         "taskbarMutation",
-        "networkDownload"
+        "networkDownload",
+        "trueExecution"
       ],
       "properties": {
         "registryMutation": {
@@ -157,6 +206,9 @@
           "const": false
         },
         "networkDownload": {
+          "const": false
+        },
+        "trueExecution": {
           "const": false
         }
       },

@@ -5,6 +5,10 @@ param(
     [string]$DefaultAppsPath = "tests/fixtures/user-experience/default-apps/baseline.json",
     [string]$StartMenuPath = "tests/fixtures/user-experience/start-menu/baseline.json",
     [string]$TaskbarPath = "tests/fixtures/user-experience/taskbar/baseline.json",
+    [string]$CapabilityMatrixPath = "tests/fixtures/user-experience/capability-matrix/windows-11-24h2-supported.json",
+    [string]$TemplateMetadataPath = "tests/fixtures/user-experience/template-metadata/default-apps-24h2.json",
+    [string]$VerificationPlanPath = "tests/fixtures/user-experience/verification/default-apps-planned.json",
+    [string]$ScopeSemanticsPath = "tests/fixtures/user-experience/scope-semantics/default-user-vs-current-user.json",
     [string]$LocalPrivatePath,
     [string]$ReportPath,
     [ValidateSet("plan-only", "report-only", "fixture")]
@@ -31,6 +35,10 @@ $windowsContext = Read-KitUserExperienceJson -Path $WindowsContextPath
 $defaultApps = Read-KitUserExperienceJson -Path $DefaultAppsPath
 $startMenu = Read-KitUserExperienceJson -Path $StartMenuPath
 $taskbar = Read-KitUserExperienceJson -Path $TaskbarPath
+$capabilityMatrix = Read-KitUserExperienceJson -Path $CapabilityMatrixPath
+$templateMetadata = Read-KitUserExperienceJson -Path $TemplateMetadataPath
+$verificationPlan = Read-KitUserExperienceJson -Path $VerificationPlanPath
+$scopeSemantics = Read-KitUserExperienceJson -Path $ScopeSemanticsPath
 $localPrivatePathFixture = $null
 if (-not [string]::IsNullOrWhiteSpace($LocalPrivatePath)) {
     $localPrivatePathFixture = Read-KitUserExperienceJson -Path $LocalPrivatePath
@@ -44,6 +52,10 @@ $report = New-KitUserExperienceRestoreReport `
     -DefaultApps $defaultApps `
     -StartMenu $startMenu `
     -Taskbar $taskbar `
+    -CapabilityMatrix $capabilityMatrix `
+    -TemplateMetadata $templateMetadata `
+    -ScopeSemantics $scopeSemantics `
+    -VerificationPlan $verificationPlan `
     -LocalPrivatePathFixture $localPrivatePathFixture `
     -WhatIf
 
@@ -72,6 +84,12 @@ if (
     $report.summary.missingBuildCount -gt 0 -or
     $report.summary.missingCapabilityCount -gt 0 -or
     $report.summary.localPrivatePathCount -gt 0 -or
+    $report.summary.unsupportedCapabilityCount -gt 0 -or
+    $report.summary.scopeMismatchCount -gt 0 -or
+    $report.summary.templateMetadataFailureCount -gt 0 -or
+    $report.summary.verificationFailureCount -gt 0 -or
+    $report.summary.exitCodeOnlySuccessClaimCount -gt 0 -or
+    $report.summary.userConfigurationFalseClaimCount -gt 0 -or
     $report.trueExecution
 ) {
     exit 1

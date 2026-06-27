@@ -1,0 +1,18 @@
+{
+  "reportType": "ux-capability-matrix",
+  "schemaVersion": 1,
+  "matrixId": "unsupported-build-feature",
+  "capabilities": [
+    {
+      "id": "win11-future-default-user-default-apps",
+      "displayVersion": "future",
+      "buildMin": 27000,
+      "buildMax": 27999,
+      "scope": "default-user",
+      "feature": "default-apps",
+      "supportStatus": "blocked",
+      "verificationMode": "manual-checklist",
+      "mutationAllowed": false
+    }
+  ]
+}

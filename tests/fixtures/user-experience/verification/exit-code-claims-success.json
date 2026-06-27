@@ -1,0 +1,13 @@
+{
+  "reportType": "ux-verification-plan",
+  "schemaVersion": 1,
+  "verificationId": "exit-code-claims-success",
+  "scope": "default-user",
+  "feature": "default-apps",
+  "currentStage": "report-only",
+  "evidenceType": "planned",
+  "successSignal": "command-exit-code",
+  "commandExitCodeSufficient": true,
+  "userConfigurationConfirmed": false,
+  "status": "planned"
+}

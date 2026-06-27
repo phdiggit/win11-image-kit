@@ -1,0 +1,28 @@
+{
+  "reportType": "ux-template-metadata",
+  "schemaVersion": 1,
+  "templateId": "start-menu-reference-24h2",
+  "templateType": "start-menu",
+  "expectedTemplateType": "start-menu",
+  "source": "fixture",
+  "sourceWindows": {
+    "edition": "Pro",
+    "displayVersion": "24H2",
+    "buildNumber": 26100,
+    "architecture": "amd64"
+  },
+  "exportedAt": "2026-06-27T00:00:00Z",
+  "targetScope": "default-user",
+  "expectedScope": "default-user",
+  "layoutFormat": "LayoutModification.json",
+  "targetApps": [
+    {
+      "logicalName": "Sample Browser",
+      "appUserModelId": "Sample.Browser_12345!App",
+      "packageFamilyName": "Sample.Browser_12345",
+      "required": true,
+      "knownCapability": true
+    }
+  ],
+  "status": "planned"
+}
