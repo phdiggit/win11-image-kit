@@ -6,6 +6,8 @@
 . "$PSScriptRoot\ConvertTo-KitWimImagePlan.ps1"
 . "$PSScriptRoot\ConvertTo-KitWinREPlan.ps1"
 . "$PSScriptRoot\New-KitNativeCommandPlan.ps1"
+. "$PSScriptRoot\Test-KitControlledExecutionAuthorization.ps1"
+. "$PSScriptRoot\Invoke-KitNativeCommandSimulation.ps1"
 
 function Resolve-KitControlledExecutionRepoPath {
     param(
@@ -50,6 +52,8 @@ function New-KitControlledExecutionActionResult {
         requiresReboot = [bool](Get-KitControlledExecutionValue -InputObject $Action -Name "requiresReboot" -DefaultValue $false)
         mutationKind = [string](Get-KitControlledExecutionValue -InputObject $Action -Name "mutationKind" -DefaultValue "")
         evidenceProducer = [string](Get-KitControlledExecutionValue -InputObject $Action -Name "evidenceProducer" -DefaultValue "")
+        dependsOn = @((Get-KitControlledExecutionValue -InputObject $Action -Name "dependsOn" -DefaultValue @()) | ForEach-Object { [string]$_ })
+        executionPolicy = [string](Get-KitControlledExecutionValue -InputObject $Action -Name "executionPolicy" -DefaultValue "plan-only")
         executed = $false
     }
 }
@@ -80,6 +84,12 @@ function New-KitControlledExecutionReport {
         [AllowNull()]
         $NativeCommandPlan,
 
+        [AllowNull()]
+        $Authorization,
+
+        [AllowNull()]
+        $NativeCommandSimulation,
+
         [switch]$WhatIf
     )
 
@@ -92,10 +102,19 @@ function New-KitControlledExecutionReport {
     }
 
     $manifestErrors = @(Test-KitControlledExecutionSafety -Manifest $Manifest)
+    $diskIdentityPlan = ConvertTo-KitDiskIdentityPlan -InputObject $DiskIdentity
+    $confirmationTokenPlan = Test-KitConfirmationToken -InputObject $ConfirmationToken
+    $wimImagePlan = ConvertTo-KitWimImagePlan -InputObject $WimMetadata
+    $winREPlanResult = ConvertTo-KitWinREPlan -InputObject $WinREPlan
+    $nativeCommandPlanResult = New-KitNativeCommandPlan -InputObject $NativeCommandPlan
+    $authorizationResult = Test-KitControlledExecutionAuthorization -InputObject $Authorization
+    $nativeCommandSimulationResult = Invoke-KitNativeCommandSimulation -InputObject $NativeCommandSimulation
+
     $results = @()
+    $resultById = @{}
 
     foreach ($errorMessage in $manifestErrors) {
-        $results += [pscustomobject][ordered]@{
+        $manifestResult = [pscustomobject][ordered]@{
             id = "manifest-safety"
             stage = "preflight"
             mode = "report-only"
@@ -109,8 +128,13 @@ function New-KitControlledExecutionReport {
             requiresReboot = $false
             mutationKind = "none"
             evidenceProducer = "controlled-execution"
+            dependsOn = @()
+            executionPolicy = "plan-only"
             executed = $false
         }
+
+        $results += $manifestResult
+        $resultById[$manifestResult.id] = $manifestResult
     }
 
     foreach ($action in @($Manifest.actions)) {
@@ -118,6 +142,8 @@ function New-KitControlledExecutionReport {
         $mutationKind = [string](Get-KitControlledExecutionValue -InputObject $action -Name "mutationKind" -DefaultValue "")
         $requiresNetwork = [bool](Get-KitControlledExecutionValue -InputObject $action -Name "requiresNetwork" -DefaultValue $false)
         $actionMode = [string](Get-KitControlledExecutionValue -InputObject $action -Name "mode" -DefaultValue "")
+        $stage = [string](Get-KitControlledExecutionValue -InputObject $action -Name "stage" -DefaultValue "")
+        $dependsOn = @((Get-KitControlledExecutionValue -InputObject $action -Name "dependsOn" -DefaultValue @()) | ForEach-Object { [string]$_ })
         $status = "planned"
         $reason = "planned only; entrypoint is not invoked"
 
@@ -138,30 +164,54 @@ function New-KitControlledExecutionReport {
             $reason = "manual review signal only; no execution"
         }
 
-        $results += New-KitControlledExecutionActionResult -Action $action -Status $status -Reason $reason
+        foreach ($dependency in $dependsOn) {
+            if (-not $resultById.ContainsKey($dependency)) {
+                $status = "failed"
+                $reason = "unknown dependency: $dependency"
+                break
+            }
+
+            $dependencyResult = $resultById[$dependency]
+            if ($dependencyResult.status -in @("blocked", "failed")) {
+                $status = "blocked"
+                $reason = "blocked by dependency: $dependency"
+                break
+            }
+        }
+
+        if ([string](Get-KitControlledExecutionValue -InputObject $action -Name "evidenceProducer" -DefaultValue "") -eq "authorization" -and $authorizationResult.failureCount -gt 0) {
+            $status = "blocked"
+            $reason = $authorizationResult.reason
+        }
+
+        if ($stage -eq "native-command-simulation" -and $nativeCommandSimulationResult.failureCount -gt 0) {
+            $status = "failed"
+            $reason = $nativeCommandSimulationResult.reason
+        }
+
+        $actionResult = New-KitControlledExecutionActionResult -Action $action -Status $status -Reason $reason
+        $results += $actionResult
+        $resultById[$actionResult.id] = $actionResult
     }
 
     $blockedCount = @($results | Where-Object { $_.status -eq "blocked" }).Count
     $failedCount = @($results | Where-Object { $_.status -eq "failed" }).Count
     $plannedCount = @($results | Where-Object { $_.status -eq "planned" }).Count
     $mutationCount = @($results | Where-Object { $_.mutationKind -ne "none" }).Count
+    $dependencyBlockedCount = @($results | Where-Object { $_.reason -like "blocked by dependency:*" }).Count
     $status = "passed"
     if ($blockedCount -gt 0 -or $failedCount -gt 0) {
         $status = "failed"
     }
-
-    $diskIdentityPlan = ConvertTo-KitDiskIdentityPlan -InputObject $DiskIdentity
-    $confirmationTokenPlan = Test-KitConfirmationToken -InputObject $ConfirmationToken
-    $wimImagePlan = ConvertTo-KitWimImagePlan -InputObject $WimMetadata
-    $winREPlanResult = ConvertTo-KitWinREPlan -InputObject $WinREPlan
-    $nativeCommandPlanResult = New-KitNativeCommandPlan -InputObject $NativeCommandPlan
 
     if (
         $diskIdentityPlan.mismatchCount -gt 0 -or
         $confirmationTokenPlan.failureCount -gt 0 -or
         $wimImagePlan.failureCount -gt 0 -or
         $winREPlanResult.failureCount -gt 0 -or
-        $nativeCommandPlanResult.failureCount -gt 0
+        $nativeCommandPlanResult.failureCount -gt 0 -or
+        $authorizationResult.failureCount -gt 0 -or
+        $nativeCommandSimulationResult.failureCount -gt 0
     ) {
         $status = "failed"
     }
@@ -190,14 +240,31 @@ function New-KitControlledExecutionReport {
             wimValidationFailureCount = [int]$wimImagePlan.failureCount
             winrePlanFailureCount = [int]$winREPlanResult.failureCount
             nativeCommandFailureCount = [int]$nativeCommandPlanResult.failureCount
+            authorizationFailureCount = [int]$authorizationResult.failureCount
+            executeRequestBlockedCount = [int]$authorizationResult.executeRequestBlockedCount
+            simulatedCommandCount = [int]$nativeCommandSimulationResult.simulatedCommandCount
+            simulatedFailureCount = [int]$nativeCommandSimulationResult.simulatedFailureCount
+            downstreamBlockedCount = [int]$dependencyBlockedCount
+            dependencyBlockedCount = [int]$dependencyBlockedCount
         }
         actions = @($results)
+        stageResults = @($results)
         inputs = [pscustomobject][ordered]@{
             diskIdentity = $diskIdentityPlan
             confirmationToken = $confirmationTokenPlan
             wimMetadata = $wimImagePlan
             winrePlan = $winREPlanResult
             nativeCommandPlan = $nativeCommandPlanResult
+            authorization = $authorizationResult
+        }
+        authorization = $authorizationResult
+        simulation = [pscustomobject][ordered]@{
+            status = $nativeCommandSimulationResult.status
+            reason = $nativeCommandSimulationResult.reason
+            simulatedCommandCount = [int]$nativeCommandSimulationResult.simulatedCommandCount
+            simulatedFailureCount = [int]$nativeCommandSimulationResult.simulatedFailureCount
+            downstreamBlockedCount = [int]$dependencyBlockedCount
+            command = $nativeCommandSimulationResult.command
         }
         safety = [pscustomobject][ordered]@{
             diskMutation = $false

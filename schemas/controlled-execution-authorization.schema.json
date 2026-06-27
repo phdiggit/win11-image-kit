@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "win11-image-kit controlled execution authorization",
+  "type": "object",
+  "required": ["reportType", "schemaVersion", "requestedMode", "executeRequested", "allowTrueExecution", "targetDiskNumber", "targetDiskSerial", "confirmationTokenStatus", "diskIdentityStatus", "wimValidationStatus", "sourceRunId", "authorizationStatus", "trueExecutionAllowed"],
+  "properties": {
+    "reportType": { "type": "string", "const": "controlled-execution-authorization" },
+    "schemaVersion": { "type": "integer", "minimum": 1 },
+    "requestedMode": { "type": "string", "enum": ["dry-run", "what-if", "plan-only", "execute"] },
+    "executeRequested": { "type": "boolean" },
+    "allowTrueExecution": { "type": "boolean", "const": false },
+    "targetDiskNumber": { "type": "integer", "minimum": 0 },
+    "targetDiskSerial": { "type": "string" },
+    "confirmationTokenStatus": { "type": "string", "enum": ["matched", "missing", "mismatched", "blocked"] },
+    "diskIdentityStatus": { "type": "string", "enum": ["matched", "missing", "mismatched", "blocked"] },
+    "wimValidationStatus": { "type": "string", "enum": ["matched", "missing", "mismatched", "blocked"] },
+    "sourceRunId": { "type": "string" },
+    "expectedSourceRunId": { "type": "string" },
+    "authorizationStatus": { "type": "string", "enum": ["planned", "blocked"] },
+    "trueExecutionAllowed": { "type": "boolean", "const": false }
+  },
+  "additionalProperties": false
+}

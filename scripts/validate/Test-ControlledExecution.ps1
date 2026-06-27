@@ -6,6 +6,8 @@ param(
     [string]$WimMetadataPath = "tests/fixtures/controlled-execution/wim-image/matched.json",
     [string]$WinREPlanPath = "tests/fixtures/controlled-execution/winre-plan/planned.json",
     [string]$NativeCommandPlanPath = "tests/fixtures/controlled-execution/native-command/planned.json",
+    [string]$AuthorizationPath = "tests/fixtures/controlled-execution/authorization/matched.json",
+    [string]$NativeCommandSimulationPath = "tests/fixtures/controlled-execution/native-command-simulation/baseline-success.json",
     [string]$ReportPath,
     [ValidateSet("dry-run", "what-if", "plan-only")]
     [string]$Mode = "dry-run"
@@ -22,6 +24,8 @@ $confirmationToken = Get-Content -LiteralPath (Resolve-KitControlledExecutionRep
 $wimMetadata = Get-Content -LiteralPath (Resolve-KitControlledExecutionRepoPath -RepoRoot $repoRoot -Path $WimMetadataPath) -Raw -Encoding UTF8 | ConvertFrom-Json
 $winREPlan = Get-Content -LiteralPath (Resolve-KitControlledExecutionRepoPath -RepoRoot $repoRoot -Path $WinREPlanPath) -Raw -Encoding UTF8 | ConvertFrom-Json
 $nativeCommandPlan = Get-Content -LiteralPath (Resolve-KitControlledExecutionRepoPath -RepoRoot $repoRoot -Path $NativeCommandPlanPath) -Raw -Encoding UTF8 | ConvertFrom-Json
+$authorization = Get-Content -LiteralPath (Resolve-KitControlledExecutionRepoPath -RepoRoot $repoRoot -Path $AuthorizationPath) -Raw -Encoding UTF8 | ConvertFrom-Json
+$nativeCommandSimulation = Get-Content -LiteralPath (Resolve-KitControlledExecutionRepoPath -RepoRoot $repoRoot -Path $NativeCommandSimulationPath) -Raw -Encoding UTF8 | ConvertFrom-Json
 $report = New-KitControlledExecutionReport `
     -Manifest $manifest `
     -RepoRoot $repoRoot `
@@ -31,6 +35,8 @@ $report = New-KitControlledExecutionReport `
     -WimMetadata $wimMetadata `
     -WinREPlan $winREPlan `
     -NativeCommandPlan $nativeCommandPlan `
+    -Authorization $authorization `
+    -NativeCommandSimulation $nativeCommandSimulation `
     -WhatIf
 
 if (-not [string]::IsNullOrWhiteSpace($ReportPath)) {
@@ -53,7 +59,11 @@ if (
     $report.summary.confirmationTokenFailureCount -gt 0 -or
     $report.summary.wimValidationFailureCount -gt 0 -or
     $report.summary.winrePlanFailureCount -gt 0 -or
-    $report.summary.nativeCommandFailureCount -gt 0
+    $report.summary.nativeCommandFailureCount -gt 0 -or
+    $report.summary.authorizationFailureCount -gt 0 -or
+    $report.summary.executeRequestBlockedCount -gt 0 -or
+    $report.summary.simulatedFailureCount -gt 0 -or
+    $report.summary.dependencyBlockedCount -gt 0
 ) {
     exit 1
 }

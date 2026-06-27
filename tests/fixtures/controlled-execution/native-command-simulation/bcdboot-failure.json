@@ -1,0 +1,10 @@
+{
+  "reportType": "native-command-simulation",
+  "schemaVersion": 1,
+  "commandId": "boot-plan-bcdboot",
+  "commandName": "bcdboot",
+  "plannedCommand": "bcdboot W:\\Windows /s S: /f UEFI",
+  "simulatedExitCode": 1,
+  "simulatedStdout": "",
+  "simulatedStderr": "simulated boot plan failure"
+}

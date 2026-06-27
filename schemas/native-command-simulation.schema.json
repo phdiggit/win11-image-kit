@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "win11-image-kit native command simulation fixture",
+  "type": "object",
+  "required": ["reportType", "schemaVersion", "commandId", "commandName", "plannedCommand", "simulatedExitCode", "simulatedStdout", "simulatedStderr"],
+  "properties": {
+    "reportType": { "type": "string", "const": "native-command-simulation" },
+    "schemaVersion": { "type": "integer", "minimum": 1 },
+    "commandId": { "type": "string", "minLength": 1 },
+    "commandName": { "type": "string", "enum": ["diskpart", "dism", "bcdboot", "reagentc"] },
+    "plannedCommand": { "type": "string", "minLength": 1 },
+    "simulatedExitCode": { "type": "integer" },
+    "simulatedStdout": { "type": "string" },
+    "simulatedStderr": { "type": "string" }
+  },
+  "additionalProperties": false
+}

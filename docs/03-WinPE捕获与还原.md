@@ -61,3 +61,11 @@ scripts\winpe\Apply-Win11Image.cmd Z:\golden\win11-dev-YYYYMMDD.wim W:\ S:
 DISM /Apply-Image /ImageFile:Z:\golden\win11-dev-YYYYMMDD.wim /Index:1 /ApplyDir:W:\
 bcdboot W:\Windows /s S: /f UEFI
 ```
+
+## 受控执行计划入口
+
+Issue #17 当前仍只允许计划、模拟和 `-WhatIf`。`scripts\winpe\New-WinPEControlledExecutionPlan.ps1` 可以解析未来还原流程需要的目标磁盘、镜像哈希、镜像索引、架构、确认令牌和 `SourceRunId`，但只输出 JSON 计划报告。
+
+即使传入 `-Execute`，当前阶段也会返回 blocked 报告；确认令牌匹配不代表允许真实执行。diskpart、DISM、bcdboot 和 reagentc 只能出现在 planned command 字符串或 fixture 中，不得由受控执行脚本调用。
+
+PR Fast CI 只验证计划/模拟边界，不是 main/workflow 生命周期证据。

@@ -1,0 +1,10 @@
+{
+  "reportType": "native-command-simulation",
+  "schemaVersion": 1,
+  "commandId": "baseline-native-simulation",
+  "commandName": "diskpart",
+  "plannedCommand": "diskpart /s X:\\kit\\plans\\partition.txt",
+  "simulatedExitCode": 0,
+  "simulatedStdout": "simulated baseline native command completed",
+  "simulatedStderr": ""
+}

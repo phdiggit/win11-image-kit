@@ -13,7 +13,9 @@ Describe "Controlled execution schema and manifest" {
             "schemas\confirmation-token.schema.json",
             "schemas\wim-image-metadata.schema.json",
             "schemas\winre-plan.schema.json",
-            "schemas\native-command-plan.schema.json"
+            "schemas\native-command-plan.schema.json",
+            "schemas\controlled-execution-authorization.schema.json",
+            "schemas\native-command-simulation.schema.json"
         )) {
             $json = Get-Content -LiteralPath (Join-Path $script:RepoRoot $path) -Raw -Encoding UTF8 | ConvertFrom-Json
             Assert-KitNotNullOrEmpty $json

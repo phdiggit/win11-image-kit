@@ -1,0 +1,10 @@
+{
+  "reportType": "native-command-simulation",
+  "schemaVersion": 1,
+  "commandId": "winre-plan-reagentc",
+  "commandName": "reagentc",
+  "plannedCommand": "reagentc /setreimage /path R:\\Recovery\\WindowsRE /target W:\\Windows",
+  "simulatedExitCode": 3,
+  "simulatedStdout": "",
+  "simulatedStderr": "simulated WinRE plan failure"
+}
