@@ -12,7 +12,7 @@ Describe "Future true UX restore evidence model" {
         Assert-KitEqual $authorizationSchema.additionalProperties $false
         Assert-KitEqual $authorizationSchema.'$defs'.authorizationRequest.additionalProperties $false
         Assert-KitEqual (@($authorizationSchema.'$defs'.scope.enum) -join ",") "current-user,default-user,offline-image,machine"
-        Assert-KitEqual (@($authorizationSchema.'$defs'.decision.enum) -join ",") "blocked,dry-run-ready,authorized-pending-review"
+        Assert-KitEqual (@($authorizationSchema.'$defs'.decision.enum) -join ",") "blocked,dry-run-ready,authorized-pending-review,needs-more-evidence,authorization-review-ready,rejected"
         Assert-KitEqual $evidenceSchema.additionalProperties $false
         Assert-KitEqual $evidenceSchema.properties.trueExecution.const $false
         Assert-KitEqual $evidenceSchema.properties.mutationCount.const 0
@@ -23,10 +23,17 @@ Describe "Future true UX restore evidence model" {
         Assert-KitEqual ($evidenceSchema.required -contains "offlineImageEvidenceContract") $true
         Assert-KitEqual ($evidenceSchema.required -contains "machineEvidenceContract") $true
         Assert-KitEqual ($evidenceSchema.required -contains "scopeEvidenceContracts") $true
+        Assert-KitEqual ($evidenceSchema.required -contains "reviewDecision") $true
+        Assert-KitEqual ($evidenceSchema.required -contains "executeReady") $true
+        Assert-KitEqual ($evidenceSchema.required -contains "evidencePacket") $true
+        Assert-KitEqual (@($evidenceSchema.'$defs'.reviewDecision.enum) -contains "authorization-review-ready") $true
         Assert-KitEqual $evidenceFixture.trueExecution $false
         Assert-KitEqual $evidenceFixture.mutationCount 0
         Assert-KitEqual $evidenceFixture.commandExitCodeSufficient $false
         Assert-KitEqual $evidenceFixture.userConfigurationConfirmed $false
+        Assert-KitEqual $evidenceFixture.reviewDecision "blocked"
+        Assert-KitEqual $evidenceFixture.executeReady $false
+        Assert-KitEqual $evidenceFixture.evidencePacket.executeReady $false
         foreach ($contractName in @("currentUserEvidenceContract", "defaultUserEvidenceContract", "offlineImageEvidenceContract", "machineEvidenceContract")) {
             Assert-KitEqual $evidenceFixture.$contractName.trueExecution $false
             Assert-KitEqual $evidenceFixture.$contractName.mutationCount 0

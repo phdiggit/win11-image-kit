@@ -69,4 +69,22 @@ Describe "Issue 18 future true UX restore split" {
             Assert-KitNotMatch $doc "(?i)\b(fixes|closes|resolves)\s+#18\b"
         }
     }
+
+    It "keeps authorization review workflow separate from Issue 18 closure" {
+        $docs = @(
+            @{ Path = "docs\76-future-true-ux-restore-unified-authorization-request.md"; Status = "authorization-request-draft" },
+            @{ Path = "docs\77-future-true-ux-restore-maintainer-review-checkpoint.md"; Status = "review-checkpoint-draft" },
+            @{ Path = "docs\78-future-true-ux-restore-evidence-packet-contract.md"; Status = "evidence-packet-draft" },
+            @{ Path = "docs\79-future-true-ux-restore-authorization-state-machine.md"; Status = "authorization-state-machine" }
+        )
+
+        foreach ($docInfo in $docs) {
+            $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot $docInfo.Path) -Raw -Encoding UTF8
+            Assert-KitMatch $doc ('Status:\s*`{0}`' -f [regex]::Escape($docInfo.Status))
+            Assert-KitMatch $doc "Refs #18"
+            Assert-KitMatch $doc "AuthorizationApproved=false"
+            Assert-KitMatch $doc "ExecutionApproved=false"
+            Assert-KitNotMatch $doc "(?i)\b(fixes|closes|resolves)\s+#18\b"
+        }
+    }
 }

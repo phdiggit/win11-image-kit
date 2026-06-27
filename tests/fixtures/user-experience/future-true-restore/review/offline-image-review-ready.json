@@ -1,0 +1,31 @@
+{
+  "scope": "offline-image",
+  "reviewDecision": "authorization-review-ready",
+  "authorizationApproved": false,
+  "executionApproved": false,
+  "executeReady": false,
+  "evidencePacket": {
+    "scope": "offline-image",
+    "targetIdentity": "offline-image:redacted-wim",
+    "requestedMutationType": "future-offline-image-ux-restore",
+    "dryRunCommandEnvelope": "scripts/config/Show-FutureTrueUxRestoreScopeDryRunPlan.ps1 -Scope offline-image",
+    "rollbackPlan": "Restore original WIM artifact before any future offline-image mutation.",
+    "beforeEvidence": "Redacted offline image metadata and planned UX baseline packet.",
+    "afterEvidencePlaceholder": "Future after-state packet required before execution can be approved.",
+    "independentVerificationPlaceholder": "Future independent verification packet required before execution can be approved.",
+    "scopeGuardAssertion": "offline-image",
+    "privacyRedactionStatement": "Image source paths are redacted.",
+    "failurePropagation": "Any missing offline-image evidence keeps the decision blocked.",
+    "reviewerChecklist": [
+      "Scope is offline-image only.",
+      "Rollback plan exists.",
+      "No execution approval is requested."
+    ],
+    "authorizationApproved": false,
+    "executionApproved": false,
+    "executeReady": false,
+    "trueExecution": false,
+    "mutationCount": 0,
+    "userConfigurationConfirmed": false
+  }
+}

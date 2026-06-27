@@ -113,5 +113,34 @@
       "failurePropagation",
       "reviewCheckpoint"
     ]
+  },
+  "authorizationReview": {
+    "enabled": true,
+    "authorizationApproved": false,
+    "executionApproved": false,
+    "executeReady": false,
+    "allowedReviewDecisions": [
+      "blocked",
+      "needs-more-evidence",
+      "authorization-review-ready",
+      "rejected"
+    ],
+    "forbiddenReviewDecisions": [
+      "execute-ready"
+    ],
+    "requiredPacketFields": [
+      "scope",
+      "targetIdentity",
+      "requestedMutationType",
+      "dryRunCommandEnvelope",
+      "rollbackPlan",
+      "beforeEvidence",
+      "afterEvidencePlaceholder",
+      "independentVerificationPlaceholder",
+      "scopeGuardAssertion",
+      "privacyRedactionStatement",
+      "failurePropagation",
+      "reviewerChecklist"
+    ]
   }
 }

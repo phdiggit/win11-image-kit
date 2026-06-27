@@ -1,0 +1,23 @@
+{
+  "scope": "current-user",
+  "reviewDecision": "authorization-review-ready",
+  "authorizationApproved": false,
+  "executionApproved": false,
+  "executeReady": false,
+  "evidencePacket": {
+    "scope": "current-user",
+    "targetIdentity": "C:\\Users\\RealUser\\AppData\\Local\\UX",
+    "requestedMutationType": "future-current-user-ux-restore",
+    "dryRunCommandEnvelope": "scripts/config/Show-FutureTrueUxRestoreCurrentUserDryRunPlan.ps1 -Scope current-user",
+    "rollbackPlan": "Restore from captured current-user profile backup before any future mutation.",
+    "beforeEvidence": "Unredacted private path C:\\Users\\RealUser\\Desktop is blocked.",
+    "afterEvidencePlaceholder": "Future after-state packet required before execution can be approved.",
+    "independentVerificationPlaceholder": "Future independent verification packet required before execution can be approved.",
+    "scopeGuardAssertion": "current-user",
+    "privacyRedactionStatement": "This packet intentionally demonstrates a redaction failure.",
+    "failurePropagation": "Any private path keeps the decision blocked.",
+    "reviewerChecklist": [
+      "No execution approval is requested."
+    ]
+  }
+}

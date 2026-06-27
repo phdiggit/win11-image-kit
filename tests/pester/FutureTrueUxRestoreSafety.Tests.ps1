@@ -52,12 +52,15 @@ Describe "Future true UX restore safety" {
             "scripts\common\New-FutureTrueUxRestoreAuthorizationReport.ps1",
             "scripts\common\New-FutureTrueUxRestoreCurrentUserDryRunReport.ps1",
             "scripts\common\New-FutureTrueUxRestoreScopeDryRunReport.ps1",
+            "scripts\common\New-FutureTrueUxRestoreAuthorizationReviewReport.ps1",
             "scripts\validate\Test-FutureTrueUxRestoreAuthorization.ps1",
             "scripts\validate\Test-FutureTrueUxRestoreCurrentUserDryRun.ps1",
             "scripts\validate\Test-FutureTrueUxRestoreScopeDryRun.ps1",
+            "scripts\validate\Test-FutureTrueUxRestoreAuthorizationReview.ps1",
             "scripts\config\Show-FutureTrueUxRestoreAuthorizationPlan.ps1",
             "scripts\config\Show-FutureTrueUxRestoreCurrentUserDryRunPlan.ps1",
-            "scripts\config\Show-FutureTrueUxRestoreScopeDryRunPlan.ps1"
+            "scripts\config\Show-FutureTrueUxRestoreScopeDryRunPlan.ps1",
+            "scripts\config\Show-FutureTrueUxRestoreAuthorizationReviewPlan.ps1"
         )
 
         foreach ($file in $files) {

@@ -296,7 +296,7 @@
       "path": ".github/workflows/ci.yml",
       "category": "workflow",
       "required": true,
-      "hash": "251aa1dec8d4aae507d16e337f23a4d0e0fae84622cd0f3ffb813f226614c6d6",
+      "hash": "db53d18b4c25093f2816a984a519ff664f9b32bfd1fc0fa201b19a91a4a6e4e5",
       "reason": "PR Fast CI runs future true UX scope dry-run validation and Pester coverage."
     },
     {
@@ -394,7 +394,7 @@
       "path": "manifests/quality-gates.json",
       "category": "manifest",
       "required": true,
-      "hash": "8d6e42f2debe99f8e806d8351e38402055a8c12848326dfb1ac33d9ce547b11a",
+      "hash": "d44b0bd5514979fc073fc4cb3922ed673f0d1bebe4b61a30db88beea9a2ae4af",
       "reason": "Quality Gates include future true UX scope dry-run validation."
     },
     {
@@ -2403,7 +2403,7 @@
       "path": "tests/pester/Issue18FutureTrueUxRestoreSplit.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "415484b587753a4e4ca765c23c7034772a59f665ba1d9aeba0e8726dc38b4b9e",
+      "hash": "e63b4d83580f1161a169efc1c315ad88386b449a43ca2cfc13be32a0669b37bc",
       "reason": "Issue 18 future split tests guard explicit authorization and no true UX mutation."
     },
     {
@@ -2431,21 +2431,21 @@
       "path": "manifests/future-true-ux-restore-authorization.json",
       "category": "manifest",
       "required": true,
-      "hash": "cc99b08da91b9c472d7dc6bb054a257f868a6df45a8eb9abc33607ab4eb0c6ae",
+      "hash": "e07b07bafaf1e428f4aa4fabc84871ec3d011db38a128ea2f0186bff7f2f7e8a",
       "reason": "Future true UX restore authorization manifest declares remaining scope dry-run gates."
     },
     {
       "path": "schemas/future-true-ux-restore-authorization.schema.json",
       "category": "schema",
       "required": true,
-      "hash": "2f9685181582433c08b30af476791113232ac08d4079004b2d5dfe55721b13bc",
+      "hash": "f0750a44cdf8fe05aa99f94825c96305c5643e54373661eb9cee64db982f5c1d",
       "reason": "Future true UX restore schemas constrain remaining scope dry-run contracts."
     },
     {
       "path": "schemas/future-true-ux-restore-evidence.schema.json",
       "category": "schema",
       "required": true,
-      "hash": "51994d054a9d87516e7bf865a14a4c8161dc33d5e2b6a9c0c1165cb7c792670f",
+      "hash": "0abe89f973075d3abc4bf42efa3247be6c26e41b839e5c0b1b4ae457731ef319",
       "reason": "Future true UX restore schemas constrain remaining scope dry-run contracts."
     },
     {
@@ -2515,7 +2515,7 @@
       "path": "tests/fixtures/user-experience/future-true-restore/evidence/baseline-report.json",
       "category": "test",
       "required": true,
-      "hash": "33deca55be6781db1ffc24f844ab89568c1ed61ba72095401867d78047248300",
+      "hash": "f88867396a5c158e0377233d62579c470e444dd90d440f67a2d3443d5260808a",
       "reason": "Future true UX restore authorization fixtures and Pester coverage."
     },
     {
@@ -2536,21 +2536,21 @@
       "path": "tests/pester/FutureTrueUxRestoreEvidence.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "e47b0a6f780e00af231acef48b7e4be0912744caa52f06e6b1e2ef69ce26636c",
+      "hash": "b6dd7ba590cfa111f43b2e5807a9d76e25e5e0940ab5ae7c7ac54e90dd6814db",
       "reason": "Future true UX restore authorization fixtures and Pester coverage."
     },
     {
       "path": "tests/pester/FutureTrueUxRestoreSafety.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "1fc54f6ad61ffd8d9350cdbbb2e1b7efd415623ac5b66e1362e9dbe2de8f5c3f",
+      "hash": "2dcb7f8c1cf4f1934c8829c36a72bc94e3ad0b36bd911aa93fa0b70b38d11bee",
       "reason": "Future true UX restore authorization fixtures and Pester coverage."
     },
     {
       "path": "tests/pester/FutureTrueUxRestoreValidation.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "fedb6248e2bd82225f523976b004b710a7e28303e4d4944807bf9e07957d9a16",
+      "hash": "3762b8fded92dfdee3cfe02a546b94c09bda6bbbbd1fc3325aece135152dfb78",
       "reason": "Future true UX restore authorization fixtures and Pester coverage."
     },
     {
@@ -2571,7 +2571,7 @@
       "path": "docs/71-future-true-ux-restore-execute-gate-dual-approval.md",
       "category": "doc",
       "required": true,
-      "hash": "dcf5ac9c41069b73a84bf3cea573878f7c7a5ca73b1b3dddbdc6a4bfc004a2ef",
+      "hash": "4a88130fbc505159d690a028c90e5efabbd5629e7cc117847e79f622bbafb4bd",
       "reason": "Future true UX current-user dry-run and dual execute-gate documentation."
     },
     {
@@ -2690,281 +2690,743 @@
       "path": "tests/pester/FutureTrueUxRestoreExecuteGate.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "59c23e88f1d8c0768ef9b37f429919bbf94216c2ae0e85ba5fb1122046e3cf57",
+      "hash": "204b79c0a5451a807b3814adb40aebeb9815ec69646806ecf73c6310edde4392",
       "reason": "Future true UX current-user dry-run fixtures and Pester coverage."
     },
     {
       "path": "docs/72-future-true-ux-restore-default-user-dry-run-gate.md",
       "category": "doc",
       "required": true,
-      "hash": "91c353d48d1a4be5d21c7e5322143de1f6c855868a787901b3ba4f5eb1f2dead",
+      "hash": "eeb905973e9b0d0999c56fabd1785cb1e6d2b500c1b6859f2a5aedbe0074a683",
       "reason": "Future true UX remaining scope dry-run and scope guard documentation."
     },
     {
       "path": "docs/73-future-true-ux-restore-offline-image-dry-run-gate.md",
       "category": "doc",
       "required": true,
-      "hash": "a33b555f1ef7ce75b4e30d6c138f001a23937b98b500ce952d1a7bbaa509dc55",
+      "hash": "5fdd9bb4456f1ae7bc788c202796eac6ad6a152a8d19c001686496b6f44c8c73",
       "reason": "Future true UX remaining scope dry-run and scope guard documentation."
     },
     {
       "path": "docs/74-future-true-ux-restore-machine-dry-run-gate.md",
       "category": "doc",
       "required": true,
-      "hash": "6154193d7a9c37de98047ffc6abe39ea35e4c14c9f45e33b1f8c15e2b623a1d0",
+      "hash": "9c0246f411fe4d295c83f7c580fbf3aa9872d420a86228007a173718042fc735",
       "reason": "Future true UX remaining scope dry-run and scope guard documentation."
     },
     {
       "path": "docs/75-future-true-ux-restore-scope-guard-matrix.md",
       "category": "doc",
       "required": true,
-      "hash": "be8dc5181b415df281be367354bb5d85d0562475d2d46034bbaf2e76d4b20c3d",
+      "hash": "f7c662611d9ce03945b3380c7dfe1ae89123c56f662de5b9d2229cf46f86106f",
       "reason": "Future true UX remaining scope dry-run and scope guard documentation."
     },
     {
       "path": "scripts/common/New-FutureTrueUxRestoreScopeDryRunReport.ps1",
       "category": "script",
       "required": true,
-      "hash": "d4dd6688bf117bacd6c39b9be7ddf62fe6fa957fd03a92f1d737efc1961c5cdf",
+      "hash": "e313946b21d2fb8d7421ea7bf36c61fd60c444c17b6d0a3a7b80b720c6e20afa",
       "reason": "Future true UX remaining scope dry-run report, plan, or validation entrypoint."
     },
     {
       "path": "scripts/config/Show-FutureTrueUxRestoreScopeDryRunPlan.ps1",
       "category": "script",
       "required": true,
-      "hash": "1b46fe3e89af4599284121ad53ac7c83ac852d9cfcc9a377aa97c0a01f51703c",
+      "hash": "4a580ef484de616229ed279c68f2d9fe280c18ff905597502934ecc86436dc6d",
       "reason": "Future true UX remaining scope dry-run report, plan, or validation entrypoint."
     },
     {
       "path": "scripts/validate/Test-FutureTrueUxRestoreScopeDryRun.ps1",
       "category": "script",
       "required": true,
-      "hash": "ac938b1d3951afde2eb99fa89210a058eeba4c6ebb547228a14f24f18a8696fd",
+      "hash": "86bffb5e40c59d1ff507e96b7778a481f9a617df55160d50081ffe5debdd8876",
       "reason": "Future true UX remaining scope dry-run report, plan, or validation entrypoint."
     },
     {
       "path": "tests/pester/FutureTrueUxRestoreDefaultUserDryRun.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "d25818e091bac5c9c40d15b1bcb3d341a9b80e7507f1cac100032106910b54cc",
+      "hash": "eb5e67849a6b25142b2cf64b7e4a74748d13e8d3ad44abb17a6b188833ca1ced",
       "reason": "Future true UX remaining scope dry-run Pester coverage."
     },
     {
       "path": "tests/pester/FutureTrueUxRestoreOfflineImageDryRun.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "8ecf58b5993024b78f2abdb639680c78e4424d027706193f7806b589550ec236",
+      "hash": "294f30f9387c16eb77eb351ddfea4350c9090e33bda2d225ac7f5240afc2409c",
       "reason": "Future true UX remaining scope dry-run Pester coverage."
     },
     {
       "path": "tests/pester/FutureTrueUxRestoreMachineDryRun.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "e208f40a4f7f5234a73f48a418e3550c0493d59c6e2fd548c8ce9bad23446a2e",
+      "hash": "664ca84cbcbf45b5b67ce68248a2cf5fe5c53e55c8250a617c7fccc4ca665bf6",
       "reason": "Future true UX remaining scope dry-run Pester coverage."
     },
     {
       "path": "tests/pester/FutureTrueUxRestoreScopeGuard.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "e056d95596eb30f0981a9d87d73a56555b885bcb94ae5f42f8073fa4750655c0",
+      "hash": "90fca0a051ecdd2f08721239aa891319d5551c801aa6cd53e6f0c5606a8974cb",
       "reason": "Future true UX remaining scope dry-run Pester coverage."
     },
     {
       "path": "tests/pester/FutureTrueUxRestoreScopeDryRunValidation.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "bb9aecead4f1ec1155c34e0e9443c3c43fc7efd9b1885a9391252d0d49957c5a",
+      "hash": "ae319f298775cd40a17284c7549c285de4c2d4cb1245f0fda99d229fde9f86ca",
       "reason": "Future true UX remaining scope dry-run Pester coverage."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/default-user/baseline-blocked.json",
       "category": "test",
       "required": true,
-      "hash": "21b680abc32b541dea7c6b83a8e6f51ec2cd9eaa8862da18afa0287be16af555",
+      "hash": "3ee7c2f6331836aa057f635b28bc442d477201c598d6d9d3769914add68da7a4",
       "reason": "Future true UX remaining scope dry-run fixtures and evidence contracts."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/default-user/current-user-scope-claim-blocked.json",
       "category": "test",
       "required": true,
-      "hash": "677e0d6bd7e06dbc2d1a71c9a107475c30d2b9f3ac31ef6243752129a6306745",
+      "hash": "776dd238d8632f990d41fd840ad54487b0b77d11af658bc78496f69abfb59740",
       "reason": "Future true UX remaining scope dry-run fixtures and evidence contracts."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/default-user/dry-run-ready-no-execute.json",
       "category": "test",
       "required": true,
-      "hash": "5ee944168e06166b491c3ea44b931063243352b7a075a1684bc2ceb3a77c5de7",
+      "hash": "482a68c29f0f7f455b7c29f8c21ab5a4695931803e1c1a835505a70590bf3382",
       "reason": "Future true UX remaining scope dry-run fixtures and evidence contracts."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/default-user/exit-code-only-success-blocked.json",
       "category": "test",
       "required": true,
-      "hash": "452c02d8f377d4a302c561796ca1b737c8774805470d3307b83604a183db382c",
+      "hash": "60b14ea339a834af25c1d8f779a2958cbb6270e0b297f6c50f1405c0285a2c6d",
       "reason": "Future true UX remaining scope dry-run fixtures and evidence contracts."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/default-user/hive-load-requested-blocked.json",
       "category": "test",
       "required": true,
-      "hash": "4a7d7e70448f3655852acc59c708abb49a2329dc646d35049943fcb7323906c5",
+      "hash": "57c2cd28aa7a563114118ac9da273705a0b518be18bb8108be618eea3d03285b",
       "reason": "Future true UX remaining scope dry-run fixtures and evidence contracts."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/default-user/manual-checklist-success-blocked.json",
       "category": "test",
       "required": true,
-      "hash": "23ce2a33448ed843f3fad33832f2bfd1d166508a90826d4cfc6574363a6ba96c",
+      "hash": "880f8d32f44d5da8c18f63637a180be439c86ad1f0a8051d65e29a592c84be69",
       "reason": "Future true UX remaining scope dry-run fixtures and evidence contracts."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/default-user/missing-template-source.json",
       "category": "test",
       "required": true,
-      "hash": "ed97fb745c207e1ab4885dd8e092a8c2dc52bbff04005df29cd4da4e4cc535df",
+      "hash": "1441eace683407ec9c71f06aa256626bb75d8556e124a4aa779879abab1766ce",
       "reason": "Future true UX remaining scope dry-run fixtures and evidence contracts."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/default-user/mutation-requested-blocked.json",
       "category": "test",
       "required": true,
-      "hash": "7d2bef756644efec79b80b243f3aa14f0a0cc6cc55a9fcd279c4b2adf665477e",
+      "hash": "27fb1f06398951881ab10061064f5dabd1b6f4d51d69f74361e36a0cb5630c4d",
       "reason": "Future true UX remaining scope dry-run fixtures and evidence contracts."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/default-user/private-profile-path-blocked.json",
       "category": "test",
       "required": true,
-      "hash": "f543b1334d4a20fc45fb0d4fdfce529c0420bc554d6abc1d177c7458c12b7916",
+      "hash": "a2757995454d3a18bcd9cbefbf593240b7a43f0e7d699950d609ec9b6b6fba1c",
       "reason": "Future true UX remaining scope dry-run fixtures and evidence contracts."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/offline-image/baseline-blocked.json",
       "category": "test",
       "required": true,
-      "hash": "6423fc7f6100ea6546d94c67e69661e150cae59a27a9c5437e32c1ade2dfb240",
+      "hash": "f45ebac0cb04edb8533b62dccbf943229a4a3143dab3a9b3ddb667199d76a8a4",
       "reason": "Future true UX remaining scope dry-run fixtures and evidence contracts."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/offline-image/current-machine-claim-blocked.json",
       "category": "test",
       "required": true,
-      "hash": "3f90047cbbaaeffee574969ba23392b347d0c79bca090e19aa7bcc7d6ef4f211",
+      "hash": "bbddd1ab087c6fdbb0bdff6503ecc82625f341ec8006525a8997db301715f476",
       "reason": "Future true UX remaining scope dry-run fixtures and evidence contracts."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/offline-image/dry-run-ready-no-execute.json",
       "category": "test",
       "required": true,
-      "hash": "05034728e8fa649b812dab31bb5a70d588467b471a3ad20a8790286707c4a5c1",
+      "hash": "fa4bf5deef5666649db447a9ab04b59035f8c2d5966c07251fc5ffa44e756458",
       "reason": "Future true UX remaining scope dry-run fixtures and evidence contracts."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/offline-image/exit-code-only-success-blocked.json",
       "category": "test",
       "required": true,
-      "hash": "75ab8daa56975c25c2de48c71250df7e9b523dfd45b072a677cca41750d61652",
+      "hash": "cd0f9d3425d5d2fa780147416c606a99e14d771b7e48c66666e29f6f4f088e36",
       "reason": "Future true UX remaining scope dry-run fixtures and evidence contracts."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/offline-image/handler-report-success-blocked.json",
       "category": "test",
       "required": true,
-      "hash": "04fe96b6a09b476c09520c334e69d676f07d259b1a6d047aa92970e3bf6e4dfb",
+      "hash": "182966664e4ece0a670b95bb98ae0f00651cb227d4fb005c09c24cec7ac15841",
       "reason": "Future true UX remaining scope dry-run fixtures and evidence contracts."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/offline-image/image-servicing-requested-blocked.json",
       "category": "test",
       "required": true,
-      "hash": "999b33faaaffe8a6205ac51caab56cc1bf1284f631c5317f25c89f1d74caac64",
+      "hash": "b21723f17b3957beacad6f7d8ff8e67c82b5f4f6489ec57b6fac1d9d7087bf27",
       "reason": "Future true UX remaining scope dry-run fixtures and evidence contracts."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/offline-image/missing-image-identity.json",
       "category": "test",
       "required": true,
-      "hash": "592294e60b4d864d3a4e238cb3909dd1b6707c9f41b0274b253114e9fe51092b",
+      "hash": "50a7b9e078cc32e61c3b93ef768469b89b343c4871c0ffabd761ccb3563c2a42",
       "reason": "Future true UX remaining scope dry-run fixtures and evidence contracts."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/offline-image/mount-requested-blocked.json",
       "category": "test",
       "required": true,
-      "hash": "d60274a376a9d152ab6f0007e9f3778470430d1947708b900238d3b5b8164c31",
+      "hash": "8d1d6214faf703b8798272b6a454b5651c9ede00a0acb953837f97651e27ba71",
       "reason": "Future true UX remaining scope dry-run fixtures and evidence contracts."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/offline-image/private-mount-path-blocked.json",
       "category": "test",
       "required": true,
-      "hash": "1ebbb9e316e640e1770d331398332b37404db1f75c018101c2f751910001f255",
+      "hash": "28b0f9926e4afac2396fcd7ca258fcdccc74995ebfbc401f332cf9d75b2a7046",
       "reason": "Future true UX remaining scope dry-run fixtures and evidence contracts."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/machine/baseline-blocked.json",
       "category": "test",
       "required": true,
-      "hash": "9297227d796900471efa6cb415e06152e6beffea9751682df5e05feafbdadb7a",
+      "hash": "28a19e6a49e82b9b9031abd56e0072a74e48421ae0147ba8d4286798588eedf7",
       "reason": "Future true UX remaining scope dry-run fixtures and evidence contracts."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/machine/current-user-claim-blocked.json",
       "category": "test",
       "required": true,
-      "hash": "224bec1fe5d2dfc2e6291e13e729efac2d5030a8e78290f82b070617862d1b28",
+      "hash": "2310caec6b2454f8d299969d4ec84e9f1b13dfe9203b7d0260abda9c8a91bce0",
       "reason": "Future true UX remaining scope dry-run fixtures and evidence contracts."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/machine/defender-requested-blocked.json",
       "category": "test",
       "required": true,
-      "hash": "f8c71a4189b1ccc491ac749e4ec3f5157fdd4d45e5038dc25906d5873796d4ea",
+      "hash": "1091d4959c11f7502191f96e185d916809e061e2dc8f57c900707a2c4edf7ae5",
       "reason": "Future true UX remaining scope dry-run fixtures and evidence contracts."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/machine/dry-run-ready-no-execute.json",
       "category": "test",
       "required": true,
-      "hash": "e1aa32f0dc21d499b2a810af9a03d3c47bcd4271600abb74acc9c287dc51af06",
+      "hash": "6ccad1ace2e589cf7c3d46ff588ef161acc7c5d864057b86132a5fdd4729ec8b",
       "reason": "Future true UX remaining scope dry-run fixtures and evidence contracts."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/machine/dry-run-report-success-blocked.json",
       "category": "test",
       "required": true,
-      "hash": "fe807375bf40969aabaff8b871f56976fef176b45b79d0839ea16b0092e82860",
+      "hash": "d1e93c95f2925eb2dc2b43415786ce30144d0c655f0af9a3875e7b9d237b932f",
       "reason": "Future true UX remaining scope dry-run fixtures and evidence contracts."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/machine/exit-code-only-success-blocked.json",
       "category": "test",
       "required": true,
-      "hash": "51b6a08bf03fe65c8c6865b1622112bb2aa76bc8b9c7fc89613152c831c80530",
+      "hash": "15788d31919f8e29f8a2d6045ba2469e449b17635c0e55d1a6a53340e0f90d7b",
       "reason": "Future true UX remaining scope dry-run fixtures and evidence contracts."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/machine/missing-machine-identity.json",
       "category": "test",
       "required": true,
-      "hash": "d73fff3a94be9182d00976a718abbf8dd058446ddc026daffc7b2a932da4e9b2",
+      "hash": "b7ee0c5d9eb8e7f69dd085b78e55ada7869d8f9936bc1f15bf76fc0c35019c7b",
       "reason": "Future true UX remaining scope dry-run fixtures and evidence contracts."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/machine/policy-write-requested-blocked.json",
       "category": "test",
       "required": true,
-      "hash": "75a043e7a57cef5bbbcc0e373a3f633e9a7a625f12ddb5fb840a6aaf1820cd82",
+      "hash": "adb175e1a316f3414f95daac7f2553701dae6b5e392e128cbbe2d6163dc787bc",
       "reason": "Future true UX remaining scope dry-run fixtures and evidence contracts."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/machine/service-requested-blocked.json",
       "category": "test",
       "required": true,
-      "hash": "9d287f89a17d49eae493908ce999b12d5e07a942acbc19edb7caad9b4619f87a",
+      "hash": "f0696c1a47d2710e11421fc1a584bb4473ff7ea49b6145c37d8cfed2f0a2c0a8",
       "reason": "Future true UX remaining scope dry-run fixtures and evidence contracts."
+    },
+    {
+      "path": "docs/76-future-true-ux-restore-unified-authorization-request.md",
+      "category": "doc",
+      "required": true,
+      "hash": "f45f8f09041bf2bda0a5ed4c40b969d0a1dac0c6310dfee53f93981b0effc330",
+      "reason": "Future true UX restore authorization review documentation is a trusted review input."
+    },
+    {
+      "path": "docs/77-future-true-ux-restore-maintainer-review-checkpoint.md",
+      "category": "doc",
+      "required": true,
+      "hash": "f8514ae423bee15e3bbb3e7d446df4bc6695d2125e0367ba3832b9bfdd99908e",
+      "reason": "Future true UX restore authorization review documentation is a trusted review input."
+    },
+    {
+      "path": "docs/78-future-true-ux-restore-evidence-packet-contract.md",
+      "category": "doc",
+      "required": true,
+      "hash": "0609ad1476ca8dc57517a59988dd5c72a00c47d9d639aa1a4500d5341e8cf7fb",
+      "reason": "Future true UX restore authorization review documentation is a trusted review input."
+    },
+    {
+      "path": "docs/79-future-true-ux-restore-authorization-state-machine.md",
+      "category": "doc",
+      "required": true,
+      "hash": "7194cea7ab71e265d91f95c2c83f5e9a74065311879e6c92a266648cc2ad2e38",
+      "reason": "Future true UX restore authorization review documentation is a trusted review input."
+    },
+    {
+      "path": "manifests/appx-cleanup.json",
+      "category": "manifest",
+      "required": true,
+      "hash": "5efd6f05bec1960a64fa8c3b3428924bd820866ece346016d168433bc21b0998",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "manifests/defender-exclusions.json",
+      "category": "manifest",
+      "required": true,
+      "hash": "a76dcf8436df1dbe2a75b8e1ae96e4c76c1783370c52f30af2f29068ceae7768",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "manifests/junctions.json",
+      "category": "manifest",
+      "required": true,
+      "hash": "8f9364e46eb565b6dccd3f9d2ceb3a94f5acbcce9a680719c283a8a90417ec73",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "manifests/paths.json",
+      "category": "manifest",
+      "required": true,
+      "hash": "4f077467649135512da5e39bf8466127db7b33f5dec29c0baba97a96986f8445",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "schemas/appx-cleanup.schema.json",
+      "category": "schema",
+      "required": true,
+      "hash": "d0c9306ca90eebaf83989363d0f0b1e5c66d009425a2aacb3bdf65c6869d7b26",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "schemas/defender-exclusions.schema.json",
+      "category": "schema",
+      "required": true,
+      "hash": "2e7b149afbef074fa1af10f16c0753bdd1756bc2e48009771ec0db96b1f10534",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "schemas/junctions.schema.json",
+      "category": "schema",
+      "required": true,
+      "hash": "3018a35b844cf7073a3e2622795a8684c0af2ad751ba4b27626fb3d312027dff",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "schemas/paths.schema.json",
+      "category": "schema",
+      "required": true,
+      "hash": "827601fafcedfe4eef6447db29f17dba1e5b4d11cb07f5ff43a56b6f3b983a2b",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "scripts/common/Assert-KitElevation.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "0377cc14d510a25991dfd9713cda50cdd20b6556df10fb3a82a65bd5215cb7ed",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "scripts/common/Get-KitAppxInventory.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "5d58508fa1f8bea05749cde5dd211b4ae5625347db82b0a4f791ff827868f468",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "scripts/common/Get-KitCapabilityRegistry.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "caf50b7a45f4251060865aa46aa56e7a0659130c160d96c23213240086e0d95b",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "scripts/common/Get-KitChildReportSummary.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "c11621fb27359a665de4100e1293cecc2ff856e0062bdc646d09c3f94c19c123",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "scripts/common/Get-KitDefenderExclusionState.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "dcf9cbdf104fadb5060fa54168f6fd9f365643a5a224d717e00e7695bbd1990c",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "scripts/common/Install-KitSoftwarePackages.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "3dc6952ed2421e1306d7ff954c860b5237587497f736f3eece720882d121fa54",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "scripts/common/Invoke-KitJunctionTransaction.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "6e0626f573693294d5fbd346407c43e26206e520123422a27038298237352887",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "scripts/common/Invoke-KitPackageTestCommand.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "ff694ab2dd9d1096abfc4e2656ee35e5a4dd7de7f441a5ec04297f12cee643d1",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "scripts/common/Invoke-KitStep.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "751afc68b6930ed88af5a89f6530699136cc2d66904abedff9e35b79fe18af4b",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "scripts/common/New-FutureTrueUxRestoreAuthorizationReviewReport.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "23769b119def0ab4ded1c5f4ca7e400edd076b938c1287edc1e7f9087be3a8c2",
+      "reason": "Future true UX authorization review script is a trusted report-only validation input."
+    },
+    {
+      "path": "scripts/common/New-KitPackageResult.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "3048cba94a45883543977b0e71bd8414f1ade30006af8ee432ed6ce2c3823e9c",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "scripts/common/New-StepResult.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "76f3200c1ce4e93219f50be0ae5d0189c4929ecb490a0f681a97c9451c7dcb71",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "scripts/common/Resolve-KitContextScope.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "d6b58445d13fab8b1b7546f5cac6243eeee1ccad26d0d325a8d163256c8b9e2f",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "scripts/common/Resolve-KitOutputPath.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "407f0cdeeef41d6a1cb767cce82351344c8562498ede57c16397c2d723103d4c",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "scripts/common/Resolve-KitPackagePolicy.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "d9d573718980baac9b4423ee5ed7b231edec9391a7ede146e52b0e44638f935b",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "scripts/common/Resolve-KitPath.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "a271a6d97e1f39cfe9b475926f0c7444acdbcd537b51c7833db6f18bcf2f5545",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "scripts/common/Set-KitDefenderExclusionState.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "54437284e92d9b5c4e1a1c9fbfeb09df43ec285c54c4e58465d35a6e2b328048",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "scripts/common/Test-KitAppxState.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "884be7f86b0f66f2b938df224c4ebbac7fa3b9f2eb5795623bbef033fee6aff8",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "scripts/common/Test-KitCapabilityConsistency.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "5594a37e5ece20babf8211bc26fe4ec0e7f72bcd9bb450e9f5254a45b0ffea27",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "scripts/common/Test-KitConfigState.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "5e3244be09060fd02416286a57aba26215e610dc18233a47cf2a773ae8464c14",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "scripts/common/Test-KitContextSafety.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "723e4cd2dbe69bad78825230cd28c74b7e705478a91282b4853d6e7684d7ea02",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "scripts/common/Test-KitDefenderExclusionPolicy.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "db1a37690f884332e4d39bd440065f1fd956c594abaf0a362f1f0f284165c625",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "scripts/common/Test-KitDefenderState.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "317f7ac907bb6a63012028149fe0ef5ede663a81b5e8f26c27c8b919f66b3a3a",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "scripts/common/Test-KitJunctionPreflight.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "cbdef9979a66cbe374cb2ce28adc0b5caa76214242119b848b29d302174e9d2d",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "scripts/common/Test-KitJunctionState.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "73d0da8f46c2416254d8de9c2bdfbcd3c1a4d7babc431bf058bdac5bedc44df7",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "scripts/common/Test-KitPackageHash.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "dce010dab21d36df6225097b0702ee82480eb0c337f830c5aa60b6f76bf427c4",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "scripts/common/Test-KitServiceState.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "81f08ae9737bb3743647161675111110836ea00b1bd912e021a9be484c995ca5",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "scripts/common/Test-KitSysprepAppxReadiness.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "afa8b2bd1ff4e9f4b597d036806c6c7fb87093e6dd99a9fbd94e4ae8decd314d",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "scripts/common/Write-Log.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "86d52c76bc488d12508009dd40a502fb9af1455556cec575ce297d00878fba0f",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "scripts/validate/Test-FutureTrueUxRestoreAuthorizationReview.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "1938635d841b800bd31273a9319b783d099b57daaadbb73b300891ee885b6d7f",
+      "reason": "Future true UX authorization review script is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/review/auto-close-keyword-blocked.json",
+      "category": "test",
+      "required": true,
+      "hash": "50f766d0495f81af098568218577d30faf1dfc53795740920a5e79f8381fa2c7",
+      "reason": "Future true UX authorization review fixture guards blocked and review-ready semantics."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/review/baseline-blocked.json",
+      "category": "test",
+      "required": true,
+      "hash": "e0d2b1f26b9cc7ff4e22b2f369ee4d2071853bd83fa54723a0870e788fa7e4de",
+      "reason": "Future true UX authorization review fixture guards blocked and review-ready semantics."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/review/cross-scope-evidence-blocked.json",
+      "category": "test",
+      "required": true,
+      "hash": "70f2e3548489d6b940eacae7965ba8d30f2fa810a76708e52c9f1a727fa5e9a4",
+      "reason": "Future true UX authorization review fixture guards blocked and review-ready semantics."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/review/current-user-review-ready.json",
+      "category": "test",
+      "required": true,
+      "hash": "743b57556f243a119aff216627f5b1619fe5a746169b006c2a52886f55dd999e",
+      "reason": "Future true UX authorization review fixture guards blocked and review-ready semantics."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/review/default-user-review-ready.json",
+      "category": "test",
+      "required": true,
+      "hash": "a1daca506f83076b5ed93d0dcdc979bbea8d3ab046e7c8d3fe4cb55feaa5aace",
+      "reason": "Future true UX authorization review fixture guards blocked and review-ready semantics."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/review/execute-ready-requested-blocked.json",
+      "category": "test",
+      "required": true,
+      "hash": "fd61ec204b1e9e0db3e039598f640813af64f8950988aa250bdaf455873bbce6",
+      "reason": "Future true UX authorization review fixture guards blocked and review-ready semantics."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/review/execution-approved-requested-blocked.json",
+      "category": "test",
+      "required": true,
+      "hash": "1dba8eb120c962d163c2e2968e688fb59e87ffa753c5ff69c5fd30552b4d8fa9",
+      "reason": "Future true UX authorization review fixture guards blocked and review-ready semantics."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/review/exit-code-only-success-blocked.json",
+      "category": "test",
+      "required": true,
+      "hash": "92bcae0abfb7751736b32c02dfadb5e05c25711ade5767cadf5cfffee6cf964e",
+      "reason": "Future true UX authorization review fixture guards blocked and review-ready semantics."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/review/machine-review-ready.json",
+      "category": "test",
+      "required": true,
+      "hash": "2c0faad29800a5ce517bca0ab4e9ca443a76788ff9fea680e7afaf86e5682584",
+      "reason": "Future true UX authorization review fixture guards blocked and review-ready semantics."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/review/missing-before-evidence-blocked.json",
+      "category": "test",
+      "required": true,
+      "hash": "f46c2a76f5264dbc77f14b9deb2a981f8c39bd473fc9d890a172b5b9534bd9f6",
+      "reason": "Future true UX authorization review fixture guards blocked and review-ready semantics."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/review/missing-rollback-blocked.json",
+      "category": "test",
+      "required": true,
+      "hash": "6318861992242932fa5250eb7293af4763dc6676d7743446b0ae590d145ef32f",
+      "reason": "Future true UX authorization review fixture guards blocked and review-ready semantics."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/review/offline-image-review-ready.json",
+      "category": "test",
+      "required": true,
+      "hash": "d9b5a4303d60f27ca3d103c56b3e8c0e7792b72755f96e5bc3f246c56e536f46",
+      "reason": "Future true UX authorization review fixture guards blocked and review-ready semantics."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/review/private-path-blocked.json",
+      "category": "test",
+      "required": true,
+      "hash": "3368eb11b66cb904202499620767b8ac514bb837a5a8f5d79f0534ed3e23e2ba",
+      "reason": "Future true UX authorization review fixture guards blocked and review-ready semantics."
+    },
+    {
+      "path": "tests/pester/CapabilityRegistryConsistency.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "417796a9a916698627feb7652e6699f51880fe90ce878cb25487c897d222be1d",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "tests/pester/CapabilityRegistryReport.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "0e4798c9e57325296f0761847d53dcda37188fdc3b9f7562d056152df196b254",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "tests/pester/CapabilityRegistrySchema.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "1672467577aba0b0c97ae0fa8b7d6d2f477b599c86d527adc603d7c08848adcc",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "tests/pester/FutureTrueUxRestoreAuthorizationReview.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "02bb62ffa8a7b87c77503736e24bf9a7788ae68d48bc2943c761e46f30ba78ce",
+      "reason": "Future true UX authorization review tests guard report-only safety behavior."
+    },
+    {
+      "path": "tests/pester/FutureTrueUxRestoreAuthorizationStateMachine.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "7abe8044e0362750fecf81944ab455bcaaa44e780c693288c13e1514ac9c0514",
+      "reason": "Future true UX authorization state machine tests guard review-only transitions."
+    },
+    {
+      "path": "tests/pester/FutureTrueUxRestoreEvidencePacket.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "6ecd62a1c79099857bf560dd358eb2a2e7f272c292cb5432b0529271d5bdd36f",
+      "reason": "Future true UX evidence packet tests guard review packet contracts."
+    },
+    {
+      "path": "tests/pester/FutureTrueUxRestoreReviewSafety.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "bbd8028f642131539c8cd1e6c6b5d56f985e375e70b419471fc9ab44a53773f0",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "tests/pester/Issue11CapabilityRegistry.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "1733c61565cc11155d63883242164b8c9785bafb57cbc4bc0115f3ec5202f560",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "tests/pester/Issue11CapabilityRegistryAcceptance.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "eda0d9fb8416d1a42b59b207748a0e32d7667c96ad4600d73e983aba5b71cd63",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "tests/pester/Issue12BuildLockAcceptance.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "bd46a0199881c7ad7377c0ae66c3ae341e146eee985308664da4d259192c9e56",
+      "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "tests/pester/UserExperienceStateVerification.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "c55b20704965f573070b877edd9bf16599a0b06c7426ddba335327e96a8a765f",
+      "reason": "Build lock watches this file as a trusted repository input."
     }
   ],
   "watchGlobs": [

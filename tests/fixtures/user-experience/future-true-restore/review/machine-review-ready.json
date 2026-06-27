@@ -1,0 +1,31 @@
+{
+  "scope": "machine",
+  "reviewDecision": "authorization-review-ready",
+  "authorizationApproved": false,
+  "executionApproved": false,
+  "executeReady": false,
+  "evidencePacket": {
+    "scope": "machine",
+    "targetIdentity": "machine:redacted-hardware-id",
+    "requestedMutationType": "future-machine-ux-restore",
+    "dryRunCommandEnvelope": "scripts/config/Show-FutureTrueUxRestoreScopeDryRunPlan.ps1 -Scope machine",
+    "rollbackPlan": "Restore machine-level UX policy backup before any future mutation.",
+    "beforeEvidence": "Redacted machine-level UX baseline packet.",
+    "afterEvidencePlaceholder": "Future after-state packet required before execution can be approved.",
+    "independentVerificationPlaceholder": "Future independent verification packet required before execution can be approved.",
+    "scopeGuardAssertion": "machine",
+    "privacyRedactionStatement": "Machine identity and local paths are redacted.",
+    "failurePropagation": "Any missing machine evidence keeps the decision blocked.",
+    "reviewerChecklist": [
+      "Scope is machine only.",
+      "Rollback plan exists.",
+      "No execution approval is requested."
+    ],
+    "authorizationApproved": false,
+    "executionApproved": false,
+    "executeReady": false,
+    "trueExecution": false,
+    "mutationCount": 0,
+    "userConfigurationConfirmed": false
+  }
+}

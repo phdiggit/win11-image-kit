@@ -53,4 +53,17 @@ Describe "Future true UX restore scope guard matrix" {
             Assert-KitEqual $report.mutationCount 0
         }
     }
+
+    It "keeps authorization review scope guard separate from dry-run scope guard" {
+        . (Join-Path $script:RepoRoot "scripts\common\New-FutureTrueUxRestoreAuthorizationReviewReport.ps1")
+        $manifest = Get-Content -LiteralPath (Join-Path $script:RepoRoot "manifests\future-true-ux-restore-authorization.json") -Raw -Encoding UTF8 | ConvertFrom-Json
+        $request = Get-Content -LiteralPath (Join-Path $script:RepoRoot "tests\fixtures\user-experience\future-true-restore\review\cross-scope-evidence-blocked.json") -Raw -Encoding UTF8 | ConvertFrom-Json
+        $report = New-FutureTrueUxRestoreAuthorizationReviewReport -Manifest $manifest -Request $request -RepoRoot $script:RepoRoot
+
+        Assert-KitEqual $report.reviewDecision "blocked"
+        Assert-KitMatch ($report.blockedReasons -join "`n") "scope guard"
+        Assert-KitEqual $report.trueExecution $false
+        Assert-KitEqual $report.mutationCount 0
+        Assert-KitEqual $report.executeReady $false
+    }
 }

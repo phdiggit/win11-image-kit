@@ -459,6 +459,30 @@
       "notes": "Prevents evidence substitution across current-user, default-user, offline-image, and machine scopes."
     },
     {
+      "id": "future-true-ux-authorization-review",
+      "displayName": "Future true UX authorization review workflow",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "scripts/validate/Test-FutureTrueUxRestoreAuthorizationReview.ps1",
+      "evidence": "report",
+      "notes": "Validates review-only authorization packets and keeps execute-ready, execution approval, and Issue 18 auto-close wording blocked."
+    },
+    {
+      "id": "future-true-ux-evidence-packet",
+      "displayName": "Future true UX evidence packet contract",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "docs/78-future-true-ux-restore-evidence-packet-contract.md",
+      "evidence": "document",
+      "notes": "Defines packet fields required for maintainer review without allowing execution approval or true UX mutation."
+    },
+    {
       "id": "future-true-ux-execute-gate",
       "displayName": "Future true UX execute gate dual approval",
       "layer": "pr-fast",
