@@ -1,0 +1,11 @@
+{
+  "reportType": "ux-scope-semantics",
+  "schemaVersion": 1,
+  "semanticsId": "offline-image-vs-current-machine",
+  "sourceScope": "offline-image",
+  "targetScope": "machine",
+  "defaultProfileClaimsCurrentUser": false,
+  "offlineImageClaimsCurrentMachine": false,
+  "scopeMismatch": false,
+  "status": "planned"
+}

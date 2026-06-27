@@ -1,0 +1,27 @@
+{
+  "reportType": "ux-template-metadata",
+  "schemaVersion": 1,
+  "templateId": "required-app-missing",
+  "templateType": "default-apps",
+  "expectedTemplateType": "default-apps",
+  "source": "fixture",
+  "sourceWindows": {
+    "edition": "Pro",
+    "displayVersion": "24H2",
+    "buildNumber": 26100,
+    "architecture": "amd64"
+  },
+  "exportedAt": "2026-06-27T00:00:00Z",
+  "targetScope": "default-user",
+  "expectedScope": "default-user",
+  "targetApps": [
+    {
+      "logicalName": "Sample Missing Browser",
+      "progId": "Sample.Missing.Browser",
+      "packageFamilyName": "Sample.Missing_12345",
+      "required": true,
+      "knownCapability": false
+    }
+  ],
+  "status": "planned"
+}

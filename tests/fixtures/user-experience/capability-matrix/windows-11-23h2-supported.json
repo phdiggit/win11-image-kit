@@ -1,0 +1,29 @@
+{
+  "reportType": "ux-capability-matrix",
+  "schemaVersion": 1,
+  "matrixId": "windows-11-23h2-supported",
+  "capabilities": [
+    {
+      "id": "win11-23h2-default-user-default-apps",
+      "displayVersion": "23H2",
+      "buildMin": 22631,
+      "buildMax": 22699,
+      "scope": "default-user",
+      "feature": "default-apps",
+      "supportStatus": "report-only",
+      "verificationMode": "fixture",
+      "mutationAllowed": false
+    },
+    {
+      "id": "win11-23h2-offline-image-default-apps",
+      "displayVersion": "23H2",
+      "buildMin": 22631,
+      "buildMax": 22699,
+      "scope": "offline-image",
+      "feature": "default-apps",
+      "supportStatus": "planned-supported",
+      "verificationMode": "future-real-verification",
+      "mutationAllowed": false
+    }
+  ]
+}

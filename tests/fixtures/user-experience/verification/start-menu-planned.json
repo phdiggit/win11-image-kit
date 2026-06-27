@@ -1,0 +1,13 @@
+{
+  "reportType": "ux-verification-plan",
+  "schemaVersion": 1,
+  "verificationId": "start-menu-current-user-report-only",
+  "scope": "current-user",
+  "feature": "start-menu",
+  "currentStage": "report-only",
+  "evidenceType": "manual-checklist",
+  "successSignal": "future-real-verification-required",
+  "commandExitCodeSufficient": false,
+  "userConfigurationConfirmed": false,
+  "status": "planned"
+}

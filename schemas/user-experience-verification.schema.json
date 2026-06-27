@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "win11-image-kit user experience verification fixture",
+  "type": "object",
+  "required": ["reportType", "schemaVersion", "verificationId", "scope", "feature", "currentStage", "evidenceType", "successSignal", "commandExitCodeSufficient", "userConfigurationConfirmed", "status"],
+  "properties": {
+    "reportType": { "const": "ux-verification-plan" },
+    "schemaVersion": { "type": "integer", "minimum": 1 },
+    "verificationId": { "type": "string" },
+    "scope": { "type": "string", "enum": ["machine", "default-user", "current-user", "offline-image"] },
+    "feature": { "type": "string", "enum": ["default-apps", "start-menu", "taskbar", "app-visibility", "verification"] },
+    "currentStage": { "type": "string", "enum": ["report-only", "plan-only", "fixture"] },
+    "evidenceType": { "type": "string", "enum": ["planned", "fixture", "manual-checklist", "future-real-verification"] },
+    "successSignal": { "type": "string" },
+    "commandExitCodeSufficient": { "const": false },
+    "userConfigurationConfirmed": { "const": false },
+    "status": { "type": "string", "enum": ["planned", "blocked", "failed"] }
+  },
+  "additionalProperties": false
+}

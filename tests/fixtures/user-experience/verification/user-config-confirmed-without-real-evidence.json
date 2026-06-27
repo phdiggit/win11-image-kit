@@ -1,0 +1,13 @@
+{
+  "reportType": "ux-verification-plan",
+  "schemaVersion": 1,
+  "verificationId": "user-config-confirmed-without-real-evidence",
+  "scope": "current-user",
+  "feature": "start-menu",
+  "currentStage": "report-only",
+  "evidenceType": "planned",
+  "successSignal": "fixture-only",
+  "commandExitCodeSufficient": false,
+  "userConfigurationConfirmed": true,
+  "status": "planned"
+}

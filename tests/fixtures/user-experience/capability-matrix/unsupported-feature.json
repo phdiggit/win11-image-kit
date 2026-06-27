@@ -1,0 +1,18 @@
+{
+  "reportType": "ux-capability-matrix",
+  "schemaVersion": 1,
+  "matrixId": "unsupported-feature",
+  "capabilities": [
+    {
+      "id": "win11-24h2-current-user-unsupported-app-visibility",
+      "displayVersion": "24H2",
+      "buildMin": 26100,
+      "buildMax": 26199,
+      "scope": "current-user",
+      "feature": "app-visibility",
+      "supportStatus": "unsupported",
+      "verificationMode": "manual-checklist",
+      "mutationAllowed": false
+    }
+  ]
+}

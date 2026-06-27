@@ -219,6 +219,66 @@
       "notes": "Validates Start menu and taskbar plan fixtures with executed=false and no profile or registry mutation."
     },
     {
+      "id": "user-experience-capability-matrix",
+      "displayName": "User experience capability matrix validation",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "fixture",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "tests/pester/UserExperienceCapabilityMatrix.Tests.ps1",
+      "evidence": "pester",
+      "notes": "Validates Issue 18 version and scope capability matrix without registry, profile, default app, Start menu, or taskbar mutation."
+    },
+    {
+      "id": "user-experience-template-metadata",
+      "displayName": "User experience template metadata validation",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "fixture",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "tests/pester/UserExperienceTemplateMetadata.Tests.ps1",
+      "evidence": "pester",
+      "notes": "Validates template source Windows metadata, target app capability fields, scope matching, and missing capability blocking."
+    },
+    {
+      "id": "user-experience-scope-semantics",
+      "displayName": "User experience scope semantics validation",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "fixture",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "tests/pester/UserExperienceScopeSemantics.Tests.ps1",
+      "evidence": "pester",
+      "notes": "Validates default-user, current-user, offline-image, and machine scope separation without real UX mutation."
+    },
+    {
+      "id": "user-experience-verification-plan",
+      "displayName": "User experience verification plan validation",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "fixture",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "tests/pester/UserExperienceVerificationPlan.Tests.ps1",
+      "evidence": "pester",
+      "notes": "Validates command-exit-code and false user-configuration success claims remain blocked in report-only planning."
+    },
+    {
+      "id": "issue18-capability-matrix",
+      "displayName": "Issue 18 capability matrix documentation",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "docs/60-issue18-user-experience-capability-matrix.md",
+      "evidence": "document",
+      "notes": "Documents Issue 18 capability matrix, scope semantics, template metadata, and verification evidence boundaries without close-prep."
+    },
+    {
       "id": "controlled-execution-disk-identity",
       "displayName": "Controlled execution disk identity fixture validation",
       "layer": "pr-fast",

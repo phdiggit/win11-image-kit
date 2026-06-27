@@ -13,6 +13,7 @@
     "allowDefaultAppMutation",
     "allowNetworkDownload",
     "contexts",
+    "capabilityMatrix",
     "plans"
   ],
   "properties": {
@@ -59,6 +60,12 @@
         "$ref": "#/$defs/windowsContext"
       }
     },
+    "capabilityMatrix": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/capability"
+      }
+    },
     "plans": {
       "type": "array",
       "items": {
@@ -75,6 +82,81 @@
         "current-user",
         "offline-image"
       ]
+    },
+    "feature": {
+      "type": "string",
+      "enum": [
+        "default-apps",
+        "start-menu",
+        "taskbar",
+        "app-visibility",
+        "verification"
+      ]
+    },
+    "supportStatus": {
+      "type": "string",
+      "enum": [
+        "planned-supported",
+        "report-only",
+        "manual-or-future",
+        "unsupported",
+        "blocked"
+      ]
+    },
+    "verificationMode": {
+      "type": "string",
+      "enum": [
+        "fixture",
+        "report-only",
+        "manual-checklist",
+        "future-real-verification"
+      ]
+    },
+    "capability": {
+      "type": "object",
+      "required": [
+        "id",
+        "displayVersion",
+        "buildMin",
+        "buildMax",
+        "scope",
+        "feature",
+        "supportStatus",
+        "verificationMode",
+        "mutationAllowed"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "displayVersion": {
+          "type": "string"
+        },
+        "buildMin": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "buildMax": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "scope": {
+          "$ref": "#/$defs/scope"
+        },
+        "feature": {
+          "$ref": "#/$defs/feature"
+        },
+        "supportStatus": {
+          "$ref": "#/$defs/supportStatus"
+        },
+        "verificationMode": {
+          "$ref": "#/$defs/verificationMode"
+        },
+        "mutationAllowed": {
+          "const": false
+        }
+      },
+      "additionalProperties": false
     },
     "windowsContext": {
       "type": "object",

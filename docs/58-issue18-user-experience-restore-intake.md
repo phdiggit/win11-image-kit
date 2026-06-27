@@ -80,4 +80,5 @@ PR Fast CI 运行 `scripts/validate/Test-UserExperienceRestore.ps1` 和 Issue #1
 ## Related Documents
 
 - [Issue #18 User Experience Restore Acceptance](59-issue18-user-experience-restore-acceptance.md)
+- [Issue #18 User Experience Capability Matrix](60-issue18-user-experience-capability-matrix.md)
 - [Codex 工作流](codex-workflow.md)

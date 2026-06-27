@@ -10,6 +10,7 @@ Describe "User experience restore schema" {
         $reportSchema = Get-Content -LiteralPath (Join-Path $script:RepoRoot "schemas\user-experience-restore-report.schema.json") -Raw -Encoding UTF8 | ConvertFrom-Json
 
         Assert-KitEqual $manifest.defaultMode "plan-only"
+        Assert-KitEqual (@($manifest.capabilityMatrix).Count -gt 0) $true
         Assert-KitEqual $manifest.allowProfileMutation $false
         Assert-KitEqual $manifest.allowRegistryMutation $false
         Assert-KitEqual $manifest.allowDefaultAppMutation $false
@@ -17,5 +18,7 @@ Describe "User experience restore schema" {
         Assert-KitEqual $schema.'$defs'.plan.additionalProperties $false
         Assert-KitEqual $reportSchema.additionalProperties $false
         Assert-KitEqual $reportSchema.'$defs'.summary.additionalProperties $false
+        Assert-KitEqual ($reportSchema.required -contains "capabilityMatrix") $true
+        Assert-KitEqual ($reportSchema.required -contains "verification") $true
     }
 }

@@ -5,6 +5,10 @@ param(
     [string]$DefaultAppsPath = "tests/fixtures/user-experience/default-apps/baseline.json",
     [string]$StartMenuPath = "tests/fixtures/user-experience/start-menu/baseline.json",
     [string]$TaskbarPath = "tests/fixtures/user-experience/taskbar/baseline.json",
+    [string]$CapabilityMatrixPath = "tests/fixtures/user-experience/capability-matrix/windows-11-24h2-supported.json",
+    [string]$TemplateMetadataPath = "tests/fixtures/user-experience/template-metadata/default-apps-24h2.json",
+    [string]$VerificationPlanPath = "tests/fixtures/user-experience/verification/default-apps-planned.json",
+    [string]$ScopeSemanticsPath = "tests/fixtures/user-experience/scope-semantics/default-user-vs-current-user.json",
     [ValidateSet("plan-only", "report-only", "fixture")]
     [string]$Mode = "plan-only"
 )
@@ -32,6 +36,10 @@ $report = New-KitUserExperienceRestoreReport `
     -DefaultApps (Read-KitUserExperiencePlanJson -Path $DefaultAppsPath) `
     -StartMenu (Read-KitUserExperiencePlanJson -Path $StartMenuPath) `
     -Taskbar (Read-KitUserExperiencePlanJson -Path $TaskbarPath) `
+    -CapabilityMatrix (Read-KitUserExperiencePlanJson -Path $CapabilityMatrixPath) `
+    -TemplateMetadata (Read-KitUserExperiencePlanJson -Path $TemplateMetadataPath) `
+    -ScopeSemantics (Read-KitUserExperiencePlanJson -Path $ScopeSemanticsPath) `
+    -VerificationPlan (Read-KitUserExperiencePlanJson -Path $VerificationPlanPath) `
     -WhatIf
 
 Write-Host "Plan only: no user experience mutation executed"
@@ -40,4 +48,7 @@ Write-Host "Registry mutation: false"
 Write-Host "Profile mutation: false"
 Write-Host "Default app mutation: false"
 Write-Host "Start menu mutation: false"
+Write-Host "Taskbar mutation: false"
+Write-Host "Command exit code sufficient: false"
+Write-Host "User configuration confirmed: false"
 $report | ConvertTo-Json -Depth 12
