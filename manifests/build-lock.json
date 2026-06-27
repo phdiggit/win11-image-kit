@@ -296,14 +296,14 @@
                         "path":  ".github/workflows/ci.yml",
                         "category":  "workflow",
                         "required":  true,
-                        "hash":  "0efaf4dd518ce304450e3253bd150906f98ec175e1a7afb71732a2f7c751a533",
+                        "hash":  "08c5ab696da7bf8b376ef7479bda38ad30aaa16b1ab0abe1e306b72fa87bb2fa",
                         "reason":  "PR Fast CI runs Issue 18 UX restore validation and Pester coverage."
                     },
                     {
                         "path":  "README.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "2fca8409f56a7ac6f5c046ba63296603ea5152f08eeb0f3182979ec56ecc82b8",
+                        "hash":  "23df5b0f0e48c1e29ac226a774968e17095258e2de563a987262492a843c6814",
                         "reason":  "README links Issue 18 UX restore intake and validation entrypoint."
                     },
                     {
@@ -394,7 +394,7 @@
                         "path":  "manifests/quality-gates.json",
                         "category":  "manifest",
                         "required":  true,
-                        "hash":  "f80715a58a7a570817047bf0c255a93686c641725608e7c0929dad67635cd92f",
+                        "hash":  "64ceb8c56fd57e1a568402d1d46d4a60b3cd9c4128e65e080237025149a56e40",
                         "reason":  "Quality Gates include Issue 18 UX restore plan and acceptance gates."
                     },
                     {
@@ -660,14 +660,14 @@
                         "path":  "manifests/customization-scope.json",
                         "category":  "manifest",
                         "required":  true,
-                        "hash":  "76c3712ec99f6dd014ce4d18280d1b74f707888ad6e3b83ab1a73c86cbe97757",
+                        "hash":  "c2013aee5b8335d33c59b273ee80a06bfce7364f4e855959e8b7bc6f259a9104",
                         "reason":  "Customization scope declares layered configuration manifest and default stack while preserving pathsManifest."
                     },
                     {
                         "path":  "schemas/customization-scope.schema.json",
                         "category":  "schema",
                         "required":  true,
-                        "hash":  "67f454eb5c558c39042a4fefd7eaa5daa533e8be26b996019e4465c495731b5c",
+                        "hash":  "3f0f9ac7de6bd991a01671363fa3a2a04766ca0866cb7b1d5088d39154c6bf60",
                         "reason":  "Customization scope schema allows layered configuration reference fields."
                     },
                     {
@@ -1682,7 +1682,7 @@
                         "path":  "docs/59-issue18-user-experience-restore-acceptance.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "bebc39f4b4310974890d0418b67755fb07a89a1d379a8e99bba24d8970c16b1d",
+                        "hash":  "3194784693d63a2ce8b885177d238d3f46855dc635904fd1ae39cb18e811f000",
                         "reason":  "Issue 18 acceptance scaffold records report-only fixture coverage and safety boundaries."
                     },
                     {
@@ -1773,21 +1773,21 @@
                         "path":  "docs/58-issue18-user-experience-restore-intake.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "0b05d64f6cddf2fd406e4b44ca76411843f72887ccbfe6c9c08ca33e4c699347",
+                        "hash":  "100390b001acaf92d717b50313a3dfee6f121c0643f6a02321727bf591487c90",
                         "reason":  "Issue 18 intake records real Issue and Roadmap scope for UX restore planning."
                     },
                     {
                         "path":  "tests/pester/Issue18UserExperienceRestoreAcceptance.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "71a55eb1831960535a8139d03440e848800a0f1fe9540647fa53e5bba036cd8b",
+                        "hash":  "bec03ca4e5584e7ece64e2fb25e3603a32d55f0e48fa4037634161076b92be31",
                         "reason":  "Issue 18 acceptance tests guard QG and Build Lock wiring."
                     },
                     {
                         "path":  "tests/pester/UserExperienceRestoreSchema.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "0da754d37cf1deb34c4ab833238e244f1db36017630b1f0970f1af2e85f33891",
+                        "hash":  "0ddd2519731a1221bc1027d6090455bb7b6e671685216d56eef5276770cd7c62",
                         "reason":  "Issue 18 schema tests guard closed manifest and report schemas."
                     },
                     {
@@ -1843,7 +1843,7 @@
                         "path":  "tests/pester/Issue18UserExperienceRestore.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "013c1fdd14adee306c4e894a98c1201ef41969e35115b1f727bbad127e806386",
+                        "hash":  "94423b4e89843c0448b501a0f8138fd1621b0973a299b2587d726c3d2a5e2d6a",
                         "reason":  "Issue 18 intake tests guard source recording and no close-prep docs."
                     },
                     {
@@ -1892,28 +1892,28 @@
                         "path":  "tests/pester/UserExperienceRestoreSafety.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "6376551b88079082a3db27d7dd39e151182a48d78a14694a18fb6ca78a406f1f",
+                        "hash":  "5c8f782a153e51f5f75ed9266bf01f83dc2665133c57733cc6b219470589abbf",
                         "reason":  "Issue 18 safety tests guard manifest switches and dangerous command absence."
                     },
                     {
                         "path":  "docs/04-部署后恢复.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "ce3bf27315d5e9c85956235f74ffd3fbf3632642e0a37432e09d19e7e3528e3b",
+                        "hash":  "37a69935f17cf075538ae63aeffee86c74d76069ee818a553b3061e1e0b63394",
                         "reason":  "Issue 18 UX restore documentation records report-only capability and safety boundaries."
                     },
                     {
                         "path":  "docs/06-已知问题与决策.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "b7690051bcfa858811f4042b4d30de738078906628a749cb6e313756eea6a688",
+                        "hash":  "f81921ace0b181b9bd78dfe221bac17fa826b3a1cce2411ba7af64e72a1d264c",
                         "reason":  "Issue 18 UX restore documentation records report-only capability and safety boundaries."
                     },
                     {
                         "path":  "docs/60-issue18-user-experience-capability-matrix.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "96c4a7c8a70583fd5e5439cd62bf186332ae166ed26934fb20d57fc18d76ce14",
+                        "hash":  "845a4a0ec4754e499377dace5b1c11809171ba4918dbd135305eca454f176c36",
                         "reason":  "Issue 18 capability matrix runbook documents version-aware UX restore boundaries and verification evidence."
                     },
                     {
@@ -1927,7 +1927,7 @@
                         "path":  "schemas/user-experience-template-metadata.schema.json",
                         "category":  "schema",
                         "required":  true,
-                        "hash":  "1b38097191c8dfd624ba917986866216a82bf485e62960054184cfbda1c0945b",
+                        "hash":  "4c575f77f840784ceca0fe063dd4f9a3d478bfbdc05087a45d0b110a0a3d79c6",
                         "reason":  "Issue 18 template metadata schema constrains source build, scope, and target app evidence."
                     },
                     {
@@ -2095,7 +2095,7 @@
                         "path":  "tests/pester/Issue18UserExperienceCapabilityMatrix.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "f99917d7a4244318fb512b99e5b727d0717058254e694b8516f3829273501b00",
+                        "hash":  "a72923cc8f59b394997ac7dbd4010feaeaebc6fd064f834fd377af3a18de3206",
                         "reason":  "Issue 18 capability matrix tests guard support status and build awareness."
                     },
                     {
@@ -2130,225 +2130,253 @@
                         "path":  "configs/default-apps/default-apps.metadata.json",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "a1586a065d0e81c0cc792309de1455e17e6c2f53c698dd1c01fcef5eb245a125",
+                        "hash":  "a6847410ed2fa499235a9d00a2a6764bd9e33be87ace931d702ed93b3ebb2d10",
                         "reason":  "Issue 18 default app template metadata records source Windows, scope, and target app contract without real import."
                     },
                     {
                         "path":  "configs/default-apps/README.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "3895145e5067d3c5e3c6692c5f23a21fec8cfbd823dcdca569ffd0a40188bcac",
+                        "hash":  "7ed47d754632bdd52e48f8502512adc115740b89717c3a976958aedb74f8ddb7",
                         "reason":  "Issue 18 default app template metadata records source Windows, scope, and target app contract without real import."
                     },
                     {
                         "path":  "configs/start-menu/README.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "e2bfd8ba68597f1864b4e520c79fdef705d56c14faa627918d3bbf5c52c05d73",
+                        "hash":  "fa947532bf5101b0d5ee5fa191278cfc32ac5ac142c70f43ef6255af4bed4771",
                         "reason":  "Issue 18 Start menu template metadata records source Windows, scope, and target app contract without profile writes."
                     },
                     {
                         "path":  "configs/start-menu/start-menu.metadata.json",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "af8a70d2db52dd299ce2b5d2e44a04eb583a3c3aae1a7c798d39e73f32701dde",
+                        "hash":  "83969951546bc3913d4fc2c2828ca2417726593a99c107d92f31c4b800b99c92",
                         "reason":  "Issue 18 Start menu template metadata records source Windows, scope, and target app contract without profile writes."
                     },
                     {
                         "path":  "docs/61-issue18-restore-handler-integration.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "d76a363913013092daca66925e6ba2bb290990dabcf568cd8f0dbb523124d1c2",
+                        "hash":  "5b4ec3fdc0752718ba17fc0232bcaef6def55452a6f0ae0aacff23cb709056a9",
                         "reason":  "Issue 18 restore handler integration runbook documents report-only handler wiring and non-goals."
                     },
                     {
                         "path":  "schemas/user-experience-handler-plan.schema.json",
                         "category":  "schema",
                         "required":  true,
-                        "hash":  "a2010728ccf7059a87beef1de2ccfab932f035f6ed6406ff708391ea35f8759d",
+                        "hash":  "8ac901d407789eac5192809d3dcc8adc74dd3a07c9467109a1e9d97581ea4ad8",
                         "reason":  "Issue 18 handler plan schema constrains report-only handler adapter fixtures."
                     },
                     {
                         "path":  "scripts/common/ConvertTo-KitDefaultAppAssociationPlan.ps1",
                         "category":  "script",
                         "required":  true,
-                        "hash":  "6352d1d129737733f004dddb40399f059f3f9bd66e04ac818a0accc27c03984b",
+                        "hash":  "4e13431afdb314924b2e0700058abeb6495593fe047f280a3d4cf689f9640f9e",
                         "reason":  "Issue 18 handler adapter helper keeps UX restore planned, manual, or blocked without execution."
                     },
                     {
                         "path":  "scripts/common/ConvertTo-KitStartMenuLayoutPlan.ps1",
                         "category":  "script",
                         "required":  true,
-                        "hash":  "6352d1d129737733f004dddb40399f059f3f9bd66e04ac818a0accc27c03984b",
+                        "hash":  "4e13431afdb314924b2e0700058abeb6495593fe047f280a3d4cf689f9640f9e",
                         "reason":  "Issue 18 handler adapter helper keeps UX restore planned, manual, or blocked without execution."
                     },
                     {
                         "path":  "scripts/common/ConvertTo-KitTaskbarPlan.ps1",
                         "category":  "script",
                         "required":  true,
-                        "hash":  "6352d1d129737733f004dddb40399f059f3f9bd66e04ac818a0accc27c03984b",
+                        "hash":  "4e13431afdb314924b2e0700058abeb6495593fe047f280a3d4cf689f9640f9e",
                         "reason":  "Issue 18 handler adapter helper keeps UX restore planned, manual, or blocked without execution."
                     },
                     {
                         "path":  "scripts/common/ConvertTo-KitUserExperienceHandlerPlan.ps1",
                         "category":  "script",
                         "required":  true,
-                        "hash":  "edd28676d3f101d58ba09b68463188edc637095c93602c852213d214df3d1c87",
+                        "hash":  "95ac957861592a9ce265571bd70e7080b19d84c9bc0f2dfc1e7bbfa24a2fa2a3",
                         "reason":  "Issue 18 handler adapter helper keeps UX restore planned, manual, or blocked without execution."
                     },
                     {
                         "path":  "scripts/common/New-KitUserExperienceHandlerReport.ps1",
                         "category":  "script",
                         "required":  true,
-                        "hash":  "32c3c6d0412e3c55aa3e33ce10ddd9f92beb1add667e74c68450096eb5254cb1",
+                        "hash":  "693ab4ea99c25b52499d92e1ad4f9550cddec176cf91ce69ca28020c16f5035a",
                         "reason":  "Issue 18 handler adapter helper keeps UX restore planned, manual, or blocked without execution."
                     },
                     {
                         "path":  "scripts/common/New-KitUserExperienceManualChecklist.ps1",
                         "category":  "script",
                         "required":  true,
-                        "hash":  "9520a9a56340c09bee8245d21cd9e1230ce8b69610ed7de89d11e8a2c885dfc6",
+                        "hash":  "43d6be3da3df5613daab924e0e128f912b14dac948043e9035a7a5cf5ed9ed37",
                         "reason":  "Issue 18 handler adapter helper keeps UX restore planned, manual, or blocked without execution."
                     },
                     {
                         "path":  "scripts/postdeploy/Restore-UserExperience.ps1",
                         "category":  "script",
                         "required":  true,
-                        "hash":  "5fdc56e3e44f9be74c41974490a15d70933d3a0dff0484908c69ebb23a188307",
+                        "hash":  "cf3f444d2b295ccd246a1ca8b70ff974c9212f3432ee4f1ae75393119cebdb73",
                         "reason":  "Issue 18 Restore-UserExperience entrypoint emits scope-aware report-only handler output."
                     },
                     {
                         "path":  "tests/fixtures/user-experience/handlers/default-apps/current-user-manual.json",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "e212660100ae4d097a468e977f0356421511165e532472f5e7253c6c026931c4",
+                        "hash":  "58ee0160282a46cf9ccb303d749d3de5e6028c96aecead49fb8ebe623147a816",
                         "reason":  "Issue 18 handler fixture covers planned, manual, blocked, scope, and requested-apply cases."
                     },
                     {
                         "path":  "tests/fixtures/user-experience/handlers/default-apps/default-user-planned.json",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "86beaae5556f234185772107f781bc6a70f56966fc2485eb1c0c43c7260e8f9d",
+                        "hash":  "90907034799b960d445d1a720e128ab9cfbc62df78d7d5fd86c1eecc148fe742",
                         "reason":  "Issue 18 handler fixture covers planned, manual, blocked, scope, and requested-apply cases."
                     },
                     {
                         "path":  "tests/fixtures/user-experience/handlers/default-apps/missing-required-progid.json",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "8cf457c45e2b0b9ddc9fd227261ea8a4a0ef94525ec1a7846d06f8263e3f2862",
+                        "hash":  "fe3f4282b9f1fb9cfaf276ae005f8d642bcab95b2ae0ea10ebafb200b8a804b3",
                         "reason":  "Issue 18 handler fixture covers planned, manual, blocked, scope, and requested-apply cases."
                     },
                     {
                         "path":  "tests/fixtures/user-experience/handlers/default-apps/offline-image-planned.json",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "21a9128e7530aa9dd9cd0788f109f42128d67a1707b2fe1fb053dd80bffc5bfc",
+                        "hash":  "a81cd46e4847ebd2cb148389216a7419990f3e65e755518c0ec64298789d3c13",
                         "reason":  "Issue 18 handler fixture covers planned, manual, blocked, scope, and requested-apply cases."
                     },
                     {
                         "path":  "tests/fixtures/user-experience/handlers/default-apps/requested-apply-blocked.json",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "5d00a86cb3bff7b81589fc5103db8e7177411504f94086833463b129f70b1669",
+                        "hash":  "df9f0d41df80c9553ea8e04c91e4f2a8e1395d2042b4e7f6fa23f212bd5fe6e1",
                         "reason":  "Issue 18 handler fixture covers planned, manual, blocked, scope, and requested-apply cases."
                     },
                     {
                         "path":  "tests/fixtures/user-experience/handlers/default-apps/scope-mismatch.json",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "8fb65397456849e245d1baf8ac3e30d108bb66e6bd16716283de059c745bb175",
+                        "hash":  "1cf6a9a57246418e523095b063b4ca74287d1232c363a7ef87d42e1525e387ac",
                         "reason":  "Issue 18 handler fixture covers planned, manual, blocked, scope, and requested-apply cases."
                     },
                     {
                         "path":  "tests/fixtures/user-experience/handlers/start-menu/current-user-manual-checklist.json",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "18732716cd018693cba4371a168a21df217a9cf7966030823b170ee9ed54521a",
+                        "hash":  "bec93516d4b0a899c6a51049eea21c2d4cf94576e6ec0edfc8b8e41138a8a7b4",
                         "reason":  "Issue 18 handler fixture covers planned, manual, blocked, scope, and requested-apply cases."
                     },
                     {
                         "path":  "tests/fixtures/user-experience/handlers/start-menu/default-user-layout-planned.json",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "cdebb626a3a1769a2578926f10bd9f3d350adb6eb310314a75b115c9103a4560",
+                        "hash":  "8452aff5415838794100c033853c01dcf2bf0e7e86a2450b11d79bc8db6de38c",
                         "reason":  "Issue 18 handler fixture covers planned, manual, blocked, scope, and requested-apply cases."
                     },
                     {
                         "path":  "tests/fixtures/user-experience/handlers/start-menu/profile-write-blocked.json",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "ff6ed5d56f084e2190e0d819a87fc8b51fb76673f76d51cf4238dbdb667cb006",
+                        "hash":  "36be210d208dd94267b7b6317902fd832a12123ba8641e28eb1c85a3e2b3c304",
                         "reason":  "Issue 18 handler fixture covers planned, manual, blocked, scope, and requested-apply cases."
                     },
                     {
                         "path":  "tests/fixtures/user-experience/handlers/start-menu/requested-apply-blocked.json",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "61244726778bc336aa1a4e81242747dea89bef5a74cbaa62e94ed4be84848400",
+                        "hash":  "a18fe3ccf1364b7dccab49c09a768f0f8086916cf68147b08b83ad0a2e9c0d5f",
                         "reason":  "Issue 18 handler fixture covers planned, manual, blocked, scope, and requested-apply cases."
                     },
                     {
                         "path":  "tests/fixtures/user-experience/handlers/taskbar/current-user-manual-checklist.json",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "5cc990e6ba106fbb0ccdf5d7ba2ad39fee1bb1bd9e95b34b3dfdcbe207de1ab2",
+                        "hash":  "1b597c8fc0e45e944e37796a45fe6e86ff46e1c66ea25abadb683439062cc365",
                         "reason":  "Issue 18 handler fixture covers planned, manual, blocked, scope, and requested-apply cases."
                     },
                     {
                         "path":  "tests/fixtures/user-experience/handlers/taskbar/registry-write-blocked.json",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "8a6448b9f736ef4f6e7c88371da100cd933ff39f71035492b0f66adf583214e4",
+                        "hash":  "7dddaf7d7c5cf429b7c3f1c95ffc9e04e7505aac527964f6ad91d0b8717e5d3a",
                         "reason":  "Issue 18 handler fixture covers planned, manual, blocked, scope, and requested-apply cases."
                     },
                     {
                         "path":  "tests/fixtures/user-experience/handlers/taskbar/requested-apply-blocked.json",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "6817101ae6ff7e4536fef365b51e42ea551ddb537cad72c23173d96ec91b308e",
+                        "hash":  "2d0692c76d03f475ff985f277182f592d025f27e22c92f7b14610de487ed3ec0",
                         "reason":  "Issue 18 handler fixture covers planned, manual, blocked, scope, and requested-apply cases."
                     },
                     {
                         "path":  "tests/pester/Issue18RestoreHandlerIntegration.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "12ff0b2e921471958216ea9566c28711b4664a76578f2310f992e21850be089c",
+                        "hash":  "d323060f75315225f77b1672216203b506a0ec35420c830609920c8d918f0853",
                         "reason":  "Issue 18 handler Pester tests guard report-only adapters and safety boundaries."
                     },
                     {
                         "path":  "tests/pester/UserExperienceDefaultAppHandler.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "781552ee6e54de69db54ce9ef8fca081094b3d4c15dbfc2e284087f2c82f93ef",
+                        "hash":  "89227e6156f0844893421ef2ba5fc71bdb27790001996a3e6289c5e5e0a6dccb",
                         "reason":  "Issue 18 handler Pester tests guard report-only adapters and safety boundaries."
                     },
                     {
                         "path":  "tests/pester/UserExperienceManualChecklist.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "0651411a9e1fb2015ed069c777fabe6e69d563f990690ffa6d89f9b30882bf13",
+                        "hash":  "c9c9873ef3ec5e58518d6bf77d198d223b4945efae5fde6687ce6ae211725e4d",
                         "reason":  "Issue 18 handler Pester tests guard report-only adapters and safety boundaries."
                     },
                     {
                         "path":  "tests/pester/UserExperienceRestoreHandler.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "ba17d4db71fdf9901e37cc5f030325a7ef93ae0f8c0acc5aad1037d1856d68ec",
+                        "hash":  "76f4ebf67afe6d2afca514b313741221daf7564503a5ab88b9c5356453165d6b",
                         "reason":  "Issue 18 handler Pester tests guard report-only adapters and safety boundaries."
                     },
                     {
                         "path":  "tests/pester/UserExperienceStartMenuHandler.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "434944fa4e4856b7ce7755311ace66586d73b2c5aafc4ab8df121c580720643d",
+                        "hash":  "f2eda3fd2d317d416c8fed96a96d998c8826e2a9ccbdf3613e15ed9c676087d3",
                         "reason":  "Issue 18 handler Pester tests guard report-only adapters and safety boundaries."
                     },
                     {
                         "path":  "tests/pester/UserExperienceTaskbarHandler.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "e73276087ef152df6de2bb5c8f37981c44bcb94bb6fbe8aa82b256b7d8e1eae7",
+                        "hash":  "266bfcb11aebc55e0f6720d93056812c778749da1ab54ecb600a8c5234b7bde3",
                         "reason":  "Issue 18 handler Pester tests guard report-only adapters and safety boundaries."
+                    },
+                    {
+                        "path":  "docs/62-issue18-close-preparation.md",
+                        "category":  "doc",
+                        "required":  true,
+                        "hash":  "6f7714f6209f7f03d98cdc6806977a987e2aaa2e06cf4ff19468b2432a0acbe2",
+                        "reason":  "Issue 18 acceptance consolidation and close-prep scaffold input."
+                    },
+                    {
+                        "path":  "docs/63-issue18-main-validation-evidence.md",
+                        "category":  "doc",
+                        "required":  true,
+                        "hash":  "54d35571b496d37289affbea7f86d93de49e1a4db37b78c79c856f5dd932ccc5",
+                        "reason":  "Issue 18 acceptance consolidation and close-prep scaffold input."
+                    },
+                    {
+                        "path":  "tests/pester/Issue18ClosePrep.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "d6cc2910dfe77ef5e32a6f1bc33ed6eaff9cec35c6f4c4013ba47adac19556d7",
+                        "reason":  "Issue 18 acceptance consolidation and close-prep scaffold input."
+                    },
+                    {
+                        "path":  "tests/pester/Issue18MainValidationEvidence.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "773946dd499a9ee03499bf87ffed65b3415254534101321f1f065780be51e22b",
+                        "reason":  "Issue 18 acceptance consolidation and close-prep scaffold input."
                     }
                 ],
     "watchGlobs":  [

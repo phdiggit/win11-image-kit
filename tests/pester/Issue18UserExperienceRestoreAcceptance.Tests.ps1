@@ -7,9 +7,11 @@ Describe "Issue 18 user experience restore acceptance scaffold" {
     It "keeps acceptance in the current report-only stage" {
         $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\59-issue18-user-experience-restore-acceptance.md") -Raw -Encoding UTF8
 
-        Assert-KitMatch $doc 'Status: `in-acceptance`'
+        Assert-KitMatch $doc 'Status: `accepted-pending-main-validation`'
         Assert-KitMatch $doc "PR Fast CI is not main/workflow evidence"
         Assert-KitMatch $doc "Fixture/report-only validation is not real UX restore evidence"
+        Assert-KitMatch $doc "handler reports are not real UX restore evidence"
+        Assert-KitMatch $doc "manual checklist rows are not success evidence"
         Assert-KitMatch $doc "does not confirm that user configuration has taken effect"
     }
 
@@ -29,7 +31,9 @@ Describe "Issue 18 user experience restore acceptance scaffold" {
             "user-experience-template-metadata",
             "user-experience-scope-semantics",
             "user-experience-verification-plan",
-            "issue18-capability-matrix"
+            "issue18-capability-matrix",
+            "issue18-close-prep",
+            "issue18-main-evidence-scaffold"
         )) {
             Assert-KitEqual ($gateIds -contains $id) $true
         }
@@ -38,8 +42,13 @@ Describe "Issue 18 user experience restore acceptance scaffold" {
             "docs/58-issue18-user-experience-restore-intake.md",
             "docs/59-issue18-user-experience-restore-acceptance.md",
             "docs/60-issue18-user-experience-capability-matrix.md",
+            "docs/61-issue18-restore-handler-integration.md",
+            "docs/62-issue18-close-preparation.md",
+            "docs/63-issue18-main-validation-evidence.md",
             "manifests/user-experience-restore.json",
             "scripts/validate/Test-UserExperienceRestore.ps1",
+            "tests/pester/Issue18ClosePrep.Tests.ps1",
+            "tests/pester/Issue18MainValidationEvidence.Tests.ps1",
             "tests/pester/UserExperienceCapabilityMatrix.Tests.ps1",
             "tests/pester/UserExperienceVerificationPlan.Tests.ps1"
         )) {

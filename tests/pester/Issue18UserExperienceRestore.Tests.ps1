@@ -14,11 +14,13 @@ Describe "Issue 18 user experience restore intake" {
         Assert-KitMatch $doc "report-only"
     }
 
-    It "does not add Issue 18 close-prep, main-evidence, or completion summary docs" {
+    It "does not add Issue 18 completion summary docs" {
         $docs = @(Get-ChildItem -Path (Join-Path $script:RepoRoot "docs") -Filter "*issue18*.md" | ForEach-Object { $_.Name })
 
         Assert-KitEqual ($docs -contains "58-issue18-user-experience-restore-intake.md") $true
         Assert-KitEqual ($docs -contains "59-issue18-user-experience-restore-acceptance.md") $true
-        Assert-KitEqual (@($docs | Where-Object { $_ -match "close-preparation|main-validation-evidence|completion-summary" }).Count) 0
+        Assert-KitEqual ($docs -contains "62-issue18-close-preparation.md") $true
+        Assert-KitEqual ($docs -contains "63-issue18-main-validation-evidence.md") $true
+        Assert-KitEqual (@($docs | Where-Object { $_ -match "completion-summary" }).Count) 0
     }
 }

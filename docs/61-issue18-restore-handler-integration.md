@@ -1,6 +1,6 @@
 # Issue #18 Restore Handler Integration
 
-Status: `in-acceptance`
+Status: `accepted-pending-main-validation`
 
 ## Scope
 
@@ -70,8 +70,8 @@ manual checklist 是未来授权验证的待办清单：
 
 ## Current Non-goals
 
-- no Issue #18 close-prep
-- no Issue #18 main-validation-evidence
+- no final ready close-prep
+- no ready main-validation evidence
 - no Issue #18 completion summary
 - no Issue #18 auto-close
 - no registry/profile/default app/Start menu/taskbar mutation
@@ -81,16 +81,19 @@ manual checklist 是未来授权验证的待办清单：
 
 ## Validation
 
-本阶段验收以 fixture、schema、Pester、Quality Gates 和 Build Lock 为主。`Restore-UserExperience.ps1 -WhatIf -ReportPath ...` 只能证明 handler report 结构和安全边界，不能证明真实用户体验已恢复。
+本阶段验收以 fixture、schema、Pester、Quality Gates 和 Build Lock 为主。`Restore-UserExperience.ps1 -WhatIf -ReportPath ...` 只能证明 handler report 结构和安全边界，不能证明真实用户体验已恢复。PR Fast CI 不是 main/workflow evidence，handler report 不是 real UX restore evidence，manual checklist 不是 success evidence。
 
 ## Remaining Work
 
 - 扩展更多真实模板 fixture 与缺失应用矩阵。
 - 设计未来真实执行授权与 evidence collection 分支。
-- 在单独任务中准备 Issue #18 close-prep candidate。
+- 在单独任务中回填 post-PR main/workflow validation evidence。
+- 将未来真实 UX restore execution 拆到明确授权的受控任务。
 
 ## Related Documents
 
 - [Issue #18 intake](58-issue18-user-experience-restore-intake.md)
 - [Issue #18 acceptance](59-issue18-user-experience-restore-acceptance.md)
 - [Issue #18 capability matrix](60-issue18-user-experience-capability-matrix.md)
+- [Issue #18 close preparation](62-issue18-close-preparation.md)
+- [Issue #18 main validation evidence](63-issue18-main-validation-evidence.md)
