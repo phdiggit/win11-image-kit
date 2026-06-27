@@ -4,27 +4,32 @@ Describe "Issue 17 controlled execution authorization acceptance" {
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
     }
 
-    It "keeps Issue 17 documents in staged acceptance and not close-ready" {
+    It "keeps Issue 17 acceptance documents accepted but pending main validation" {
         $doc52 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\52-issue17-controlled-execution-intake.md") -Raw -Encoding UTF8
         $doc53 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\53-issue17-controlled-execution-acceptance.md") -Raw -Encoding UTF8
         $doc54 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\54-issue17-controlled-execution-safety-hardening.md") -Raw -Encoding UTF8
         $doc55 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\55-issue17-controlled-execution-authorization.md") -Raw -Encoding UTF8
 
         Assert-KitMatch $doc52 'Status: `in-progress`'
-        Assert-KitMatch $doc53 'Status: `in-acceptance`'
-        Assert-KitMatch $doc54 'Status: `in-acceptance`'
-        Assert-KitMatch $doc55 'Status: `in-acceptance`'
+        Assert-KitMatch $doc53 'Status: `accepted-pending-main-validation`'
+        Assert-KitMatch $doc54 'Status: `accepted-pending-main-validation`'
+        Assert-KitMatch $doc55 'Status: `accepted-pending-main-validation`'
         Assert-KitNotMatch $doc55 "ready-for-manual-closure"
     }
 
-    It "does not create Issue 17 closure or main evidence documents" {
+    It "creates only candidate close-prep and pending main evidence documents" {
+        $closePrep = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\56-issue17-close-preparation.md") -Raw -Encoding UTF8
+        $mainEvidence = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\57-issue17-main-validation-evidence.md") -Raw -Encoding UTF8
+
+        Assert-KitMatch $closePrep 'Status: `ready-for-manual-closure-candidate`'
+        Assert-KitMatch $mainEvidence 'Status: `pending-main-validation`'
+
         foreach ($path in @(
             "docs\55-issue17-close-preparation.md",
             "docs\55-issue17-main-validation-evidence.md",
             "docs\55-issue17-completion-summary.md",
-            "docs\56-issue17-close-preparation.md",
-            "docs\56-issue17-main-validation-evidence.md",
-            "docs\56-issue17-completion-summary.md"
+            "docs\56-issue17-completion-summary.md",
+            "docs\57-issue17-completion-summary.md"
         )) {
             if (Test-Path -LiteralPath (Join-Path $script:RepoRoot $path)) {
                 throw "Issue 17 closure document should not exist: $path"

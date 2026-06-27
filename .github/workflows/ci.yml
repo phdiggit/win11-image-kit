@@ -216,6 +216,8 @@ jobs:
               "tests/pester/ControlledExecutionNativeSimulation.Tests.ps1",
               "tests/pester/WinPEControlledExecutionPlan.Tests.ps1",
               "tests/pester/Issue17ControlledExecutionAuthorization.Tests.ps1",
+              "tests/pester/Issue17ClosePrep.Tests.ps1",
+              "tests/pester/Issue17MainValidationEvidence.Tests.ps1",
               "tests/pester/Issue11ClosePrep.Tests.ps1",
               "tests/pester/Issue11MainValidationEvidence.Tests.ps1",
               "tests/pester/UserExperienceStateVerification.Tests.ps1",

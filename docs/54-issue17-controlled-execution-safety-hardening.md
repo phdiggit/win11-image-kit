@@ -1,6 +1,6 @@
 # Issue #17 Controlled Execution Safety Hardening
 
-Status: `in-acceptance`
+Status: `accepted-pending-main-validation`
 
 ## Scope
 
@@ -87,7 +87,7 @@ The report summary now includes:
 
 ## CI / Quality Gates / Build Lock
 
-PR Fast CI keeps running controlled execution validation and now includes the safety hardening Pester files.
+PR Fast CI keeps running controlled execution validation and includes the safety hardening Pester files. It is not main/workflow evidence and is not real lifecycle evidence.
 
 Quality Gates add fixture-only gates for disk identity, confirmation token, WIM planning, WinRE planning, and native command envelopes.
 
@@ -100,7 +100,8 @@ Build Lock covers this document, schemas, scripts, fixtures, tests, CI, Quality 
 - No real build, capture, deploy, WinPE build, or boot media creation.
 - No real boot/recovery tooling execution.
 - No registry, profile, hive, service, AppX, Defender, Junction, install, network, or signing action.
-- No Issue #17 close-prep, main-evidence, or completion summary.
+- Issue #17 close-prep is candidate-only in `docs/56`; main evidence remains pending in `docs/57`.
+- No Issue #17 completion summary.
 - No automatic Issue #17 closure.
 - No Issue #6-#16 close-prep, main-evidence, or completion summary edits.
 
@@ -109,10 +110,13 @@ Build Lock covers this document, schemas, scripts, fixtures, tests, CI, Quality 
 - Expand the execution-set matrix only with more fixture or plan-only stages.
 - Design the later human authorization flow for any real execution stage.
 - Keep true execution behind a later manual safety gate.
-- Prepare Issue #17 close-prep only when a later task explicitly reaches that stage.
+- Backfill main/workflow validation evidence only in a later task.
+- Keep true execution behind a separate controlled task with explicit human authorization.
 
 ## Related Documents
 
 - [Issue #17 Controlled Execution Intake](52-issue17-controlled-execution-intake.md)
 - [Issue #17 Controlled Execution Acceptance](53-issue17-controlled-execution-acceptance.md)
 - [Issue #17 Controlled Execution Authorization and Simulation](55-issue17-controlled-execution-authorization.md)
+- [Issue #17 Close Preparation](56-issue17-close-preparation.md)
+- [Issue #17 Main Validation Evidence](57-issue17-main-validation-evidence.md)
