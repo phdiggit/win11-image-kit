@@ -104,6 +104,12 @@ jobs:
           $ErrorActionPreference = "Stop"
           & .\scripts\validate\Test-FutureTrueUxRestoreAuthorizationReview.ps1
 
+      - name: Run future UX restore mock review drill validation with Windows PowerShell
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+          & .\scripts\validate\Test-FutureTrueUxRestoreMockReviewDrill.ps1
+
       - name: Run effective configuration validation with Windows PowerShell
         shell: powershell
         run: |
@@ -284,6 +290,10 @@ jobs:
               "tests/pester/FutureTrueUxRestoreScopeDryRunValidation.Tests.ps1",
               "tests/pester/FutureTrueUxRestoreExecuteGate.Tests.ps1",
               "tests/pester/FutureTrueUxRestoreAuthorizationReview.Tests.ps1",
+              "tests/pester/FutureTrueUxRestoreMockReviewDrill.Tests.ps1",
+              "tests/pester/FutureTrueUxRestoreMockDecisionLedger.Tests.ps1",
+              "tests/pester/FutureTrueUxRestoreMockTranscript.Tests.ps1",
+              "tests/pester/FutureTrueUxRestoreMockReviewSafety.Tests.ps1",
               "tests/pester/FutureTrueUxRestoreEvidencePacket.Tests.ps1",
               "tests/pester/FutureTrueUxRestoreAuthorizationStateMachine.Tests.ps1",
               "tests/pester/FutureTrueUxRestoreReviewSafety.Tests.ps1",
@@ -392,6 +402,12 @@ jobs:
           $ErrorActionPreference = "Stop"
           & .\scripts\validate\Test-FutureTrueUxRestoreAuthorizationReview.ps1
 
+      - name: Run future UX restore mock review drill validation with Windows PowerShell
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+          & .\scripts\validate\Test-FutureTrueUxRestoreMockReviewDrill.ps1
+
       - name: Run PSScriptAnalyzer with Windows PowerShell
         shell: powershell
         run: |
@@ -482,6 +498,12 @@ jobs:
         run: |
           $ErrorActionPreference = "Stop"
           & .\scripts\validate\Test-FutureTrueUxRestoreAuthorizationReview.ps1
+
+      - name: Run future UX restore mock review drill validation with PowerShell 7
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          & .\scripts\validate\Test-FutureTrueUxRestoreMockReviewDrill.ps1
 
       - name: Run PSScriptAnalyzer with PowerShell 7
         shell: pwsh

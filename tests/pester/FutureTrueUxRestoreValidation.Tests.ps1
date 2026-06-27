@@ -52,7 +52,11 @@ Describe "Future true UX restore validation runner" {
             "docs\76-future-true-ux-restore-unified-authorization-request.md",
             "docs\77-future-true-ux-restore-maintainer-review-checkpoint.md",
             "docs\78-future-true-ux-restore-evidence-packet-contract.md",
-            "docs\79-future-true-ux-restore-authorization-state-machine.md"
+            "docs\79-future-true-ux-restore-authorization-state-machine.md",
+            "docs\80-future-true-ux-restore-mock-review-packet-drill.md",
+            "docs\81-future-true-ux-restore-mock-maintainer-review-transcript.md",
+            "docs\82-future-true-ux-restore-mock-decision-ledger.md",
+            "docs\83-future-true-ux-restore-mock-drill-lessons.md"
         )) {
             Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot $doc)) $true
         }
@@ -71,6 +75,10 @@ Describe "Future true UX restore validation runner" {
         $doc77 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\77-future-true-ux-restore-maintainer-review-checkpoint.md") -Raw -Encoding UTF8
         $doc78 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\78-future-true-ux-restore-evidence-packet-contract.md") -Raw -Encoding UTF8
         $doc79 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\79-future-true-ux-restore-authorization-state-machine.md") -Raw -Encoding UTF8
+        $doc80 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\80-future-true-ux-restore-mock-review-packet-drill.md") -Raw -Encoding UTF8
+        $doc81 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\81-future-true-ux-restore-mock-maintainer-review-transcript.md") -Raw -Encoding UTF8
+        $doc82 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\82-future-true-ux-restore-mock-decision-ledger.md") -Raw -Encoding UTF8
+        $doc83 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\83-future-true-ux-restore-mock-drill-lessons.md") -Raw -Encoding UTF8
         Assert-KitMatch $doc66 'Status:\s*`authorization-intake`'
         Assert-KitMatch $doc67 'Status:\s*`evidence-model-draft`'
         Assert-KitMatch $doc68 'Status:\s*`dry-run-plan`'
@@ -85,6 +93,10 @@ Describe "Future true UX restore validation runner" {
         Assert-KitMatch $doc77 'Status:\s*`review-checkpoint-draft`'
         Assert-KitMatch $doc78 'Status:\s*`evidence-packet-draft`'
         Assert-KitMatch $doc79 'Status:\s*`authorization-state-machine`'
+        Assert-KitMatch $doc80 'Status:\s*`mock-review-drill`'
+        Assert-KitMatch $doc81 'Status:\s*`mock-review-transcript`'
+        Assert-KitMatch $doc82 'Status:\s*`mock-decision-ledger`'
+        Assert-KitMatch $doc83 'Status:\s*`mock-drill-lessons`'
 
         $qualityGates = Get-Content -LiteralPath (Join-Path $script:RepoRoot "manifests\quality-gates.json") -Raw -Encoding UTF8 | ConvertFrom-Json
         $gateIds = @($qualityGates.gates.id)
@@ -95,6 +107,8 @@ Describe "Future true UX restore validation runner" {
         Assert-KitEqual ($gateIds -contains "future-true-ux-scope-guard-matrix") $true
         Assert-KitEqual ($gateIds -contains "future-true-ux-execute-gate") $true
         Assert-KitEqual ($gateIds -contains "future-true-ux-authorization-review") $true
+        Assert-KitEqual ($gateIds -contains "future-true-ux-mock-review-drill") $true
+        Assert-KitEqual ($gateIds -contains "future-true-ux-mock-decision-ledger") $true
         Assert-KitEqual ($gateIds -contains "future-true-ux-evidence-packet") $true
     }
 
@@ -117,7 +131,11 @@ Describe "Future true UX restore validation runner" {
             "docs\76-future-true-ux-restore-unified-authorization-request.md",
             "docs\77-future-true-ux-restore-maintainer-review-checkpoint.md",
             "docs\78-future-true-ux-restore-evidence-packet-contract.md",
-            "docs\79-future-true-ux-restore-authorization-state-machine.md"
+            "docs\79-future-true-ux-restore-authorization-state-machine.md",
+            "docs\80-future-true-ux-restore-mock-review-packet-drill.md",
+            "docs\81-future-true-ux-restore-mock-maintainer-review-transcript.md",
+            "docs\82-future-true-ux-restore-mock-decision-ledger.md",
+            "docs\83-future-true-ux-restore-mock-drill-lessons.md"
         )) {
             $text = Get-Content -LiteralPath (Join-Path $script:RepoRoot $path) -Raw -Encoding UTF8
             Assert-KitNotMatch $text "(?i)\b(fixes|closes|resolves)\s+#18\b"

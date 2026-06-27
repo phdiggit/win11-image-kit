@@ -296,8 +296,8 @@
       "path": ".github/workflows/ci.yml",
       "category": "workflow",
       "required": true,
-      "hash": "db53d18b4c25093f2816a984a519ff664f9b32bfd1fc0fa201b19a91a4a6e4e5",
-      "reason": "PR Fast CI runs future true UX scope dry-run validation and Pester coverage."
+      "hash": "39f74705ef527a3b512d79ae35da5dd9fc3b91ad3a7d6267ff4351963c32f17e",
+      "reason": "PR Fast CI runs future true UX mock review drill validation and Pester coverage."
     },
     {
       "path": "README.md",
@@ -394,8 +394,8 @@
       "path": "manifests/quality-gates.json",
       "category": "manifest",
       "required": true,
-      "hash": "d44b0bd5514979fc073fc4cb3922ed673f0d1bebe4b61a30db88beea9a2ae4af",
-      "reason": "Quality Gates include future true UX scope dry-run validation."
+      "hash": "a182413d6196c1bcea04f89d2e7ad6de86be78bf7cf71161fdfd00557438bc2f",
+      "reason": "Quality Gates include future true UX mock review drill validation."
     },
     {
       "path": "schemas/quality-gates.schema.json",
@@ -2431,22 +2431,22 @@
       "path": "manifests/future-true-ux-restore-authorization.json",
       "category": "manifest",
       "required": true,
-      "hash": "e07b07bafaf1e428f4aa4fabc84871ec3d011db38a128ea2f0186bff7f2f7e8a",
-      "reason": "Future true UX restore authorization manifest declares remaining scope dry-run gates."
+      "hash": "8ffdd67ba1ac7a3e76b4b680e383e2d5529f2ba6b7f933c0a84797c848cf4489",
+      "reason": "Future true UX authorization manifest freezes mock review drill execution flags."
     },
     {
       "path": "schemas/future-true-ux-restore-authorization.schema.json",
       "category": "schema",
       "required": true,
-      "hash": "f0750a44cdf8fe05aa99f94825c96305c5643e54373661eb9cee64db982f5c1d",
-      "reason": "Future true UX restore schemas constrain remaining scope dry-run contracts."
+      "hash": "6ef56b5016852499332829c0946e107d625cc79d330cd3956db1ef2b538e3d2e",
+      "reason": "Authorization schema constrains mock review drill execution freeze fields."
     },
     {
       "path": "schemas/future-true-ux-restore-evidence.schema.json",
       "category": "schema",
       "required": true,
-      "hash": "0abe89f973075d3abc4bf42efa3247be6c26e41b839e5c0b1b4ae457731ef319",
-      "reason": "Future true UX restore schemas constrain remaining scope dry-run contracts."
+      "hash": "b25357764610f2549c329a96ac8a16bcfa435fa3e9134d2240a5d900e5c3605a",
+      "reason": "Evidence schema documents the mock review drill report contract."
     },
     {
       "path": "scripts/common/New-FutureTrueUxRestoreAuthorizationReport.ps1",
@@ -2550,8 +2550,8 @@
       "path": "tests/pester/FutureTrueUxRestoreValidation.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "3762b8fded92dfdee3cfe02a546b94c09bda6bbbbd1fc3325aece135152dfb78",
-      "reason": "Future true UX restore authorization fixtures and Pester coverage."
+      "hash": "43a544e3fd97eb9a3ed7b82e2b1cd294ec11b45df463b24e0c6ccc91487227c9",
+      "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "docs/69-future-true-ux-restore-current-user-dry-run-gate.md",
@@ -3383,8 +3383,8 @@
       "path": "tests/pester/FutureTrueUxRestoreAuthorizationStateMachine.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "7abe8044e0362750fecf81944ab455bcaaa44e780c693288c13e1514ac9c0514",
-      "reason": "Future true UX authorization state machine tests guard review-only transitions."
+      "hash": "b77151fd9d75d8b46925b7f92ff5dbc3a379c8470c9f27391bd89c1991283fae",
+      "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/pester/FutureTrueUxRestoreEvidencePacket.Tests.ps1",
@@ -3427,6 +3427,146 @@
       "required": true,
       "hash": "c55b20704965f573070b877edd9bf16599a0b06c7426ddba335327e96a8a765f",
       "reason": "Build lock watches this file as a trusted repository input."
+    },
+    {
+      "path": "docs/80-future-true-ux-restore-mock-review-packet-drill.md",
+      "category": "doc",
+      "required": true,
+      "hash": "5899f432c6c83d6c140a61776eec5411191dab2139e48e48d94e21c7e2ef3444",
+      "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "docs/81-future-true-ux-restore-mock-maintainer-review-transcript.md",
+      "category": "doc",
+      "required": true,
+      "hash": "0b14501e0122863ca87cbc2eda228f188826d9d2814a947c07b914f3561cf87d",
+      "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "docs/82-future-true-ux-restore-mock-decision-ledger.md",
+      "category": "doc",
+      "required": true,
+      "hash": "77d7a4c3c42d212ceba87b34282523734f0340e4e52e16b40a035850a6dc7aa8",
+      "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "docs/83-future-true-ux-restore-mock-drill-lessons.md",
+      "category": "doc",
+      "required": true,
+      "hash": "ebc67c23916ce6d0b853f8ef21bf5c417101675f4915d6025cd013aea160b385",
+      "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "scripts/common/New-FutureTrueUxRestoreMockReviewDrillReport.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "854cccf8890392c6d93ee478638abf7f4539bba58856a41546cfa033256f7c58",
+      "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "scripts/config/Show-FutureTrueUxRestoreMockReviewDrillPlan.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "520aec8c5eb282ace96fc1aef74f37a7da9a656f274ce2fa7681e4296cb92a69",
+      "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "scripts/validate/Test-FutureTrueUxRestoreMockReviewDrill.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "6d544dc1e36616e24485bbf196f9d9f2dda2c06595082e726791d38053b6add3",
+      "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/mock-review/current-user-complete-packet.json",
+      "category": "test",
+      "required": true,
+      "hash": "db7365744e03d64ad9e61839a3db7f538c1b23b2627162119c1a97ec1151967c",
+      "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/mock-review/default-user-complete-packet.json",
+      "category": "test",
+      "required": true,
+      "hash": "07fcf043c9c147d2804aadc87f4ca9b7f64749eb775a406f0e11b8c392230f35",
+      "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/mock-review/negative-missing-reviewer-checklist.json",
+      "category": "test",
+      "required": true,
+      "hash": "c9c28fe35248863dce1434865b71ff65ef74ed112c42521757181768c573efbd",
+      "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/mock-review/negative-cross-scope-packet.json",
+      "category": "test",
+      "required": true,
+      "hash": "c9863075b7c5e7d00f96cc31a304e8225c77351f46c7a6242a0ff5f09f8a5d26",
+      "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/mock-review/negative-private-path.json",
+      "category": "test",
+      "required": true,
+      "hash": "013798aa1f46e08814abd060bdc63a121463da6e0b1040c1a8b5e1b43c02ccc8",
+      "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/mock-review/negative-execute-ready.json",
+      "category": "test",
+      "required": true,
+      "hash": "0a0ebf023b06778cff08288601ed41e639eee6895f35066dc31193481c571c6a",
+      "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/mock-review/negative-executed.json",
+      "category": "test",
+      "required": true,
+      "hash": "3c332232250a1ce5b65100ca140e3ed2eb4210c818247af6cb8359a3539d2f11",
+      "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/mock-review/negative-completed.json",
+      "category": "test",
+      "required": true,
+      "hash": "b9afb80ec56f4b4b7fe4be5f9eeb3a1f19b8edfa273fd3170feae24bee8bcad5",
+      "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/mock-review/negative-auto-close-keyword.json",
+      "category": "test",
+      "required": true,
+      "hash": "40f8a529af6b6ac4df82ea6d768e294fd32f079d40c25c3dc602049166ecd6d7",
+      "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/pester/FutureTrueUxRestoreMockDecisionLedger.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "c2826e00496dc3b887650de5fa9cc5ff042c6d9dc292f966cba7a4fd0f98e535",
+      "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/pester/FutureTrueUxRestoreMockReviewDrill.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "4ca41739ca8cbb3f0e029415393b1a03c869d9dc6fd78c0c1a8a52036da1790d",
+      "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/pester/FutureTrueUxRestoreMockReviewSafety.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "4de09161c92e17d418beaf28d36e775cf0f7aee8137a00a7cd0b91737725013f",
+      "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/pester/FutureTrueUxRestoreMockTranscript.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "a206a8fba50f6f718ab4be63b698135e51b3711e1250a34514950221ef6d7472",
+      "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     }
   ],
   "watchGlobs": [

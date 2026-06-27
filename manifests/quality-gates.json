@@ -471,6 +471,30 @@
       "notes": "Validates review-only authorization packets and keeps execute-ready, execution approval, and Issue 18 auto-close wording blocked."
     },
     {
+      "id": "future-true-ux-mock-review-drill",
+      "displayName": "Future true UX mock review packet drill",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "scripts/validate/Test-FutureTrueUxRestoreMockReviewDrill.ps1",
+      "evidence": "report",
+      "notes": "Runs a mock authorization review packet drill without allowing execute-ready or true mutation."
+    },
+    {
+      "id": "future-true-ux-mock-decision-ledger",
+      "displayName": "Future true UX mock decision ledger",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "docs/82-future-true-ux-restore-mock-decision-ledger.md",
+      "evidence": "document",
+      "notes": "Records mock review decisions while keeping execution blocked."
+    },
+    {
       "id": "future-true-ux-evidence-packet",
       "displayName": "Future true UX evidence packet contract",
       "layer": "pr-fast",
