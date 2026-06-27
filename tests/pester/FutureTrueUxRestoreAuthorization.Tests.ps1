@@ -16,6 +16,10 @@ Describe "Future true UX restore authorization intake" {
         foreach ($field in @("scope", "targetIdentity", "mutationType", "rollbackPlan", "beforeEvidence", "afterEvidence", "independentVerification", "failurePropagation", "reviewCheckpoint")) {
             Assert-KitEqual (@($manifest.requiredAuthorizationFields) -contains $field) $true
         }
+        Assert-KitEqual $manifest.currentUserDryRun.scope "current-user"
+        Assert-KitEqual $manifest.currentUserDryRun.authorizationApproved $false
+        Assert-KitEqual $manifest.currentUserDryRun.executionApproved $false
+        Assert-KitEqual $manifest.currentUserDryRun.allowCurrentUserMutation $false
     }
 
     It "blocks baseline and unsafe authorization requests" {

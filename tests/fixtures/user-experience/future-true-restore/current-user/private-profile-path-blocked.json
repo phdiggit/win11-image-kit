@@ -1,0 +1,13 @@
+{
+  "requestId": "current-user-private-profile-path-blocked",
+  "scope": "current-user",
+  "claimedScope": "current-user",
+  "redactedUserIdentity": "user-token:redacted-current-user",
+  "beforeEvidence": "C:\\Users\\Alice\\AppData\\Local\\Packages\\PrivateState.json",
+  "dryRunCommandEnvelope": "future-current-user-command-envelope",
+  "rollbackPlan": "fixture-current-user-rollback-plan",
+  "afterEvidencePlaceholder": "future-current-user-after-evidence-required",
+  "independentVerificationPlaceholder": "future-independent-current-user-verification-required",
+  "failurePropagation": "stop-on-failure",
+  "reviewCheckpoint": "maintainer-review-required"
+}

@@ -24,5 +24,26 @@
     "independentVerification",
     "failurePropagation",
     "reviewCheckpoint"
-  ]
+  ],
+  "currentUserDryRun": {
+    "enabled": true,
+    "scope": "current-user",
+    "authorizationApproved": false,
+    "executionApproved": false,
+    "defaultDecision": "blocked",
+    "allowCurrentUserMutation": false,
+    "allowDefaultUserFallback": false,
+    "allowMachineFallback": false,
+    "allowOfflineImageFallback": false,
+    "requiredEvidence": [
+      "redactedUserIdentity",
+      "beforeEvidence",
+      "dryRunCommandEnvelope",
+      "rollbackPlan",
+      "afterEvidencePlaceholder",
+      "independentVerificationPlaceholder",
+      "failurePropagation",
+      "reviewCheckpoint"
+    ]
+  }
 }

@@ -50,8 +50,11 @@ Describe "Future true UX restore safety" {
         )
         $files = @(
             "scripts\common\New-FutureTrueUxRestoreAuthorizationReport.ps1",
+            "scripts\common\New-FutureTrueUxRestoreCurrentUserDryRunReport.ps1",
             "scripts\validate\Test-FutureTrueUxRestoreAuthorization.ps1",
-            "scripts\config\Show-FutureTrueUxRestoreAuthorizationPlan.ps1"
+            "scripts\validate\Test-FutureTrueUxRestoreCurrentUserDryRun.ps1",
+            "scripts\config\Show-FutureTrueUxRestoreAuthorizationPlan.ps1",
+            "scripts\config\Show-FutureTrueUxRestoreCurrentUserDryRunPlan.ps1"
         )
 
         foreach ($file in $files) {

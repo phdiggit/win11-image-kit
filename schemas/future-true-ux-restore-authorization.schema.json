@@ -15,7 +15,8 @@
     "allowDismMutation",
     "allowAppxMutation",
     "allowNetworkDownload",
-    "requiredAuthorizationFields"
+    "requiredAuthorizationFields",
+    "currentUserDryRun"
   ],
   "properties": {
     "$schema": {
@@ -73,6 +74,9 @@
       "items": {
         "$ref": "#/$defs/authorizationField"
       }
+    },
+    "currentUserDryRun": {
+      "$ref": "#/$defs/currentUserDryRun"
     }
   },
   "$defs": {
@@ -108,6 +112,77 @@
         "failurePropagation",
         "reviewCheckpoint"
       ]
+    },
+    "currentUserEvidenceField": {
+      "type": "string",
+      "enum": [
+        "redactedUserIdentity",
+        "beforeEvidence",
+        "dryRunCommandEnvelope",
+        "rollbackPlan",
+        "afterEvidencePlaceholder",
+        "independentVerificationPlaceholder",
+        "failurePropagation",
+        "reviewCheckpoint"
+      ]
+    },
+    "currentUserDryRun": {
+      "type": "object",
+      "required": [
+        "enabled",
+        "scope",
+        "authorizationApproved",
+        "executionApproved",
+        "defaultDecision",
+        "allowCurrentUserMutation",
+        "allowDefaultUserFallback",
+        "allowMachineFallback",
+        "allowOfflineImageFallback",
+        "requiredEvidence"
+      ],
+      "properties": {
+        "enabled": {
+          "const": true
+        },
+        "scope": {
+          "const": "current-user"
+        },
+        "authorizationApproved": {
+          "const": false,
+          "default": false
+        },
+        "executionApproved": {
+          "const": false,
+          "default": false
+        },
+        "defaultDecision": {
+          "const": "blocked"
+        },
+        "allowCurrentUserMutation": {
+          "const": false,
+          "default": false
+        },
+        "allowDefaultUserFallback": {
+          "const": false,
+          "default": false
+        },
+        "allowMachineFallback": {
+          "const": false,
+          "default": false
+        },
+        "allowOfflineImageFallback": {
+          "const": false,
+          "default": false
+        },
+        "requiredEvidence": {
+          "type": "array",
+          "minItems": 8,
+          "items": {
+            "$ref": "#/$defs/currentUserEvidenceField"
+          }
+        }
+      },
+      "additionalProperties": false
     },
     "authorizationRequest": {
       "type": "object",
