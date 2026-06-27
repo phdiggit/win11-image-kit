@@ -79,6 +79,42 @@
       },
       "additionalProperties": false
     },
+    "userExperienceRestore": {
+      "type": "object",
+      "required": [
+        "defaultMode",
+        "scopes",
+        "defaultUserIsCurrentUser",
+        "offlineImageIsCurrentMachine",
+        "allowRegistryMutation",
+        "allowProfileMutation",
+        "allowDefaultAppMutation",
+        "allowStartMenuMutation",
+        "allowTaskbarMutation"
+      ],
+      "properties": {
+        "defaultMode": {
+          "type": "string",
+          "enum": ["plan-only", "report-only", "fixture"]
+        },
+        "scopes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["default-user", "current-user", "offline-image", "machine"]
+          },
+          "uniqueItems": true
+        },
+        "defaultUserIsCurrentUser": { "const": false },
+        "offlineImageIsCurrentMachine": { "const": false },
+        "allowRegistryMutation": { "const": false },
+        "allowProfileMutation": { "const": false },
+        "allowDefaultAppMutation": { "const": false },
+        "allowStartMenuMutation": { "const": false },
+        "allowTaskbarMutation": { "const": false }
+      },
+      "additionalProperties": false
+    },
     "userInteraction": {
       "type": "object",
       "required": ["editableBeforeRun", "allowedChanges"],

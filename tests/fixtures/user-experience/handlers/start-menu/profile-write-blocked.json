@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../../schemas/user-experience-handler-plan.schema.json",
+  "schemaVersion": 1,
+  "handlerId": "start-menu-profile-write",
+  "handlerType": "start-menu",
+  "scope": "default-user",
+  "mode": "fixture",
+  "source": "fixture",
+  "templateMetadataId": "start-menu-reference-24h2",
+  "supportStatus": "planned-supported",
+  "verificationMode": "future-real-verification",
+  "requestedApply": false,
+  "profileWriteRequested": true,
+  "executed": false,
+  "status": "blocked",
+  "pins": []
+}

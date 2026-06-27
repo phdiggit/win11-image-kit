@@ -1,0 +1,17 @@
+{
+  "$schema": "../../../../schemas/user-experience-handler-plan.schema.json",
+  "schemaVersion": 1,
+  "handlerId": "taskbar-registry-write",
+  "handlerType": "taskbar",
+  "scope": "current-user",
+  "mode": "fixture",
+  "source": "fixture",
+  "templateMetadataId": "",
+  "supportStatus": "manual-or-future",
+  "verificationMode": "manual-checklist",
+  "requestedApply": false,
+  "registryWriteRequested": true,
+  "executed": false,
+  "status": "blocked",
+  "pins": []
+}

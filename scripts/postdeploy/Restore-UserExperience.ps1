@@ -1,43 +1,54 @@
-﻿[CmdletBinding(SupportsShouldProcess)]
+[CmdletBinding(SupportsShouldProcess)]
 param(
     [string]$ScopeManifestPath = "manifests/customization-scope.json",
     [string]$PathsManifestPath,
+    [string]$ConfigRoot,
+    [string]$DefaultAppsTemplate,
+    [string]$StartMenuTemplate,
+    [ValidateSet("default-user", "current-user", "offline-image", "machine")]
+    [string]$Scope = "default-user",
+    [ValidateSet("plan-only", "report-only", "fixture")]
+    [string]$Mode = "plan-only",
     [switch]$Strict,
+    [switch]$Apply,
+    [switch]$Execute,
     [string]$ReportPath,
     [switch]$ReportRequired
 )
 
 $ErrorActionPreference = "Stop"
 . "$PSScriptRoot\..\common\Write-Log.ps1"
-. "$PSScriptRoot\..\common\Assert-KitElevation.ps1"
-. "$PSScriptRoot\..\common\Resolve-KitPath.ps1"
 . "$PSScriptRoot\..\common\Invoke-KitStep.ps1"
+. "$PSScriptRoot\..\common\Resolve-KitPath.ps1"
 . "$PSScriptRoot\..\common\Test-KitConfigState.ps1"
+. "$PSScriptRoot\..\common\New-KitUserExperienceHandlerReport.ps1"
 
 $repoRoot = (Resolve-Path -LiteralPath "$PSScriptRoot\..\..").Path
 $script:UserExperienceReportItems = @()
 $script:UserExperienceStateResults = @()
 
-Assert-KitElevation -Operation "用户体验恢复" -AllowWhatIfPreview
+function Read-KitUxJsonFile {
+    param([string]$Path)
+
+    if ([string]::IsNullOrWhiteSpace($Path) -or -not (Test-Path -LiteralPath $Path)) {
+        return $null
+    }
+
+    return Get-Content -LiteralPath $Path -Raw -Encoding UTF8 | ConvertFrom-Json
+}
 
 function Add-KitUserExperienceReportItem {
     param(
-        [Parameter(Mandatory)]
-        [string]$Name,
-
-        [Parameter(Mandatory)]
-        [string]$Status,
-
-        [Parameter(Mandatory)]
-        [string]$Reason,
-
+        [Parameter(Mandatory)][string]$Name,
+        [Parameter(Mandatory)][string]$Status,
+        [Parameter(Mandatory)][string]$Reason,
         [string]$Source,
         [string]$Destination,
         [string]$Advice,
         [string[]]$Details = @()
     )
 
-    $script:UserExperienceReportItems += [pscustomobject]@{
+    $script:UserExperienceReportItems += [pscustomobject][ordered]@{
         name = $Name
         status = $Status
         reason = $Reason
@@ -48,89 +59,8 @@ function Add-KitUserExperienceReportItem {
     }
 }
 
-function Write-KitUserExperienceReport {
-    param(
-        [AllowEmptyString()]
-        [string]$Path,
-
-        [switch]$Required
-    )
-
-    if ([string]::IsNullOrWhiteSpace($Path)) {
-        return
-    }
-
-    $resolvedPath = Resolve-KitRepoPath -RepoRoot $repoRoot -Path $Path
-    $directory = Split-Path -Path $resolvedPath -Parent
-    if (-not [string]::IsNullOrWhiteSpace($directory) -and -not (Test-Path -LiteralPath $directory)) {
-        New-Item -ItemType Directory -Path $directory -Force -WhatIf:$false | Out-Null
-    }
-
-    $summary = [pscustomobject]@{
-        succeeded = @($script:UserExperienceReportItems | Where-Object { $_.status -in @("restored", "succeeded") }).Count
-        skipped = @($script:UserExperienceReportItems | Where-Object { $_.status -eq "skipped" }).Count
-        missing = @($script:UserExperienceReportItems | Where-Object { $_.status -eq "missing" }).Count
-        whatIf = @($script:UserExperienceReportItems | Where-Object { $_.status -eq "whatif" }).Count
-    }
-    $userExperienceSummary = Get-KitConfigStateResultSummary -Results $script:UserExperienceStateResults
-
-    $report = [pscustomobject]@{
-        generatedAt = (Get-Date).ToString("s")
-        reportType = "post-deploy-user-experience"
-        strict = [bool]$Strict
-        scopeManifestPath = $ScopeManifestPath
-        summary = $summary
-        userExperienceSummary = $userExperienceSummary
-        userExperienceResults = $script:UserExperienceStateResults
-        items = $script:UserExperienceReportItems
-    }
-
-    if ([IO.Path]::GetExtension($resolvedPath).ToLowerInvariant() -eq ".md") {
-        $lines = @(
-            "# 用户体验恢复报告",
-            "",
-            "- 生成时间：$($report.generatedAt)",
-            "- 严格模式：$($report.strict)",
-            "- 成功：$($summary.succeeded)",
-            "- 预演：$($summary.whatIf)",
-            "- 跳过：$($summary.skipped)",
-            "- 缺失：$($summary.missing)",
-            "- 配置状态总数：$($userExperienceSummary.total)",
-            "- 配置状态阻断失败：$($userExperienceSummary.failedRequiredCount)",
-            "- 配置状态不符：$($userExperienceSummary.configMismatchCount)",
-            "- 配置状态缺失：$($userExperienceSummary.configMissingCount)",
-            "- 配置状态查询失败：$($userExperienceSummary.configQueryFailedCount)",
-            "- 配置状态未查询：$($userExperienceSummary.configNotRunCount)",
-            "",
-            "| 项目 | 状态 | 原因 | 来源 | 目标 | 建议 |",
-            "|---|---|---|---|---|---|"
-        )
-
-        foreach ($item in $script:UserExperienceReportItems) {
-            $name = ([string]$item.name).Replace("|", "\|")
-            $status = ([string]$item.status).Replace("|", "\|")
-            $reason = ([string]$item.reason).Replace("|", "\|")
-            $source = ([string]$item.source).Replace("|", "\|")
-            $destination = ([string]$item.destination).Replace("|", "\|")
-            $advice = ([string]$item.advice).Replace("|", "\|")
-            $lines += "| $name | $status | $reason | $source | $destination | $advice |"
-        }
-
-        $written = Write-KitTextFile -Path $resolvedPath -Content $lines -Description "用户体验恢复报告" -Required:$Required
-    } else {
-        $written = Write-KitTextFile -Path $resolvedPath -Content ($report | ConvertTo-Json -Depth 8) -Description "用户体验恢复报告" -Required:$Required
-    }
-
-    if ($written) {
-        Write-KitLog "用户体验恢复报告已写入：$resolvedPath" "OK"
-    }
-}
-
 function Get-KitUserExperienceStateChecks {
-    param(
-        [AllowNull()]
-        $ScopeConfig
-    )
+    param([AllowNull()]$ScopeConfig)
 
     if ($null -eq $ScopeConfig -or $null -eq $ScopeConfig.system) {
         return @()
@@ -143,434 +73,240 @@ function Get-KitUserExperienceStateChecks {
         }
 
         $section = $ScopeConfig.system.$sectionName
-        if ($null -eq $section -or $section.PSObject.Properties.Name -notcontains "stateChecks") {
-            continue
+        if ($null -ne $section -and $section.PSObject.Properties.Name -contains "stateChecks") {
+            $checks += @($section.stateChecks)
         }
-
-        $checks += @($section.stateChecks)
     }
 
-    return $checks
+    return @($checks)
 }
 
 function Get-KitUserExperienceReportItemState {
-    param(
-        [Parameter(Mandatory)]
-        [string]$SettingName
-    )
+    param([Parameter(Mandatory)][string]$SettingName)
 
     $item = @($script:UserExperienceReportItems | Where-Object { $_.name -eq $SettingName } | Select-Object -First 1)
     if ($item.Count -eq 0) {
-        return [pscustomobject]@{
-            found = $false
-            value = $null
-        }
+        return [pscustomobject]@{ found = $false; value = $null }
     }
 
-    return [pscustomobject]@{
-        found = $true
-        value = [string]$item[0].status
-    }
+    return [pscustomobject]@{ found = $true; value = [string]$item[0].status }
 }
 
 function Invoke-KitUserExperienceStateChecks {
-    if ($null -eq $scopeConfig) {
+    if ($null -eq $script:scopeConfig) {
         $script:UserExperienceStateResults = @()
         return
     }
 
-    $stateChecks = @(Get-KitUserExperienceStateChecks -ScopeConfig $scopeConfig)
+    $stateChecks = @(Get-KitUserExperienceStateChecks -ScopeConfig $script:scopeConfig)
     if ($stateChecks.Count -eq 0) {
         $script:UserExperienceStateResults = @()
         return
     }
 
     $query = {
-        param(
-            $Check,
-            [string]$Domain,
-            [string]$SettingName
-        )
-
+        param($Check, [string]$Domain, [string]$SettingName)
         Get-KitUserExperienceReportItemState -SettingName $SettingName
     }
 
     $script:UserExperienceStateResults = @(Test-KitConfigState -Config $stateChecks -ConfigQuery $query -WhatIf:$WhatIfPreference)
 }
 
-function Test-KitDirectoryHasContent {
+function Write-KitUserExperienceReport {
     param(
-        [Parameter(Mandatory)]
-        [string]$Path
-    )
-
-    if (-not (Test-Path -LiteralPath $Path)) {
-        return $false
-    }
-
-    return @(
-        Get-ChildItem -LiteralPath $Path -Force -ErrorAction SilentlyContinue
-    ).Count -gt 0
-}
-
-function Ensure-KitDirectory {
-    [CmdletBinding(SupportsShouldProcess)]
-    param(
-        [Parameter(Mandatory)]
+        [AllowNull()]$Report,
         [string]$Path,
-
-        [Parameter(Mandatory)]
-        [string]$Description
+        [switch]$Required
     )
 
-    if (Test-Path -LiteralPath $Path) {
-        Write-KitLog "$Description 已存在：$Path" "OK"
-        return "existing"
-    }
-
-    if ($PSCmdlet.ShouldProcess($Path, "创建 $Description")) {
-        New-Item -ItemType Directory -Path $Path -Force | Out-Null
-        Write-KitLog "$Description 已创建：$Path" "OK"
-        return "created"
-    }
-
-    Write-KitLog "预演创建 $Description：$Path"
-    return "whatif"
-}
-
-function Register-KitMissingTemplate {
-    param(
-        [Parameter(Mandatory)]
-        [string]$Name,
-
-        [Parameter(Mandatory)]
-        [string]$Reason,
-
-        [Parameter(Mandatory)]
-        [string]$Source,
-
-        [string]$Destination,
-        [string]$Advice,
-        [string[]]$Details = @()
-    )
-
-    $message = "$Name 缺少配置模板，跳过自动恢复：$Source"
-    if (-not [string]::IsNullOrWhiteSpace($Advice)) {
-        $message = "$message。$Advice"
-    }
-
-    Write-KitLog $message "WARN"
-    Add-KitUserExperienceReportItem `
-        -Name $Name `
-        -Status "missing" `
-        -Reason $Reason `
-        -Source $Source `
-        -Destination $Destination `
-        -Advice $Advice `
-        -Details $Details
-
-    if ($Strict) {
-        throw "$Name 缺少配置模板，严格模式下停止执行：$Source"
-    }
-}
-
-function Set-KitRegistryDword {
-    [CmdletBinding(SupportsShouldProcess)]
-    param(
-        [Parameter(Mandatory)]
-        [string]$Path,
-
-        [Parameter(Mandatory)]
-        [string]$Name,
-
-        [Parameter(Mandatory)]
-        [int]$Value
-    )
-
-    $target = "{0}\{1}" -f $Path, $Name
-    if ($PSCmdlet.ShouldProcess($target, "设置 DWORD 值为 $Value")) {
-        if (-not (Test-Path -LiteralPath $Path)) {
-            New-Item -Path $Path -Force | Out-Null
-        }
-
-        New-ItemProperty -Path $Path -Name $Name -PropertyType DWord -Value $Value -Force | Out-Null
-        Write-KitLog "已设置资源管理器选项：$target = $Value" "OK"
-    }
-}
-
-function Copy-KitConfigFile {
-    [CmdletBinding(SupportsShouldProcess)]
-    param(
-        [Parameter(Mandatory)]
-        [string]$Source,
-
-        [Parameter(Mandatory)]
-        [string]$Destination,
-
-        [Parameter(Mandatory)]
-        [string]$Description,
-
-        [string]$Advice
-    )
-
-    if (-not (Test-Path -LiteralPath $Source)) {
-        Register-KitMissingTemplate `
-            -Name $Description `
-            -Reason "source-missing" `
-            -Source $Source `
-            -Destination $Destination `
-            -Advice $Advice
+    if ([string]::IsNullOrWhiteSpace($Path)) {
         return
     }
 
-    if ($PSCmdlet.ShouldProcess($Destination, "复制 $Description")) {
-        $destinationDirectory = Split-Path -Path $Destination -Parent
-        if (-not (Test-Path -LiteralPath $destinationDirectory)) {
-            New-Item -ItemType Directory -Path $destinationDirectory -Force | Out-Null
-        }
+    $resolvedPath = Resolve-KitRepoPath -RepoRoot $repoRoot -Path $Path
+    $directory = Split-Path -Path $resolvedPath -Parent
+    if (-not [string]::IsNullOrWhiteSpace($directory) -and -not (Test-Path -LiteralPath $directory)) {
+        New-Item -ItemType Directory -Path $directory -Force | Out-Null
+    }
 
-        Copy-Item -LiteralPath $Source -Destination $Destination -Force
-        Write-KitLog "$Description 已复制：$Destination" "OK"
-        Add-KitUserExperienceReportItem `
-            -Name $Description `
-            -Status "restored" `
-            -Reason "completed" `
-            -Source $Source `
-            -Destination $Destination `
-            -Advice $Advice
+    $content = if ([IO.Path]::GetExtension($resolvedPath).ToLowerInvariant() -eq ".md") {
+        @(
+            "# User Experience Restore Report",
+            "",
+            "- Mode: $($Report.mode)",
+            "- Status: $($Report.status)",
+            "- True execution: $($Report.trueExecution)",
+            "- Handler executions: $($Report.summary.handlerExecutionCount)",
+            "- Blocked handlers: $($Report.summary.blockedHandlerCount)",
+            "- Manual checklist: $($Report.summary.manualChecklistCount)"
+        ) -join "`n"
     } else {
-        Write-KitLog "预演恢复 $Description：$Source -> $Destination"
-        Add-KitUserExperienceReportItem `
-            -Name $Description `
-            -Status "whatif" `
-            -Reason "whatif-preview" `
-            -Source $Source `
-            -Destination $Destination `
-            -Advice $Advice
+        $Report | ConvertTo-Json -Depth 16
     }
+
+    $content | Set-Content -LiteralPath $resolvedPath -Encoding UTF8 -WhatIf:$false
+    Write-KitLog "User experience restore report written: $resolvedPath" "OK"
 }
 
-function Copy-KitConfigDirectory {
-    [CmdletBinding(SupportsShouldProcess)]
-    param(
-        [Parameter(Mandatory)]
-        [string]$Source,
+function ConvertTo-KitUxTemplateSources {
+    param([AllowNull()]$Metadata)
 
-        [Parameter(Mandatory)]
-        [string]$Destination,
-
-        [Parameter(Mandatory)]
-        [string]$Description,
-
-        [string]$Advice,
-
-        [switch]$PrepareDestinationWhenMissing
-    )
-
-    if (-not (Test-Path -LiteralPath $Source)) {
-        $details = @()
-        if ($PrepareDestinationWhenMissing) {
-            $state = Ensure-KitDirectory -Path $Destination -Description $Description -WhatIf:$WhatIfPreference
-            $details += "destinationState=$state"
-        }
-
-        Register-KitMissingTemplate `
-            -Name $Description `
-            -Reason "source-missing" `
-            -Source $Source `
-            -Destination $Destination `
-            -Advice $Advice `
-            -Details $details
-        return
+    if ($null -eq $Metadata) {
+        return @()
     }
 
-    if (-not (Test-KitDirectoryHasContent -Path $Source)) {
-        $details = @("sourceState=empty")
-        if ($PrepareDestinationWhenMissing) {
-            $state = Ensure-KitDirectory -Path $Destination -Description $Description -WhatIf:$WhatIfPreference
-            $details += "destinationState=$state"
-        }
-
-        Register-KitMissingTemplate `
-            -Name $Description `
-            -Reason "source-empty" `
-            -Source $Source `
-            -Destination $Destination `
-            -Advice $Advice `
-            -Details $details
-        return
-    }
-
-    if ($PSCmdlet.ShouldProcess($Destination, "恢复 $Description")) {
-        if (-not (Test-Path -LiteralPath $Destination)) {
-            New-Item -ItemType Directory -Path $Destination -Force | Out-Null
-        }
-
-        foreach ($item in Get-ChildItem -LiteralPath $Source -Force) {
-            Copy-Item -LiteralPath $item.FullName -Destination $Destination -Recurse -Force
-        }
-
-        Write-KitLog "$Description 已恢复：$Destination" "OK"
-        Add-KitUserExperienceReportItem `
-            -Name $Description `
-            -Status "restored" `
-            -Reason "completed" `
-            -Source $Source `
-            -Destination $Destination `
-            -Advice $Advice
-    } else {
-        Write-KitLog "预演恢复 $Description：$Source -> $Destination"
-        Add-KitUserExperienceReportItem `
-            -Name $Description `
-            -Status "whatif" `
-            -Reason "whatif-preview" `
-            -Source $Source `
-            -Destination $Destination `
-            -Advice $Advice
-    }
+    return @([pscustomobject][ordered]@{
+        templateId = [string](Get-KitUserExperienceValue -InputObject $Metadata -Name "templateId" -DefaultValue "")
+        templateType = [string](Get-KitUserExperienceValue -InputObject $Metadata -Name "templateType" -DefaultValue "")
+        targetScope = [string](Get-KitUserExperienceValue -InputObject $Metadata -Name "targetScope" -DefaultValue "")
+        sourceWindows = (Get-KitUserExperienceValue -InputObject $Metadata -Name "sourceWindows" -DefaultValue $null)
+        targetApps = @($Metadata.targetApps)
+        executed = $false
+    })
 }
 
-function Import-KitDefaultAppAssociations {
-    [CmdletBinding(SupportsShouldProcess)]
-    param(
-        [Parameter(Mandatory)]
-        [string]$AssociationFile,
-
-        [string]$Advice
-    )
-
-    if (-not (Test-Path -LiteralPath $AssociationFile)) {
-        Register-KitMissingTemplate `
-            -Name "默认应用关联" `
-            -Reason "source-missing" `
-            -Source $AssociationFile `
-            -Advice $Advice
-        return
-    }
-
-    if ($PSCmdlet.ShouldProcess($AssociationFile, "导入默认应用关联")) {
-        Write-KitLog "导入默认应用关联：$AssociationFile"
-        $argument = "/Import-DefaultAppAssociations:$AssociationFile"
-        $output = & dism.exe /Online $argument 2>&1
-        $exitCode = $LASTEXITCODE
-
-        foreach ($line in @($output)) {
-            if (-not [string]::IsNullOrWhiteSpace([string]$line)) {
-                Write-KitLog ([string]$line)
-            }
-        }
-
-        if ($exitCode -ne 0) {
-            throw "默认应用关联导入失败，exit code: $exitCode"
-        }
-
-        Write-KitLog "默认应用关联导入完成" "OK"
-        Add-KitUserExperienceReportItem `
-            -Name "默认应用关联" `
-            -Status "restored" `
-            -Reason "completed" `
-            -Source $AssociationFile `
-            -Advice $Advice
-    } else {
-        Write-KitLog "预演导入默认应用关联：$AssociationFile"
-        Add-KitUserExperienceReportItem `
-            -Name "默认应用关联" `
-            -Status "whatif" `
-            -Reason "whatif-preview" `
-            -Source $AssociationFile `
-            -Advice $Advice
-    }
-}
-
-Write-KitLog "开始恢复用户体验配置"
+Write-KitLog "Start user experience restore plan"
 
 $ScopeManifestPath = Resolve-KitRepoPath -RepoRoot $repoRoot -Path $ScopeManifestPath
-$scopeConfig = Get-Content -LiteralPath $ScopeManifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
+$script:scopeConfig = Read-KitUxJsonFile -Path $ScopeManifestPath
+if ($null -eq $script:scopeConfig) {
+    throw "Unable to read user experience scope manifest: $ScopeManifestPath"
+}
 
 if (-not $PathsManifestPath) {
-    $PathsManifestPath = Resolve-KitRepoPath -RepoRoot $repoRoot -Path $scopeConfig.pathsManifest
+    $PathsManifestPath = Resolve-KitRepoPath -RepoRoot $repoRoot -Path $script:scopeConfig.pathsManifest
 } else {
     $PathsManifestPath = Resolve-KitRepoPath -RepoRoot $repoRoot -Path $PathsManifestPath
 }
 
 $pathMap = Get-KitPathMap -ManifestPath $PathsManifestPath
-
-try {
-    if ($scopeConfig.system.defaultApps.enabled) {
-        $associationFile = Resolve-KitPath -Path $scopeConfig.system.defaultApps.associationFile -PathMap $pathMap
-        Import-KitDefaultAppAssociations `
-            -AssociationFile $associationFile `
-            -Advice "请补充 DefaultAppAssoc.xml，或在新机上手动导出并导入默认应用关联。" `
-            -WhatIf:$WhatIfPreference
-    } else {
-        Write-KitLog "默认应用关联已停用，跳过"
-        Add-KitUserExperienceReportItem -Name "默认应用关联" -Status "skipped" -Reason "disabled"
-    }
-
-    if ($scopeConfig.system.explorerOptions.enabled) {
-        $advancedPath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced"
-        $hideFileExt = if ($scopeConfig.system.explorerOptions.showFileExtensions) { 0 } else { 1 }
-        $hidden = if ($scopeConfig.system.explorerOptions.showHiddenFiles) { 1 } else { 2 }
-
-        Set-KitRegistryDword -Path $advancedPath -Name "HideFileExt" -Value $hideFileExt -WhatIf:$WhatIfPreference
-        Set-KitRegistryDword -Path $advancedPath -Name "Hidden" -Value $hidden -WhatIf:$WhatIfPreference
-
-        Add-KitUserExperienceReportItem `
-            -Name "资源管理器选项" `
-            -Status $(if ($WhatIfPreference) { "whatif" } else { "restored" }) `
-            -Reason $(if ($WhatIfPreference) { "whatif-preview" } else { "completed" }) `
-            -Destination $advancedPath
-    } else {
-        Write-KitLog "资源管理器选项已停用，跳过"
-        Add-KitUserExperienceReportItem -Name "资源管理器选项" -Status "skipped" -Reason "disabled"
-    }
-
-    if ($scopeConfig.system.startMenu.enabled) {
-        $startMenuConfigRoot = Resolve-KitPath -Path $scopeConfig.system.startMenu.config -PathMap $pathMap
-        $layoutFile = Join-Path -Path $startMenuConfigRoot -ChildPath "LayoutModification.json"
-        $defaultProfileLayout = "C:\Users\Default\AppData\Local\Microsoft\Windows\Shell\LayoutModification.json"
-        Copy-KitConfigFile `
-            -Source $layoutFile `
-            -Destination $defaultProfileLayout `
-            -Description "开始菜单默认布局" `
-            -Advice '请在 ${ConfigRoot}\start-menu 下提供 LayoutModification.json，或在目标机器上手动固定开始菜单。' `
-            -WhatIf:$WhatIfPreference
-    } else {
-        Write-KitLog "开始菜单配置已停用，跳过"
-        Add-KitUserExperienceReportItem -Name "开始菜单默认布局" -Status "skipped" -Reason "disabled"
-    }
-
-    if (($scopeConfig.system.PSObject.Properties.Name -contains "windowsTerminal") -and $scopeConfig.system.windowsTerminal.enabled) {
-        $terminalSource = Resolve-KitPath -Path $scopeConfig.system.windowsTerminal.source -PathMap $pathMap
-        $terminalDestination = Resolve-KitPath -Path $scopeConfig.system.windowsTerminal.destination -PathMap $pathMap
-        Copy-KitConfigDirectory `
-            -Source $terminalSource `
-            -Destination $terminalDestination `
-            -Description "Windows Terminal 配置模板" `
-            -Advice '请在 ${ConfigRoot}\windows-terminal 下提供 settings.json 或相关片段，再重新执行恢复脚本。' `
-            -WhatIf:$WhatIfPreference
-    } else {
-        Write-KitLog "Windows Terminal 配置恢复已停用，跳过"
-        Add-KitUserExperienceReportItem -Name "Windows Terminal 配置模板" -Status "skipped" -Reason "disabled"
-    }
-
-    if (($scopeConfig.system.PSObject.Properties.Name -contains "vscodePortable") -and $scopeConfig.system.vscodePortable.enabled) {
-        $vscodeSource = Resolve-KitPath -Path $scopeConfig.system.vscodePortable.source -PathMap $pathMap
-        $vscodeDestination = Resolve-KitPath -Path $scopeConfig.system.vscodePortable.destination -PathMap $pathMap
-        Copy-KitConfigDirectory `
-            -Source $vscodeSource `
-            -Destination $vscodeDestination `
-            -Description "VSCode 便携版 data 配置目录" `
-            -Advice '请在 ${ConfigRoot}\vscode-portable\data 下补充模板，或后续用 Settings Sync / 手工设置完成恢复。' `
-            -PrepareDestinationWhenMissing `
-            -WhatIf:$WhatIfPreference
-    } else {
-        Write-KitLog "VSCode 便携版 data 配置目录恢复已停用，跳过"
-        Add-KitUserExperienceReportItem -Name "VSCode 便携版 data 配置目录" -Status "skipped" -Reason "disabled"
-    }
-} finally {
-    Invoke-KitUserExperienceStateChecks
-    Write-KitUserExperienceReport -Path $ReportPath -Required:$ReportRequired
+if ([string]::IsNullOrWhiteSpace($ConfigRoot)) {
+    $ConfigRoot = Join-Path -Path $repoRoot -ChildPath "configs"
 }
 
-Write-KitLog "用户体验配置恢复完成" "OK"
+$defaultMetadataPath = if ([string]::IsNullOrWhiteSpace($DefaultAppsTemplate)) {
+    Join-Path -Path $ConfigRoot -ChildPath "default-apps\default-apps.metadata.json"
+} else {
+    Resolve-KitRepoPath -RepoRoot $repoRoot -Path $DefaultAppsTemplate
+}
+
+$startMetadataPath = if ([string]::IsNullOrWhiteSpace($StartMenuTemplate)) {
+    Join-Path -Path $ConfigRoot -ChildPath "start-menu\start-menu.metadata.json"
+} else {
+    Resolve-KitRepoPath -RepoRoot $repoRoot -Path $StartMenuTemplate
+}
+
+$defaultMetadata = Read-KitUxJsonFile -Path $defaultMetadataPath
+$startMetadata = Read-KitUxJsonFile -Path $startMetadataPath
+
+$requestedApply = [bool]($Apply -or $Execute)
+$defaultApps = $null
+if ($script:scopeConfig.system.defaultApps.enabled) {
+    $defaultTemplateMetadataId = [string](Get-KitUserExperienceValue -InputObject $defaultMetadata -Name "templateId" -DefaultValue "default-apps-metadata-missing")
+    $defaultKnownCapability = $null -ne $defaultMetadata
+    $defaultAssociations = @()
+    foreach ($targetApp in @($defaultMetadata.targetApps)) {
+        $defaultAssociations += [pscustomobject][ordered]@{
+            progId = [string](Get-KitUserExperienceValue -InputObject $targetApp -Name "progId" -DefaultValue "")
+            appIdentity = [string](Get-KitUserExperienceValue -InputObject $targetApp -Name "logicalName" -DefaultValue "")
+            knownCapability = [bool](Get-KitUserExperienceValue -InputObject $targetApp -Name "knownCapability" -DefaultValue $defaultKnownCapability)
+        }
+    }
+
+    $defaultApps = [pscustomobject][ordered]@{
+        handlerId = "default-apps-default-user"
+        handlerType = "default-apps"
+        scope = "default-user"
+        mode = $Mode
+        source = "config-metadata"
+        templateMetadataId = $defaultTemplateMetadataId
+        supportStatus = "planned-supported"
+        verificationMode = "future-real-verification"
+        requestedApply = $requestedApply
+        mutationRequested = $false
+        associations = $defaultAssociations
+    }
+    Add-KitUserExperienceReportItem -Name "Default app associations" -Status "planned" -Reason "report-only-handler" -Source $defaultMetadataPath -Advice "Plan-only output is not real UX evidence."
+} else {
+    Add-KitUserExperienceReportItem -Name "Default app associations" -Status "skipped" -Reason "disabled"
+}
+
+$startMenu = $null
+if ($script:scopeConfig.system.startMenu.enabled) {
+    $startTemplateMetadataId = [string](Get-KitUserExperienceValue -InputObject $startMetadata -Name "templateId" -DefaultValue "start-menu-metadata-missing")
+    $startPins = @($startMetadata.targetApps)
+    $startMenu = [pscustomobject][ordered]@{
+        handlerId = "start-menu-default-user"
+        handlerType = "start-menu"
+        scope = "default-user"
+        mode = $Mode
+        source = "config-metadata"
+        templateMetadataId = $startTemplateMetadataId
+        supportStatus = "planned-supported"
+        verificationMode = "future-real-verification"
+        requestedApply = $requestedApply
+        mutationRequested = $false
+        profileWriteRequested = $false
+        pins = $startPins
+    }
+    Add-KitUserExperienceReportItem -Name "Start menu default layout" -Status "planned" -Reason "report-only-handler" -Source $startMetadataPath -Advice "Default User plan is not current-user success evidence."
+} else {
+    Add-KitUserExperienceReportItem -Name "Start menu default layout" -Status "skipped" -Reason "disabled"
+}
+
+$taskbar = [pscustomobject][ordered]@{
+    handlerId = "taskbar-current-user"
+    handlerType = "taskbar"
+    scope = "current-user"
+    mode = $Mode
+    source = "manual-checklist"
+    templateMetadataId = ""
+    supportStatus = "manual-or-future"
+    verificationMode = "manual-checklist"
+    requestedApply = $requestedApply
+    mutationRequested = $false
+    registryWriteRequested = $false
+    pins = @()
+}
+
+Add-KitUserExperienceReportItem -Name "Taskbar layout" -Status "manual" -Reason "manual-checklist" -Advice "Manual checklist only; no taskbar mutation."
+Add-KitUserExperienceReportItem -Name "Explorer options" -Status "planned" -Reason "report-only-handler" -Advice "No user registry mutation in this stage."
+Add-KitUserExperienceReportItem -Name "Windows Terminal template" -Status "planned" -Reason "report-only-handler"
+Add-KitUserExperienceReportItem -Name "VSCode portable data directory" -Status "planned" -Reason "report-only-handler"
+
+Invoke-KitUserExperienceStateChecks
+
+$templateSources = @()
+$templateSources += ConvertTo-KitUxTemplateSources -Metadata $defaultMetadata
+$templateSources += ConvertTo-KitUxTemplateSources -Metadata $startMetadata
+
+$scopeMapping = [pscustomobject][ordered]@{
+    defaultUserIsCurrentUser = $false
+    offlineImageIsCurrentMachine = $false
+    scopes = @("default-user", "current-user", "offline-image", "machine")
+}
+
+$report = New-KitUserExperienceHandlerReport `
+    -Mode $Mode `
+    -Scope $Scope `
+    -RequestedApply:$requestedApply `
+    -DefaultApps $defaultApps `
+    -StartMenu $startMenu `
+    -Taskbar $taskbar `
+    -TemplateSources $templateSources `
+    -ScopeMapping $scopeMapping `
+    -LegacyItems $script:UserExperienceReportItems `
+    -UserExperienceResults $script:UserExperienceStateResults
+
+$report | Add-Member -NotePropertyName strict -NotePropertyValue ([bool]$Strict)
+$report | Add-Member -NotePropertyName scopeManifestPath -NotePropertyValue $ScopeManifestPath
+$report | Add-Member -NotePropertyName userExperienceSummary -NotePropertyValue (Get-KitConfigStateResultSummary -Results $script:UserExperienceStateResults)
+
+Write-KitUserExperienceReport -Report $report -Path $ReportPath -Required:$ReportRequired
+Write-KitLog "User experience restore plan generated" "OK"
+
+$report
+
+if ($requestedApply -or ($Strict -and $report.status -ne "planned")) {
+    exit 1
+}

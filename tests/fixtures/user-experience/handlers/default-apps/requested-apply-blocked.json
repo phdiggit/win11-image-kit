@@ -1,0 +1,18 @@
+{
+  "$schema": "../../../../schemas/user-experience-handler-plan.schema.json",
+  "schemaVersion": 1,
+  "handlerId": "default-apps-requested-apply",
+  "handlerType": "default-apps",
+  "scope": "default-user",
+  "mode": "fixture",
+  "source": "fixture",
+  "templateMetadataId": "default-apps-reference-24h2",
+  "supportStatus": "planned-supported",
+  "verificationMode": "future-real-verification",
+  "requestedApply": true,
+  "executed": false,
+  "status": "blocked",
+  "associations": [
+    { "progId": "Sample.Browser.HTML", "knownCapability": true }
+  ]
+}
