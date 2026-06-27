@@ -1,0 +1,14 @@
+{
+  "requestId": "current-user-missing-rollback",
+  "scope": "current-user",
+  "targetIdentity": "redacted-user-sid:S-1-5-21-redacted",
+  "mutationType": "start-menu",
+  "expectedBeforeState": "fixture-before-state",
+  "allowedCommand": "future-approved-command-envelope",
+  "rollbackPlan": "",
+  "beforeEvidence": "fixture-before-evidence",
+  "afterEvidence": "fixture-after-evidence",
+  "independentVerification": "fixture-independent-user-verification",
+  "failurePropagation": "stop-on-failure",
+  "reviewCheckpoint": "maintainer-review-required"
+}

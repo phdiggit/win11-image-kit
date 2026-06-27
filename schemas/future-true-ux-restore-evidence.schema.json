@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "win11-image-kit future true UX restore evidence report draft",
+  "type": "object",
+  "required": [
+    "reportType",
+    "schemaVersion",
+    "mode",
+    "decision",
+    "scope",
+    "trueExecution",
+    "mutationCount",
+    "commandExitCodeSufficient",
+    "userConfigurationConfirmed",
+    "evidenceLayers",
+    "scopeVerification",
+    "privatePathRedacted"
+  ],
+  "properties": {
+    "reportType": {
+      "const": "future-true-ux-restore-evidence"
+    },
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "mode": {
+      "const": "evidence-model-draft"
+    },
+    "decision": {
+      "type": "string",
+      "enum": [
+        "blocked",
+        "dry-run-ready",
+        "authorized-pending-review"
+      ]
+    },
+    "scope": {
+      "$ref": "#/$defs/scope"
+    },
+    "trueExecution": {
+      "const": false,
+      "default": false
+    },
+    "mutationCount": {
+      "const": 0,
+      "default": 0
+    },
+    "commandExitCodeSufficient": {
+      "const": false,
+      "default": false
+    },
+    "userConfigurationConfirmed": {
+      "const": false,
+      "default": false
+    },
+    "evidenceLayers": {
+      "type": "object",
+      "required": [
+        "beforeEvidence",
+        "executionEvidence",
+        "afterEvidence",
+        "independentVerification"
+      ],
+      "properties": {
+        "beforeEvidence": {
+          "type": "string"
+        },
+        "executionEvidence": {
+          "type": "string"
+        },
+        "afterEvidence": {
+          "type": "string"
+        },
+        "independentVerification": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "scopeVerification": {
+      "type": "object",
+      "required": [
+        "targetIdentity",
+        "rollbackPlan",
+        "scopeBoundary"
+      ],
+      "properties": {
+        "targetIdentity": {
+          "type": "string"
+        },
+        "rollbackPlan": {
+          "type": "string"
+        },
+        "scopeBoundary": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "privatePathRedacted": {
+      "const": true,
+      "default": true
+    }
+  },
+  "$defs": {
+    "scope": {
+      "type": "string",
+      "enum": [
+        "current-user",
+        "default-user",
+        "offline-image",
+        "machine"
+      ]
+    }
+  },
+  "not": {
+    "required": [
+      "executed"
+    ]
+  },
+  "additionalProperties": false
+}

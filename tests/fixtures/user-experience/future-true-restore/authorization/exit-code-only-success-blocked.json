@@ -1,0 +1,15 @@
+{
+  "requestId": "exit-code-only-success-blocked",
+  "scope": "current-user",
+  "targetIdentity": "redacted-user-sid:S-1-5-21-redacted",
+  "mutationType": "default-apps",
+  "expectedBeforeState": "fixture-before-current-user-state",
+  "allowedCommand": "future-approved-command-envelope",
+  "rollbackPlan": "fixture-current-user-rollback",
+  "beforeEvidence": "fixture-before-evidence",
+  "afterEvidence": "fixture-after-evidence",
+  "independentVerification": "exit-code-0",
+  "failurePropagation": "stop-on-failure",
+  "reviewCheckpoint": "maintainer-review-required",
+  "exitCodeOnlySuccess": true
+}

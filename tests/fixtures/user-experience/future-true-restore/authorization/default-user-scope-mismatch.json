@@ -1,0 +1,15 @@
+{
+  "requestId": "default-user-scope-mismatch",
+  "scope": "default-user",
+  "claimedScope": "current-user",
+  "targetIdentity": "default-user-template:redacted",
+  "mutationType": "default-apps",
+  "expectedBeforeState": "fixture-before-default-user-state",
+  "allowedCommand": "future-approved-command-envelope",
+  "rollbackPlan": "fixture-default-user-backup",
+  "beforeEvidence": "fixture-before-evidence",
+  "afterEvidence": "fixture-after-evidence",
+  "independentVerification": "fixture-template-verification",
+  "failurePropagation": "stop-on-failure",
+  "reviewCheckpoint": "maintainer-review-required"
+}

@@ -399,6 +399,30 @@
       "notes": "Separates future true UX mutation from Issue 18 ready report-only stage and requires explicit authorization."
     },
     {
+      "id": "future-true-ux-restore-authorization",
+      "displayName": "Future true UX restore authorization intake",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "scripts/validate/Test-FutureTrueUxRestoreAuthorization.ps1",
+      "evidence": "report",
+      "notes": "Validates future true UX restore authorization intake without allowing mutation."
+    },
+    {
+      "id": "future-true-ux-restore-evidence-model",
+      "displayName": "Future true UX restore evidence model",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "docs/67-future-true-ux-restore-evidence-model.md",
+      "evidence": "document",
+      "notes": "Defines evidence needed before any future true UX restore mutation can be authorized."
+    },
+    {
       "id": "controlled-execution-disk-identity",
       "displayName": "Controlled execution disk identity fixture validation",
       "layer": "pr-fast",

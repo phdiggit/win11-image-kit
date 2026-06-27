@@ -451,6 +451,7 @@ function Test-JsonSchemaFiles {
         @{ Manifest = "services.json"; Schema = "services.schema.json" },
         @{ Manifest = "software.json"; Schema = "software.schema.json" },
         @{ Manifest = "sysprep-appx-gate.json"; Schema = "sysprep-appx-gate.schema.json" },
+        @{ Manifest = "future-true-ux-restore-authorization.json"; Schema = "future-true-ux-restore-authorization.schema.json" },
         @{ Manifest = "user-experience-restore.json"; Schema = "user-experience-restore.schema.json" }
     )
 

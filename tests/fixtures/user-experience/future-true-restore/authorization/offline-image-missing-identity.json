@@ -1,0 +1,14 @@
+{
+  "requestId": "offline-image-missing-identity",
+  "scope": "offline-image",
+  "targetIdentity": "",
+  "mutationType": "default-apps",
+  "expectedBeforeState": "fixture-before-image-state",
+  "allowedCommand": "future-approved-command-envelope",
+  "rollbackPlan": "fixture-unmount-discard",
+  "beforeEvidence": "fixture-before-evidence",
+  "afterEvidence": "fixture-after-evidence",
+  "independentVerification": "fixture-offline-image-verification",
+  "failurePropagation": "stop-on-failure",
+  "reviewCheckpoint": "maintainer-review-required"
+}

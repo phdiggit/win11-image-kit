@@ -80,6 +80,12 @@ jobs:
           $ErrorActionPreference = "Stop"
           & .\scripts\validate\Test-UserExperienceRestore.ps1
 
+      - name: Run future UX restore authorization validation with Windows PowerShell
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+          & .\scripts\validate\Test-FutureTrueUxRestoreAuthorization.ps1
+
       - name: Run effective configuration validation with Windows PowerShell
         shell: powershell
         run: |
@@ -245,6 +251,12 @@ jobs:
               "tests/pester/UserExperienceRestoreSafety.Tests.ps1",
               "tests/pester/UserExperienceDefaultAppsPlan.Tests.ps1",
               "tests/pester/UserExperienceStartMenuPlan.Tests.ps1",
+              "tests/pester/Issue18ManualClosureHandoff.Tests.ps1",
+              "tests/pester/Issue18FutureTrueUxRestoreSplit.Tests.ps1",
+              "tests/pester/FutureTrueUxRestoreAuthorization.Tests.ps1",
+              "tests/pester/FutureTrueUxRestoreEvidence.Tests.ps1",
+              "tests/pester/FutureTrueUxRestoreSafety.Tests.ps1",
+              "tests/pester/FutureTrueUxRestoreValidation.Tests.ps1",
               "tests/pester/Issue11ClosePrep.Tests.ps1",
               "tests/pester/Issue11MainValidationEvidence.Tests.ps1",
               "tests/pester/UserExperienceStateVerification.Tests.ps1",
@@ -326,6 +338,12 @@ jobs:
           $ErrorActionPreference = "Stop"
           & .\scripts\validate\Test-ControlledExecution.ps1
 
+      - name: Run future UX restore authorization validation with Windows PowerShell
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+          & .\scripts\validate\Test-FutureTrueUxRestoreAuthorization.ps1
+
       - name: Run PSScriptAnalyzer with Windows PowerShell
         shell: powershell
         run: |
@@ -392,6 +410,12 @@ jobs:
         run: |
           $ErrorActionPreference = "Stop"
           & .\scripts\validate\Test-ControlledExecution.ps1
+
+      - name: Run future UX restore authorization validation with PowerShell 7
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          & .\scripts\validate\Test-FutureTrueUxRestoreAuthorization.ps1
 
       - name: Run PSScriptAnalyzer with PowerShell 7
         shell: pwsh

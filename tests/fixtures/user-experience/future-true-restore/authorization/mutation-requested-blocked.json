@@ -1,0 +1,15 @@
+{
+  "requestId": "mutation-requested-blocked",
+  "scope": "machine",
+  "targetIdentity": "machine:redacted",
+  "mutationType": "policy",
+  "expectedBeforeState": "fixture-before-machine-state",
+  "allowedCommand": "future-approved-command-envelope",
+  "rollbackPlan": "fixture-machine-rollback",
+  "beforeEvidence": "fixture-before-evidence",
+  "afterEvidence": "fixture-after-evidence",
+  "independentVerification": "fixture-machine-verification",
+  "failurePropagation": "stop-on-failure",
+  "reviewCheckpoint": "maintainer-review-required",
+  "mutationRequested": true
+}
