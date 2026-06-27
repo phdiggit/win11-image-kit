@@ -303,7 +303,7 @@
                         "path":  "README.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "de0ef821a3421721171b92b3c70805fdbc840a193771b3623fc5c55191130d7f",
+                        "hash":  "da9679f670f76996545231594915f2b4bceb4b9a260408f365fb1a2505d49886",
                         "reason":  "README links Issue 18 UX restore intake and validation entrypoint."
                     },
                     {
@@ -394,7 +394,7 @@
                         "path":  "manifests/quality-gates.json",
                         "category":  "manifest",
                         "required":  true,
-                        "hash":  "d109c4d9209ff18a4ccfffe1e43fad11ec7fafb4b378619c92650ddbce13df15",
+                        "hash":  "1cb54c760448c6de078e4b9bb660ca756dac3d9b49dc36101859fc9573fdca61",
                         "reason":  "Quality Gates include Issue 18 UX restore plan and acceptance gates."
                     },
                     {
@@ -1682,7 +1682,7 @@
                         "path":  "docs/59-issue18-user-experience-restore-acceptance.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "fff0cc0b8514a00d125de37a9e013d997f4fb754ff28ff8f63bc03d71c53c589",
+                        "hash":  "8bda802cd7b48378daccd38e183df1bd22f3051a986532eddb86155daba74dfa",
                         "reason":  "Issue 18 acceptance scaffold records report-only fixture coverage and safety boundaries."
                     },
                     {
@@ -1773,14 +1773,14 @@
                         "path":  "docs/58-issue18-user-experience-restore-intake.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "9a76cab7ba59c1e033e19e054e110031efb5da8fe09bb5e217d909d43661030b",
+                        "hash":  "0fe400f705aed4e97b9a94087796feb6fc3311c2c62e6d1c9d35d2eb30c97d25",
                         "reason":  "Issue 18 intake records real Issue and Roadmap scope for UX restore planning."
                     },
                     {
                         "path":  "tests/pester/Issue18UserExperienceRestoreAcceptance.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "e6c4b45e9f393a69d159c7ce0b34233b456c14a041bda11d6639b4adbacf927c",
+                        "hash":  "494ecd4b566142ad09b7115534bbb9aab53187cfeb95343b73ad43c534ee67ee",
                         "reason":  "Issue 18 acceptance tests guard QG and Build Lock wiring."
                     },
                     {
@@ -1899,21 +1899,21 @@
                         "path":  "docs/04-部署后恢复.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "53fa604661deda1b206a98e3fcbfefd0d3002de63a2b6cc5739c2d5d658cb7b1",
+                        "hash":  "28b82cb0833c9f56fb866ffcd26b8c67db8d51d1cc0cf6e632dd9362f516c260",
                         "reason":  "Issue 18 UX restore documentation records report-only capability and safety boundaries."
                     },
                     {
                         "path":  "docs/06-已知问题与决策.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "4d5623c9dc6095b8f0d2be2ff6f5d04941a8d2c6c5e667258d049e23c772809d",
+                        "hash":  "6901dd82d7ee993ae29e9cd4833b5e5c8ed4e783fb890266cf6bef813f74981f",
                         "reason":  "Issue 18 UX restore documentation records report-only capability and safety boundaries."
                     },
                     {
                         "path":  "docs/60-issue18-user-experience-capability-matrix.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "1b3fbd51d32ce2ba0ba7daec24a8b89513555f63198e6839b409f40b56fe1b2f",
+                        "hash":  "098c65e9a02d7511c4ededc3ad6a149503f14caf433f057e5ed809db854e4c87",
                         "reason":  "Issue 18 capability matrix runbook documents version-aware UX restore boundaries and verification evidence."
                     },
                     {
@@ -2095,7 +2095,7 @@
                         "path":  "tests/pester/Issue18UserExperienceCapabilityMatrix.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "9fbbb7b1ef962c80271fd7a5eeffa9229919dd5f7b348fb53b6ff4a0bf5388d9",
+                        "hash":  "ba560fcaa4f38a91172ae0fe5da4db774878f8f93d6efce295e77ab220fa2aa0",
                         "reason":  "Issue 18 capability matrix tests guard support status and build awareness."
                     },
                     {
@@ -2158,7 +2158,7 @@
                         "path":  "docs/61-issue18-restore-handler-integration.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "f64648653604f6e4f0eac5ab8b3c39512375a0834d42d1b9da82e59facdfd5bf",
+                        "hash":  "c1d7d0d938c73a489c82d9a934a49fe7810223f380dfd2e8577de3108b5619a1",
                         "reason":  "Issue 18 restore handler integration runbook documents report-only handler wiring and non-goals."
                     },
                     {
@@ -2312,7 +2312,7 @@
                         "path":  "tests/pester/Issue18RestoreHandlerIntegration.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "b5d5a55fe6a074c367f4182455c146c57cf87e6a6187ef96cfb93fe032e48fd7",
+                        "hash":  "fd6d6f2d7ed6f0339474b2c998794a2527a3f5307e3cc644b315ca250f3e57c5",
                         "reason":  "Issue 18 handler Pester tests guard report-only adapters and safety boundaries."
                     },
                     {
@@ -2354,29 +2354,57 @@
                         "path":  "docs/62-issue18-close-preparation.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "901bf75cea897f295c770abe84a52645962f18eb3b79105cd6b1106243ff5e96",
+                        "hash":  "6cee207a6a74d972b23aa4cb1ed059762e155e6569f04fc48ad39b74d4c750a9",
                         "reason":  "Issue 18 acceptance consolidation and close-prep scaffold input."
                     },
                     {
                         "path":  "docs/63-issue18-main-validation-evidence.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "3957fc425448f32e0fcfe6bccb7c53eeb0e31270bfeb1773e6acb7ef9b2e10a8",
+                        "hash":  "ae2e3706dcec95c5dc586f21dc41ff8998dc00d87c0b2421d62bdb76ccfbecb8",
                         "reason":  "Issue 18 acceptance consolidation and close-prep scaffold input."
                     },
                     {
                         "path":  "tests/pester/Issue18ClosePrep.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "6cf979fd6fd81d56581bb4a9bd249636028a0a37fbe0fbdb32a330459551ddc2",
+                        "hash":  "612d789b7333a1a8f5d02a33e2e78ad24726c99555b3873129fa97ab633f9c03",
                         "reason":  "Issue 18 acceptance consolidation and close-prep scaffold input."
                     },
                     {
                         "path":  "tests/pester/Issue18MainValidationEvidence.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "01b77e40f28686edf0961a6a753bb1a063058b8cb2a9b09c5c18934d87fd1d21",
+                        "hash":  "b14f927b522440631fb59eb8e9641ce8be16f8d607ac5af42012e92c27ad9863",
                         "reason":  "Issue 18 acceptance consolidation and close-prep scaffold input."
+                    },
+                    {
+                        "path":  "docs/64-issue18-manual-closure-handoff.md",
+                        "category":  "doc",
+                        "required":  true,
+                        "hash":  "07ad3b9c966aec5652524add310d008d58ffb83c8339e11b0c5a5ca245fcc3e0",
+                        "reason":  "Issue 18 manual closure handoff keeps ready state scoped and non-closing."
+                    },
+                    {
+                        "path":  "docs/65-future-true-ux-restore-execution-split.md",
+                        "category":  "doc",
+                        "required":  true,
+                        "hash":  "b60aeba59e06ab17a73a0b979ea7144303cd2d4a98ec90ddac7ec3d8b8e17257",
+                        "reason":  "Issue 18 future true UX restore split requires explicit authorization before mutation."
+                    },
+                    {
+                        "path":  "tests/pester/Issue18ManualClosureHandoff.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "cfb81f179303f9ddd0f09551de824f1336f4b9597d2b241ac9fcae74263b4437",
+                        "reason":  "Issue 18 handoff tests guard no auto-close, no completion summary, and build-lock wiring."
+                    },
+                    {
+                        "path":  "tests/pester/Issue18FutureTrueUxRestoreSplit.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "8d28da723f4101bd7e8ef0ac76bbfbf50ba5cc43a5fe3163ad889d604c880421",
+                        "reason":  "Issue 18 future split tests guard explicit authorization and no true UX mutation."
                     }
                 ],
     "watchGlobs":  [

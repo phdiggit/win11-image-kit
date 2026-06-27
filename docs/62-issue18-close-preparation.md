@@ -6,6 +6,8 @@ Status: `ready-for-manual-closure`
 
 This document records manual closure readiness for the current report-only / handler-adapter stage. Issue #18 can be evaluated for maintainer manual closure of this stage, but it must not be automatically closed by this PR.
 
+Manual closure handoff is recorded in [Issue #18 Manual Closure Handoff](64-issue18-manual-closure-handoff.md). Future true UX restore execution remains split into [Future True UX Restore Execution Split](65-future-true-ux-restore-execution-split.md).
+
 The candidate scope covers version-aware and scope-aware UX restore planning, template metadata validation, handler adapters, manual checklist generation, false-success guardrails, and report-only safety boundaries.
 
 ## Accepted Report-only / Fixture / Handler Capabilities
@@ -74,3 +76,5 @@ Refs #18
 - [Issue #18 User Experience Capability Matrix](60-issue18-user-experience-capability-matrix.md)
 - [Issue #18 Restore Handler Integration](61-issue18-restore-handler-integration.md)
 - [Issue #18 Main Validation Evidence](63-issue18-main-validation-evidence.md)
+- [Issue #18 Manual Closure Handoff](64-issue18-manual-closure-handoff.md)
+- [Future True UX Restore Execution Split](65-future-true-ux-restore-execution-split.md)
