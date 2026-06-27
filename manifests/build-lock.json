@@ -296,7 +296,7 @@
                         "path":  ".github/workflows/ci.yml",
                         "category":  "workflow",
                         "required":  true,
-                        "hash":  "3194944f22b0fdad4f574148f52cbb5770a326072e40a9f83f239d35ff076497",
+                        "hash":  "a069b0efea9f447021ee0dc17a1f2ecbb0fbe2452c6cc532d22a19c4a5413e66",
                         "reason":  "PR Fast CI runs Issue 18 UX restore validation and Pester coverage."
                     },
                     {
@@ -1717,7 +1717,7 @@
                         "path":  "scripts/common/New-KitUserExperienceRestoreReport.ps1",
                         "category":  "script",
                         "required":  true,
-                        "hash":  "c963ba12281cbb4a020808201b98ad345b2dbbb1e38beb20e8d5b3c42508fbcf",
+                        "hash":  "b6ad1456f1cf3f4c438f218b2dfc5aa9a98bd912817465157025ba124ec64258",
                         "reason":  "Issue 18 report builder keeps UX restore fixture-first and trueExecution=false."
                     },
                     {
@@ -2116,7 +2116,7 @@
                         "path":  "tests/pester/UserExperienceTemplateMetadata.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "1c9680bf03e0cd5e3be851db704765ad08bf774d11237d32ddbfc667a9572a1f",
+                        "hash":  "ba1bdb5dbb22430d662b614067482c1e0899c5ef568711c5a1cb0a6bcd10c4e3",
                         "reason":  "Issue 18 template metadata tests guard source, scope, target app, and ProgId failures."
                     },
                     {
@@ -2361,7 +2361,7 @@
                         "path":  "docs/63-issue18-main-validation-evidence.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "3811ff87323d439fea71153c80a5268645078359a3e3ac626a83a4a7f3eafc52",
+                        "hash":  "911aa42e996b8410868720d764562d225b26e8c98b05d500a7b37c2e282291b0",
                         "reason":  "Issue 18 acceptance consolidation and close-prep scaffold input."
                     },
                     {
@@ -2375,7 +2375,7 @@
                         "path":  "tests/pester/Issue18MainValidationEvidence.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "c3b0a2cfca24576ec1a9783aa12899688422342ab0364b601e63eb6be7e91580",
+                        "hash":  "8be449118be5412347887a6cbd26c567a6ad01e7fa2266c3c5cb17849790c19e",
                         "reason":  "Issue 18 acceptance consolidation and close-prep scaffold input."
                     }
                 ],
