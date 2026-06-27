@@ -1,5 +1,5 @@
 Describe "Controlled execution execution-set matrix" {
-    BeforeEach {
+    BeforeAll {
         $script:RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
         . (Join-Path $script:RepoRoot "scripts\common\New-KitControlledExecutionReport.ps1")
@@ -12,29 +12,29 @@ Describe "Controlled execution execution-set matrix" {
         $script:NativeCommandPlan = Get-Content -LiteralPath (Join-Path $script:RepoRoot "tests\fixtures\controlled-execution\native-command\planned.json") -Raw -Encoding UTF8 | ConvertFrom-Json
         $script:Authorization = Get-Content -LiteralPath (Join-Path $script:RepoRoot "tests\fixtures\controlled-execution\authorization\matched.json") -Raw -Encoding UTF8 | ConvertFrom-Json
         $script:NativeCommandSimulation = Get-Content -LiteralPath (Join-Path $script:RepoRoot "tests\fixtures\controlled-execution\native-command-simulation\baseline-success.json") -Raw -Encoding UTF8 | ConvertFrom-Json
-    }
 
-    function New-BaselineExecutionSetReport {
-        param(
-            [AllowNull()]$Manifest = $script:Manifest,
-            [AllowNull()]$NativeCommandSimulation = $script:NativeCommandSimulation
-        )
+        $script:NewBaselineExecutionSetReport = {
+            param(
+                [AllowNull()]$Manifest = $script:Manifest,
+                [AllowNull()]$NativeCommandSimulation = $script:NativeCommandSimulation
+            )
 
-        New-KitControlledExecutionReport `
-            -Manifest $Manifest `
-            -RepoRoot $script:RepoRoot `
-            -DiskIdentity $script:DiskIdentity `
-            -ConfirmationToken $script:ConfirmationToken `
-            -WimMetadata $script:WimMetadata `
-            -WinREPlan $script:WinREPlan `
-            -NativeCommandPlan $script:NativeCommandPlan `
-            -Authorization $script:Authorization `
-            -NativeCommandSimulation $NativeCommandSimulation `
-            -WhatIf
+            New-KitControlledExecutionReport `
+                -Manifest $Manifest `
+                -RepoRoot $script:RepoRoot `
+                -DiskIdentity $script:DiskIdentity `
+                -ConfirmationToken $script:ConfirmationToken `
+                -WimMetadata $script:WimMetadata `
+                -WinREPlan $script:WinREPlan `
+                -NativeCommandPlan $script:NativeCommandPlan `
+                -Authorization $script:Authorization `
+                -NativeCommandSimulation $NativeCommandSimulation `
+                -WhatIf
+        }
     }
 
     It "includes the Issue 17 execution-set matrix and keeps all actions unexecuted" {
-        $report = New-BaselineExecutionSetReport
+        $report = & $script:NewBaselineExecutionSetReport
         $stages = @($report.stageResults.stage)
 
         foreach ($stage in @("preflight", "disk-identity", "confirmation-token", "wim-validation", "partition-plan", "apply-plan", "boot-plan", "winre-plan", "native-command-simulation", "final-report")) {
@@ -53,7 +53,7 @@ Describe "Controlled execution execution-set matrix" {
         $partition = @($manifest.actions | Where-Object { $_.id -eq "partition-plan" })[0]
         $partition.mutationKind = "disk"
 
-        $report = New-BaselineExecutionSetReport -Manifest $manifest
+        $report = & $script:NewBaselineExecutionSetReport -Manifest $manifest
         $applyPlan = @($report.actions | Where-Object { $_.id -eq "apply-plan" })[0]
 
         Assert-KitEqual $report.status "failed"
@@ -66,7 +66,7 @@ Describe "Controlled execution execution-set matrix" {
 
     It "blocks the final report after a simulated native command failure" {
         $failedSimulation = Get-Content -LiteralPath (Join-Path $script:RepoRoot "tests\fixtures\controlled-execution\native-command-simulation\reagentc-failure.json") -Raw -Encoding UTF8 | ConvertFrom-Json
-        $report = New-BaselineExecutionSetReport -NativeCommandSimulation $failedSimulation
+        $report = & $script:NewBaselineExecutionSetReport -NativeCommandSimulation $failedSimulation
         $finalReport = @($report.actions | Where-Object { $_.id -eq "final-report" })[0]
 
         Assert-KitEqual $report.status "failed"
