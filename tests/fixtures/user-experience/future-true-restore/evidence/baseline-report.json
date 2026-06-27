@@ -19,5 +19,19 @@
     "rollbackPlan": "required-rollback-plan",
     "scopeBoundary": "must-prove-current-user-default-user-offline-image-or-machine-boundary"
   },
-  "privatePathRedacted": true
+  "privatePathRedacted": true,
+  "currentUserEvidenceContract": {
+    "redactedUserIdentity": "user-token:redacted-current-user",
+    "beforeEvidence": "required-current-user-before-evidence",
+    "dryRunCommandEnvelope": "required-current-user-dry-run-command-envelope",
+    "rollbackPlan": "required-current-user-rollback-plan",
+    "afterEvidencePlaceholder": "required-current-user-after-evidence-placeholder",
+    "independentVerificationPlaceholder": "required-current-user-independent-verification-placeholder",
+    "failurePropagation": "required-failure-propagation",
+    "reviewCheckpoint": "required-review-checkpoint",
+    "privatePathRedacted": true,
+    "currentUserConfirmed": false,
+    "trueExecution": false,
+    "mutationCount": 0
+  }
 }

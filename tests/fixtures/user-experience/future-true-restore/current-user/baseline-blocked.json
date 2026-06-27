@@ -1,0 +1,12 @@
+{
+  "requestId": "current-user-baseline-blocked",
+  "scope": "current-user",
+  "redactedUserIdentity": "",
+  "beforeEvidence": "",
+  "dryRunCommandEnvelope": "",
+  "rollbackPlan": "",
+  "afterEvidencePlaceholder": "",
+  "independentVerificationPlaceholder": "",
+  "failurePropagation": "",
+  "reviewCheckpoint": ""
+}

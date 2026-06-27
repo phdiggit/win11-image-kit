@@ -41,7 +41,10 @@ Describe "Future true UX restore validation runner" {
         foreach ($doc in @(
             "docs\66-future-true-ux-restore-authorization-intake.md",
             "docs\67-future-true-ux-restore-evidence-model.md",
-            "docs\68-future-true-ux-restore-dry-run-plan.md"
+            "docs\68-future-true-ux-restore-dry-run-plan.md",
+            "docs\69-future-true-ux-restore-current-user-dry-run-gate.md",
+            "docs\70-future-true-ux-restore-current-user-evidence-contract.md",
+            "docs\71-future-true-ux-restore-execute-gate-dual-approval.md"
         )) {
             Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot $doc)) $true
         }
@@ -49,14 +52,22 @@ Describe "Future true UX restore validation runner" {
         $doc66 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\66-future-true-ux-restore-authorization-intake.md") -Raw -Encoding UTF8
         $doc67 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\67-future-true-ux-restore-evidence-model.md") -Raw -Encoding UTF8
         $doc68 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\68-future-true-ux-restore-dry-run-plan.md") -Raw -Encoding UTF8
+        $doc69 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\69-future-true-ux-restore-current-user-dry-run-gate.md") -Raw -Encoding UTF8
+        $doc70 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\70-future-true-ux-restore-current-user-evidence-contract.md") -Raw -Encoding UTF8
+        $doc71 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\71-future-true-ux-restore-execute-gate-dual-approval.md") -Raw -Encoding UTF8
         Assert-KitMatch $doc66 'Status:\s*`authorization-intake`'
         Assert-KitMatch $doc67 'Status:\s*`evidence-model-draft`'
         Assert-KitMatch $doc68 'Status:\s*`dry-run-plan`'
+        Assert-KitMatch $doc69 'Status:\s*`current-user-dry-run-gate`'
+        Assert-KitMatch $doc70 'Status:\s*`evidence-contract-draft`'
+        Assert-KitMatch $doc71 'Status:\s*`execute-gate-draft`'
 
         $qualityGates = Get-Content -LiteralPath (Join-Path $script:RepoRoot "manifests\quality-gates.json") -Raw -Encoding UTF8 | ConvertFrom-Json
         $gateIds = @($qualityGates.gates.id)
         Assert-KitEqual ($gateIds -contains "future-true-ux-restore-authorization") $true
         Assert-KitEqual ($gateIds -contains "future-true-ux-restore-evidence-model") $true
+        Assert-KitEqual ($gateIds -contains "future-true-ux-current-user-dry-run") $true
+        Assert-KitEqual ($gateIds -contains "future-true-ux-execute-gate") $true
     }
 
     It "keeps Issue 18 ready state frozen and avoids completion summary wording" {

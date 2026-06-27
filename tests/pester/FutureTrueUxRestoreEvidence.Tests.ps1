@@ -18,6 +18,7 @@ Describe "Future true UX restore evidence model" {
         Assert-KitEqual $evidenceSchema.properties.mutationCount.const 0
         Assert-KitEqual $evidenceSchema.properties.commandExitCodeSufficient.const $false
         Assert-KitEqual $evidenceSchema.properties.userConfigurationConfirmed.const $false
+        Assert-KitEqual ($evidenceSchema.required -contains "currentUserEvidenceContract") $true
         Assert-KitEqual $evidenceFixture.trueExecution $false
         Assert-KitEqual $evidenceFixture.mutationCount 0
         Assert-KitEqual $evidenceFixture.commandExitCodeSufficient $false

@@ -198,7 +198,7 @@
                         "path":  "scripts/validate/Test-ProjectConfig.ps1",
                         "category":  "script",
                         "required":  true,
-                        "hash":  "a67935c510d662d085f490b6f4514dc3846fbfb68ff8a15e3bf32f3aaef888be",
+                        "hash":  "56d3a725c597795e564ab2f97fda0aa90e021ad6db7d1f009d7a7af279a7c115",
                         "reason":  "Project config validation includes the user experience restore manifest/schema pair."
                     },
                     {
@@ -296,14 +296,14 @@
                         "path":  ".github/workflows/ci.yml",
                         "category":  "workflow",
                         "required":  true,
-                        "hash":  "8b1b0486470b2ecb518ef98da6ac7e60b0023f763a68cbef6f3188861f25fc01",
+                        "hash":  "0460579c985d0777ee1d255f439e361bb715f2c7558ad37a709f3a7f7c7dac07",
                         "reason":  "PR Fast CI runs Issue 18 UX restore validation and Pester coverage."
                     },
                     {
                         "path":  "README.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "7727c270d6bb20d190a0dedf48eb83b7e1a07fa5e42928426a6e3c2f3e49c9f8",
+                        "hash":  "eaee26bb0866f1636636848ba848de51001981fe17daf93effcdc03859bea599",
                         "reason":  "README links Issue 18 UX restore intake and validation entrypoint."
                     },
                     {
@@ -394,7 +394,7 @@
                         "path":  "manifests/quality-gates.json",
                         "category":  "manifest",
                         "required":  true,
-                        "hash":  "52520f2a3da23ed18c866df2ede0d61333a426e7a3c4c3afb5b6809cf71a09d9",
+                        "hash":  "ee64465ea41cd01597a9465d7f077dc959ac6cef0dfe5c9676afbabb99617a1f",
                         "reason":  "Quality Gates include Issue 18 UX restore plan and acceptance gates."
                     },
                     {
@@ -1899,14 +1899,14 @@
                         "path":  "docs/04-部署后恢复.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "728e00e896b03985b78ffe401d8fd1c4a3eabb4caa41362e0a1e25b3119ec5d9",
+                        "hash":  "9346ca69fcaaa044e5d4c3739c31c2ded2b47de6802b2e67888ff92d8532fc09",
                         "reason":  "Issue 18 UX restore documentation records report-only capability and safety boundaries."
                     },
                     {
                         "path":  "docs/06-已知问题与决策.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "b54c09c0c4e8b90bbe0f4343ceb1e8144fd3213f8cce35b463477ce5d36c5b33",
+                        "hash":  "5bd36dab4413b55b42669b91404e8b53f078aea1ee5cf7f092edd3360955a5b7",
                         "reason":  "Issue 18 UX restore documentation records report-only capability and safety boundaries."
                     },
                     {
@@ -2403,155 +2403,295 @@
                         "path":  "tests/pester/Issue18FutureTrueUxRestoreSplit.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "f07476787c8c1a88e186cca30d6cf1cc43821a1a6c8695c1e10dbb5f4d970663",
+                        "hash":  "f00fbce42b7da831379c6a593299f3c8470f08785a2a9b05d130d043b303cdfb",
                         "reason":  "Issue 18 future split tests guard explicit authorization and no true UX mutation."
                     },
                     {
                         "path":  "docs/66-future-true-ux-restore-authorization-intake.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "28bb6c443fb7cabb21fa4369e2b26b99ef869fdf53a187dd4c623a9700eb3dad",
+                        "hash":  "b933c33a935dbe6a1e125f36b21d906e5f6cb5283400095dc3e4af0d47f1f4ba",
                         "reason":  "Future true UX restore authorization intake documentation and dry-run boundaries."
                     },
                     {
                         "path":  "docs/67-future-true-ux-restore-evidence-model.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "b1cabb08688cc78cf85414ff4faea5e101664eb4b62e8fcf2317c38f0b09fea5",
+                        "hash":  "c8a0b906f4a1b2a0bd6b0095897d28795336f6b4ef2a1416aa181e6022dabc43",
                         "reason":  "Future true UX restore authorization intake documentation and dry-run boundaries."
                     },
                     {
                         "path":  "docs/68-future-true-ux-restore-dry-run-plan.md",
                         "category":  "doc",
                         "required":  true,
-                        "hash":  "3aa14b432dfa1a54941aaa934c5b535a4aa3b3cc719ba9023c5f02aa52bc37cb",
+                        "hash":  "d982d857c9a9e2e76410c97d0b68011e44a0c53d23396cbf486094fe21ec28b7",
                         "reason":  "Future true UX restore authorization intake documentation and dry-run boundaries."
                     },
                     {
                         "path":  "manifests/future-true-ux-restore-authorization.json",
                         "category":  "manifest",
                         "required":  true,
-                        "hash":  "94384d5694409cfb66f93de2f2ce798f8fccaff96b88a8933047fe89f18c9a53",
+                        "hash":  "ef9117ea406b3225ad9681ae422a2b362b5dd09b52850fa5d85314a3947d5ebf",
                         "reason":  "Future true UX restore authorization intake manifest or synchronized gate manifest."
                     },
                     {
                         "path":  "schemas/future-true-ux-restore-authorization.schema.json",
                         "category":  "schema",
                         "required":  true,
-                        "hash":  "c3984c103627ae355d2f2f5ded9dfec737921b189168cd0a84c03433f3028e6d",
+                        "hash":  "dd4903cc304aa8957fe8cc01900a88ab291ea95c52b12f109645e13dd14e0659",
                         "reason":  "Future true UX restore authorization and evidence schema contract."
                     },
                     {
                         "path":  "schemas/future-true-ux-restore-evidence.schema.json",
                         "category":  "schema",
                         "required":  true,
-                        "hash":  "d189dc62927419ccf11444f6572b7665527483851310e599ba38d918a58d22db",
+                        "hash":  "5c69c82a38bf9e9dd37372ef8e429282d226c151edfb7be1e53265f26a23e2a3",
                         "reason":  "Future true UX restore authorization and evidence schema contract."
                     },
                     {
                         "path":  "scripts/common/New-FutureTrueUxRestoreAuthorizationReport.ps1",
                         "category":  "script",
                         "required":  true,
-                        "hash":  "02acefb247c5358a2ee8fdd8ec79dce1ae199d916aeca9aa0422991c8d45e5da",
+                        "hash":  "236fa41cab609716e6f7538513870fdc610c4ddda0b0bc37c2859d82088753c1",
                         "reason":  "Future true UX restore authorization intake report, plan, or validation entrypoint."
                     },
                     {
                         "path":  "scripts/config/Show-FutureTrueUxRestoreAuthorizationPlan.ps1",
                         "category":  "script",
                         "required":  true,
-                        "hash":  "2e102e80e5cda6a68c5bd1ceb6ea154ce277cc96a233c40dfdd584a6251cff56",
+                        "hash":  "558290df76f5f480ec6d78fc8ea9a5a13a6c58fbb1c19626e7d08d89cfe66665",
                         "reason":  "Future true UX restore authorization intake report, plan, or validation entrypoint."
                     },
                     {
                         "path":  "scripts/validate/Test-FutureTrueUxRestoreAuthorization.ps1",
                         "category":  "script",
                         "required":  true,
-                        "hash":  "e18afe353fa4e60654a3b9de62463cdf2aa15d570ba3a4591480838c35874304",
+                        "hash":  "3cdcbf738061597050516d0246a595ed06865c1e2f7c18c7b08070ca2b908896",
                         "reason":  "Future true UX restore authorization intake report, plan, or validation entrypoint."
                     },
                     {
                         "path":  "tests/fixtures/user-experience/future-true-restore/authorization/baseline-blocked.json",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "93950b5bc6bf8e77fa795a4dbae0e7b33c9ea344801a13b7ce967f0122d239b8",
+                        "hash":  "af17c5a3a62daa7d1b7ae856e5f6dc35f68b044057754afc379a89e3c6ffdb92",
                         "reason":  "Future true UX restore authorization fixtures and Pester coverage."
                     },
                     {
                         "path":  "tests/fixtures/user-experience/future-true-restore/authorization/current-user-missing-rollback.json",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "a01cb89ca6bb18e1ce60bb87926dc4828e1f274cdcaadcfd90aec127eaa2021d",
+                        "hash":  "679dd28c9e29606a9767590bee7fe0708b74b6314d98fafb71838476b2d10cef",
                         "reason":  "Future true UX restore authorization fixtures and Pester coverage."
                     },
                     {
                         "path":  "tests/fixtures/user-experience/future-true-restore/authorization/default-user-scope-mismatch.json",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "5c9dc59a443a5b71e9179ef8251219d57e3b515cbc222bf36262a97428a30179",
+                        "hash":  "13a6b8dd6e6a6be893713d6f0d0a507821855dad33ead1bd75e82a47ec7c4a49",
                         "reason":  "Future true UX restore authorization fixtures and Pester coverage."
                     },
                     {
                         "path":  "tests/fixtures/user-experience/future-true-restore/authorization/offline-image-missing-identity.json",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "dbbfccdd9bb09fb006abd6bd1220ab73729de2bf0e663deed4f7d9152d0a5dbc",
+                        "hash":  "af77e66b70027f7ced851c7511851901b93f71b017756bb65afedf1cfc975f17",
                         "reason":  "Future true UX restore authorization fixtures and Pester coverage."
                     },
                     {
                         "path":  "tests/fixtures/user-experience/future-true-restore/authorization/mutation-requested-blocked.json",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "38319e6fb7a37edcb560329a1ec652362517eece0f475401db17616ce877e071",
+                        "hash":  "6ab2432ffe4b83a3cb836a21193f3f995a4cdba3df5372fd85832a23dabcd3ef",
                         "reason":  "Future true UX restore authorization fixtures and Pester coverage."
                     },
                     {
                         "path":  "tests/fixtures/user-experience/future-true-restore/authorization/exit-code-only-success-blocked.json",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "88764ab05555f6e58490c3d28c6d3fa277f2772fd294f1ccaab0c7af1656be1c",
+                        "hash":  "6b91f22bccfc3e3a9c49eef37f10db0bc74000c8cf10b0935b5f0c8661591c8b",
                         "reason":  "Future true UX restore authorization fixtures and Pester coverage."
                     },
                     {
                         "path":  "tests/fixtures/user-experience/future-true-restore/evidence/baseline-report.json",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "a18bb0aa0a4b5ffebb354e62c79a76af3c0632dc5d6a60585a88ec1050d9d148",
+                        "hash":  "92d7c640e392cb9b3be6946bf6941ffc292186fc9ddc4229ab1d24b790e814e8",
                         "reason":  "Future true UX restore authorization fixtures and Pester coverage."
                     },
                     {
                         "path":  "tests/fixtures/user-experience/future-true-restore/evidence/private-path-blocked.json",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "4b95da1e18eb4b5b0ec0c79941469e7d632d5585cc3c4012eaff04b4bb18f12b",
+                        "hash":  "b0acf7955832124e66ec1c31ee0fd448660775c43d864377ee178848cd77dad6",
                         "reason":  "Future true UX restore authorization fixtures and Pester coverage."
                     },
                     {
                         "path":  "tests/pester/FutureTrueUxRestoreAuthorization.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "e25d0535db762d2c22d63462d9b4437eb96507b995eb914acdfc3965efff51de",
+                        "hash":  "beb8acf86b239174760f4458ab468cdc76d4f8d633fd38ed64b539b9d220f11a",
                         "reason":  "Future true UX restore authorization fixtures and Pester coverage."
                     },
                     {
                         "path":  "tests/pester/FutureTrueUxRestoreEvidence.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "b3b21972d9a24f8a858fdc8119f76a5e777bcd13173db09613cae5ad21d3e16e",
+                        "hash":  "3840e2b00650d2c62dc7998201d6863f49662d4a9e01ff7a40a80e672126cd3c",
                         "reason":  "Future true UX restore authorization fixtures and Pester coverage."
                     },
                     {
                         "path":  "tests/pester/FutureTrueUxRestoreSafety.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "07d1c7b624f9ee0d843b33a5210377cbcca99b8e54252aca21bc59ab41fb11ec",
+                        "hash":  "978a9f9002786a7703c049c027f94cba22d222c46dec0da734b4ec1173949660",
                         "reason":  "Future true UX restore authorization fixtures and Pester coverage."
                     },
                     {
                         "path":  "tests/pester/FutureTrueUxRestoreValidation.Tests.ps1",
                         "category":  "test",
                         "required":  true,
-                        "hash":  "99f1dcabdf901f8f1d654472bbfde11b64e20dfc20c5e72e173d706a97345711",
+                        "hash":  "a03d781fa548356c8abd77abcfef15f9ad1d0c05d0f4222009ae65328db83e15",
                         "reason":  "Future true UX restore authorization fixtures and Pester coverage."
+                    },
+                    {
+                        "path":  "docs/69-future-true-ux-restore-current-user-dry-run-gate.md",
+                        "category":  "doc",
+                        "required":  true,
+                        "hash":  "6e258175ce1836863b0d9d335c392055a5977877a6c975136d69220dfab34b44",
+                        "reason":  "Future true UX current-user dry-run and dual execute-gate documentation."
+                    },
+                    {
+                        "path":  "docs/70-future-true-ux-restore-current-user-evidence-contract.md",
+                        "category":  "doc",
+                        "required":  true,
+                        "hash":  "f575b62364add699917eaf33247a3bcb3736212af58394c0184b4d63055d19db",
+                        "reason":  "Future true UX current-user dry-run and dual execute-gate documentation."
+                    },
+                    {
+                        "path":  "docs/71-future-true-ux-restore-execute-gate-dual-approval.md",
+                        "category":  "doc",
+                        "required":  true,
+                        "hash":  "239d111973bfd1d95a8b9872f0c7049d46d8080472e7c26f753b50c412577f14",
+                        "reason":  "Future true UX current-user dry-run and dual execute-gate documentation."
+                    },
+                    {
+                        "path":  "scripts/common/New-FutureTrueUxRestoreCurrentUserDryRunReport.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "39a12fde45284ae0d56ea166f39cc44599326ff889bdf28dca7704e4cb494bf6",
+                        "reason":  "Future true UX current-user dry-run report, plan, or validation entrypoint."
+                    },
+                    {
+                        "path":  "scripts/config/Show-FutureTrueUxRestoreCurrentUserDryRunPlan.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "669be0f24da6770b7d6bcedb55866b34872dc76ec2aa64f8ef247f03cb3eaef2",
+                        "reason":  "Future true UX current-user dry-run report, plan, or validation entrypoint."
+                    },
+                    {
+                        "path":  "scripts/validate/Test-FutureTrueUxRestoreCurrentUserDryRun.ps1",
+                        "category":  "script",
+                        "required":  true,
+                        "hash":  "b69c07a15592fb5e5618324c224e795888dc3315f895692d447bead0f2eaf9d6",
+                        "reason":  "Future true UX current-user dry-run report, plan, or validation entrypoint."
+                    },
+                    {
+                        "path":  "tests/fixtures/user-experience/future-true-restore/current-user/authorization-approved-without-execution-blocked.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "0134da694db7f2ae627382474aa52052e9bdba120c88d014a8d1387801ce39d1",
+                        "reason":  "Future true UX current-user dry-run fixtures and Pester coverage."
+                    },
+                    {
+                        "path":  "tests/fixtures/user-experience/future-true-restore/current-user/baseline-blocked.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "d46672962772a8179dffca2c479d29cb2add9400873067d1aabcf1d7478777d0",
+                        "reason":  "Future true UX current-user dry-run fixtures and Pester coverage."
+                    },
+                    {
+                        "path":  "tests/fixtures/user-experience/future-true-restore/current-user/default-user-scope-claim-blocked.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "6d11d23387f401d4e341ed5102de55197d2ab0d29bc85fd05efa820363c2ab2d",
+                        "reason":  "Future true UX current-user dry-run fixtures and Pester coverage."
+                    },
+                    {
+                        "path":  "tests/fixtures/user-experience/future-true-restore/current-user/dry-run-ready-no-execute.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "2581cf3766e8aecf85ace6d450567e0f4eaac0455ac0a8ae3ffe38b09dabfcc8",
+                        "reason":  "Future true UX current-user dry-run fixtures and Pester coverage."
+                    },
+                    {
+                        "path":  "tests/fixtures/user-experience/future-true-restore/current-user/execution-approved-without-authorization-blocked.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "03e279aefd1da3719f32987e15eea8d789f3198434a4fcc0c208152542fa6e20",
+                        "reason":  "Future true UX current-user dry-run fixtures and Pester coverage."
+                    },
+                    {
+                        "path":  "tests/fixtures/user-experience/future-true-restore/current-user/exit-code-only-success-blocked.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "be781de2e263daa02de4f4e01015e96b1326d923065225ced3b2bb7555ae6b4e",
+                        "reason":  "Future true UX current-user dry-run fixtures and Pester coverage."
+                    },
+                    {
+                        "path":  "tests/fixtures/user-experience/future-true-restore/current-user/machine-scope-claim-blocked.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "28230fae1a3cffb99803d2e890aa30a258571e1805dfe960d724e0f1b2100efe",
+                        "reason":  "Future true UX current-user dry-run fixtures and Pester coverage."
+                    },
+                    {
+                        "path":  "tests/fixtures/user-experience/future-true-restore/current-user/missing-redacted-user.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "a0ba60daf7e2dff4b244873e9d7269deb27a63aa22a8d6cf309491c41f0c1cec",
+                        "reason":  "Future true UX current-user dry-run fixtures and Pester coverage."
+                    },
+                    {
+                        "path":  "tests/fixtures/user-experience/future-true-restore/current-user/mutation-requested-blocked.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "3439860741f3a8d6b3fec9d92fec71522c3466fe2e9c311e2af7e735dddc343c",
+                        "reason":  "Future true UX current-user dry-run fixtures and Pester coverage."
+                    },
+                    {
+                        "path":  "tests/fixtures/user-experience/future-true-restore/current-user/offline-image-scope-claim-blocked.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "19294738a3d807c11c7fd7dfe97f5fe09f1fde2725d5df86c1237e9850591656",
+                        "reason":  "Future true UX current-user dry-run fixtures and Pester coverage."
+                    },
+                    {
+                        "path":  "tests/fixtures/user-experience/future-true-restore/current-user/private-profile-path-blocked.json",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "027a4bbd5e23f5854c0dc9d41a741de8de1f19dcb421a5f33c93edde0ecac6ee",
+                        "reason":  "Future true UX current-user dry-run fixtures and Pester coverage."
+                    },
+                    {
+                        "path":  "tests/pester/FutureTrueUxRestoreCurrentUserDryRun.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "89c70a57395180a352eff051451392bf24a39562c9c47b57b3ea6dcc38eabdd3",
+                        "reason":  "Future true UX current-user dry-run fixtures and Pester coverage."
+                    },
+                    {
+                        "path":  "tests/pester/FutureTrueUxRestoreCurrentUserEvidence.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "9b652768b4f737d3fc922fef12600a55e183b75418e13186eb7a5cb8edd408f9",
+                        "reason":  "Future true UX current-user dry-run fixtures and Pester coverage."
+                    },
+                    {
+                        "path":  "tests/pester/FutureTrueUxRestoreExecuteGate.Tests.ps1",
+                        "category":  "test",
+                        "required":  true,
+                        "hash":  "eee39e32adc7496d0e2fd8652fe96913c6d7a6a147129ca0c7a1cb54eba3f06e",
+                        "reason":  "Future true UX current-user dry-run fixtures and Pester coverage."
                     }
                 ],
     "watchGlobs":  [
@@ -2636,7 +2776,8 @@
                        "tests/pester/Issue18*.Tests.ps1",
                        "tests/pester/Issue18*.Tests.ps1",
                        "tests/pester/Issue18*.Tests.ps1",
-                       "tests/pester/FutureTrueUxRestore*.Tests.ps1"
+                       "tests/pester/FutureTrueUxRestore*.Tests.ps1",
+                       "docs/*future-true-ux-restore*.md"
                    ],
     "policy":  {
                    "missingRequired":  "fail",

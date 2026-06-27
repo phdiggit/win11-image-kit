@@ -1,0 +1,13 @@
+{
+  "requestId": "current-user-offline-image-scope-claim-blocked",
+  "scope": "current-user",
+  "claimedScope": "offline-image",
+  "redactedUserIdentity": "user-token:redacted-current-user",
+  "beforeEvidence": "fixture-offline-image-state",
+  "dryRunCommandEnvelope": "future-current-user-command-envelope",
+  "rollbackPlan": "fixture-current-user-rollback-plan",
+  "afterEvidencePlaceholder": "future-current-user-after-evidence-required",
+  "independentVerificationPlaceholder": "future-independent-current-user-verification-required",
+  "failurePropagation": "stop-on-failure",
+  "reviewCheckpoint": "maintainer-review-required"
+}

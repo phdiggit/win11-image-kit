@@ -423,6 +423,30 @@
       "notes": "Defines evidence needed before any future true UX restore mutation can be authorized."
     },
     {
+      "id": "future-true-ux-current-user-dry-run",
+      "displayName": "Future true UX current-user dry-run gate",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "scripts/validate/Test-FutureTrueUxRestoreCurrentUserDryRun.ps1",
+      "evidence": "report",
+      "notes": "Validates current-user UX restore dry-run gate without allowing true mutation."
+    },
+    {
+      "id": "future-true-ux-execute-gate",
+      "displayName": "Future true UX execute gate dual approval",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "docs/71-future-true-ux-restore-execute-gate-dual-approval.md",
+      "evidence": "document",
+      "notes": "Keeps authorization and execution approval separate; no execution in this stage."
+    },
+    {
       "id": "controlled-execution-disk-identity",
       "displayName": "Controlled execution disk identity fixture validation",
       "layer": "pr-fast",

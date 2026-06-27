@@ -86,6 +86,12 @@ jobs:
           $ErrorActionPreference = "Stop"
           & .\scripts\validate\Test-FutureTrueUxRestoreAuthorization.ps1
 
+      - name: Run future UX restore current-user dry-run validation with Windows PowerShell
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+          & .\scripts\validate\Test-FutureTrueUxRestoreCurrentUserDryRun.ps1
+
       - name: Run effective configuration validation with Windows PowerShell
         shell: powershell
         run: |
@@ -257,6 +263,9 @@ jobs:
               "tests/pester/FutureTrueUxRestoreEvidence.Tests.ps1",
               "tests/pester/FutureTrueUxRestoreSafety.Tests.ps1",
               "tests/pester/FutureTrueUxRestoreValidation.Tests.ps1",
+              "tests/pester/FutureTrueUxRestoreCurrentUserDryRun.Tests.ps1",
+              "tests/pester/FutureTrueUxRestoreCurrentUserEvidence.Tests.ps1",
+              "tests/pester/FutureTrueUxRestoreExecuteGate.Tests.ps1",
               "tests/pester/Issue11ClosePrep.Tests.ps1",
               "tests/pester/Issue11MainValidationEvidence.Tests.ps1",
               "tests/pester/UserExperienceStateVerification.Tests.ps1",
@@ -344,6 +353,12 @@ jobs:
           $ErrorActionPreference = "Stop"
           & .\scripts\validate\Test-FutureTrueUxRestoreAuthorization.ps1
 
+      - name: Run future UX restore current-user dry-run validation with Windows PowerShell
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+          & .\scripts\validate\Test-FutureTrueUxRestoreCurrentUserDryRun.ps1
+
       - name: Run PSScriptAnalyzer with Windows PowerShell
         shell: powershell
         run: |
@@ -416,6 +431,12 @@ jobs:
         run: |
           $ErrorActionPreference = "Stop"
           & .\scripts\validate\Test-FutureTrueUxRestoreAuthorization.ps1
+
+      - name: Run future UX restore current-user dry-run validation with PowerShell 7
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          & .\scripts\validate\Test-FutureTrueUxRestoreCurrentUserDryRun.ps1
 
       - name: Run PSScriptAnalyzer with PowerShell 7
         shell: pwsh

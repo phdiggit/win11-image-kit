@@ -1,0 +1,13 @@
+{
+  "requestId": "current-user-default-user-scope-claim-blocked",
+  "scope": "current-user",
+  "claimedScope": "default-user",
+  "redactedUserIdentity": "user-token:redacted-current-user",
+  "beforeEvidence": "fixture-default-user-template-state",
+  "dryRunCommandEnvelope": "future-current-user-command-envelope",
+  "rollbackPlan": "fixture-current-user-rollback-plan",
+  "afterEvidencePlaceholder": "future-current-user-after-evidence-required",
+  "independentVerificationPlaceholder": "future-independent-current-user-verification-required",
+  "failurePropagation": "stop-on-failure",
+  "reviewCheckpoint": "maintainer-review-required"
+}

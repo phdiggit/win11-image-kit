@@ -41,4 +41,15 @@ Describe "Issue 18 future true UX restore split" {
         Assert-KitMatch $script:Doc "offline image is not the current machine"
         Assert-KitNotMatch $script:Doc "(?i)\b(fixes|closes|resolves)\s+#18\b"
     }
+
+    It "keeps future current-user gate as dry-run only" {
+        $docPath = Join-Path $script:RepoRoot "docs\69-future-true-ux-restore-current-user-dry-run-gate.md"
+        $doc = Get-Content -LiteralPath $docPath -Raw -Encoding UTF8
+
+        Assert-KitMatch $doc 'Status:\s*`current-user-dry-run-gate`'
+        Assert-KitMatch $doc "AuthorizationApproved=false"
+        Assert-KitMatch $doc "ExecutionApproved=false"
+        Assert-KitMatch $doc "dry-run-ready"
+        Assert-KitMatch $doc "cannot execute mutation"
+    }
 }
