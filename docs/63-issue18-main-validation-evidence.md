@@ -17,6 +17,12 @@ This scaffold is reserved for post-PR main/workflow validation evidence. PR Fast
 | Result | pending |
 | Notes | pending post-PR main/workflow evidence |
 
+## Blocked Evidence Attempt
+
+The post-PR #94 `main` push run at `https://github.com/phdiggit/win11-image-kit/actions/runs/28281913558` targeted `c634998b4d050601f72183f3114d463639518b9b`, but `Full Validate` completed with conclusion `failure`. The job `https://github.com/phdiggit/win11-image-kit/actions/runs/28281913558/job/83799151961` failed in `Run Pester tests with PowerShell 7`. This failed run is recorded only as blocked evidence and is not used as ready evidence.
+
+Blocked reason: post-PR #94 main Full Validate completed with conclusion `failure`, and the failed run is not eligible as ready evidence.
+
 ## UX Restore Report Evidence
 
 | Field | Value |
