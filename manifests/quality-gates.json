@@ -288,7 +288,7 @@
       "blocking": true,
       "entrypoint": "docs/53-issue17-controlled-execution-acceptance.md",
       "evidence": "document",
-      "notes": "Records accepted-pending-main-validation dry-run coverage without final closure."
+      "notes": "Records accepted-ready-for-manual-closure dry-run coverage for the current planning/simulation stage without true execution."
     },
     {
       "id": "issue17-close-prep",
@@ -300,7 +300,7 @@
       "blocking": true,
       "entrypoint": "docs/56-issue17-close-preparation.md",
       "evidence": "document",
-      "notes": "Records manual closure candidate only; PR Fast CI and simulation are not main/workflow evidence."
+      "notes": "Records manual closure readiness for the current planning/simulation stage; PR Fast CI and simulation are not main/workflow or real lifecycle evidence."
     },
     {
       "id": "issue17-main-evidence-scaffold",
@@ -312,7 +312,7 @@
       "blocking": true,
       "entrypoint": "docs/57-issue17-main-validation-evidence.md",
       "evidence": "document",
-      "notes": "Keeps main/workflow evidence pending until real main or workflow_dispatch evidence exists."
+      "notes": "Records post-PR #89 main push Full Validate success for manual closure review while keeping true execution out of scope."
     },
     {
       "id": "issue16-acceptance",

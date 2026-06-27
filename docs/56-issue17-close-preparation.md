@@ -1,12 +1,12 @@
 # Issue #17 Close Preparation
 
-Status: `ready-for-manual-closure-candidate`
+Status: `ready-for-manual-closure`
 
 ## Final Scope Candidate
 
 Issue #17 now has a consolidated controlled execution planning baseline covering dry-run reporting, disk identity fixtures, confirmation-token checks, WIM metadata fixtures, WinRE planning, native command envelopes, authorization checks, execution-set dependency blocking, native command simulation, and a WinPE plan entrypoint.
 
-This page is a candidate for maintainer manual review only. It is not final manual closure readiness and it is not automatic Issue #17 closure.
+This page is ready for maintainer manual closure review of the current planning/simulation stage because [Issue #17 Main Validation Evidence](57-issue17-main-validation-evidence.md) records post-PR #89 `main` push Full Validate success. It is still not an automatic Issue #17 closure.
 
 ## Accepted Report-only / Fixture / Simulation Capabilities
 
@@ -33,6 +33,8 @@ This page is a candidate for maintainer manual review only. It is not final manu
 
 PR Fast CI may validate static, fixture, simulation, report-only, and plan-only behavior. PR Fast CI is not main/workflow evidence. Simulation is not real execution evidence.
 
+The manual closure readiness recorded here is based on post-PR #89 `main` push Full Validate success in `docs/57`. It does not represent true WinPE, disk, WIM, boot, or recovery execution.
+
 The close-prep candidate requires:
 
 - `whatIf=true`
@@ -48,9 +50,9 @@ The close-prep candidate requires:
 
 ## Manual Closure Checklist
 
-- Confirm `docs/53`, `docs/54`, and `docs/55` remain `accepted-pending-main-validation`.
-- Confirm this page remains `ready-for-manual-closure-candidate`, not final ready.
-- Confirm `docs/57` remains `pending-main-validation`.
+- Confirm `docs/53`, `docs/54`, and `docs/55` are `accepted-ready-for-manual-closure`.
+- Confirm this page remains `ready-for-manual-closure` for the current planning/simulation stage only.
+- Confirm `docs/57` records post-PR #89 main/workflow Full Validate success.
 - Confirm PR Fast CI is not used as main/workflow evidence.
 - Confirm simulation is not used as real lifecycle evidence.
 - Confirm real disk, WIM, DISM, boot, and recovery evidence remain not-run, not-captured, or not-provided.
@@ -69,7 +71,7 @@ Build Lock may cover tracked docs, manifests, schemas, scripts, fixtures, tests,
 
 ## Closure Note Draft
 
-Issue #17 has a controlled execution planning baseline with accepted report-only, fixture, simulation, authorization, dependency, and WinPE plan-entrypoint coverage. Maintainers may review this as a manual closure candidate for the current planning stage, while main/workflow validation evidence remains pending and real WinPE/disk/WIM/boot/recovery execution remains not-run, not-captured, or not-provided.
+Issue #17 has a controlled execution planning baseline with accepted report-only, fixture, simulation, authorization, dependency, WinPE plan-entrypoint coverage, and post-PR #89 main push Full Validate evidence recorded in docs/57. Maintainers may manually review Issue #17 for closure of the current planning/simulation stage, while real WinPE/disk/WIM/boot/recovery execution remains not-run, not-captured, or not-provided.
 
 ## Related Documents
 

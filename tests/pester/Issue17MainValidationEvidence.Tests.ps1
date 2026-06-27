@@ -6,8 +6,8 @@ Describe "Issue 17 main validation evidence scaffold" {
         $script:Doc = Get-Content -LiteralPath $script:DocPath -Raw -Encoding UTF8
     }
 
-    It "keeps docs/57 pending and rejects PR Fast CI or simulation substitutes" {
-        Assert-KitMatch $script:Doc 'Status:\s*`pending-main-validation`'
+    It "keeps docs/57 ready and rejects PR Fast CI or simulation substitutes" {
+        Assert-KitMatch $script:Doc 'Status:\s*`ready-for-manual-closure`'
         Assert-KitMatch $script:Doc "Pull request-only Fast CI is not a substitute"
         Assert-KitMatch $script:Doc "Native command simulation is not a substitute"
         Assert-KitMatch $script:Doc '\| PR Fast CI substitute allowed \| `false` \|'
@@ -15,16 +15,33 @@ Describe "Issue 17 main validation evidence scaffold" {
         Assert-KitNotMatch $script:Doc "(?i)\b(fixes|closes|resolves)\s+#17\b"
     }
 
-    It "keeps current evidence pending" {
-        foreach ($field in @("Trigger source", "Main SHA", "Workflow run", "Full Validate job", "Result")) {
-            Assert-KitMatch $script:Doc ('\| {0} \| `pending` \|' -f [regex]::Escape($field))
-        }
-        Assert-KitMatch $script:Doc '\| Notes \| `pending post-PR main/workflow evidence` \|'
+    It "records post-PR main Full Validate success evidence" {
+        Assert-KitMatch $script:Doc '\| Trigger source \| `(?:main push|workflow_dispatch)` \|'
+        Assert-KitMatch $script:Doc '\| Main SHA \| `[0-9a-f]{40}` \|'
+        Assert-KitMatch $script:Doc '\| Workflow run \| `https://github\.com/phdiggit/win11-image-kit/actions/runs/[0-9]+` \|'
+        Assert-KitMatch $script:Doc '\| Full Validate job \| `https://github\.com/phdiggit/win11-image-kit/actions/runs/[0-9]+/job/[0-9]+` \|'
+        Assert-KitMatch $script:Doc '\| Result \| `success` \|'
+        Assert-KitMatch $script:Doc "checkout log fetched"
+        Assert-KitMatch $script:Doc "local git log -1 confirmed"
     }
 
-    It "keeps controlled execution report evidence pending with safety flags fixed" {
-        foreach ($field in @("Report status", "failedCount", "blockedCount", "authorizationFailureCount", "executeRequestBlockedCount", "simulatedFailureCount", "dependencyBlockedCount")) {
-            Assert-KitMatch $script:Doc ('\| {0} \| `pending` \|' -f [regex]::Escape($field))
+    It "records controlled execution report evidence with zero failure counts" {
+        Assert-KitMatch $script:Doc '\| Report status \| `(passed|manual)` \|'
+        foreach ($field in @(
+            "failedCount",
+            "blockedCount",
+            "authorizationFailureCount",
+            "executeRequestBlockedCount",
+            "simulatedFailureCount",
+            "dependencyBlockedCount",
+            "diskIdentityMismatchCount",
+            "confirmationTokenFailureCount",
+            "wimValidationFailureCount",
+            "winrePlanFailureCount",
+            "nativeCommandFailureCount",
+            "executedActionCount"
+        )) {
+            Assert-KitMatch $script:Doc ('\| {0} \| `0` \|' -f [regex]::Escape($field))
         }
 
         Assert-KitMatch $script:Doc '\| trueExecution \| `false` \|'
@@ -45,7 +62,7 @@ Describe "Issue 17 main validation evidence scaffold" {
             Assert-KitMatch $script:Doc ([regex]::Escape($field))
         }
 
-        Assert-KitMatch $script:Doc '\| Current readiness \| `pending-main-validation` \|'
-        Assert-KitMatch $script:Doc '\| Required next evidence \| `main/workflow validation` \|'
+        Assert-KitMatch $script:Doc '\| Current readiness \| `ready-for-manual-closure` \|'
+        Assert-KitMatch $script:Doc '\| Required next evidence \| `maintainer manual review` \|'
     }
 }

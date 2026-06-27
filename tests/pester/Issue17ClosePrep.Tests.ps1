@@ -6,8 +6,8 @@ Describe "Issue 17 close-prep candidate" {
         $script:Doc = Get-Content -LiteralPath $script:DocPath -Raw -Encoding UTF8
     }
 
-    It "keeps docs/56 as candidate-only close preparation" {
-        Assert-KitMatch $script:Doc 'Status:\s*`ready-for-manual-closure-candidate`'
+    It "keeps docs/56 ready for manual closure of the planning stage" {
+        Assert-KitMatch $script:Doc 'Status:\s*`ready-for-manual-closure`'
         foreach ($term in @(
             "## Final Scope Candidate",
             "## Accepted Report-only / Fixture / Simulation Capabilities",
@@ -22,9 +22,9 @@ Describe "Issue 17 close-prep candidate" {
             Assert-KitMatch $script:Doc ([regex]::Escape($term))
         }
 
-        Assert-KitMatch $script:Doc "candidate for maintainer manual review only"
-        Assert-KitMatch $script:Doc "not final manual closure readiness"
-        Assert-KitMatch $script:Doc "not automatic Issue #17 closure"
+        Assert-KitMatch $script:Doc "ready for maintainer manual closure review"
+        Assert-KitMatch $script:Doc "post-PR #89.*Full Validate success"
+        Assert-KitMatch $script:Doc "automatic.*Issue #17 closure"
         Assert-KitMatch $script:Doc "PR Fast CI is not main/workflow evidence"
         Assert-KitMatch $script:Doc "Simulation is not real execution evidence"
         Assert-KitNotMatch $script:Doc "(?i)\b(fixes|closes|resolves)\s+#17\b"

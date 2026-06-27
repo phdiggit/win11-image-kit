@@ -1,6 +1,6 @@
 # Issue #17 Controlled Execution Authorization and Simulation
 
-Status: `accepted-pending-main-validation`
+Status: `accepted-ready-for-manual-closure`
 
 ## Scope
 
@@ -101,7 +101,7 @@ PR Fast CI continues to run `scripts/validate/Test-ControlledExecution.ps1` and 
 
 Quality Gates include the new controlled-execution sub-gates. Build Lock covers the touched docs, schemas, scripts, fixtures, tests, workflow, Quality Gates, and README. It does not include `manifests/paths.local.json`, real disk reports, real WIM artifacts, real WinPE logs, or private machine paths.
 
-PR Fast CI is not main/workflow lifecycle evidence. Native command simulation is not real lifecycle evidence.
+PR Fast CI is not main/workflow lifecycle evidence. Native command simulation is not real lifecycle evidence. Post-PR #89 main push Full Validate evidence is recorded in `docs/57` for the current planning/simulation stage only.
 
 ## Non-goals
 
@@ -118,7 +118,6 @@ PR Fast CI is not main/workflow lifecycle evidence. Native command simulation is
 
 - Decide the later human authorization and review model for any real execution stage.
 - Define how true execution evidence would be collected after separate approval.
-- Backfill main/workflow validation evidence in a later task before any final manual closure decision.
 - Keep real execution behind a later controlled task with separate human authorization.
 
 ## Related Documents
