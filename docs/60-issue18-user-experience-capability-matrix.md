@@ -1,6 +1,6 @@
 # Issue #18 User Experience Capability Matrix
 
-Status: `in-acceptance`
+Status: `accepted-pending-main-validation`
 
 ## Scope
 
@@ -75,7 +75,7 @@ Unsupported or future-only matrix rows should produce a clear manual checklist i
 
 ## CI / Quality Gates / Build Lock
 
-PR Fast CI runs the Issue #18 UX restore validator and the UserExperience Pester subset. Quality Gates include capability matrix, template metadata, scope semantics, verification plan, and this document. Build Lock tracks the docs, manifest, schemas, helper scripts, fixtures, tests, workflow, README, and Quality Gates inputs.
+PR Fast CI runs the Issue #18 UX restore validator and the UserExperience Pester subset. Quality Gates include capability matrix, template metadata, scope semantics, verification plan, close-prep candidate, pending main evidence scaffold, and this document. Build Lock tracks the docs, manifest, schemas, helper scripts, fixtures, tests, workflow, README, and Quality Gates inputs.
 
 ## Non-goals
 
@@ -87,18 +87,21 @@ PR Fast CI runs the Issue #18 UX restore validator and the UserExperience Pester
 - no DISM import
 - no network download
 - no install/uninstall/upgrade
-- no Issue #18 close-prep, main-evidence, or completion summary
+- no final ready close-prep
+- no ready main evidence
+- no Issue #18 completion summary
 - no automatic Issue #18 closure
 
 ## Remaining Work
 
 - Expand default-user/current-user/offline-image simulation.
-- Add fixture-only restore handler adapters.
 - Convert manual checklist rows into future authorized evidence collection.
-- Prepare an Issue #18 close-prep candidate only in a later task.
+- Backfill post-PR main/workflow validation evidence in a later task.
 
 ## Related Documents
 
 - [Issue #18 User Experience Restore Intake](58-issue18-user-experience-restore-intake.md)
 - [Issue #18 User Experience Restore Acceptance](59-issue18-user-experience-restore-acceptance.md)
 - [Issue #18 Restore Handler Integration](61-issue18-restore-handler-integration.md)
+- [Issue #18 Close Preparation](62-issue18-close-preparation.md)
+- [Issue #18 Main Validation Evidence](63-issue18-main-validation-evidence.md)

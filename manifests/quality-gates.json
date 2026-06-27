@@ -348,7 +348,31 @@
       "blocking": true,
       "entrypoint": "docs/61-issue18-restore-handler-integration.md",
       "evidence": "document",
-      "notes": "Documents Restore-UserExperience handler integration without close-prep, main evidence, completion summary, or true execution."
+      "notes": "Documents Restore-UserExperience handler integration without final ready close-prep, ready main evidence, completion summary, or true execution."
+    },
+    {
+      "id": "issue18-close-prep",
+      "displayName": "Issue 18 close-prep candidate",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "docs/62-issue18-close-preparation.md",
+      "evidence": "document",
+      "notes": "Records manual closure candidate only; PR Fast CI, fixtures, handler reports, and manual checklist are not main/workflow or real UX restore evidence."
+    },
+    {
+      "id": "issue18-main-evidence-scaffold",
+      "displayName": "Issue 18 main evidence scaffold",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "docs/63-issue18-main-validation-evidence.md",
+      "evidence": "document",
+      "notes": "Keeps main/workflow evidence pending until real main or workflow_dispatch evidence exists."
     },
     {
       "id": "controlled-execution-disk-identity",

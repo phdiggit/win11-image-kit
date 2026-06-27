@@ -1,18 +1,18 @@
 # Issue #18 User Experience Restore Acceptance
 
-Status: `in-acceptance`
+Status: `accepted-pending-main-validation`
 
 ## Acceptance Matrix
 
 | Area | Current result | Status |
 |---|---|---|
-| Intake | Real Issue #18 and Roadmap #19 source are recorded in docs/58. | `in-acceptance` |
-| Scope | This stage is intake plus report-only / fixture baseline. | `in-acceptance` |
-| Manifest/schema | UX restore manifest and closed schemas define plan-only behavior. | `in-acceptance` |
-| Validator | Baseline report passes; failure fixtures block or fail. | `in-acceptance` |
-| Safety | Registry, profile, default app, Start menu, taskbar, network and true execution flags remain false. | `in-acceptance` |
-| CI/QG/Build Lock | PR Fast CI, Quality Gates and Build Lock include Issue #18 artifacts. | `in-acceptance` |
-| Capability matrix | Version capability, template metadata, scope semantics, and verification plan are fixture-backed and report-only. | `in-acceptance` |
+| Intake | Real Issue #18 and Roadmap #19 source are recorded in docs/58. | `accepted-pending-main-validation` |
+| Scope | This stage is intake plus report-only / fixture baseline. | `accepted-pending-main-validation` |
+| Manifest/schema | UX restore manifest and closed schemas define plan-only behavior. | `accepted-pending-main-validation` |
+| Validator | Baseline report passes; failure fixtures block or fail. | `accepted-pending-main-validation` |
+| Safety | Registry, profile, default app, Start menu, taskbar, network and true execution flags remain false. | `accepted-pending-main-validation` |
+| CI/QG/Build Lock | PR Fast CI, Quality Gates and Build Lock include Issue #18 artifacts. | `accepted-pending-main-validation` |
+| Capability matrix | Version capability, template metadata, scope semantics, and verification plan are fixture-backed and report-only. | `accepted-pending-main-validation` |
 
 ## Version-Aware Coverage
 
@@ -43,15 +43,22 @@ PR Fast CI is not main/workflow evidence. Fixture/report-only validation is not 
 - no install/uninstall/upgrade
 - no local private artifact
 
+## Main Validation Boundary
+
+This acceptance state is not final ready. It remains pending main/workflow validation and maintainer manual closure review. PR Fast CI is not main/workflow evidence, fixture/report-only validation is not real UX restore evidence, handler reports are not real UX restore evidence, and manual checklist rows are not success evidence.
+
 ## Remaining Work
 
 - Expand default-app association matrix beyond sample extensions and protocols.
 - Expand Start menu and taskbar version compatibility coverage.
 - Add deeper default-user/current-user/offline-image simulation.
-- Prepare a later Issue #18 close-prep candidate only after maintainers request that stage.
+- Backfill post-PR main/workflow validation evidence in a later task.
+- Split future true UX restore execution into an explicitly authorized task with a real evidence model.
 
 ## Related Documents
 
 - [Issue #18 User Experience Restore Intake](58-issue18-user-experience-restore-intake.md)
 - [Issue #18 User Experience Capability Matrix](60-issue18-user-experience-capability-matrix.md)
 - [Issue #18 Restore Handler Integration](61-issue18-restore-handler-integration.md)
+- [Issue #18 Close Preparation](62-issue18-close-preparation.md)
+- [Issue #18 Main Validation Evidence](63-issue18-main-validation-evidence.md)

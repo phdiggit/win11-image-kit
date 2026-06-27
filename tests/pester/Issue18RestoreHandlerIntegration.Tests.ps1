@@ -4,14 +4,15 @@ Describe "Issue 18 restore handler integration" {
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
     }
 
-    It "adds docs/61 and keeps Issue 18 out of close-prep" {
+    It "keeps docs/61 accepted but not final ready" {
         $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\61-issue18-restore-handler-integration.md") -Raw -Encoding UTF8
-        Assert-KitMatch $doc 'Status: `in-acceptance`'
+        Assert-KitMatch $doc 'Status: `accepted-pending-main-validation`'
         Assert-KitMatch $doc "report-only"
-        Assert-KitMatch $doc "no Issue #18 close-prep"
+        Assert-KitMatch $doc "no final ready close-prep"
+        Assert-KitMatch $doc "handler report.*real UX restore evidence"
 
         $docs = @(Get-ChildItem -LiteralPath (Join-Path $script:RepoRoot "docs") -File | Where-Object {
-            $_.Name -match "issue18" -and $_.Name -match "close-preparation|main-validation-evidence|completion-summary"
+            $_.Name -match "issue18" -and $_.Name -match "completion-summary"
         })
         Assert-KitEqual $docs.Count 0
     }

@@ -237,6 +237,8 @@ jobs:
               "tests/pester/UserExperienceTaskbarHandler.Tests.ps1",
               "tests/pester/UserExperienceManualChecklist.Tests.ps1",
               "tests/pester/Issue18RestoreHandlerIntegration.Tests.ps1",
+              "tests/pester/Issue18ClosePrep.Tests.ps1",
+              "tests/pester/Issue18MainValidationEvidence.Tests.ps1",
               "tests/pester/UserExperienceRestoreSchema.Tests.ps1",
               "tests/pester/UserExperienceRestoreReport.Tests.ps1",
               "tests/pester/UserExperienceRestoreValidation.Tests.ps1",
