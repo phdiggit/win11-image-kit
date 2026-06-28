@@ -366,8 +366,15 @@
       "path": "docs/109-future-true-ux-quality-gate-governance.md",
       "category": "doc",
       "required": true,
-      "hash": "cb2294d7549de83f43dc228d1a6b54fc327e98c83bf800f33287a59003965b4b",
+      "hash": "8f04c9f8a0a8d155cddeaf0e68ff57c5d9e8586f546add5c0da36e6e55d19a57",
       "reason": "Future True UX quality gate governance documents grouping, naming, and demotion policy."
+    },
+    {
+      "path": "docs/110-future-true-ux-archive-policy-reference-map.md",
+      "category": "doc",
+      "required": true,
+      "hash": "e3e8d35c88741f6ef8da5a8640e2ea0bca12b0b30e5d5842a411e9ef73c3d5e0",
+      "reason": "Future True UX archive policy and reference map documents archive blockers before any move."
     },
     {
       "path": "tests/pester/Issue14QualityGates.Tests.ps1",
@@ -450,8 +457,15 @@
       "path": "tests/pester/FutureTrueUxQualityGateGovernance.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "aaae88dd901514206be0001fa10c731047105b97f4ee3b4413a7585a27b4d03b",
+      "hash": "a96d6e9a29803cfa675dc1b400056b7fd2263f97a7fe5b456650a90d4663c2d0",
       "reason": "Future True UX quality gate governance tests guard grouping and report-only semantics."
+    },
+    {
+      "path": "tests/pester/FutureTrueUxArchivePolicyReferenceMap.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "541c026c5a5d700b4027079f5bc7be4b51a0167620d1946c95ce0d90a116f49c",
+      "reason": "Future True UX archive policy tests guard categories, gate coverage, and no-move semantics."
     },
     {
       "path": "tests/pester/Issue14QualityGateAcceptance.Tests.ps1",
