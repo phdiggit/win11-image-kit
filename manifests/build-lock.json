@@ -296,7 +296,7 @@
       "path": ".github/workflows/ci.yml",
       "category": "workflow",
       "required": true,
-      "hash": "39f74705ef527a3b512d79ae35da5dd9fc3b91ad3a7d6267ff4351963c32f17e",
+      "hash": "2e709f3b39858cb0c026734f9fd2dd57e6868e68395e789c579d198458705835",
       "reason": "PR Fast CI runs future true UX mock review drill validation and Pester coverage."
     },
     {
@@ -394,7 +394,7 @@
       "path": "manifests/quality-gates.json",
       "category": "manifest",
       "required": true,
-      "hash": "a182413d6196c1bcea04f89d2e7ad6de86be78bf7cf71161fdfd00557438bc2f",
+      "hash": "b11b3f368d120b90221ddd8caccea9bb0e1a29ae15568ffd93ebd00481ec353b",
       "reason": "Quality Gates include future true UX mock review drill validation."
     },
     {
@@ -2403,7 +2403,7 @@
       "path": "tests/pester/Issue18FutureTrueUxRestoreSplit.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "e63b4d83580f1161a169efc1c315ad88386b449a43ca2cfc13be32a0669b37bc",
+      "hash": "91e81766e33d0540ee76d5700eaea57168680035d5a66974f0e0b436ecb3afeb",
       "reason": "Issue 18 future split tests guard explicit authorization and no true UX mutation."
     },
     {
@@ -2431,21 +2431,21 @@
       "path": "manifests/future-true-ux-restore-authorization.json",
       "category": "manifest",
       "required": true,
-      "hash": "8ffdd67ba1ac7a3e76b4b680e383e2d5529f2ba6b7f933c0a84797c848cf4489",
+      "hash": "65275559319e1239d509957b17db70697949d8acc3c0104ad831a3fdc47c91e3",
       "reason": "Future true UX authorization manifest freezes mock review drill execution flags."
     },
     {
       "path": "schemas/future-true-ux-restore-authorization.schema.json",
       "category": "schema",
       "required": true,
-      "hash": "6ef56b5016852499332829c0946e107d625cc79d330cd3956db1ef2b538e3d2e",
+      "hash": "5d66095974c8d173b2b304d16f382226fe6ca5314223e626108e4068641ceff7",
       "reason": "Authorization schema constrains mock review drill execution freeze fields."
     },
     {
       "path": "schemas/future-true-ux-restore-evidence.schema.json",
       "category": "schema",
       "required": true,
-      "hash": "b25357764610f2549c329a96ac8a16bcfa435fa3e9134d2240a5d900e5c3605a",
+      "hash": "95d7e7b960f98334e88be0000eddcb0ee084ccaf9097283f609f650db927197a",
       "reason": "Evidence schema documents the mock review drill report contract."
     },
     {
@@ -2515,7 +2515,7 @@
       "path": "tests/fixtures/user-experience/future-true-restore/evidence/baseline-report.json",
       "category": "test",
       "required": true,
-      "hash": "f88867396a5c158e0377233d62579c470e444dd90d440f67a2d3443d5260808a",
+      "hash": "75cf4faafcec1058b209e5fdca7af3f1aefae68adef9a0b093a54cfa0b7870c4",
       "reason": "Future true UX restore authorization fixtures and Pester coverage."
     },
     {
@@ -2536,21 +2536,21 @@
       "path": "tests/pester/FutureTrueUxRestoreEvidence.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "b6dd7ba590cfa111f43b2e5807a9d76e25e5e0940ab5ae7c7ac54e90dd6814db",
+      "hash": "0c16a8be5bf02b0f2a7414fde0940fc923ab0c98e1ecfa7516580e542892cbf3",
       "reason": "Future true UX restore authorization fixtures and Pester coverage."
     },
     {
       "path": "tests/pester/FutureTrueUxRestoreSafety.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "2dcb7f8c1cf4f1934c8829c36a72bc94e3ad0b36bd911aa93fa0b70b38d11bee",
+      "hash": "4cf59083213b3393e0dde437e4ce0aeba1a3cd695deabebd8c705dfd55d1b544",
       "reason": "Future true UX restore authorization fixtures and Pester coverage."
     },
     {
       "path": "tests/pester/FutureTrueUxRestoreValidation.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "43a544e3fd97eb9a3ed7b82e2b1cd294ec11b45df463b24e0c6ccc91487227c9",
+      "hash": "30ddd6dd099abcad0cdfb4191d76e25ffedc41ddf9506efec5db4538608b82f2",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
@@ -2767,7 +2767,7 @@
       "path": "tests/pester/FutureTrueUxRestoreScopeGuard.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "90fca0a051ecdd2f08721239aa891319d5551c801aa6cd53e6f0c5606a8974cb",
+      "hash": "dc820b2ab2a6c8fc3b3f83ec09919a9fe59378908eb426240b684c8851d5e64b",
       "reason": "Future true UX remaining scope dry-run Pester coverage."
     },
     {
@@ -2970,28 +2970,28 @@
       "path": "docs/76-future-true-ux-restore-unified-authorization-request.md",
       "category": "doc",
       "required": true,
-      "hash": "f45f8f09041bf2bda0a5ed4c40b969d0a1dac0c6310dfee53f93981b0effc330",
+      "hash": "9e7252de0937134074bf96dcaf6ff229ef7228b851199c968c9ce26c6ba2081e",
       "reason": "Future true UX restore authorization review documentation is a trusted review input."
     },
     {
       "path": "docs/77-future-true-ux-restore-maintainer-review-checkpoint.md",
       "category": "doc",
       "required": true,
-      "hash": "f8514ae423bee15e3bbb3e7d446df4bc6695d2125e0367ba3832b9bfdd99908e",
+      "hash": "933b84f26e2d56f3acf574c06613df238f03a12649204531aaa80176cef6fd39",
       "reason": "Future true UX restore authorization review documentation is a trusted review input."
     },
     {
       "path": "docs/78-future-true-ux-restore-evidence-packet-contract.md",
       "category": "doc",
       "required": true,
-      "hash": "0609ad1476ca8dc57517a59988dd5c72a00c47d9d639aa1a4500d5341e8cf7fb",
+      "hash": "971022a63c3256744eeea8f2e79a62fe21c2c9db60e8d3f03477518a0ba13831",
       "reason": "Future true UX restore authorization review documentation is a trusted review input."
     },
     {
       "path": "docs/79-future-true-ux-restore-authorization-state-machine.md",
       "category": "doc",
       "required": true,
-      "hash": "7194cea7ab71e265d91f95c2c83f5e9a74065311879e6c92a266648cc2ad2e38",
+      "hash": "f79bfb40939f871ac91b12111fe7d83c1ed6a51c89670e3274aadbb1e124ab89",
       "reason": "Future true UX restore authorization review documentation is a trusted review input."
     },
     {
@@ -3117,7 +3117,7 @@
       "path": "scripts/common/New-FutureTrueUxRestoreAuthorizationReviewReport.ps1",
       "category": "script",
       "required": true,
-      "hash": "23769b119def0ab4ded1c5f4ca7e400edd076b938c1287edc1e7f9087be3a8c2",
+      "hash": "ab4c3a3d828b296c92a62eb35a05f6cdeeaef94d9fca8b5fb92e124f0a8dbc63",
       "reason": "Future true UX authorization review script is a trusted report-only validation input."
     },
     {
@@ -3257,98 +3257,98 @@
       "path": "scripts/validate/Test-FutureTrueUxRestoreAuthorizationReview.ps1",
       "category": "script",
       "required": true,
-      "hash": "1938635d841b800bd31273a9319b783d099b57daaadbb73b300891ee885b6d7f",
+      "hash": "4dd8845d4bcaf2508403e7e652e9a2f17f4591ae50e7a14f3e879011b29cbf7b",
       "reason": "Future true UX authorization review script is a trusted report-only validation input."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/review/auto-close-keyword-blocked.json",
       "category": "test",
       "required": true,
-      "hash": "50f766d0495f81af098568218577d30faf1dfc53795740920a5e79f8381fa2c7",
+      "hash": "cbe976fdaeba50d3c504c0137773ddb992a59f86a2d5226d2ef84c16512f1e12",
       "reason": "Future true UX authorization review fixture guards blocked and review-ready semantics."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/review/baseline-blocked.json",
       "category": "test",
       "required": true,
-      "hash": "e0d2b1f26b9cc7ff4e22b2f369ee4d2071853bd83fa54723a0870e788fa7e4de",
+      "hash": "27cbcb841ab94fb8d7cd643636fe0d09c21435d296a82b1c3a7e5945d14ce0d2",
       "reason": "Future true UX authorization review fixture guards blocked and review-ready semantics."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/review/cross-scope-evidence-blocked.json",
       "category": "test",
       "required": true,
-      "hash": "70f2e3548489d6b940eacae7965ba8d30f2fa810a76708e52c9f1a727fa5e9a4",
+      "hash": "4cbbee146ce3525cf0821a0b98f2014d99f2d1dfdff81c05fa794f008fd61b72",
       "reason": "Future true UX authorization review fixture guards blocked and review-ready semantics."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/review/current-user-review-ready.json",
       "category": "test",
       "required": true,
-      "hash": "743b57556f243a119aff216627f5b1619fe5a746169b006c2a52886f55dd999e",
+      "hash": "35b0bfec131f1a6338e5cca4c2d75ae10276e438a00c4f907276d73009de7a81",
       "reason": "Future true UX authorization review fixture guards blocked and review-ready semantics."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/review/default-user-review-ready.json",
       "category": "test",
       "required": true,
-      "hash": "a1daca506f83076b5ed93d0dcdc979bbea8d3ab046e7c8d3fe4cb55feaa5aace",
+      "hash": "76d201299150db5e9d40074362a8c67e66e54271229caa356b6da575f07b4b50",
       "reason": "Future true UX authorization review fixture guards blocked and review-ready semantics."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/review/execute-ready-requested-blocked.json",
       "category": "test",
       "required": true,
-      "hash": "fd61ec204b1e9e0db3e039598f640813af64f8950988aa250bdaf455873bbce6",
+      "hash": "babd85e52893eaa29726a104c01ce82223027ff419030eea7fd920e3152d9b81",
       "reason": "Future true UX authorization review fixture guards blocked and review-ready semantics."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/review/execution-approved-requested-blocked.json",
       "category": "test",
       "required": true,
-      "hash": "1dba8eb120c962d163c2e2968e688fb59e87ffa753c5ff69c5fd30552b4d8fa9",
+      "hash": "53ed74c90d77ada4df87989d383f8f59b8f7f3e9a8b8d075a7c21a5ce0a91a50",
       "reason": "Future true UX authorization review fixture guards blocked and review-ready semantics."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/review/exit-code-only-success-blocked.json",
       "category": "test",
       "required": true,
-      "hash": "92bcae0abfb7751736b32c02dfadb5e05c25711ade5767cadf5cfffee6cf964e",
+      "hash": "1cc78fe37a2fc77dbccedd442f6c993577dceffbcfbebb7c16cd34235d47c0de",
       "reason": "Future true UX authorization review fixture guards blocked and review-ready semantics."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/review/machine-review-ready.json",
       "category": "test",
       "required": true,
-      "hash": "2c0faad29800a5ce517bca0ab4e9ca443a76788ff9fea680e7afaf86e5682584",
+      "hash": "adc30bc9029b753ea36ac317d8187b58be53a9d9a703f61a20083cfdc152ea7f",
       "reason": "Future true UX authorization review fixture guards blocked and review-ready semantics."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/review/missing-before-evidence-blocked.json",
       "category": "test",
       "required": true,
-      "hash": "f46c2a76f5264dbc77f14b9deb2a981f8c39bd473fc9d890a172b5b9534bd9f6",
+      "hash": "c875202584edb6863e0c6ac3b06b6204408e8627b3fd9550409cce1cff4463f6",
       "reason": "Future true UX authorization review fixture guards blocked and review-ready semantics."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/review/missing-rollback-blocked.json",
       "category": "test",
       "required": true,
-      "hash": "6318861992242932fa5250eb7293af4763dc6676d7743446b0ae590d145ef32f",
+      "hash": "7907a418152d5cbdce9c2b9a6074ed53aa5c991f5d2720a7ce8da03bdf883c3d",
       "reason": "Future true UX authorization review fixture guards blocked and review-ready semantics."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/review/offline-image-review-ready.json",
       "category": "test",
       "required": true,
-      "hash": "d9b5a4303d60f27ca3d103c56b3e8c0e7792b72755f96e5bc3f246c56e536f46",
+      "hash": "9394c007da9fbc03c749682b93bb11d27e53398a724e264f71c17d33e0dc9ecb",
       "reason": "Future true UX authorization review fixture guards blocked and review-ready semantics."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/review/private-path-blocked.json",
       "category": "test",
       "required": true,
-      "hash": "3368eb11b66cb904202499620767b8ac514bb837a5a8f5d79f0534ed3e23e2ba",
+      "hash": "32d1e1bcda4429826168c60a597eec4c6144bb27b5be021657764722f631a466",
       "reason": "Future true UX authorization review fixture guards blocked and review-ready semantics."
     },
     {
@@ -3376,28 +3376,28 @@
       "path": "tests/pester/FutureTrueUxRestoreAuthorizationReview.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "02bb62ffa8a7b87c77503736e24bf9a7788ae68d48bc2943c761e46f30ba78ce",
+      "hash": "57c503697670bbadef2a2e902a453ce0816a86ebd27e3b60d5c27aa6dcd863f2",
       "reason": "Future true UX authorization review tests guard report-only safety behavior."
     },
     {
       "path": "tests/pester/FutureTrueUxRestoreAuthorizationStateMachine.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "b77151fd9d75d8b46925b7f92ff5dbc3a379c8470c9f27391bd89c1991283fae",
+      "hash": "153fc5e1584b7c8c621cf14b839141bf167d9e55962a8d75759ad506ce0e0762",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/pester/FutureTrueUxRestoreEvidencePacket.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "6ecd62a1c79099857bf560dd358eb2a2e7f272c292cb5432b0529271d5bdd36f",
+      "hash": "c85fffadbcae2cfe30d21fcc51fb33ab083c33aa35d5d8077103e1a060f03fb2",
       "reason": "Future true UX evidence packet tests guard review packet contracts."
     },
     {
       "path": "tests/pester/FutureTrueUxRestoreReviewSafety.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "bbd8028f642131539c8cd1e6c6b5d56f985e375e70b419471fc9ab44a53773f0",
+      "hash": "72857bd20ce57be3c54eb5306a2265e7c1ea64b32d20e98780f4cdf024ccf339",
       "reason": "Build lock watches this file as a trusted repository input."
     },
     {
@@ -3432,141 +3432,246 @@
       "path": "docs/80-future-true-ux-restore-mock-review-packet-drill.md",
       "category": "doc",
       "required": true,
-      "hash": "5899f432c6c83d6c140a61776eec5411191dab2139e48e48d94e21c7e2ef3444",
+      "hash": "9f36d57d3e41d202001f786ff4a131bb9ce0fe6b3bbb642270876c3dbbfbe21e",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "docs/81-future-true-ux-restore-mock-maintainer-review-transcript.md",
       "category": "doc",
       "required": true,
-      "hash": "0b14501e0122863ca87cbc2eda228f188826d9d2814a947c07b914f3561cf87d",
+      "hash": "92d9641423196ce0ccf288a552d24a23311f49d51ccd5dbe7de4b283ade07a1d",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "docs/82-future-true-ux-restore-mock-decision-ledger.md",
       "category": "doc",
       "required": true,
-      "hash": "77d7a4c3c42d212ceba87b34282523734f0340e4e52e16b40a035850a6dc7aa8",
+      "hash": "3c908dd169eba0d33a149202874ef4e3fb6a675fb03c51f1fe67517da5145838",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "docs/83-future-true-ux-restore-mock-drill-lessons.md",
       "category": "doc",
       "required": true,
-      "hash": "ebc67c23916ce6d0b853f8ef21bf5c417101675f4915d6025cd013aea160b385",
+      "hash": "6662c0914132eb14ab8adc386a5d13bdb2aac0d187ec2723cc07daf5cc139e14",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "scripts/common/New-FutureTrueUxRestoreMockReviewDrillReport.ps1",
       "category": "script",
       "required": true,
-      "hash": "854cccf8890392c6d93ee478638abf7f4539bba58856a41546cfa033256f7c58",
+      "hash": "e79e7747c538ac6024a7d701527d84d8153c8ddda295af1e88b13b3c1a2b49a0",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "scripts/config/Show-FutureTrueUxRestoreMockReviewDrillPlan.ps1",
       "category": "script",
       "required": true,
-      "hash": "520aec8c5eb282ace96fc1aef74f37a7da9a656f274ce2fa7681e4296cb92a69",
+      "hash": "0f23ac9668304b4e3fdfc38bb62b537c4b1e8b36f8778eb4cb5414b6c50521a7",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "scripts/validate/Test-FutureTrueUxRestoreMockReviewDrill.ps1",
       "category": "script",
       "required": true,
-      "hash": "6d544dc1e36616e24485bbf196f9d9f2dda2c06595082e726791d38053b6add3",
+      "hash": "06acb51ebf9b03446d7e8b86ac0a5966c2b1b290dcdf724272aea5b034e7d927",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/mock-review/current-user-complete-packet.json",
       "category": "test",
       "required": true,
-      "hash": "db7365744e03d64ad9e61839a3db7f538c1b23b2627162119c1a97ec1151967c",
+      "hash": "fda3b5337f47f83689499cd74ee019af71cbbbf85c03a49767db19db4562f7c8",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/mock-review/default-user-complete-packet.json",
       "category": "test",
       "required": true,
-      "hash": "07fcf043c9c147d2804aadc87f4ca9b7f64749eb775a406f0e11b8c392230f35",
+      "hash": "599b8cb0e162d84ea025887c023e8410f9f5d90210dd8cd76e2be7a0625100a1",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/mock-review/negative-missing-reviewer-checklist.json",
       "category": "test",
       "required": true,
-      "hash": "c9c28fe35248863dce1434865b71ff65ef74ed112c42521757181768c573efbd",
+      "hash": "29fe2d5cdd7f43ac8bbdc66c9c83c880ceb7281515c9c90ab3f684b2ab21ce6b",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/mock-review/negative-cross-scope-packet.json",
       "category": "test",
       "required": true,
-      "hash": "c9863075b7c5e7d00f96cc31a304e8225c77351f46c7a6242a0ff5f09f8a5d26",
+      "hash": "86c5bf3b35fdf00cef86772bda7077f5590b15e6c63c8c7f4565a4019f5236c3",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/mock-review/negative-private-path.json",
       "category": "test",
       "required": true,
-      "hash": "013798aa1f46e08814abd060bdc63a121463da6e0b1040c1a8b5e1b43c02ccc8",
+      "hash": "d89de5220f182bd132dec4fb7b4793fb7caab5ae726be9059c1017439a920ceb",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/mock-review/negative-execute-ready.json",
       "category": "test",
       "required": true,
-      "hash": "0a0ebf023b06778cff08288601ed41e639eee6895f35066dc31193481c571c6a",
+      "hash": "cc13d366dc29d117335c19d97868e7c055d6ecd5c0c04bd36e1a6cb2babda09d",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/mock-review/negative-executed.json",
       "category": "test",
       "required": true,
-      "hash": "3c332232250a1ce5b65100ca140e3ed2eb4210c818247af6cb8359a3539d2f11",
+      "hash": "bc2219e4b06c5f881fb7c057e2fec761ae800f5062af2b2828d0e70ec24cd3f6",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/mock-review/negative-completed.json",
       "category": "test",
       "required": true,
-      "hash": "b9afb80ec56f4b4b7fe4be5f9eeb3a1f19b8edfa273fd3170feae24bee8bcad5",
+      "hash": "574231d6ac5c59e7fac29b9b439759d18bb8108e782beaace66fdea38c563965",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/mock-review/negative-auto-close-keyword.json",
       "category": "test",
       "required": true,
-      "hash": "40f8a529af6b6ac4df82ea6d768e294fd32f079d40c25c3dc602049166ecd6d7",
+      "hash": "a4067bef541658576f1e510317ac271c5dd57be281c185cb6e81234b99c69ba7",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/pester/FutureTrueUxRestoreMockDecisionLedger.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "c2826e00496dc3b887650de5fa9cc5ff042c6d9dc292f966cba7a4fd0f98e535",
+      "hash": "9e77eb1f35f600f8e5ccc816737ffafabf6db4fc5dc9d930f4ed50b7f875a2fd",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/pester/FutureTrueUxRestoreMockReviewDrill.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "4ca41739ca8cbb3f0e029415393b1a03c869d9dc6fd78c0c1a8a52036da1790d",
+      "hash": "43d3b4d4dd72b8befaa4fd65bc63e6156b1f36cd6221f7c137de86cebc92b5aa",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/pester/FutureTrueUxRestoreMockReviewSafety.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "4de09161c92e17d418beaf28d36e775cf0f7aee8137a00a7cd0b91737725013f",
+      "hash": "5923783cad24ce3bc6e3967e462328f19dad55271634b16fea431776f74c5379",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/pester/FutureTrueUxRestoreMockTranscript.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "a206a8fba50f6f718ab4be63b698135e51b3711e1250a34514950221ef6d7472",
+      "hash": "25b6372ae57796d6a8f0ef621e8ad57a5ef3976fd5969a7b266d5fa8f6df6557",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "docs/84-future-true-ux-restore-negative-review-drill-bundle.md",
+      "category": "doc",
+      "required": true,
+      "hash": "1e510e41c76de27fe065b7bf8e5c2c858798ca3f7b73e61a2bdb97dc0e79a0a4",
+      "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "docs/85-future-true-ux-restore-negative-review-transcript.md",
+      "category": "doc",
+      "required": true,
+      "hash": "be29ac43a215a4e4c34b5711ded235741309949f36f3efb483cb931c506d0108",
+      "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "docs/86-future-true-ux-restore-negative-decision-ledger.md",
+      "category": "doc",
+      "required": true,
+      "hash": "92bc188af640c197a1ed967f4a87c87fe7ae3665bd15449bee306877031fb579",
+      "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "docs/87-future-true-ux-restore-negative-drill-lessons.md",
+      "category": "doc",
+      "required": true,
+      "hash": "13c7291a8275de441c85c9a9f4c9a412a0f4b15dd5aec378290708ede32e1c44",
+      "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "scripts/common/New-FutureTrueUxRestoreNegativeReviewDrillReport.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "edbfd04d51cd8fd1ffe4ad5336582c00cb850823bacfa62988b2eb85c95e62f3",
+      "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "scripts/validate/Test-FutureTrueUxRestoreNegativeReviewDrill.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "9b48c6fec29cf0665a252e7b2584ea37f9f2f1df9636006806d6f5b08af530f5",
+      "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/pester/FutureTrueUxRestoreNegativeReviewDrill.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "089c39b8c5e7b42f163fad6d8695453863153061ef4a172c85141d39d30b33c9",
+      "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/negative-review/exit-code-only-success.json",
+      "category": "test",
+      "required": true,
+      "hash": "53b8c2e3483203aa09fe3e41822b6084bec42b15d60f4584050c7def486db1ec",
+      "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/negative-review/high-risk-mutation-vocabulary.json",
+      "category": "test",
+      "required": true,
+      "hash": "2a65319638702d8702c84a867611cb821c67cc04fbb2d4d7ea07c347d952572a",
+      "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/negative-review/missing-maintainer-approval.json",
+      "category": "test",
+      "required": true,
+      "hash": "95185e419b9c922fde2266db3a13156b9956e2803ee778255fe852d7b4bbcce8",
+      "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/negative-review/missing-rollback-plan.json",
+      "category": "test",
+      "required": true,
+      "hash": "0f263d23708888737fc6f1d55babace8d61798e2ad257acb6b2a0393838e860e",
+      "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/negative-review/mock-packet-as-real-evidence.json",
+      "category": "test",
+      "required": true,
+      "hash": "f737c9394f81f6e4d9fc62b3520cab5524b18da756e3d4bc7bbe456b4ffa0732",
+      "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/negative-review/report-only-as-real-evidence.json",
+      "category": "test",
+      "required": true,
+      "hash": "5c11fc277f488d392c92f45ff6b12859c237e941c4f5d92e0b999a1fac350408",
+      "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/negative-review/scope-expanded.json",
+      "category": "test",
+      "required": true,
+      "hash": "e39394eb17bcfa7c71d761d216a7baee6feb132f2b430a70d0e3f45ac83a5e80",
+      "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/negative-review/stale-inconsistent-packet.json",
+      "category": "test",
+      "required": true,
+      "hash": "23de5722423ab7674238f076bec59f983bdb6b82ba82ba40aeea2337cf4404ed",
+      "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
     }
   ],
   "watchGlobs": [
