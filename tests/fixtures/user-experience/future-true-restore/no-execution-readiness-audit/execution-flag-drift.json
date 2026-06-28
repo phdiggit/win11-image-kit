@@ -1,0 +1,12 @@
+{
+  "caseId": "execution-flag-drift",
+  "auditDecision": "audit-ready",
+  "expectedDecision": "blocked",
+  "requiresRunnerStopLine": true,
+  "hasRunnerStopLine": true,
+  "authorizationApproved": false,
+  "executionApproved": true,
+  "executeReady": false,
+  "trueExecution": false,
+  "mutationCount": 0
+}

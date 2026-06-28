@@ -1,0 +1,16 @@
+{
+  "caseId": "complete-no-execution-chain",
+  "auditDecision": "audit-ready",
+  "expectedDecision": "audit-ready",
+  "requiresRunnerStopLine": true,
+  "hasRunnerStopLine": true,
+  "notes": [
+    "All layers remain report-only and fixture-only.",
+    "The no-execution stop line remains visible before human authorization."
+  ],
+  "authorizationApproved": false,
+  "executionApproved": false,
+  "executeReady": false,
+  "trueExecution": false,
+  "mutationCount": 0
+}

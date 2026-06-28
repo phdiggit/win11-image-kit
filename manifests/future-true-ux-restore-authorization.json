@@ -291,5 +291,34 @@
       "manual-decision-placeholder",
       "non-execution-statement"
     ]
+  },
+  "endToEndNoExecutionReadinessAudit": {
+    "enabled": true,
+    "mode": "end-to-end-no-execution-readiness-audit",
+    "authorizationApproved": false,
+    "executionApproved": false,
+    "executeReady": false,
+    "trueExecution": false,
+    "mutationCount": 0,
+    "requiredLayers": [
+      "authorization-intake",
+      "current-user-dry-run",
+      "default-user-dry-run",
+      "offline-image-dry-run",
+      "machine-dry-run",
+      "authorization-review",
+      "mock-review-drill",
+      "negative-review-drill",
+      "approval-checklist-ergonomics",
+      "integrated-packet-preview",
+      "human-authorization-handoff"
+    ],
+    "forbiddenStates": [
+      "execute-ready",
+      "executed",
+      "completed",
+      "issue-18-complete",
+      "closure-ready"
+    ]
   }
 }

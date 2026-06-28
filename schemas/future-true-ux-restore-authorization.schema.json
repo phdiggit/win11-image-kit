@@ -25,7 +25,8 @@
     "negativeReviewDrill",
     "approvalChecklistErgonomics",
     "integratedPacketPreview",
-    "humanAuthorizationHandoff"
+    "humanAuthorizationHandoff",
+    "endToEndNoExecutionReadinessAudit"
   ],
   "properties": {
     "$schema": {
@@ -113,6 +114,9 @@
     },
     "humanAuthorizationHandoff": {
       "$ref": "#/$defs/humanAuthorizationHandoff"
+    },
+    "endToEndNoExecutionReadinessAudit": {
+      "$ref": "#/$defs/endToEndNoExecutionReadinessAudit"
     }
   },
   "$defs": {
@@ -1423,6 +1427,173 @@
         },
         "decision": {
           "$ref": "#/$defs/decision"
+        }
+      },
+      "additionalProperties": false
+    },
+    "endToEndNoExecutionReadinessAuditLayer": {
+      "type": "string",
+      "enum": [
+        "authorization-intake",
+        "current-user-dry-run",
+        "default-user-dry-run",
+        "offline-image-dry-run",
+        "machine-dry-run",
+        "authorization-review",
+        "mock-review-drill",
+        "negative-review-drill",
+        "approval-checklist-ergonomics",
+        "integrated-packet-preview",
+        "human-authorization-handoff"
+      ]
+    },
+    "endToEndNoExecutionForbiddenState": {
+      "type": "string",
+      "enum": [
+        "execute-ready",
+        "executed",
+        "completed",
+        "issue-18-complete",
+        "closure-ready"
+      ]
+    },
+    "endToEndNoExecutionReadinessAudit": {
+      "type": "object",
+      "required": [
+        "enabled",
+        "mode",
+        "authorizationApproved",
+        "executionApproved",
+        "executeReady",
+        "trueExecution",
+        "mutationCount",
+        "requiredLayers",
+        "forbiddenStates"
+      ],
+      "properties": {
+        "enabled": {
+          "const": true
+        },
+        "mode": {
+          "const": "end-to-end-no-execution-readiness-audit"
+        },
+        "authorizationApproved": {
+          "const": false,
+          "default": false
+        },
+        "executionApproved": {
+          "const": false,
+          "default": false
+        },
+        "executeReady": {
+          "const": false,
+          "default": false
+        },
+        "trueExecution": {
+          "const": false,
+          "default": false
+        },
+        "mutationCount": {
+          "const": 0,
+          "default": 0
+        },
+        "requiredLayers": {
+          "type": "array",
+          "minItems": 11,
+          "allOf": [
+            {
+              "contains": {
+                "const": "authorization-intake"
+              }
+            },
+            {
+              "contains": {
+                "const": "current-user-dry-run"
+              }
+            },
+            {
+              "contains": {
+                "const": "default-user-dry-run"
+              }
+            },
+            {
+              "contains": {
+                "const": "offline-image-dry-run"
+              }
+            },
+            {
+              "contains": {
+                "const": "machine-dry-run"
+              }
+            },
+            {
+              "contains": {
+                "const": "authorization-review"
+              }
+            },
+            {
+              "contains": {
+                "const": "mock-review-drill"
+              }
+            },
+            {
+              "contains": {
+                "const": "negative-review-drill"
+              }
+            },
+            {
+              "contains": {
+                "const": "approval-checklist-ergonomics"
+              }
+            },
+            {
+              "contains": {
+                "const": "integrated-packet-preview"
+              }
+            },
+            {
+              "contains": {
+                "const": "human-authorization-handoff"
+              }
+            }
+          ],
+          "items": {
+            "$ref": "#/$defs/endToEndNoExecutionReadinessAuditLayer"
+          }
+        },
+        "forbiddenStates": {
+          "type": "array",
+          "minItems": 5,
+          "allOf": [
+            {
+              "contains": {
+                "const": "execute-ready"
+              }
+            },
+            {
+              "contains": {
+                "const": "executed"
+              }
+            },
+            {
+              "contains": {
+                "const": "completed"
+              }
+            },
+            {
+              "contains": {
+                "const": "issue-18-complete"
+              }
+            },
+            {
+              "contains": {
+                "const": "closure-ready"
+              }
+            }
+          ],
+          "items": {
+            "$ref": "#/$defs/endToEndNoExecutionForbiddenState"
+          }
         }
       },
       "additionalProperties": false
