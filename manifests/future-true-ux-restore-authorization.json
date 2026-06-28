@@ -163,5 +163,36 @@
       "executed",
       "completed"
     ]
+  },
+  "negativeReviewDrill": {
+    "enabled": true,
+    "mode": "negative-review-drill",
+    "defaultScope": "current-user",
+    "authorizationApproved": false,
+    "executionApproved": false,
+    "executeReady": false,
+    "trueExecution": false,
+    "mutationCount": 0,
+    "allowedNegativeDecisions": [
+      "blocked",
+      "needs-rework",
+      "rejected"
+    ],
+    "forbiddenNegativeDecisions": [
+      "authorization-review-ready",
+      "execute-ready",
+      "executed",
+      "completed"
+    ],
+    "requiredReasonCodes": [
+      "missing-maintainer-approval",
+      "scope-ambiguous-or-expanded",
+      "exit-code-not-ux-evidence",
+      "report-only-not-real-evidence",
+      "mock-only-not-real-evidence",
+      "stale-or-inconsistent-packet",
+      "missing-rollback-plan",
+      "high-risk-mutation-intent"
+    ]
   }
 }

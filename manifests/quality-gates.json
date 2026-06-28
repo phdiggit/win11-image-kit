@@ -483,6 +483,18 @@
       "notes": "Runs a mock authorization review packet drill without allowing execute-ready or true mutation."
     },
     {
+      "id": "future-true-ux-negative-review-drill",
+      "displayName": "Future true UX negative review drill",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "scripts/validate/Test-FutureTrueUxRestoreNegativeReviewDrill.ps1",
+      "evidence": "report",
+      "notes": "Runs negative review fixtures for missing approval, scope expansion, false evidence, stale packets, rollback gaps, and high-risk vocabulary without allowing execution."
+    },
+    {
       "id": "future-true-ux-mock-decision-ledger",
       "displayName": "Future true UX mock decision ledger",
       "layer": "pr-fast",

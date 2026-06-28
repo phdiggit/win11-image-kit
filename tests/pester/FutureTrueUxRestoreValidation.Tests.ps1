@@ -56,7 +56,11 @@ Describe "Future true UX restore validation runner" {
             "docs\80-future-true-ux-restore-mock-review-packet-drill.md",
             "docs\81-future-true-ux-restore-mock-maintainer-review-transcript.md",
             "docs\82-future-true-ux-restore-mock-decision-ledger.md",
-            "docs\83-future-true-ux-restore-mock-drill-lessons.md"
+            "docs\83-future-true-ux-restore-mock-drill-lessons.md",
+            "docs\84-future-true-ux-restore-negative-review-drill-bundle.md",
+            "docs\85-future-true-ux-restore-negative-review-transcript.md",
+            "docs\86-future-true-ux-restore-negative-decision-ledger.md",
+            "docs\87-future-true-ux-restore-negative-drill-lessons.md"
         )) {
             Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot $doc)) $true
         }
@@ -79,6 +83,10 @@ Describe "Future true UX restore validation runner" {
         $doc81 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\81-future-true-ux-restore-mock-maintainer-review-transcript.md") -Raw -Encoding UTF8
         $doc82 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\82-future-true-ux-restore-mock-decision-ledger.md") -Raw -Encoding UTF8
         $doc83 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\83-future-true-ux-restore-mock-drill-lessons.md") -Raw -Encoding UTF8
+        $doc84 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\84-future-true-ux-restore-negative-review-drill-bundle.md") -Raw -Encoding UTF8
+        $doc85 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\85-future-true-ux-restore-negative-review-transcript.md") -Raw -Encoding UTF8
+        $doc86 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\86-future-true-ux-restore-negative-decision-ledger.md") -Raw -Encoding UTF8
+        $doc87 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\87-future-true-ux-restore-negative-drill-lessons.md") -Raw -Encoding UTF8
         Assert-KitMatch $doc66 'Status:\s*`authorization-intake`'
         Assert-KitMatch $doc67 'Status:\s*`evidence-model-draft`'
         Assert-KitMatch $doc68 'Status:\s*`dry-run-plan`'
@@ -97,6 +105,10 @@ Describe "Future true UX restore validation runner" {
         Assert-KitMatch $doc81 'Status:\s*`mock-review-transcript`'
         Assert-KitMatch $doc82 'Status:\s*`mock-decision-ledger`'
         Assert-KitMatch $doc83 'Status:\s*`mock-drill-lessons`'
+        Assert-KitMatch $doc84 'Status:\s*`negative-review-drill`'
+        Assert-KitMatch $doc85 'Status:\s*`negative-review-transcript`'
+        Assert-KitMatch $doc86 'Status:\s*`negative-decision-ledger`'
+        Assert-KitMatch $doc87 'Status:\s*`negative-drill-lessons`'
 
         $qualityGates = Get-Content -LiteralPath (Join-Path $script:RepoRoot "manifests\quality-gates.json") -Raw -Encoding UTF8 | ConvertFrom-Json
         $gateIds = @($qualityGates.gates.id)
@@ -110,6 +122,7 @@ Describe "Future true UX restore validation runner" {
         Assert-KitEqual ($gateIds -contains "future-true-ux-mock-review-drill") $true
         Assert-KitEqual ($gateIds -contains "future-true-ux-mock-decision-ledger") $true
         Assert-KitEqual ($gateIds -contains "future-true-ux-evidence-packet") $true
+        Assert-KitEqual ($gateIds -contains "future-true-ux-negative-review-drill") $true
     }
 
     It "keeps Issue 18 ready state frozen and avoids completion summary wording" {
@@ -135,7 +148,11 @@ Describe "Future true UX restore validation runner" {
             "docs\80-future-true-ux-restore-mock-review-packet-drill.md",
             "docs\81-future-true-ux-restore-mock-maintainer-review-transcript.md",
             "docs\82-future-true-ux-restore-mock-decision-ledger.md",
-            "docs\83-future-true-ux-restore-mock-drill-lessons.md"
+            "docs\83-future-true-ux-restore-mock-drill-lessons.md",
+            "docs\84-future-true-ux-restore-negative-review-drill-bundle.md",
+            "docs\85-future-true-ux-restore-negative-review-transcript.md",
+            "docs\86-future-true-ux-restore-negative-decision-ledger.md",
+            "docs\87-future-true-ux-restore-negative-drill-lessons.md"
         )) {
             $text = Get-Content -LiteralPath (Join-Path $script:RepoRoot $path) -Raw -Encoding UTF8
             Assert-KitNotMatch $text "(?i)\b(fixes|closes|resolves)\s+#18\b"

@@ -1,0 +1,27 @@
+{
+  "caseId": "high-risk-mutation-vocabulary",
+  "scope": "current-user",
+  "reviewDecision": "execute-ready",
+  "maintainerApprovalPresent": true,
+  "executeReady": true,
+  "expectedDecision": "blocked",
+  "expectedReasonCodes": [
+    "high-risk-mutation-intent"
+  ],
+  "evidencePacket": {
+    "scope": "current-user",
+    "targetIdentity": "redacted-current-user",
+    "requestedMutationType": "report-only text mentions registry and Defender",
+    "dryRunCommandEnvelope": "review text mentions AppX, DISM, StartLayout, Service, Sysprep, winget, choco, msiexec, Invoke-WebRequest, Invoke-RestMethod, and Install-Module as forbidden vocabulary only",
+    "rollbackPlan": "No real state changed; this packet must remain blocked.",
+    "beforeEvidence": "before-state placeholder",
+    "afterEvidencePlaceholder": "after-state placeholder",
+    "independentVerificationPlaceholder": "human review placeholder",
+    "scopeGuardAssertion": "current-user",
+    "privacyRedactionStatement": "private values redacted",
+    "failurePropagation": "block report-only mutation vocabulary",
+    "reviewerChecklist": [
+      "report-only paths must not sound execute-ready"
+    ]
+  }
+}

@@ -21,7 +21,8 @@
     "offlineImageDryRun",
     "machineDryRun",
     "authorizationReview",
-    "mockReviewDrill"
+    "mockReviewDrill",
+    "negativeReviewDrill"
   ],
   "properties": {
     "$schema": {
@@ -97,6 +98,9 @@
     },
     "mockReviewDrill": {
       "$ref": "#/$defs/mockReviewDrill"
+    },
+    "negativeReviewDrill": {
+      "$ref": "#/$defs/negativeReviewDrill"
     }
   },
   "$defs": {
@@ -600,6 +604,133 @@
           ],
           "items": {
             "type": "string"
+          }
+        }
+      },
+      "not": {
+        "required": [
+          "executed"
+        ]
+      },
+      "additionalProperties": false
+    },
+    "negativeDecision": {
+      "type": "string",
+      "enum": [
+        "blocked",
+        "needs-rework",
+        "rejected"
+      ]
+    },
+    "negativeReasonCode": {
+      "type": "string",
+      "enum": [
+        "missing-maintainer-approval",
+        "scope-ambiguous-or-expanded",
+        "exit-code-not-ux-evidence",
+        "report-only-not-real-evidence",
+        "mock-only-not-real-evidence",
+        "stale-or-inconsistent-packet",
+        "missing-rollback-plan",
+        "high-risk-mutation-intent"
+      ]
+    },
+    "negativeReviewDrill": {
+      "type": "object",
+      "required": [
+        "enabled",
+        "mode",
+        "defaultScope",
+        "authorizationApproved",
+        "executionApproved",
+        "executeReady",
+        "trueExecution",
+        "mutationCount",
+        "allowedNegativeDecisions",
+        "forbiddenNegativeDecisions",
+        "requiredReasonCodes"
+      ],
+      "properties": {
+        "enabled": {
+          "const": true
+        },
+        "mode": {
+          "const": "negative-review-drill"
+        },
+        "defaultScope": {
+          "const": "current-user"
+        },
+        "authorizationApproved": {
+          "const": false,
+          "default": false
+        },
+        "executionApproved": {
+          "const": false,
+          "default": false
+        },
+        "executeReady": {
+          "const": false,
+          "default": false
+        },
+        "trueExecution": {
+          "const": false,
+          "default": false
+        },
+        "mutationCount": {
+          "const": 0,
+          "default": 0
+        },
+        "allowedNegativeDecisions": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "$ref": "#/$defs/negativeDecision"
+          },
+          "not": {
+            "contains": {
+              "enum": [
+                "authorization-review-ready",
+                "execute-ready",
+                "executed",
+                "completed"
+              ]
+            }
+          }
+        },
+        "forbiddenNegativeDecisions": {
+          "type": "array",
+          "minItems": 4,
+          "allOf": [
+            {
+              "contains": {
+                "const": "authorization-review-ready"
+              }
+            },
+            {
+              "contains": {
+                "const": "execute-ready"
+              }
+            },
+            {
+              "contains": {
+                "const": "executed"
+              }
+            },
+            {
+              "contains": {
+                "const": "completed"
+              }
+            }
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "requiredReasonCodes": {
+          "type": "array",
+          "minItems": 8,
+          "items": {
+            "$ref": "#/$defs/negativeReasonCode"
           }
         }
       },

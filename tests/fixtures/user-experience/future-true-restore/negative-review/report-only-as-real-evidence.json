@@ -1,0 +1,29 @@
+{
+  "caseId": "report-only-as-real-evidence",
+  "scope": "current-user",
+  "reviewDecision": "needs-more-evidence",
+  "maintainerApprovalPresent": true,
+  "dryRunReportAsSuccess": true,
+  "handlerReportAsSuccess": true,
+  "manualChecklistAsSuccess": true,
+  "expectedDecision": "needs-rework",
+  "expectedReasonCodes": [
+    "report-only-not-real-evidence"
+  ],
+  "evidencePacket": {
+    "scope": "current-user",
+    "targetIdentity": "redacted-current-user",
+    "requestedMutationType": "ux-restore-review-only",
+    "dryRunCommandEnvelope": "report-only handler output",
+    "rollbackPlan": "Return to the prior reviewed fixture state; no real state changed in this packet.",
+    "beforeEvidence": "before-state placeholder",
+    "afterEvidencePlaceholder": "dry-run and manual checklist only",
+    "independentVerificationPlaceholder": "missing independent real UX evidence",
+    "scopeGuardAssertion": "current-user",
+    "privacyRedactionStatement": "private values redacted",
+    "failurePropagation": "block report-only success claims",
+    "reviewerChecklist": [
+      "do not promote reports into real evidence"
+    ]
+  }
+}
