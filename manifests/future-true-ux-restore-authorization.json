@@ -320,5 +320,46 @@
       "issue-18-complete",
       "closure-ready"
     ]
+  },
+  "finalStopLineHandoff": {
+    "enabled": true,
+    "mode": "final-stop-line-handoff",
+    "authorizationApproved": false,
+    "executionApproved": false,
+    "executeReady": false,
+    "trueExecution": false,
+    "mutationCount": 0,
+    "allowedStopLineDecisions": [
+      "pause-at-stop-line",
+      "request-rework",
+      "start-true-restore-planning",
+      "close-issue-manually"
+    ],
+    "forbiddenStopLineStates": [
+      "execute-ready",
+      "executed",
+      "completed",
+      "issue-18-complete",
+      "closure-ready"
+    ],
+    "requiredCompletedPreparationLayers": [
+      "authorization-intake",
+      "current-user-dry-run",
+      "default-user-dry-run",
+      "offline-image-dry-run",
+      "machine-dry-run",
+      "authorization-review",
+      "mock-review-drill",
+      "negative-review-drill",
+      "approval-checklist-ergonomics",
+      "integrated-packet-preview",
+      "human-authorization-handoff",
+      "end-to-end-no-execution-readiness-audit"
+    ],
+    "requiredStopLineDocs": [
+      "docs/106-future-true-ux-restore-final-stop-line-handoff.md",
+      "docs/107-future-true-ux-restore-stop-line-decision-matrix.md"
+    ],
+    "requiresNewRunnerGateForTrueRestorePlanning": true
   }
 }

@@ -1,0 +1,13 @@
+{
+  "caseId": "request-rework-for-missing-runner-gate",
+  "stopLineDecision": "pause-at-stop-line",
+  "expectedDecision": "request-rework",
+  "missingRunnerGate": true,
+  "requiresHumanDecisionBoundary": true,
+  "requiresNewRunnerGateBoundary": true,
+  "authorizationApproved": false,
+  "executionApproved": false,
+  "executeReady": false,
+  "trueExecution": false,
+  "mutationCount": 0
+}

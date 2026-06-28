@@ -1,0 +1,13 @@
+{
+  "caseId": "pause-at-stop-line",
+  "stopLineDecision": "pause-at-stop-line",
+  "expectedDecision": "pause-at-stop-line",
+  "requiresHumanDecisionBoundary": true,
+  "requiresNewRunnerGateBoundary": true,
+  "newHighRiskPlanningChainRequired": false,
+  "authorizationApproved": false,
+  "executionApproved": false,
+  "executeReady": false,
+  "trueExecution": false,
+  "mutationCount": 0
+}

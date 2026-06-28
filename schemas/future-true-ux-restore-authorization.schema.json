@@ -26,7 +26,8 @@
     "approvalChecklistErgonomics",
     "integratedPacketPreview",
     "humanAuthorizationHandoff",
-    "endToEndNoExecutionReadinessAudit"
+    "endToEndNoExecutionReadinessAudit",
+    "finalStopLineHandoff"
   ],
   "properties": {
     "$schema": {
@@ -117,6 +118,9 @@
     },
     "endToEndNoExecutionReadinessAudit": {
       "$ref": "#/$defs/endToEndNoExecutionReadinessAudit"
+    },
+    "finalStopLineHandoff": {
+      "$ref": "#/$defs/finalStopLineHandoff"
     }
   },
   "$defs": {
@@ -1594,6 +1598,249 @@
           "items": {
             "$ref": "#/$defs/endToEndNoExecutionForbiddenState"
           }
+        }
+      },
+      "additionalProperties": false
+    },
+    "finalStopLineDecision": {
+      "type": "string",
+      "enum": [
+        "pause-at-stop-line",
+        "request-rework",
+        "start-true-restore-planning",
+        "close-issue-manually"
+      ]
+    },
+    "finalStopLineForbiddenState": {
+      "type": "string",
+      "enum": [
+        "execute-ready",
+        "executed",
+        "completed",
+        "issue-18-complete",
+        "closure-ready"
+      ]
+    },
+    "finalStopLinePreparationLayer": {
+      "type": "string",
+      "enum": [
+        "authorization-intake",
+        "current-user-dry-run",
+        "default-user-dry-run",
+        "offline-image-dry-run",
+        "machine-dry-run",
+        "authorization-review",
+        "mock-review-drill",
+        "negative-review-drill",
+        "approval-checklist-ergonomics",
+        "integrated-packet-preview",
+        "human-authorization-handoff",
+        "end-to-end-no-execution-readiness-audit"
+      ]
+    },
+    "finalStopLineDoc": {
+      "type": "string",
+      "enum": [
+        "docs/106-future-true-ux-restore-final-stop-line-handoff.md",
+        "docs/107-future-true-ux-restore-stop-line-decision-matrix.md"
+      ]
+    },
+    "finalStopLineHandoff": {
+      "type": "object",
+      "required": [
+        "enabled",
+        "mode",
+        "authorizationApproved",
+        "executionApproved",
+        "executeReady",
+        "trueExecution",
+        "mutationCount",
+        "allowedStopLineDecisions",
+        "forbiddenStopLineStates",
+        "requiredCompletedPreparationLayers",
+        "requiredStopLineDocs",
+        "requiresNewRunnerGateForTrueRestorePlanning"
+      ],
+      "properties": {
+        "enabled": {
+          "const": true
+        },
+        "mode": {
+          "const": "final-stop-line-handoff"
+        },
+        "authorizationApproved": {
+          "const": false,
+          "default": false
+        },
+        "executionApproved": {
+          "const": false,
+          "default": false
+        },
+        "executeReady": {
+          "const": false,
+          "default": false
+        },
+        "trueExecution": {
+          "const": false,
+          "default": false
+        },
+        "mutationCount": {
+          "const": 0,
+          "default": 0
+        },
+        "allowedStopLineDecisions": {
+          "type": "array",
+          "minItems": 4,
+          "allOf": [
+            {
+              "contains": {
+                "const": "pause-at-stop-line"
+              }
+            },
+            {
+              "contains": {
+                "const": "request-rework"
+              }
+            },
+            {
+              "contains": {
+                "const": "start-true-restore-planning"
+              }
+            },
+            {
+              "contains": {
+                "const": "close-issue-manually"
+              }
+            }
+          ],
+          "items": {
+            "$ref": "#/$defs/finalStopLineDecision"
+          }
+        },
+        "forbiddenStopLineStates": {
+          "type": "array",
+          "minItems": 5,
+          "allOf": [
+            {
+              "contains": {
+                "const": "execute-ready"
+              }
+            },
+            {
+              "contains": {
+                "const": "executed"
+              }
+            },
+            {
+              "contains": {
+                "const": "completed"
+              }
+            },
+            {
+              "contains": {
+                "const": "issue-18-complete"
+              }
+            },
+            {
+              "contains": {
+                "const": "closure-ready"
+              }
+            }
+          ],
+          "items": {
+            "$ref": "#/$defs/finalStopLineForbiddenState"
+          }
+        },
+        "requiredCompletedPreparationLayers": {
+          "type": "array",
+          "minItems": 12,
+          "allOf": [
+            {
+              "contains": {
+                "const": "authorization-intake"
+              }
+            },
+            {
+              "contains": {
+                "const": "current-user-dry-run"
+              }
+            },
+            {
+              "contains": {
+                "const": "default-user-dry-run"
+              }
+            },
+            {
+              "contains": {
+                "const": "offline-image-dry-run"
+              }
+            },
+            {
+              "contains": {
+                "const": "machine-dry-run"
+              }
+            },
+            {
+              "contains": {
+                "const": "authorization-review"
+              }
+            },
+            {
+              "contains": {
+                "const": "mock-review-drill"
+              }
+            },
+            {
+              "contains": {
+                "const": "negative-review-drill"
+              }
+            },
+            {
+              "contains": {
+                "const": "approval-checklist-ergonomics"
+              }
+            },
+            {
+              "contains": {
+                "const": "integrated-packet-preview"
+              }
+            },
+            {
+              "contains": {
+                "const": "human-authorization-handoff"
+              }
+            },
+            {
+              "contains": {
+                "const": "end-to-end-no-execution-readiness-audit"
+              }
+            }
+          ],
+          "items": {
+            "$ref": "#/$defs/finalStopLinePreparationLayer"
+          }
+        },
+        "requiredStopLineDocs": {
+          "type": "array",
+          "minItems": 2,
+          "allOf": [
+            {
+              "contains": {
+                "const": "docs/106-future-true-ux-restore-final-stop-line-handoff.md"
+              }
+            },
+            {
+              "contains": {
+                "const": "docs/107-future-true-ux-restore-stop-line-decision-matrix.md"
+              }
+            }
+          ],
+          "items": {
+            "$ref": "#/$defs/finalStopLineDoc"
+          }
+        },
+        "requiresNewRunnerGateForTrueRestorePlanning": {
+          "const": true
         }
       },
       "additionalProperties": false

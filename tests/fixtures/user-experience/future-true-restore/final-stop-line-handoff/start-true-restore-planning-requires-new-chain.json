@@ -1,0 +1,16 @@
+{
+  "caseId": "start-true-restore-planning-requires-new-chain",
+  "stopLineDecision": "start-true-restore-planning",
+  "expectedDecision": "start-true-restore-planning",
+  "newHighRiskPlanningChainRequired": true,
+  "requiresHumanDecisionBoundary": true,
+  "requiresNewRunnerGateBoundary": true,
+  "notes": [
+    "This is a planning decision only and does not authorize execution in this PR."
+  ],
+  "authorizationApproved": false,
+  "executionApproved": false,
+  "executeReady": false,
+  "trueExecution": false,
+  "mutationCount": 0
+}

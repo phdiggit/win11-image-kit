@@ -1,0 +1,13 @@
+{
+  "caseId": "execute-ready-wording-blocked",
+  "stopLineDecision": "pause-at-stop-line",
+  "expectedDecision": "blocked",
+  "notes": [
+    "This bad packet tries to call the stop-line execute-ready and closure-ready."
+  ],
+  "authorizationApproved": false,
+  "executionApproved": false,
+  "executeReady": false,
+  "trueExecution": false,
+  "mutationCount": 0
+}

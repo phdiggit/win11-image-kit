@@ -78,7 +78,9 @@ Describe "Future true UX restore validation runner" {
             "docs\102-future-true-ux-restore-end-to-end-no-execution-readiness-audit.md",
             "docs\103-future-true-ux-restore-state-name-separation-matrix.md",
             "docs\104-future-true-ux-restore-artifact-chain-consistency-index.md",
-            "docs\105-future-true-ux-restore-no-execution-stop-line.md"
+            "docs\105-future-true-ux-restore-no-execution-stop-line.md",
+            "docs\106-future-true-ux-restore-final-stop-line-handoff.md",
+            "docs\107-future-true-ux-restore-stop-line-decision-matrix.md"
         )) {
             Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot $doc)) $true
         }
@@ -123,6 +125,8 @@ Describe "Future true UX restore validation runner" {
         $doc103 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\103-future-true-ux-restore-state-name-separation-matrix.md") -Raw -Encoding UTF8
         $doc104 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\104-future-true-ux-restore-artifact-chain-consistency-index.md") -Raw -Encoding UTF8
         $doc105 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\105-future-true-ux-restore-no-execution-stop-line.md") -Raw -Encoding UTF8
+        $doc106 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\106-future-true-ux-restore-final-stop-line-handoff.md") -Raw -Encoding UTF8
+        $doc107 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\107-future-true-ux-restore-stop-line-decision-matrix.md") -Raw -Encoding UTF8
         Assert-KitMatch $doc66 'Status:\s*`authorization-intake`'
         Assert-KitMatch $doc67 'Status:\s*`evidence-model-draft`'
         Assert-KitMatch $doc68 'Status:\s*`dry-run-plan`'
@@ -163,6 +167,8 @@ Describe "Future true UX restore validation runner" {
         Assert-KitMatch $doc103 'Status:\s*`state-name-separation-matrix`'
         Assert-KitMatch $doc104 'Status:\s*`artifact-chain-consistency-index`'
         Assert-KitMatch $doc105 'Status:\s*`no-execution-stop-line`'
+        Assert-KitMatch $doc106 'Status:\s*`final-stop-line-handoff`'
+        Assert-KitMatch $doc107 'Status:\s*`stop-line-decision-matrix`'
 
         $qualityGates = Get-Content -LiteralPath (Join-Path $script:RepoRoot "manifests\quality-gates.json") -Raw -Encoding UTF8 | ConvertFrom-Json
         $gateIds = @($qualityGates.gates.id)
@@ -181,6 +187,7 @@ Describe "Future true UX restore validation runner" {
         Assert-KitEqual ($gateIds -contains "future-true-ux-integrated-packet-preview") $true
         Assert-KitEqual ($gateIds -contains "future-true-ux-human-authorization-handoff") $true
         Assert-KitEqual ($gateIds -contains "future-true-ux-end-to-end-no-execution-readiness-audit") $true
+        Assert-KitEqual ($gateIds -contains "future-true-ux-final-stop-line-handoff") $true
     }
 
     It "keeps Issue 18 ready state frozen and avoids completion summary wording" {
@@ -228,7 +235,9 @@ Describe "Future true UX restore validation runner" {
             "docs\102-future-true-ux-restore-end-to-end-no-execution-readiness-audit.md",
             "docs\103-future-true-ux-restore-state-name-separation-matrix.md",
             "docs\104-future-true-ux-restore-artifact-chain-consistency-index.md",
-            "docs\105-future-true-ux-restore-no-execution-stop-line.md"
+            "docs\105-future-true-ux-restore-no-execution-stop-line.md",
+            "docs\106-future-true-ux-restore-final-stop-line-handoff.md",
+            "docs\107-future-true-ux-restore-stop-line-decision-matrix.md"
         )) {
             $text = Get-Content -LiteralPath (Join-Path $script:RepoRoot $path) -Raw -Encoding UTF8
             Assert-KitNotMatch $text "(?i)\b(fixes|closes|resolves)\s+#18\b"
