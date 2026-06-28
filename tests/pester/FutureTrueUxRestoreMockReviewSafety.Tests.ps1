@@ -82,7 +82,12 @@ Describe "Future true UX restore mock review safety" {
             Assert-KitNotMatch $file.Name "completion-summary"
         }
 
-        $changed = @(git -C $script:RepoRoot -c core.quotepath=false diff --name-only origin/main...HEAD)
+        git -C $script:RepoRoot rev-parse --verify --quiet origin/main | Out-Null
+        if ($LASTEXITCODE -eq 0) {
+            $changed = @(git -C $script:RepoRoot -c core.quotepath=false diff --name-only origin/main...HEAD)
+        } else {
+            $changed = @(git -C $script:RepoRoot -c core.quotepath=false diff-tree --no-commit-id --name-only -r HEAD)
+        }
         foreach ($path in $changed) {
             Assert-KitNotMatch $path "docs/.*issue(6|7|8|9|10|11|12|13|14|15|16|17).*(close|main|completion)"
         }
