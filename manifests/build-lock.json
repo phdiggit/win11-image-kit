@@ -394,7 +394,7 @@
       "path": "manifests/quality-gates.json",
       "category": "manifest",
       "required": true,
-      "hash": "5313c27e878c5a40e7f2d35952b9d432c9808bbbeb9542d38a853046d98eb1d7",
+      "hash": "037007e320d51b1129ff21302bb3b03fa8cf4b34d0f7ca969cc87a44fe2408df",
       "reason": "Quality Gates include future true UX mock review drill validation."
     },
     {
@@ -2431,14 +2431,14 @@
       "path": "manifests/future-true-ux-restore-authorization.json",
       "category": "manifest",
       "required": true,
-      "hash": "3dc11796ec7ad5177fca763eca4f3bb9a75e4fa38b8e726e0106bbabad3d72b9",
+      "hash": "ecc85b86506ae3f36aa52358ca1dcec449450ca4a5c3e1adfb65b61cc6d85e04",
       "reason": "Future true UX authorization manifest freezes mock review drill execution flags."
     },
     {
       "path": "schemas/future-true-ux-restore-authorization.schema.json",
       "category": "schema",
       "required": true,
-      "hash": "f5b975aa7f96be626fb3f2568194e7cca3c652d384c72d40e70fa89c072cf962",
+      "hash": "a9be576abc2928651647776523843fc8373d001f0043beb36b1e92ad47014bf4",
       "reason": "Authorization schema constrains mock review drill execution freeze fields."
     },
     {
@@ -2550,7 +2550,7 @@
       "path": "tests/pester/FutureTrueUxRestoreValidation.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "ce7310d39b2720064c88fbdd7dc69e45a44669e4054e3311bbb57e925647e645",
+      "hash": "5154e03756632f27cf7883ccea9285ccb718196d1406dd4ed185798232ba32bc",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
@@ -3677,92 +3677,197 @@
       "path": "docs/88-future-true-ux-restore-maintainer-approval-checklist-ergonomics.md",
       "category": "doc",
       "required": true,
-      "hash": "9d6751b0b7ffdedffce70fdffca41454f882f0bf618e828fca7ad62d163cd982",
+      "hash": "c9b380d1e946eb5d6d0ff7c80d7416ac50ac17dd89a3da1dc95f3bf660003ccb",
       "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
     },
     {
       "path": "docs/89-future-true-ux-restore-review-packet-readability-guide.md",
       "category": "doc",
       "required": true,
-      "hash": "24e492f0bae65d467ee54aa8f3246fb4cf6b4d01dcd8db266f6f08e6719618f3",
+      "hash": "2364ba6b7d97b9ee35239563315932ca1ee8b5eef7de45e3f60502d8d5bd50e5",
       "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
     },
     {
       "path": "docs/90-future-true-ux-restore-manual-decision-form-template.md",
       "category": "doc",
       "required": true,
-      "hash": "262eb65fde6b9c58ff20935bfd7fb361b06e870e32b4d2fa03a2714378362a08",
+      "hash": "f6fe550e29238bf9d17882d8fa3787c8f8af1118f4c4d8dcc165ee43b4e69057",
       "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
     },
     {
       "path": "docs/91-future-true-ux-restore-approval-checklist-lessons.md",
       "category": "doc",
       "required": true,
-      "hash": "7e55fe59c8cd814476aac34c5b18f10016f167ea839641f600d030782b18e6db",
+      "hash": "4d8252930bd98070068dd7cb71c646b8a7a5f5f69993709e99d57b93c9b22d25",
       "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
     },
     {
       "path": "scripts/common/New-FutureTrueUxRestoreApprovalChecklistErgonomicsReport.ps1",
       "category": "script",
       "required": true,
-      "hash": "60b27fbffa831c60dd3f45e8e27b16aeacde5241e61ab6af74af5989c1e7f2f5",
+      "hash": "0789d560f8a7ad6249af4f640e6338f1c588f9a2c874b10d80e42f7b31f15081",
       "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
     },
     {
       "path": "scripts/validate/Test-FutureTrueUxRestoreApprovalChecklistErgonomics.ps1",
       "category": "script",
       "required": true,
-      "hash": "363a5e6e0034e894d90b75a17317dd9aceb9d5a167bb59e958193cd3cd0ff51d",
+      "hash": "5a8ee9840f7e51e366790013c18d0afacec6432c5c38c0761141e2af7978fc17",
       "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/approval-checklist/complete-current-user-checklist.json",
       "category": "test",
       "required": true,
-      "hash": "da710656155a8383dc7def6a84e32ee10797c2b6bcd07a4c1b8af16e59185e78",
+      "hash": "db7e97c267423840ab65f7403a04fd5239845a363e36989e6946f0ad185c0d27",
       "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/approval-checklist/missing-human-decision-summary.json",
       "category": "test",
       "required": true,
-      "hash": "0d1d34638c1957eb7d44cd88be515cb23b71547f095262609b8e0af52ed7ffc9",
+      "hash": "c277ed60966194d4ded58989876fc84a6060bddbcd162891634cefa55015df21",
       "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/approval-checklist/scope-label-hard-to-read.json",
       "category": "test",
       "required": true,
-      "hash": "2380f65ae50ce8783ed1163b886a4eebee8563ba61d42f5fb1b2d2faff5a5e4f",
+      "hash": "32c0d411dfcfc9babb49339e164c566b969a735f5381aec85b3094eacf4f8f2e",
       "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/approval-checklist/evidence-boundary-ambiguous.json",
       "category": "test",
       "required": true,
-      "hash": "ebb5ac12564487e782510bb5a58fd1dc37de8fbbf381a83edafccd0dafcedb46",
+      "hash": "b785039df313e5750ba4dad27ee984e385658b19f3361237dd4affb54b810e31",
       "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/approval-checklist/rollback-plan-too-vague.json",
       "category": "test",
       "required": true,
-      "hash": "e4fcd97c580e5c44c2a66355dc5d0709ab7c298f21d56f489e8870a07a113ff0",
+      "hash": "5c8ed0a7c9052d72d498c50278a076f25d30b3f1e9a8e9a57f9d2c96351abd58",
       "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/approval-checklist/approval-wording-drifts-to-execute-ready.json",
       "category": "test",
       "required": true,
-      "hash": "71ce40f321f40ec1132d9911a4c312a15bdaf166138bbca1b9dc23a4d686df3e",
+      "hash": "a56e9e853b4f853f2dbb365e8fe0d8fe978fb00a8caa47b6c6e0a262d788600e",
       "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/pester/FutureTrueUxRestoreApprovalChecklistErgonomics.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "50c4e70123ebc06e4e261f61c15c325e33ccafbef1141ecceb4f6072fdfbe7ae",
+      "hash": "59d5384dfb390c6b1fe5e0e296f0f70b7f7faafb2957fbb2c8fe1a80c7caa033",
       "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "docs/92-future-true-ux-restore-integrated-authorization-packet-preview.md",
+      "category": "doc",
+      "required": true,
+      "hash": "526b3559eae044c3148d0ecdd6c749e415acc16de153ba48679a381e0ef6d270",
+      "reason": "Future true UX integrated packet preview artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "docs/93-future-true-ux-restore-packet-preview-field-map.md",
+      "category": "doc",
+      "required": true,
+      "hash": "aefb3e80f64ce409152bd56d297a9e5f882cfd4ab2d374d1282ab97bf3a461ef",
+      "reason": "Future true UX integrated packet preview artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "docs/94-future-true-ux-restore-packet-preview-reviewer-reading-order.md",
+      "category": "doc",
+      "required": true,
+      "hash": "ec3075954f7e14930619542375d986dd4a61513b8676404607f413f436108b8d",
+      "reason": "Future true UX integrated packet preview artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "docs/95-future-true-ux-restore-packet-preview-blocker-index.md",
+      "category": "doc",
+      "required": true,
+      "hash": "e5cdfc07bc4587960042ec4ec1baa929f24379001eb00d33ab1281d1a1db1aba",
+      "reason": "Future true UX integrated packet preview artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "docs/96-future-true-ux-restore-packet-preview-lessons.md",
+      "category": "doc",
+      "required": true,
+      "hash": "f40963be24640183918f03a8eac59fe30ec9feeb784274a168a2b7feb597d9fc",
+      "reason": "Future true UX integrated packet preview artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "scripts/common/New-FutureTrueUxRestoreIntegratedPacketPreviewReport.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "7c55a7c157de144bc335983caac19a7c6d7d9c568cd22fd71f94fea23602b05e",
+      "reason": "Future true UX integrated packet preview artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "scripts/validate/Test-FutureTrueUxRestoreIntegratedPacketPreview.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "c058bd4f694d3f9b663376040da82af0554c63e601fa0e883fe718a9c935ffed",
+      "reason": "Future true UX integrated packet preview artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/packet-preview/complete-current-user-packet-preview.json",
+      "category": "test",
+      "required": true,
+      "hash": "d479dd3a78e12db50b40fed41da07570955286424eb6ea53230d17e632a72e20",
+      "reason": "Future true UX integrated packet preview artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/packet-preview/missing-runner-gate-reminder.json",
+      "category": "test",
+      "required": true,
+      "hash": "ecb842d73960a372aff8108b4b7aab3bacbb3a927419e6532d22166358480f8e",
+      "reason": "Future true UX integrated packet preview artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/packet-preview/missing-negative-blocker-summary.json",
+      "category": "test",
+      "required": true,
+      "hash": "23e7b781f0f448c1d2e54ac87e9b3b6381e6adb33e2e544313e5f05930103c87",
+      "reason": "Future true UX integrated packet preview artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/packet-preview/evidence-boundary-promotes-report-to-real.json",
+      "category": "test",
+      "required": true,
+      "hash": "f89465ec3d20b3b78dc50365d088181cb6fe92f9e98b4399ac48c70ee4fba56b",
+      "reason": "Future true UX integrated packet preview artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/packet-preview/preview-wording-drifts-to-authorization-ready.json",
+      "category": "test",
+      "required": true,
+      "hash": "108e0487fdf139354d30d80053a30da793686f437365e458c7117dcbc855e7b2",
+      "reason": "Future true UX integrated packet preview artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/packet-preview/preview-wording-drifts-to-execute-ready.json",
+      "category": "test",
+      "required": true,
+      "hash": "0a7df84a822b2626ca00ec943fb3a47c77c80edc35bc2d869403c45d75c5a593",
+      "reason": "Future true UX integrated packet preview artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/packet-preview/private-path-not-redacted.json",
+      "category": "test",
+      "required": true,
+      "hash": "e448cc3bb3eadd65fc3c18859bc680af7ce30e06cf9a8aae72d97bf8c4b74354",
+      "reason": "Future true UX integrated packet preview artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/pester/FutureTrueUxRestoreIntegratedPacketPreview.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "a9c3c67a718f3f295efb6e5b1675c4530b3d09155a029cf533987dd90b6023a6",
+      "reason": "Future true UX integrated packet preview artifact is a trusted report-only validation input."
     }
   ],
   "watchGlobs": [

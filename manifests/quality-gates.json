@@ -507,6 +507,18 @@
       "notes": "Checks maintainer-facing approval checklist readability and decision safety without allowing execution."
     },
     {
+      "id": "future-true-ux-integrated-packet-preview",
+      "displayName": "Future true UX integrated packet preview",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "scripts/validate/Test-FutureTrueUxRestoreIntegratedPacketPreview.ps1",
+      "evidence": "report",
+      "notes": "Validates integrated packet preview consistency and safety without allowing execution."
+    },
+    {
       "id": "future-true-ux-mock-decision-ledger",
       "displayName": "Future true UX mock decision ledger",
       "layer": "pr-fast",

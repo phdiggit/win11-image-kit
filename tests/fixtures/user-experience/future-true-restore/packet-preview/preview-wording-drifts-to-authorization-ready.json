@@ -1,0 +1,24 @@
+{
+  "caseId": "preview-wording-drifts-to-authorization-ready",
+  "scope": "current-user",
+  "previewDecision": "authorization-review-ready",
+  "expectedDecision": "blocked",
+  "authorizationApproved": false,
+  "executionApproved": false,
+  "executeReady": false,
+  "trueExecution": false,
+  "mutationCount": 0,
+  "packetPreviewSections": {
+    "scope": "current-user only.",
+    "target-identity-redaction": "Target identity is redacted.",
+    "evidence-boundary": "Dry-run, mock, checklist, and report-only material only; not real UX evidence.",
+    "approval-checklist-summary": "Preview text incorrectly says authorization-review-ready.",
+    "negative-blocker-summary": "Blockers include scope drift, private path, evidence promotion, and wording drift.",
+    "rollback-or-restore-plan": "Restore notes name templates and reviewer.",
+    "execution-boundary": "No authorization or execution approval is granted.",
+    "runner-gate-reminder": "Current reusable runner is enough for report-only validation."
+  },
+  "fieldMap": [],
+  "reviewerReadingOrder": [],
+  "blockerIndex": []
+}
