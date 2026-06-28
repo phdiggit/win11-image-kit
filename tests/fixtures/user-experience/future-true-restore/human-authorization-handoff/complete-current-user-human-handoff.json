@@ -1,0 +1,30 @@
+{
+  "caseId": "complete-current-user-human-handoff",
+  "scope": "current-user",
+  "handoffDecision": "handoff-ready-for-human-review",
+  "expectedDecision": "handoff-ready-for-human-review",
+  "authorizationApproved": false,
+  "executionApproved": false,
+  "executeReady": false,
+  "trueExecution": false,
+  "mutationCount": 0,
+  "artifactIndex": [
+    "authorization intake report",
+    "dry-run gate reports",
+    "approval checklist ergonomics report",
+    "integrated packet preview report"
+  ],
+  "handoffSections": {
+    "scope": "current-user only; no default-user, offline-image, or machine handoff claim is made.",
+    "artifact-index": "Artifact index lists authorization intake, dry-run gates, negative blockers, approval checklist, and packet preview.",
+    "identity-redaction": "Target identity is redacted as <redacted-current-user>; no local profile path or private share is present.",
+    "evidence-boundary": "Handoff uses CI, dry-run, mock, report-only, approval checklist, and packet preview material only. It is not real UX evidence and is not approval.",
+    "approval-checklist-summary": "Approval checklist is readable and remains separate from authorization review.",
+    "negative-blocker-summary": "Blockers include scope drift, private path, evidence promotion, wording drift, rollback gap, and runner gate gap.",
+    "integrated-preview-summary": "Packet preview is readable and remains a preview, not an authorization state.",
+    "rollback-or-restore-plan": "Restore notes identify source templates, review artifacts, owner, and a separate future discussion path.",
+    "runner-gate-reminder": "Reusable current runner is acceptable for report-only validation; expanded runner scope requires separate confirmation.",
+    "manual-decision-placeholder": "Human reviewer may choose handoff-ready-for-human-review, needs-rework, or blocked.",
+    "non-execution-statement": "This handoff does not approve authorization, execution, true UX restore, or Issue #18 closure."
+  }
+}

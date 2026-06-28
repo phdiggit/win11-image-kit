@@ -69,7 +69,12 @@ Describe "Future true UX restore validation runner" {
             "docs\93-future-true-ux-restore-packet-preview-field-map.md",
             "docs\94-future-true-ux-restore-packet-preview-reviewer-reading-order.md",
             "docs\95-future-true-ux-restore-packet-preview-blocker-index.md",
-            "docs\96-future-true-ux-restore-packet-preview-lessons.md"
+            "docs\96-future-true-ux-restore-packet-preview-lessons.md",
+            "docs\97-future-true-ux-restore-human-authorization-handoff.md",
+            "docs\98-future-true-ux-restore-human-handoff-artifact-index.md",
+            "docs\99-future-true-ux-restore-human-handoff-manual-decision-placeholder.md",
+            "docs\100-future-true-ux-restore-human-handoff-review-boundary.md",
+            "docs\101-future-true-ux-restore-human-handoff-lessons.md"
         )) {
             Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot $doc)) $true
         }
@@ -105,6 +110,11 @@ Describe "Future true UX restore validation runner" {
         $doc94 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\94-future-true-ux-restore-packet-preview-reviewer-reading-order.md") -Raw -Encoding UTF8
         $doc95 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\95-future-true-ux-restore-packet-preview-blocker-index.md") -Raw -Encoding UTF8
         $doc96 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\96-future-true-ux-restore-packet-preview-lessons.md") -Raw -Encoding UTF8
+        $doc97 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\97-future-true-ux-restore-human-authorization-handoff.md") -Raw -Encoding UTF8
+        $doc98 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\98-future-true-ux-restore-human-handoff-artifact-index.md") -Raw -Encoding UTF8
+        $doc99 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\99-future-true-ux-restore-human-handoff-manual-decision-placeholder.md") -Raw -Encoding UTF8
+        $doc100 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\100-future-true-ux-restore-human-handoff-review-boundary.md") -Raw -Encoding UTF8
+        $doc101 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\101-future-true-ux-restore-human-handoff-lessons.md") -Raw -Encoding UTF8
         Assert-KitMatch $doc66 'Status:\s*`authorization-intake`'
         Assert-KitMatch $doc67 'Status:\s*`evidence-model-draft`'
         Assert-KitMatch $doc68 'Status:\s*`dry-run-plan`'
@@ -136,6 +146,11 @@ Describe "Future true UX restore validation runner" {
         Assert-KitMatch $doc94 'Status:\s*`integrated-packet-preview-reading-order`'
         Assert-KitMatch $doc95 'Status:\s*`integrated-packet-preview-blocker-index`'
         Assert-KitMatch $doc96 'Status:\s*`integrated-packet-preview-lessons`'
+        Assert-KitMatch $doc97 'Status:\s*`human-authorization-handoff`'
+        Assert-KitMatch $doc98 'Status:\s*`human-authorization-handoff-artifact-index`'
+        Assert-KitMatch $doc99 'Status:\s*`human-authorization-handoff-manual-decision-placeholder`'
+        Assert-KitMatch $doc100 'Status:\s*`human-authorization-handoff-review-boundary`'
+        Assert-KitMatch $doc101 'Status:\s*`human-authorization-handoff-lessons`'
 
         $qualityGates = Get-Content -LiteralPath (Join-Path $script:RepoRoot "manifests\quality-gates.json") -Raw -Encoding UTF8 | ConvertFrom-Json
         $gateIds = @($qualityGates.gates.id)
@@ -152,6 +167,7 @@ Describe "Future true UX restore validation runner" {
         Assert-KitEqual ($gateIds -contains "future-true-ux-negative-review-drill") $true
         Assert-KitEqual ($gateIds -contains "future-true-ux-approval-checklist-ergonomics") $true
         Assert-KitEqual ($gateIds -contains "future-true-ux-integrated-packet-preview") $true
+        Assert-KitEqual ($gateIds -contains "future-true-ux-human-authorization-handoff") $true
     }
 
     It "keeps Issue 18 ready state frozen and avoids completion summary wording" {
@@ -190,7 +206,12 @@ Describe "Future true UX restore validation runner" {
             "docs\93-future-true-ux-restore-packet-preview-field-map.md",
             "docs\94-future-true-ux-restore-packet-preview-reviewer-reading-order.md",
             "docs\95-future-true-ux-restore-packet-preview-blocker-index.md",
-            "docs\96-future-true-ux-restore-packet-preview-lessons.md"
+            "docs\96-future-true-ux-restore-packet-preview-lessons.md",
+            "docs\97-future-true-ux-restore-human-authorization-handoff.md",
+            "docs\98-future-true-ux-restore-human-handoff-artifact-index.md",
+            "docs\99-future-true-ux-restore-human-handoff-manual-decision-placeholder.md",
+            "docs\100-future-true-ux-restore-human-handoff-review-boundary.md",
+            "docs\101-future-true-ux-restore-human-handoff-lessons.md"
         )) {
             $text = Get-Content -LiteralPath (Join-Path $script:RepoRoot $path) -Raw -Encoding UTF8
             Assert-KitNotMatch $text "(?i)\b(fixes|closes|resolves)\s+#18\b"

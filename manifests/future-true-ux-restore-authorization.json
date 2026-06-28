@@ -255,5 +255,41 @@
       "execution-boundary",
       "runner-gate-reminder"
     ]
+  },
+  "humanAuthorizationHandoff": {
+    "enabled": true,
+    "mode": "human-authorization-handoff",
+    "defaultScope": "current-user",
+    "authorizationApproved": false,
+    "executionApproved": false,
+    "executeReady": false,
+    "trueExecution": false,
+    "mutationCount": 0,
+    "allowedHandoffDecisions": [
+      "handoff-ready-for-human-review",
+      "needs-rework",
+      "blocked"
+    ],
+    "forbiddenHandoffDecisions": [
+      "authorization-review-ready",
+      "execute-ready",
+      "executed",
+      "completed",
+      "issue-18-complete",
+      "closure-ready"
+    ],
+    "requiredHandoffSections": [
+      "scope",
+      "artifact-index",
+      "identity-redaction",
+      "evidence-boundary",
+      "approval-checklist-summary",
+      "negative-blocker-summary",
+      "integrated-preview-summary",
+      "rollback-or-restore-plan",
+      "runner-gate-reminder",
+      "manual-decision-placeholder",
+      "non-execution-statement"
+    ]
   }
 }

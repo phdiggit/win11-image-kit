@@ -24,7 +24,8 @@
     "mockReviewDrill",
     "negativeReviewDrill",
     "approvalChecklistErgonomics",
-    "integratedPacketPreview"
+    "integratedPacketPreview",
+    "humanAuthorizationHandoff"
   ],
   "properties": {
     "$schema": {
@@ -109,6 +110,9 @@
     },
     "integratedPacketPreview": {
       "$ref": "#/$defs/integratedPacketPreview"
+    },
+    "humanAuthorizationHandoff": {
+      "$ref": "#/$defs/humanAuthorizationHandoff"
     }
   },
   "$defs": {
@@ -1066,6 +1070,200 @@
           ],
           "items": {
             "$ref": "#/$defs/integratedPacketPreviewSection"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "humanAuthorizationHandoffDecision": {
+      "type": "string",
+      "enum": [
+        "handoff-ready-for-human-review",
+        "needs-rework",
+        "blocked"
+      ]
+    },
+    "humanAuthorizationHandoffSection": {
+      "type": "string",
+      "enum": [
+        "scope",
+        "artifact-index",
+        "identity-redaction",
+        "evidence-boundary",
+        "approval-checklist-summary",
+        "negative-blocker-summary",
+        "integrated-preview-summary",
+        "rollback-or-restore-plan",
+        "runner-gate-reminder",
+        "manual-decision-placeholder",
+        "non-execution-statement"
+      ]
+    },
+    "humanAuthorizationHandoff": {
+      "type": "object",
+      "required": [
+        "enabled",
+        "mode",
+        "defaultScope",
+        "authorizationApproved",
+        "executionApproved",
+        "executeReady",
+        "trueExecution",
+        "mutationCount",
+        "allowedHandoffDecisions",
+        "forbiddenHandoffDecisions",
+        "requiredHandoffSections"
+      ],
+      "properties": {
+        "enabled": {
+          "const": true
+        },
+        "mode": {
+          "const": "human-authorization-handoff"
+        },
+        "defaultScope": {
+          "const": "current-user"
+        },
+        "authorizationApproved": {
+          "const": false,
+          "default": false
+        },
+        "executionApproved": {
+          "const": false,
+          "default": false
+        },
+        "executeReady": {
+          "const": false,
+          "default": false
+        },
+        "trueExecution": {
+          "const": false,
+          "default": false
+        },
+        "mutationCount": {
+          "const": 0,
+          "default": 0
+        },
+        "allowedHandoffDecisions": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "$ref": "#/$defs/humanAuthorizationHandoffDecision"
+          },
+          "not": {
+            "contains": {
+              "enum": [
+                "authorization-review-ready",
+                "execute-ready",
+                "executed",
+                "completed",
+                "issue-18-complete",
+                "closure-ready"
+              ]
+            }
+          }
+        },
+        "forbiddenHandoffDecisions": {
+          "type": "array",
+          "minItems": 6,
+          "allOf": [
+            {
+              "contains": {
+                "const": "authorization-review-ready"
+              }
+            },
+            {
+              "contains": {
+                "const": "execute-ready"
+              }
+            },
+            {
+              "contains": {
+                "const": "executed"
+              }
+            },
+            {
+              "contains": {
+                "const": "completed"
+              }
+            },
+            {
+              "contains": {
+                "const": "issue-18-complete"
+              }
+            },
+            {
+              "contains": {
+                "const": "closure-ready"
+              }
+            }
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "requiredHandoffSections": {
+          "type": "array",
+          "minItems": 11,
+          "allOf": [
+            {
+              "contains": {
+                "const": "scope"
+              }
+            },
+            {
+              "contains": {
+                "const": "artifact-index"
+              }
+            },
+            {
+              "contains": {
+                "const": "identity-redaction"
+              }
+            },
+            {
+              "contains": {
+                "const": "evidence-boundary"
+              }
+            },
+            {
+              "contains": {
+                "const": "approval-checklist-summary"
+              }
+            },
+            {
+              "contains": {
+                "const": "negative-blocker-summary"
+              }
+            },
+            {
+              "contains": {
+                "const": "integrated-preview-summary"
+              }
+            },
+            {
+              "contains": {
+                "const": "rollback-or-restore-plan"
+              }
+            },
+            {
+              "contains": {
+                "const": "runner-gate-reminder"
+              }
+            },
+            {
+              "contains": {
+                "const": "manual-decision-placeholder"
+              }
+            },
+            {
+              "contains": {
+                "const": "non-execution-statement"
+              }
+            }
+          ],
+          "items": {
+            "$ref": "#/$defs/humanAuthorizationHandoffSection"
           }
         }
       },
