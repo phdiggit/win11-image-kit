@@ -17,7 +17,10 @@ Describe "Orchestrator StepResult reports" {
                 [string]$Extension
             )
 
-            return (Join-Path ([IO.Path]::GetTempPath()) ("win11-image-kit-orchestrator-{0}{1}" -f ([guid]::NewGuid().ToString("N")), $Extension))
+            $root = Join-Path $script:RepoRoot ".tmp\pester-orchestrator"
+            [IO.Directory]::CreateDirectory($root) | Out-Null
+
+            return (Join-Path $root ("win11-image-kit-orchestrator-{0}{1}" -f ([guid]::NewGuid().ToString("N")), $Extension))
         }
     }
 

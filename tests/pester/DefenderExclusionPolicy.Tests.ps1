@@ -6,7 +6,7 @@ Describe "Defender exclusion policy preflight" {
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
         . (Join-Path $script:RepoRoot "scripts\common\Test-KitDefenderExclusionPolicy.ps1")
 
-        $script:TempRoot = Join-Path ([IO.Path]::GetTempPath()) ("win11-image-kit-defender-policy-{0}" -f ([guid]::NewGuid().ToString("N")))
+        $script:TempRoot = Join-Path $script:RepoRoot (".tmp\pester-defender-policy-{0}" -f ([guid]::NewGuid().ToString("N")))
         [IO.Directory]::CreateDirectory($script:TempRoot) | Out-Null
         $script:PathMap = @{
             WorkRoot = Join-Path $script:TempRoot "work"

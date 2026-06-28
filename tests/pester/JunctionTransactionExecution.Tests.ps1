@@ -6,10 +6,15 @@ Describe "Junction transaction execution" {
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
         . (Join-Path $script:RepoRoot "scripts\common\Invoke-KitJunctionTransaction.ps1")
 
+        $script:TempRoot = Join-Path $script:RepoRoot (".tmp\pester-junction-transaction-{0}" -f ([guid]::NewGuid().ToString("N")))
+        [IO.Directory]::CreateDirectory($script:TempRoot) | Out-Null
+        $script:DefaultSource = Join-Path $script:TempRoot "source"
+        $script:DefaultTarget = Join-Path $script:TempRoot "target"
+
         $script:NewTransactionConfig = {
             param(
-                [string]$Source = "C:\Source",
-                [string]$Target = "D:\Data\Target",
+                [string]$Source = $script:DefaultSource,
+                [string]$Target = $script:DefaultTarget,
                 [string]$BackupRetention = "keep"
             )
 
@@ -78,7 +83,13 @@ Describe "Junction transaction execution" {
 
         $script:VerifyOk = {
             param([string]$Path, $JunctionConfig)
-            [pscustomobject]@{ Exists = $true; IsJunction = $true; Target = "D:\Data\Target"; LinkType = "Junction"; Attributes = "Directory, ReparsePoint" }
+            [pscustomobject]@{ Exists = $true; IsJunction = $true; Target = $script:DefaultTarget; LinkType = "Junction"; Attributes = "Directory, ReparsePoint" }
+        }
+    }
+
+    AfterEach {
+        if (-not [string]::IsNullOrWhiteSpace($script:TempRoot) -and [IO.Directory]::Exists($script:TempRoot)) {
+            [IO.Directory]::Delete($script:TempRoot, $true)
         }
     }
 
@@ -236,7 +247,7 @@ Describe "Junction transaction execution" {
             -CopyDirectory { 0 } `
             -RenameSourceToBackup $rename `
             -CreateJunction { 1 } `
-            -PathExists { param([string]$Path) $Path -ne "C:\Source" }
+            -PathExists { param([string]$Path) $Path -ne $script:DefaultSource }
 
         Assert-KitEqual $result.status "failed"
         Assert-KitEqual $result.reason "junction-mklink-failed"
@@ -285,7 +296,7 @@ Describe "Junction transaction execution" {
         Assert-KitEqual $result.status "changed"
         Assert-KitEqual $result.reason "junction-transaction-complete"
         Assert-KitEqual $result.data.transactionStage "complete"
-        Assert-KitEqual $result.data.verifiedTarget "D:\Data\Target"
+        Assert-KitEqual $result.data.verifiedTarget $script:DefaultTarget
         Assert-KitNotNullOrEmpty $result.data.backupPath
         Assert-KitEqual $operations.remove 0
     }
