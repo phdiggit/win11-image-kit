@@ -1,0 +1,21 @@
+{
+  "caseId": "evidence-boundary-ambiguous",
+  "scope": "current-user",
+  "checklistDecision": "approval-checklist-ready",
+  "expectedDecision": "needs-rework",
+  "humanDecisionSummary": "Evidence wording needs a clearer boundary.",
+  "authorizationApproved": false,
+  "executionApproved": false,
+  "executeReady": false,
+  "trueExecution": false,
+  "mutationCount": 0,
+  "checklistSections": {
+    "scope": "current-user only.",
+    "target-identity-redaction": "Identity is redacted.",
+    "evidence-boundary": "CI success may be treated as real UX evidence for approval, wording to be decided.",
+    "rollback-or-restore-plan": "Restore notes identify the template source and manual revert owner.",
+    "privacy-redaction": "Private paths are replaced by placeholders.",
+    "reviewer-decision": "Maintainer checklist decision is needs-rework.",
+    "execution-boundary": "No execution approval is granted."
+  }
+}

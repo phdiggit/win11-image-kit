@@ -60,7 +60,11 @@ Describe "Future true UX restore validation runner" {
             "docs\84-future-true-ux-restore-negative-review-drill-bundle.md",
             "docs\85-future-true-ux-restore-negative-review-transcript.md",
             "docs\86-future-true-ux-restore-negative-decision-ledger.md",
-            "docs\87-future-true-ux-restore-negative-drill-lessons.md"
+            "docs\87-future-true-ux-restore-negative-drill-lessons.md",
+            "docs\88-future-true-ux-restore-maintainer-approval-checklist-ergonomics.md",
+            "docs\89-future-true-ux-restore-review-packet-readability-guide.md",
+            "docs\90-future-true-ux-restore-manual-decision-form-template.md",
+            "docs\91-future-true-ux-restore-approval-checklist-lessons.md"
         )) {
             Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot $doc)) $true
         }
@@ -87,6 +91,10 @@ Describe "Future true UX restore validation runner" {
         $doc85 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\85-future-true-ux-restore-negative-review-transcript.md") -Raw -Encoding UTF8
         $doc86 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\86-future-true-ux-restore-negative-decision-ledger.md") -Raw -Encoding UTF8
         $doc87 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\87-future-true-ux-restore-negative-drill-lessons.md") -Raw -Encoding UTF8
+        $doc88 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\88-future-true-ux-restore-maintainer-approval-checklist-ergonomics.md") -Raw -Encoding UTF8
+        $doc89 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\89-future-true-ux-restore-review-packet-readability-guide.md") -Raw -Encoding UTF8
+        $doc90 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\90-future-true-ux-restore-manual-decision-form-template.md") -Raw -Encoding UTF8
+        $doc91 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\91-future-true-ux-restore-approval-checklist-lessons.md") -Raw -Encoding UTF8
         Assert-KitMatch $doc66 'Status:\s*`authorization-intake`'
         Assert-KitMatch $doc67 'Status:\s*`evidence-model-draft`'
         Assert-KitMatch $doc68 'Status:\s*`dry-run-plan`'
@@ -109,6 +117,10 @@ Describe "Future true UX restore validation runner" {
         Assert-KitMatch $doc85 'Status:\s*`negative-review-transcript`'
         Assert-KitMatch $doc86 'Status:\s*`negative-decision-ledger`'
         Assert-KitMatch $doc87 'Status:\s*`negative-drill-lessons`'
+        Assert-KitMatch $doc88 'Status:\s*`approval-checklist-ergonomics`'
+        Assert-KitMatch $doc89 'Status:\s*`approval-checklist-readability-guide`'
+        Assert-KitMatch $doc90 'Status:\s*`approval-checklist-form-template`'
+        Assert-KitMatch $doc91 'Status:\s*`approval-checklist-lessons`'
 
         $qualityGates = Get-Content -LiteralPath (Join-Path $script:RepoRoot "manifests\quality-gates.json") -Raw -Encoding UTF8 | ConvertFrom-Json
         $gateIds = @($qualityGates.gates.id)
@@ -123,6 +135,7 @@ Describe "Future true UX restore validation runner" {
         Assert-KitEqual ($gateIds -contains "future-true-ux-mock-decision-ledger") $true
         Assert-KitEqual ($gateIds -contains "future-true-ux-evidence-packet") $true
         Assert-KitEqual ($gateIds -contains "future-true-ux-negative-review-drill") $true
+        Assert-KitEqual ($gateIds -contains "future-true-ux-approval-checklist-ergonomics") $true
     }
 
     It "keeps Issue 18 ready state frozen and avoids completion summary wording" {
@@ -152,7 +165,11 @@ Describe "Future true UX restore validation runner" {
             "docs\84-future-true-ux-restore-negative-review-drill-bundle.md",
             "docs\85-future-true-ux-restore-negative-review-transcript.md",
             "docs\86-future-true-ux-restore-negative-decision-ledger.md",
-            "docs\87-future-true-ux-restore-negative-drill-lessons.md"
+            "docs\87-future-true-ux-restore-negative-drill-lessons.md",
+            "docs\88-future-true-ux-restore-maintainer-approval-checklist-ergonomics.md",
+            "docs\89-future-true-ux-restore-review-packet-readability-guide.md",
+            "docs\90-future-true-ux-restore-manual-decision-form-template.md",
+            "docs\91-future-true-ux-restore-approval-checklist-lessons.md"
         )) {
             $text = Get-Content -LiteralPath (Join-Path $script:RepoRoot $path) -Raw -Encoding UTF8
             Assert-KitNotMatch $text "(?i)\b(fixes|closes|resolves)\s+#18\b"

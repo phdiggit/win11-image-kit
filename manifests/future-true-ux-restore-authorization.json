@@ -194,5 +194,35 @@
       "missing-rollback-plan",
       "high-risk-mutation-intent"
     ]
+  },
+  "approvalChecklistErgonomics": {
+    "enabled": true,
+    "mode": "approval-checklist-ergonomics",
+    "defaultScope": "current-user",
+    "authorizationApproved": false,
+    "executionApproved": false,
+    "executeReady": false,
+    "trueExecution": false,
+    "mutationCount": 0,
+    "allowedChecklistDecisions": [
+      "approval-checklist-ready",
+      "needs-rework",
+      "blocked"
+    ],
+    "forbiddenChecklistDecisions": [
+      "authorization-review-ready",
+      "execute-ready",
+      "executed",
+      "completed"
+    ],
+    "requiredChecklistSections": [
+      "scope",
+      "target-identity-redaction",
+      "evidence-boundary",
+      "rollback-or-restore-plan",
+      "privacy-redaction",
+      "reviewer-decision",
+      "execution-boundary"
+    ]
   }
 }

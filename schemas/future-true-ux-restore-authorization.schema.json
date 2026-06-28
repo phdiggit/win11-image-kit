@@ -22,7 +22,8 @@
     "machineDryRun",
     "authorizationReview",
     "mockReviewDrill",
-    "negativeReviewDrill"
+    "negativeReviewDrill",
+    "approvalChecklistErgonomics"
   ],
   "properties": {
     "$schema": {
@@ -101,6 +102,9 @@
     },
     "negativeReviewDrill": {
       "$ref": "#/$defs/negativeReviewDrill"
+    },
+    "approvalChecklistErgonomics": {
+      "$ref": "#/$defs/approvalChecklistErgonomics"
     }
   },
   "$defs": {
@@ -738,6 +742,164 @@
         "required": [
           "executed"
         ]
+      },
+      "additionalProperties": false
+    },
+    "approvalChecklistDecision": {
+      "type": "string",
+      "enum": [
+        "approval-checklist-ready",
+        "needs-rework",
+        "blocked"
+      ]
+    },
+    "approvalChecklistSection": {
+      "type": "string",
+      "enum": [
+        "scope",
+        "target-identity-redaction",
+        "evidence-boundary",
+        "rollback-or-restore-plan",
+        "privacy-redaction",
+        "reviewer-decision",
+        "execution-boundary"
+      ]
+    },
+    "approvalChecklistErgonomics": {
+      "type": "object",
+      "required": [
+        "enabled",
+        "mode",
+        "defaultScope",
+        "authorizationApproved",
+        "executionApproved",
+        "executeReady",
+        "trueExecution",
+        "mutationCount",
+        "allowedChecklistDecisions",
+        "forbiddenChecklistDecisions",
+        "requiredChecklistSections"
+      ],
+      "properties": {
+        "enabled": {
+          "const": true
+        },
+        "mode": {
+          "const": "approval-checklist-ergonomics"
+        },
+        "defaultScope": {
+          "const": "current-user"
+        },
+        "authorizationApproved": {
+          "const": false,
+          "default": false
+        },
+        "executionApproved": {
+          "const": false,
+          "default": false
+        },
+        "executeReady": {
+          "const": false,
+          "default": false
+        },
+        "trueExecution": {
+          "const": false,
+          "default": false
+        },
+        "mutationCount": {
+          "const": 0,
+          "default": 0
+        },
+        "allowedChecklistDecisions": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "$ref": "#/$defs/approvalChecklistDecision"
+          },
+          "not": {
+            "contains": {
+              "enum": [
+                "authorization-review-ready",
+                "execute-ready",
+                "executed",
+                "completed"
+              ]
+            }
+          }
+        },
+        "forbiddenChecklistDecisions": {
+          "type": "array",
+          "minItems": 4,
+          "allOf": [
+            {
+              "contains": {
+                "const": "authorization-review-ready"
+              }
+            },
+            {
+              "contains": {
+                "const": "execute-ready"
+              }
+            },
+            {
+              "contains": {
+                "const": "executed"
+              }
+            },
+            {
+              "contains": {
+                "const": "completed"
+              }
+            }
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "requiredChecklistSections": {
+          "type": "array",
+          "minItems": 7,
+          "allOf": [
+            {
+              "contains": {
+                "const": "scope"
+              }
+            },
+            {
+              "contains": {
+                "const": "target-identity-redaction"
+              }
+            },
+            {
+              "contains": {
+                "const": "evidence-boundary"
+              }
+            },
+            {
+              "contains": {
+                "const": "rollback-or-restore-plan"
+              }
+            },
+            {
+              "contains": {
+                "const": "privacy-redaction"
+              }
+            },
+            {
+              "contains": {
+                "const": "reviewer-decision"
+              }
+            },
+            {
+              "contains": {
+                "const": "execution-boundary"
+              }
+            }
+          ],
+          "items": {
+            "$ref": "#/$defs/approvalChecklistSection"
+          }
+        }
       },
       "additionalProperties": false
     },

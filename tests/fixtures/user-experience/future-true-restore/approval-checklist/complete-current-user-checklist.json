@@ -1,0 +1,21 @@
+{
+  "caseId": "complete-current-user-checklist",
+  "scope": "current-user",
+  "checklistDecision": "approval-checklist-ready",
+  "expectedDecision": "approval-checklist-ready",
+  "humanDecisionSummary": "Maintainer can read scope, evidence boundary, rollback notes, privacy redaction, and non-execution boundary before any later authorization review.",
+  "authorizationApproved": false,
+  "executionApproved": false,
+  "executeReady": false,
+  "trueExecution": false,
+  "mutationCount": 0,
+  "checklistSections": {
+    "scope": "current-user only; no default-user, machine, or offline-image claim is reviewed in this checklist.",
+    "target-identity-redaction": "User identity is redacted as <redacted-current-user>; no local profile path or NAS path is present.",
+    "evidence-boundary": "Evidence is dry-run, mock, and report-only material. It is not real UX evidence and is not approval.",
+    "rollback-or-restore-plan": "Restore plan names the original exported templates, the dry-run report artifact, and the manual revert owner for a separate authorized run.",
+    "privacy-redaction": "Private path, account name, and host identity are replaced with placeholders before maintainer review.",
+    "reviewer-decision": "Maintainer checklist decision is approval-checklist-ready only.",
+    "execution-boundary": "No execution approval is granted; this checklist cannot authorize or perform restore actions."
+  }
+}
