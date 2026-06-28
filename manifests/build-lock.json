@@ -363,6 +363,13 @@
       "reason": "Issue 14 quality gates runbook records accepted readiness and verified main evidence."
     },
     {
+      "path": "docs/109-future-true-ux-quality-gate-governance.md",
+      "category": "doc",
+      "required": true,
+      "hash": "cb2294d7549de83f43dc228d1a6b54fc327e98c83bf800f33287a59003965b4b",
+      "reason": "Future True UX quality gate governance documents grouping, naming, and demotion policy."
+    },
+    {
       "path": "tests/pester/Issue14QualityGates.Tests.ps1",
       "category": "test",
       "required": true,
@@ -394,7 +401,7 @@
       "path": "manifests/quality-gates.json",
       "category": "manifest",
       "required": true,
-      "hash": "779debeeed50c5d696c29b73284f1b79af174f183c2a2e0bec5a794a5e6e3505",
+      "hash": "e4d6e0164e3482cc16cb620b987a298105439215f0d551d8ca1fae1879189811",
       "reason": "Quality Gates include future true UX mock review drill validation."
     },
     {
@@ -438,6 +445,13 @@
       "required": true,
       "hash": "0425084983093f9253df402f8e9ea33f119b3834ddf847f7dfdfc447a49aa652",
       "reason": "Quality gate validation tests guard report writing and failure exit codes."
+    },
+    {
+      "path": "tests/pester/FutureTrueUxQualityGateGovernance.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "aaae88dd901514206be0001fa10c731047105b97f4ee3b4413a7585a27b4d03b",
+      "reason": "Future True UX quality gate governance tests guard grouping and report-only semantics."
     },
     {
       "path": "tests/pester/Issue14QualityGateAcceptance.Tests.ps1",
