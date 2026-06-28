@@ -394,7 +394,7 @@
       "path": "manifests/quality-gates.json",
       "category": "manifest",
       "required": true,
-      "hash": "ac3e002c28fb9437d318ea0cf6719872e06b23ac4d2ade3df740fe1bce17125f",
+      "hash": "779debeeed50c5d696c29b73284f1b79af174f183c2a2e0bec5a794a5e6e3505",
       "reason": "Quality Gates include future true UX mock review drill validation."
     },
     {
@@ -2431,14 +2431,14 @@
       "path": "manifests/future-true-ux-restore-authorization.json",
       "category": "manifest",
       "required": true,
-      "hash": "137f6e8f883f689c50513e5713632c6a9c1e03f6d221d34ea6a8fba6020b2130",
+      "hash": "c9e2282705e61bf770eed761ff3a9e4d73dc5606e9b88ffcdbf1a6ad82a1c2c2",
       "reason": "Future true UX authorization manifest freezes mock review drill execution flags."
     },
     {
       "path": "schemas/future-true-ux-restore-authorization.schema.json",
       "category": "schema",
       "required": true,
-      "hash": "716ea36b60e28f329667c7ac22f1ab32337b4ab1fe410d8ede4cf883ad136244",
+      "hash": "149aa91daf203285497cc8c9f919ec56821cf99d21ece72ce60374d2b4ba818e",
       "reason": "Authorization schema constrains mock review drill execution freeze fields."
     },
     {
@@ -2550,7 +2550,7 @@
       "path": "tests/pester/FutureTrueUxRestoreValidation.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "3c8498087d988c4dd5a326cb3d0e6122d272adc8797adc307ffb3818430aa657",
+      "hash": "082de6b4064bef614566ebf90b3d06dee0a94d07993e1a02871bd2de1fdaf6e2",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
@@ -3873,112 +3873,112 @@
       "path": "docs/97-future-true-ux-restore-human-authorization-handoff.md",
       "category": "doc",
       "required": true,
-      "hash": "26759caa2e55b3d303585cbba9a281e9db64e8ba97e742338719d966ba836cf2",
+      "hash": "c1853220a3bb3ccc09cb445eb66aee5a87a6c35cf9b12cb2cfe635325de3a917",
       "reason": "Future true UX human authorization handoff artifact is a trusted report-only validation input."
     },
     {
       "path": "docs/98-future-true-ux-restore-human-handoff-artifact-index.md",
       "category": "doc",
       "required": true,
-      "hash": "037af073ca9d0c24326d1aefc733ad86d3896ddbae47415bf412f16aed72e044",
+      "hash": "1946c14c2b94cf44f38c0729d2bd3023cc59ccf2cd916908354a9071f1d34042",
       "reason": "Future true UX human authorization handoff artifact is a trusted report-only validation input."
     },
     {
       "path": "docs/99-future-true-ux-restore-human-handoff-manual-decision-placeholder.md",
       "category": "doc",
       "required": true,
-      "hash": "c0b31a246c5dda81730bdc09d56d2134299f44ce8062d3bb46767a16892e87ff",
+      "hash": "8437ad909aa0b2b2e968eb6cd14b578d78d0666bea616d001820b11fd7489b06",
       "reason": "Future true UX human authorization handoff artifact is a trusted report-only validation input."
     },
     {
       "path": "docs/100-future-true-ux-restore-human-handoff-review-boundary.md",
       "category": "doc",
       "required": true,
-      "hash": "c1cbec0a2c13fba3684dc4c5af24b9d2dd6acfe2404df4c812778a73b9257c00",
+      "hash": "64df7a843d6bb28ca0b9159402f14b034c931eda0e81ab7c3d9e595b5962f1c2",
       "reason": "Future true UX human authorization handoff artifact is a trusted report-only validation input."
     },
     {
       "path": "docs/101-future-true-ux-restore-human-handoff-lessons.md",
       "category": "doc",
       "required": true,
-      "hash": "e1d9f9c1dcc17d369f1f5a4de6f8b77a11c41d208f692fb4d9347eae26306381",
+      "hash": "c8885e1527eeafe5f84e8b6013eb438af109b38e10244b6de790d97f38d89fd7",
       "reason": "Future true UX human authorization handoff artifact is a trusted report-only validation input."
     },
     {
       "path": "scripts/common/New-FutureTrueUxRestoreHumanAuthorizationHandoffReport.ps1",
       "category": "script",
       "required": true,
-      "hash": "51c617ea00b300f3fda75ff78da5c94b505f93ef7f006a6c4a30fb044bde07b4",
+      "hash": "2dd9128641ae6034cfba678403398301810866cabb122cb314dae99e438ad8c9",
       "reason": "Future true UX human authorization handoff artifact is a trusted report-only validation input."
     },
     {
       "path": "scripts/validate/Test-FutureTrueUxRestoreHumanAuthorizationHandoff.ps1",
       "category": "script",
       "required": true,
-      "hash": "cea790b1ac0d70229f71bc92c3e358251c49bc7be7b9982c1f9837bcc61f9b49",
+      "hash": "cd193b8449d333dfa233fb4a498f01fd9bfb26f47ddda89c84984741d8bf55a3",
       "reason": "Future true UX human authorization handoff artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/human-authorization-handoff/complete-current-user-human-handoff.json",
       "category": "test",
       "required": true,
-      "hash": "15c5cfa1b06255a15cd4fa108f9838472890e94644d1c43f38cf825e83ab132f",
+      "hash": "ac198845ce993dc49db9d8fc8ef565913728bc337eeca5c84043ba1efa6765db",
       "reason": "Future true UX human authorization handoff artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/human-authorization-handoff/missing-artifact-index.json",
       "category": "test",
       "required": true,
-      "hash": "92e35b47a7015dfdf4ef2e0a9bdd063deba619f5ba3208ae8b066178e919d1e6",
+      "hash": "0ffe386a8ed8078468b9d33b065621336727ff2e690799dd74e527bd2bcf3096",
       "reason": "Future true UX human authorization handoff artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/human-authorization-handoff/missing-manual-decision-placeholder.json",
       "category": "test",
       "required": true,
-      "hash": "d37e9de609e34342236192494c221f9a9eeeefed24e6fbb9d1684c62791bfe0d",
+      "hash": "ce052064d6502bbd1bfcb7be2e124621c5b90f34cfb96a52a287282bbfde7aca",
       "reason": "Future true UX human authorization handoff artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/human-authorization-handoff/handoff-promotes-preview-to-authorization-ready.json",
       "category": "test",
       "required": true,
-      "hash": "8f6e6e780242b37edd8af5c5effa345da0ec6cae88ad98f5da06aef95ab0a367",
+      "hash": "3bfb224f649855c92fd3c82735e06311af78a0f75c4a5857e98396dd8d585c41",
       "reason": "Future true UX human authorization handoff artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/human-authorization-handoff/handoff-promotes-report-to-real-evidence.json",
       "category": "test",
       "required": true,
-      "hash": "b5838c716c01eb458edd1a10e93b3c1ce6723bff6c3d663da032537cbf31fc5d",
+      "hash": "07377eaca36f7d8de7b6ee2f58238d78a3731ccb86b3ddc04e131285f3472f95",
       "reason": "Future true UX human authorization handoff artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/human-authorization-handoff/handoff-drifts-to-execute-ready.json",
       "category": "test",
       "required": true,
-      "hash": "278dbdfa5a7abb8668973e01d24deda1d345b0e23807060c656d4af395007b01",
+      "hash": "6bb6e46c451457a4455c907f7458cfa1accf5c04580ac151f17c7b88e93be4f8",
       "reason": "Future true UX human authorization handoff artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/human-authorization-handoff/handoff-mentions-issue-18-closure.json",
       "category": "test",
       "required": true,
-      "hash": "61de32f59bdd245a82e2e4ce19276ba22b3b8b68e8e500b3ad4ef8fd5e0db061",
+      "hash": "2da9c6ff37bfd317004141f233a6f032deb6b44796d238da49787787fb6effec",
       "reason": "Future true UX human authorization handoff artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/human-authorization-handoff/private-path-not-redacted.json",
       "category": "test",
       "required": true,
-      "hash": "91bd4648f41f10fe75cb3f1989610e7fd04cffcff36d971b3d747802f5b12eac",
+      "hash": "bcaffbf11c453c53e564b6e7634dfd8bb082885be6ffa454e5ef2f257a3f604d",
       "reason": "Future true UX human authorization handoff artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/pester/FutureTrueUxRestoreHumanAuthorizationHandoff.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "ddc27a36f30c9d953a27fa3306f642a0da1d7210bd8303548862f8791bb38148",
+      "hash": "4b99c9981d57c3b42369ec60a8356875739f1beb2d4f2d98e2728aef7f07850d",
       "reason": "Future true UX human authorization handoff artifact is a trusted report-only validation input."
     },
     {
@@ -4078,6 +4078,76 @@
       "required": true,
       "hash": "e2578f4db090d8a3a4c66bbbbb4fe1072362177392eeb51d5df8e44819a19137",
       "reason": "Future True UX Restore no-execution readiness audit Pester coverage guards no-execution semantics."
+    },
+    {
+      "path": "docs/106-future-true-ux-restore-final-stop-line-handoff.md",
+      "category": "doc",
+      "required": true,
+      "hash": "a24c81e27d7e04704c48ad5188b786e1a8affcb91ba5ed712149ec1cc45cd909",
+      "reason": "Future True UX Restore final stop-line handoff documentation records the human decision boundary."
+    },
+    {
+      "path": "docs/107-future-true-ux-restore-stop-line-decision-matrix.md",
+      "category": "doc",
+      "required": true,
+      "hash": "e367af4c4923bcf8fb18aec9003c2c9957b0bf54ece1969ae0193d3f3ec441ea",
+      "reason": "Future True UX Restore final stop-line handoff documentation records the human decision boundary."
+    },
+    {
+      "path": "scripts/common/New-FutureTrueUxRestoreFinalStopLineHandoffReport.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "658d9c51825de89d5089013832ee21bbf2f75039b890ad2a4e8c22cfa916a4ab",
+      "reason": "Future True UX Restore final stop-line handoff report helper is a report-only validator input."
+    },
+    {
+      "path": "scripts/validate/Test-FutureTrueUxRestoreFinalStopLineHandoff.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "21ddc6b5472d7f6af5e8df791d72e0be0851260718632fd71c96e0a47233b4b2",
+      "reason": "Future True UX Restore final stop-line handoff validation entrypoint is a PR-fast report-only gate."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/final-stop-line-handoff/auto-close-wording-blocked.json",
+      "category": "test",
+      "required": true,
+      "hash": "a65d38be654c7db53f6cd65159096db033829dd708a3db749d768a4de008977a",
+      "reason": "Future True UX Restore final stop-line handoff fixture guards stop-line decisions and blockers."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/final-stop-line-handoff/execute-ready-wording-blocked.json",
+      "category": "test",
+      "required": true,
+      "hash": "22f8af1bf552293d4ba789631859226cf96b170a1ab3156330c199d0602683df",
+      "reason": "Future True UX Restore final stop-line handoff fixture guards stop-line decisions and blockers."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/final-stop-line-handoff/pause-at-stop-line.json",
+      "category": "test",
+      "required": true,
+      "hash": "53d2c66a394e5a97b8dd65fc6f75171367f86c32dceeb561c8d72c2a15372ffb",
+      "reason": "Future True UX Restore final stop-line handoff fixture guards stop-line decisions and blockers."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/final-stop-line-handoff/request-rework-for-missing-runner-gate.json",
+      "category": "test",
+      "required": true,
+      "hash": "1b1d5d780146bd59ec64b4094e8d9d149029230da208d4a399a0669854f709d1",
+      "reason": "Future True UX Restore final stop-line handoff fixture guards stop-line decisions and blockers."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/final-stop-line-handoff/start-true-restore-planning-requires-new-chain.json",
+      "category": "test",
+      "required": true,
+      "hash": "8983ceac1885ad7f8780599347b783c5bb5cae5208bd206f32ad61e0240a8d25",
+      "reason": "Future True UX Restore final stop-line handoff fixture guards stop-line decisions and blockers."
+    },
+    {
+      "path": "tests/pester/FutureTrueUxRestoreFinalStopLineHandoff.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "f25a99ba915f7b887ce5e4514633c8c38aa7b06fac6816812ffc8bed2bd9db9e",
+      "reason": "Future True UX Restore final stop-line handoff Pester coverage guards no-execution semantics."
     }
   ],
   "watchGlobs": [

@@ -1,0 +1,13 @@
+{
+  "caseId": "auto-close-wording-blocked",
+  "stopLineDecision": "pause-at-stop-line",
+  "expectedDecision": "blocked",
+  "notes": [
+    "This bad packet says Fixes #18."
+  ],
+  "authorizationApproved": false,
+  "executionApproved": false,
+  "executeReady": false,
+  "trueExecution": false,
+  "mutationCount": 0
+}
