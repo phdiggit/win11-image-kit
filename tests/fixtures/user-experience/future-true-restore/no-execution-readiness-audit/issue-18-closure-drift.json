@@ -1,0 +1,15 @@
+{
+  "caseId": "issue-18-closure-drift",
+  "auditDecision": "audit-ready",
+  "expectedDecision": "blocked",
+  "requiresRunnerStopLine": true,
+  "hasRunnerStopLine": true,
+  "notes": [
+    "This bad packet says Closes #18."
+  ],
+  "authorizationApproved": false,
+  "executionApproved": false,
+  "executeReady": false,
+  "trueExecution": false,
+  "mutationCount": 0
+}

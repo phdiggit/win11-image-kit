@@ -1,0 +1,15 @@
+{
+  "caseId": "missing-runner-stop-line",
+  "auditDecision": "audit-ready",
+  "expectedDecision": "needs-rework",
+  "requiresRunnerStopLine": true,
+  "hasRunnerStopLine": false,
+  "notes": [
+    "The packet forgot to carry the runner stop-line reminder."
+  ],
+  "authorizationApproved": false,
+  "executionApproved": false,
+  "executeReady": false,
+  "trueExecution": false,
+  "mutationCount": 0
+}

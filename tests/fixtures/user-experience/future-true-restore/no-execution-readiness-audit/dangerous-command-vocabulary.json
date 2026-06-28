@@ -1,0 +1,15 @@
+{
+  "caseId": "dangerous-command-vocabulary",
+  "auditDecision": "audit-ready",
+  "expectedDecision": "blocked",
+  "requiresRunnerStopLine": true,
+  "hasRunnerStopLine": true,
+  "notes": [
+    "This bad request mentions Start-Process as if the audit could run it."
+  ],
+  "authorizationApproved": false,
+  "executionApproved": false,
+  "executeReady": false,
+  "trueExecution": false,
+  "mutationCount": 0
+}

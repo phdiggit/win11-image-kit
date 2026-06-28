@@ -394,7 +394,7 @@
       "path": "manifests/quality-gates.json",
       "category": "manifest",
       "required": true,
-      "hash": "d79c801a83b4c3347ea832c73c31727237ea040ee73946ee7e65d4f94905c522",
+      "hash": "ac3e002c28fb9437d318ea0cf6719872e06b23ac4d2ade3df740fe1bce17125f",
       "reason": "Quality Gates include future true UX mock review drill validation."
     },
     {
@@ -2431,14 +2431,14 @@
       "path": "manifests/future-true-ux-restore-authorization.json",
       "category": "manifest",
       "required": true,
-      "hash": "45f9035f9a9e9ba76d0c31e8fed5019cd2c0201765dd29a80a2af590bd6ef1be",
+      "hash": "137f6e8f883f689c50513e5713632c6a9c1e03f6d221d34ea6a8fba6020b2130",
       "reason": "Future true UX authorization manifest freezes mock review drill execution flags."
     },
     {
       "path": "schemas/future-true-ux-restore-authorization.schema.json",
       "category": "schema",
       "required": true,
-      "hash": "10aa90e3e21e4b4a13c3f20a5e13bdd6db8daca09adcc824355ee16bf519dc83",
+      "hash": "716ea36b60e28f329667c7ac22f1ab32337b4ab1fe410d8ede4cf883ad136244",
       "reason": "Authorization schema constrains mock review drill execution freeze fields."
     },
     {
@@ -2550,7 +2550,7 @@
       "path": "tests/pester/FutureTrueUxRestoreValidation.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "1f0e6033fda11c20399872dbd7ddd1b5f89704141b1c142ea0d9fcc823ba9056",
+      "hash": "3c8498087d988c4dd5a326cb3d0e6122d272adc8797adc307ffb3818430aa657",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
@@ -3980,6 +3980,104 @@
       "required": true,
       "hash": "ddc27a36f30c9d953a27fa3306f642a0da1d7210bd8303548862f8791bb38148",
       "reason": "Future true UX human authorization handoff artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "docs/102-future-true-ux-restore-end-to-end-no-execution-readiness-audit.md",
+      "category": "doc",
+      "required": true,
+      "hash": "386adb5a3db0aad44a5528690ac0ff41baa995c72dca3387af9b59ffb9749956",
+      "reason": "Future True UX Restore no-execution readiness audit documentation records report-only stop-line semantics."
+    },
+    {
+      "path": "docs/103-future-true-ux-restore-state-name-separation-matrix.md",
+      "category": "doc",
+      "required": true,
+      "hash": "f506caa5e8a8d8e21ad0eab5f00d60ca65c07b1d4a0937fccc02a3cc499a49b8",
+      "reason": "Future True UX Restore no-execution readiness audit documentation records report-only stop-line semantics."
+    },
+    {
+      "path": "docs/104-future-true-ux-restore-artifact-chain-consistency-index.md",
+      "category": "doc",
+      "required": true,
+      "hash": "25d5588a82e837aa0d21cd44241d43422744b6f6a0e8f140a2bc76c77cdc8294",
+      "reason": "Future True UX Restore no-execution readiness audit documentation records report-only stop-line semantics."
+    },
+    {
+      "path": "docs/105-future-true-ux-restore-no-execution-stop-line.md",
+      "category": "doc",
+      "required": true,
+      "hash": "40fe1be0d4fa2f375b43b31f09b46ca0614cb9b6f82002fcb01cd6e6315c4a6b",
+      "reason": "Future True UX Restore no-execution readiness audit documentation records report-only stop-line semantics."
+    },
+    {
+      "path": "scripts/common/New-FutureTrueUxRestoreEndToEndNoExecutionReadinessAuditReport.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "89ead8c4796d1a48a91b843166857ef61bbe2047499284f91ae4fbbfa0eb8ea0",
+      "reason": "Future True UX Restore no-execution readiness audit report helper is a report-only validator input."
+    },
+    {
+      "path": "scripts/validate/Test-FutureTrueUxRestoreEndToEndNoExecutionReadinessAudit.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "7c8342eae4dd36f8532bfa277c999b2248667c92179679d62eb4edafaed983a4",
+      "reason": "Future True UX Restore no-execution readiness audit validation entrypoint is a PR-fast report-only gate."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/no-execution-readiness-audit/complete-no-execution-chain.json",
+      "category": "test",
+      "required": true,
+      "hash": "e37380cdf9dcfe491f73ea8172090d876221dca1f9d610bb02467e07b841da91",
+      "reason": "Future True UX Restore no-execution readiness audit fixture guards blocked and needs-rework outcomes."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/no-execution-readiness-audit/dangerous-command-vocabulary.json",
+      "category": "test",
+      "required": true,
+      "hash": "add8a9a0378b478030569324591726dd7f1ea9f02e87e46c80771c484031a1e2",
+      "reason": "Future True UX Restore no-execution readiness audit fixture guards blocked and needs-rework outcomes."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/no-execution-readiness-audit/execution-flag-drift.json",
+      "category": "test",
+      "required": true,
+      "hash": "bc49de3d64559027f11a957d4cc1910f0819eef75cca7d0c89b4e92d4eba4429",
+      "reason": "Future True UX Restore no-execution readiness audit fixture guards blocked and needs-rework outcomes."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/no-execution-readiness-audit/issue-18-closure-drift.json",
+      "category": "test",
+      "required": true,
+      "hash": "b8168fd382f1b68cd4a2b8c65934b6bbf7258aefd0caf1fb97196fc4da22fd74",
+      "reason": "Future True UX Restore no-execution readiness audit fixture guards blocked and needs-rework outcomes."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/no-execution-readiness-audit/missing-layer.json",
+      "category": "test",
+      "required": true,
+      "hash": "bf3a02945cfe768d3c77dfa360e111131a5f89ac875b1d1e39c57ac32992f8ba",
+      "reason": "Future True UX Restore no-execution readiness audit fixture guards blocked and needs-rework outcomes."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/no-execution-readiness-audit/missing-runner-stop-line.json",
+      "category": "test",
+      "required": true,
+      "hash": "b2e9bf42636a9f99ec534d2726b402607b29b46a2022355edaf0978ac8f7b563",
+      "reason": "Future True UX Restore no-execution readiness audit fixture guards blocked and needs-rework outcomes."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/no-execution-readiness-audit/state-promotion-drift.json",
+      "category": "test",
+      "required": true,
+      "hash": "cdf529dcb0dc4d88b92fa3c08b074bf82cabce3bd524f913de0767bc33c55f1a",
+      "reason": "Future True UX Restore no-execution readiness audit fixture guards blocked and needs-rework outcomes."
+    },
+    {
+      "path": "tests/pester/FutureTrueUxRestoreEndToEndNoExecutionReadinessAudit.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "e2578f4db090d8a3a4c66bbbbb4fe1072362177392eeb51d5df8e44819a19137",
+      "reason": "Future True UX Restore no-execution readiness audit Pester coverage guards no-execution semantics."
     }
   ],
   "watchGlobs": [
