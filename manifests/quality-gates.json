@@ -519,6 +519,18 @@
       "notes": "Validates integrated packet preview consistency and safety without allowing execution."
     },
     {
+      "id": "future-true-ux-human-authorization-handoff",
+      "displayName": "Future true UX human authorization handoff",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "scripts/validate/Test-FutureTrueUxRestoreHumanAuthorizationHandoff.ps1",
+      "evidence": "report",
+      "notes": "Validates human authorization handoff packet readability and safety without allowing execution."
+    },
+    {
       "id": "future-true-ux-mock-decision-ledger",
       "displayName": "Future true UX mock decision ledger",
       "layer": "pr-fast",
