@@ -17,7 +17,37 @@ Describe "Orchestrator StepResult reports" {
                 [string]$Extension
             )
 
-            return (Join-Path ([IO.Path]::GetTempPath()) ("win11-image-kit-orchestrator-{0}{1}" -f ([guid]::NewGuid().ToString("N")), $Extension))
+            $root = Join-Path $script:RepoRoot ".tmp\pester-orchestrator"
+            [IO.Directory]::CreateDirectory($root) | Out-Null
+
+            return (Join-Path $root ("win11-image-kit-orchestrator-{0}{1}" -f ([guid]::NewGuid().ToString("N")), $Extension))
+        }
+
+        $script:NewOrchestratorPathsFixture = {
+            $fixtureRoot = Join-Path $script:RepoRoot (".tmp\pester-orchestrator-roots\{0}" -f ([guid]::NewGuid().ToString("N")))
+            [IO.Directory]::CreateDirectory($fixtureRoot) | Out-Null
+
+            $pathsPath = & $script:NewOrchestratorTempPath ".paths.json"
+            $paths = [pscustomobject][ordered]@{
+                '$schema' = "../schemas/paths.schema.json"
+                paths = [pscustomobject][ordered]@{
+                    NasProjectRoot = $fixtureRoot
+                    ConfigRoot = (Join-Path $fixtureRoot "configs")
+                    PackageRoot = (Join-Path $fixtureRoot "packages")
+                    ImageRoot = (Join-Path $fixtureRoot "images")
+                    DeployRoot = (Join-Path $fixtureRoot "deploy")
+                    WorkRoot = (Join-Path $fixtureRoot "work")
+                    DownloadPool = (Join-Path $fixtureRoot "downloads")
+                    ToolRoot = (Join-Path $fixtureRoot "tools")
+                    DataRoot = (Join-Path $fixtureRoot "data")
+                }
+            }
+            Set-Content -LiteralPath $pathsPath -Value ($paths | ConvertTo-Json -Depth 8) -Encoding UTF8
+
+            [pscustomobject]@{
+                Root = $fixtureRoot
+                PathsManifestPath = $pathsPath
+            }
         }
     }
 
@@ -70,11 +100,13 @@ Describe "Orchestrator StepResult reports" {
         $logPath = & $script:NewOrchestratorTempPath ".log"
         $stdoutPath = & $script:NewOrchestratorTempPath ".out"
         $stderrPath = & $script:NewOrchestratorTempPath ".err"
+        $pathsFixture = & $script:NewOrchestratorPathsFixture
 
         try {
             $scriptPath = Join-Path $script:RepoRoot "scripts\postdeploy\Invoke-PostDeploy.ps1"
             & $powerShell -NoProfile -ExecutionPolicy Bypass -File $scriptPath `
                 -WhatIf `
+                -PathsManifestPath $pathsFixture.PathsManifestPath `
                 -SummaryReportPath $summaryPath `
                 -ReportPath $installerPath `
                 -UserExperienceReportPath $userExperiencePath `
@@ -97,7 +129,10 @@ Describe "Orchestrator StepResult reports" {
             Assert-KitEqual $report.stepSummary.exitCode 0
             Assert-KitEqual @($report.stepResults | Where-Object { $_.status -eq "completed" }).Count 0
         } finally {
-            Remove-Item -LiteralPath $summaryPath,$installerPath,$userExperiencePath,$logPath,$stdoutPath,$stderrPath -Force -ErrorAction SilentlyContinue
+            Remove-Item -LiteralPath $summaryPath,$installerPath,$userExperiencePath,$logPath,$stdoutPath,$stderrPath,$pathsFixture.PathsManifestPath -Force -ErrorAction SilentlyContinue
+            if ($null -ne $pathsFixture -and [IO.Directory]::Exists($pathsFixture.Root)) {
+                [IO.Directory]::Delete($pathsFixture.Root, $true)
+            }
         }
     }
 
@@ -110,6 +145,7 @@ Describe "Orchestrator StepResult reports" {
         $logPath = & $script:NewOrchestratorTempPath ".log"
         $stdoutPath = & $script:NewOrchestratorTempPath ".out"
         $stderrPath = & $script:NewOrchestratorTempPath ".err"
+        $pathsFixture = & $script:NewOrchestratorPathsFixture
 
         try {
             $defaultScopePath = Join-Path $script:RepoRoot "manifests\customization-scope.json"
@@ -122,7 +158,7 @@ Describe "Orchestrator StepResult reports" {
             $scriptPath = Join-Path $script:RepoRoot "scripts\postdeploy\Invoke-PostDeploy.ps1"
             $command = @"
 try {
-    & '$scriptPath' -WhatIf -ScopeManifestPath '$scopePath' -SummaryReportPath '$summaryPath' -ReportPath '$installerPath' -UserExperienceReportPath '$userExperiencePath' -LogPath '$logPath'
+    & '$scriptPath' -WhatIf -ScopeManifestPath '$scopePath' -PathsManifestPath '$($pathsFixture.PathsManifestPath)' -SummaryReportPath '$summaryPath' -ReportPath '$installerPath' -UserExperienceReportPath '$userExperiencePath' -LogPath '$logPath'
     exit 0
 } catch {
     exit 1
@@ -148,7 +184,10 @@ try {
             Assert-KitEqual $report.stepSummary.exitCode 1
             Assert-KitEqual @($report.stepResults | Where-Object { $_.status -eq "completed" }).Count 0
         } finally {
-            Remove-Item -LiteralPath $scopePath,$summaryPath,$installerPath,$userExperiencePath,$logPath,$stdoutPath,$stderrPath -Force -ErrorAction SilentlyContinue
+            Remove-Item -LiteralPath $scopePath,$summaryPath,$installerPath,$userExperiencePath,$logPath,$stdoutPath,$stderrPath,$pathsFixture.PathsManifestPath -Force -ErrorAction SilentlyContinue
+            if ($null -ne $pathsFixture -and [IO.Directory]::Exists($pathsFixture.Root)) {
+                [IO.Directory]::Delete($pathsFixture.Root, $true)
+            }
         }
     }
 }
