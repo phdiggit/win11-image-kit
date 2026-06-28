@@ -224,5 +224,36 @@
       "reviewer-decision",
       "execution-boundary"
     ]
+  },
+  "integratedPacketPreview": {
+    "enabled": true,
+    "mode": "integrated-packet-preview",
+    "defaultScope": "current-user",
+    "authorizationApproved": false,
+    "executionApproved": false,
+    "executeReady": false,
+    "trueExecution": false,
+    "mutationCount": 0,
+    "allowedPreviewDecisions": [
+      "packet-preview-ready",
+      "needs-rework",
+      "blocked"
+    ],
+    "forbiddenPreviewDecisions": [
+      "authorization-review-ready",
+      "execute-ready",
+      "executed",
+      "completed"
+    ],
+    "requiredPreviewSections": [
+      "scope",
+      "target-identity-redaction",
+      "evidence-boundary",
+      "approval-checklist-summary",
+      "negative-blocker-summary",
+      "rollback-or-restore-plan",
+      "execution-boundary",
+      "runner-gate-reminder"
+    ]
   }
 }

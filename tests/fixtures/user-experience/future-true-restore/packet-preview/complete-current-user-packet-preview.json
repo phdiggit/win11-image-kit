@@ -1,0 +1,43 @@
+{
+  "caseId": "complete-current-user-packet-preview",
+  "scope": "current-user",
+  "previewDecision": "packet-preview-ready",
+  "expectedDecision": "packet-preview-ready",
+  "authorizationApproved": false,
+  "executionApproved": false,
+  "executeReady": false,
+  "trueExecution": false,
+  "mutationCount": 0,
+  "packetPreviewSections": {
+    "scope": "current-user only; default-user, offline-image, and machine claims are outside this packet preview.",
+    "target-identity-redaction": "Target identity is redacted as <redacted-current-user>; no local profile path or private share is present.",
+    "evidence-boundary": "Evidence is dry-run, mock, checklist, and report-only material. It is not real UX evidence and is not approval.",
+    "approval-checklist-summary": "Approval checklist ergonomics is readable and remains separate from any authorization review state.",
+    "negative-blocker-summary": "Negative review blockers are summarized: scope drift, private path, evidence promotion, wording drift, rollback gap, and runner gate gap.",
+    "rollback-or-restore-plan": "Restore notes name the original templates, preview report artifact, manual reviewer, and separate future authorization path.",
+    "execution-boundary": "Preview does not approve authorization or execution and cannot perform true UX restore.",
+    "runner-gate-reminder": "Reusable current runner is acceptable for report-only validation; any expanded runner or workflow change needs separate confirmation."
+  },
+  "fieldMap": [
+    "scope -> authorization request and scope guard",
+    "evidence-boundary -> dry-run, mock, negative review, and approval checklist reports"
+  ],
+  "reviewerReadingOrder": [
+    "scope",
+    "target-identity-redaction",
+    "evidence-boundary",
+    "approval-checklist-summary",
+    "negative-blocker-summary",
+    "rollback-or-restore-plan",
+    "execution-boundary",
+    "runner-gate-reminder"
+  ],
+  "blockerIndex": [
+    "scope mismatch",
+    "private path",
+    "evidence promotion",
+    "approval or execution wording drift",
+    "rollback missing",
+    "runner gate missing"
+  ]
+}

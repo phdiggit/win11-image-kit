@@ -23,7 +23,8 @@
     "authorizationReview",
     "mockReviewDrill",
     "negativeReviewDrill",
-    "approvalChecklistErgonomics"
+    "approvalChecklistErgonomics",
+    "integratedPacketPreview"
   ],
   "properties": {
     "$schema": {
@@ -105,6 +106,9 @@
     },
     "approvalChecklistErgonomics": {
       "$ref": "#/$defs/approvalChecklistErgonomics"
+    },
+    "integratedPacketPreview": {
+      "$ref": "#/$defs/integratedPacketPreview"
     }
   },
   "$defs": {
@@ -898,6 +902,170 @@
           ],
           "items": {
             "$ref": "#/$defs/approvalChecklistSection"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "integratedPacketPreviewDecision": {
+      "type": "string",
+      "enum": [
+        "packet-preview-ready",
+        "needs-rework",
+        "blocked"
+      ]
+    },
+    "integratedPacketPreviewSection": {
+      "type": "string",
+      "enum": [
+        "scope",
+        "target-identity-redaction",
+        "evidence-boundary",
+        "approval-checklist-summary",
+        "negative-blocker-summary",
+        "rollback-or-restore-plan",
+        "execution-boundary",
+        "runner-gate-reminder"
+      ]
+    },
+    "integratedPacketPreview": {
+      "type": "object",
+      "required": [
+        "enabled",
+        "mode",
+        "defaultScope",
+        "authorizationApproved",
+        "executionApproved",
+        "executeReady",
+        "trueExecution",
+        "mutationCount",
+        "allowedPreviewDecisions",
+        "forbiddenPreviewDecisions",
+        "requiredPreviewSections"
+      ],
+      "properties": {
+        "enabled": {
+          "const": true
+        },
+        "mode": {
+          "const": "integrated-packet-preview"
+        },
+        "defaultScope": {
+          "const": "current-user"
+        },
+        "authorizationApproved": {
+          "const": false,
+          "default": false
+        },
+        "executionApproved": {
+          "const": false,
+          "default": false
+        },
+        "executeReady": {
+          "const": false,
+          "default": false
+        },
+        "trueExecution": {
+          "const": false,
+          "default": false
+        },
+        "mutationCount": {
+          "const": 0,
+          "default": 0
+        },
+        "allowedPreviewDecisions": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "$ref": "#/$defs/integratedPacketPreviewDecision"
+          },
+          "not": {
+            "contains": {
+              "enum": [
+                "authorization-review-ready",
+                "execute-ready",
+                "executed",
+                "completed"
+              ]
+            }
+          }
+        },
+        "forbiddenPreviewDecisions": {
+          "type": "array",
+          "minItems": 4,
+          "allOf": [
+            {
+              "contains": {
+                "const": "authorization-review-ready"
+              }
+            },
+            {
+              "contains": {
+                "const": "execute-ready"
+              }
+            },
+            {
+              "contains": {
+                "const": "executed"
+              }
+            },
+            {
+              "contains": {
+                "const": "completed"
+              }
+            }
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "requiredPreviewSections": {
+          "type": "array",
+          "minItems": 8,
+          "allOf": [
+            {
+              "contains": {
+                "const": "scope"
+              }
+            },
+            {
+              "contains": {
+                "const": "target-identity-redaction"
+              }
+            },
+            {
+              "contains": {
+                "const": "evidence-boundary"
+              }
+            },
+            {
+              "contains": {
+                "const": "approval-checklist-summary"
+              }
+            },
+            {
+              "contains": {
+                "const": "negative-blocker-summary"
+              }
+            },
+            {
+              "contains": {
+                "const": "rollback-or-restore-plan"
+              }
+            },
+            {
+              "contains": {
+                "const": "execution-boundary"
+              }
+            },
+            {
+              "contains": {
+                "const": "runner-gate-reminder"
+              }
+            }
+          ],
+          "items": {
+            "$ref": "#/$defs/integratedPacketPreviewSection"
           }
         }
       },
