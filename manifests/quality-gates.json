@@ -459,6 +459,18 @@
       "notes": "Prevents evidence substitution across current-user, default-user, offline-image, and machine scopes."
     },
     {
+      "id": "future-true-ux-execute-gate",
+      "displayName": "Future true UX execute gate dual approval",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "docs/71-future-true-ux-restore-execute-gate-dual-approval.md",
+      "evidence": "document",
+      "notes": "Keeps authorization and execution approval separate; no execution in this stage."
+    },
+    {
       "id": "future-true-ux-authorization-review",
       "displayName": "Future true UX authorization review workflow",
       "layer": "pr-fast",
@@ -471,6 +483,18 @@
       "notes": "Validates review-only authorization packets and keeps execute-ready, execution approval, and Issue 18 auto-close wording blocked."
     },
     {
+      "id": "future-true-ux-evidence-packet",
+      "displayName": "Future true UX evidence packet contract",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "docs/78-future-true-ux-restore-evidence-packet-contract.md",
+      "evidence": "document",
+      "notes": "Defines packet fields required for maintainer review without allowing execution approval or true UX mutation."
+    },
+    {
       "id": "future-true-ux-mock-review-drill",
       "displayName": "Future true UX mock review packet drill",
       "layer": "pr-fast",
@@ -481,6 +505,18 @@
       "entrypoint": "scripts/validate/Test-FutureTrueUxRestoreMockReviewDrill.ps1",
       "evidence": "report",
       "notes": "Runs a mock authorization review packet drill without allowing execute-ready or true mutation."
+    },
+    {
+      "id": "future-true-ux-mock-decision-ledger",
+      "displayName": "Future true UX mock decision ledger",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "docs/82-future-true-ux-restore-mock-decision-ledger.md",
+      "evidence": "document",
+      "notes": "Records mock review decisions while keeping execution blocked."
     },
     {
       "id": "future-true-ux-negative-review-drill",
@@ -531,40 +567,28 @@
       "notes": "Validates human authorization handoff packet readability and safety without allowing execution."
     },
     {
-      "id": "future-true-ux-mock-decision-ledger",
-      "displayName": "Future true UX mock decision ledger",
+      "id": "future-true-ux-end-to-end-no-execution-readiness-audit",
+      "displayName": "Future true UX end-to-end no-execution readiness audit",
       "layer": "pr-fast",
       "trigger": "pull_request",
       "mode": "report-only",
       "required": true,
       "blocking": true,
-      "entrypoint": "docs/82-future-true-ux-restore-mock-decision-ledger.md",
-      "evidence": "document",
-      "notes": "Records mock review decisions while keeping execution blocked."
+      "entrypoint": "scripts/validate/Test-FutureTrueUxRestoreEndToEndNoExecutionReadinessAudit.ps1",
+      "evidence": "report",
+      "notes": "Audits the full Future True UX Restore preparation chain for no-execution, no-auto-close, and no-evidence-promotion consistency."
     },
     {
-      "id": "future-true-ux-evidence-packet",
-      "displayName": "Future true UX evidence packet contract",
+      "id": "future-true-ux-final-stop-line-handoff",
+      "displayName": "Future true UX final stop-line handoff",
       "layer": "pr-fast",
       "trigger": "pull_request",
       "mode": "report-only",
       "required": true,
       "blocking": true,
-      "entrypoint": "docs/78-future-true-ux-restore-evidence-packet-contract.md",
-      "evidence": "document",
-      "notes": "Defines packet fields required for maintainer review without allowing execution approval or true UX mutation."
-    },
-    {
-      "id": "future-true-ux-execute-gate",
-      "displayName": "Future true UX execute gate dual approval",
-      "layer": "pr-fast",
-      "trigger": "pull_request",
-      "mode": "report-only",
-      "required": true,
-      "blocking": true,
-      "entrypoint": "docs/71-future-true-ux-restore-execute-gate-dual-approval.md",
-      "evidence": "document",
-      "notes": "Keeps authorization and execution approval separate; no execution in this stage."
+      "entrypoint": "scripts/validate/Test-FutureTrueUxRestoreFinalStopLineHandoff.ps1",
+      "evidence": "report",
+      "notes": "Validates the final Future True UX Restore stop-line handoff without authorizing true execution or Issue closure."
     },
     {
       "id": "controlled-execution-disk-identity",
@@ -805,30 +829,6 @@
       "entrypoint": "docs/47-issue15-main-validation-evidence.md",
       "evidence": "document",
       "notes": "Records real main push or workflow_dispatch Full Validate evidence for manual closure review."
-    },
-    {
-      "id": "future-true-ux-end-to-end-no-execution-readiness-audit",
-      "displayName": "Future true UX end-to-end no-execution readiness audit",
-      "layer": "pr-fast",
-      "trigger": "pull_request",
-      "mode": "report-only",
-      "required": true,
-      "blocking": true,
-      "entrypoint": "scripts/validate/Test-FutureTrueUxRestoreEndToEndNoExecutionReadinessAudit.ps1",
-      "evidence": "report",
-      "notes": "Audits the full Future True UX Restore preparation chain for no-execution, no-auto-close, and no-evidence-promotion consistency."
-    },
-    {
-      "id": "future-true-ux-final-stop-line-handoff",
-      "displayName": "Future true UX final stop-line handoff",
-      "layer": "pr-fast",
-      "trigger": "pull_request",
-      "mode": "report-only",
-      "required": true,
-      "blocking": true,
-      "entrypoint": "scripts/validate/Test-FutureTrueUxRestoreFinalStopLineHandoff.ps1",
-      "evidence": "report",
-      "notes": "Validates the final Future True UX Restore stop-line handoff without authorizing true execution or Issue closure."
     }
   ]
 }
