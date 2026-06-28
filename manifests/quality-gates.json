@@ -495,6 +495,18 @@
       "notes": "Runs negative review fixtures for missing approval, scope expansion, false evidence, stale packets, rollback gaps, and high-risk vocabulary without allowing execution."
     },
     {
+      "id": "future-true-ux-approval-checklist-ergonomics",
+      "displayName": "Future true UX approval checklist ergonomics",
+      "layer": "pr-fast",
+      "trigger": "pull_request",
+      "mode": "report-only",
+      "required": true,
+      "blocking": true,
+      "entrypoint": "scripts/validate/Test-FutureTrueUxRestoreApprovalChecklistErgonomics.ps1",
+      "evidence": "report",
+      "notes": "Checks maintainer-facing approval checklist readability and decision safety without allowing execution."
+    },
+    {
       "id": "future-true-ux-mock-decision-ledger",
       "displayName": "Future true UX mock decision ledger",
       "layer": "pr-fast",

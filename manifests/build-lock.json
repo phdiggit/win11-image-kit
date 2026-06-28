@@ -394,7 +394,7 @@
       "path": "manifests/quality-gates.json",
       "category": "manifest",
       "required": true,
-      "hash": "b11b3f368d120b90221ddd8caccea9bb0e1a29ae15568ffd93ebd00481ec353b",
+      "hash": "5313c27e878c5a40e7f2d35952b9d432c9808bbbeb9542d38a853046d98eb1d7",
       "reason": "Quality Gates include future true UX mock review drill validation."
     },
     {
@@ -2431,14 +2431,14 @@
       "path": "manifests/future-true-ux-restore-authorization.json",
       "category": "manifest",
       "required": true,
-      "hash": "65275559319e1239d509957b17db70697949d8acc3c0104ad831a3fdc47c91e3",
+      "hash": "3dc11796ec7ad5177fca763eca4f3bb9a75e4fa38b8e726e0106bbabad3d72b9",
       "reason": "Future true UX authorization manifest freezes mock review drill execution flags."
     },
     {
       "path": "schemas/future-true-ux-restore-authorization.schema.json",
       "category": "schema",
       "required": true,
-      "hash": "5d66095974c8d173b2b304d16f382226fe6ca5314223e626108e4068641ceff7",
+      "hash": "f5b975aa7f96be626fb3f2568194e7cca3c652d384c72d40e70fa89c072cf962",
       "reason": "Authorization schema constrains mock review drill execution freeze fields."
     },
     {
@@ -2550,7 +2550,7 @@
       "path": "tests/pester/FutureTrueUxRestoreValidation.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "30ddd6dd099abcad0cdfb4191d76e25ffedc41ddf9506efec5db4538608b82f2",
+      "hash": "ce7310d39b2720064c88fbdd7dc69e45a44669e4054e3311bbb57e925647e645",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
@@ -3572,106 +3572,197 @@
       "path": "docs/84-future-true-ux-restore-negative-review-drill-bundle.md",
       "category": "doc",
       "required": true,
-      "hash": "1e510e41c76de27fe065b7bf8e5c2c858798ca3f7b73e61a2bdb97dc0e79a0a4",
+      "hash": "d33a7185db9c55d140569095fc22652facaab7286a21f426be18a4aca625ba65",
       "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "docs/85-future-true-ux-restore-negative-review-transcript.md",
       "category": "doc",
       "required": true,
-      "hash": "be29ac43a215a4e4c34b5711ded235741309949f36f3efb483cb931c506d0108",
+      "hash": "5f832c097fe1bc1a215068f21007d425b9e86735eadee861e322f93d236c292b",
       "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "docs/86-future-true-ux-restore-negative-decision-ledger.md",
       "category": "doc",
       "required": true,
-      "hash": "92bc188af640c197a1ed967f4a87c87fe7ae3665bd15449bee306877031fb579",
+      "hash": "2db5a2a9977abc92d0afd6b7e48182c594e3e4ece5a2c08ffc57af66d02b67d0",
       "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "docs/87-future-true-ux-restore-negative-drill-lessons.md",
       "category": "doc",
       "required": true,
-      "hash": "13c7291a8275de441c85c9a9f4c9a412a0f4b15dd5aec378290708ede32e1c44",
+      "hash": "a0132f112f913a5823334b038f40e34d70dea8bc44fd1db7f0b7a3dd7cca87e3",
       "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "scripts/common/New-FutureTrueUxRestoreNegativeReviewDrillReport.ps1",
       "category": "script",
       "required": true,
-      "hash": "edbfd04d51cd8fd1ffe4ad5336582c00cb850823bacfa62988b2eb85c95e62f3",
+      "hash": "99c4bc1f2b0009b893de49cec655f1c3e1937f1b9fb78a9acf9fcaa4327271b2",
       "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "scripts/validate/Test-FutureTrueUxRestoreNegativeReviewDrill.ps1",
       "category": "script",
       "required": true,
-      "hash": "9b48c6fec29cf0665a252e7b2584ea37f9f2f1df9636006806d6f5b08af530f5",
+      "hash": "1d35f86e838bc7ebf135f842b35182001b857a9c5451856942817ac6ec0eece2",
       "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/pester/FutureTrueUxRestoreNegativeReviewDrill.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "089c39b8c5e7b42f163fad6d8695453863153061ef4a172c85141d39d30b33c9",
+      "hash": "af3a4c797af718036e9edb10e6dd1f2c28e6ddffeb2189f1ab26b76ddc7da73d",
       "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/negative-review/exit-code-only-success.json",
       "category": "test",
       "required": true,
-      "hash": "53b8c2e3483203aa09fe3e41822b6084bec42b15d60f4584050c7def486db1ec",
+      "hash": "aee08219b2e381c1a84014af47672c40231f29c741dd22e1c1e87a0b76d856e2",
       "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/negative-review/high-risk-mutation-vocabulary.json",
       "category": "test",
       "required": true,
-      "hash": "2a65319638702d8702c84a867611cb821c67cc04fbb2d4d7ea07c347d952572a",
+      "hash": "2cd77aee92a57e9b328c9637d266d4232fedb1b805296ee5e43fbc561b0ee61c",
       "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/negative-review/missing-maintainer-approval.json",
       "category": "test",
       "required": true,
-      "hash": "95185e419b9c922fde2266db3a13156b9956e2803ee778255fe852d7b4bbcce8",
+      "hash": "3cf6b5d6996877ffe3b631657fe5de4d56ffb473a6aacaecf5141a4f418a0d21",
       "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/negative-review/missing-rollback-plan.json",
       "category": "test",
       "required": true,
-      "hash": "0f263d23708888737fc6f1d55babace8d61798e2ad257acb6b2a0393838e860e",
+      "hash": "ca6cb09d6dda0c747775a63d27c2aae6732c786edb40f5e1be0e3fa5eb503db6",
       "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/negative-review/mock-packet-as-real-evidence.json",
       "category": "test",
       "required": true,
-      "hash": "f737c9394f81f6e4d9fc62b3520cab5524b18da756e3d4bc7bbe456b4ffa0732",
+      "hash": "8fb93bcfe82171a481d50c3abe93c778bd19e36ed6e4db3db03c8563c3a8dfa4",
       "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/negative-review/report-only-as-real-evidence.json",
       "category": "test",
       "required": true,
-      "hash": "5c11fc277f488d392c92f45ff6b12859c237e941c4f5d92e0b999a1fac350408",
+      "hash": "e57449c7bbe1e98ba1a04358d2a9d074645b4f75194bebd0b9b93001d023adea",
       "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/negative-review/scope-expanded.json",
       "category": "test",
       "required": true,
-      "hash": "e39394eb17bcfa7c71d761d216a7baee6feb132f2b430a70d0e3f45ac83a5e80",
+      "hash": "d84704d65aec49d75ad53bf599b9364f54294556e4f7f0585757bf84857cfdf3",
       "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/fixtures/user-experience/future-true-restore/negative-review/stale-inconsistent-packet.json",
       "category": "test",
       "required": true,
-      "hash": "23de5722423ab7674238f076bec59f983bdb6b82ba82ba40aeea2337cf4404ed",
+      "hash": "5a8e3a0ae28835c349e4d58dcae4a5615e032a1a2482a2975102c052725938fb",
       "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "docs/88-future-true-ux-restore-maintainer-approval-checklist-ergonomics.md",
+      "category": "doc",
+      "required": true,
+      "hash": "9d6751b0b7ffdedffce70fdffca41454f882f0bf618e828fca7ad62d163cd982",
+      "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "docs/89-future-true-ux-restore-review-packet-readability-guide.md",
+      "category": "doc",
+      "required": true,
+      "hash": "24e492f0bae65d467ee54aa8f3246fb4cf6b4d01dcd8db266f6f08e6719618f3",
+      "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "docs/90-future-true-ux-restore-manual-decision-form-template.md",
+      "category": "doc",
+      "required": true,
+      "hash": "262eb65fde6b9c58ff20935bfd7fb361b06e870e32b4d2fa03a2714378362a08",
+      "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "docs/91-future-true-ux-restore-approval-checklist-lessons.md",
+      "category": "doc",
+      "required": true,
+      "hash": "7e55fe59c8cd814476aac34c5b18f10016f167ea839641f600d030782b18e6db",
+      "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "scripts/common/New-FutureTrueUxRestoreApprovalChecklistErgonomicsReport.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "60b27fbffa831c60dd3f45e8e27b16aeacde5241e61ab6af74af5989c1e7f2f5",
+      "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "scripts/validate/Test-FutureTrueUxRestoreApprovalChecklistErgonomics.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "363a5e6e0034e894d90b75a17317dd9aceb9d5a167bb59e958193cd3cd0ff51d",
+      "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/approval-checklist/complete-current-user-checklist.json",
+      "category": "test",
+      "required": true,
+      "hash": "da710656155a8383dc7def6a84e32ee10797c2b6bcd07a4c1b8af16e59185e78",
+      "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/approval-checklist/missing-human-decision-summary.json",
+      "category": "test",
+      "required": true,
+      "hash": "0d1d34638c1957eb7d44cd88be515cb23b71547f095262609b8e0af52ed7ffc9",
+      "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/approval-checklist/scope-label-hard-to-read.json",
+      "category": "test",
+      "required": true,
+      "hash": "2380f65ae50ce8783ed1163b886a4eebee8563ba61d42f5fb1b2d2faff5a5e4f",
+      "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/approval-checklist/evidence-boundary-ambiguous.json",
+      "category": "test",
+      "required": true,
+      "hash": "ebb5ac12564487e782510bb5a58fd1dc37de8fbbf381a83edafccd0dafcedb46",
+      "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/approval-checklist/rollback-plan-too-vague.json",
+      "category": "test",
+      "required": true,
+      "hash": "e4fcd97c580e5c44c2a66355dc5d0709ab7c298f21d56f489e8870a07a113ff0",
+      "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/fixtures/user-experience/future-true-restore/approval-checklist/approval-wording-drifts-to-execute-ready.json",
+      "category": "test",
+      "required": true,
+      "hash": "71ce40f321f40ec1132d9911a4c312a15bdaf166138bbca1b9dc23a4d686df3e",
+      "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
+    },
+    {
+      "path": "tests/pester/FutureTrueUxRestoreApprovalChecklistErgonomics.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "50c4e70123ebc06e4e261f61c15c325e33ccafbef1141ecceb4f6072fdfbe7ae",
+      "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
     }
   ],
   "watchGlobs": [
