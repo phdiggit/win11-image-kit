@@ -1,6 +1,7 @@
 [CmdletBinding()]
 param()
 
+. "$PSScriptRoot\FutureTrueUxRestore.Guards.ps1"
 . "$PSScriptRoot\New-FutureTrueUxRestoreMockReviewDrillReport.ps1"
 
 function Add-FutureTrueUxNegativeReason {
@@ -29,15 +30,7 @@ function Test-FutureTrueUxNegativeFlag {
         $Value
     )
 
-    if ($Value -eq $true) {
-        return $true
-    }
-
-    if ($Value -is [string]) {
-        return ($Value -match '^(?i:true|yes|1)$')
-    }
-
-    return $false
+    return (Test-FutureTrueUxRestoreTruthy -Value $Value)
 }
 
 function New-FutureTrueUxRestoreNegativeReviewEvidenceClassification {
@@ -205,7 +198,7 @@ function New-FutureTrueUxRestoreNegativeReviewDrillReport {
     }
 
     $allStrings = Get-FutureTrueUxRestoreStrings -InputObject $Request
-    $highRiskPattern = '(?i)\b(registry|hklm|hkcu|dism|appx|startlayout|defender|junction|service|sysprep|winget|choco|msiexec|invoke-webrequest|invoke-restmethod|install-module)\b'
+    $highRiskPattern = Get-FutureTrueUxRestoreDangerousVocabularyPattern
     foreach ($text in $allStrings) {
         if ($text -match $highRiskPattern) {
             Add-FutureTrueUxNegativeReason -Reasons ([ref]$reasons) -Code "high-risk-mutation-intent" -Message "High-risk mutation vocabulary appears in a report-only review path."

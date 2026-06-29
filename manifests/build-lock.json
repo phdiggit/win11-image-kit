@@ -3488,8 +3488,8 @@
       "path": "scripts/common/New-FutureTrueUxRestoreMockReviewDrillReport.ps1",
       "category": "script",
       "required": true,
-      "hash": "e79e7747c538ac6024a7d701527d84d8153c8ddda295af1e88b13b3c1a2b49a0",
-      "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
+      "hash": "cf044e7e27673c420c6da189a72b3acae50e6d7b0f9709a6e3a92e5ddf2f941c",
+      "reason": "Future True UX mock review drill report generator is a report-only guardrail."
     },
     {
       "path": "scripts/config/Show-FutureTrueUxRestoreMockReviewDrillPlan.ps1",
@@ -3628,8 +3628,8 @@
       "path": "scripts/common/New-FutureTrueUxRestoreNegativeReviewDrillReport.ps1",
       "category": "script",
       "required": true,
-      "hash": "99c4bc1f2b0009b893de49cec655f1c3e1937f1b9fb78a9acf9fcaa4327271b2",
-      "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
+      "hash": "43f64b55506fe8b2277340aa75d6c2e28f870d471219f307fa88dc63bb6015b9",
+      "reason": "Future True UX negative review drill report generator blocks unsafe review promotion."
     },
     {
       "path": "scripts/validate/Test-FutureTrueUxRestoreNegativeReviewDrill.ps1",
@@ -4188,7 +4188,7 @@
       "path": "tests/pester/FutureTrueUxArchiveDryRunPlan.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "6fd0f6080f289d0faf38c00c7fc8c6d403a5dcc94a19f25a022740d658e11b4f",
+      "hash": "30e0533f435a0275573b1980d733a95c55173f365f9bf9b5ebe05c1df75c1339",
       "reason": "Future True UX archive dry-run plan tests guard no-move semantics, archive path scope, and true-execution stop lines."
     },
     {
@@ -4202,7 +4202,7 @@
       "path": "docs/README.md",
       "category": "doc",
       "required": true,
-      "hash": "8ec2b89fc9dafec2a48785ae06e8140b13b48660c70434bd58a7fe77d5c9183c",
+      "hash": "30c00577a454e9369611d5104381a4f398421b22f479d82b8f408ccd8f775805",
       "reason": "Canonical docs index separates current entrypoints from historical archive material."
     },
     {
@@ -4211,6 +4211,27 @@
       "required": true,
       "hash": "6bf181eb31cccd83a94a9f6df857d191a7186b1f77f2de7dea9be1599efdc6e4",
       "reason": "Docs governance archive tests guard moved Future True UX docs, entrypoints, Build Lock paths, and no-execution semantics."
+    },
+    {
+      "path": "docs/archive/future-true-ux-restore/00-governance/112-future-true-ux-validator-script-governance.md",
+      "category": "doc",
+      "required": true,
+      "hash": "10e2af6637bbc498d5a44ae28fff0cf8036a8501f9d3cb85dde78148bc9e125f",
+      "reason": "Future True UX validator and script governance audit records report-only entrypoints and consolidation boundaries."
+    },
+    {
+      "path": "scripts/common/FutureTrueUxRestore.Guards.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "e7485131bada323ac268ed3a4a5a50e54140e312b8f2954e3d922035c6d2bbe9",
+      "reason": "Future True UX shared guard helper centralizes frozen execution state and report-only review matching."
+    },
+    {
+      "path": "tests/pester/FutureTrueUxValidatorScriptGovernance.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "b0c63f6c318019ea9f09282f608cabb46b43b9c5170fa462ab33e1f170d5bb49",
+      "reason": "Future True UX validator script governance tests guard report-only entrypoints and consolidation boundaries."
     }
   ],
   "watchGlobs": [

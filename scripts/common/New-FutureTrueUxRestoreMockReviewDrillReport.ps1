@@ -1,5 +1,6 @@
 #Requires -Version 5.1
 
+. "$PSScriptRoot\FutureTrueUxRestore.Guards.ps1"
 . "$PSScriptRoot\New-FutureTrueUxRestoreAuthorizationReviewReport.ps1"
 
 function New-FutureTrueUxRestoreMockDecisionLedger {
@@ -8,13 +9,7 @@ function New-FutureTrueUxRestoreMockDecisionLedger {
         [string]$Scope
     )
 
-    $flags = [pscustomobject][ordered]@{
-        authorizationApproved = $false
-        executionApproved = $false
-        executeReady = $false
-        trueExecution = $false
-        mutationCount = 0
-    }
+    $flags = New-FutureTrueUxRestoreFrozenExecutionState
 
     @(
         [pscustomobject][ordered]@{
@@ -114,7 +109,7 @@ function New-FutureTrueUxRestoreMockReviewDrillReport {
     if ($null -eq $section) {
         $blockedReasons += "mockReviewDrill manifest section is missing"
     } else {
-        foreach ($flagName in @("authorizationApproved", "executionApproved", "executeReady", "trueExecution")) {
+        foreach ($flagName in @(Get-FutureTrueUxRestoreFrozenFlagNames)) {
             if ([bool](Get-FutureTrueUxRestoreValue -InputObject $section -Name $flagName -DefaultValue $false)) {
                 $blockedReasons += "mockReviewDrill $flagName must remain false"
             }
