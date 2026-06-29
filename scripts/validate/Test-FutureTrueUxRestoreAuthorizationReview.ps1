@@ -6,52 +6,26 @@ param(
 
 $ErrorActionPreference = "Stop"
 . "$PSScriptRoot\..\common\New-FutureTrueUxRestoreAuthorizationReviewReport.ps1"
+. "$PSScriptRoot\..\common\FutureTrueUxRestore.ValidatorPrimitives.ps1"
 
-$repoRoot = (Resolve-Path -LiteralPath "$PSScriptRoot\..\..").Path
-$script:Failures = @()
+$repoRoot = Get-FutureTrueUxRestoreValidatorRepoRoot -ValidatorScriptRoot $PSScriptRoot
+$validatorState = New-FutureTrueUxRestoreValidatorState
 
-function Read-FutureTrueUxReviewJson {
-    param(
-        [Parameter(Mandatory)]
-        [string]$Path
-    )
-
-    $resolvedPath = Resolve-FutureTrueUxRestoreRepoPath -RepoRoot $repoRoot -Path $Path
-    Get-Content -LiteralPath $resolvedPath -Raw -Encoding UTF8 | ConvertFrom-Json
-}
-
-function Assert-FutureTrueUxReview {
-    param(
-        [Parameter(Mandatory)]
-        [bool]$Condition,
-
-        [Parameter(Mandatory)]
-        [string]$Message
-    )
-
-    if ($Condition) {
-        Write-Host "[OK] $Message" -ForegroundColor Green
-    } else {
-        $script:Failures += $Message
-        Write-Host "[ERROR] $Message" -ForegroundColor Red
-    }
-}
-
-$manifest = Read-FutureTrueUxReviewJson -Path $ManifestPath
+$manifest = Read-FutureTrueUxRestoreValidatorJson -RepoRoot $repoRoot -Path $ManifestPath
 $section = $manifest.authorizationReview
 
-Assert-FutureTrueUxReview -Condition ($section.enabled -eq $true) -Message "authorizationReview is enabled"
-Assert-FutureTrueUxReview -Condition ($section.authorizationApproved -eq $false) -Message "authorizationApproved remains false"
-Assert-FutureTrueUxReview -Condition ($section.executionApproved -eq $false) -Message "executionApproved remains false"
-Assert-FutureTrueUxReview -Condition ($section.executeReady -eq $false) -Message "executeReady remains false"
-Assert-FutureTrueUxReview -Condition (@($section.forbiddenReviewDecisions) -contains "execute-ready") -Message "execute-ready is forbidden"
-Assert-FutureTrueUxReview -Condition (-not (@($section.allowedReviewDecisions) -contains "execute-ready")) -Message "allowed decisions exclude execute-ready"
+Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($section.enabled -eq $true) -Message "authorizationReview is enabled"
+Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($section.authorizationApproved -eq $false) -Message "authorizationApproved remains false"
+Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($section.executionApproved -eq $false) -Message "executionApproved remains false"
+Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($section.executeReady -eq $false) -Message "executeReady remains false"
+Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition (@($section.forbiddenReviewDecisions) -contains "execute-ready") -Message "execute-ready is forbidden"
+Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition (-not (@($section.allowedReviewDecisions) -contains "execute-ready")) -Message "allowed decisions exclude execute-ready"
 
 $fixtureRoot = "tests/fixtures/user-experience/future-true-restore/review"
-$baseline = Read-FutureTrueUxReviewJson -Path "$fixtureRoot/baseline-blocked.json"
+$baseline = Read-FutureTrueUxRestoreValidatorJson -RepoRoot $repoRoot -Path "$fixtureRoot/baseline-blocked.json"
 $baselineReport = New-FutureTrueUxRestoreAuthorizationReviewReport -Manifest $manifest -Request $baseline -RepoRoot $repoRoot
-Assert-FutureTrueUxReview -Condition ($baselineReport.reviewDecision -eq "blocked") -Message "baseline remains blocked"
-Assert-FutureTrueUxReview -Condition ($baselineReport.trueExecution -eq $false -and $baselineReport.mutationCount -eq 0 -and $baselineReport.executeReady -eq $false) -Message "baseline does not execute"
+Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($baselineReport.reviewDecision -eq "blocked") -Message "baseline remains blocked"
+Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($baselineReport.trueExecution -eq $false -and $baselineReport.mutationCount -eq 0 -and $baselineReport.executeReady -eq $false) -Message "baseline does not execute"
 
 $readyCases = @(
     "current-user-review-ready.json",
@@ -61,12 +35,12 @@ $readyCases = @(
 )
 $caseReports = @()
 foreach ($fileName in $readyCases) {
-    $request = Read-FutureTrueUxReviewJson -Path "$fixtureRoot/$fileName"
+    $request = Read-FutureTrueUxRestoreValidatorJson -RepoRoot $repoRoot -Path "$fixtureRoot/$fileName"
     $report = New-FutureTrueUxRestoreAuthorizationReviewReport -Manifest $manifest -Request $request -RepoRoot $repoRoot
     $caseReports += [pscustomobject][ordered]@{ name = $fileName; reviewDecision = $report.reviewDecision; blockedReasons = @($report.blockedReasons) }
-    Assert-FutureTrueUxReview -Condition ($report.reviewDecision -eq "authorization-review-ready") -Message "$fileName can be authorization-review-ready"
-    Assert-FutureTrueUxReview -Condition ($report.evidencePacketStatus -eq "complete") -Message "$fileName packet is complete"
-    Assert-FutureTrueUxReview -Condition ($report.trueExecution -eq $false -and $report.mutationCount -eq 0 -and $report.executeReady -eq $false) -Message "$fileName does not execute"
+    Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($report.reviewDecision -eq "authorization-review-ready") -Message "$fileName can be authorization-review-ready"
+    Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($report.evidencePacketStatus -eq "complete") -Message "$fileName packet is complete"
+    Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($report.trueExecution -eq $false -and $report.mutationCount -eq 0 -and $report.executeReady -eq $false) -Message "$fileName does not execute"
 }
 
 $blockedCases = @(
@@ -81,38 +55,24 @@ $blockedCases = @(
 )
 
 foreach ($case in $blockedCases) {
-    $request = Read-FutureTrueUxReviewJson -Path $case.Path
+    $request = Read-FutureTrueUxRestoreValidatorJson -RepoRoot $repoRoot -Path $case.Path
     $report = New-FutureTrueUxRestoreAuthorizationReviewReport -Manifest $manifest -Request $request -RepoRoot $repoRoot
     $caseReports += [pscustomobject][ordered]@{ name = $case.Name; reviewDecision = $report.reviewDecision; blockedReasons = @($report.blockedReasons) }
-    Assert-FutureTrueUxReview -Condition ($report.reviewDecision -eq "blocked") -Message "$($case.Name) is blocked"
-    Assert-FutureTrueUxReview -Condition (($report.blockedReasons -join "`n") -match [regex]::Escape($case.Pattern)) -Message "$($case.Name) records expected blocked reason"
-    Assert-FutureTrueUxReview -Condition ($report.trueExecution -eq $false -and $report.mutationCount -eq 0 -and $report.executeReady -eq $false) -Message "$($case.Name) does not execute"
+    Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($report.reviewDecision -eq "blocked") -Message "$($case.Name) is blocked"
+    Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition (($report.blockedReasons -join "`n") -match [regex]::Escape($case.Pattern)) -Message "$($case.Name) records expected blocked reason"
+    Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($report.trueExecution -eq $false -and $report.mutationCount -eq 0 -and $report.executeReady -eq $false) -Message "$($case.Name) does not execute"
 }
 
 $reportObject = [pscustomobject][ordered]@{
     reportType = "future-true-ux-restore-authorization-review-validation"
     schemaVersion = 1
     generatedAt = (Get-Date).ToString("s")
-    status = $(if ($script:Failures.Count -eq 0) { "passed" } else { "failed" })
-    failureCount = $script:Failures.Count
-    failures = @($script:Failures)
+    status = Get-FutureTrueUxRestoreValidatorStatus -State $validatorState
+    failureCount = Get-FutureTrueUxRestoreValidatorFailureCount -State $validatorState
+    failures = @($validatorState.failures)
     baseline = $baselineReport
     cases = @($caseReports)
 }
 
-if (-not [string]::IsNullOrWhiteSpace($ReportPath)) {
-    $resolvedReportPath = Resolve-FutureTrueUxRestoreRepoPath -RepoRoot $repoRoot -Path $ReportPath
-    $reportDirectory = Split-Path -Path $resolvedReportPath -Parent
-    if (-not [string]::IsNullOrWhiteSpace($reportDirectory) -and -not (Test-Path -LiteralPath $reportDirectory)) {
-        New-Item -ItemType Directory -Path $reportDirectory -Force | Out-Null
-    }
-
-    $reportObject | ConvertTo-Json -Depth 12 | Set-Content -LiteralPath $resolvedReportPath -Encoding UTF8
-    Write-Host "Future true UX authorization review report written: $resolvedReportPath"
-}
-
-$reportObject
-
-if ($script:Failures.Count -gt 0) {
-    exit 1
-}
+Write-FutureTrueUxRestoreValidatorReport -RepoRoot $repoRoot -ReportPath $ReportPath -ReportObject $reportObject -SuccessMessage "Future true UX authorization review report written"
+Complete-FutureTrueUxRestoreValidatorRun -State $validatorState -ReportObject $reportObject

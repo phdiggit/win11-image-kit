@@ -7,52 +7,26 @@ param(
 
 $ErrorActionPreference = "Stop"
 . "$PSScriptRoot\..\common\New-FutureTrueUxRestoreCurrentUserDryRunReport.ps1"
+. "$PSScriptRoot\..\common\FutureTrueUxRestore.ValidatorPrimitives.ps1"
 
-$repoRoot = (Resolve-Path -LiteralPath "$PSScriptRoot\..\..").Path
-$script:Failures = @()
+$repoRoot = Get-FutureTrueUxRestoreValidatorRepoRoot -ValidatorScriptRoot $PSScriptRoot
+$validatorState = New-FutureTrueUxRestoreValidatorState
 
-function Read-FutureTrueUxCurrentUserJson {
-    param(
-        [Parameter(Mandatory)]
-        [string]$Path
-    )
-
-    $resolvedPath = Resolve-FutureTrueUxRestoreRepoPath -RepoRoot $repoRoot -Path $Path
-    Get-Content -LiteralPath $resolvedPath -Raw -Encoding UTF8 | ConvertFrom-Json
-}
-
-function Assert-FutureTrueUxCurrentUser {
-    param(
-        [Parameter(Mandatory)]
-        [bool]$Condition,
-
-        [Parameter(Mandatory)]
-        [string]$Message
-    )
-
-    if ($Condition) {
-        Write-Host "[OK] $Message" -ForegroundColor Green
-    } else {
-        $script:Failures += $Message
-        Write-Host "[ERROR] $Message" -ForegroundColor Red
-    }
-}
-
-$manifest = Read-FutureTrueUxCurrentUserJson -Path $ManifestPath
+$manifest = Read-FutureTrueUxRestoreValidatorJson -RepoRoot $repoRoot -Path $ManifestPath
 $section = $manifest.currentUserDryRun
 
-Assert-FutureTrueUxCurrentUser -Condition ($section.enabled -eq $true) -Message "currentUserDryRun is enabled"
-Assert-FutureTrueUxCurrentUser -Condition ($section.scope -eq "current-user") -Message "currentUserDryRun scope is current-user"
+Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($section.enabled -eq $true) -Message "currentUserDryRun is enabled"
+Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($section.scope -eq "current-user") -Message "currentUserDryRun scope is current-user"
 foreach ($flagName in @("authorizationApproved", "executionApproved", "allowCurrentUserMutation", "allowDefaultUserFallback", "allowMachineFallback", "allowOfflineImageFallback")) {
-    Assert-FutureTrueUxCurrentUser -Condition ([bool]$section.$flagName -eq $false) -Message "$flagName remains false"
+    Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ([bool]$section.$flagName -eq $false) -Message "$flagName remains false"
 }
 
-$baseline = Read-FutureTrueUxCurrentUserJson -Path $BaselinePath
+$baseline = Read-FutureTrueUxRestoreValidatorJson -RepoRoot $repoRoot -Path $BaselinePath
 $baselineReport = New-FutureTrueUxRestoreCurrentUserDryRunReport -Manifest $manifest -Request $baseline -RepoRoot $repoRoot
-Assert-FutureTrueUxCurrentUser -Condition ($baselineReport.decision -eq "blocked") -Message "baseline remains blocked"
-Assert-FutureTrueUxCurrentUser -Condition ($baselineReport.trueExecution -eq $false) -Message "baseline trueExecution is false"
-Assert-FutureTrueUxCurrentUser -Condition ($baselineReport.mutationCount -eq 0) -Message "baseline mutationCount is zero"
-Assert-FutureTrueUxCurrentUser -Condition ($baselineReport.currentUserConfirmed -eq $false) -Message "current user is not confirmed in this stage"
+Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($baselineReport.decision -eq "blocked") -Message "baseline remains blocked"
+Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($baselineReport.trueExecution -eq $false) -Message "baseline trueExecution is false"
+Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($baselineReport.mutationCount -eq 0) -Message "baseline mutationCount is zero"
+Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($baselineReport.currentUserConfirmed -eq $false) -Message "current user is not confirmed in this stage"
 
 $cases = @(
     @{ Name = "dry-run-ready-no-execute"; Path = "tests/fixtures/user-experience/future-true-restore/current-user/dry-run-ready-no-execute.json"; Decision = "dry-run-ready"; Pattern = "" },
@@ -69,7 +43,7 @@ $cases = @(
 
 $caseReports = @()
 foreach ($case in $cases) {
-    $request = Read-FutureTrueUxCurrentUserJson -Path $case.Path
+    $request = Read-FutureTrueUxRestoreValidatorJson -RepoRoot $repoRoot -Path $case.Path
     $report = New-FutureTrueUxRestoreCurrentUserDryRunReport -Manifest $manifest -Request $request -RepoRoot $repoRoot
     $caseReports += [pscustomobject][ordered]@{
         name = $case.Name
@@ -77,10 +51,10 @@ foreach ($case in $cases) {
         blockedReasons = @($report.blockedReasons)
     }
 
-    Assert-FutureTrueUxCurrentUser -Condition ($report.decision -eq $case.Decision) -Message "$($case.Name) decision is $($case.Decision)"
-    Assert-FutureTrueUxCurrentUser -Condition ($report.trueExecution -eq $false -and $report.mutationCount -eq 0 -and $report.currentUserConfirmed -eq $false) -Message "$($case.Name) does not execute or confirm current user"
+    Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($report.decision -eq $case.Decision) -Message "$($case.Name) decision is $($case.Decision)"
+    Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($report.trueExecution -eq $false -and $report.mutationCount -eq 0 -and $report.currentUserConfirmed -eq $false) -Message "$($case.Name) does not execute or confirm current user"
     if (-not [string]::IsNullOrWhiteSpace($case.Pattern)) {
-        Assert-FutureTrueUxCurrentUser -Condition (($report.blockedReasons -join "`n") -match [regex]::Escape($case.Pattern)) -Message "$($case.Name) records expected blocked reason"
+        Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition (($report.blockedReasons -join "`n") -match [regex]::Escape($case.Pattern)) -Message "$($case.Name) records expected blocked reason"
     }
 }
 
@@ -88,26 +62,12 @@ $reportObject = [pscustomobject][ordered]@{
     reportType = "future-true-ux-restore-current-user-dry-run-validation"
     schemaVersion = 1
     generatedAt = (Get-Date).ToString("s")
-    status = $(if ($script:Failures.Count -eq 0) { "passed" } else { "failed" })
-    failureCount = $script:Failures.Count
-    failures = @($script:Failures)
+    status = Get-FutureTrueUxRestoreValidatorStatus -State $validatorState
+    failureCount = Get-FutureTrueUxRestoreValidatorFailureCount -State $validatorState
+    failures = @($validatorState.failures)
     baseline = $baselineReport
     cases = @($caseReports)
 }
 
-if (-not [string]::IsNullOrWhiteSpace($ReportPath)) {
-    $resolvedReportPath = Resolve-FutureTrueUxRestoreRepoPath -RepoRoot $repoRoot -Path $ReportPath
-    $reportDirectory = Split-Path -Path $resolvedReportPath -Parent
-    if (-not [string]::IsNullOrWhiteSpace($reportDirectory) -and -not (Test-Path -LiteralPath $reportDirectory)) {
-        New-Item -ItemType Directory -Path $reportDirectory -Force | Out-Null
-    }
-
-    $reportObject | ConvertTo-Json -Depth 12 | Set-Content -LiteralPath $resolvedReportPath -Encoding UTF8
-    Write-Host "Future true UX current-user dry-run report written: $resolvedReportPath"
-}
-
-$reportObject
-
-if ($script:Failures.Count -gt 0) {
-    exit 1
-}
+Write-FutureTrueUxRestoreValidatorReport -RepoRoot $repoRoot -ReportPath $ReportPath -ReportObject $reportObject -SuccessMessage "Future true UX current-user dry-run report written"
+Complete-FutureTrueUxRestoreValidatorRun -State $validatorState -ReportObject $reportObject
