@@ -2487,7 +2487,7 @@
       "path": "scripts/config/Show-FutureTrueUxRestoreAuthorizationPlan.ps1",
       "category": "script",
       "required": true,
-      "hash": "558290df76f5f480ec6d78fc8ea9a5a13a6c58fbb1c19626e7d08d89cfe66665",
+      "hash": "a52c48b434b401b82b6a31a776e09753949c347e12339316dd4e275925e8eb9a",
       "reason": "Future true UX restore authorization intake report, plan, or validation entrypoint."
     },
     {
@@ -2613,7 +2613,7 @@
       "path": "scripts/config/Show-FutureTrueUxRestoreCurrentUserDryRunPlan.ps1",
       "category": "script",
       "required": true,
-      "hash": "6567cbf76596051d0013bd8058e2dbb02f0e64cbe3a059b1a136c0b9b8590a12",
+      "hash": "793370b4fc1d43340458078eae60c1d18e8595dcf76692636e0526a4e98d40cb",
       "reason": "Future true UX current-user dry-run report, plan, or validation entrypoint."
     },
     {
@@ -2760,7 +2760,7 @@
       "path": "scripts/config/Show-FutureTrueUxRestoreScopeDryRunPlan.ps1",
       "category": "script",
       "required": true,
-      "hash": "4a580ef484de616229ed279c68f2d9fe280c18ff905597502934ecc86436dc6d",
+      "hash": "f7d0f6cc129686a570b33d524b33f44525f16703627627626e480b4a67138eea",
       "reason": "Future true UX remaining scope dry-run report, plan, or validation entrypoint."
     },
     {
@@ -3149,6 +3149,13 @@
       "reason": "Future true UX authorization review script is a trusted report-only validation input."
     },
     {
+      "path": "scripts/config/Show-FutureTrueUxRestoreAuthorizationReviewPlan.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "68332edfc5249d91a5469ec2635a58657eb8ef10151e8752673a87ae31bbc11d",
+      "reason": "Future true UX authorization review presentation plan is a trusted report-only validation input."
+    },
+    {
       "path": "scripts/common/New-KitPackageResult.ps1",
       "category": "script",
       "required": true,
@@ -3495,7 +3502,7 @@
       "path": "scripts/config/Show-FutureTrueUxRestoreMockReviewDrillPlan.ps1",
       "category": "script",
       "required": true,
-      "hash": "0f23ac9668304b4e3fdfc38bb62b537c4b1e8b36f8778eb4cb5414b6c50521a7",
+      "hash": "a56578b10309f3c03cf605890bfd02895f78fbf26e138adc5badd5ff9fb846c5",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
@@ -4216,7 +4223,7 @@
       "path": "docs/archive/future-true-ux-restore/00-governance/112-future-true-ux-validator-script-governance.md",
       "category": "doc",
       "required": true,
-      "hash": "d8d574951edf5401dcdb1e03a22c0bca774f336803de6478bba7de61734960df",
+      "hash": "52fb51e2dd14d41a1b3cb8e9fd55a2b8a9d975b3c783895c79445351cc6485af",
       "reason": "Future True UX validator and script governance audit records report-only entrypoints and consolidation boundaries."
     },
     {
@@ -4234,11 +4241,25 @@
       "reason": "Future True UX shared validator primitives centralize report-only entrypoint read, report, and exit plumbing."
     },
     {
+      "path": "scripts/common/FutureTrueUxRestore.PresentationPrimitives.ps1",
+      "category": "script",
+      "required": true,
+      "hash": "f6bb234e2f0f70723581fc741034b695ba5fa0f4c9bf946d29796d70e816bc5c",
+      "reason": "Future True UX shared presentation primitives centralize read-only show/config formatting."
+    },
+    {
       "path": "tests/pester/FutureTrueUxPesterHelpers.ps1",
       "category": "test",
       "required": true,
-      "hash": "7d179d4d169cbf39140f122532b7bb6112d48b01ae8f501dbd4354302bf6704f",
+      "hash": "825ca7737fa2673a3b5c1818841262682b58de3561c47e0e8260dda2d7890d89",
       "reason": "Future True UX Pester helper centralizes governance boundary assertions for report-only tests."
+    },
+    {
+      "path": "tests/pester/FutureTrueUxPresentationGovernance.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "12b21487a0e397a75fdb4b121ba8487b1a36393cb00afd9a173eb0e73583dd5b",
+      "reason": "Future True UX presentation governance tests guard read-only show/config entrypoints and helpers."
     },
     {
       "path": "tests/pester/FutureTrueUxValidatorEntrypointConsolidation.Tests.ps1",

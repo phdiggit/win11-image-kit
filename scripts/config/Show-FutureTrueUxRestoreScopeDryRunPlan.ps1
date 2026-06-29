@@ -5,53 +5,41 @@ param(
 
 $ErrorActionPreference = "Stop"
 . "$PSScriptRoot\..\common\New-FutureTrueUxRestoreScopeDryRunReport.ps1"
+. "$PSScriptRoot\..\common\FutureTrueUxRestore.PresentationPrimitives.ps1"
 
-$repoRoot = (Resolve-Path -LiteralPath "$PSScriptRoot\..\..").Path
-
-function Read-FutureTrueUxScopePlanJson {
-    param(
-        [Parameter(Mandatory)]
-        [string]$Path
-    )
-
-    $resolvedPath = Resolve-FutureTrueUxRestoreRepoPath -RepoRoot $repoRoot -Path $Path
-    Get-Content -LiteralPath $resolvedPath -Raw -Encoding UTF8 | ConvertFrom-Json
-}
+$repoRoot = Get-FutureTrueUxRestorePresentationRepoRoot -PresentationScriptRoot $PSScriptRoot
 
 $fixtureRoot = "tests/fixtures/user-experience/future-true-restore"
 $requestsByScope = @{
-    "current-user" = Read-FutureTrueUxScopePlanJson -Path "$fixtureRoot/current-user/baseline-blocked.json"
-    "default-user" = Read-FutureTrueUxScopePlanJson -Path "$fixtureRoot/default-user/baseline-blocked.json"
-    "offline-image" = Read-FutureTrueUxScopePlanJson -Path "$fixtureRoot/offline-image/baseline-blocked.json"
-    "machine" = Read-FutureTrueUxScopePlanJson -Path "$fixtureRoot/machine/baseline-blocked.json"
+    "current-user" = Read-FutureTrueUxRestorePresentationJson -RepoRoot $repoRoot -Path "$fixtureRoot/current-user/baseline-blocked.json"
+    "default-user" = Read-FutureTrueUxRestorePresentationJson -RepoRoot $repoRoot -Path "$fixtureRoot/default-user/baseline-blocked.json"
+    "offline-image" = Read-FutureTrueUxRestorePresentationJson -RepoRoot $repoRoot -Path "$fixtureRoot/offline-image/baseline-blocked.json"
+    "machine" = Read-FutureTrueUxRestorePresentationJson -RepoRoot $repoRoot -Path "$fixtureRoot/machine/baseline-blocked.json"
 }
 
 $report = New-FutureTrueUxRestoreScopeDryRunReport `
-    -Manifest (Read-FutureTrueUxScopePlanJson -Path $ManifestPath) `
+    -Manifest (Read-FutureTrueUxRestorePresentationJson -RepoRoot $repoRoot -Path $ManifestPath) `
     -RequestsByScope $requestsByScope `
     -RepoRoot $repoRoot
 
-Write-Host "Future true UX restore scope dry-run plan"
-Write-Host "Dry-run only: true"
-Write-Host "AuthorizationApproved: false"
-Write-Host "ExecutionApproved: false"
-Write-Host "Aggregate decision: $($report.aggregateDecision)"
-Write-Host "True execution: false"
-Write-Host "Mutation count: 0"
-Write-Host "Command exit code sufficient: false"
+Write-FutureTrueUxRestorePresentationHeader -Title "Future true UX restore scope dry-run plan"
+Write-FutureTrueUxRestorePresentationLine -Label "Dry-run only" -Value "true"
+Write-FutureTrueUxRestorePresentationLine -Label "AuthorizationApproved" -Value "false"
+Write-FutureTrueUxRestorePresentationLine -Label "ExecutionApproved" -Value "false"
+Write-FutureTrueUxRestorePresentationLine -Label "Aggregate decision" -Value $report.aggregateDecision
+Write-FutureTrueUxRestorePresentationLine -Label "True execution" -Value "false"
+Write-FutureTrueUxRestorePresentationLine -Label "Mutation count" -Value 0
+Write-FutureTrueUxRestorePresentationLine -Label "Command exit code sufficient" -Value "false"
 
 foreach ($scopeReport in @($report.scopeReports)) {
     Write-Host ""
-    Write-Host "Scope: $($scopeReport.scope)"
-    Write-Host "Decision: $($scopeReport.decision)"
-    Write-Host "Required evidence:"
-    foreach ($property in @($scopeReport.evidenceContract.PSObject.Properties)) {
-        Write-Host ("- {0}: {1}" -f $property.Name, $property.Value)
-    }
-    Write-Host "Blocked reasons:"
-    foreach ($reason in @($scopeReport.blockedReasons)) {
-        Write-Host ("- {0}" -f $reason)
+    Write-FutureTrueUxRestorePresentationLine -Label "Scope" -Value $scopeReport.scope
+    Write-FutureTrueUxRestorePresentationLine -Label "Decision" -Value $scopeReport.decision
+    Write-FutureTrueUxRestorePresentationObjectProperties -Title "Required evidence:" -InputObject $scopeReport.evidenceContract
+    Write-FutureTrueUxRestorePresentationList -Title "Blocked reasons:" -Items $scopeReport.blockedReasons -FormatItem {
+        param($reason)
+        $reason
     }
 }
 
-$report | ConvertTo-Json -Depth 12
+Write-FutureTrueUxRestorePresentationReportJson -ReportObject $report -Depth 12
