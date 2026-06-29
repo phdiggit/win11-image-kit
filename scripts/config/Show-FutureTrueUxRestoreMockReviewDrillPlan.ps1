@@ -6,42 +6,33 @@ param(
 
 $ErrorActionPreference = "Stop"
 . "$PSScriptRoot\..\common\New-FutureTrueUxRestoreMockReviewDrillReport.ps1"
+. "$PSScriptRoot\..\common\FutureTrueUxRestore.PresentationPrimitives.ps1"
 
-$repoRoot = (Resolve-Path -LiteralPath "$PSScriptRoot\..\..").Path
+$repoRoot = Get-FutureTrueUxRestorePresentationRepoRoot -PresentationScriptRoot $PSScriptRoot
 
-function Read-FutureTrueUxMockReviewPlanJson {
-    param(
-        [Parameter(Mandatory)]
-        [string]$Path
-    )
-
-    $resolvedPath = Resolve-FutureTrueUxRestoreRepoPath -RepoRoot $repoRoot -Path $Path
-    Get-Content -LiteralPath $resolvedPath -Raw -Encoding UTF8 | ConvertFrom-Json
-}
-
-$manifest = Read-FutureTrueUxMockReviewPlanJson -Path $ManifestPath
-$request = Read-FutureTrueUxMockReviewPlanJson -Path $RequestPath
+$manifest = Read-FutureTrueUxRestorePresentationJson -RepoRoot $repoRoot -Path $ManifestPath
+$request = Read-FutureTrueUxRestorePresentationJson -RepoRoot $repoRoot -Path $RequestPath
 $report = New-FutureTrueUxRestoreMockReviewDrillReport -Manifest $manifest -Request $request -RepoRoot $repoRoot
 
-Write-Host "Future true UX restore mock review drill plan"
-Write-Host "Mock drill only: true"
-Write-Host "Scope: $($report.scope)"
-Write-Host "Packet status: $($report.packetStatus)"
-Write-Host "Review decision: $($report.reviewDecision)"
-Write-Host "Execution decision: $($report.executionDecision)"
-Write-Host "AuthorizationApproved: false"
-Write-Host "ExecutionApproved: false"
-Write-Host "ExecuteReady: false"
-Write-Host "True execution: false"
-Write-Host "Mutation count: 0"
-Write-Host "Execution frozen: true"
-Write-Host "Decision ledger:"
-foreach ($entry in @($report.decisionLedger)) {
-    Write-Host ("- {0}: {1}" -f $entry.stage, $entry.decision)
+Write-FutureTrueUxRestorePresentationHeader -Title "Future true UX restore mock review drill plan"
+Write-FutureTrueUxRestorePresentationLine -Label "Mock drill only" -Value "true"
+Write-FutureTrueUxRestorePresentationLine -Label "Scope" -Value $report.scope
+Write-FutureTrueUxRestorePresentationLine -Label "Packet status" -Value $report.packetStatus
+Write-FutureTrueUxRestorePresentationLine -Label "Review decision" -Value $report.reviewDecision
+Write-FutureTrueUxRestorePresentationLine -Label "Execution decision" -Value $report.executionDecision
+Write-FutureTrueUxRestorePresentationLine -Label "AuthorizationApproved" -Value "false"
+Write-FutureTrueUxRestorePresentationLine -Label "ExecutionApproved" -Value "false"
+Write-FutureTrueUxRestorePresentationLine -Label "ExecuteReady" -Value "false"
+Write-FutureTrueUxRestorePresentationLine -Label "True execution" -Value "false"
+Write-FutureTrueUxRestorePresentationLine -Label "Mutation count" -Value 0
+Write-FutureTrueUxRestorePresentationLine -Label "Execution frozen" -Value "true"
+Write-FutureTrueUxRestorePresentationList -Title "Decision ledger:" -Items $report.decisionLedger -FormatItem {
+    param($entry)
+    "{0}: {1}" -f $entry.stage, $entry.decision
 }
-Write-Host "Blocked reasons:"
-foreach ($reason in @($report.blockedReasons)) {
-    Write-Host ("- {0}" -f $reason)
+Write-FutureTrueUxRestorePresentationList -Title "Blocked reasons:" -Items $report.blockedReasons -FormatItem {
+    param($reason)
+    $reason
 }
 
-$report | ConvertTo-Json -Depth 12
+Write-FutureTrueUxRestorePresentationReportJson -ReportObject $report -Depth 12

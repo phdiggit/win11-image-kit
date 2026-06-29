@@ -6,46 +6,37 @@ param(
 
 $ErrorActionPreference = "Stop"
 . "$PSScriptRoot\..\common\New-FutureTrueUxRestoreAuthorizationReviewReport.ps1"
+. "$PSScriptRoot\..\common\FutureTrueUxRestore.PresentationPrimitives.ps1"
 
-$repoRoot = (Resolve-Path -LiteralPath "$PSScriptRoot\..\..").Path
+$repoRoot = Get-FutureTrueUxRestorePresentationRepoRoot -PresentationScriptRoot $PSScriptRoot
 
-function Read-FutureTrueUxReviewPlanJson {
-    param(
-        [Parameter(Mandatory)]
-        [string]$Path
-    )
-
-    $resolvedPath = Resolve-FutureTrueUxRestoreRepoPath -RepoRoot $repoRoot -Path $Path
-    Get-Content -LiteralPath $resolvedPath -Raw -Encoding UTF8 | ConvertFrom-Json
-}
-
-$manifest = Read-FutureTrueUxReviewPlanJson -Path $ManifestPath
-$request = Read-FutureTrueUxReviewPlanJson -Path $RequestPath
+$manifest = Read-FutureTrueUxRestorePresentationJson -RepoRoot $repoRoot -Path $ManifestPath
+$request = Read-FutureTrueUxRestorePresentationJson -RepoRoot $repoRoot -Path $RequestPath
 $report = New-FutureTrueUxRestoreAuthorizationReviewReport -Manifest $manifest -Request $request -RepoRoot $repoRoot
 
-Write-Host "Future true UX restore authorization review plan"
-Write-Host "Review workflow only: true"
-Write-Host "AuthorizationApproved: false"
-Write-Host "ExecutionApproved: false"
-Write-Host "ExecuteReady: false"
-Write-Host "True execution: false"
-Write-Host "Mutation count: 0"
-Write-Host "Review decision: $($report.reviewDecision)"
-Write-Host "Allowed review decisions:"
-foreach ($decision in @($report.allowedReviewDecisions)) {
-    Write-Host ("- {0}" -f $decision)
+Write-FutureTrueUxRestorePresentationHeader -Title "Future true UX restore authorization review plan"
+Write-FutureTrueUxRestorePresentationLine -Label "Review workflow only" -Value "true"
+Write-FutureTrueUxRestorePresentationLine -Label "AuthorizationApproved" -Value "false"
+Write-FutureTrueUxRestorePresentationLine -Label "ExecutionApproved" -Value "false"
+Write-FutureTrueUxRestorePresentationLine -Label "ExecuteReady" -Value "false"
+Write-FutureTrueUxRestorePresentationLine -Label "True execution" -Value "false"
+Write-FutureTrueUxRestorePresentationLine -Label "Mutation count" -Value 0
+Write-FutureTrueUxRestorePresentationLine -Label "Review decision" -Value $report.reviewDecision
+Write-FutureTrueUxRestorePresentationList -Title "Allowed review decisions:" -Items $report.allowedReviewDecisions -FormatItem {
+    param($decision)
+    $decision
 }
-Write-Host "Forbidden review decisions:"
-foreach ($decision in @($report.forbiddenReviewDecisions)) {
-    Write-Host ("- {0}" -f $decision)
+Write-FutureTrueUxRestorePresentationList -Title "Forbidden review decisions:" -Items $report.forbiddenReviewDecisions -FormatItem {
+    param($decision)
+    $decision
 }
-Write-Host "Required packet fields:"
-foreach ($field in @($manifest.authorizationReview.requiredPacketFields)) {
-    Write-Host ("- {0}" -f $field)
+Write-FutureTrueUxRestorePresentationList -Title "Required packet fields:" -Items $manifest.authorizationReview.requiredPacketFields -FormatItem {
+    param($field)
+    $field
 }
-Write-Host "Blocked reasons:"
-foreach ($reason in @($report.blockedReasons)) {
-    Write-Host ("- {0}" -f $reason)
+Write-FutureTrueUxRestorePresentationList -Title "Blocked reasons:" -Items $report.blockedReasons -FormatItem {
+    param($reason)
+    $reason
 }
 
-$report | ConvertTo-Json -Depth 12
+Write-FutureTrueUxRestorePresentationReportJson -ReportObject $report -Depth 12

@@ -207,3 +207,63 @@ function Assert-FutureTrueUxValidatorReportShape {
     Assert-KitEqual @($Report.failures).Count 0
     Assert-KitNotNullOrEmpty $Report.generatedAt
 }
+
+function Assert-FutureTrueUxPresentationEntrypointExists {
+    param(
+        [Parameter(Mandatory)]
+        [string]$RepoRoot,
+
+        [Parameter(Mandatory)]
+        [string]$RelativePath
+    )
+
+    Assert-KitMatch $RelativePath "^scripts/config/Show-FutureTrueUxRestore.+Plan\.ps1$"
+    Assert-KitEqual (Test-Path -LiteralPath (Join-Path $RepoRoot $RelativePath)) $true
+}
+
+function Assert-FutureTrueUxPresentationUsesSharedPrimitives {
+    param(
+        [Parameter(Mandatory)]
+        [string]$Content
+    )
+
+    Assert-KitMatch $Content "FutureTrueUxRestore\.PresentationPrimitives\.ps1"
+    Assert-KitMatch $Content "Get-FutureTrueUxRestorePresentationRepoRoot"
+    Assert-KitMatch $Content "Read-FutureTrueUxRestorePresentationJson"
+    Assert-KitMatch $Content "Write-FutureTrueUxRestorePresentation"
+}
+
+function Assert-FutureTrueUxPresentationReadOnly {
+    param(
+        [Parameter(Mandatory)]
+        [string]$Content
+    )
+
+    Assert-FutureTrueUxNoDangerousCommands -Content $Content
+    Assert-KitNotMatch $Content "(?i)(^|[^A-Za-z0-9-])(Set-Content|Out-File|Export-Csv|Export-Clixml|Add-Content|New-Item|Remove-Item|Copy-Item|Move-Item)([^A-Za-z0-9-]|$)"
+    Assert-KitNotMatch $Content "function\s+Read-FutureTrueUx.*PlanJson"
+}
+
+function Invoke-FutureTrueUxPresentationSmoke {
+    param(
+        [Parameter(Mandatory)]
+        [string]$RepoRoot,
+
+        [Parameter(Mandatory)]
+        [string]$RelativePath
+    )
+
+    $scriptPath = Join-Path $RepoRoot $RelativePath
+    $output = & powershell -NoProfile -ExecutionPolicy Bypass -File $scriptPath 2>&1
+    $exitCode = $LASTEXITCODE
+
+    if ($exitCode -ne 0) {
+        throw "Presentation smoke failed for <$RelativePath> with exit code <$exitCode>: $($output -join "`n")"
+    }
+
+    [pscustomobject][ordered]@{
+        exitCode = $exitCode
+        output = @($output)
+        text = ($output -join "`n")
+    }
+}

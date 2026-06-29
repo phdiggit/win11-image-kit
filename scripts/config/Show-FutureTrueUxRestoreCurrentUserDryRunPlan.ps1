@@ -6,41 +6,29 @@ param(
 
 $ErrorActionPreference = "Stop"
 . "$PSScriptRoot\..\common\New-FutureTrueUxRestoreCurrentUserDryRunReport.ps1"
+. "$PSScriptRoot\..\common\FutureTrueUxRestore.PresentationPrimitives.ps1"
 
-$repoRoot = (Resolve-Path -LiteralPath "$PSScriptRoot\..\..").Path
-
-function Read-FutureTrueUxCurrentUserPlanJson {
-    param(
-        [Parameter(Mandatory)]
-        [string]$Path
-    )
-
-    $resolvedPath = Resolve-FutureTrueUxRestoreRepoPath -RepoRoot $repoRoot -Path $Path
-    Get-Content -LiteralPath $resolvedPath -Raw -Encoding UTF8 | ConvertFrom-Json
-}
+$repoRoot = Get-FutureTrueUxRestorePresentationRepoRoot -PresentationScriptRoot $PSScriptRoot
 
 $report = New-FutureTrueUxRestoreCurrentUserDryRunReport `
-    -Manifest (Read-FutureTrueUxCurrentUserPlanJson -Path $ManifestPath) `
-    -Request (Read-FutureTrueUxCurrentUserPlanJson -Path $RequestPath) `
+    -Manifest (Read-FutureTrueUxRestorePresentationJson -RepoRoot $repoRoot -Path $ManifestPath) `
+    -Request (Read-FutureTrueUxRestorePresentationJson -RepoRoot $repoRoot -Path $RequestPath) `
     -RepoRoot $repoRoot
 
-Write-Host "Future true UX restore current-user dry-run plan"
-Write-Host "Scope: current-user"
-Write-Host "Dry-run only: true"
-Write-Host "AuthorizationApproved: false"
-Write-Host "ExecutionApproved: false"
-Write-Host "Decision: $($report.decision)"
-Write-Host "True execution: false"
-Write-Host "Mutation count: 0"
-Write-Host "Current user confirmed: false"
-Write-Host "Command exit code sufficient: false"
-Write-Host "Required evidence:"
-foreach ($property in @($report.evidenceContract.PSObject.Properties)) {
-    Write-Host ("- {0}: {1}" -f $property.Name, $property.Value)
-}
-Write-Host "Blocked reasons:"
-foreach ($reason in @($report.blockedReasons)) {
-    Write-Host ("- {0}" -f $reason)
+Write-FutureTrueUxRestorePresentationHeader -Title "Future true UX restore current-user dry-run plan"
+Write-FutureTrueUxRestorePresentationLine -Label "Scope" -Value "current-user"
+Write-FutureTrueUxRestorePresentationLine -Label "Dry-run only" -Value "true"
+Write-FutureTrueUxRestorePresentationLine -Label "AuthorizationApproved" -Value "false"
+Write-FutureTrueUxRestorePresentationLine -Label "ExecutionApproved" -Value "false"
+Write-FutureTrueUxRestorePresentationLine -Label "Decision" -Value $report.decision
+Write-FutureTrueUxRestorePresentationLine -Label "True execution" -Value "false"
+Write-FutureTrueUxRestorePresentationLine -Label "Mutation count" -Value 0
+Write-FutureTrueUxRestorePresentationLine -Label "Current user confirmed" -Value "false"
+Write-FutureTrueUxRestorePresentationLine -Label "Command exit code sufficient" -Value "false"
+Write-FutureTrueUxRestorePresentationObjectProperties -Title "Required evidence:" -InputObject $report.evidenceContract
+Write-FutureTrueUxRestorePresentationList -Title "Blocked reasons:" -Items $report.blockedReasons -FormatItem {
+    param($reason)
+    $reason
 }
 
-$report | ConvertTo-Json -Depth 12
+Write-FutureTrueUxRestorePresentationReportJson -ReportObject $report -Depth 12

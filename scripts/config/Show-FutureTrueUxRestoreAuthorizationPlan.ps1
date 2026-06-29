@@ -6,44 +6,35 @@ param(
 
 $ErrorActionPreference = "Stop"
 . "$PSScriptRoot\..\common\New-FutureTrueUxRestoreAuthorizationReport.ps1"
+. "$PSScriptRoot\..\common\FutureTrueUxRestore.PresentationPrimitives.ps1"
 
-$repoRoot = (Resolve-Path -LiteralPath "$PSScriptRoot\..\..").Path
-
-function Read-FutureTrueUxRestorePlanJson {
-    param(
-        [Parameter(Mandatory)]
-        [string]$Path
-    )
-
-    $resolvedPath = Resolve-FutureTrueUxRestoreRepoPath -RepoRoot $repoRoot -Path $Path
-    Get-Content -LiteralPath $resolvedPath -Raw -Encoding UTF8 | ConvertFrom-Json
-}
+$repoRoot = Get-FutureTrueUxRestorePresentationRepoRoot -PresentationScriptRoot $PSScriptRoot
 
 $report = New-FutureTrueUxRestoreAuthorizationReport `
-    -Manifest (Read-FutureTrueUxRestorePlanJson -Path $ManifestPath) `
-    -AuthorizationRequest (Read-FutureTrueUxRestorePlanJson -Path $AuthorizationPath) `
+    -Manifest (Read-FutureTrueUxRestorePresentationJson -RepoRoot $repoRoot -Path $ManifestPath) `
+    -AuthorizationRequest (Read-FutureTrueUxRestorePresentationJson -RepoRoot $repoRoot -Path $AuthorizationPath) `
     -RepoRoot $repoRoot
 
-Write-Host "Future true UX restore authorization intake plan"
-Write-Host "Dry-run only: true"
-Write-Host "Default deny: true"
-Write-Host "Decision: $($report.decision)"
-Write-Host "True execution: false"
-Write-Host "Mutation count: 0"
-Write-Host "Command exit code sufficient: false"
-Write-Host "User configuration confirmed: false"
-Write-Host "Registry mutation: false"
-Write-Host "Profile mutation: false"
-Write-Host "Default User hive mutation: false"
-Write-Host "Default app mutation: false"
-Write-Host "Start menu mutation: false"
-Write-Host "Taskbar mutation: false"
-Write-Host "Image servicing mutation: false"
-Write-Host "AppX mutation: false"
-Write-Host "Network download: false"
-Write-Host "Required scopes:"
-foreach ($item in @($report.evidenceRequirements)) {
-    Write-Host ("- {0}: {1}" -f $item.scope, $item.safetyGate)
+Write-FutureTrueUxRestorePresentationHeader -Title "Future true UX restore authorization intake plan"
+Write-FutureTrueUxRestorePresentationLine -Label "Dry-run only" -Value "true"
+Write-FutureTrueUxRestorePresentationLine -Label "Default deny" -Value "true"
+Write-FutureTrueUxRestorePresentationLine -Label "Decision" -Value $report.decision
+Write-FutureTrueUxRestorePresentationLine -Label "True execution" -Value "false"
+Write-FutureTrueUxRestorePresentationLine -Label "Mutation count" -Value 0
+Write-FutureTrueUxRestorePresentationLine -Label "Command exit code sufficient" -Value "false"
+Write-FutureTrueUxRestorePresentationLine -Label "User configuration confirmed" -Value "false"
+Write-FutureTrueUxRestorePresentationLine -Label "Registry mutation" -Value "false"
+Write-FutureTrueUxRestorePresentationLine -Label "Profile mutation" -Value "false"
+Write-FutureTrueUxRestorePresentationLine -Label "Default User hive mutation" -Value "false"
+Write-FutureTrueUxRestorePresentationLine -Label "Default app mutation" -Value "false"
+Write-FutureTrueUxRestorePresentationLine -Label "Start menu mutation" -Value "false"
+Write-FutureTrueUxRestorePresentationLine -Label "Taskbar mutation" -Value "false"
+Write-FutureTrueUxRestorePresentationLine -Label "Image servicing mutation" -Value "false"
+Write-FutureTrueUxRestorePresentationLine -Label "AppX mutation" -Value "false"
+Write-FutureTrueUxRestorePresentationLine -Label "Network download" -Value "false"
+Write-FutureTrueUxRestorePresentationList -Title "Required scopes:" -Items $report.evidenceRequirements -FormatItem {
+    param($item)
+    "{0}: {1}" -f $item.scope, $item.safetyGate
 }
 
-$report | ConvertTo-Json -Depth 12
+Write-FutureTrueUxRestorePresentationReportJson -ReportObject $report -Depth 12
