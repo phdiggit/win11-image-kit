@@ -2,6 +2,7 @@ Describe "Future True UX archive policy reference map" {
     BeforeAll {
         $script:RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
+        . (Join-Path $script:RepoRoot "tests\pester\FutureTrueUxPesterHelpers.ps1")
         $script:DocPath = Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\00-governance\110-future-true-ux-archive-policy-reference-map.md"
         $script:Doc = Get-Content -LiteralPath $script:DocPath -Raw -Encoding UTF8
         $script:QualityGatePolicy = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\00-governance\109-future-true-ux-quality-gate-governance.md") -Raw -Encoding UTF8
@@ -30,17 +31,7 @@ Describe "Future True UX archive policy reference map" {
     }
 
     It "keeps Issue 19 and true execution boundaries closed" {
-        Assert-KitMatch $script:Doc "Refs #19"
-        Assert-KitNotMatch $script:Doc "(?i)\b(fixes|closes|resolves)\s+#19\b"
-        Assert-KitMatch $script:Doc '\| `authorizationApproved` \| `false` \|'
-        Assert-KitMatch $script:Doc '\| `executionApproved` \| `false` \|'
-        Assert-KitMatch $script:Doc '\| `executeReady` \| `false` \|'
-        Assert-KitMatch $script:Doc '\| `trueExecution` \| `false` \|'
-        Assert-KitMatch $script:Doc '\| `mutationCount` \| `0` \|'
-        Assert-KitNotMatch $script:Doc "authorizationApproved\s*=\s*true"
-        Assert-KitNotMatch $script:Doc "executionApproved\s*=\s*true"
-        Assert-KitNotMatch $script:Doc "executeReady\s*=\s*true"
-        Assert-KitNotMatch $script:Doc "trueExecution\s*=\s*true"
+        Assert-FutureTrueUxGovernanceBoundary -DocumentText $script:Doc -IssueNumber 19
     }
 
     It "documents archived stage paths and former root paths" {

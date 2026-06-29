@@ -2,6 +2,7 @@ Describe "Future True UX quality gate governance" {
     BeforeAll {
         $script:RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
+        . (Join-Path $script:RepoRoot "tests\pester\FutureTrueUxPesterHelpers.ps1")
         $script:DocPath = Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\00-governance\109-future-true-ux-quality-gate-governance.md"
         $script:Doc = Get-Content -LiteralPath $script:DocPath -Raw -Encoding UTF8
         $script:QualityGates = Get-Content -LiteralPath (Join-Path $script:RepoRoot "manifests\quality-gates.json") -Raw -Encoding UTF8 | ConvertFrom-Json
@@ -62,27 +63,11 @@ Describe "Future True UX quality gate governance" {
     It "keeps every Future True UX gate report-only, required, blocking, and pull-request triggered" {
         $futureGates = @($script:QualityGates.gates | Where-Object { $_.id -like "future-true-ux*" })
         foreach ($gate in $futureGates) {
-            Assert-KitEqual $gate.layer "pr-fast"
-            Assert-KitEqual $gate.trigger "pull_request"
-            Assert-KitEqual $gate.mode "report-only"
-            Assert-KitEqual $gate.required $true
-            Assert-KitEqual $gate.blocking $true
-            Assert-KitNotMatch $gate.entrypoint "scripts/(build|postdeploy|presysprep|winpe)/"
-            Assert-KitNotMatch $gate.entrypoint "Restore-UserExperience|Invoke-GoldenImageBuild|Install-|Set-|Clear-|New-WinPE"
+            Assert-FutureTrueUxQualityGateSemantics -Gate $gate
         }
     }
 
     It "keeps Issue 19 and true execution boundaries closed in the governance document" {
-        Assert-KitMatch $script:Doc "Refs #19"
-        Assert-KitNotMatch $script:Doc "(?i)\b(fixes|closes|resolves)\s+#19\b"
-        Assert-KitMatch $script:Doc '\| `authorizationApproved` \| `false` \|'
-        Assert-KitMatch $script:Doc '\| `executionApproved` \| `false` \|'
-        Assert-KitMatch $script:Doc '\| `executeReady` \| `false` \|'
-        Assert-KitMatch $script:Doc '\| `trueExecution` \| `false` \|'
-        Assert-KitMatch $script:Doc '\| `mutationCount` \| `0` \|'
-        Assert-KitNotMatch $script:Doc "authorizationApproved\s*=\s*true"
-        Assert-KitNotMatch $script:Doc "executionApproved\s*=\s*true"
-        Assert-KitNotMatch $script:Doc "executeReady\s*=\s*true"
-        Assert-KitNotMatch $script:Doc "trueExecution\s*=\s*true"
+        Assert-FutureTrueUxGovernanceBoundary -DocumentText $script:Doc -IssueNumber 19
     }
 }

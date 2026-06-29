@@ -1,5 +1,7 @@
 #Requires -Version 5.1
 
+. "$PSScriptRoot\FutureTrueUxRestore.Guards.ps1"
+
 function Resolve-FutureTrueUxRestoreRepoPath {
     param(
         [Parameter(Mandatory)]

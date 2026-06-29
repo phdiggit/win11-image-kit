@@ -58,7 +58,7 @@ function New-FutureTrueUxRestoreAuthorizationReviewReport {
 
     $scope = [string](Get-FutureTrueUxRestoreValue -InputObject $Request -Name "scope" -DefaultValue "")
     $packetScope = [string](Get-FutureTrueUxRestoreValue -InputObject $packet -Name "scope" -DefaultValue "")
-    $validScopes = @("current-user", "default-user", "offline-image", "machine")
+    $validScopes = @(Get-FutureTrueUxRestoreSupportedScopes)
     if ($validScopes -notcontains $scope) {
         $blockedReasons += "request scope must name exactly one supported scope"
     }
@@ -90,22 +90,20 @@ function New-FutureTrueUxRestoreAuthorizationReviewReport {
         $blockedReasons += "review decision $reviewDecision is not allowed in this stage"
     }
 
-    if ([bool](Get-FutureTrueUxRestoreValue -InputObject $Request -Name "authorizationApproved" -DefaultValue $false)) {
-        $blockedReasons += "authorization approval request is blocked in this stage"
+    $requestFlagMessages = @{
+        authorizationApproved = "authorization approval request is blocked in this stage"
+        executionApproved = "execution approval request is blocked in this stage"
+        executeReady = "execute-ready request is blocked in this stage"
+        trueExecution = "true execution request is blocked in this stage"
     }
-    if ([bool](Get-FutureTrueUxRestoreValue -InputObject $Request -Name "executionApproved" -DefaultValue $false)) {
-        $blockedReasons += "execution approval request is blocked in this stage"
-    }
-    if ([bool](Get-FutureTrueUxRestoreValue -InputObject $Request -Name "executeReady" -DefaultValue $false)) {
-        $blockedReasons += "execute-ready request is blocked in this stage"
+    foreach ($flagName in @(Get-FutureTrueUxRestoreFrozenFlagNames)) {
+        if ([bool](Get-FutureTrueUxRestoreValue -InputObject $Request -Name $flagName -DefaultValue $false)) {
+            $blockedReasons += $requestFlagMessages[$flagName]
+        }
     }
 
     if ($null -ne $section) {
-        foreach ($flagName in @("authorizationApproved", "executionApproved", "executeReady")) {
-            if ([bool](Get-FutureTrueUxRestoreValue -InputObject $section -Name $flagName -DefaultValue $false)) {
-                $blockedReasons += "manifest $flagName must remain false"
-            }
-        }
+        $blockedReasons += @(Get-FutureTrueUxRestoreFrozenStateMessages -InputObject $section -Subject "manifest")
     }
 
     if ([bool](Get-FutureTrueUxRestoreValue -InputObject $Request -Name "exitCodeOnlySuccess" -DefaultValue $false)) {
@@ -127,8 +125,9 @@ function New-FutureTrueUxRestoreAuthorizationReviewReport {
     }
 
     $allStrings = @($Request | Get-FutureTrueUxRestoreStrings)
+    $autoClosePattern = Get-FutureTrueUxRestoreIssueAutoClosePattern -IssueNumber 18
     foreach ($value in $allStrings) {
-        if ($value -match '(?i)\b(fixes|closes|resolves)\s+#18\b') {
+        if ($value -match $autoClosePattern) {
             $blockedReasons += "auto-close keyword is blocked for Issue #18"
             break
         }

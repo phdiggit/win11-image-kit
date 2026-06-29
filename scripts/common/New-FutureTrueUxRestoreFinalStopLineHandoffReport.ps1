@@ -2,28 +2,6 @@
 
 . "$PSScriptRoot\New-FutureTrueUxRestoreAuthorizationReport.ps1"
 
-function Get-FutureTrueUxRestoreFinalStopLineText {
-    param(
-        [Parameter(Mandatory)]
-        [string]$Path
-    )
-
-    if (-not (Test-Path -LiteralPath $Path)) {
-        return ""
-    }
-
-    Get-Content -LiteralPath $Path -Raw -Encoding UTF8
-}
-
-function New-FutureTrueUxRestoreFinalStopLinePattern {
-    param(
-        [Parameter(Mandatory)]
-        [string[]]$Parts
-    )
-
-    [regex]::Escape(($Parts -join ""))
-}
-
 function New-FutureTrueUxRestoreFinalStopLineHandoffReport {
     [CmdletBinding()]
     param(
@@ -118,28 +96,11 @@ function New-FutureTrueUxRestoreFinalStopLineHandoffReport {
         if ($null -eq $layerObject) {
             continue
         }
-        foreach ($flagName in @("authorizationApproved", "executionApproved", "executeReady", "trueExecution")) {
-            if ([bool](Get-FutureTrueUxRestoreValue -InputObject $layerObject -Name $flagName -DefaultValue $false)) {
-                $flagDrift += "$layer.$flagName"
-            }
-        }
-        if ([int](Get-FutureTrueUxRestoreValue -InputObject $layerObject -Name "mutationCount" -DefaultValue 0) -ne 0) {
-            $flagDrift += "$layer.mutationCount"
-        }
+        $flagDrift += @(Get-FutureTrueUxRestoreFrozenStateDrift -InputObject $layerObject -Prefix "$layer.")
     }
-    foreach ($flagName in @("authorizationApproved", "executionApproved", "executeReady", "trueExecution")) {
-        if ([bool](Get-FutureTrueUxRestoreValue -InputObject $Request -Name $flagName -DefaultValue $false)) {
-            $flagDrift += "request.$flagName"
-        }
-        if ($null -ne $section -and [bool](Get-FutureTrueUxRestoreValue -InputObject $section -Name $flagName -DefaultValue $false)) {
-            $flagDrift += "finalStopLineHandoff.$flagName"
-        }
-    }
-    if ([int](Get-FutureTrueUxRestoreValue -InputObject $Request -Name "mutationCount" -DefaultValue 0) -ne 0) {
-        $flagDrift += "request.mutationCount"
-    }
-    if ($null -ne $section -and [int](Get-FutureTrueUxRestoreValue -InputObject $section -Name "mutationCount" -DefaultValue 0) -ne 0) {
-        $flagDrift += "finalStopLineHandoff.mutationCount"
+    $flagDrift += @(Get-FutureTrueUxRestoreFrozenStateDrift -InputObject $Request -Prefix "request.")
+    if ($null -ne $section) {
+        $flagDrift += @(Get-FutureTrueUxRestoreFrozenStateDrift -InputObject $section -Prefix "finalStopLineHandoff.")
     }
     if ($flagDrift.Count -gt 0) {
         $blockingReasons += "execution flags drifted: $($flagDrift -join ', ')"
@@ -150,19 +111,19 @@ function New-FutureTrueUxRestoreFinalStopLineHandoffReport {
     $autoCloseMatches = @()
     $forbiddenDocOutputMatches = @()
     $docTexts = @()
-    $autoClosePattern = '(?i)\b({0}|{1}|{2})\s+#18\b' -f ("fix" + "es"), ("close" + "s"), ("resolve" + "s")
+    $autoClosePattern = Get-FutureTrueUxRestoreIssueAutoClosePattern -IssueNumber 18
     foreach ($docPath in $requiredDocs) {
         $resolvedDocPath = Resolve-FutureTrueUxRestoreRepoPath -RepoRoot $RepoRoot -Path $docPath
-        $docText = Get-FutureTrueUxRestoreFinalStopLineText -Path $resolvedDocPath
+        $docText = Get-FutureTrueUxRestoreDocumentText -Path $resolvedDocPath
         if ([string]::IsNullOrWhiteSpace($docText)) {
             $missingDocs += $docPath
             continue
         }
         $docTexts += $docText
-        if ($docPath -like "*106-*" -and $docText -notmatch 'Status:\s*`final-stop-line-handoff`') {
+        if ($docPath -like "*106-*" -and -not (Test-FutureTrueUxRestoreStatusMarker -Text $docText -Status "final-stop-line-handoff")) {
             $missingStatusDocs += $docPath
         }
-        if ($docPath -like "*107-*" -and $docText -notmatch 'Status:\s*`stop-line-decision-matrix`') {
+        if ($docPath -like "*107-*" -and -not (Test-FutureTrueUxRestoreStatusMarker -Text $docText -Status "stop-line-decision-matrix")) {
             $missingStatusDocs += $docPath
         }
         if ($docText -match $autoClosePattern) {
@@ -213,25 +174,11 @@ function New-FutureTrueUxRestoreFinalStopLineHandoffReport {
         $needsReworkReasons += "true restore planning requires a new high-risk planning chain"
     }
 
-    $commandPatterns = @(
-        (New-FutureTrueUxRestoreFinalStopLinePattern -Parts @("Start", "-", "Process")),
-        (New-FutureTrueUxRestoreFinalStopLinePattern -Parts @("Invoke", "-", "Expression")),
-        (New-FutureTrueUxRestoreFinalStopLinePattern -Parts @("Set", "-", "Item", "Property")),
-        (New-FutureTrueUxRestoreFinalStopLinePattern -Parts @("New", "-", "Item", "Property")),
-        (New-FutureTrueUxRestoreFinalStopLinePattern -Parts @("Remove", "-", "Appx", "Package")),
-        (New-FutureTrueUxRestoreFinalStopLinePattern -Parts @("Add", "-", "Mp", "Preference")),
-        "\b$(([char]100).ToString())$(([char]105).ToString())$(([char]115).ToString())$(([char]109).ToString())\b",
-        "\b$(([char]119).ToString())$(([char]105).ToString())$(([char]110).ToString())$(([char]103).ToString())$(([char]101).ToString())$(([char]116).ToString())\b",
-        "\b$(([char]99).ToString())$(([char]104).ToString())$(([char]111).ToString())$(([char]99).ToString())$(([char]111).ToString())\b",
-        "\b$(([char]109).ToString())$(([char]115).ToString())$(([char]105).ToString())$(([char]101).ToString())$(([char]120).ToString())$(([char]101).ToString())$(([char]99).ToString())\b",
-        (New-FutureTrueUxRestoreFinalStopLinePattern -Parts @("Invoke", "-", "Web", "Request")),
-        (New-FutureTrueUxRestoreFinalStopLinePattern -Parts @("Invoke", "-", "Rest", "Method")),
-        (New-FutureTrueUxRestoreFinalStopLinePattern -Parts @("Install", "-", "Module"))
-    )
+    $commandPatterns = @(Get-FutureTrueUxRestoreDangerousCommandPatterns)
     $dangerousScriptMatches = @()
     foreach ($relativePath in @("scripts/common/New-FutureTrueUxRestoreFinalStopLineHandoffReport.ps1", "scripts/validate/Test-FutureTrueUxRestoreFinalStopLineHandoff.ps1")) {
         $scriptPath = Resolve-FutureTrueUxRestoreRepoPath -RepoRoot $RepoRoot -Path $relativePath
-        $scriptText = Get-FutureTrueUxRestoreFinalStopLineText -Path $scriptPath
+        $scriptText = Get-FutureTrueUxRestoreDocumentText -Path $scriptPath
         foreach ($pattern in $commandPatterns) {
             if ($scriptText -match $pattern) {
                 $dangerousScriptMatches += $relativePath

@@ -457,14 +457,14 @@
       "path": "tests/pester/FutureTrueUxQualityGateGovernance.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "abc4ba6cbc0b4f0b91374e5097d026f73796c977d563fde57bbb82db8a849bd9",
+      "hash": "da3e7ce9dd70aa859686bcf4a6938607f7b1a48be236a4798bbe98d3d929c113",
       "reason": "Future True UX quality gate governance tests guard grouping and report-only semantics."
     },
     {
       "path": "tests/pester/FutureTrueUxArchivePolicyReferenceMap.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "15f216d48ffabde0ae4b3e050978d150d66db58ba52332b9c04ace38d552f058",
+      "hash": "478adba4c8db7160c1c636afcb80eaa15cee86b41cd0c64fae1aeef5f970a4c6",
       "reason": "Future True UX archive policy tests guard categories, gate coverage, and no-move semantics."
     },
     {
@@ -2480,7 +2480,7 @@
       "path": "scripts/common/New-FutureTrueUxRestoreAuthorizationReport.ps1",
       "category": "script",
       "required": true,
-      "hash": "236fa41cab609716e6f7538513870fdc610c4ddda0b0bc37c2859d82088753c1",
+      "hash": "9f68940e42e76444351cb2698203d6a4873d2210a9ae8704e7bbce940b9cc015",
       "reason": "Future true UX restore authorization intake report, plan, or validation entrypoint."
     },
     {
@@ -3145,7 +3145,7 @@
       "path": "scripts/common/New-FutureTrueUxRestoreAuthorizationReviewReport.ps1",
       "category": "script",
       "required": true,
-      "hash": "ab4c3a3d828b296c92a62eb35a05f6cdeeaef94d9fca8b5fb92e124f0a8dbc63",
+      "hash": "91a5df457a82e7ae16342082f104230d2112d3e2135cb3179494ee8a104304e2",
       "reason": "Future true UX authorization review script is a trusted report-only validation input."
     },
     {
@@ -3733,7 +3733,7 @@
       "path": "scripts/common/New-FutureTrueUxRestoreApprovalChecklistErgonomicsReport.ps1",
       "category": "script",
       "required": true,
-      "hash": "0789d560f8a7ad6249af4f640e6338f1c588f9a2c874b10d80e42f7b31f15081",
+      "hash": "146d5af6f621167bcfcbe645cdfe841b75c817d23f6f86c61b38584af89d9cc9",
       "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
     },
     {
@@ -3831,7 +3831,7 @@
       "path": "scripts/common/New-FutureTrueUxRestoreIntegratedPacketPreviewReport.ps1",
       "category": "script",
       "required": true,
-      "hash": "2bb33b1efc854e9583ce8b010e8bff5a75aa7c02272d71f5064a2d66dd38c460",
+      "hash": "79e8d5ae812beed0bd40cf9a186d5848bc62302835b6a5e1bf13a92dad9e3c93",
       "reason": "Future true UX integrated packet preview artifact is a trusted report-only validation input."
     },
     {
@@ -3936,7 +3936,7 @@
       "path": "scripts/common/New-FutureTrueUxRestoreHumanAuthorizationHandoffReport.ps1",
       "category": "script",
       "required": true,
-      "hash": "2dd9128641ae6034cfba678403398301810866cabb122cb314dae99e438ad8c9",
+      "hash": "b7535e085136a8355d7cf50f2ffa014584e97bf32226b7f8ac38e52bba786a59",
       "reason": "Future true UX human authorization handoff artifact is a trusted report-only validation input."
     },
     {
@@ -4041,7 +4041,7 @@
       "path": "scripts/common/New-FutureTrueUxRestoreEndToEndNoExecutionReadinessAuditReport.ps1",
       "category": "script",
       "required": true,
-      "hash": "c50d1b51eec620e534eb1a0b2d6a1b236c85eb5cefd2956eeb08b0e8ca3ceef7",
+      "hash": "3f521fc9164b2d00f33d67746af803961b19195266ae709470a95ee48854d50a",
       "reason": "Future True UX Restore no-execution readiness audit report helper is a report-only validator input."
     },
     {
@@ -4125,7 +4125,7 @@
       "path": "scripts/common/New-FutureTrueUxRestoreFinalStopLineHandoffReport.ps1",
       "category": "script",
       "required": true,
-      "hash": "99c2bc4b2446b3bf9776acf77c661e56040c460fe02b2b39eff68513715af3c4",
+      "hash": "9f648fb3a6bd0f9cb2260938a9fa1158109cbe2a3b7fc1513cc55310e6ea0140",
       "reason": "Future True UX Restore final stop-line handoff report helper is a report-only validator input."
     },
     {
@@ -4188,7 +4188,7 @@
       "path": "tests/pester/FutureTrueUxArchiveDryRunPlan.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "30e0533f435a0275573b1980d733a95c55173f365f9bf9b5ebe05c1df75c1339",
+      "hash": "5f0a4a7422232a55c6ccfb915ff4d54009680e8f4bed41ed9c39094ddd05ebd9",
       "reason": "Future True UX archive dry-run plan tests guard no-move semantics, archive path scope, and true-execution stop lines."
     },
     {
@@ -4216,21 +4216,28 @@
       "path": "docs/archive/future-true-ux-restore/00-governance/112-future-true-ux-validator-script-governance.md",
       "category": "doc",
       "required": true,
-      "hash": "10e2af6637bbc498d5a44ae28fff0cf8036a8501f9d3cb85dde78148bc9e125f",
+      "hash": "55125ae0e52a6405c9a1116506e54d70fc79a5d64a509b45632c5eff8b9ae5bf",
       "reason": "Future True UX validator and script governance audit records report-only entrypoints and consolidation boundaries."
     },
     {
       "path": "scripts/common/FutureTrueUxRestore.Guards.ps1",
       "category": "script",
       "required": true,
-      "hash": "e7485131bada323ac268ed3a4a5a50e54140e312b8f2954e3d922035c6d2bbe9",
+      "hash": "bdfe25c825629a18f53659494e4a8b2fad96a657525197c6ee139d86802139e9",
       "reason": "Future True UX shared guard helper centralizes frozen execution state and report-only review matching."
+    },
+    {
+      "path": "tests/pester/FutureTrueUxPesterHelpers.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "3702c15004ea9b47eb72f9121162e5fcbbd6416657299f60954b69f172f5105f",
+      "reason": "Future True UX Pester helper centralizes governance boundary assertions for report-only tests."
     },
     {
       "path": "tests/pester/FutureTrueUxValidatorScriptGovernance.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "b0c63f6c318019ea9f09282f608cabb46b43b9c5170fa462ab33e1f170d5bb49",
+      "hash": "892e83ee8e4557173cba373dbe17e4a07d4c2033ac66e79295918f3490d6bba8",
       "reason": "Future True UX validator script governance tests guard report-only entrypoints and consolidation boundaries."
     }
   ],

@@ -105,7 +105,7 @@ function New-FutureTrueUxRestoreHumanAuthorizationHandoffReport {
         $blockingReasons += "handoff decision $requestedDecision is forbidden in this stage"
     }
 
-    $validScopes = @("current-user", "default-user", "offline-image", "machine")
+    $validScopes = @(Get-FutureTrueUxRestoreSupportedScopes)
     if ($validScopes -notcontains $scope) {
         $blockingReasons += "scope must name exactly one supported scope"
     }
@@ -117,21 +117,9 @@ function New-FutureTrueUxRestoreHumanAuthorizationHandoffReport {
         $needsReworkReasons += "ambiguous handoff sections: $($ambiguousSections -join ', ')"
     }
 
-    foreach ($flagName in @("authorizationApproved", "executionApproved", "executeReady", "trueExecution")) {
-        if ([bool](Get-FutureTrueUxRestoreValue -InputObject $Request -Name $flagName -DefaultValue $false)) {
-            $blockingReasons += "$flagName must remain false"
-        }
-        if ($null -ne $section -and [bool](Get-FutureTrueUxRestoreValue -InputObject $section -Name $flagName -DefaultValue $false)) {
-            $blockingReasons += "manifest $flagName must remain false"
-        }
-    }
-
-    $mutationCount = [int](Get-FutureTrueUxRestoreValue -InputObject $Request -Name "mutationCount" -DefaultValue 0)
-    if ($mutationCount -ne 0) {
-        $blockingReasons += "mutationCount must remain 0"
-    }
-    if ($null -ne $section -and [int](Get-FutureTrueUxRestoreValue -InputObject $section -Name "mutationCount" -DefaultValue 0) -ne 0) {
-        $blockingReasons += "manifest mutationCount must remain 0"
+    $blockingReasons += @(Get-FutureTrueUxRestoreFrozenStateMessages -InputObject $Request)
+    if ($null -ne $section) {
+        $blockingReasons += @(Get-FutureTrueUxRestoreFrozenStateMessages -InputObject $section -Subject "manifest")
     }
 
     $privatePathMatches = @(Test-FutureTrueUxRestorePrivatePath -InputObject $Request)
@@ -155,13 +143,13 @@ function New-FutureTrueUxRestoreHumanAuthorizationHandoffReport {
     }
 
     $allText = (@($Request | Get-FutureTrueUxRestoreStrings) -join "`n")
-    if ($allText -match '(?i)\b(authorization-review-ready|execute-ready|approved to execute|executed|completed|issue-18-complete|closure-ready)\b') {
+    if ($allText -match (Get-FutureTrueUxRestoreReviewStateDriftPattern -IncludeClosure)) {
         $blockingReasons += "handoff wording drifts into authorization, execution, or closure state"
     }
     if ($allText -match '(?i)\b(completion summary|close-prep|main-evidence|closure-ready)\b') {
         $blockingReasons += "Issue 18 closure handoff wording is blocked"
     }
-    if ($allText -match '(?i)\b(CI success|dry-run|handler report|manual checklist|mock packet|negative drill|approval checklist|packet preview|report-only)\b.*\b(can be treated as|treated as|counts as|promotes to|is approval|is real UX evidence|is true UX evidence)\b') {
+    if ($allText -match (Get-FutureTrueUxRestoreEvidencePromotionPattern)) {
         $needsReworkReasons += "handoff evidence boundary promotes review material into real UX evidence"
     }
 
