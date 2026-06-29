@@ -52,7 +52,7 @@ Describe "Issue 14 CI policy" {
     }
 
     It "documents CI split in Issue 14 runbook" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\40-issue14-quality-gates.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-14\40-issue14-quality-gates.md") -Raw -Encoding UTF8
 
         foreach ($term in @(
             'The PR gate is the `Validate` job',

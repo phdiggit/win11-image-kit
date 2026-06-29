@@ -6,7 +6,7 @@ Describe "Issue 12 build lock guardrails" {
     }
 
     It "documents build lock and links it from README" {
-        $docPath = Join-Path $script:RepoRoot "docs\32-issue12-build-lock.md"
+        $docPath = Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-12\32-issue12-build-lock.md"
         $readmePath = Join-Path $script:RepoRoot "README.md"
 
         Assert-KitEqual (Test-Path -LiteralPath $docPath) $true
@@ -19,7 +19,7 @@ Describe "Issue 12 build lock guardrails" {
         foreach ($term in @("no network", "no signing", "no real build", "no automatic trust")) {
             Assert-KitMatch $doc ([regex]::Escape($term))
         }
-        Assert-KitMatch $readme "docs/32-issue12-build-lock\.md"
+        Assert-KitMatch $readme "docs/archive/completed-roadmap/issue-12/32-issue12-build-lock\.md"
     }
 
     It "wires Issue 12 tests into PR Fast CI" {
@@ -65,12 +65,12 @@ Describe "Issue 12 build lock guardrails" {
         Assert-KitEqual $capability.context "none"
         Assert-KitEqual $capability.mutationLevel "audit-only"
         Assert-KitEqual (@($capability.validateEntrypoints) -contains "scripts/validate/Test-BuildLock.ps1") $true
-        Assert-KitEqual (@($capability.docs) -contains "docs/32-issue12-build-lock.md") $true
+        Assert-KitEqual (@($capability.docs) -contains "docs/archive/completed-roadmap/issue-12/32-issue12-build-lock.md") $true
     }
 
     It "keeps issue 12 docs free of auto-closing keyword references" {
         $files = @(
-            "docs\32-issue12-build-lock.md",
+            "docs\archive\completed-roadmap\issue-12\32-issue12-build-lock.md",
             "tests\pester\Issue12BuildLock.Tests.ps1"
         )
 

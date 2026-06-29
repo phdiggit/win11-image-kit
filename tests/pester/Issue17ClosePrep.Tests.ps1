@@ -2,7 +2,7 @@ Describe "Issue 17 close-prep candidate" {
     BeforeAll {
         $script:RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
-        $script:DocPath = Join-Path $script:RepoRoot "docs\56-issue17-close-preparation.md"
+        $script:DocPath = Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-17\56-issue17-close-preparation.md"
         $script:Doc = Get-Content -LiteralPath $script:DocPath -Raw -Encoding UTF8
     }
 
@@ -44,14 +44,20 @@ Describe "Issue 17 close-prep candidate" {
         }
     }
 
-    It "keeps Issue 6 through 16 closure documents untouched by this task scope" {
-        $changed = @(& git -C $script:RepoRoot -c core.quotepath=false diff --name-only)
-        $forbidden = @($changed | Where-Object { $_ -match '^docs/.*issue(6|7|8|9|10|11|12|13|14|15|16).*(close|main-validation|completion)' })
-        Assert-KitEqual $forbidden.Count 0
+    It "keeps Issue 6 through 16 closure documents archived without auto-close drift" {
+        foreach ($issue in 6..16) {
+            Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-$issue")) $true
+        }
+
+        $docs = @(Get-ChildItem -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap") -Filter "*.md" -Recurse | Where-Object { $_.FullName -match 'issue-(6|7|8|9|10|11|12|13|14|15|16)' })
+        foreach ($doc in $docs) {
+            $text = Get-Content -LiteralPath $doc.FullName -Raw -Encoding UTF8
+            Assert-KitNotMatch $text "(?i)\b(fixes|closes|resolves)\s+#(6|7|8|9|10|11|12|13|14|15|16)\b"
+        }
     }
 
     It "keeps Issue 17 completion summary absent" {
-        $issue17Docs = @(Get-ChildItem -LiteralPath (Join-Path $script:RepoRoot "docs") -Filter "*issue17*.md")
+        $issue17Docs = @(Get-ChildItem -LiteralPath (Join-Path $script:RepoRoot "docs") -Filter "*issue17*.md" -Recurse)
         Assert-KitEqual (@($issue17Docs | Where-Object { $_.Name -match "completion-summary" }).Count) 0
     }
 
@@ -64,8 +70,8 @@ Describe "Issue 17 close-prep candidate" {
         $buildLock = Get-Content -LiteralPath (Join-Path $script:RepoRoot "manifests\build-lock.json") -Raw -Encoding UTF8 | ConvertFrom-Json
         $paths = @($buildLock.entries.path)
         foreach ($path in @(
-            "docs/56-issue17-close-preparation.md",
-            "docs/57-issue17-main-validation-evidence.md",
+            "docs/archive/completed-roadmap/issue-17/56-issue17-close-preparation.md",
+            "docs/archive/completed-roadmap/issue-17/57-issue17-main-validation-evidence.md",
             "tests/pester/Issue17ClosePrep.Tests.ps1",
             "tests/pester/Issue17MainValidationEvidence.Tests.ps1"
         )) {

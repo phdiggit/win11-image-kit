@@ -6,7 +6,7 @@ Describe "Future true UX restore execute gate dual approval" {
     }
 
     It "documents separate authorization and execution approvals" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\71-future-true-ux-restore-execute-gate-dual-approval.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\00-governance\71-future-true-ux-restore-execute-gate-dual-approval.md") -Raw -Encoding UTF8
 
         Assert-KitMatch $doc 'Status:\s*`execute-gate-draft`'
         Assert-KitMatch $doc "AuthorizationApproved=true"

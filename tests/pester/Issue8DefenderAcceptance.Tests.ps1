@@ -1,4 +1,4 @@
-﻿$RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
+$RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
 
 Describe "Issue 8 Defender exclusion acceptance guardrails" {
     BeforeEach {
@@ -52,7 +52,7 @@ Describe "Issue 8 Defender exclusion acceptance guardrails" {
     }
 
     It "documents the acceptance scope, non-goals, matrix, and manual checklist" {
-        $docPath = Join-Path $script:RepoRoot "docs\17-issue8-defender-exclusion-acceptance.md"
+        $docPath = Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-8\17-issue8-defender-exclusion-acceptance.md"
         $content = Get-Content -LiteralPath $docPath -Raw -Encoding UTF8
 
         Assert-KitMatch $content "Status: accepted-pending-manual-closure"
@@ -67,7 +67,7 @@ Describe "Issue 8 Defender exclusion acceptance guardrails" {
 
     It "keeps docs and README linked to the acceptance layer" {
         $readme = Get-Content -LiteralPath (Join-Path $script:RepoRoot "README.md") -Raw -Encoding UTF8
-        $policyDoc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\16-issue8-defender-exclusion-policy.md") -Raw -Encoding UTF8
+        $policyDoc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-8\16-issue8-defender-exclusion-policy.md") -Raw -Encoding UTF8
 
         Assert-KitMatch $readme "17-issue8-defender-exclusion-acceptance.md"
         Assert-KitMatch $policyDoc "17-issue8-defender-exclusion-acceptance.md"

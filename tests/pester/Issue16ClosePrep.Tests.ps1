@@ -2,7 +2,7 @@ Describe "Issue 16 close-prep candidate" {
     BeforeAll {
         $script:RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
-        $script:DocPath = Join-Path $script:RepoRoot "docs\50-issue16-close-preparation.md"
+        $script:DocPath = Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-16\50-issue16-close-preparation.md"
         $script:Doc = Get-Content -LiteralPath $script:DocPath -Raw -Encoding UTF8
     }
 
@@ -32,7 +32,7 @@ Describe "Issue 16 close-prep candidate" {
     It "requires main validation evidence when close prep is ready" {
         if ($script:Doc -match 'Status:\s*`ready-for-manual-closure`') {
             Assert-KitMatch $script:Doc "post-PR #84.*Full Validate"
-            $evidenceDoc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\51-issue16-main-validation-evidence.md") -Raw -Encoding UTF8
+            $evidenceDoc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-16\51-issue16-main-validation-evidence.md") -Raw -Encoding UTF8
             Assert-KitMatch $evidenceDoc 'Status:\s*`ready-for-manual-closure`'
             Assert-KitMatch $evidenceDoc '\| Result \| `success` \|'
         }

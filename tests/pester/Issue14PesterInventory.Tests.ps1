@@ -35,7 +35,7 @@ Describe "Issue 14 Pester inventory" {
         Assert-KitMatch $script:Workflow "Invoke-Pester -Path tests/pester"
         Assert-KitMatch $script:Workflow "if:\s*github\.event_name != 'pull_request'"
 
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\40-issue14-quality-gates.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-14\40-issue14-quality-gates.md") -Raw -Encoding UTF8
         Assert-KitMatch $doc 'Full Validate runs `tests/pester`'
         Assert-KitMatch $doc "Adding new Pester files requires updating CI wiring"
     }

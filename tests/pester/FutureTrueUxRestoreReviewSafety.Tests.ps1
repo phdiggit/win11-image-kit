@@ -42,10 +42,10 @@ Describe "Future true UX restore authorization review safety" {
 
     It "keeps review artifacts report-only and manual-closure-safe" {
         $paths = @(
-            "docs\76-future-true-ux-restore-unified-authorization-request.md",
-            "docs\77-future-true-ux-restore-maintainer-review-checkpoint.md",
-            "docs\78-future-true-ux-restore-evidence-packet-contract.md",
-            "docs\79-future-true-ux-restore-authorization-state-machine.md",
+            "docs\archive\future-true-ux-restore\00-governance\76-future-true-ux-restore-unified-authorization-request.md",
+            "docs\archive\future-true-ux-restore\00-governance\77-future-true-ux-restore-maintainer-review-checkpoint.md",
+            "docs\archive\future-true-ux-restore\00-governance\78-future-true-ux-restore-evidence-packet-contract.md",
+            "docs\archive\future-true-ux-restore\00-governance\79-future-true-ux-restore-authorization-state-machine.md",
             "scripts\common\New-FutureTrueUxRestoreAuthorizationReviewReport.ps1",
             "scripts\validate\Test-FutureTrueUxRestoreAuthorizationReview.ps1",
             "scripts\config\Show-FutureTrueUxRestoreAuthorizationReviewPlan.ps1"

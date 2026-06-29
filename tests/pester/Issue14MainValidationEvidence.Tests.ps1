@@ -5,7 +5,7 @@ Describe "Issue 14 main validation evidence" {
     }
 
     It "allows pending or ready main validation sections" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\43-issue14-main-validation-evidence.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-14\43-issue14-main-validation-evidence.md") -Raw -Encoding UTF8
         $statusMatch = [regex]::Match($doc, '(?m)^Status: `([^`]+)`')
 
         Assert-KitEqual $statusMatch.Success $true
@@ -24,7 +24,7 @@ Describe "Issue 14 main validation evidence" {
     }
 
     It "validates pending or ready main workflow evidence fields" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\43-issue14-main-validation-evidence.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-14\43-issue14-main-validation-evidence.md") -Raw -Encoding UTF8
         $status = ([regex]::Match($doc, '(?m)^Status: `([^`]+)`')).Groups[1].Value
 
         if ($status -eq "pending-main-validation") {
@@ -67,7 +67,7 @@ Describe "Issue 14 main validation evidence" {
     }
 
     It "keeps real VM admin smoke not-run and not-provided" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\43-issue14-main-validation-evidence.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-14\43-issue14-main-validation-evidence.md") -Raw -Encoding UTF8
 
         foreach ($term in @(
             '| Environment | `not-run` |',
@@ -84,7 +84,7 @@ Describe "Issue 14 main validation evidence" {
     }
 
     It "documents ready-state rules without activating them" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\43-issue14-main-validation-evidence.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-14\43-issue14-main-validation-evidence.md") -Raw -Encoding UTF8
         $status = ([regex]::Match($doc, '(?m)^Status: `([^`]+)`')).Groups[1].Value
 
         if ($status -eq "pending-main-validation") {
@@ -110,15 +110,15 @@ Describe "Issue 14 main validation evidence" {
 
     It "links main-evidence scaffold from README, docs, CI, and Build Lock" {
         $readme = Get-Content -LiteralPath (Join-Path $script:RepoRoot "README.md") -Raw -Encoding UTF8
-        $runbook = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\40-issue14-quality-gates.md") -Raw -Encoding UTF8
+        $runbook = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-14\40-issue14-quality-gates.md") -Raw -Encoding UTF8
         $workflow = Get-Content -LiteralPath (Join-Path $script:RepoRoot ".github\workflows\ci.yml") -Raw -Encoding UTF8
         $buildLock = Get-Content -LiteralPath (Join-Path $script:RepoRoot "manifests\build-lock.json") -Raw -Encoding UTF8 | ConvertFrom-Json
         $paths = @($buildLock.entries.path)
 
-        Assert-KitMatch $readme "docs/43-issue14-main-validation-evidence\.md"
+        Assert-KitMatch $readme "docs/archive/completed-roadmap/issue-14/43-issue14-main-validation-evidence\.md"
         Assert-KitMatch $runbook "43-issue14-main-validation-evidence\.md"
         Assert-KitMatch $workflow ([regex]::Escape("tests/pester/Issue14MainValidationEvidence.Tests.ps1"))
-        Assert-KitEqual ($paths -contains "docs/43-issue14-main-validation-evidence.md") $true
+        Assert-KitEqual ($paths -contains "docs/archive/completed-roadmap/issue-14/43-issue14-main-validation-evidence.md") $true
         Assert-KitEqual ($paths -contains "tests/pester/Issue14MainValidationEvidence.Tests.ps1") $true
     }
 }

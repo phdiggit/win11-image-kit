@@ -6,7 +6,7 @@ Describe "Issue 9 Sysprep AppX acceptance guardrails" {
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
         . (Join-Path $script:RepoRoot "scripts\common\Test-KitSysprepAppxReadiness.ps1")
 
-        $script:Doc21 = Join-Path $script:RepoRoot "docs\21-issue9-sysprep-appx-acceptance.md"
+        $script:Doc21 = Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-9\21-issue9-sysprep-appx-acceptance.md"
         $script:CiPath = Join-Path $script:RepoRoot ".github\workflows\ci.yml"
         $script:ReadmePath = Join-Path $script:RepoRoot "README.md"
     }

@@ -5,7 +5,7 @@ Describe "Issue 14 quality gate acceptance" {
     }
 
     It "documents acceptance state without unsafe claims" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\41-issue14-quality-gates-acceptance.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-14\41-issue14-quality-gates-acceptance.md") -Raw -Encoding UTF8
         $statusMatch = [regex]::Match($doc, '(?m)^Status: `([^`]+)`')
 
         Assert-KitEqual $statusMatch.Success $true
@@ -76,9 +76,9 @@ Describe "Issue 14 quality gate acceptance" {
             "schemas/quality-gates.schema.json",
             "scripts/common/New-KitQualityGateReport.ps1",
             "scripts/validate/Test-QualityGates.ps1",
-            "docs/41-issue14-quality-gates-acceptance.md",
-            "docs/42-issue14-close-preparation.md",
-            "docs/43-issue14-main-validation-evidence.md",
+            "docs/archive/completed-roadmap/issue-14/41-issue14-quality-gates-acceptance.md",
+            "docs/archive/completed-roadmap/issue-14/42-issue14-close-preparation.md",
+            "docs/archive/completed-roadmap/issue-14/43-issue14-main-validation-evidence.md",
             "tests/pester/QualityGateSchema.Tests.ps1",
             "tests/pester/QualityGateReport.Tests.ps1",
             "tests/pester/QualityGateValidation.Tests.ps1",

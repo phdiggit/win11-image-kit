@@ -106,7 +106,7 @@
       "mode": "static",
       "required": true,
       "blocking": true,
-      "entrypoint": "docs/40-issue14-quality-gates.md",
+      "entrypoint": "docs/archive/completed-roadmap/issue-14/40-issue14-quality-gates.md",
       "evidence": "document",
       "notes": "Documents that real build, mutation, network, signing, and registry/profile/hive writes are out of scope."
     },
@@ -118,7 +118,7 @@
       "mode": "report-only",
       "required": true,
       "blocking": true,
-      "entrypoint": "docs/41-issue14-quality-gates-acceptance.md",
+      "entrypoint": "docs/archive/completed-roadmap/issue-14/41-issue14-quality-gates-acceptance.md",
       "evidence": "document",
       "notes": "Provides the in-acceptance scaffold without close-prep or main-evidence claims."
     },
@@ -178,7 +178,7 @@
       "mode": "report-only",
       "required": true,
       "blocking": true,
-      "entrypoint": "docs/58-issue18-user-experience-restore-intake.md",
+      "entrypoint": "docs/archive/completed-roadmap/issue-18/58-issue18-user-experience-restore-intake.md",
       "evidence": "document",
       "notes": "Records real Issue 18 and Roadmap 19 source while keeping this stage intake and report-only."
     },
@@ -190,7 +190,7 @@
       "mode": "report-only",
       "required": true,
       "blocking": true,
-      "entrypoint": "docs/59-issue18-user-experience-restore-acceptance.md",
+      "entrypoint": "docs/archive/completed-roadmap/issue-18/59-issue18-user-experience-restore-acceptance.md",
       "evidence": "document",
       "notes": "Records in-acceptance fixture coverage without close-prep, main-evidence, completion summary, or real UX restore claims."
     },
@@ -274,7 +274,7 @@
       "mode": "report-only",
       "required": true,
       "blocking": true,
-      "entrypoint": "docs/60-issue18-user-experience-capability-matrix.md",
+      "entrypoint": "docs/archive/completed-roadmap/issue-18/60-issue18-user-experience-capability-matrix.md",
       "evidence": "document",
       "notes": "Documents Issue 18 capability matrix, scope semantics, template metadata, and verification evidence boundaries without close-prep."
     },
@@ -346,7 +346,7 @@
       "mode": "report-only",
       "required": true,
       "blocking": true,
-      "entrypoint": "docs/61-issue18-restore-handler-integration.md",
+      "entrypoint": "docs/archive/completed-roadmap/issue-18/61-issue18-restore-handler-integration.md",
       "evidence": "document",
       "notes": "Documents Restore-UserExperience handler integration ready for manual closure of the current report-only stage without completion summary or true execution."
     },
@@ -358,7 +358,7 @@
       "mode": "report-only",
       "required": true,
       "blocking": true,
-      "entrypoint": "docs/62-issue18-close-preparation.md",
+      "entrypoint": "docs/archive/completed-roadmap/issue-18/62-issue18-close-preparation.md",
       "evidence": "document",
       "notes": "Records manual closure readiness for the current report-only / handler-adapter stage; PR Fast CI, fixtures, handler reports, and manual checklist are not real UX restore evidence."
     },
@@ -370,7 +370,7 @@
       "mode": "report-only",
       "required": true,
       "blocking": true,
-      "entrypoint": "docs/63-issue18-main-validation-evidence.md",
+      "entrypoint": "docs/archive/completed-roadmap/issue-18/63-issue18-main-validation-evidence.md",
       "evidence": "document",
       "notes": "Records post-PR #96 main/workflow Full Validate success evidence for current report-only / handler-adapter stage readiness."
     },
@@ -382,7 +382,7 @@
       "mode": "report-only",
       "required": true,
       "blocking": true,
-      "entrypoint": "docs/64-issue18-manual-closure-handoff.md",
+      "entrypoint": "docs/archive/completed-roadmap/issue-18/64-issue18-manual-closure-handoff.md",
       "evidence": "document",
       "notes": "Provides manual closure handoff only; no completion summary, no auto-close, no real UX restore execution."
     },
@@ -394,7 +394,7 @@
       "mode": "report-only",
       "required": true,
       "blocking": true,
-      "entrypoint": "docs/65-future-true-ux-restore-execution-split.md",
+      "entrypoint": "docs/archive/future-true-ux-restore/00-governance/65-future-true-ux-restore-execution-split.md",
       "evidence": "document",
       "notes": "Separates future true UX mutation from Issue 18 ready report-only stage and requires explicit authorization."
     },
@@ -418,7 +418,7 @@
       "mode": "report-only",
       "required": true,
       "blocking": true,
-      "entrypoint": "docs/67-future-true-ux-restore-evidence-model.md",
+      "entrypoint": "docs/archive/future-true-ux-restore/00-governance/67-future-true-ux-restore-evidence-model.md",
       "evidence": "document",
       "notes": "Defines evidence needed before any future true UX restore mutation can be authorized."
     },
@@ -454,7 +454,7 @@
       "mode": "report-only",
       "required": true,
       "blocking": true,
-      "entrypoint": "docs/75-future-true-ux-restore-scope-guard-matrix.md",
+      "entrypoint": "docs/archive/future-true-ux-restore/00-governance/75-future-true-ux-restore-scope-guard-matrix.md",
       "evidence": "document",
       "notes": "Prevents evidence substitution across current-user, default-user, offline-image, and machine scopes."
     },
@@ -466,7 +466,7 @@
       "mode": "report-only",
       "required": true,
       "blocking": true,
-      "entrypoint": "docs/71-future-true-ux-restore-execute-gate-dual-approval.md",
+      "entrypoint": "docs/archive/future-true-ux-restore/00-governance/71-future-true-ux-restore-execute-gate-dual-approval.md",
       "evidence": "document",
       "notes": "Keeps authorization and execution approval separate; no execution in this stage."
     },
@@ -490,7 +490,7 @@
       "mode": "report-only",
       "required": true,
       "blocking": true,
-      "entrypoint": "docs/78-future-true-ux-restore-evidence-packet-contract.md",
+      "entrypoint": "docs/archive/future-true-ux-restore/00-governance/78-future-true-ux-restore-evidence-packet-contract.md",
       "evidence": "document",
       "notes": "Defines packet fields required for maintainer review without allowing execution approval or true UX mutation."
     },
@@ -514,7 +514,7 @@
       "mode": "report-only",
       "required": true,
       "blocking": true,
-      "entrypoint": "docs/82-future-true-ux-restore-mock-decision-ledger.md",
+      "entrypoint": "docs/archive/future-true-ux-restore/01-mock-review/82-future-true-ux-restore-mock-decision-ledger.md",
       "evidence": "document",
       "notes": "Records mock review decisions while keeping execution blocked."
     },
@@ -706,7 +706,7 @@
       "mode": "report-only",
       "required": true,
       "blocking": true,
-      "entrypoint": "docs/52-issue17-controlled-execution-intake.md",
+      "entrypoint": "docs/archive/completed-roadmap/issue-17/52-issue17-controlled-execution-intake.md",
       "evidence": "document",
       "notes": "Records real Issue 17 and Roadmap intake without close-prep or auto-close."
     },
@@ -718,7 +718,7 @@
       "mode": "report-only",
       "required": true,
       "blocking": true,
-      "entrypoint": "docs/53-issue17-controlled-execution-acceptance.md",
+      "entrypoint": "docs/archive/completed-roadmap/issue-17/53-issue17-controlled-execution-acceptance.md",
       "evidence": "document",
       "notes": "Records accepted-ready-for-manual-closure dry-run coverage for the current planning/simulation stage without true execution."
     },
@@ -730,7 +730,7 @@
       "mode": "report-only",
       "required": true,
       "blocking": true,
-      "entrypoint": "docs/56-issue17-close-preparation.md",
+      "entrypoint": "docs/archive/completed-roadmap/issue-17/56-issue17-close-preparation.md",
       "evidence": "document",
       "notes": "Records manual closure readiness for the current planning/simulation stage; PR Fast CI and simulation are not main/workflow or real lifecycle evidence."
     },
@@ -742,7 +742,7 @@
       "mode": "report-only",
       "required": true,
       "blocking": true,
-      "entrypoint": "docs/57-issue17-main-validation-evidence.md",
+      "entrypoint": "docs/archive/completed-roadmap/issue-17/57-issue17-main-validation-evidence.md",
       "evidence": "document",
       "notes": "Records post-PR #89 main push Full Validate success for manual closure review while keeping true execution out of scope."
     },
@@ -754,7 +754,7 @@
       "mode": "report-only",
       "required": true,
       "blocking": true,
-      "entrypoint": "docs/49-issue16-evidence-chain-acceptance.md",
+      "entrypoint": "docs/archive/completed-roadmap/issue-16/49-issue16-evidence-chain-acceptance.md",
       "evidence": "document",
       "notes": "Records accepted-ready-for-manual-closure without automatic closure."
     },
@@ -766,7 +766,7 @@
       "mode": "manual",
       "required": true,
       "blocking": true,
-      "entrypoint": "docs/50-issue16-close-preparation.md",
+      "entrypoint": "docs/archive/completed-roadmap/issue-16/50-issue16-close-preparation.md",
       "evidence": "document",
       "notes": "Provides manual closure readiness only; PR Fast CI is not main evidence."
     },
@@ -778,7 +778,7 @@
       "mode": "report-only",
       "required": true,
       "blocking": true,
-      "entrypoint": "docs/51-issue16-main-validation-evidence.md",
+      "entrypoint": "docs/archive/completed-roadmap/issue-16/51-issue16-main-validation-evidence.md",
       "evidence": "document",
       "notes": "Records real post-PR #84 main push Full Validate evidence for manual closure review."
     },
@@ -802,7 +802,7 @@
       "mode": "report-only",
       "required": true,
       "blocking": true,
-      "entrypoint": "docs/45-issue15-layered-configuration-acceptance.md",
+      "entrypoint": "docs/archive/completed-roadmap/issue-15/45-issue15-layered-configuration-acceptance.md",
       "evidence": "document",
       "notes": "Documents functional acceptance after post-merge main/workflow validation evidence is recorded."
     },
@@ -814,7 +814,7 @@
       "mode": "manual",
       "required": true,
       "blocking": true,
-      "entrypoint": "docs/46-issue15-close-preparation.md",
+      "entrypoint": "docs/archive/completed-roadmap/issue-15/46-issue15-close-preparation.md",
       "evidence": "document",
       "notes": "Provides manual closure readiness only; PR Fast CI is not main evidence."
     },
@@ -826,7 +826,7 @@
       "mode": "report-only",
       "required": true,
       "blocking": true,
-      "entrypoint": "docs/47-issue15-main-validation-evidence.md",
+      "entrypoint": "docs/archive/completed-roadmap/issue-15/47-issue15-main-validation-evidence.md",
       "evidence": "document",
       "notes": "Records real main push or workflow_dispatch Full Validate evidence for manual closure review."
     }

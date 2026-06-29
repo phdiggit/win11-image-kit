@@ -66,30 +66,30 @@ Describe "Future true UX restore mock review safety" {
         }
     }
 
-    It "does not create Issue 18 completion summary or touch Issue 6-17 closure docs" {
+    It "does not create Issue 18 completion summary or weaken archived Issue 6-17 closure docs" {
         foreach ($path in @(
-            "docs\80-future-true-ux-restore-mock-review-packet-drill.md",
-            "docs\81-future-true-ux-restore-mock-maintainer-review-transcript.md",
-            "docs\82-future-true-ux-restore-mock-decision-ledger.md",
-            "docs\83-future-true-ux-restore-mock-drill-lessons.md"
+            "docs\archive\future-true-ux-restore\01-mock-review\80-future-true-ux-restore-mock-review-packet-drill.md",
+            "docs\archive\future-true-ux-restore\01-mock-review\81-future-true-ux-restore-mock-maintainer-review-transcript.md",
+            "docs\archive\future-true-ux-restore\01-mock-review\82-future-true-ux-restore-mock-decision-ledger.md",
+            "docs\archive\future-true-ux-restore\01-mock-review\83-future-true-ux-restore-mock-drill-lessons.md"
         )) {
             $text = Get-Content -LiteralPath (Join-Path $script:RepoRoot $path) -Raw -Encoding UTF8
             Assert-KitNotMatch $text "(?i)\b(fixes|closes|resolves)\s+#18\b"
             Assert-KitMatch $text "(?i)(mock|review|blocked|not execution approval|trueExecution=false)"
         }
 
-        foreach ($file in Get-ChildItem -LiteralPath (Join-Path $script:RepoRoot "docs") -Filter "*issue18*.md") {
+        foreach ($file in Get-ChildItem -LiteralPath (Join-Path $script:RepoRoot "docs") -Filter "*issue18*.md" -Recurse) {
             Assert-KitNotMatch $file.Name "completion-summary"
         }
 
-        git -C $script:RepoRoot rev-parse --verify --quiet origin/main | Out-Null
-        if ($LASTEXITCODE -eq 0) {
-            $changed = @(git -C $script:RepoRoot -c core.quotepath=false diff --name-only origin/main...HEAD)
-        } else {
-            $changed = @(git -C $script:RepoRoot -c core.quotepath=false diff-tree --no-commit-id --name-only -r HEAD)
+        foreach ($issue in 6..17) {
+            Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-$issue")) $true
         }
-        foreach ($path in $changed) {
-            Assert-KitNotMatch $path "docs/.*issue(6|7|8|9|10|11|12|13|14|15|16|17).*(close|main|completion)"
+
+        $docs = @(Get-ChildItem -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap") -Filter "*.md" -Recurse | Where-Object { $_.FullName -match 'issue-(6|7|8|9|10|11|12|13|14|15|16|17)' })
+        foreach ($doc in $docs) {
+            $text = Get-Content -LiteralPath $doc.FullName -Raw -Encoding UTF8
+            Assert-KitNotMatch $text "(?i)\b(fixes|closes|resolves)\s+#(6|7|8|9|10|11|12|13|14|15|16|17)\b"
         }
     }
 }

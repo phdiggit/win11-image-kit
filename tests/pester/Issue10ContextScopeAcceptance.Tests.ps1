@@ -5,7 +5,7 @@ Describe "Issue 10 context scope acceptance matrix" {
     }
 
     It "keeps the acceptance document in the expected state with required sections" {
-        $docPath = Join-Path $script:RepoRoot "docs\25-issue10-context-scope-acceptance.md"
+        $docPath = Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-10\25-issue10-context-scope-acceptance.md"
         Assert-KitEqual (Test-Path -LiteralPath $docPath) $true
         $doc = Get-Content -LiteralPath $docPath -Raw -Encoding UTF8
 
@@ -65,7 +65,7 @@ Describe "Issue 10 context scope acceptance matrix" {
         $readme = Get-Content -LiteralPath (Join-Path $script:RepoRoot "README.md") -Raw -Encoding UTF8
         $workflow = Get-Content -LiteralPath (Join-Path $script:RepoRoot ".github\workflows\ci.yml") -Raw -Encoding UTF8
 
-        Assert-KitMatch $readme "docs/25-issue10-context-scope-acceptance\.md"
+        Assert-KitMatch $readme "docs/archive/completed-roadmap/issue-10/25-issue10-context-scope-acceptance\.md"
         foreach ($testPath in @(
             "tests/pester/ContextScopeSchema.Tests.ps1",
             "tests/pester/ContextScopeResolver.Tests.ps1",

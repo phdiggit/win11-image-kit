@@ -25,8 +25,8 @@ Describe "Evidence chain close-prep wiring" {
         $paths = @($buildLock.entries.path)
 
         foreach ($path in @(
-            "docs/50-issue16-close-preparation.md",
-            "docs/51-issue16-main-validation-evidence.md",
+            "docs/archive/completed-roadmap/issue-16/50-issue16-close-preparation.md",
+            "docs/archive/completed-roadmap/issue-16/51-issue16-main-validation-evidence.md",
             "manifests/evidence-report-inputs.json",
             "schemas/evidence-report-inputs.schema.json",
             "scripts/common/Read-KitEvidenceReportInputs.ps1",
@@ -37,7 +37,7 @@ Describe "Evidence chain close-prep wiring" {
             "tests/pester/Issue16ClosePrep.Tests.ps1",
             "tests/pester/Issue16MainValidationEvidence.Tests.ps1"
         )) {
-            Assert-KitMatch $readme "docs/50-issue16-close-preparation\.md|docs/51-issue16-main-validation-evidence\.md"
+            Assert-KitMatch $readme "docs/archive/completed-roadmap/issue-16/50-issue16-close-preparation\.md|docs/archive/completed-roadmap/issue-16/51-issue16-main-validation-evidence\.md"
             Assert-KitEqual ($paths -contains $path) $true
         }
     }

@@ -2,7 +2,7 @@ Describe "Issue 18 close-prep candidate" {
     BeforeAll {
         $script:RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
-        $script:DocPath = Join-Path $script:RepoRoot "docs\62-issue18-close-preparation.md"
+        $script:DocPath = Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-18\62-issue18-close-preparation.md"
         $script:Doc = Get-Content -LiteralPath $script:DocPath -Raw -Encoding UTF8
     }
 
@@ -45,14 +45,23 @@ Describe "Issue 18 close-prep candidate" {
         }
     }
 
-    It "keeps Issue 6 through 17 closure documents untouched by this task scope" {
-        $changed = @(& git -C $script:RepoRoot -c core.quotepath=false diff --name-only)
-        $forbidden = @($changed | Where-Object { $_ -match '^docs/.*issue(6|7|8|9|10|11|12|13|14|15|16|17).*(close|main-validation|completion)' })
-        Assert-KitEqual $forbidden.Count 0
+    It "keeps Issue 6 through 17 closure documents archived without changing closure semantics" {
+        foreach ($issue in 6..17) {
+            Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-$issue")) $true
+        }
+
+        $archivedDocs = @(Get-ChildItem -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap") -Filter "*.md" -Recurse)
+        $issue6To17Docs = @($archivedDocs | Where-Object { $_.FullName -match 'issue-(6|7|8|9|10|11|12|13|14|15|16|17)' })
+        Assert-KitEqual ($issue6To17Docs.Count -gt 0) $true
+
+        foreach ($doc in $issue6To17Docs) {
+            $text = Get-Content -LiteralPath $doc.FullName -Raw -Encoding UTF8
+            Assert-KitNotMatch $text "(?i)\b(fixes|closes|resolves)\s+#(6|7|8|9|10|11|12|13|14|15|16|17)\b"
+        }
     }
 
     It "keeps Issue 18 completion summary absent and auto-close keywords out" {
-        $issue18Docs = @(Get-ChildItem -LiteralPath (Join-Path $script:RepoRoot "docs") -Filter "*issue18*.md")
+        $issue18Docs = @(Get-ChildItem -LiteralPath (Join-Path $script:RepoRoot "docs") -Filter "*issue18*.md" -Recurse)
         Assert-KitEqual (@($issue18Docs | Where-Object { $_.Name -match "completion-summary" }).Count) 0
 
         foreach ($doc in $issue18Docs) {
@@ -70,8 +79,8 @@ Describe "Issue 18 close-prep candidate" {
         $buildLock = Get-Content -LiteralPath (Join-Path $script:RepoRoot "manifests\build-lock.json") -Raw -Encoding UTF8 | ConvertFrom-Json
         $paths = @($buildLock.entries.path)
         foreach ($path in @(
-            "docs/62-issue18-close-preparation.md",
-            "docs/63-issue18-main-validation-evidence.md",
+            "docs/archive/completed-roadmap/issue-18/62-issue18-close-preparation.md",
+            "docs/archive/completed-roadmap/issue-18/63-issue18-main-validation-evidence.md",
             "tests/pester/Issue18ClosePrep.Tests.ps1",
             "tests/pester/Issue18MainValidationEvidence.Tests.ps1"
         )) {

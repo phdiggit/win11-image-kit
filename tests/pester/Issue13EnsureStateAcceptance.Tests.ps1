@@ -8,7 +8,7 @@ Describe "Issue 13 ensure-state acceptance" {
     }
 
     It "records acceptance status, scope, non-goals, matrix, split rules, and CI boundary" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\37-issue13-ensure-state-acceptance.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-13\37-issue13-ensure-state-acceptance.md") -Raw -Encoding UTF8
         $statusMatch = [regex]::Match($doc, '(?m)^Status: `([^`]+)`')
 
         Assert-KitEqual $statusMatch.Success $true
@@ -120,14 +120,14 @@ Describe "Issue 13 ensure-state acceptance" {
 
     It "keeps README, docs, capability registry, build lock, and PR Fast CI wired" {
         $readme = Get-Content -LiteralPath (Join-Path $script:RepoRoot "README.md") -Raw -Encoding UTF8
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\37-issue13-ensure-state-acceptance.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-13\37-issue13-ensure-state-acceptance.md") -Raw -Encoding UTF8
         $ci = Get-Content -LiteralPath (Join-Path $script:RepoRoot ".github\workflows\ci.yml") -Raw -Encoding UTF8
         $registry = Get-Content -LiteralPath (Join-Path $script:RepoRoot "manifests\capability-registry.json") -Raw -Encoding UTF8 | ConvertFrom-Json
         $buildLock = Get-Content -LiteralPath (Join-Path $script:RepoRoot "manifests\build-lock.json") -Raw -Encoding UTF8 | ConvertFrom-Json
         $capability = @($registry.capabilities | Where-Object { $_.id -eq "ensure-state-convergence" })[0]
         $lockedPaths = @($buildLock.entries.path)
 
-        Assert-KitMatch $readme "docs/37-issue13-ensure-state-acceptance\.md"
+        Assert-KitMatch $readme "docs/archive/completed-roadmap/issue-13/37-issue13-ensure-state-acceptance\.md"
         Assert-KitMatch $doc "36-issue13-ensure-state\.md"
         Assert-KitEqual $capability.issue "#13"
         Assert-KitEqual $capability.mutationLevel "plan-only"
@@ -144,8 +144,8 @@ Describe "Issue 13 ensure-state acceptance" {
         }
 
         foreach ($path in @(
-            "docs/37-issue13-ensure-state-acceptance.md",
-            "docs/39-issue13-main-validation-evidence.md",
+            "docs/archive/completed-roadmap/issue-13/37-issue13-ensure-state-acceptance.md",
+            "docs/archive/completed-roadmap/issue-13/39-issue13-main-validation-evidence.md",
             "tests/pester/Issue13EnsureStateAcceptance.Tests.ps1"
         )) {
             Assert-KitEqual ($lockedPaths -contains $path) $true

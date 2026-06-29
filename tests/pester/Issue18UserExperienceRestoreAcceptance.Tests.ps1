@@ -5,7 +5,7 @@ Describe "Issue 18 user experience restore acceptance scaffold" {
     }
 
     It "keeps acceptance in the current report-only stage" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\59-issue18-user-experience-restore-acceptance.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-18\59-issue18-user-experience-restore-acceptance.md") -Raw -Encoding UTF8
 
         Assert-KitMatch $doc 'Status: `accepted-ready-for-manual-closure`'
         Assert-KitMatch $doc "post-PR #96 main/workflow success evidence"
@@ -40,12 +40,12 @@ Describe "Issue 18 user experience restore acceptance scaffold" {
         }
 
         foreach ($path in @(
-            "docs/58-issue18-user-experience-restore-intake.md",
-            "docs/59-issue18-user-experience-restore-acceptance.md",
-            "docs/60-issue18-user-experience-capability-matrix.md",
-            "docs/61-issue18-restore-handler-integration.md",
-            "docs/62-issue18-close-preparation.md",
-            "docs/63-issue18-main-validation-evidence.md",
+            "docs/archive/completed-roadmap/issue-18/58-issue18-user-experience-restore-intake.md",
+            "docs/archive/completed-roadmap/issue-18/59-issue18-user-experience-restore-acceptance.md",
+            "docs/archive/completed-roadmap/issue-18/60-issue18-user-experience-capability-matrix.md",
+            "docs/archive/completed-roadmap/issue-18/61-issue18-restore-handler-integration.md",
+            "docs/archive/completed-roadmap/issue-18/62-issue18-close-preparation.md",
+            "docs/archive/completed-roadmap/issue-18/63-issue18-main-validation-evidence.md",
             "manifests/user-experience-restore.json",
             "scripts/validate/Test-UserExperienceRestore.ps1",
             "tests/pester/Issue18ClosePrep.Tests.ps1",

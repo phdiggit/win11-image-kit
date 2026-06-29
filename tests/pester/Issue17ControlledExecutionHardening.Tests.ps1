@@ -5,9 +5,9 @@ Describe "Issue 17 controlled execution hardening acceptance" {
     }
 
     It "keeps docs/54 accepted and ready for manual closure" {
-        $doc52 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\52-issue17-controlled-execution-intake.md") -Raw -Encoding UTF8
-        $doc53 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\53-issue17-controlled-execution-acceptance.md") -Raw -Encoding UTF8
-        $doc54 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\54-issue17-controlled-execution-safety-hardening.md") -Raw -Encoding UTF8
+        $doc52 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-17\52-issue17-controlled-execution-intake.md") -Raw -Encoding UTF8
+        $doc53 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-17\53-issue17-controlled-execution-acceptance.md") -Raw -Encoding UTF8
+        $doc54 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-17\54-issue17-controlled-execution-safety-hardening.md") -Raw -Encoding UTF8
 
         Assert-KitMatch $doc52 'Status: `in-progress`'
         Assert-KitMatch $doc53 'Status: `accepted-ready-for-manual-closure`'
@@ -17,16 +17,16 @@ Describe "Issue 17 controlled execution hardening acceptance" {
 
     It "creates only ready close-prep and ready main evidence documents" {
         foreach ($path in @(
-            "docs\56-issue17-close-preparation.md",
-            "docs\57-issue17-main-validation-evidence.md"
+            "docs\archive\completed-roadmap\issue-17\56-issue17-close-preparation.md",
+            "docs\archive\completed-roadmap\issue-17\57-issue17-main-validation-evidence.md"
         )) {
             if (-not (Test-Path -LiteralPath (Join-Path $script:RepoRoot $path))) {
                 throw "Issue 17 scaffold document should exist: $path"
             }
         }
 
-        $closePrep = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\56-issue17-close-preparation.md") -Raw -Encoding UTF8
-        $mainEvidence = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\57-issue17-main-validation-evidence.md") -Raw -Encoding UTF8
+        $closePrep = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-17\56-issue17-close-preparation.md") -Raw -Encoding UTF8
+        $mainEvidence = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-17\57-issue17-main-validation-evidence.md") -Raw -Encoding UTF8
         Assert-KitMatch $closePrep 'Status: `ready-for-manual-closure`'
         Assert-KitMatch $mainEvidence 'Status: `ready-for-manual-closure`'
 

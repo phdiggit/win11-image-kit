@@ -63,8 +63,8 @@ function New-FutureTrueUxRestoreFinalStopLineHandoffReport {
         "end-to-end-no-execution-readiness-audit"
     )
     $requiredDocs = @(
-        "docs/106-future-true-ux-restore-final-stop-line-handoff.md",
-        "docs/107-future-true-ux-restore-stop-line-decision-matrix.md"
+        "docs/archive/future-true-ux-restore/00-governance/106-future-true-ux-restore-final-stop-line-handoff.md",
+        "docs/archive/future-true-ux-restore/00-governance/107-future-true-ux-restore-stop-line-decision-matrix.md"
     )
 
     if ($null -eq $section) {

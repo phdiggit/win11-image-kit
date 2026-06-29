@@ -4,7 +4,7 @@ Describe "Issue 9 close preparation guardrails" {
     BeforeAll {
         $script:RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
-        $script:Doc22 = Join-Path $script:RepoRoot "docs\22-issue9-close-preparation.md"
+        $script:Doc22 = Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-9\22-issue9-close-preparation.md"
     }
 
     It "has close preparation status and required sections" {
@@ -22,10 +22,10 @@ Describe "Issue 9 close preparation guardrails" {
     It "keeps the evidence chain complete" {
         $doc = Get-Content -LiteralPath $script:Doc22 -Raw -Encoding UTF8
         foreach ($text in @(
-            "docs/20-issue9-sysprep-appx-gate.md",
-            "docs/21-issue9-sysprep-appx-acceptance.md",
-            "docs/22-issue9-close-preparation.md",
-            "docs/23-issue9-main-validation-evidence.md",
+            "docs/archive/completed-roadmap/issue-9/20-issue9-sysprep-appx-gate.md",
+            "docs/archive/completed-roadmap/issue-9/21-issue9-sysprep-appx-acceptance.md",
+            "docs/archive/completed-roadmap/issue-9/22-issue9-close-preparation.md",
+            "docs/archive/completed-roadmap/issue-9/23-issue9-main-validation-evidence.md",
             "SysprepAppxInventory.Tests.ps1",
             "SysprepAppxReadiness.Tests.ps1",
             "SysprepAppxReport.Tests.ps1",
@@ -71,7 +71,7 @@ Describe "Issue 9 close preparation guardrails" {
 
     It "keeps README and docs links complete" {
         $readme = Get-Content -LiteralPath (Join-Path $script:RepoRoot "README.md") -Raw -Encoding UTF8
-        $doc20 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\20-issue9-sysprep-appx-gate.md") -Raw -Encoding UTF8
+        $doc20 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-9\20-issue9-sysprep-appx-gate.md") -Raw -Encoding UTF8
 
         Assert-KitMatch $readme "22-issue9-close-preparation\.md"
         Assert-KitMatch $doc20 "22-issue9-close-preparation\.md"

@@ -5,8 +5,8 @@ Describe "Issue 7 close preparation evidence" {
         $script:RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
 
-        $script:Doc14Path = Join-Path $script:RepoRoot "docs\14-issue7-close-preparation.md"
-        $script:Doc13Path = Join-Path $script:RepoRoot "docs\13-issue7-junction-transaction-acceptance.md"
+        $script:Doc14Path = Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-7\14-issue7-close-preparation.md"
+        $script:Doc13Path = Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-7\13-issue7-junction-transaction-acceptance.md"
         $script:ReadmePath = Join-Path $script:RepoRoot "README.md"
         $script:CiPath = Join-Path $script:RepoRoot ".github\workflows\ci.yml"
 
@@ -41,7 +41,7 @@ Describe "Issue 7 close preparation evidence" {
 
     It "keeps the evidence chain complete" {
         foreach ($requiredTerm in @(
-            "docs/13-issue7-junction-transaction-acceptance.md";
+            "docs/archive/completed-roadmap/issue-7/13-issue7-junction-transaction-acceptance.md";
             "tests/pester/JunctionTransactionPreflight.Tests.ps1";
             "tests/pester/JunctionTransactionExecution.Tests.ps1";
             "tests/pester/JunctionStateVerification.Tests.ps1";
@@ -116,7 +116,7 @@ Describe "Issue 7 close preparation evidence" {
             throw "docs/14 must link back to docs/13."
         }
 
-        if (-not $script:Readme.Contains("docs/14-issue7-close-preparation.md")) {
+        if (-not $script:Readme.Contains("docs/archive/completed-roadmap/issue-7/14-issue7-close-preparation.md")) {
             throw "README is missing the docs/14 close preparation entry."
         }
     }

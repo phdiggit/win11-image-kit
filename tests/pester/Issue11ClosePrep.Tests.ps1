@@ -5,7 +5,7 @@ Describe "Issue 11 close preparation" {
     }
 
     It "records close-prep status and manual closure boundaries" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\30-issue11-close-preparation.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-11\30-issue11-close-preparation.md") -Raw -Encoding UTF8
         $statusMatch = [regex]::Match($doc, '(?m)^Status: `([^`]+)`')
 
         Assert-KitEqual $statusMatch.Success $true
@@ -38,13 +38,13 @@ Describe "Issue 11 close preparation" {
     }
 
     It "lists the full Issue 11 evidence chain" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\30-issue11-close-preparation.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-11\30-issue11-close-preparation.md") -Raw -Encoding UTF8
 
         foreach ($path in @(
-            "docs/28-issue11-capability-registry.md",
-            "docs/29-issue11-capability-registry-acceptance.md",
-            "docs/30-issue11-close-preparation.md",
-            "docs/31-issue11-main-validation-evidence.md",
+            "docs/archive/completed-roadmap/issue-11/28-issue11-capability-registry.md",
+            "docs/archive/completed-roadmap/issue-11/29-issue11-capability-registry-acceptance.md",
+            "docs/archive/completed-roadmap/issue-11/30-issue11-close-preparation.md",
+            "docs/archive/completed-roadmap/issue-11/31-issue11-main-validation-evidence.md",
             "tests/pester/CapabilityRegistrySchema.Tests.ps1",
             "tests/pester/CapabilityRegistryConsistency.Tests.ps1",
             "tests/pester/CapabilityRegistryReport.Tests.ps1",
@@ -58,7 +58,7 @@ Describe "Issue 11 close preparation" {
     }
 
     It "keeps validation policy report-only and avoids auto-closing keywords" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\30-issue11-close-preparation.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-11\30-issue11-close-preparation.md") -Raw -Encoding UTF8
 
         foreach ($term in @(
             "must not call real business handlers",
@@ -77,7 +77,7 @@ Describe "Issue 11 close preparation" {
         $readme = Get-Content -LiteralPath (Join-Path $script:RepoRoot "README.md") -Raw -Encoding UTF8
         $workflow = Get-Content -LiteralPath (Join-Path $script:RepoRoot ".github\workflows\ci.yml") -Raw -Encoding UTF8
 
-        Assert-KitMatch $readme "docs/30-issue11-close-preparation\.md"
+        Assert-KitMatch $readme "docs/archive/completed-roadmap/issue-11/30-issue11-close-preparation\.md"
         Assert-KitMatch $workflow ([regex]::Escape("tests/pester/Issue11ClosePrep.Tests.ps1"))
     }
 }

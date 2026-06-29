@@ -5,7 +5,7 @@ Describe "Issue 14 close preparation" {
     }
 
     It "records candidate or ready status and manual closure sections" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\42-issue14-close-preparation.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-14\42-issue14-close-preparation.md") -Raw -Encoding UTF8
         $statusMatch = [regex]::Match($doc, '(?m)^Status: `([^`]+)`')
 
         Assert-KitEqual $statusMatch.Success $true
@@ -25,7 +25,7 @@ Describe "Issue 14 close preparation" {
     }
 
     It "keeps closure state aligned with main evidence" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\42-issue14-close-preparation.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-14\42-issue14-close-preparation.md") -Raw -Encoding UTF8
         $status = ([regex]::Match($doc, '(?m)^Status: `([^`]+)`')).Groups[1].Value
 
         if ($status -eq "ready-for-manual-closure-candidate") {
@@ -55,7 +55,7 @@ Describe "Issue 14 close preparation" {
     }
 
     It "does not claim real smoke or true execution success" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\42-issue14-close-preparation.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-14\42-issue14-close-preparation.md") -Raw -Encoding UTF8
 
         foreach ($term in @(
             "real Windows image build",
@@ -75,15 +75,15 @@ Describe "Issue 14 close preparation" {
 
     It "links close-prep from README, docs, CI, and Build Lock" {
         $readme = Get-Content -LiteralPath (Join-Path $script:RepoRoot "README.md") -Raw -Encoding UTF8
-        $runbook = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\40-issue14-quality-gates.md") -Raw -Encoding UTF8
+        $runbook = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-14\40-issue14-quality-gates.md") -Raw -Encoding UTF8
         $workflow = Get-Content -LiteralPath (Join-Path $script:RepoRoot ".github\workflows\ci.yml") -Raw -Encoding UTF8
         $buildLock = Get-Content -LiteralPath (Join-Path $script:RepoRoot "manifests\build-lock.json") -Raw -Encoding UTF8 | ConvertFrom-Json
         $paths = @($buildLock.entries.path)
 
-        Assert-KitMatch $readme "docs/42-issue14-close-preparation\.md"
+        Assert-KitMatch $readme "docs/archive/completed-roadmap/issue-14/42-issue14-close-preparation\.md"
         Assert-KitMatch $runbook "42-issue14-close-preparation\.md"
         Assert-KitMatch $workflow ([regex]::Escape("tests/pester/Issue14ClosePrep.Tests.ps1"))
-        Assert-KitEqual ($paths -contains "docs/42-issue14-close-preparation.md") $true
+        Assert-KitEqual ($paths -contains "docs/archive/completed-roadmap/issue-14/42-issue14-close-preparation.md") $true
         Assert-KitEqual ($paths -contains "tests/pester/Issue14ClosePrep.Tests.ps1") $true
     }
 }

@@ -8,7 +8,7 @@ Describe "Issue 9 Sysprep AppX gate acceptance" {
 
     It "includes the Issue 9 docs manifest schema and entrypoint files" {
         foreach ($relativePath in @(
-            "docs\20-issue9-sysprep-appx-gate.md",
+            "docs\archive\completed-roadmap\issue-9\20-issue9-sysprep-appx-gate.md",
             "manifests\sysprep-appx-gate.json",
             "schemas\sysprep-appx-gate.schema.json",
             "scripts\common\Get-KitAppxInventory.ps1",

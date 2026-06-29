@@ -36,7 +36,7 @@ Describe "Issue 14 analyzer policy" {
     }
 
     It "documents analyzer policy without pretending missing modules are success" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\40-issue14-quality-gates.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-14\40-issue14-quality-gates.md") -Raw -Encoding UTF8
 
         foreach ($term in @(
             'PSScriptAnalyzer uses `PSScriptAnalyzerSettings.psd1`',

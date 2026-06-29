@@ -42,7 +42,7 @@ Describe "Future true UX restore evidence model" {
     }
 
     It "documents per-scope evidence requirements" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\67-future-true-ux-restore-evidence-model.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\00-governance\67-future-true-ux-restore-evidence-model.md") -Raw -Encoding UTF8
 
         foreach ($term in @("current-user", "default-user", "offline-image", "machine", "Independent Verification", "Command exit code alone", "not real UX success evidence")) {
             Assert-KitMatch $doc ([regex]::Escape($term))

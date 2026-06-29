@@ -60,11 +60,11 @@ Describe "Future true UX restore integrated packet preview" {
 
     It "keeps docs free of Issue 18 auto-close keywords" {
         foreach ($path in @(
-            "docs\92-future-true-ux-restore-integrated-authorization-packet-preview.md",
-            "docs\93-future-true-ux-restore-packet-preview-field-map.md",
-            "docs\94-future-true-ux-restore-packet-preview-reviewer-reading-order.md",
-            "docs\95-future-true-ux-restore-packet-preview-blocker-index.md",
-            "docs\96-future-true-ux-restore-packet-preview-lessons.md"
+            "docs\archive\future-true-ux-restore\04-packet-preview\92-future-true-ux-restore-integrated-authorization-packet-preview.md",
+            "docs\archive\future-true-ux-restore\04-packet-preview\93-future-true-ux-restore-packet-preview-field-map.md",
+            "docs\archive\future-true-ux-restore\04-packet-preview\94-future-true-ux-restore-packet-preview-reviewer-reading-order.md",
+            "docs\archive\future-true-ux-restore\04-packet-preview\95-future-true-ux-restore-packet-preview-blocker-index.md",
+            "docs\archive\future-true-ux-restore\04-packet-preview\96-future-true-ux-restore-packet-preview-lessons.md"
         )) {
             $text = Get-Content -LiteralPath (Join-Path $script:RepoRoot $path) -Raw -Encoding UTF8
             Assert-KitNotMatch $text "(?i)\b(fixes|closes|resolves)\s+#18\b"

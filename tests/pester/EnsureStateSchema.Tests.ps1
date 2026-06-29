@@ -57,6 +57,6 @@ Describe "Ensure-State schema" {
         Assert-KitEqual $capability.issue "#13"
         Assert-KitEqual ($paths -contains "scripts/validate/Test-EnsureState.ps1") $true
         Assert-KitEqual ($paths -contains "tests/pester/Issue13EnsureState.Tests.ps1") $true
-        Assert-KitEqual ($paths -contains "docs/36-issue13-ensure-state.md") $true
+        Assert-KitEqual ($paths -contains "docs/archive/completed-roadmap/issue-13/36-issue13-ensure-state.md") $true
     }
 }
