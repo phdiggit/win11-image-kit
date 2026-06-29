@@ -6,61 +6,35 @@ param(
 
 $ErrorActionPreference = "Stop"
 . "$PSScriptRoot\..\common\New-FutureTrueUxRestoreMockReviewDrillReport.ps1"
+. "$PSScriptRoot\..\common\FutureTrueUxRestore.ValidatorPrimitives.ps1"
 
-$repoRoot = (Resolve-Path -LiteralPath "$PSScriptRoot\..\..").Path
-$script:Failures = @()
+$repoRoot = Get-FutureTrueUxRestoreValidatorRepoRoot -ValidatorScriptRoot $PSScriptRoot
+$validatorState = New-FutureTrueUxRestoreValidatorState
 
-function Read-FutureTrueUxMockReviewJson {
-    param(
-        [Parameter(Mandatory)]
-        [string]$Path
-    )
-
-    $resolvedPath = Resolve-FutureTrueUxRestoreRepoPath -RepoRoot $repoRoot -Path $Path
-    Get-Content -LiteralPath $resolvedPath -Raw -Encoding UTF8 | ConvertFrom-Json
-}
-
-function Assert-FutureTrueUxMockReview {
-    param(
-        [Parameter(Mandatory)]
-        [bool]$Condition,
-
-        [Parameter(Mandatory)]
-        [string]$Message
-    )
-
-    if ($Condition) {
-        Write-Host "[OK] $Message" -ForegroundColor Green
-    } else {
-        $script:Failures += $Message
-        Write-Host "[ERROR] $Message" -ForegroundColor Red
-    }
-}
-
-$manifest = Read-FutureTrueUxMockReviewJson -Path $ManifestPath
+$manifest = Read-FutureTrueUxRestoreValidatorJson -RepoRoot $repoRoot -Path $ManifestPath
 $section = $manifest.mockReviewDrill
 
-Assert-FutureTrueUxMockReview -Condition ($section.enabled -eq $true) -Message "mockReviewDrill is enabled"
-Assert-FutureTrueUxMockReview -Condition ($section.mode -eq "mock-review-drill") -Message "mockReviewDrill mode is fixed"
-Assert-FutureTrueUxMockReview -Condition ($section.defaultScope -eq "current-user") -Message "default scope is current-user"
-Assert-FutureTrueUxMockReview -Condition ($section.authorizationApproved -eq $false) -Message "authorizationApproved remains false"
-Assert-FutureTrueUxMockReview -Condition ($section.executionApproved -eq $false) -Message "executionApproved remains false"
-Assert-FutureTrueUxMockReview -Condition ($section.executeReady -eq $false) -Message "executeReady remains false"
-Assert-FutureTrueUxMockReview -Condition ($section.trueExecution -eq $false) -Message "trueExecution remains false"
-Assert-FutureTrueUxMockReview -Condition ($section.mutationCount -eq 0) -Message "mutationCount remains 0"
-Assert-FutureTrueUxMockReview -Condition (-not (@($section.allowedMockDecisions) -contains "execute-ready")) -Message "allowed mock decisions exclude execute-ready"
-Assert-FutureTrueUxMockReview -Condition ((@($section.forbiddenMockDecisions) -contains "execute-ready") -and (@($section.forbiddenMockDecisions) -contains "executed") -and (@($section.forbiddenMockDecisions) -contains "completed")) -Message "execute-ready, executed, and completed are forbidden"
+Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($section.enabled -eq $true) -Message "mockReviewDrill is enabled"
+Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($section.mode -eq "mock-review-drill") -Message "mockReviewDrill mode is fixed"
+Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($section.defaultScope -eq "current-user") -Message "default scope is current-user"
+Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($section.authorizationApproved -eq $false) -Message "authorizationApproved remains false"
+Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($section.executionApproved -eq $false) -Message "executionApproved remains false"
+Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($section.executeReady -eq $false) -Message "executeReady remains false"
+Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($section.trueExecution -eq $false) -Message "trueExecution remains false"
+Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($section.mutationCount -eq 0) -Message "mutationCount remains 0"
+Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition (-not (@($section.allowedMockDecisions) -contains "execute-ready")) -Message "allowed mock decisions exclude execute-ready"
+Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ((@($section.forbiddenMockDecisions) -contains "execute-ready") -and (@($section.forbiddenMockDecisions) -contains "executed") -and (@($section.forbiddenMockDecisions) -contains "completed")) -Message "execute-ready, executed, and completed are forbidden"
 
 $fixtureRoot = "tests/fixtures/user-experience/future-true-restore/mock-review"
-$complete = Read-FutureTrueUxMockReviewJson -Path "$fixtureRoot/current-user-complete-packet.json"
+$complete = Read-FutureTrueUxRestoreValidatorJson -RepoRoot $repoRoot -Path "$fixtureRoot/current-user-complete-packet.json"
 $completeReport = New-FutureTrueUxRestoreMockReviewDrillReport -Manifest $manifest -Request $complete -RepoRoot $repoRoot
-Assert-FutureTrueUxMockReview -Condition ($completeReport.reviewDecision -eq "authorization-review-ready") -Message "complete current-user packet can be authorization-review-ready"
-Assert-FutureTrueUxMockReview -Condition ($completeReport.packetStatus -eq "complete") -Message "complete current-user packet is complete"
-Assert-FutureTrueUxMockReview -Condition ($completeReport.executionDecision -eq "not-approved") -Message "execution decision remains not-approved"
-Assert-FutureTrueUxMockReview -Condition ($completeReport.blockedForExecution -eq $true) -Message "complete packet remains blocked for execution"
-Assert-FutureTrueUxMockReview -Condition ($completeReport.trueExecution -eq $false -and $completeReport.mutationCount -eq 0 -and $completeReport.executeReady -eq $false) -Message "complete packet does not execute"
-Assert-FutureTrueUxMockReview -Condition (@($completeReport.decisionLedger.stage) -contains "execute-ready-blocked") -Message "decision ledger includes execute-ready-blocked"
-Assert-FutureTrueUxMockReview -Condition ($completeReport.transcript.warning -match "not execution approval") -Message "transcript warns review-ready is not execution approval"
+Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($completeReport.reviewDecision -eq "authorization-review-ready") -Message "complete current-user packet can be authorization-review-ready"
+Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($completeReport.packetStatus -eq "complete") -Message "complete current-user packet is complete"
+Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($completeReport.executionDecision -eq "not-approved") -Message "execution decision remains not-approved"
+Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($completeReport.blockedForExecution -eq $true) -Message "complete packet remains blocked for execution"
+Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($completeReport.trueExecution -eq $false -and $completeReport.mutationCount -eq 0 -and $completeReport.executeReady -eq $false) -Message "complete packet does not execute"
+Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition (@($completeReport.decisionLedger.stage) -contains "execute-ready-blocked") -Message "decision ledger includes execute-ready-blocked"
+Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($completeReport.transcript.warning -match "not execution approval") -Message "transcript warns review-ready is not execution approval"
 
 $blockedCases = @(
     @{ Name = "negative-missing-reviewer-checklist"; Path = "$fixtureRoot/negative-missing-reviewer-checklist.json"; Pattern = "reviewerChecklist" },
@@ -74,38 +48,24 @@ $blockedCases = @(
 
 $caseReports = @([pscustomobject][ordered]@{ name = "current-user-complete-packet"; reviewDecision = $completeReport.reviewDecision; blockedReasons = @($completeReport.blockedReasons) })
 foreach ($case in $blockedCases) {
-    $request = Read-FutureTrueUxMockReviewJson -Path $case.Path
+    $request = Read-FutureTrueUxRestoreValidatorJson -RepoRoot $repoRoot -Path $case.Path
     $report = New-FutureTrueUxRestoreMockReviewDrillReport -Manifest $manifest -Request $request -RepoRoot $repoRoot
     $caseReports += [pscustomobject][ordered]@{ name = $case.Name; reviewDecision = $report.reviewDecision; blockedReasons = @($report.blockedReasons) }
-    Assert-FutureTrueUxMockReview -Condition ($report.reviewDecision -eq "blocked") -Message "$($case.Name) is blocked"
-    Assert-FutureTrueUxMockReview -Condition (($report.blockedReasons -join "`n") -match [regex]::Escape($case.Pattern)) -Message "$($case.Name) records expected blocked reason"
-    Assert-FutureTrueUxMockReview -Condition ($report.trueExecution -eq $false -and $report.mutationCount -eq 0 -and $report.executeReady -eq $false) -Message "$($case.Name) does not execute"
+    Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($report.reviewDecision -eq "blocked") -Message "$($case.Name) is blocked"
+    Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition (($report.blockedReasons -join "`n") -match [regex]::Escape($case.Pattern)) -Message "$($case.Name) records expected blocked reason"
+    Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($report.trueExecution -eq $false -and $report.mutationCount -eq 0 -and $report.executeReady -eq $false) -Message "$($case.Name) does not execute"
 }
 
 $reportObject = [pscustomobject][ordered]@{
     reportType = "future-true-ux-restore-mock-review-drill-validation"
     schemaVersion = 1
     generatedAt = (Get-Date).ToString("s")
-    status = $(if ($script:Failures.Count -eq 0) { "passed" } else { "failed" })
-    failureCount = $script:Failures.Count
-    failures = @($script:Failures)
+    status = Get-FutureTrueUxRestoreValidatorStatus -State $validatorState
+    failureCount = Get-FutureTrueUxRestoreValidatorFailureCount -State $validatorState
+    failures = @($validatorState.failures)
     complete = $completeReport
     cases = @($caseReports)
 }
 
-if (-not [string]::IsNullOrWhiteSpace($ReportPath)) {
-    $resolvedReportPath = Resolve-FutureTrueUxRestoreRepoPath -RepoRoot $repoRoot -Path $ReportPath
-    $reportDirectory = Split-Path -Path $resolvedReportPath -Parent
-    if (-not [string]::IsNullOrWhiteSpace($reportDirectory) -and -not (Test-Path -LiteralPath $reportDirectory)) {
-        New-Item -ItemType Directory -Path $reportDirectory -Force | Out-Null
-    }
-
-    $reportObject | ConvertTo-Json -Depth 12 | Set-Content -LiteralPath $resolvedReportPath -Encoding UTF8
-    Write-Host "Future true UX mock review drill report written: $resolvedReportPath"
-}
-
-$reportObject
-
-if ($script:Failures.Count -gt 0) {
-    exit 1
-}
+Write-FutureTrueUxRestoreValidatorReport -RepoRoot $repoRoot -ReportPath $ReportPath -ReportObject $reportObject -SuccessMessage "Future true UX mock review drill report written"
+Complete-FutureTrueUxRestoreValidatorRun -State $validatorState -ReportObject $reportObject
