@@ -2,7 +2,7 @@ Describe "Future True UX quality gate governance" {
     BeforeAll {
         $script:RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
-        $script:DocPath = Join-Path $script:RepoRoot "docs\109-future-true-ux-quality-gate-governance.md"
+        $script:DocPath = Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\00-governance\109-future-true-ux-quality-gate-governance.md"
         $script:Doc = Get-Content -LiteralPath $script:DocPath -Raw -Encoding UTF8
         $script:QualityGates = Get-Content -LiteralPath (Join-Path $script:RepoRoot "manifests\quality-gates.json") -Raw -Encoding UTF8 | ConvertFrom-Json
         $script:ExpectedFutureGateIds = @(

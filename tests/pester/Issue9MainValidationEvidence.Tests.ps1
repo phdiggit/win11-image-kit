@@ -4,7 +4,7 @@ Describe "Issue 9 main validation evidence scaffold" {
     BeforeAll {
         $script:RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
-        $script:Doc23 = Join-Path $script:RepoRoot "docs\23-issue9-main-validation-evidence.md"
+        $script:Doc23 = Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-9\23-issue9-main-validation-evidence.md"
     }
 
     It "uses an allowed evidence status" {

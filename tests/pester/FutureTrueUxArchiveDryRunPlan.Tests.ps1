@@ -2,16 +2,16 @@ Describe "Future True UX archive dry-run plan" {
     BeforeAll {
         $script:RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
-        $script:DocPath = Join-Path $script:RepoRoot "docs\111-future-true-ux-archive-dry-run-plan.md"
+        $script:DocPath = Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\00-governance\111-future-true-ux-archive-dry-run-plan.md"
         $script:Doc = Get-Content -LiteralPath $script:DocPath -Raw -Encoding UTF8
     }
 
-    It "exists and records the dry-run status marker" {
+    It "exists and records the implementation state" {
         Assert-KitEqual (Test-Path -LiteralPath $script:DocPath) $true
         Assert-KitMatch $script:Doc 'Status:\s*`future-true-ux-archive-dry-run-plan`'
-        Assert-KitMatch $script:Doc "No file moves are performed in this PR"
-        Assert-KitMatch $script:Doc "No file deletions are performed in this PR"
-        Assert-KitMatch $script:Doc "No archive directory is required or created in this PR"
+        Assert-KitMatch $script:Doc "the files were moved into `docs/archive/future-true-ux-restore/`"
+        Assert-KitMatch $script:Doc "No file deletion is authorized"
+        Assert-KitMatch $script:Doc "No workflow behavior change is authorized"
     }
 
     It "keeps Issue 19 and true execution boundaries closed" {
@@ -28,49 +28,36 @@ Describe "Future True UX archive dry-run plan" {
         Assert-KitNotMatch $script:Doc "trueExecution\s*=\s*true"
     }
 
-    It "marks every proposed move row as not movable in this PR" {
-        $rows = @([regex]::Matches($script:Doc, '(?m)^\| `docs/[0-9]+-future-true-ux-restore-[^`]+\.md` \| `docs/archive/future-true-ux-restore/[^`]+\.md` \| .+ \| .+ \| no \| .+ \|$'))
+    It "records every implemented old root path to archive path row" {
+        $rows = @([regex]::Matches($script:Doc, '(?m)^\| `docs/[0-9]+-future-true-ux-restore-[^`]+\.md` \| `docs/archive/future-true-ux-restore/[^`]+\.md` \| .+ \| .+ \|$'))
         Assert-KitEqual $rows.Count 26
 
         foreach ($row in $rows) {
-            Assert-KitMatch $row.Value "\| no \|"
+            Assert-KitMatch $row.Value "docs/archive/future-true-ux-restore/"
             Assert-KitNotMatch $row.Value "\| yes \|"
         }
     }
 
-    It "keeps proposed archive paths under the approved archive root" {
-        $proposedPaths = @([regex]::Matches($script:Doc, '`docs/archive/future-true-ux-restore/([^`]+)`') | ForEach-Object { $_.Groups[1].Value } | Where-Object { $_ -match "\.md$" })
-        Assert-KitEqual $proposedPaths.Count 26
+    It "keeps archive paths under the approved archive root" {
+        $archivePaths = @([regex]::Matches($script:Doc, '`docs/archive/future-true-ux-restore/([^`]+)`') | ForEach-Object { $_.Groups[1].Value } | Where-Object { $_ -match "\.md$" } | Sort-Object -Unique)
+        Assert-KitEqual $archivePaths.Count 33
 
-        foreach ($relativePath in $proposedPaths) {
-            Assert-KitMatch $relativePath "^(01-mock-review|02-negative-review|03-approval-checklist|04-packet-preview|05-human-handoff|06-no-execution-audit)/[0-9]+-future-true-ux-restore-.+\.md$"
+        foreach ($relativePath in $archivePaths) {
+            Assert-KitMatch $relativePath "^(00-governance|01-mock-review|02-negative-review|03-approval-checklist|04-packet-preview|05-human-handoff|06-no-execution-audit)/[0-9]+-.+\.md$"
         }
     }
 
-    It "keeps canonical docs in place" {
+    It "keeps canonical docs in place and archived files present" {
         foreach ($path in @(
-            "docs\65-future-true-ux-restore-execution-split.md",
-            "docs\106-future-true-ux-restore-final-stop-line-handoff.md",
-            "docs\107-future-true-ux-restore-stop-line-decision-matrix.md",
-            "docs\108-repo-documentation-script-governance-audit.md",
-            "docs\109-future-true-ux-quality-gate-governance.md",
-            "docs\110-future-true-ux-archive-policy-reference-map.md",
-            "docs\111-future-true-ux-archive-dry-run-plan.md"
-        )) {
-            Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot $path)) $true
-        }
-    }
-
-    It "does not require an actual archive directory or moved files" {
-        Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot "docs\archive")) $false
-
-        foreach ($path in @(
-            "docs\80-future-true-ux-restore-mock-review-packet-drill.md",
-            "docs\84-future-true-ux-restore-negative-review-drill-bundle.md",
-            "docs\92-future-true-ux-restore-integrated-authorization-packet-preview.md",
-            "docs\97-future-true-ux-restore-human-authorization-handoff.md",
-            "docs\102-future-true-ux-restore-end-to-end-no-execution-readiness-audit.md",
-            "docs\105-future-true-ux-restore-no-execution-stop-line.md"
+            "docs\archive\future-true-ux-restore\00-governance\65-future-true-ux-restore-execution-split.md",
+            "docs\archive\future-true-ux-restore\00-governance\106-future-true-ux-restore-final-stop-line-handoff.md",
+            "docs\archive\future-true-ux-restore\00-governance\107-future-true-ux-restore-stop-line-decision-matrix.md",
+            "docs\archive\future-true-ux-restore\00-governance\108-repo-documentation-script-governance-audit.md",
+            "docs\archive\future-true-ux-restore\00-governance\109-future-true-ux-quality-gate-governance.md",
+            "docs\archive\future-true-ux-restore\00-governance\110-future-true-ux-archive-policy-reference-map.md",
+            "docs\archive\future-true-ux-restore\00-governance\111-future-true-ux-archive-dry-run-plan.md",
+            "docs\archive\future-true-ux-restore\01-mock-review\80-future-true-ux-restore-mock-review-packet-drill.md",
+            "docs\archive\future-true-ux-restore\06-no-execution-audit\105-future-true-ux-restore-no-execution-stop-line.md"
         )) {
             Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot $path)) $true
         }

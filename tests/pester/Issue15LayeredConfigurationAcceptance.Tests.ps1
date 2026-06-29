@@ -5,7 +5,7 @@ Describe "Issue 15 layered configuration acceptance" {
     }
 
     It "tracks accepted state with close-prep and main evidence documents" {
-        $doc45 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\45-issue15-layered-configuration-acceptance.md") -Raw -Encoding UTF8
+        $doc45 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-15\45-issue15-layered-configuration-acceptance.md") -Raw -Encoding UTF8
 
         $statusMatch = [regex]::Match($doc45, 'Status:\s*`([^`]+)`')
         Assert-KitEqual $statusMatch.Success $true
@@ -33,12 +33,12 @@ Describe "Issue 15 layered configuration acceptance" {
 
         if ($statusMatch.Groups[1].Value -eq "accepted-ready-for-manual-closure") {
             Assert-KitMatch $doc45 "main/workflow evidence has been backfilled"
-            Assert-KitMatch $doc45 "docs/47-issue15-main-validation-evidence\.md"
+            Assert-KitMatch $doc45 "docs/archive/completed-roadmap/issue-15/47-issue15-main-validation-evidence\.md"
         } else {
             Assert-KitMatch $doc45 "main/workflow evidence is still pending"
         }
-        Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot "docs\46-issue15-close-preparation.md")) $true
-        Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot "docs\47-issue15-main-validation-evidence.md")) $true
+        Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-15\46-issue15-close-preparation.md")) $true
+        Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-15\47-issue15-main-validation-evidence.md")) $true
     }
 
     It "wires README, CI, Quality Gates, and Build Lock for hardening" {
@@ -50,9 +50,9 @@ Describe "Issue 15 layered configuration acceptance" {
         $gate = @($qualityGates.gates | Where-Object { $_.id -eq "effective-configuration" })[0]
         $mainEvidenceGate = @($qualityGates.gates | Where-Object { $_.id -in @("issue15-main-evidence-scaffold", "issue15-main-evidence") })[0]
 
-        Assert-KitMatch $readme "docs/45-issue15-layered-configuration-acceptance\.md"
-        Assert-KitMatch $readme "docs/46-issue15-close-preparation\.md"
-        Assert-KitMatch $readme "docs/47-issue15-main-validation-evidence\.md"
+        Assert-KitMatch $readme "docs/archive/completed-roadmap/issue-15/45-issue15-layered-configuration-acceptance\.md"
+        Assert-KitMatch $readme "docs/archive/completed-roadmap/issue-15/46-issue15-close-preparation\.md"
+        Assert-KitMatch $readme "docs/archive/completed-roadmap/issue-15/47-issue15-main-validation-evidence\.md"
         Assert-KitMatch $ci "Test-EffectiveConfiguration\.ps1 -AllStacks"
         Assert-KitMatch $ci "EffectiveConfigurationMergePolicy\.Tests\.ps1"
         Assert-KitMatch $ci "EffectiveConfigurationConsumerIntegration\.Tests\.ps1"
@@ -64,9 +64,9 @@ Describe "Issue 15 layered configuration acceptance" {
         Assert-KitNotMatch ($qualityGates | ConvertTo-Json -Depth 10) "true-execution"
 
         foreach ($path in @(
-            "docs/45-issue15-layered-configuration-acceptance.md",
-            "docs/46-issue15-close-preparation.md",
-            "docs/47-issue15-main-validation-evidence.md",
+            "docs/archive/completed-roadmap/issue-15/45-issue15-layered-configuration-acceptance.md",
+            "docs/archive/completed-roadmap/issue-15/46-issue15-close-preparation.md",
+            "docs/archive/completed-roadmap/issue-15/47-issue15-main-validation-evidence.md",
             "manifests/paths.local.example.json",
             "tests/pester/EffectiveConfigurationConsumerIntegration.Tests.ps1",
             "tests/pester/CustomizationScopeEffectiveConfiguration.Tests.ps1",
@@ -84,8 +84,8 @@ Describe "Issue 15 layered configuration acceptance" {
 
     It "does not introduce auto-close wording for Issue 15" {
         $text = @(
-            Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\44-issue15-layered-configuration.md") -Raw -Encoding UTF8
-            Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\45-issue15-layered-configuration-acceptance.md") -Raw -Encoding UTF8
+            Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-15\44-issue15-layered-configuration.md") -Raw -Encoding UTF8
+            Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-15\45-issue15-layered-configuration-acceptance.md") -Raw -Encoding UTF8
             Get-Content -LiteralPath (Join-Path $script:RepoRoot "README.md") -Raw -Encoding UTF8
         ) -join "`n"
 

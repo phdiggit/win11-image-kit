@@ -5,7 +5,7 @@ Describe "Issue 11 main validation evidence" {
     }
 
     It "supports pending or ready main validation evidence states" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\31-issue11-main-validation-evidence.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-11\31-issue11-main-validation-evidence.md") -Raw -Encoding UTF8
         $statusMatch = [regex]::Match($doc, '(?m)^Status: `([^`]+)`')
 
         Assert-KitEqual $statusMatch.Success $true
@@ -40,7 +40,7 @@ Describe "Issue 11 main validation evidence" {
     }
 
     It "requires main or workflow-dispatch evidence instead of PR Fast CI" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\31-issue11-main-validation-evidence.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-11\31-issue11-main-validation-evidence.md") -Raw -Encoding UTF8
 
         foreach ($term in @(
             'push` workflow on `main`',
@@ -56,7 +56,7 @@ Describe "Issue 11 main validation evidence" {
     }
 
     It "documents optional real VM smoke without implying it ran" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\31-issue11-main-validation-evidence.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-11\31-issue11-main-validation-evidence.md") -Raw -Encoding UTF8
 
         Assert-KitMatch $doc "Real VM or administrator smoke validation is optional"
         Assert-KitMatch $doc "PR Fast CI"
@@ -68,7 +68,7 @@ Describe "Issue 11 main validation evidence" {
         $readme = Get-Content -LiteralPath (Join-Path $script:RepoRoot "README.md") -Raw -Encoding UTF8
         $workflow = Get-Content -LiteralPath (Join-Path $script:RepoRoot ".github\workflows\ci.yml") -Raw -Encoding UTF8
 
-        Assert-KitMatch $readme "docs/31-issue11-main-validation-evidence\.md"
+        Assert-KitMatch $readme "docs/archive/completed-roadmap/issue-11/31-issue11-main-validation-evidence\.md"
         Assert-KitMatch $workflow ([regex]::Escape("tests/pester/Issue11MainValidationEvidence.Tests.ps1"))
     }
 }

@@ -32,7 +32,7 @@ Describe "Issue 6 main validation evidence package" {
             return $match.Groups["status"].Value
         }
 
-        $script:DocPath = Join-Path $script:RepoRoot "docs\11-issue6-main-validation-evidence.md"
+        $script:DocPath = Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-6\11-issue6-main-validation-evidence.md"
         $script:Doc = Get-Content -LiteralPath $script:DocPath -Raw -Encoding UTF8
         $script:Workflow = Get-Content -LiteralPath (Join-Path $script:RepoRoot ".github\workflows\ci.yml") -Raw -Encoding UTF8
     }

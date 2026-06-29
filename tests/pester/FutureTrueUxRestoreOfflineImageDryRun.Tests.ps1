@@ -6,7 +6,7 @@ Describe "Future true UX restore offline-image dry-run gate" {
     }
 
     It "keeps docs and manifest in offline-image dry-run state" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\73-future-true-ux-restore-offline-image-dry-run-gate.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\00-governance\73-future-true-ux-restore-offline-image-dry-run-gate.md") -Raw -Encoding UTF8
         $manifest = Get-Content -LiteralPath (Join-Path $script:RepoRoot "manifests\future-true-ux-restore-authorization.json") -Raw -Encoding UTF8 | ConvertFrom-Json
         $section = $manifest.offlineImageDryRun
 

@@ -5,7 +5,7 @@ Describe "Future true UX restore current-user evidence contract" {
     }
 
     It "documents current-user evidence collector contract" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\70-future-true-ux-restore-current-user-evidence-contract.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\00-governance\70-future-true-ux-restore-current-user-evidence-contract.md") -Raw -Encoding UTF8
 
         Assert-KitMatch $doc 'Status:\s*`evidence-contract-draft`'
         foreach ($term in @("redacted user identity", "Before Evidence", "Dry-run Command Envelope", "After Evidence Placeholder", "Independent Verification Placeholder", "Rollback", "private paths", "command exit code", "manual checklist")) {

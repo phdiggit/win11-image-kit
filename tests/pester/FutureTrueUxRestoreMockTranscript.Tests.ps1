@@ -6,7 +6,7 @@ Describe "Future true UX restore mock transcript" {
     }
 
     It "documents mock maintainer review without execution approval" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\81-future-true-ux-restore-mock-maintainer-review-transcript.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\01-mock-review\81-future-true-ux-restore-mock-maintainer-review-transcript.md") -Raw -Encoding UTF8
 
         Assert-KitMatch $doc 'Status:\s*`mock-review-transcript`'
         Assert-KitMatch $doc "maintainer-reviewer-fixture"

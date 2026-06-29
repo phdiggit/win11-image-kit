@@ -2,7 +2,7 @@ Describe "Issue 18 future true UX restore split" {
     BeforeAll {
         $script:RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
-        $script:DocPath = Join-Path $script:RepoRoot "docs\65-future-true-ux-restore-execution-split.md"
+        $script:DocPath = Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\00-governance\65-future-true-ux-restore-execution-split.md"
         $script:Doc = Get-Content -LiteralPath $script:DocPath -Raw -Encoding UTF8
     }
 
@@ -43,7 +43,7 @@ Describe "Issue 18 future true UX restore split" {
     }
 
     It "keeps future current-user gate as dry-run only" {
-        $docPath = Join-Path $script:RepoRoot "docs\69-future-true-ux-restore-current-user-dry-run-gate.md"
+        $docPath = Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\00-governance\69-future-true-ux-restore-current-user-dry-run-gate.md"
         $doc = Get-Content -LiteralPath $docPath -Raw -Encoding UTF8
 
         Assert-KitMatch $doc 'Status:\s*`current-user-dry-run-gate`'
@@ -55,10 +55,10 @@ Describe "Issue 18 future true UX restore split" {
 
     It "keeps remaining scope gates as dry-run only" {
         $docs = @(
-            @{ Path = "docs\72-future-true-ux-restore-default-user-dry-run-gate.md"; Status = "default-user-dry-run-gate"; Scope = "default-user" },
-            @{ Path = "docs\73-future-true-ux-restore-offline-image-dry-run-gate.md"; Status = "offline-image-dry-run-gate"; Scope = "offline-image" },
-            @{ Path = "docs\74-future-true-ux-restore-machine-dry-run-gate.md"; Status = "machine-dry-run-gate"; Scope = "machine" },
-            @{ Path = "docs\75-future-true-ux-restore-scope-guard-matrix.md"; Status = "scope-guard-matrix"; Scope = "scope" }
+            @{ Path = "docs\archive\future-true-ux-restore\00-governance\72-future-true-ux-restore-default-user-dry-run-gate.md"; Status = "default-user-dry-run-gate"; Scope = "default-user" },
+            @{ Path = "docs\archive\future-true-ux-restore\00-governance\73-future-true-ux-restore-offline-image-dry-run-gate.md"; Status = "offline-image-dry-run-gate"; Scope = "offline-image" },
+            @{ Path = "docs\archive\future-true-ux-restore\00-governance\74-future-true-ux-restore-machine-dry-run-gate.md"; Status = "machine-dry-run-gate"; Scope = "machine" },
+            @{ Path = "docs\archive\future-true-ux-restore\00-governance\75-future-true-ux-restore-scope-guard-matrix.md"; Status = "scope-guard-matrix"; Scope = "scope" }
         )
 
         foreach ($docInfo in $docs) {
@@ -72,10 +72,10 @@ Describe "Issue 18 future true UX restore split" {
 
     It "keeps authorization review workflow separate from Issue 18 closure" {
         $docs = @(
-            @{ Path = "docs\76-future-true-ux-restore-unified-authorization-request.md"; Status = "authorization-request-draft" },
-            @{ Path = "docs\77-future-true-ux-restore-maintainer-review-checkpoint.md"; Status = "review-checkpoint-draft" },
-            @{ Path = "docs\78-future-true-ux-restore-evidence-packet-contract.md"; Status = "evidence-packet-draft" },
-            @{ Path = "docs\79-future-true-ux-restore-authorization-state-machine.md"; Status = "authorization-state-machine" }
+            @{ Path = "docs\archive\future-true-ux-restore\00-governance\76-future-true-ux-restore-unified-authorization-request.md"; Status = "authorization-request-draft" },
+            @{ Path = "docs\archive\future-true-ux-restore\00-governance\77-future-true-ux-restore-maintainer-review-checkpoint.md"; Status = "review-checkpoint-draft" },
+            @{ Path = "docs\archive\future-true-ux-restore\00-governance\78-future-true-ux-restore-evidence-packet-contract.md"; Status = "evidence-packet-draft" },
+            @{ Path = "docs\archive\future-true-ux-restore\00-governance\79-future-true-ux-restore-authorization-state-machine.md"; Status = "authorization-state-machine" }
         )
 
         foreach ($docInfo in $docs) {

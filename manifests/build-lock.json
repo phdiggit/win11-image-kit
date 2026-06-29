@@ -9,7 +9,7 @@
       "path": "manifests/capability-registry.json",
       "category": "manifest",
       "required": true,
-      "hash": "cfd7dd56b2844601bbaf532f2dd2eebf40621ad3fb81f48dff2b2f5e4cb390cd",
+      "hash": "57f53b7ae6ab8e9d96f9aaa24cc9501943e18df30a0e156dc640e6950999e435",
       "reason": "Capability registry is a supply-chain control plane input."
     },
     {
@@ -233,14 +233,14 @@
       "path": "tests/pester/Issue12BuildLock.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "9c78cce1b34023bb63c4e6f4c70a8ac5b4f7afdc79714ef2533d7ca020df86f3",
+      "hash": "f052dc2b51b3186e2a2248ee022a7f3a5ade97c790b311f7be429486891c9431",
       "reason": "Issue 12 guardrail tests keep CI, docs, and safety boundaries wired."
     },
     {
       "path": "tests/pester/EnsureStateSchema.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "a79491045bd03daa32a39eb2debff4880da044b2701401104d2c06acf2718ab5",
+      "hash": "3b709fed878ef0add08550e93441daa17c77ae4c94ec8636bb52d2f1a99c5b9a",
       "reason": "Ensure-State schema tests guard manifest structure, registry wiring, and build lock coverage."
     },
     {
@@ -268,25 +268,25 @@
       "path": "tests/pester/Issue13EnsureState.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "2f9bf5560a46b9228623270f42d65d0c89bed83d947539096d82852ffda14d17",
+      "hash": "725c33c54ca91cbdeb730293df7b5a9b55d13fc0b52d9ed8c475f1e01ea5b2ec",
       "reason": "Issue 13 guardrail tests keep docs, CI wiring, and non-mutation boundaries aligned."
     },
     {
-      "path": "docs/28-issue11-capability-registry.md",
+      "path": "docs/archive/completed-roadmap/issue-11/28-issue11-capability-registry.md",
       "category": "doc",
       "required": true,
       "hash": "24f3b7c976c9dca89f108e3e271d4cbe78aaf02ded3dd67d187e289710593b43",
       "reason": "Capability registry runbook defines the upstream control plane."
     },
     {
-      "path": "docs/32-issue12-build-lock.md",
+      "path": "docs/archive/completed-roadmap/issue-12/32-issue12-build-lock.md",
       "category": "doc",
       "required": true,
       "hash": "90c8c9e6cf24aa9801018c2570c7c2697e7d37d72f7728cbdb6a39e275ac8d80",
       "reason": "Build lock runbook documents report-only supply-chain validation."
     },
     {
-      "path": "docs/36-issue13-ensure-state.md",
+      "path": "docs/archive/completed-roadmap/issue-13/36-issue13-ensure-state.md",
       "category": "doc",
       "required": true,
       "hash": "049a5a90d070f35328c5bc4d928ac8ad0c113a4c5dde8e744707ba4b22ab7a66",
@@ -303,25 +303,25 @@
       "path": "README.md",
       "category": "doc",
       "required": true,
-      "hash": "eaee26bb0866f1636636848ba848de51001981fe17daf93effcdc03859bea599",
+      "hash": "2491522fda62f22e8002abd55908cb74c2787eea8412b17a6e2f37120b2c7e09",
       "reason": "README links Issue 18 UX restore intake and validation entrypoint."
     },
     {
-      "path": "docs/37-issue13-ensure-state-acceptance.md",
+      "path": "docs/archive/completed-roadmap/issue-13/37-issue13-ensure-state-acceptance.md",
       "category": "doc",
       "required": true,
       "hash": "aaa96e5cd404dc239ab2733ee8f376d160bb4cf368429b36de7c54db1b51701f",
       "reason": "Issue 13 acceptance matrix documents plan-only Ensure-State coverage and CI boundaries."
     },
     {
-      "path": "docs/38-issue13-close-preparation.md",
+      "path": "docs/archive/completed-roadmap/issue-13/38-issue13-close-preparation.md",
       "category": "doc",
       "required": true,
-      "hash": "41c30662ad790b01fd5419774e49256f7114ee210274816001a28672b5ee122a",
+      "hash": "9ce9cbe1aaac06087d6f1f9c7401555870115984db2c2db52809a1be3d860610",
       "reason": "Issue 13 close-preparation checklist documents manual closure boundaries."
     },
     {
-      "path": "docs/39-issue13-main-validation-evidence.md",
+      "path": "docs/archive/completed-roadmap/issue-13/39-issue13-main-validation-evidence.md",
       "category": "doc",
       "required": true,
       "hash": "1395979db658dc3c5f696ccf2667ffd272927d0ddd1eac97ae8dd68b6984976e",
@@ -331,21 +331,21 @@
       "path": "tests/pester/Issue13EnsureStateAcceptance.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "60c19e2ed8d4e9857cb43fc24b0b2c5ab025b57ca51cd6ae0b097d6219b0b180",
+      "hash": "bd3d7a4cc8908c691381fb11dbbf9a5ecfd585c334eb1cd3432702155ca1e805",
       "reason": "Issue 13 acceptance guardrails cover schema, safety, report contract, registry, Build Lock, docs, and CI wiring."
     },
     {
       "path": "tests/pester/Issue13ClosePrep.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "5357cfd5fa4b19a25f2f5f8528ec5a92f9f163884768c75875515a43103f22f6",
+      "hash": "73443e9563aeddfea48b28296bfc354893e66660b34ab0db92ed2d4eebe1383b",
       "reason": "Issue 13 close-preparation tests guard manual closure semantics and safe validation policy."
     },
     {
       "path": "tests/pester/Issue13MainValidationEvidence.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "a781fe6ed25c727d904c3bab47723616ec7891ec0d6f32637c50aa53a9413934",
+      "hash": "17c5a23a97d8af36499b0a0573915e6a8fb91c8159e7e0af11ab377ab73494b7",
       "reason": "Issue 13 main-evidence tests keep pending evidence honest and define ready-state rules."
     },
     {
@@ -356,59 +356,59 @@
       "reason": "PSScriptAnalyzer settings define the local analyzer baseline for quality gates."
     },
     {
-      "path": "docs/40-issue14-quality-gates.md",
+      "path": "docs/archive/completed-roadmap/issue-14/40-issue14-quality-gates.md",
       "category": "doc",
       "required": true,
       "hash": "676ef94ed6be54969352c550e78efbd11462791399ef3f007544653417635a03",
       "reason": "Issue 14 quality gates runbook records accepted readiness and verified main evidence."
     },
     {
-      "path": "docs/109-future-true-ux-quality-gate-governance.md",
+      "path": "docs/archive/future-true-ux-restore/00-governance/109-future-true-ux-quality-gate-governance.md",
       "category": "doc",
       "required": true,
       "hash": "8f04c9f8a0a8d155cddeaf0e68ff57c5d9e8586f546add5c0da36e6e55d19a57",
       "reason": "Future True UX quality gate governance documents grouping, naming, and demotion policy."
     },
     {
-      "path": "docs/110-future-true-ux-archive-policy-reference-map.md",
+      "path": "docs/archive/future-true-ux-restore/00-governance/110-future-true-ux-archive-policy-reference-map.md",
       "category": "doc",
       "required": true,
-      "hash": "e3e8d35c88741f6ef8da5a8640e2ea0bca12b0b30e5d5842a411e9ef73c3d5e0",
+      "hash": "8d3b77681afb55936047125e17488a97284d30f99ec82c63989897f4324e57fc",
       "reason": "Future True UX archive policy and reference map documents archive blockers before any move."
     },
     {
       "path": "tests/pester/Issue14QualityGates.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "8ea15ec212afcc48fc5c9c8e692c50203bc50bff76786cf516f99516af1caa32",
+      "hash": "e5031578bd44c95f7a71aa49f0dca916d7e51ceb08d6ed0505e1317d1c2bcf22",
       "reason": "Issue 14 quality gate tests guard docs, README, Build Lock, and no auto-close wording."
     },
     {
       "path": "tests/pester/Issue14CiPolicy.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "dbd4f9782500f3b89a7ce117dec513200de40e645b29307156517321360fb1dd",
+      "hash": "29b7624d9887a902feed659b27bfd26f99fa6d339eeee7794cf60b94decbf953",
       "reason": "Issue 14 CI policy tests guard PR fast and Full Validate split plus no-mutation workflow policy."
     },
     {
       "path": "tests/pester/Issue14PesterInventory.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "d95bb34393ae81e64cd863bf5c2083fc101b08d610476cf12bdb422b7572ef30",
+      "hash": "7ad159d686c152a0b16bed4643736333f60f84acba9232e30f8773cd140c6b26",
       "reason": "Issue 14 Pester inventory tests guard fast-path issue test coverage."
     },
     {
       "path": "tests/pester/Issue14AnalyzerPolicy.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "0a215988e286dc504d0ff3f69840bb3d7796ddec60e5bf72f749132de798cd91",
+      "hash": "355cb8fc261f78a022d3948168ee7260c35da20b09f570454ecd3189630ab6e4",
       "reason": "Issue 14 analyzer policy tests guard PSScriptAnalyzer settings and non-blocking workflow behavior."
     },
     {
       "path": "manifests/quality-gates.json",
       "category": "manifest",
       "required": true,
-      "hash": "e4d6e0164e3482cc16cb620b987a298105439215f0d551d8ca1fae1879189811",
+      "hash": "9a872c040fd6a0927f07781ef22debe070e92f88b05b7e74bf96e489e21b0750",
       "reason": "Quality Gates include future true UX mock review drill validation."
     },
     {
@@ -457,39 +457,39 @@
       "path": "tests/pester/FutureTrueUxQualityGateGovernance.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "a96d6e9a29803cfa675dc1b400056b7fd2263f97a7fe5b456650a90d4663c2d0",
+      "hash": "abc4ba6cbc0b4f0b91374e5097d026f73796c977d563fde57bbb82db8a849bd9",
       "reason": "Future True UX quality gate governance tests guard grouping and report-only semantics."
     },
     {
       "path": "tests/pester/FutureTrueUxArchivePolicyReferenceMap.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "541c026c5a5d700b4027079f5bc7be4b51a0167620d1946c95ce0d90a116f49c",
+      "hash": "15f216d48ffabde0ae4b3e050978d150d66db58ba52332b9c04ace38d552f058",
       "reason": "Future True UX archive policy tests guard categories, gate coverage, and no-move semantics."
     },
     {
       "path": "tests/pester/Issue14QualityGateAcceptance.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "923b8e64101240bbeca8f128e66c6045f440787f16903743829b94ad264f90d7",
+      "hash": "4d135a867300c89677eb55ecbf16c3625fd7b2a3e674886406e08cadb2d04531",
       "reason": "Issue 14 acceptance tests guard pending and ready status without unsafe claims."
     },
     {
-      "path": "docs/41-issue14-quality-gates-acceptance.md",
+      "path": "docs/archive/completed-roadmap/issue-14/41-issue14-quality-gates-acceptance.md",
       "category": "doc",
       "required": true,
-      "hash": "24837a86229183838d190151819eb2d43560fa92f5706c1b94a7fddc026c4ada",
+      "hash": "230f37f43129f760293b7dff11725fbc240f3aa3e9f1fd889b23088648bdaf15",
       "reason": "Issue 14 acceptance records accepted-ready-for-manual-closure status after main evidence backfill."
     },
     {
-      "path": "docs/42-issue14-close-preparation.md",
+      "path": "docs/archive/completed-roadmap/issue-14/42-issue14-close-preparation.md",
       "category": "doc",
       "required": true,
-      "hash": "a14a14aec49031d7d1a11501e9236047872ef7906ee223c2f505393e6e1632ae",
+      "hash": "9729fa854d4a27a1131107b94a84b90003aaee07af012f43020723b9d33ef4c2",
       "reason": "Issue 14 close-preparation records ready-for-manual-closure after verified main evidence."
     },
     {
-      "path": "docs/43-issue14-main-validation-evidence.md",
+      "path": "docs/archive/completed-roadmap/issue-14/43-issue14-main-validation-evidence.md",
       "category": "doc",
       "required": true,
       "hash": "2d1d03362ee00203e95ba57f4f9e53dc2465b6db8e089747971783f3c9c37a40",
@@ -503,17 +503,17 @@
       "reason": "Issue 15 local private override file must remain untracked."
     },
     {
-      "path": "docs/44-issue15-layered-configuration.md",
+      "path": "docs/archive/completed-roadmap/issue-15/44-issue15-layered-configuration.md",
       "category": "doc",
       "required": true,
-      "hash": "400a831c59d5978c551039375c566feb88b9b9bb10afdea05afc2ed9e9b92fdf",
+      "hash": "96bd37e3db9ed5e065097255ac441f365cd78988ab645a316e0d53f295cdcbdc",
       "reason": "Issue 15 layered configuration design records consumer integration and close-prep links."
     },
     {
-      "path": "docs/45-issue15-layered-configuration-acceptance.md",
+      "path": "docs/archive/completed-roadmap/issue-15/45-issue15-layered-configuration-acceptance.md",
       "category": "doc",
       "required": true,
-      "hash": "c3ddc6e2fa95e3bb311231369071603ae5de5fe1e2a789b74a3203f06323b2eb",
+      "hash": "10229aca4dd0ccffb62891073c3b1b4bcfbe91bc5bc873f8c4deeb0b212ba449",
       "reason": "Issue 15 acceptance records accepted-pending-main-validation status."
     },
     {
@@ -590,7 +590,7 @@
       "path": "tests/pester/Issue15LayeredConfiguration.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "6fa62c599e787a886663ce1d0b8e68ca9743b23efbe376fad7ee492a19fba46f",
+      "hash": "19f9d071ee4c7670ee7cabf9d2d2716fd9c5ae8c122f74fbfd1858a7738e600e",
       "reason": "Issue 15 guardrail tests cover intake, wiring, Build Lock, and no auto-close wording."
     },
     {
@@ -646,39 +646,39 @@
       "path": "tests/pester/Issue15LayeredConfigurationAcceptance.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "0e4bcd319ff6830fb04423726e17ca7ab2df0fcedf57e872d6e136528c99ac82",
+      "hash": "e08fdb2ebc83c076dac0c088cd06e9fbb1b87072f93174987b932c4c30cda79c",
       "reason": "Issue 15 acceptance tests guard accepted-pending-main-validation and wiring."
     },
     {
       "path": "tests/pester/Issue14ClosePrep.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "d0117e8c964fc391f9bcf6ac30198093d4f82d9c1c3ea396a9b2a32e0f4f6738",
+      "hash": "ab2f28513b69c9b4070e5ce6fcb55449759029a1f57dcf3925b197cca7a6c8a9",
       "reason": "Issue 14 close-preparation tests guard candidate and ready semantics."
     },
     {
       "path": "tests/pester/Issue14MainValidationEvidence.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "5c1f80f6d0a244364e434964f5a1de852c59601422e3d7522fe7d0d27c6aa7b5",
+      "hash": "f2d941b4469f887d2a60ce2698ef237ce450c4ce65e2defe04101a6d54ef2322",
       "reason": "Issue 14 main-evidence tests validate pending and ready evidence details."
     },
     {
       "path": "docs/07-定制范围与配置入口.md",
       "category": "doc",
       "required": true,
-      "hash": "e91a96b1b0c6bff46f6aa055f7552bbf12f0f5a7d18e3a8891a481024cd53b8b",
+      "hash": "e3a98f2cbe34a67f9c7669cba6237e638425a456c364c783669e643498472250",
       "reason": "Configuration entry documentation describes opt-in effective configuration migration."
     },
     {
-      "path": "docs/46-issue15-close-preparation.md",
+      "path": "docs/archive/completed-roadmap/issue-15/46-issue15-close-preparation.md",
       "category": "doc",
       "required": true,
-      "hash": "8f9a32542b6d0b74f2f8e751b7d3f5ea9630f2c27db576734af9402816f9068e",
+      "hash": "99e881012e28c0b70f3a7f7e185d034aaf41a573b978890c5d1e2060a17260cd",
       "reason": "Issue 15 close-prep candidate is a manual closure input."
     },
     {
-      "path": "docs/47-issue15-main-validation-evidence.md",
+      "path": "docs/archive/completed-roadmap/issue-15/47-issue15-main-validation-evidence.md",
       "category": "doc",
       "required": true,
       "hash": "526682ff178924300badda935ecde4fbf23d4541abd55666e222dea516a28191",
@@ -723,18 +723,18 @@
       "path": "tests/pester/Issue15ClosePrep.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "04fdf3d656e8d1ca4c0cedcab187006075610b63f62259176667440cd7200402",
+      "hash": "eebf3b1185bdaecab027aff1ccf2c07aceff98c6c1b4f47fde3543ae95854e96",
       "reason": "Issue 15 close-prep tests guard candidate-only closure semantics."
     },
     {
       "path": "tests/pester/Issue15MainValidationEvidence.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "a25246729f642c4a932d8a6c301882cff0e045b520ae2bbfa7ebafca9d576acc",
+      "hash": "8489006e489a60bc752be6a24d59f262e336f142bd87ea6574e048b43182b9fc",
       "reason": "Issue 15 main evidence tests guard pending-only evidence scaffold."
     },
     {
-      "path": "docs/48-issue16-evidence-chain-report.md",
+      "path": "docs/archive/completed-roadmap/issue-16/48-issue16-evidence-chain-report.md",
       "category": "doc",
       "required": true,
       "hash": "4342989847dcd850063d63a352f5df94103cec608a99485c3f030f7d85f09901",
@@ -779,7 +779,7 @@
       "path": "scripts/config/Show-EvidenceChain.ps1",
       "category": "script",
       "required": true,
-      "hash": "3ed3d0b40aef4b7ab2246e6d78bcfbe18e03230c1111c1897860739a736739cd",
+      "hash": "4a7158c685d5a42469632a31c6e23db704966942eddc63525886f31be2eed53a",
       "reason": "Evidence chain display shows input set and normalization summary."
     },
     {
@@ -856,11 +856,11 @@
       "path": "tests/pester/Issue16EvidenceChain.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "fbd9a61b7c3a24c686fa284b16619a7745bb6f15adeaf293161951e91cb1d9db",
+      "hash": "fb8ffd8b10b20410713865294aff51cb1d9bf9497a15d68cffe91aef3ccfeb34",
       "reason": "Issue 16 evidence chain tests guard baseline document and no auto-close boundaries."
     },
     {
-      "path": "docs/49-issue16-evidence-chain-acceptance.md",
+      "path": "docs/archive/completed-roadmap/issue-16/49-issue16-evidence-chain-acceptance.md",
       "category": "doc",
       "required": true,
       "hash": "467fbc80f331f6f0b4312c8e587e66fd6b386f1f05de3a606e6fa7243ff06c68",
@@ -947,18 +947,18 @@
       "path": "tests/pester/Issue16EvidenceChainAcceptance.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "710afecf73ce7fbd4d395fe2ba7478e6a876d8b10672e03e84074f30152ebace",
+      "hash": "de342abd08d5395afe83ea01f04f867a004a8e13157dfc48ad720f20dff3fa81",
       "reason": "Issue 16 acceptance tests guard accepted-pending-main-validation state."
     },
     {
-      "path": "docs/50-issue16-close-preparation.md",
+      "path": "docs/archive/completed-roadmap/issue-16/50-issue16-close-preparation.md",
       "category": "doc",
       "required": true,
       "hash": "270fa3924f5597130d4ab6df324f497e6050305ab792d3e223b19660a1ea8705",
       "reason": "Issue 16 close-preparation candidate records manual closure boundaries."
     },
     {
-      "path": "docs/51-issue16-main-validation-evidence.md",
+      "path": "docs/archive/completed-roadmap/issue-16/51-issue16-main-validation-evidence.md",
       "category": "doc",
       "required": true,
       "hash": "2a3942cf495201f755f1e7032c54701235b3405c0aefd28e9ba0793de1e0a502",
@@ -1073,7 +1073,7 @@
       "path": "tests/pester/EvidenceChainClosePrep.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "a40308bca3c0b2459da3c222bac65030bf7eab87ee1ea1a9037ddeadc966048a",
+      "hash": "930d90977fe092db5758beac783c23c959b810b3b05673f51da18194af284293",
       "reason": "Evidence chain close-prep tests guard Quality Gates and Build Lock wiring."
     },
     {
@@ -1094,25 +1094,25 @@
       "path": "tests/pester/Issue16ClosePrep.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "a0a5853971e4b14ef237709762eabd53460d3f6c38925cc29920661e031e188c",
+      "hash": "9b3fd39ab3c2b0b48558b6395044bc2ea8c1eeb0797e83b283996be8134fc3b7",
       "reason": "Issue 16 close-prep tests guard candidate-only manual closure boundaries."
     },
     {
       "path": "tests/pester/Issue16MainValidationEvidence.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "0988f840d3fd3e4f62725a97d2bdc50361053736baa7b64f9ffb22e52963c5de",
+      "hash": "16297c0fa1d76ee2623aca904f1af1b62b8268094a4ffe0a763098fe70b469bd",
       "reason": "Issue 16 main evidence tests guard pending-only scaffold fields."
     },
     {
-      "path": "docs/52-issue17-controlled-execution-intake.md",
+      "path": "docs/archive/completed-roadmap/issue-17/52-issue17-controlled-execution-intake.md",
       "category": "doc",
       "required": true,
-      "hash": "e47d695c772a13401fdf8a1a6e013e645c322d57205b69246d8413ed2cb383df",
+      "hash": "a2c4a34049a8cc0bd3055c74bc96ea21faf89be16ba61bfefb7f4274fc87f563",
       "reason": "Issue 17 controlled execution matrix, report, validation, and tests stay synchronized."
     },
     {
-      "path": "docs/53-issue17-controlled-execution-acceptance.md",
+      "path": "docs/archive/completed-roadmap/issue-17/53-issue17-controlled-execution-acceptance.md",
       "category": "doc",
       "required": true,
       "hash": "d47d0f42e8bfda28837533c7acddfb4aaffc001cda2be83194c5230eaabf4d12",
@@ -1171,14 +1171,14 @@
       "path": "tests/fixtures/controlled-execution/sample-plan.json",
       "category": "test",
       "required": true,
-      "hash": "7a57ace35a391d31883b1df1b827ea0a39c727d34094f89e02cae987a141d85e",
+      "hash": "d231b095c4fd3a4de4975028cdf891a6827b21a755b0f613325509e6b7e16a9e",
       "reason": "Controlled execution plan fixture backs report-only baseline tests."
     },
     {
       "path": "tests/fixtures/controlled-execution/sample-blocked-mutation.json",
       "category": "test",
       "required": true,
-      "hash": "280c1ce739e117575b51bcfd71cfa56045501e71f3e4b3982e4cd297aeb5b744",
+      "hash": "9c9c60d38c612a1fde869521bbdfde6c6fa4a6589ff3ba0b4e7b252226d0fdb7",
       "reason": "Controlled execution blocked mutation fixture proves validator failure behavior."
     },
     {
@@ -1199,35 +1199,35 @@
       "path": "tests/fixtures/controlled-execution/failure/network-download-action.json",
       "category": "test",
       "required": true,
-      "hash": "4bfa5be239b3ea8251546808f22c53669331cedda188f9a06c1fd70c019df3cd",
+      "hash": "9b082cdc925812672bd155eff69cd15dcf761961bab368c0393ba40403744c8e",
       "reason": "Controlled execution failure fixture proves network actions are blocked."
     },
     {
       "path": "tests/fixtures/controlled-execution/failure/registry-mutation-action.json",
       "category": "test",
       "required": true,
-      "hash": "b44bf1759055d5e08390fe7c866030e109b93eaba844dc508bd7b7e136dd792b",
+      "hash": "9ee0480f2e195b4a6eccce5c424385e12cacd4939a609c589ff4bf44b34537a6",
       "reason": "Controlled execution failure fixture proves registry mutation is blocked."
     },
     {
       "path": "tests/fixtures/controlled-execution/failure/disk-mutation-action.json",
       "category": "test",
       "required": true,
-      "hash": "db5ca311e291b5b3f60c413b8ce1c425c8249c1c45739aa3b8b1d1f26cc0db12",
+      "hash": "72ae85037a0b757fa3bb105536ba257b7d77105173800e6010777038fd674f91",
       "reason": "Controlled execution failure fixture proves disk mutation is blocked."
     },
     {
       "path": "tests/pester/Issue17ControlledExecution.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "e37bd1e210f61479569d94aa914717d007aa1f407d6fadff1c3f760159f8fde2",
+      "hash": "73524e481afa20e109adfdc114bfd303bbd7af6388bc301cb8bdb1b9d3ee2347",
       "reason": "Issue 17 intake tests guard auto-close boundaries across all Issue 17 docs."
     },
     {
       "path": "tests/pester/Issue17ControlledExecutionAcceptance.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "5d18425b143668b198a4aab8390ff4ddf30c3c77f2207bc340b447fda266e9ac",
+      "hash": "94d7043d40639b6bf0219569a88fcbc7f08b12a24a2d10a9f6e40dd832368863",
       "reason": "Issue 17 acceptance tests guard accepted-pending-main-validation state."
     },
     {
@@ -1259,7 +1259,7 @@
       "reason": "Controlled execution safety tests guard scripts against executable native calls."
     },
     {
-      "path": "docs/54-issue17-controlled-execution-safety-hardening.md",
+      "path": "docs/archive/completed-roadmap/issue-17/54-issue17-controlled-execution-safety-hardening.md",
       "category": "doc",
       "required": true,
       "hash": "07edccdaee5f50b59914cbc2b7ea4d44b1b54e10d54e3333b841c85def69f95a",
@@ -1486,7 +1486,7 @@
       "path": "tests/pester/Issue17ControlledExecutionHardening.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "4be6a6727b467b8f10961254e2b09a7e4a09a2411d07f0ae93720ab4295efab0",
+      "hash": "6ca130d95cb4b0639bff46b28b3aab70dcef8dcc9b7a3a8827c5452ea9a1b6bb",
       "reason": "Issue 17 hardening tests guard candidate and pending scaffold boundaries."
     },
     {
@@ -1497,7 +1497,7 @@
       "reason": "WinPE documentation records the controlled execution plan-only boundary."
     },
     {
-      "path": "docs/55-issue17-controlled-execution-authorization.md",
+      "path": "docs/archive/completed-roadmap/issue-17/55-issue17-controlled-execution-authorization.md",
       "category": "doc",
       "required": true,
       "hash": "d299a45419b87262308877c1898a01fce530d9f577a9c4b287fbaf14a654b744",
@@ -1661,7 +1661,7 @@
       "path": "tests/pester/Issue17ControlledExecutionAuthorization.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "afcc145f00d4421b8205c7278b23e960d6e2d40d9683fae4162ed8d0fc1b082b",
+      "hash": "206a9284c07e88c9536f2f16434d055a144b013d442a2dede7fa78b5055128e3",
       "reason": "Issue 17 authorization tests guard accepted-pending-main-validation state."
     },
     {
@@ -1672,14 +1672,14 @@
       "reason": "Issue 17 WinPE plan entrypoint validates plan-only behavior and Execute blocking."
     },
     {
-      "path": "docs/56-issue17-close-preparation.md",
+      "path": "docs/archive/completed-roadmap/issue-17/56-issue17-close-preparation.md",
       "category": "doc",
       "required": true,
       "hash": "bc00718a762645e2d843ee88ec70209257806e551e578f3606a19419fb7bbd4b",
       "reason": "Issue 17 close-prep candidate records manual review scope without final readiness."
     },
     {
-      "path": "docs/57-issue17-main-validation-evidence.md",
+      "path": "docs/archive/completed-roadmap/issue-17/57-issue17-main-validation-evidence.md",
       "category": "doc",
       "required": true,
       "hash": "4ba31f66dd6c56fa5114c3b1684a3c90ec270de3d2b375ed18532c536b9f77df",
@@ -1689,14 +1689,14 @@
       "path": "tests/pester/Issue17ClosePrep.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "d4394aa4ed58fc939e95f0b5a5bb3c81d79b7d6e025aaebf548537103649047b",
+      "hash": "1bf428e838ef618ef971afd6ac962e3f03188b1ce967565da24c579b0eb9763f",
       "reason": "Issue 17 close-prep tests guard candidate-only manual closure boundaries."
     },
     {
       "path": "tests/pester/Issue17MainValidationEvidence.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "0c0246d2bc557456b0437d950a1804ab2686f33e4ab891b6fd336236d0adb69b",
+      "hash": "f519a871c41f8d30eed48ce509335d1e9733798010f97f4da225964ec91ab4a0",
       "reason": "Issue 17 main evidence tests guard pending-only scaffold fields."
     },
     {
@@ -1707,7 +1707,7 @@
       "reason": "Issue 18 default apps failure fixture records missing capability."
     },
     {
-      "path": "docs/59-issue18-user-experience-restore-acceptance.md",
+      "path": "docs/archive/completed-roadmap/issue-18/59-issue18-user-experience-restore-acceptance.md",
       "category": "doc",
       "required": true,
       "hash": "bfc4e3c939f20bfc9c743cb22dc852f5547a37ee35086a86c2636daf97e62218",
@@ -1798,7 +1798,7 @@
       "reason": "Issue 18 baseline Windows 11 24H2 context fixture."
     },
     {
-      "path": "docs/58-issue18-user-experience-restore-intake.md",
+      "path": "docs/archive/completed-roadmap/issue-18/58-issue18-user-experience-restore-intake.md",
       "category": "doc",
       "required": true,
       "hash": "1d4625b746763a6f48332a58c0a15d4bc2df7715f88f91806db7d8b031786214",
@@ -1808,7 +1808,7 @@
       "path": "tests/pester/Issue18UserExperienceRestoreAcceptance.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "494ecd4b566142ad09b7115534bbb9aab53187cfeb95343b73ad43c534ee67ee",
+      "hash": "0e1ffd17fcb05c3531702cd4c4f68747e8e11f7613440073d12b27b9e7587575",
       "reason": "Issue 18 acceptance tests guard QG and Build Lock wiring."
     },
     {
@@ -1871,7 +1871,7 @@
       "path": "tests/pester/Issue18UserExperienceRestore.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "755415f0e4853d442613a7baf67c8e1b7d7e07ad9cb5d17578fa73fa7f7b9d4b",
+      "hash": "7839f62ce61340c365bf5ef8640d91f3d15eeeb15889e8359c1006cbb2ed4ab8",
       "reason": "Issue 18 intake tests guard source recording and no close-prep docs."
     },
     {
@@ -1938,7 +1938,7 @@
       "reason": "Issue 18 UX restore documentation records report-only capability and safety boundaries."
     },
     {
-      "path": "docs/60-issue18-user-experience-capability-matrix.md",
+      "path": "docs/archive/completed-roadmap/issue-18/60-issue18-user-experience-capability-matrix.md",
       "category": "doc",
       "required": true,
       "hash": "fa15d3e35c6ae51b15cc02503eaee6bcfdd445c111abeda5b02e117db4e7212d",
@@ -2123,7 +2123,7 @@
       "path": "tests/pester/Issue18UserExperienceCapabilityMatrix.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "ba560fcaa4f38a91172ae0fe5da4db774878f8f93d6efce295e77ab220fa2aa0",
+      "hash": "8135d73897f2467e461e35acb3a94ed5f4b7e556477b6dd15a72d26df99da22a",
       "reason": "Issue 18 capability matrix tests guard support status and build awareness."
     },
     {
@@ -2183,7 +2183,7 @@
       "reason": "Issue 18 Start menu template metadata records source Windows, scope, and target app contract without profile writes."
     },
     {
-      "path": "docs/61-issue18-restore-handler-integration.md",
+      "path": "docs/archive/completed-roadmap/issue-18/61-issue18-restore-handler-integration.md",
       "category": "doc",
       "required": true,
       "hash": "f4daa1c4237679e6dc87b635ef31449181a0bec25f232521d96f9ef36eb9c009",
@@ -2340,7 +2340,7 @@
       "path": "tests/pester/Issue18RestoreHandlerIntegration.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "fd6d6f2d7ed6f0339474b2c998794a2527a3f5307e3cc644b315ca250f3e57c5",
+      "hash": "a6db8a980193da40b55a2f4571d14768c5b0e6e3cf2ca192b096dbe5d24eb46d",
       "reason": "Issue 18 handler Pester tests guard report-only adapters and safety boundaries."
     },
     {
@@ -2379,14 +2379,14 @@
       "reason": "Issue 18 handler Pester tests guard report-only adapters and safety boundaries."
     },
     {
-      "path": "docs/62-issue18-close-preparation.md",
+      "path": "docs/archive/completed-roadmap/issue-18/62-issue18-close-preparation.md",
       "category": "doc",
       "required": true,
       "hash": "6bdb001531f1a95920827aada53703ea2a7d4daf8f04421b372bff710b8d38ca",
       "reason": "Issue 18 acceptance consolidation and close-prep scaffold input."
     },
     {
-      "path": "docs/63-issue18-main-validation-evidence.md",
+      "path": "docs/archive/completed-roadmap/issue-18/63-issue18-main-validation-evidence.md",
       "category": "doc",
       "required": true,
       "hash": "150dcc9c8e14cf6f93c4e64f7a4e4c66c40c0a993fea107a4833e7523d6d9e3a",
@@ -2396,25 +2396,25 @@
       "path": "tests/pester/Issue18ClosePrep.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "612d789b7333a1a8f5d02a33e2e78ad24726c99555b3873129fa97ab633f9c03",
+      "hash": "c87a88e152083010ae5a18b05bf1676980d1d7dd6f450722c99cfddea3db37d5",
       "reason": "Issue 18 acceptance consolidation and close-prep scaffold input."
     },
     {
       "path": "tests/pester/Issue18MainValidationEvidence.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "b14f927b522440631fb59eb8e9641ce8be16f8d607ac5af42012e92c27ad9863",
+      "hash": "abfe047f121ddccd0801ce6e26aebde149f4daa1fc960c6353f7c06878c9b104",
       "reason": "Issue 18 acceptance consolidation and close-prep scaffold input."
     },
     {
-      "path": "docs/64-issue18-manual-closure-handoff.md",
+      "path": "docs/archive/completed-roadmap/issue-18/64-issue18-manual-closure-handoff.md",
       "category": "doc",
       "required": true,
       "hash": "dfe3e893e1c2e68e2166fa5d30a697638b60a9bf624e9deeee263a4fa2e248f7",
       "reason": "Issue 18 manual closure handoff keeps ready state scoped and non-closing."
     },
     {
-      "path": "docs/65-future-true-ux-restore-execution-split.md",
+      "path": "docs/archive/future-true-ux-restore/00-governance/65-future-true-ux-restore-execution-split.md",
       "category": "doc",
       "required": true,
       "hash": "47e627dfacf3457c995addfe3cc9428ff3e5129c0c34a5d468ded2493def5a6d",
@@ -2424,32 +2424,32 @@
       "path": "tests/pester/Issue18ManualClosureHandoff.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "181068a312882fc1701bce93ea97ca31ead818d9b11bb8e7266304ded51b58ee",
+      "hash": "ba7acb8877d03e8b234cd9aaf77f755fbe0f41f22c6fc879564f3d7cc70fca85",
       "reason": "Issue 18 handoff tests guard no auto-close, no completion summary, and build-lock wiring."
     },
     {
       "path": "tests/pester/Issue18FutureTrueUxRestoreSplit.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "91e81766e33d0540ee76d5700eaea57168680035d5a66974f0e0b436ecb3afeb",
+      "hash": "d65880d005864220ab05596183fcb28f82dd430df1e0b7f0f875c60ee3b3154b",
       "reason": "Issue 18 future split tests guard explicit authorization and no true UX mutation."
     },
     {
-      "path": "docs/66-future-true-ux-restore-authorization-intake.md",
+      "path": "docs/archive/future-true-ux-restore/00-governance/66-future-true-ux-restore-authorization-intake.md",
       "category": "doc",
       "required": true,
       "hash": "b933c33a935dbe6a1e125f36b21d906e5f6cb5283400095dc3e4af0d47f1f4ba",
       "reason": "Future true UX restore authorization intake documentation and dry-run boundaries."
     },
     {
-      "path": "docs/67-future-true-ux-restore-evidence-model.md",
+      "path": "docs/archive/future-true-ux-restore/00-governance/67-future-true-ux-restore-evidence-model.md",
       "category": "doc",
       "required": true,
       "hash": "c8a0b906f4a1b2a0bd6b0095897d28795336f6b4ef2a1416aa181e6022dabc43",
       "reason": "Future true UX restore authorization intake documentation and dry-run boundaries."
     },
     {
-      "path": "docs/68-future-true-ux-restore-dry-run-plan.md",
+      "path": "docs/archive/future-true-ux-restore/00-governance/68-future-true-ux-restore-dry-run-plan.md",
       "category": "doc",
       "required": true,
       "hash": "d982d857c9a9e2e76410c97d0b68011e44a0c53d23396cbf486094fe21ec28b7",
@@ -2459,14 +2459,14 @@
       "path": "manifests/future-true-ux-restore-authorization.json",
       "category": "manifest",
       "required": true,
-      "hash": "c9e2282705e61bf770eed761ff3a9e4d73dc5606e9b88ffcdbf1a6ad82a1c2c2",
+      "hash": "db2cfc0e4b337cf7312a38dd3eabec30b1e0d9da91e519f97ef45dc73e41b1e6",
       "reason": "Future true UX authorization manifest freezes mock review drill execution flags."
     },
     {
       "path": "schemas/future-true-ux-restore-authorization.schema.json",
       "category": "schema",
       "required": true,
-      "hash": "149aa91daf203285497cc8c9f919ec56821cf99d21ece72ce60374d2b4ba818e",
+      "hash": "b89dd1e7146f7ac9be032d1ceaec4999d7ce8ec3b3b2cc50310024d160dce5a8",
       "reason": "Authorization schema constrains mock review drill execution freeze fields."
     },
     {
@@ -2564,7 +2564,7 @@
       "path": "tests/pester/FutureTrueUxRestoreEvidence.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "0c16a8be5bf02b0f2a7414fde0940fc923ab0c98e1ecfa7516580e542892cbf3",
+      "hash": "2e8a784f8fe89636205795887d4091ef14520454777384a0a75497501cc8390b",
       "reason": "Future true UX restore authorization fixtures and Pester coverage."
     },
     {
@@ -2578,25 +2578,25 @@
       "path": "tests/pester/FutureTrueUxRestoreValidation.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "082de6b4064bef614566ebf90b3d06dee0a94d07993e1a02871bd2de1fdaf6e2",
+      "hash": "86af2730addcf6d99d52763d35b5be8019100eaef26e1872c99de851c0d67f61",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/69-future-true-ux-restore-current-user-dry-run-gate.md",
+      "path": "docs/archive/future-true-ux-restore/00-governance/69-future-true-ux-restore-current-user-dry-run-gate.md",
       "category": "doc",
       "required": true,
       "hash": "718feeca56b42e3c540bb368cd3209193d0b6cf7514f45816ab2e348258fceca",
       "reason": "Future true UX current-user dry-run and dual execute-gate documentation."
     },
     {
-      "path": "docs/70-future-true-ux-restore-current-user-evidence-contract.md",
+      "path": "docs/archive/future-true-ux-restore/00-governance/70-future-true-ux-restore-current-user-evidence-contract.md",
       "category": "doc",
       "required": true,
       "hash": "9bec8e054f7ec79bafa82b412c9fcb8daf225effdda53b23550f73dda6439dad",
       "reason": "Future true UX current-user dry-run and dual execute-gate documentation."
     },
     {
-      "path": "docs/71-future-true-ux-restore-execute-gate-dual-approval.md",
+      "path": "docs/archive/future-true-ux-restore/00-governance/71-future-true-ux-restore-execute-gate-dual-approval.md",
       "category": "doc",
       "required": true,
       "hash": "4a88130fbc505159d690a028c90e5efabbd5629e7cc117847e79f622bbafb4bd",
@@ -2704,46 +2704,46 @@
       "path": "tests/pester/FutureTrueUxRestoreCurrentUserDryRun.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "07b95cde3257b202fe74fecd267e254110bb346132cfc743b8f6a2c29b359323",
+      "hash": "86788992b273f6e64a63a11208a557c60301e808507100a5d8c74131406f2f60",
       "reason": "Future true UX current-user dry-run fixtures and Pester coverage."
     },
     {
       "path": "tests/pester/FutureTrueUxRestoreCurrentUserEvidence.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "86951dad389210eb0b625e48f17496d71eeb0354df9b3fc760a42b3050f06738",
+      "hash": "ff62ba4802e479a8dcd58efee5872acba640362de150d027864f6dc589b99074",
       "reason": "Future true UX current-user dry-run fixtures and Pester coverage."
     },
     {
       "path": "tests/pester/FutureTrueUxRestoreExecuteGate.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "204b79c0a5451a807b3814adb40aebeb9815ec69646806ecf73c6310edde4392",
+      "hash": "c1a3a582396d1df242c219372e47caaaaf05aaa1cd2003587e7b4791c879dc9e",
       "reason": "Future true UX current-user dry-run fixtures and Pester coverage."
     },
     {
-      "path": "docs/72-future-true-ux-restore-default-user-dry-run-gate.md",
+      "path": "docs/archive/future-true-ux-restore/00-governance/72-future-true-ux-restore-default-user-dry-run-gate.md",
       "category": "doc",
       "required": true,
       "hash": "eeb905973e9b0d0999c56fabd1785cb1e6d2b500c1b6859f2a5aedbe0074a683",
       "reason": "Future true UX remaining scope dry-run and scope guard documentation."
     },
     {
-      "path": "docs/73-future-true-ux-restore-offline-image-dry-run-gate.md",
+      "path": "docs/archive/future-true-ux-restore/00-governance/73-future-true-ux-restore-offline-image-dry-run-gate.md",
       "category": "doc",
       "required": true,
       "hash": "5fdd9bb4456f1ae7bc788c202796eac6ad6a152a8d19c001686496b6f44c8c73",
       "reason": "Future true UX remaining scope dry-run and scope guard documentation."
     },
     {
-      "path": "docs/74-future-true-ux-restore-machine-dry-run-gate.md",
+      "path": "docs/archive/future-true-ux-restore/00-governance/74-future-true-ux-restore-machine-dry-run-gate.md",
       "category": "doc",
       "required": true,
       "hash": "9c0246f411fe4d295c83f7c580fbf3aa9872d420a86228007a173718042fc735",
       "reason": "Future true UX remaining scope dry-run and scope guard documentation."
     },
     {
-      "path": "docs/75-future-true-ux-restore-scope-guard-matrix.md",
+      "path": "docs/archive/future-true-ux-restore/00-governance/75-future-true-ux-restore-scope-guard-matrix.md",
       "category": "doc",
       "required": true,
       "hash": "f7c662611d9ce03945b3380c7dfe1ae89123c56f662de5b9d2229cf46f86106f",
@@ -2774,28 +2774,28 @@
       "path": "tests/pester/FutureTrueUxRestoreDefaultUserDryRun.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "eb5e67849a6b25142b2cf64b7e4a74748d13e8d3ad44abb17a6b188833ca1ced",
+      "hash": "6156d04adaee3db47336ab92ee1e230975c4db27828e85b920426cea4aed79d2",
       "reason": "Future true UX remaining scope dry-run Pester coverage."
     },
     {
       "path": "tests/pester/FutureTrueUxRestoreOfflineImageDryRun.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "294f30f9387c16eb77eb351ddfea4350c9090e33bda2d225ac7f5240afc2409c",
+      "hash": "5af0b41e4302e547d3a27a949c396998707b7c0a3be091820ab2fcd3ad08fa3f",
       "reason": "Future true UX remaining scope dry-run Pester coverage."
     },
     {
       "path": "tests/pester/FutureTrueUxRestoreMachineDryRun.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "664ca84cbcbf45b5b67ce68248a2cf5fe5c53e55c8250a617c7fccc4ca665bf6",
+      "hash": "21bcaf72e985d2819f31a09a4ba9a06e80801eb49412ab460b923fe0fd9da437",
       "reason": "Future true UX remaining scope dry-run Pester coverage."
     },
     {
       "path": "tests/pester/FutureTrueUxRestoreScopeGuard.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "dc820b2ab2a6c8fc3b3f83ec09919a9fe59378908eb426240b684c8851d5e64b",
+      "hash": "49657ba489b55f7001ac880945e4f2f63abd0fa14f97b025c05c7ec63e357ebb",
       "reason": "Future true UX remaining scope dry-run Pester coverage."
     },
     {
@@ -2995,28 +2995,28 @@
       "reason": "Future true UX remaining scope dry-run fixtures and evidence contracts."
     },
     {
-      "path": "docs/76-future-true-ux-restore-unified-authorization-request.md",
+      "path": "docs/archive/future-true-ux-restore/00-governance/76-future-true-ux-restore-unified-authorization-request.md",
       "category": "doc",
       "required": true,
       "hash": "9e7252de0937134074bf96dcaf6ff229ef7228b851199c968c9ce26c6ba2081e",
       "reason": "Future true UX restore authorization review documentation is a trusted review input."
     },
     {
-      "path": "docs/77-future-true-ux-restore-maintainer-review-checkpoint.md",
+      "path": "docs/archive/future-true-ux-restore/00-governance/77-future-true-ux-restore-maintainer-review-checkpoint.md",
       "category": "doc",
       "required": true,
       "hash": "933b84f26e2d56f3acf574c06613df238f03a12649204531aaa80176cef6fd39",
       "reason": "Future true UX restore authorization review documentation is a trusted review input."
     },
     {
-      "path": "docs/78-future-true-ux-restore-evidence-packet-contract.md",
+      "path": "docs/archive/future-true-ux-restore/00-governance/78-future-true-ux-restore-evidence-packet-contract.md",
       "category": "doc",
       "required": true,
       "hash": "971022a63c3256744eeea8f2e79a62fe21c2c9db60e8d3f03477518a0ba13831",
       "reason": "Future true UX restore authorization review documentation is a trusted review input."
     },
     {
-      "path": "docs/79-future-true-ux-restore-authorization-state-machine.md",
+      "path": "docs/archive/future-true-ux-restore/00-governance/79-future-true-ux-restore-authorization-state-machine.md",
       "category": "doc",
       "required": true,
       "hash": "f79bfb40939f871ac91b12111fe7d83c1ed6a51c89670e3274aadbb1e124ab89",
@@ -3383,14 +3383,14 @@
       "path": "tests/pester/CapabilityRegistryConsistency.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "417796a9a916698627feb7652e6699f51880fe90ce878cb25487c897d222be1d",
+      "hash": "a2e9b0c1cea7483632c9deb56eaabe9fd2b51dc65da063f02da640e19dbe1960",
       "reason": "Build lock watches this file as a trusted repository input."
     },
     {
       "path": "tests/pester/CapabilityRegistryReport.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "0e4798c9e57325296f0761847d53dcda37188fdc3b9f7562d056152df196b254",
+      "hash": "9dbe2724dc777bba4312e8422f65f85c1b66d43d53fac6a0eb08a6bc0058d4d5",
       "reason": "Build lock watches this file as a trusted repository input."
     },
     {
@@ -3411,7 +3411,7 @@
       "path": "tests/pester/FutureTrueUxRestoreAuthorizationStateMachine.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "153fc5e1584b7c8c621cf14b839141bf167d9e55962a8d75759ad506ce0e0762",
+      "hash": "761b6721944b586c9ad2cd76d72d059d3d3f8cb0e4b3d96110b0103f13016f52",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
@@ -3425,28 +3425,28 @@
       "path": "tests/pester/FutureTrueUxRestoreReviewSafety.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "72857bd20ce57be3c54eb5306a2265e7c1ea64b32d20e98780f4cdf024ccf339",
+      "hash": "096c40afd17b4f799c55b63e94bbeb232dd97c1562a137cf5d462e6f8492adc8",
       "reason": "Build lock watches this file as a trusted repository input."
     },
     {
       "path": "tests/pester/Issue11CapabilityRegistry.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "1733c61565cc11155d63883242164b8c9785bafb57cbc4bc0115f3ec5202f560",
+      "hash": "5e1b6292bd40e551da67bc61cdc31c1bbe8dcfaff113b04b5f7cf6742ff65332",
       "reason": "Build lock watches this file as a trusted repository input."
     },
     {
       "path": "tests/pester/Issue11CapabilityRegistryAcceptance.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "eda0d9fb8416d1a42b59b207748a0e32d7667c96ad4600d73e983aba5b71cd63",
+      "hash": "3bdb6e43d34a11245164b9bcb55c290a2b1c6e1ec21cabaa9b4b87a82b32f18a",
       "reason": "Build lock watches this file as a trusted repository input."
     },
     {
       "path": "tests/pester/Issue12BuildLockAcceptance.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "bd46a0199881c7ad7377c0ae66c3ae341e146eee985308664da4d259192c9e56",
+      "hash": "db5a3b8f10b2049fb7bc7bfeb55ba3169d39bcc1c6030d6cdaf9ca2554a0322d",
       "reason": "Build lock watches this file as a trusted repository input."
     },
     {
@@ -3457,28 +3457,28 @@
       "reason": "Build lock watches this file as a trusted repository input."
     },
     {
-      "path": "docs/80-future-true-ux-restore-mock-review-packet-drill.md",
+      "path": "docs/archive/future-true-ux-restore/01-mock-review/80-future-true-ux-restore-mock-review-packet-drill.md",
       "category": "doc",
       "required": true,
       "hash": "9f36d57d3e41d202001f786ff4a131bb9ce0fe6b3bbb642270876c3dbbfbe21e",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/81-future-true-ux-restore-mock-maintainer-review-transcript.md",
+      "path": "docs/archive/future-true-ux-restore/01-mock-review/81-future-true-ux-restore-mock-maintainer-review-transcript.md",
       "category": "doc",
       "required": true,
       "hash": "92d9641423196ce0ccf288a552d24a23311f49d51ccd5dbe7de4b283ade07a1d",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/82-future-true-ux-restore-mock-decision-ledger.md",
+      "path": "docs/archive/future-true-ux-restore/01-mock-review/82-future-true-ux-restore-mock-decision-ledger.md",
       "category": "doc",
       "required": true,
       "hash": "3c908dd169eba0d33a149202874ef4e3fb6a675fb03c51f1fe67517da5145838",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/83-future-true-ux-restore-mock-drill-lessons.md",
+      "path": "docs/archive/future-true-ux-restore/01-mock-review/83-future-true-ux-restore-mock-drill-lessons.md",
       "category": "doc",
       "required": true,
       "hash": "6662c0914132eb14ab8adc386a5d13bdb2aac0d187ec2723cc07daf5cc139e14",
@@ -3572,7 +3572,7 @@
       "path": "tests/pester/FutureTrueUxRestoreMockDecisionLedger.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "9e77eb1f35f600f8e5ccc816737ffafabf6db4fc5dc9d930f4ed50b7f875a2fd",
+      "hash": "bfec050bbbbe806a5b5b84d50bdf1bad404ed4c36b808de2320f02e64f8631bf",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
@@ -3586,39 +3586,39 @@
       "path": "tests/pester/FutureTrueUxRestoreMockReviewSafety.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "5923783cad24ce3bc6e3967e462328f19dad55271634b16fea431776f74c5379",
+      "hash": "ab9090a9fd0928019fdfa7975ff2cd85f4511f94ecb9e73ae853e09e7ec70c60",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/pester/FutureTrueUxRestoreMockTranscript.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "25b6372ae57796d6a8f0ef621e8ad57a5ef3976fd5969a7b266d5fa8f6df6557",
+      "hash": "2673563eece6270a96fcc652fef3f6422fd11943cbe4c4507eb3356ebeb2030a",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/84-future-true-ux-restore-negative-review-drill-bundle.md",
+      "path": "docs/archive/future-true-ux-restore/02-negative-review/84-future-true-ux-restore-negative-review-drill-bundle.md",
       "category": "doc",
       "required": true,
       "hash": "d33a7185db9c55d140569095fc22652facaab7286a21f426be18a4aca625ba65",
       "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/85-future-true-ux-restore-negative-review-transcript.md",
+      "path": "docs/archive/future-true-ux-restore/02-negative-review/85-future-true-ux-restore-negative-review-transcript.md",
       "category": "doc",
       "required": true,
       "hash": "5f832c097fe1bc1a215068f21007d425b9e86735eadee861e322f93d236c292b",
       "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/86-future-true-ux-restore-negative-decision-ledger.md",
+      "path": "docs/archive/future-true-ux-restore/02-negative-review/86-future-true-ux-restore-negative-decision-ledger.md",
       "category": "doc",
       "required": true,
       "hash": "2db5a2a9977abc92d0afd6b7e48182c594e3e4ece5a2c08ffc57af66d02b67d0",
       "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/87-future-true-ux-restore-negative-drill-lessons.md",
+      "path": "docs/archive/future-true-ux-restore/02-negative-review/87-future-true-ux-restore-negative-drill-lessons.md",
       "category": "doc",
       "required": true,
       "hash": "a0132f112f913a5823334b038f40e34d70dea8bc44fd1db7f0b7a3dd7cca87e3",
@@ -3702,28 +3702,28 @@
       "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/88-future-true-ux-restore-maintainer-approval-checklist-ergonomics.md",
+      "path": "docs/archive/future-true-ux-restore/03-approval-checklist/88-future-true-ux-restore-maintainer-approval-checklist-ergonomics.md",
       "category": "doc",
       "required": true,
       "hash": "c9b380d1e946eb5d6d0ff7c80d7416ac50ac17dd89a3da1dc95f3bf660003ccb",
       "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/89-future-true-ux-restore-review-packet-readability-guide.md",
+      "path": "docs/archive/future-true-ux-restore/03-approval-checklist/89-future-true-ux-restore-review-packet-readability-guide.md",
       "category": "doc",
       "required": true,
       "hash": "2364ba6b7d97b9ee35239563315932ca1ee8b5eef7de45e3f60502d8d5bd50e5",
       "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/90-future-true-ux-restore-manual-decision-form-template.md",
+      "path": "docs/archive/future-true-ux-restore/03-approval-checklist/90-future-true-ux-restore-manual-decision-form-template.md",
       "category": "doc",
       "required": true,
       "hash": "f6fe550e29238bf9d17882d8fa3787c8f8af1118f4c4d8dcc165ee43b4e69057",
       "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/91-future-true-ux-restore-approval-checklist-lessons.md",
+      "path": "docs/archive/future-true-ux-restore/03-approval-checklist/91-future-true-ux-restore-approval-checklist-lessons.md",
       "category": "doc",
       "required": true,
       "hash": "4d8252930bd98070068dd7cb71c646b8a7a5f5f69993709e99d57b93c9b22d25",
@@ -3789,39 +3789,39 @@
       "path": "tests/pester/FutureTrueUxRestoreApprovalChecklistErgonomics.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "59d5384dfb390c6b1fe5e0e296f0f70b7f7faafb2957fbb2c8fe1a80c7caa033",
+      "hash": "0282c147bd55f9e485aa089d5d1b034266959c76d77c855c781a27a57789d4f1",
       "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/92-future-true-ux-restore-integrated-authorization-packet-preview.md",
+      "path": "docs/archive/future-true-ux-restore/04-packet-preview/92-future-true-ux-restore-integrated-authorization-packet-preview.md",
       "category": "doc",
       "required": true,
       "hash": "4d32ed0eae0576122649f92d6f7298f2d54c9b6d410751c98817793d64086496",
       "reason": "Future true UX integrated packet preview artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/93-future-true-ux-restore-packet-preview-field-map.md",
+      "path": "docs/archive/future-true-ux-restore/04-packet-preview/93-future-true-ux-restore-packet-preview-field-map.md",
       "category": "doc",
       "required": true,
       "hash": "06813bc82d6aa91ca74a1ff78c7e0e94edda7aaa272a02dddcf66081879fe3c9",
       "reason": "Future true UX integrated packet preview artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/94-future-true-ux-restore-packet-preview-reviewer-reading-order.md",
+      "path": "docs/archive/future-true-ux-restore/04-packet-preview/94-future-true-ux-restore-packet-preview-reviewer-reading-order.md",
       "category": "doc",
       "required": true,
       "hash": "c997c00b3b35b9ed3a51fa8b552d8a3375a58d9ad1f2f2cecb1c7db0bf531f80",
       "reason": "Future true UX integrated packet preview artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/95-future-true-ux-restore-packet-preview-blocker-index.md",
+      "path": "docs/archive/future-true-ux-restore/04-packet-preview/95-future-true-ux-restore-packet-preview-blocker-index.md",
       "category": "doc",
       "required": true,
       "hash": "25928f1675da666fcf0ebd01fc834944ed3b67fa90ce0b421fd8d70cbd45175c",
       "reason": "Future true UX integrated packet preview artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/96-future-true-ux-restore-packet-preview-lessons.md",
+      "path": "docs/archive/future-true-ux-restore/04-packet-preview/96-future-true-ux-restore-packet-preview-lessons.md",
       "category": "doc",
       "required": true,
       "hash": "657e369afd58bf371df12dcf93f1daba03dc1536ae85ef20074f937b18f319d9",
@@ -3894,39 +3894,39 @@
       "path": "tests/pester/FutureTrueUxRestoreIntegratedPacketPreview.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "511b582c61737092de85b1fd29f1172424e16ac0fa45104b2fa91e91050bac3d",
+      "hash": "5e5ddfa87663511de90646b6987ae03665a0e20a499be7593634c9dbcb115fa1",
       "reason": "Future true UX integrated packet preview artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/97-future-true-ux-restore-human-authorization-handoff.md",
+      "path": "docs/archive/future-true-ux-restore/05-human-handoff/97-future-true-ux-restore-human-authorization-handoff.md",
       "category": "doc",
       "required": true,
       "hash": "c1853220a3bb3ccc09cb445eb66aee5a87a6c35cf9b12cb2cfe635325de3a917",
       "reason": "Future true UX human authorization handoff artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/98-future-true-ux-restore-human-handoff-artifact-index.md",
+      "path": "docs/archive/future-true-ux-restore/05-human-handoff/98-future-true-ux-restore-human-handoff-artifact-index.md",
       "category": "doc",
       "required": true,
       "hash": "1946c14c2b94cf44f38c0729d2bd3023cc59ccf2cd916908354a9071f1d34042",
       "reason": "Future true UX human authorization handoff artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/99-future-true-ux-restore-human-handoff-manual-decision-placeholder.md",
+      "path": "docs/archive/future-true-ux-restore/05-human-handoff/99-future-true-ux-restore-human-handoff-manual-decision-placeholder.md",
       "category": "doc",
       "required": true,
       "hash": "8437ad909aa0b2b2e968eb6cd14b578d78d0666bea616d001820b11fd7489b06",
       "reason": "Future true UX human authorization handoff artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/100-future-true-ux-restore-human-handoff-review-boundary.md",
+      "path": "docs/archive/future-true-ux-restore/05-human-handoff/100-future-true-ux-restore-human-handoff-review-boundary.md",
       "category": "doc",
       "required": true,
       "hash": "64df7a843d6bb28ca0b9159402f14b034c931eda0e81ab7c3d9e595b5962f1c2",
       "reason": "Future true UX human authorization handoff artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/101-future-true-ux-restore-human-handoff-lessons.md",
+      "path": "docs/archive/future-true-ux-restore/05-human-handoff/101-future-true-ux-restore-human-handoff-lessons.md",
       "category": "doc",
       "required": true,
       "hash": "c8885e1527eeafe5f84e8b6013eb438af109b38e10244b6de790d97f38d89fd7",
@@ -4006,32 +4006,32 @@
       "path": "tests/pester/FutureTrueUxRestoreHumanAuthorizationHandoff.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "4b99c9981d57c3b42369ec60a8356875739f1beb2d4f2d98e2728aef7f07850d",
+      "hash": "e7b7648a6ddee45edee141cd3e6e50694d38ef571c00d187f72766d06064932e",
       "reason": "Future true UX human authorization handoff artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/102-future-true-ux-restore-end-to-end-no-execution-readiness-audit.md",
+      "path": "docs/archive/future-true-ux-restore/06-no-execution-audit/102-future-true-ux-restore-end-to-end-no-execution-readiness-audit.md",
       "category": "doc",
       "required": true,
       "hash": "386adb5a3db0aad44a5528690ac0ff41baa995c72dca3387af9b59ffb9749956",
       "reason": "Future True UX Restore no-execution readiness audit documentation records report-only stop-line semantics."
     },
     {
-      "path": "docs/103-future-true-ux-restore-state-name-separation-matrix.md",
+      "path": "docs/archive/future-true-ux-restore/06-no-execution-audit/103-future-true-ux-restore-state-name-separation-matrix.md",
       "category": "doc",
       "required": true,
       "hash": "f506caa5e8a8d8e21ad0eab5f00d60ca65c07b1d4a0937fccc02a3cc499a49b8",
       "reason": "Future True UX Restore no-execution readiness audit documentation records report-only stop-line semantics."
     },
     {
-      "path": "docs/104-future-true-ux-restore-artifact-chain-consistency-index.md",
+      "path": "docs/archive/future-true-ux-restore/06-no-execution-audit/104-future-true-ux-restore-artifact-chain-consistency-index.md",
       "category": "doc",
       "required": true,
       "hash": "25d5588a82e837aa0d21cd44241d43422744b6f6a0e8f140a2bc76c77cdc8294",
       "reason": "Future True UX Restore no-execution readiness audit documentation records report-only stop-line semantics."
     },
     {
-      "path": "docs/105-future-true-ux-restore-no-execution-stop-line.md",
+      "path": "docs/archive/future-true-ux-restore/06-no-execution-audit/105-future-true-ux-restore-no-execution-stop-line.md",
       "category": "doc",
       "required": true,
       "hash": "40fe1be0d4fa2f375b43b31f09b46ca0614cb9b6f82002fcb01cd6e6315c4a6b",
@@ -4041,7 +4041,7 @@
       "path": "scripts/common/New-FutureTrueUxRestoreEndToEndNoExecutionReadinessAuditReport.ps1",
       "category": "script",
       "required": true,
-      "hash": "89ead8c4796d1a48a91b843166857ef61bbe2047499284f91ae4fbbfa0eb8ea0",
+      "hash": "c50d1b51eec620e534eb1a0b2d6a1b236c85eb5cefd2956eeb08b0e8ca3ceef7",
       "reason": "Future True UX Restore no-execution readiness audit report helper is a report-only validator input."
     },
     {
@@ -4108,14 +4108,14 @@
       "reason": "Future True UX Restore no-execution readiness audit Pester coverage guards no-execution semantics."
     },
     {
-      "path": "docs/106-future-true-ux-restore-final-stop-line-handoff.md",
+      "path": "docs/archive/future-true-ux-restore/00-governance/106-future-true-ux-restore-final-stop-line-handoff.md",
       "category": "doc",
       "required": true,
       "hash": "a24c81e27d7e04704c48ad5188b786e1a8affcb91ba5ed712149ec1cc45cd909",
       "reason": "Future True UX Restore final stop-line handoff documentation records the human decision boundary."
     },
     {
-      "path": "docs/107-future-true-ux-restore-stop-line-decision-matrix.md",
+      "path": "docs/archive/future-true-ux-restore/00-governance/107-future-true-ux-restore-stop-line-decision-matrix.md",
       "category": "doc",
       "required": true,
       "hash": "e367af4c4923bcf8fb18aec9003c2c9957b0bf54ece1969ae0193d3f3ec441ea",
@@ -4125,7 +4125,7 @@
       "path": "scripts/common/New-FutureTrueUxRestoreFinalStopLineHandoffReport.ps1",
       "category": "script",
       "required": true,
-      "hash": "658d9c51825de89d5089013832ee21bbf2f75039b890ad2a4e8c22cfa916a4ab",
+      "hash": "99c2bc4b2446b3bf9776acf77c661e56040c460fe02b2b39eff68513715af3c4",
       "reason": "Future True UX Restore final stop-line handoff report helper is a report-only validator input."
     },
     {
@@ -4174,22 +4174,43 @@
       "path": "tests/pester/FutureTrueUxRestoreFinalStopLineHandoff.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "f25a99ba915f7b887ce5e4514633c8c38aa7b06fac6816812ffc8bed2bd9db9e",
+      "hash": "95e67c049b9264a9dbef3c222bc84ace08ca5d5b2211db35e80a94c4d419ed27",
       "reason": "Future True UX Restore final stop-line handoff Pester coverage guards no-execution semantics."
     },
     {
-      "path": "docs/111-future-true-ux-archive-dry-run-plan.md",
+      "path": "docs/archive/future-true-ux-restore/00-governance/111-future-true-ux-archive-dry-run-plan.md",
       "category": "doc",
       "required": true,
-      "hash": "7fcbb4381af1e58f418485c0e88abe6665417e769d5af79a110a6afc8fd4a64f",
+      "hash": "96ea6fc39b5dfc6db8c6438ee87b326935d271c76e9a14d018cf4f67b8003332",
       "reason": "Future True UX archive dry-run plan documents proposed archive paths and no-move stop lines before any archive PR."
     },
     {
       "path": "tests/pester/FutureTrueUxArchiveDryRunPlan.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "4d1056803e46284cec2a20bc745abaa37df6c06f86299252c47c9af936e31ae5",
+      "hash": "6fd0f6080f289d0faf38c00c7fc8c6d403a5dcc94a19f25a022740d658e11b4f",
       "reason": "Future True UX archive dry-run plan tests guard no-move semantics, archive path scope, and true-execution stop lines."
+    },
+    {
+      "path": "docs/archive/future-true-ux-restore/00-governance/108-repo-documentation-script-governance-audit.md",
+      "category": "doc",
+      "required": true,
+      "hash": "5c2b0ea13852a151f41a4d4287e4a46e30661c17d704f97c21fdcc823add4236",
+      "reason": "Repository governance audit records docs/archive state and no-execution boundaries."
+    },
+    {
+      "path": "docs/README.md",
+      "category": "doc",
+      "required": true,
+      "hash": "8ec2b89fc9dafec2a48785ae06e8140b13b48660c70434bd58a7fe77d5c9183c",
+      "reason": "Canonical docs index separates current entrypoints from historical archive material."
+    },
+    {
+      "path": "tests/pester/DocsGovernanceArchive.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "6bf181eb31cccd83a94a9f6df857d191a7186b1f77f2de7dea9be1599efdc6e4",
+      "reason": "Docs governance archive tests guard moved Future True UX docs, entrypoints, Build Lock paths, and no-execution semantics."
     }
   ],
   "watchGlobs": [
@@ -4199,8 +4220,8 @@
     "scripts/validate/*.ps1",
     "tests/pester/*Registry*.Tests.ps1",
     "tests/pester/*BuildLock*.Tests.ps1",
-    "docs/28-issue11-capability-registry.md",
-    "docs/32-issue12-build-lock.md",
+    "docs/archive/completed-roadmap/issue-11/28-issue11-capability-registry.md",
+    "docs/archive/completed-roadmap/issue-12/32-issue12-build-lock.md",
     ".github/workflows/ci.yml",
     "tests/pester/*EnsureState*.Tests.ps1",
     "docs/*issue13*.md",

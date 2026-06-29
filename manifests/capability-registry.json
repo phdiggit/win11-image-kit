@@ -25,7 +25,7 @@
         "tests/pester/Issue7JunctionAcceptance.Tests.ps1"
       ],
       "docs": [
-        "docs/13-issue7-junction-transaction-acceptance.md"
+        "docs/archive/completed-roadmap/issue-7/13-issue7-junction-transaction-acceptance.md"
       ],
       "notes": "Implemented filesystem capability. PR Fast CI must use fixture, mock, WhatIf, or report-only paths and must not perform real junction migration."
     },
@@ -51,7 +51,7 @@
         "tests/pester/Issue8DefenderAcceptance.Tests.ps1"
       ],
       "docs": [
-        "docs/16-issue8-defender-exclusion-policy.md"
+        "docs/archive/completed-roadmap/issue-8/16-issue8-defender-exclusion-policy.md"
       ],
       "notes": "Implemented Defender policy capability. PR Fast CI must stay on policy, state, mock, or WhatIf paths and must not mutate Defender settings."
     },
@@ -79,7 +79,7 @@
         "tests/pester/Issue9SysprepAppxGate.Tests.ps1"
       ],
       "docs": [
-        "docs/20-issue9-sysprep-appx-gate.md"
+        "docs/archive/completed-roadmap/issue-9/20-issue9-sysprep-appx-gate.md"
       ],
       "notes": "Audit and readiness capability only. This registry entry does not authorize Sysprep, AppX removal, or DISM removal."
     },
@@ -107,7 +107,7 @@
         "tests/pester/Issue10ContextScope.Tests.ps1"
       ],
       "docs": [
-        "docs/24-issue10-context-scope-split.md"
+        "docs/archive/completed-roadmap/issue-10/24-issue10-context-scope-split.md"
       ],
       "notes": "Plan and report capability only. It must not perform real registry, profile, or Default User hive mutation."
     },
@@ -136,7 +136,7 @@
         "tests/pester/Issue12BuildLock.Tests.ps1"
       ],
       "docs": [
-        "docs/32-issue12-build-lock.md"
+        "docs/archive/completed-roadmap/issue-12/32-issue12-build-lock.md"
       ],
       "notes": "Audit/report-only immutable input lock. It validates selected trusted inputs and does not build images or mutate the system."
     },
@@ -166,7 +166,7 @@
         "tests/pester/Issue13EnsureState.Tests.ps1"
       ],
       "docs": [
-        "docs/36-issue13-ensure-state.md"
+        "docs/archive/completed-roadmap/issue-13/36-issue13-ensure-state.md"
       ],
       "notes": "Plan/report-only convergence for software and services. The software manifest is the primary registry anchor; services manifest is paired evidence. PR Fast CI uses fixtures and does not install software or mutate services."
     }

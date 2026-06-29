@@ -1,12 +1,12 @@
-﻿$RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
+$RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
 
 Describe "Issue 8 close preparation evidence" {
     BeforeAll {
         $script:RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
 
-        $script:Doc18Path = Join-Path $script:RepoRoot "docs\18-issue8-close-preparation.md"
-        $script:Doc17Path = Join-Path $script:RepoRoot "docs\17-issue8-defender-exclusion-acceptance.md"
+        $script:Doc18Path = Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-8\18-issue8-close-preparation.md"
+        $script:Doc17Path = Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-8\17-issue8-defender-exclusion-acceptance.md"
         $script:ReadmePath = Join-Path $script:RepoRoot "README.md"
         $script:CiPath = Join-Path $script:RepoRoot ".github\workflows\ci.yml"
 
@@ -57,10 +57,10 @@ Describe "Issue 8 close preparation evidence" {
 
     It "keeps the Issue 8 evidence chain complete" {
         foreach ($requiredTerm in @(
-            "docs/16-issue8-defender-exclusion-policy.md";
-            "docs/17-issue8-defender-exclusion-acceptance.md";
-            "docs/18-issue8-close-preparation.md";
-            "docs/19-issue8-main-validation-evidence.md";
+            "docs/archive/completed-roadmap/issue-8/16-issue8-defender-exclusion-policy.md";
+            "docs/archive/completed-roadmap/issue-8/17-issue8-defender-exclusion-acceptance.md";
+            "docs/archive/completed-roadmap/issue-8/18-issue8-close-preparation.md";
+            "docs/archive/completed-roadmap/issue-8/19-issue8-main-validation-evidence.md";
             "tests/pester/DefenderExclusionPolicy.Tests.ps1";
             "tests/pester/DefenderExclusionState.Tests.ps1";
             "tests/pester/DefenderExclusionPostDeploy.Tests.ps1";
@@ -112,11 +112,11 @@ Describe "Issue 8 close preparation evidence" {
     }
 
     It "links README, docs 17, docs 18, and docs 19 entry points" {
-        if (-not $script:Readme.Contains("docs/18-issue8-close-preparation.md")) {
+        if (-not $script:Readme.Contains("docs/archive/completed-roadmap/issue-8/18-issue8-close-preparation.md")) {
             throw "README is missing docs/18 entry."
         }
 
-        if (-not $script:Readme.Contains("docs/19-issue8-main-validation-evidence.md")) {
+        if (-not $script:Readme.Contains("docs/archive/completed-roadmap/issue-8/19-issue8-main-validation-evidence.md")) {
             throw "README is missing docs/19 entry."
         }
 

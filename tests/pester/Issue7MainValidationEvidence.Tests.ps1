@@ -5,8 +5,8 @@ Describe "Issue 7 main validation evidence" {
         $script:RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
 
-        $script:Doc15Path = Join-Path $script:RepoRoot "docs\15-issue7-main-validation-evidence.md"
-        $script:Doc14Path = Join-Path $script:RepoRoot "docs\14-issue7-close-preparation.md"
+        $script:Doc15Path = Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-7\15-issue7-main-validation-evidence.md"
+        $script:Doc14Path = Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-7\14-issue7-close-preparation.md"
         $script:ReadmePath = Join-Path $script:RepoRoot "README.md"
         $script:CiPath = Join-Path $script:RepoRoot ".github\workflows\ci.yml"
 
@@ -28,9 +28,9 @@ Describe "Issue 7 main validation evidence" {
 
     It "keeps the evidence chain complete" {
         foreach ($requiredTerm in @(
-            "docs/13-issue7-junction-transaction-acceptance.md";
-            "docs/14-issue7-close-preparation.md";
-            "docs/15-issue7-main-validation-evidence.md";
+            "docs/archive/completed-roadmap/issue-7/13-issue7-junction-transaction-acceptance.md";
+            "docs/archive/completed-roadmap/issue-7/14-issue7-close-preparation.md";
+            "docs/archive/completed-roadmap/issue-7/15-issue7-main-validation-evidence.md";
             "tests/pester/JunctionTransactionPreflight.Tests.ps1";
             "tests/pester/JunctionTransactionExecution.Tests.ps1";
             "tests/pester/JunctionStateVerification.Tests.ps1";
@@ -127,7 +127,7 @@ Describe "Issue 7 main validation evidence" {
     }
 
     It "links README, docs 14, and docs 15" {
-        if (-not $script:Readme.Contains("docs/15-issue7-main-validation-evidence.md")) {
+        if (-not $script:Readme.Contains("docs/archive/completed-roadmap/issue-7/15-issue7-main-validation-evidence.md")) {
             throw "README is missing the docs/15 main validation evidence entry."
         }
 
@@ -135,7 +135,7 @@ Describe "Issue 7 main validation evidence" {
             throw "docs/14 must link to docs/15."
         }
 
-        if (-not $script:Doc15.Contains("docs/14-issue7-close-preparation.md")) {
+        if (-not $script:Doc15.Contains("docs/archive/completed-roadmap/issue-7/14-issue7-close-preparation.md")) {
             throw "docs/15 must reference docs/14."
         }
     }

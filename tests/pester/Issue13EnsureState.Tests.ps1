@@ -9,9 +9,9 @@ Describe "Issue 13 ensure-state guardrails" {
 
     It "keeps docs and README entry wired" {
         $readme = Get-Content -LiteralPath (Join-Path $script:RepoRoot "README.md") -Raw -Encoding UTF8
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\36-issue13-ensure-state.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-13\36-issue13-ensure-state.md") -Raw -Encoding UTF8
 
-        Assert-KitMatch $readme "docs/36-issue13-ensure-state\.md"
+        Assert-KitMatch $readme "docs/archive/completed-roadmap/issue-13/36-issue13-ensure-state\.md"
         Assert-KitMatch $doc "fixture.*report-only"
         Assert-KitNotMatch $doc "(?i)closes #13|fixes #13|resolves #13"
     }

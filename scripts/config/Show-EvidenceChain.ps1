@@ -54,7 +54,7 @@ Write-Host ("Producer normalization: normalized={0}; missing={1}; mismatch={2}; 
     $report.producerNormalization.disallowedManualCount, `
     $report.producerNormalization.disallowedNotCapturedCount, `
     $report.producerNormalization.inputPolicyViolationCount)
-$mainEvidencePath = Join-Path $repoRoot "docs\51-issue16-main-validation-evidence.md"
+$mainEvidencePath = Join-Path $repoRoot "docs\archive\completed-roadmap\issue-16\51-issue16-main-validation-evidence.md"
 $mainEvidenceStatus = $null
 if (Test-Path -LiteralPath $mainEvidencePath) {
     $mainEvidenceText = Get-Content -LiteralPath $mainEvidencePath -Raw -Encoding UTF8

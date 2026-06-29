@@ -6,7 +6,7 @@ Describe "Future true UX restore mock decision ledger" {
     }
 
     It "documents required mock ledger states and frozen execution flags" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\82-future-true-ux-restore-mock-decision-ledger.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\01-mock-review\82-future-true-ux-restore-mock-decision-ledger.md") -Raw -Encoding UTF8
 
         Assert-KitMatch $doc 'Status:\s*`mock-decision-ledger`'
         foreach ($stage in @("received", "packet-complete", "authorization-review-ready", "execute-ready-blocked", "true-execution-blocked")) {

@@ -7,7 +7,7 @@ Describe "Issue 11 capability registry acceptance" {
     }
 
     It "documents acceptance scope, non-goals, matrix, extension checklist, and evidence links" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\29-issue11-capability-registry-acceptance.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-11\29-issue11-capability-registry-acceptance.md") -Raw -Encoding UTF8
         $statusMatch = [regex]::Match($doc, '(?m)^Status: `([^`]+)`')
 
         Assert-KitEqual $statusMatch.Success $true
@@ -82,7 +82,7 @@ Describe "Issue 11 capability registry acceptance" {
         $readme = Get-Content -LiteralPath (Join-Path $script:RepoRoot "README.md") -Raw -Encoding UTF8
         $workflow = Get-Content -LiteralPath (Join-Path $script:RepoRoot ".github\workflows\ci.yml") -Raw -Encoding UTF8
 
-        Assert-KitMatch $readme "docs/29-issue11-capability-registry-acceptance\.md"
+        Assert-KitMatch $readme "docs/archive/completed-roadmap/issue-11/29-issue11-capability-registry-acceptance\.md"
         foreach ($testPath in @(
             "tests/pester/CapabilityRegistrySchema.Tests.ps1",
             "tests/pester/CapabilityRegistryConsistency.Tests.ps1",

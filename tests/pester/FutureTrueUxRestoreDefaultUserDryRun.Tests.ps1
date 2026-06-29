@@ -6,7 +6,7 @@ Describe "Future true UX restore default-user dry-run gate" {
     }
 
     It "keeps docs and manifest in default-user dry-run state" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\72-future-true-ux-restore-default-user-dry-run-gate.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\00-governance\72-future-true-ux-restore-default-user-dry-run-gate.md") -Raw -Encoding UTF8
         $manifest = Get-Content -LiteralPath (Join-Path $script:RepoRoot "manifests\future-true-ux-restore-authorization.json") -Raw -Encoding UTF8 | ConvertFrom-Json
         $section = $manifest.defaultUserDryRun
 

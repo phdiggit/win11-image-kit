@@ -9,7 +9,7 @@
       "id": "blocked-registry-mutation",
       "stage": "system",
       "mode": "manual",
-      "entrypoint": "docs/52-issue17-controlled-execution-intake.md",
+      "entrypoint": "docs/archive/completed-roadmap/issue-17/52-issue17-controlled-execution-intake.md",
       "requiresAdmin": true,
       "requiresWinPE": false,
       "requiresNetwork": false,

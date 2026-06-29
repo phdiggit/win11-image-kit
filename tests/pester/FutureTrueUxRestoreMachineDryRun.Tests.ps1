@@ -6,7 +6,7 @@ Describe "Future true UX restore machine dry-run gate" {
     }
 
     It "keeps docs and manifest in machine dry-run state" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\74-future-true-ux-restore-machine-dry-run-gate.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\00-governance\74-future-true-ux-restore-machine-dry-run-gate.md") -Raw -Encoding UTF8
         $manifest = Get-Content -LiteralPath (Join-Path $script:RepoRoot "manifests\future-true-ux-restore-authorization.json") -Raw -Encoding UTF8 | ConvertFrom-Json
         $section = $manifest.machineDryRun
 

@@ -5,7 +5,7 @@ Describe "Issue 17 controlled execution acceptance scaffold" {
     }
 
     It "keeps docs/53 accepted and ready for manual closure" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\53-issue17-controlled-execution-acceptance.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-17\53-issue17-controlled-execution-acceptance.md") -Raw -Encoding UTF8
 
         Assert-KitMatch $doc 'Status: `accepted-ready-for-manual-closure`'
         Assert-KitMatch $doc "does not claim real lifecycle execution evidence"
@@ -15,7 +15,7 @@ Describe "Issue 17 controlled execution acceptance scaffold" {
     }
 
     It "documents safety boundaries without claiming true execution" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\53-issue17-controlled-execution-acceptance.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-17\53-issue17-controlled-execution-acceptance.md") -Raw -Encoding UTF8
 
         foreach ($pattern in @(
             "no real build, capture, deploy",

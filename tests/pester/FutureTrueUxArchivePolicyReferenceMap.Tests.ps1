@@ -2,20 +2,20 @@ Describe "Future True UX archive policy reference map" {
     BeforeAll {
         $script:RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
-        $script:DocPath = Join-Path $script:RepoRoot "docs\110-future-true-ux-archive-policy-reference-map.md"
+        $script:DocPath = Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\00-governance\110-future-true-ux-archive-policy-reference-map.md"
         $script:Doc = Get-Content -LiteralPath $script:DocPath -Raw -Encoding UTF8
-        $script:QualityGatePolicy = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\109-future-true-ux-quality-gate-governance.md") -Raw -Encoding UTF8
+        $script:QualityGatePolicy = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\00-governance\109-future-true-ux-quality-gate-governance.md") -Raw -Encoding UTF8
     }
 
-    It "records the archive policy and required categories" {
+    It "records the post-move archive policy and required categories" {
         Assert-KitEqual (Test-Path -LiteralPath $script:DocPath) $true
         Assert-KitMatch $script:Doc 'Status:\s*`future-true-ux-archive-policy-reference-map`'
         foreach ($term in @(
             "Canonical active",
             "Active safety guardrail",
-            "Historical stage evidence / archive candidate",
-            "Must not move until references are updated",
-            "Delete candidates"
+            "Archived historical stage evidence",
+            "Delete candidates",
+            "Current Archive Maintenance Procedure"
         )) {
             Assert-KitMatch $script:Doc ([regex]::Escape($term))
         }
@@ -43,23 +43,21 @@ Describe "Future True UX archive policy reference map" {
         Assert-KitNotMatch $script:Doc "trueExecution\s*=\s*true"
     }
 
-    It "keeps archive candidates blocked from immediate move or deletion" {
+    It "documents archived stage paths and former root paths" {
         foreach ($path in @(
-            "docs/80-future-true-ux-restore-mock-review-packet-drill.md",
-            "docs/82-future-true-ux-restore-mock-decision-ledger.md",
-            "docs/92-future-true-ux-restore-integrated-authorization-packet-preview.md",
-            "docs/97-future-true-ux-restore-human-authorization-handoff.md",
-            "docs/102-future-true-ux-restore-end-to-end-no-execution-readiness-audit.md",
-            "docs/105-future-true-ux-restore-no-execution-stop-line.md"
+            "docs/archive/future-true-ux-restore/01-mock-review/80-future-true-ux-restore-mock-review-packet-drill.md",
+            "docs/archive/future-true-ux-restore/01-mock-review/82-future-true-ux-restore-mock-decision-ledger.md",
+            "docs/archive/future-true-ux-restore/04-packet-preview/92-future-true-ux-restore-integrated-authorization-packet-preview.md",
+            "docs/archive/future-true-ux-restore/05-human-handoff/97-future-true-ux-restore-human-authorization-handoff.md",
+            "docs/archive/future-true-ux-restore/06-no-execution-audit/102-future-true-ux-restore-end-to-end-no-execution-readiness-audit.md",
+            "docs/archive/future-true-ux-restore/06-no-execution-audit/105-future-true-ux-restore-no-execution-stop-line.md"
         )) {
-            $pathCell = '| `' + $path + '` |'
-            Assert-KitMatch $script:Doc ([regex]::Escape($pathCell))
-            Assert-KitMatch $script:Doc ([regex]::Escape($pathCell + " no | no |"))
-            Assert-KitMatch $script:Doc ("(?m)" + [regex]::Escape($pathCell) + ".*\\| no \\|$")
+            Assert-KitMatch $script:Doc ([regex]::Escape('`' + $path + '`'))
+            Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot ($path -replace '/', '\'))) $true
         }
 
+        Assert-KitMatch $script:Doc ([regex]::Escape('`docs/80-future-true-ux-restore-mock-review-packet-drill.md`'))
+        Assert-KitMatch $script:Doc ([regex]::Escape('`docs/105-future-true-ux-restore-no-execution-stop-line.md`'))
         Assert-KitMatch $script:Doc '\| Delete candidates \| None \|'
-        Assert-KitMatch $script:Doc "No deletion is safe in this task"
-        Assert-KitMatch $script:Doc "No move in this task"
     }
 }

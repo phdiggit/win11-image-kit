@@ -6,7 +6,7 @@ Describe "Issue 11 capability registry guardrails" {
     }
 
     It "documents the capability registry and links it from README" {
-        $docPath = Join-Path $script:RepoRoot "docs\28-issue11-capability-registry.md"
+        $docPath = Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-11\28-issue11-capability-registry.md"
         $readmePath = Join-Path $script:RepoRoot "README.md"
 
         Assert-KitEqual (Test-Path -LiteralPath $docPath) $true
@@ -16,7 +16,7 @@ Describe "Issue 11 capability registry guardrails" {
         foreach ($term in @("capability registry", "mutationLevel", "context", "Test-CapabilityRegistry.ps1", "PR Fast CI Boundary")) {
             Assert-KitMatch $doc ([regex]::Escape($term))
         }
-        Assert-KitMatch $readme "docs/28-issue11-capability-registry\.md"
+        Assert-KitMatch $readme "docs/archive/completed-roadmap/issue-11/28-issue11-capability-registry\.md"
     }
 
     It "wires Issue 11 tests into PR Fast CI" {
@@ -64,7 +64,7 @@ Describe "Issue 11 capability registry guardrails" {
 
     It "does not contain issue-closing keywords aimed at issue 11" {
         $files = @(
-            "docs\28-issue11-capability-registry.md",
+            "docs\archive\completed-roadmap\issue-11\28-issue11-capability-registry.md",
             "tests\pester\Issue11CapabilityRegistry.Tests.ps1"
         )
 

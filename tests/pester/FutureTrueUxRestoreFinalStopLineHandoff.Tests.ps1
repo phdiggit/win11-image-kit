@@ -37,8 +37,8 @@ Describe "Future true UX restore final stop-line handoff" {
     }
 
     It "keeps stop-line docs present with expected status markers" {
-        $doc106 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\106-future-true-ux-restore-final-stop-line-handoff.md") -Raw -Encoding UTF8
-        $doc107 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\107-future-true-ux-restore-stop-line-decision-matrix.md") -Raw -Encoding UTF8
+        $doc106 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\00-governance\106-future-true-ux-restore-final-stop-line-handoff.md") -Raw -Encoding UTF8
+        $doc107 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\00-governance\107-future-true-ux-restore-stop-line-decision-matrix.md") -Raw -Encoding UTF8
 
         Assert-KitMatch $doc106 'Status:\s*`final-stop-line-handoff`'
         Assert-KitMatch $doc107 'Status:\s*`stop-line-decision-matrix`'

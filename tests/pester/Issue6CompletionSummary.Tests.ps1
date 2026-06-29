@@ -6,7 +6,7 @@ Describe "Issue 6 completion summary archive" {
         $script:RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
 
-        $script:DocPath = Join-Path $script:RepoRoot "docs\12-issue6-completion-summary.md"
+        $script:DocPath = Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-6\12-issue6-completion-summary.md"
         $script:Doc = Get-Content -LiteralPath $script:DocPath -Raw -Encoding UTF8
         $script:Readme = Get-Content -LiteralPath (Join-Path $script:RepoRoot "README.md") -Raw -Encoding UTF8
     }
@@ -23,7 +23,7 @@ Describe "Issue 6 completion summary archive" {
             "required / optional failure policy";
             "childReportSummary";
             "Main Full Validate evidence record";
-            "docs/11-issue6-main-validation-evidence.md"
+            "docs/archive/completed-roadmap/issue-6/11-issue6-main-validation-evidence.md"
         )) {
             if (-not $script:Doc.Contains($term)) {
                 throw "Issue 6 completion summary is missing required term: $term"
@@ -36,7 +36,7 @@ Describe "Issue 6 completion summary archive" {
             "docs/08-";
             "docs/09-issue6-";
             "docs/10-issue6-";
-            "docs/11-issue6-main-validation-evidence.md"
+            "docs/archive/completed-roadmap/issue-6/11-issue6-main-validation-evidence.md"
         )) {
             if (-not $script:Doc.Contains($docPathPrefix)) {
                 throw "Issue 6 completion summary is missing evidence document prefix: $docPathPrefix"
@@ -59,7 +59,7 @@ Describe "Issue 6 completion summary archive" {
     }
 
     It "links the completion summary from README" {
-        if (-not $script:Readme.Contains("docs/12-issue6-completion-summary.md")) {
+        if (-not $script:Readme.Contains("docs/archive/completed-roadmap/issue-6/12-issue6-completion-summary.md")) {
             throw "README is missing the Issue 6 completion summary link."
         }
     }

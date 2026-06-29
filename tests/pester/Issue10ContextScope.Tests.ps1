@@ -5,7 +5,7 @@ Describe "Issue 10 context scope acceptance" {
     }
 
     It "documents the context split and links it from README" {
-        $docPath = Join-Path $script:RepoRoot "docs\24-issue10-context-scope-split.md"
+        $docPath = Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-10\24-issue10-context-scope-split.md"
         $readmePath = Join-Path $script:RepoRoot "README.md"
 
         Assert-KitEqual (Test-Path -LiteralPath $docPath) $true
@@ -16,7 +16,7 @@ Describe "Issue 10 context scope acceptance" {
         Assert-KitMatch $doc "default-user"
         Assert-KitMatch $doc "current-user"
         Assert-KitMatch $doc "must not load a real Default User hive"
-        Assert-KitMatch $readme "docs/24-issue10-context-scope-split.md"
+        Assert-KitMatch $readme "docs/archive/completed-roadmap/issue-10/24-issue10-context-scope-split.md"
     }
 
     It "keeps active context code free of uncontrolled registry and hive writes" {

@@ -5,7 +5,7 @@ Describe "Issue 18 restore handler integration" {
     }
 
     It "keeps docs/61 accepted and ready for manual closure" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\61-issue18-restore-handler-integration.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-18\61-issue18-restore-handler-integration.md") -Raw -Encoding UTF8
         Assert-KitMatch $doc 'Status: `accepted-ready-for-manual-closure`'
         Assert-KitMatch $doc "report-only"
         Assert-KitMatch $doc "post-PR #96 main/workflow Full Validate success"

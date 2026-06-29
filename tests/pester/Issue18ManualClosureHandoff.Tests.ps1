@@ -2,7 +2,7 @@ Describe "Issue 18 manual closure handoff" {
     BeforeAll {
         $script:RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
-        $script:DocPath = Join-Path $script:RepoRoot "docs\64-issue18-manual-closure-handoff.md"
+        $script:DocPath = Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-18\64-issue18-manual-closure-handoff.md"
         $script:Doc = Get-Content -LiteralPath $script:DocPath -Raw -Encoding UTF8
     }
 
@@ -37,8 +37,8 @@ Describe "Issue 18 manual closure handoff" {
 
         $buildLock = Get-Content -LiteralPath (Join-Path $script:RepoRoot "manifests\build-lock.json") -Raw -Encoding UTF8 | ConvertFrom-Json
         $paths = @($buildLock.entries.path)
-        Assert-KitEqual ($paths -contains "docs/64-issue18-manual-closure-handoff.md") $true
-        Assert-KitEqual ($paths -contains "docs/65-future-true-ux-restore-execution-split.md") $true
+        Assert-KitEqual ($paths -contains "docs/archive/completed-roadmap/issue-18/64-issue18-manual-closure-handoff.md") $true
+        Assert-KitEqual ($paths -contains "docs/archive/future-true-ux-restore/00-governance/65-future-true-ux-restore-execution-split.md") $true
         Assert-KitEqual ($paths -contains "tests/pester/Issue18ManualClosureHandoff.Tests.ps1") $true
         Assert-KitEqual ($paths -contains "tests/pester/Issue18FutureTrueUxRestoreSplit.Tests.ps1") $true
         Assert-KitEqual ($paths -contains "manifests/paths.local.json") $false

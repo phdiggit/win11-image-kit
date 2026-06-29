@@ -5,7 +5,7 @@ Describe "Issue 16 evidence chain acceptance scaffold" {
     }
 
     It "tracks accepted state with close-prep and main evidence documents" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\49-issue16-evidence-chain-acceptance.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-16\49-issue16-evidence-chain-acceptance.md") -Raw -Encoding UTF8
 
         $statusMatch = [regex]::Match($doc, 'Status:\s*`([^`]+)`')
         Assert-KitEqual $statusMatch.Success $true
@@ -47,7 +47,7 @@ Describe "Issue 16 evidence chain acceptance scaffold" {
         $paths = @($buildLock.entries.path)
         $evidenceGate = @($qualityGates.gates | Where-Object { $_.id -eq "evidence-chain" })[0]
 
-        Assert-KitMatch $readme "docs/49-issue16-evidence-chain-acceptance\.md"
+        Assert-KitMatch $readme "docs/archive/completed-roadmap/issue-16/49-issue16-evidence-chain-acceptance\.md"
         foreach ($testName in @("EvidenceChainRunId", "EvidenceChainArtifactIndex", "EvidenceChainRedaction", "EvidenceChainProducerNormalization", "EvidenceChainInputIndex", "EvidenceChainProducerAdapter", "EvidenceChainClosePrep", "Issue16EvidenceChainAcceptance", "Issue16ClosePrep", "Issue16MainValidationEvidence")) {
             Assert-KitMatch $ci ("tests/pester/{0}\.Tests\.ps1" -f $testName)
         }
@@ -58,9 +58,9 @@ Describe "Issue 16 evidence chain acceptance scaffold" {
         Assert-KitMatch $evidenceGate.notes "redaction policy"
 
         foreach ($path in @(
-            "docs/49-issue16-evidence-chain-acceptance.md",
-            "docs/50-issue16-close-preparation.md",
-            "docs/51-issue16-main-validation-evidence.md",
+            "docs/archive/completed-roadmap/issue-16/49-issue16-evidence-chain-acceptance.md",
+            "docs/archive/completed-roadmap/issue-16/50-issue16-close-preparation.md",
+            "docs/archive/completed-roadmap/issue-16/51-issue16-main-validation-evidence.md",
             "manifests/evidence-report-inputs.json",
             "schemas/evidence-report-inputs.schema.json",
             "schemas/evidence-artifact-index.schema.json",
@@ -89,18 +89,18 @@ Describe "Issue 16 evidence chain acceptance scaffold" {
 
     It "keeps Issue 16 close artifacts as candidate or pending only with no auto-close wording" {
         foreach ($path in @(
-            "docs\50-issue16-close-preparation.md",
-            "docs\51-issue16-main-validation-evidence.md"
+            "docs\archive\completed-roadmap\issue-16\50-issue16-close-preparation.md",
+            "docs\archive\completed-roadmap\issue-16\51-issue16-main-validation-evidence.md"
         )) {
             Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot $path)) $true
         }
         Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot "docs\52-issue16-completion-summary.md")) $false
 
         $text = @(
-            Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\48-issue16-evidence-chain-report.md") -Raw -Encoding UTF8
-            Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\49-issue16-evidence-chain-acceptance.md") -Raw -Encoding UTF8
-            Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\50-issue16-close-preparation.md") -Raw -Encoding UTF8
-            Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\51-issue16-main-validation-evidence.md") -Raw -Encoding UTF8
+            Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-16\48-issue16-evidence-chain-report.md") -Raw -Encoding UTF8
+            Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-16\49-issue16-evidence-chain-acceptance.md") -Raw -Encoding UTF8
+            Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-16\50-issue16-close-preparation.md") -Raw -Encoding UTF8
+            Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-16\51-issue16-main-validation-evidence.md") -Raw -Encoding UTF8
             Get-Content -LiteralPath (Join-Path $script:RepoRoot "README.md") -Raw -Encoding UTF8
         ) -join "`n"
         Assert-KitNotMatch $text "(?i)\b(fixes|closes|resolves)\s+#16\b"

@@ -9,7 +9,7 @@
       "id": "fixture-plan-action",
       "stage": "preflight",
       "mode": "report-only",
-      "entrypoint": "docs/52-issue17-controlled-execution-intake.md",
+      "entrypoint": "docs/archive/completed-roadmap/issue-17/52-issue17-controlled-execution-intake.md",
       "requiresAdmin": false,
       "requiresWinPE": false,
       "requiresNetwork": false,

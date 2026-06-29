@@ -5,7 +5,7 @@ Describe "Issue 16 evidence chain intake" {
     }
 
     It "documents the real Issue 16 source, scope, non-goals, and safety boundaries" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\48-issue16-evidence-chain-report.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-16\48-issue16-evidence-chain-report.md") -Raw -Encoding UTF8
 
         foreach ($term in @(
             "GitHub Issue #16",
@@ -42,14 +42,14 @@ Describe "Issue 16 evidence chain intake" {
         $paths = @($buildLock.entries.path)
         $gateIds = @($qualityGates.gates.id)
 
-        Assert-KitMatch $readme "docs/48-issue16-evidence-chain-report\.md"
+        Assert-KitMatch $readme "docs/archive/completed-roadmap/issue-16/48-issue16-evidence-chain-report\.md"
         Assert-KitMatch $ci "Test-EvidenceChain\.ps1"
         Assert-KitMatch $ci "Issue16EvidenceChain\.Tests\.ps1"
         Assert-KitMatch $ci "EvidenceChain"
         Assert-KitEqual ($gateIds -contains "evidence-chain") $true
 
         foreach ($path in @(
-            "docs/48-issue16-evidence-chain-report.md",
+            "docs/archive/completed-roadmap/issue-16/48-issue16-evidence-chain-report.md",
             "manifests/evidence-chain.json",
             "schemas/evidence-chain.schema.json",
             "schemas/evidence-chain-report.schema.json",
@@ -72,7 +72,7 @@ Describe "Issue 16 evidence chain intake" {
 
     It "does not introduce auto-close wording or Issue 16 close artifacts" {
         $text = @(
-            Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\48-issue16-evidence-chain-report.md") -Raw -Encoding UTF8
+            Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-16\48-issue16-evidence-chain-report.md") -Raw -Encoding UTF8
             Get-Content -LiteralPath (Join-Path $script:RepoRoot "README.md") -Raw -Encoding UTF8
         ) -join "`n"
 
@@ -87,10 +87,15 @@ Describe "Issue 16 evidence chain intake" {
         }
     }
 
-    It "does not touch Issue 6 through Issue 15 close artifacts in this stage" {
-        $changedNames = git -c core.quotepath=false diff --name-only
-        foreach ($name in @($changedNames)) {
-            Assert-KitNotMatch $name 'docs/[0-9]+-issue(6|7|8|9|10|11|12|13|14|15).*(close|main-validation|completion)'
+    It "keeps Issue 6 through Issue 15 close artifacts archived without auto-close drift" {
+        foreach ($issue in 6..15) {
+            Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-$issue")) $true
+        }
+
+        $docs = @(Get-ChildItem -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap") -Filter "*.md" -Recurse | Where-Object { $_.FullName -match 'issue-(6|7|8|9|10|11|12|13|14|15)' })
+        foreach ($doc in $docs) {
+            $text = Get-Content -LiteralPath $doc.FullName -Raw -Encoding UTF8
+            Assert-KitNotMatch $text "(?i)\b(fixes|closes|resolves)\s+#(6|7|8|9|10|11|12|13|14|15)\b"
         }
     }
 }

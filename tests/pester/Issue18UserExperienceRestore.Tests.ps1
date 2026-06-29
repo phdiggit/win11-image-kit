@@ -5,7 +5,7 @@ Describe "Issue 18 user experience restore intake" {
     }
 
     It "records the real Issue 18 and Roadmap 19 source" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\58-issue18-user-experience-restore-intake.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-18\58-issue18-user-experience-restore-intake.md") -Raw -Encoding UTF8
 
         Assert-KitMatch $doc 'Status: `in-progress`'
         Assert-KitMatch $doc "https://github.com/phdiggit/win11-image-kit/issues/18"
@@ -15,7 +15,7 @@ Describe "Issue 18 user experience restore intake" {
     }
 
     It "does not add Issue 18 completion summary docs" {
-        $docs = @(Get-ChildItem -Path (Join-Path $script:RepoRoot "docs") -Filter "*issue18*.md" | ForEach-Object { $_.Name })
+        $docs = @(Get-ChildItem -Path (Join-Path $script:RepoRoot "docs") -Filter "*issue18*.md" -Recurse | ForEach-Object { $_.Name })
 
         Assert-KitEqual ($docs -contains "58-issue18-user-experience-restore-intake.md") $true
         Assert-KitEqual ($docs -contains "59-issue18-user-experience-restore-acceptance.md") $true

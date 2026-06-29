@@ -6,7 +6,7 @@ Describe "Future true UX restore scope guard matrix" {
     }
 
     It "documents the four-scope guard matrix" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\75-future-true-ux-restore-scope-guard-matrix.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\00-governance\75-future-true-ux-restore-scope-guard-matrix.md") -Raw -Encoding UTF8
 
         Assert-KitMatch $doc 'Status:\s*`scope-guard-matrix`'
         foreach ($scope in @("current-user", "default-user", "offline-image", "machine")) {

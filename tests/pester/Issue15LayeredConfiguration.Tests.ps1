@@ -5,7 +5,7 @@ Describe "Issue 15 layered configuration intake" {
     }
 
     It "documents the real Issue 15 scope and safety boundaries" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\44-issue15-layered-configuration.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-15\44-issue15-layered-configuration.md") -Raw -Encoding UTF8
 
         foreach ($term in @(
             "GitHub Issue #15",
@@ -43,7 +43,7 @@ Describe "Issue 15 layered configuration intake" {
 
     It "does not introduce auto-close wording for Issue 15" {
         $text = @(
-            Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\44-issue15-layered-configuration.md") -Raw -Encoding UTF8
+            Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-15\44-issue15-layered-configuration.md") -Raw -Encoding UTF8
             Get-Content -LiteralPath (Join-Path $script:RepoRoot "README.md") -Raw -Encoding UTF8
         ) -join "`n"
 
@@ -58,13 +58,13 @@ Describe "Issue 15 layered configuration intake" {
         $paths = @($buildLock.entries.path)
         $gateIds = @($qualityGates.gates.id)
 
-        Assert-KitMatch $readme "docs/44-issue15-layered-configuration\.md"
+        Assert-KitMatch $readme "docs/archive/completed-roadmap/issue-15/44-issue15-layered-configuration\.md"
         Assert-KitMatch $ci "Issue15LayeredConfiguration\.Tests\.ps1"
         Assert-KitMatch $ci "EffectiveConfiguration"
         Assert-KitEqual ($gateIds -contains "effective-configuration") $true
 
         foreach ($path in @(
-            "docs/44-issue15-layered-configuration.md",
+            "docs/archive/completed-roadmap/issue-15/44-issue15-layered-configuration.md",
             "manifests/config-layers.json",
             "schemas/config-layers.schema.json",
             "schemas/config-layer-fragment.schema.json",
@@ -86,10 +86,15 @@ Describe "Issue 15 layered configuration intake" {
         }
     }
 
-    It "does not touch Issue 6 through Issue 14 close artifacts in this stage" {
-        $changedNames = git -c core.quotepath=false diff --name-only
-        foreach ($name in @($changedNames)) {
-            Assert-KitNotMatch $name 'docs/[0-9]+-issue(6|7|8|9|10|11|12|13|14).*(close|main-validation|completion)'
+    It "keeps Issue 6 through Issue 14 close artifacts archived without auto-close drift" {
+        foreach ($issue in 6..14) {
+            Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-$issue")) $true
+        }
+
+        $docs = @(Get-ChildItem -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap") -Filter "*.md" -Recurse | Where-Object { $_.FullName -match 'issue-(6|7|8|9|10|11|12|13|14)' })
+        foreach ($doc in $docs) {
+            $text = Get-Content -LiteralPath $doc.FullName -Raw -Encoding UTF8
+            Assert-KitNotMatch $text "(?i)\b(fixes|closes|resolves)\s+#(6|7|8|9|10|11|12|13|14)\b"
         }
     }
 }

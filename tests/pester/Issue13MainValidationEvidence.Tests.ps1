@@ -5,7 +5,7 @@ Describe "Issue 13 main validation evidence" {
     }
 
     It "allows pending or ready evidence state" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\39-issue13-main-validation-evidence.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-13\39-issue13-main-validation-evidence.md") -Raw -Encoding UTF8
         $statusMatch = [regex]::Match($doc, '(?m)^Status: `([^`]+)`')
 
         Assert-KitEqual $statusMatch.Success $true
@@ -24,7 +24,7 @@ Describe "Issue 13 main validation evidence" {
     }
 
     It "validates pending or ready evidence details" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\39-issue13-main-validation-evidence.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-13\39-issue13-main-validation-evidence.md") -Raw -Encoding UTF8
         $status = ([regex]::Match($doc, '(?m)^Status: `([^`]+)`')).Groups[1].Value
 
         if ($status -eq "pending-main-validation") {
@@ -58,7 +58,7 @@ Describe "Issue 13 main validation evidence" {
     }
 
     It "documents ready-state rules for future main evidence" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\39-issue13-main-validation-evidence.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-13\39-issue13-main-validation-evidence.md") -Raw -Encoding UTF8
 
         foreach ($term in @(
             'Trigger source is `main push` or `workflow_dispatch`',
@@ -75,7 +75,7 @@ Describe "Issue 13 main validation evidence" {
     }
 
     It "keeps PR Fast CI separate from main evidence and smoke optional" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\39-issue13-main-validation-evidence.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-13\39-issue13-main-validation-evidence.md") -Raw -Encoding UTF8
 
         foreach ($term in @(
             "Pull request-only Fast CI is not a substitute",
@@ -94,10 +94,10 @@ Describe "Issue 13 main validation evidence" {
 
     It "links main-evidence scaffold from README, docs, and PR Fast CI" {
         $readme = Get-Content -LiteralPath (Join-Path $script:RepoRoot "README.md") -Raw -Encoding UTF8
-        $runbook = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\36-issue13-ensure-state.md") -Raw -Encoding UTF8
+        $runbook = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-13\36-issue13-ensure-state.md") -Raw -Encoding UTF8
         $workflow = Get-Content -LiteralPath (Join-Path $script:RepoRoot ".github\workflows\ci.yml") -Raw -Encoding UTF8
 
-        Assert-KitMatch $readme "docs/39-issue13-main-validation-evidence\.md"
+        Assert-KitMatch $readme "docs/archive/completed-roadmap/issue-13/39-issue13-main-validation-evidence\.md"
         Assert-KitMatch $runbook "39-issue13-main-validation-evidence\.md"
         Assert-KitMatch $workflow ([regex]::Escape("tests/pester/Issue13MainValidationEvidence.Tests.ps1"))
     }

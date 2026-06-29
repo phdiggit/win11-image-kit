@@ -6,7 +6,7 @@ Describe "Issue 12 build lock acceptance" {
     }
 
     It "documents acceptance scope, non-goals, matrix, update checklist, and CI boundary" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\33-issue12-build-lock-acceptance.md") -Raw -Encoding UTF8
+        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-12\33-issue12-build-lock-acceptance.md") -Raw -Encoding UTF8
         $statusMatch = [regex]::Match($doc, '(?m)^Status: `([^`]+)`')
 
         Assert-KitEqual $statusMatch.Success $true
@@ -79,13 +79,13 @@ Describe "Issue 12 build lock acceptance" {
             algorithm = "SHA256"
             mode = "verify"
             entries = @([pscustomobject]@{
-                path = "docs/32-issue12-build-lock.md"
+                path = "docs/archive/completed-roadmap/issue-12/32-issue12-build-lock.md"
                 category = "doc"
                 required = $true
                 hash = "9b724b7875c7a7a6d25bb8c7a4b349a9fdb2d82aa451ed5b06fe0615aa6cf940"
                 reason = "fixture"
             })
-            watchGlobs = @("docs/32-issue12-build-lock.md")
+            watchGlobs = @("docs/archive/completed-roadmap/issue-12/32-issue12-build-lock.md")
             policy = [pscustomobject]@{
                 missingRequired = "fail"
                 hashMismatch = "manual"
@@ -106,7 +106,7 @@ Describe "Issue 12 build lock acceptance" {
         $readme = Get-Content -LiteralPath (Join-Path $script:RepoRoot "README.md") -Raw -Encoding UTF8
         $workflow = Get-Content -LiteralPath (Join-Path $script:RepoRoot ".github\workflows\ci.yml") -Raw -Encoding UTF8
 
-        Assert-KitMatch $readme "docs/33-issue12-build-lock-acceptance\.md"
+        Assert-KitMatch $readme "docs/archive/completed-roadmap/issue-12/33-issue12-build-lock-acceptance\.md"
         foreach ($testPath in @(
             "tests/pester/BuildLockSchema.Tests.ps1",
             "tests/pester/BuildLockHash.Tests.ps1",

@@ -2,7 +2,7 @@ Describe "Issue 15 close preparation candidate" {
     BeforeAll {
         $script:RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
-        $script:DocPath = Join-Path $script:RepoRoot "docs\46-issue15-close-preparation.md"
+        $script:DocPath = Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-15\46-issue15-close-preparation.md"
         $script:Doc = Get-Content -LiteralPath $script:DocPath -Raw -Encoding UTF8
     }
 
@@ -18,7 +18,7 @@ Describe "Issue 15 close preparation candidate" {
     It "requires main validation evidence when close prep is ready" {
         if ($script:Doc -match 'Status:\s*`ready-for-manual-closure`') {
             Assert-KitMatch $script:Doc "post-PR #77 main push Full Validate"
-            $evidenceDoc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\47-issue15-main-validation-evidence.md") -Raw -Encoding UTF8
+            $evidenceDoc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-15\47-issue15-main-validation-evidence.md") -Raw -Encoding UTF8
             Assert-KitMatch $evidenceDoc 'Status:\s*`ready-for-manual-closure`'
             Assert-KitMatch $evidenceDoc '\| Result \| `success` \|'
         }
@@ -36,7 +36,7 @@ Describe "Issue 15 close preparation candidate" {
 
         Assert-KitMatch $workflow "tests/pester/Issue15ClosePrep\.Tests\.ps1"
         Assert-KitMatch $workflow "tests/pester/Issue15MainValidationEvidence\.Tests\.ps1"
-        Assert-KitEqual ($paths -contains "docs/46-issue15-close-preparation.md") $true
-        Assert-KitEqual ($paths -contains "docs/47-issue15-main-validation-evidence.md") $true
+        Assert-KitEqual ($paths -contains "docs/archive/completed-roadmap/issue-15/46-issue15-close-preparation.md") $true
+        Assert-KitEqual ($paths -contains "docs/archive/completed-roadmap/issue-15/47-issue15-main-validation-evidence.md") $true
     }
 }

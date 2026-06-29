@@ -2,7 +2,7 @@ Describe "Issue 10 close preparation guardrails" {
     BeforeEach {
         $script:RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
-        $script:DocPath = Join-Path $script:RepoRoot "docs\26-issue10-close-preparation.md"
+        $script:DocPath = Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-10\26-issue10-close-preparation.md"
         $script:Doc = Get-Content -LiteralPath $script:DocPath -Raw -Encoding UTF8
     }
 
@@ -64,7 +64,7 @@ Describe "Issue 10 close preparation guardrails" {
         $readme = Get-Content -LiteralPath (Join-Path $script:RepoRoot "README.md") -Raw -Encoding UTF8
         $workflow = Get-Content -LiteralPath (Join-Path $script:RepoRoot ".github\workflows\ci.yml") -Raw -Encoding UTF8
 
-        Assert-KitMatch $readme "docs/26-issue10-close-preparation\.md"
+        Assert-KitMatch $readme "docs/archive/completed-roadmap/issue-10/26-issue10-close-preparation\.md"
         Assert-KitMatch $workflow ([regex]::Escape("tests/pester/Issue10ClosePrep.Tests.ps1"))
     }
 }
