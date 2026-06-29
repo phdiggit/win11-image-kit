@@ -26,8 +26,19 @@ The shared helper `scripts/common/FutureTrueUxRestore.Guards.ps1` centralizes on
 |---|---|---|
 | `Get-FutureTrueUxRestoreFrozenFlagNames` | Returns frozen boolean flag names used by review reports. | No mutation. |
 | `New-FutureTrueUxRestoreFrozenExecutionState` | Returns the canonical false/zero execution state object. | No mutation. |
+| `Get-FutureTrueUxRestoreSupportedScopes` | Returns the allowed report-only scope names used by review packet validators. | No mutation. |
+| `Get-FutureTrueUxRestoreGuardValue` | Reads an optional property with a caller-supplied default. | No mutation. |
+| `Get-FutureTrueUxRestoreFrozenStateDrift` | Returns the frozen flag and mutation-count fields that drifted from false/zero. | No mutation. |
+| `Get-FutureTrueUxRestoreFrozenStateMessages` | Returns blocking-reason text for frozen flag or mutation-count drift. | No mutation. |
 | `Test-FutureTrueUxRestoreTruthy` | Normalizes truthy fixture values for negative review guard checks. | No mutation. |
 | `Get-FutureTrueUxRestoreDangerousVocabularyPattern` | Provides the blocked high-risk vocabulary regex for report-only review scanning. | No mutation. |
+| `Get-FutureTrueUxRestoreIssueAutoClosePattern` | Provides the Issue auto-close wording regex for report/request scans. | No mutation. |
+| `Get-FutureTrueUxRestoreReviewStateDriftPattern` | Provides the review-state drift regex for packet, checklist, and handoff scans. | No mutation. |
+| `Get-FutureTrueUxRestoreStatePromotionPattern` | Provides the separated-state promotion regex for no-execution audit scans. | No mutation. |
+| `Get-FutureTrueUxRestoreEvidencePromotionPattern` | Provides scoped review-material-to-real-evidence promotion regexes while preserving stage-specific wording. | No mutation. |
+| `Get-FutureTrueUxRestoreDangerousCommandPatterns` | Provides direct dangerous command regexes for validator self-scans. | No mutation. |
+| `Get-FutureTrueUxRestoreDocumentText` | Reads an existing document as UTF-8 text, or returns empty text for missing paths. | No mutation. |
+| `Test-FutureTrueUxRestoreStatusMarker` | Checks a document status marker. | No mutation. |
 
 ## Reference Map
 
@@ -51,11 +62,33 @@ The shared helper `scripts/common/FutureTrueUxRestore.Guards.ps1` centralizes on
 | `future-true-ux-end-to-end-no-execution-readiness-audit` | `scripts/validate/Test-FutureTrueUxRestoreEndToEndNoExecutionReadinessAudit.ps1` | `report-only` | Existing validator remains the gate entrypoint. |
 | `future-true-ux-final-stop-line-handoff` | `scripts/validate/Test-FutureTrueUxRestoreFinalStopLineHandoff.ps1` | `report-only` | Final stop-line remains protected. |
 
+## Batch 2 Consolidation
+
+Batch 2 keeps the same validator entrypoints and moves repeated report-only guard logic into the shared helper. The consolidation covers seven report helpers:
+
+- `scripts/common/New-FutureTrueUxRestoreAuthorizationReport.ps1` dot-sources the guard helper for downstream report helpers.
+- `scripts/common/New-FutureTrueUxRestoreAuthorizationReviewReport.ps1` now uses shared scope, frozen-state, and Issue auto-close helpers.
+- `scripts/common/New-FutureTrueUxRestoreApprovalChecklistErgonomicsReport.ps1` now uses shared scope, frozen-state, review-state drift, and evidence-promotion helpers.
+- `scripts/common/New-FutureTrueUxRestoreIntegratedPacketPreviewReport.ps1` now uses shared scope, frozen-state, review-state drift, and evidence-promotion helpers.
+- `scripts/common/New-FutureTrueUxRestoreHumanAuthorizationHandoffReport.ps1` now uses shared scope, frozen-state, review-state drift, and evidence-promotion helpers.
+- `scripts/common/New-FutureTrueUxRestoreEndToEndNoExecutionReadinessAuditReport.ps1` now uses shared frozen-state drift, document text, status marker, Issue auto-close, state-promotion, evidence-promotion, and dangerous-command helpers.
+- `scripts/common/New-FutureTrueUxRestoreFinalStopLineHandoffReport.ps1` now uses shared frozen-state drift, document text, status marker, Issue auto-close, and dangerous-command helpers.
+
+`tests/pester/FutureTrueUxPesterHelpers.ps1` adds Pester-only assertions for governance document boundaries, Future True UX gate semantics, dangerous command scans, and Build Lock path checks. Existing governance tests call this helper instead of repeating the same frozen-state and gate checks.
+
 ## Findings
 
-The script surface has deliberate duplication around frozen execution flags and blocked execution vocabulary. A small helper extraction is safe because it only returns static values or regex text, and because the quality gate manifest still points at the existing validators and documents.
+The script surface had deliberate duplication around frozen execution flags, supported scope names, Issue auto-close scans, state-promotion scans, evidence-promotion scans, document status checks, and blocked execution vocabulary. A helper extraction is safe because it only returns static values, text checks, or regex text, and because the quality gate manifest still points at the existing validators and documents.
 
-No validate entrypoint was renamed or consolidated. The new helper is used by mock review and negative review reports only, where the repeated values were already local report-only guard data.
+No validate entrypoint was renamed or consolidated. No quality gate ID, trigger, layer, required/blocking setting, or report-only mode was changed. No report schema field was removed or renamed.
+
+The intentionally unconsolidated surface remains:
+
+- validator entrypoints under `scripts/validate/`;
+- quality gate IDs and gate ordering in `manifests/quality-gates.json`;
+- report JSON field names consumed by existing Pester and validators;
+- GitHub workflow wiring;
+- true execution paths, including restore, registry, AppX, Defender, service, WinPE, Sysprep, installer, image, or VM actions.
 
 ## Guardrails
 
@@ -70,4 +103,4 @@ The Pester coverage in `tests/pester/FutureTrueUxValidatorScriptGovernance.Tests
 
 ## Next Recommended Task
 
-The next task should audit whether the remaining repeated frozen-flag checks in packet preview, handoff, final stop-line, and no-execution audit reports can call the shared helper without changing any report schema or quality gate entrypoint.
+The next task should audit whether the Future True UX validator entrypoints can share a small invocation wrapper for manifest loading and report-path emission without changing any report schema, gate entrypoint, or report-only boundary.

@@ -2,28 +2,6 @@
 
 . "$PSScriptRoot\New-FutureTrueUxRestoreAuthorizationReport.ps1"
 
-function Get-FutureTrueUxRestoreAuditText {
-    param(
-        [Parameter(Mandatory)]
-        [string]$Path
-    )
-
-    if (-not (Test-Path -LiteralPath $Path)) {
-        return ""
-    }
-
-    Get-Content -LiteralPath $Path -Raw -Encoding UTF8
-}
-
-function New-FutureTrueUxRestoreAuditPattern {
-    param(
-        [Parameter(Mandatory)]
-        [string[]]$Parts
-    )
-
-    [regex]::Escape(($Parts -join ""))
-}
-
 function New-FutureTrueUxRestoreEndToEndNoExecutionReadinessAuditReport {
     [CmdletBinding()]
     param(
@@ -103,28 +81,11 @@ function New-FutureTrueUxRestoreEndToEndNoExecutionReadinessAuditReport {
             continue
         }
 
-        foreach ($flagName in @("authorizationApproved", "executionApproved", "executeReady", "trueExecution")) {
-            if ([bool](Get-FutureTrueUxRestoreValue -InputObject $layerObject -Name $flagName -DefaultValue $false)) {
-                $flagDrift += "$layer.$flagName"
-            }
-        }
-        if ([int](Get-FutureTrueUxRestoreValue -InputObject $layerObject -Name "mutationCount" -DefaultValue 0) -ne 0) {
-            $flagDrift += "$layer.mutationCount"
-        }
+        $flagDrift += @(Get-FutureTrueUxRestoreFrozenStateDrift -InputObject $layerObject -Prefix "$layer.")
     }
-    foreach ($flagName in @("authorizationApproved", "executionApproved", "executeReady", "trueExecution")) {
-        if ([bool](Get-FutureTrueUxRestoreValue -InputObject $Request -Name $flagName -DefaultValue $false)) {
-            $flagDrift += "request.$flagName"
-        }
-        if ($null -ne $section -and [bool](Get-FutureTrueUxRestoreValue -InputObject $section -Name $flagName -DefaultValue $false)) {
-            $flagDrift += "audit.$flagName"
-        }
-    }
-    if ([int](Get-FutureTrueUxRestoreValue -InputObject $Request -Name "mutationCount" -DefaultValue 0) -ne 0) {
-        $flagDrift += "request.mutationCount"
-    }
-    if ($null -ne $section -and [int](Get-FutureTrueUxRestoreValue -InputObject $section -Name "mutationCount" -DefaultValue 0) -ne 0) {
-        $flagDrift += "audit.mutationCount"
+    $flagDrift += @(Get-FutureTrueUxRestoreFrozenStateDrift -InputObject $Request -Prefix "request.")
+    if ($null -ne $section) {
+        $flagDrift += @(Get-FutureTrueUxRestoreFrozenStateDrift -InputObject $section -Prefix "audit.")
     }
     if ($flagDrift.Count -gt 0) {
         $blockingReasons += "execution flags drifted: $($flagDrift -join ', ')"
@@ -167,10 +128,10 @@ function New-FutureTrueUxRestoreEndToEndNoExecutionReadinessAuditReport {
     $missingDocStatuses = @()
     foreach ($doc in $requiredDocs) {
         $resolvedDoc = Resolve-FutureTrueUxRestoreRepoPath -RepoRoot $RepoRoot -Path $doc.Path
-        $text = Get-FutureTrueUxRestoreAuditText -Path $resolvedDoc
+        $text = Get-FutureTrueUxRestoreDocumentText -Path $resolvedDoc
         if ([string]::IsNullOrWhiteSpace($text)) {
             $missingDocs += $doc.Path
-        } elseif ($text -notmatch ('Status:\s*`{0}`' -f [regex]::Escape($doc.Status))) {
+        } elseif (-not (Test-FutureTrueUxRestoreStatusMarker -Text $text -Status $doc.Status)) {
             $missingDocStatuses += $doc.Path
         }
     }
@@ -186,20 +147,23 @@ function New-FutureTrueUxRestoreEndToEndNoExecutionReadinessAuditReport {
     $autoCloseMatches = @()
     $statePromotionMatches = @()
     $evidencePromotionMatches = @()
+    $autoClosePattern = Get-FutureTrueUxRestoreIssueAutoClosePattern -IssueNumber 18
+    $statePromotionPattern = Get-FutureTrueUxRestoreStatePromotionPattern
+    $evidencePromotionPattern = Get-FutureTrueUxRestoreEvidencePromotionPattern -Scope NoExecutionAudit
     $stopLineSeen = $false
     foreach ($docFile in $futureDocs) {
-        $text = Get-FutureTrueUxRestoreAuditText -Path $docFile.FullName
-        if ($text -match '(?i)\b(fixes|closes|resolves)\s+#18\b') {
+        $text = Get-FutureTrueUxRestoreDocumentText -Path $docFile.FullName
+        if ($text -match $autoClosePattern) {
             $autoCloseMatches += $docFile.Name
         }
         if ($text -match '(?i)\b(no-execution stop line|stops before human authorization|stops at review readiness)\b') {
             $stopLineSeen = $true
         }
         foreach ($line in @($text -split "`r?`n")) {
-            if ($line -match '(?i)\b(handoff-ready-for-human-review|packet-preview-ready|approval-checklist-ready|authorization-review-ready)\b.*\b(is|becomes|promotes to|counts as)\b.*\b(authorization-review-ready|execute-ready|closure-ready)\b' -and $line -notmatch '(?i)\bnot\b') {
+            if ($line -match $statePromotionPattern -and $line -notmatch '(?i)\bnot\b') {
                 $statePromotionMatches += "$($docFile.Name): $line"
             }
-            if ($line -match '(?i)\b(CI|dry-run|handler report|manual checklist|mock packet|negative drill|approval checklist|packet preview|handoff report)\b.*\b(is|counts as|promotes to|can be treated as)\b.*\b(true UX restore evidence|real restore evidence|real UX evidence)\b' -and $line -notmatch '(?i)\bnot\b') {
+            if ($line -match $evidencePromotionPattern -and $line -notmatch '(?i)\bnot\b') {
                 $evidencePromotionMatches += "$($docFile.Name): $line"
             }
         }
@@ -215,31 +179,17 @@ function New-FutureTrueUxRestoreEndToEndNoExecutionReadinessAuditReport {
     }
 
     $requestText = (@($Request | Get-FutureTrueUxRestoreStrings) -join "`n")
-    if ($requestText -match '(?i)\b(fixes|closes|resolves)\s+#18\b') {
+    if ($requestText -match $autoClosePattern) {
         $blockingReasons += "request contains Issue 18 auto-close wording"
     }
-    if ($requestText -match '(?i)\b(handoff-ready-for-human-review|packet-preview-ready|approval-checklist-ready|authorization-review-ready)\b.*\b(is|becomes|promotes to|counts as)\b.*\b(authorization-review-ready|execute-ready|closure-ready)\b' -and $requestText -notmatch '(?i)\bnot\b') {
+    if ($requestText -match $statePromotionPattern -and $requestText -notmatch '(?i)\bnot\b') {
         $blockingReasons += "request promotes separated states"
     }
-    if ($requestText -match '(?i)\b(CI|dry-run|handler report|manual checklist|mock packet|negative drill|approval checklist|packet preview|handoff report)\b.*\b(is|counts as|promotes to|can be treated as)\b.*\b(true UX restore evidence|real restore evidence|real UX evidence)\b' -and $requestText -notmatch '(?i)\bnot\b') {
+    if ($requestText -match $evidencePromotionPattern -and $requestText -notmatch '(?i)\bnot\b') {
         $needsReworkReasons += "request promotes review material into real evidence"
     }
 
-    $commandPatterns = @(
-        (New-FutureTrueUxRestoreAuditPattern -Parts @("Start", "-", "Process")),
-        (New-FutureTrueUxRestoreAuditPattern -Parts @("Invoke", "-", "Expression")),
-        (New-FutureTrueUxRestoreAuditPattern -Parts @("Set", "-", "Item", "Property")),
-        (New-FutureTrueUxRestoreAuditPattern -Parts @("New", "-", "Item", "Property")),
-        (New-FutureTrueUxRestoreAuditPattern -Parts @("Remove", "-", "Appx", "Package")),
-        (New-FutureTrueUxRestoreAuditPattern -Parts @("Add", "-", "Mp", "Preference")),
-        "\b$(([char]100).ToString())$(([char]105).ToString())$(([char]115).ToString())$(([char]109).ToString())\b",
-        "\b$(([char]119).ToString())$(([char]105).ToString())$(([char]110).ToString())$(([char]103).ToString())$(([char]101).ToString())$(([char]116).ToString())\b",
-        "\b$(([char]99).ToString())$(([char]104).ToString())$(([char]111).ToString())$(([char]99).ToString())$(([char]111).ToString())\b",
-        "\b$(([char]109).ToString())$(([char]115).ToString())$(([char]105).ToString())$(([char]101).ToString())$(([char]120).ToString())$(([char]101).ToString())$(([char]99).ToString())\b",
-        (New-FutureTrueUxRestoreAuditPattern -Parts @("Invoke", "-", "Web", "Request")),
-        (New-FutureTrueUxRestoreAuditPattern -Parts @("Invoke", "-", "Rest", "Method")),
-        (New-FutureTrueUxRestoreAuditPattern -Parts @("Install", "-", "Module"))
-    )
+    $commandPatterns = @(Get-FutureTrueUxRestoreDangerousCommandPatterns)
     $scriptScanPaths = @(
         "scripts/common/New-FutureTrueUxRestoreEndToEndNoExecutionReadinessAuditReport.ps1",
         "scripts/validate/Test-FutureTrueUxRestoreEndToEndNoExecutionReadinessAudit.ps1"
@@ -247,7 +197,7 @@ function New-FutureTrueUxRestoreEndToEndNoExecutionReadinessAuditReport {
     $dangerousScriptMatches = @()
     foreach ($relativePath in $scriptScanPaths) {
         $scriptPath = Resolve-FutureTrueUxRestoreRepoPath -RepoRoot $RepoRoot -Path $relativePath
-        $scriptText = Get-FutureTrueUxRestoreAuditText -Path $scriptPath
+        $scriptText = Get-FutureTrueUxRestoreDocumentText -Path $scriptPath
         foreach ($pattern in $commandPatterns) {
             if ($scriptText -match $pattern) {
                 $dangerousScriptMatches += "$relativePath"
