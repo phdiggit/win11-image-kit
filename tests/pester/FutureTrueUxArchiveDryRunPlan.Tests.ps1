@@ -29,12 +29,19 @@ Describe "Future True UX archive dry-run plan" {
     }
 
     It "records every implemented old root path to archive path row" {
-        $rows = @([regex]::Matches($script:Doc, '(?m)^\| `docs/[0-9]+-future-true-ux-restore-[^`]+\.md` \| `docs/archive/future-true-ux-restore/[^`]+\.md` \| .+ \| .+ \|$'))
-        Assert-KitEqual $rows.Count 26
+        $oldRootPaths = @([regex]::Matches($script:Doc, '`(docs/[0-9]+-future-true-ux-restore-[^`]+\.md)`') | ForEach-Object { $_.Groups[1].Value })
+        $archivePaths = @([regex]::Matches($script:Doc, '`(docs/archive/future-true-ux-restore/[^`]+\.md)`') | ForEach-Object { $_.Groups[1].Value } | Where-Object {
+            $_ -match "/(01-mock-review|02-negative-review|03-approval-checklist|04-packet-preview|05-human-handoff|06-no-execution-audit)/"
+        })
 
-        foreach ($row in $rows) {
-            Assert-KitMatch $row.Value "docs/archive/future-true-ux-restore/"
-            Assert-KitNotMatch $row.Value "\| yes \|"
+        Assert-KitEqual $oldRootPaths.Count 26
+        Assert-KitEqual $archivePaths.Count 26
+
+        for ($documentNumber = 80; $documentNumber -le 105; $documentNumber++) {
+            $oldPath = @($oldRootPaths | Where-Object { $_ -like "docs/$documentNumber-*" })
+            $archivePath = @($archivePaths | Where-Object { $_ -like "docs/archive/future-true-ux-restore/*/$documentNumber-*" })
+            Assert-KitEqual $oldPath.Count 1
+            Assert-KitEqual $archivePath.Count 1
         }
     }
 

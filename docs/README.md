@@ -37,5 +37,6 @@ Future True UX Restore 的后续规划从以下归档治理入口开始：
 - [`archive/future-true-ux-restore/00-governance/106-future-true-ux-restore-final-stop-line-handoff.md`](archive/future-true-ux-restore/00-governance/106-future-true-ux-restore-final-stop-line-handoff.md)
 - [`archive/future-true-ux-restore/00-governance/107-future-true-ux-restore-stop-line-decision-matrix.md`](archive/future-true-ux-restore/00-governance/107-future-true-ux-restore-stop-line-decision-matrix.md)
 - [`archive/future-true-ux-restore/00-governance/109-future-true-ux-quality-gate-governance.md`](archive/future-true-ux-restore/00-governance/109-future-true-ux-quality-gate-governance.md)
+- [`archive/future-true-ux-restore/00-governance/112-future-true-ux-validator-script-governance.md`](archive/future-true-ux-restore/00-governance/112-future-true-ux-validator-script-governance.md)
 
 Archive 内容不授权真实执行、真实证据提升、Issue 自动关闭、注册表写入、AppX 修改、Defender 修改、Start menu 或 taskbar 修改、Sysprep、DISM、WinPE 执行、服务变更、镜像服务、下载、安装或 VM mutation。
