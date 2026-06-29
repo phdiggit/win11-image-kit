@@ -68,10 +68,10 @@ Describe "Future true UX restore mock review safety" {
 
     It "does not create Issue 18 completion summary or touch Issue 6-17 closure docs" {
         foreach ($path in @(
-            "docs\80-future-true-ux-restore-mock-review-packet-drill.md",
-            "docs\81-future-true-ux-restore-mock-maintainer-review-transcript.md",
-            "docs\82-future-true-ux-restore-mock-decision-ledger.md",
-            "docs\83-future-true-ux-restore-mock-drill-lessons.md"
+            "docs\archive\future-true-ux-restore\01-mock-review\80-future-true-ux-restore-mock-review-packet-drill.md",
+            "docs\archive\future-true-ux-restore\01-mock-review\81-future-true-ux-restore-mock-maintainer-review-transcript.md",
+            "docs\archive\future-true-ux-restore\01-mock-review\82-future-true-ux-restore-mock-decision-ledger.md",
+            "docs\archive\future-true-ux-restore\01-mock-review\83-future-true-ux-restore-mock-drill-lessons.md"
         )) {
             $text = Get-Content -LiteralPath (Join-Path $script:RepoRoot $path) -Raw -Encoding UTF8
             Assert-KitNotMatch $text "(?i)\b(fixes|closes|resolves)\s+#18\b"

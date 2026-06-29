@@ -27,10 +27,10 @@ Frozen semantics for this governance task:
 | Canonical entry documents | `README.md`, `AGENTS.md`, `docs/codex-workflow.md`, `docs/codex-task-card-template.md`, `docs/00-*.md` through `docs/08-*.md` | Keep in place. These are project entry, operator workflow, and baseline runbook documents. Do not move without updating README, AGENTS, tests, and Build Lock together. |
 | Active roadmap and governance anchors | `docs/32-issue12-build-lock.md`, `docs/40-issue14-quality-gates.md`, `docs/48-issue16-evidence-chain-report.md`, `docs/52-issue17-controlled-execution-intake.md`, `docs/58-issue18-user-experience-restore-intake.md`, `docs/64-issue18-manual-closure-handoff.md`, `docs/65-future-true-ux-restore-execution-split.md`, `docs/106-future-true-ux-restore-final-stop-line-handoff.md`, `docs/107-future-true-ux-restore-stop-line-decision-matrix.md` | Keep active. These define current governance, safety boundary, manual handoff, and final stop-line semantics. |
 | Active validation and gate documents | `docs/09-*.md` through `docs/64-*.md` for Issues #6-#18, plus `docs/66-*.md` through `docs/79-*.md` where referenced by current quality gates or validators | Keep in place while corresponding Pester tests, quality gates, or Build Lock entries reference them. They are still part of the validation graph even when a roadmap issue has already been manually closed. |
-| Superseded Future True UX Restore stage documents | `docs/80-*.md` through `docs/105-*.md` | Treat as superseded stage evidence, not canonical planning instructions. They should remain available until a follow-up governance PR either archives them with updated references or proves no gate/test/Build Lock dependency remains. |
-| Archive candidates | Future True UX drill transcripts, decision ledgers, lessons, packet-preview maps, blocker indexes, and handoff placeholder documents in `docs/81-*.md` through `docs/105-*.md` | Candidate only. Many are directly referenced by Pester and Build Lock. Do not move in this task. A follow-up should create an explicit archive plan and update references atomically. |
+| Superseded Future True UX Restore stage documents | `docs/archive/future-true-ux-restore/01-mock-review/` through `docs/archive/future-true-ux-restore/06-no-execution-audit/` | Archived as historical stage evidence, not canonical planning instructions. Current references should point to archive paths after the docs governance implementation move. |
+| Archived Future True UX stage families | Mock review, negative review, approval checklist, packet preview, human handoff, and no-execution audit documents formerly in root `docs/80-*.md` through `docs/105-*.md` | Keep available under archive for review history. Do not treat archive content as a current true UX restore planning entrypoint. |
 | Delete candidates | None identified as safe for immediate deletion | No deletion in this audit. Current references are dense enough that deletion-first cleanup would be risky without a dedicated reference-removal PR. |
-| Must not move in this task | `README.md`, `AGENTS.md`, `docs/codex-workflow.md`, `docs/32-issue12-build-lock.md`, `docs/40-issue14-quality-gates.md`, `docs/58-*.md` through `docs/64-*.md`, `docs/65-*.md` through `docs/107-*.md` | These are referenced by README, Quality Gates, Build Lock, Pester, validator report builders, or Future True UX handoff manifests. |
+| Must remain canonical in root | `README.md`, `AGENTS.md`, `docs/README.md`, `docs/codex-workflow.md`, `docs/32-issue12-build-lock.md`, `docs/40-issue14-quality-gates.md`, `docs/58-*.md` through `docs/79-*.md`, `docs/106-*.md` through `docs/111-*.md` | These are current entrypoints, quality gates, governance docs, safety guardrails, or final stop-line documents. |
 
 ## Script And Fixture Inventory
 
@@ -53,9 +53,9 @@ Frozen semantics for this governance task:
 Observed alignment:
 
 - Quality Gates contain 69 gates. Seventeen are Future True UX gates, all currently required and report-only.
-- Build Lock contains Future True UX documents, manifests, schemas, report builders, validators, fixtures, and Pester tests for the full preparation chain.
+- Build Lock contains Future True UX documents, manifests, schemas, report builders, validators, fixtures, archived stage documents, and Pester tests for the full preparation chain.
 - README points users to the Issue #18 report-only stage, manual handoff, execution split, authorization intake, evidence model, and dry-run plan.
-- Pester directly reads many Future True UX documents by path, especially `docs/65-*.md` through `docs/107-*.md`.
+- Pester directly reads many Future True UX documents by path, including current root docs and archived stage docs.
 
 Governance findings:
 
@@ -64,8 +64,8 @@ Governance findings:
 | Gate placement is scattered by issue chronology rather than one governance section | Future True UX gates appear after Issue #18 gates, among controlled-execution gates, and near later Issue #15/#16 entries in `manifests/quality-gates.json` | Follow-up PR should group Future True UX gates or add a manifest-level grouping convention without changing CI behavior. |
 | Gate naming style is mostly consistent but not uniform | Gate IDs mix `future-true-ux-restore-*`, `future-true-ux-*`, and scope-specific names | Follow-up should decide whether ID churn is worth it. If renamed, update Build Lock, Pester expectations, reports, and PR body notes together. |
 | Historical stage gates are still required | Mock drill, negative drill, checklist ergonomics, packet preview, human handoff, end-to-end audit, and final stop-line are required PR-fast gates | Keep for now. These protect safety boundaries, but a future governance task may demote some to manual/archive after preserving the final stop-line guard. |
-| Build Lock points to superseded stage docs by design | `docs/80-*.md` through `docs/105-*.md` are locked and tested | Do not remove from Build Lock in this task. First create an archive policy and then update paths/hashes/tests in one PR. |
-| Tests protect historical stage docs | `FutureTrueUxRestore*.Tests.ps1` includes explicit path assertions for most Future True UX documents | Keep tests until references are consolidated. Any archive move must update tests in the same PR. |
+| Build Lock points to archived stage docs by design | `docs/archive/future-true-ux-restore/**` stage docs are locked and tested | Keep archive paths in Build Lock until a later policy explicitly demotes or removes historical stage coverage. |
+| Tests protect archived stage docs | `FutureTrueUxRestore*.Tests.ps1` includes explicit path assertions for current and archived Future True UX documents | Keep tests until references are consolidated. Any later archive restructuring must update tests in the same PR. |
 
 ## Boundary For Open Issues
 
@@ -85,17 +85,11 @@ This task does not edit or close GitHub issues. The following remain open unless
 
 - `.github/workflows/ci.yml`
 - Existing quality gate ordering and required flags
-- Existing Build Lock entries and hashes
+- Existing Build Lock safety policy
 - Existing Future True UX manifests, schemas, validators, fixtures, and report builders
-- Any docs archive, move, rename, or delete operation
+- Any completed-roadmap archive move, unrelated doc rename, or document deletion
 - Any true execution or system mutation path
 
 ## Next Recommended Governance Task
 
-Create a narrow follow-up PR that chooses one of these paths:
-
-1. Group Future True UX quality gates in `manifests/quality-gates.json` without changing required/report-only semantics.
-2. Add an archive policy for superseded Future True UX stage documents, then move only documents whose README, Build Lock, validator, and Pester references are updated in the same PR.
-3. Consolidate duplicate Future True UX report-only validators after proving the final stop-line, no-execution, no-auto-close, and evidence-boundary assertions remain covered.
-
-Recommended order: start with quality gate grouping and naming policy, then archive planning, then validator consolidation. That keeps the safety net intact while reducing visual clutter.
+Create a narrow follow-up PR for Future True UX validator consolidation. Inspect whether duplicate `New-FutureTrueUxRestore*.ps1`, `Test-FutureTrueUxRestore*.ps1`, and related Pester fixtures can be consolidated without weakening final stop-line, no-execution, no-auto-close, and evidence-boundary assertions.

@@ -10,10 +10,10 @@ Describe "Future true UX restore authorization state machine" {
             @{ Path = "docs\77-future-true-ux-restore-maintainer-review-checkpoint.md"; Status = "review-checkpoint-draft" },
             @{ Path = "docs\78-future-true-ux-restore-evidence-packet-contract.md"; Status = "evidence-packet-draft" },
             @{ Path = "docs\79-future-true-ux-restore-authorization-state-machine.md"; Status = "authorization-state-machine" },
-            @{ Path = "docs\80-future-true-ux-restore-mock-review-packet-drill.md"; Status = "mock-review-drill" },
-            @{ Path = "docs\81-future-true-ux-restore-mock-maintainer-review-transcript.md"; Status = "mock-review-transcript" },
-            @{ Path = "docs\82-future-true-ux-restore-mock-decision-ledger.md"; Status = "mock-decision-ledger" },
-            @{ Path = "docs\83-future-true-ux-restore-mock-drill-lessons.md"; Status = "mock-drill-lessons" }
+            @{ Path = "docs\archive\future-true-ux-restore\01-mock-review\80-future-true-ux-restore-mock-review-packet-drill.md"; Status = "mock-review-drill" },
+            @{ Path = "docs\archive\future-true-ux-restore\01-mock-review\81-future-true-ux-restore-mock-maintainer-review-transcript.md"; Status = "mock-review-transcript" },
+            @{ Path = "docs\archive\future-true-ux-restore\01-mock-review\82-future-true-ux-restore-mock-decision-ledger.md"; Status = "mock-decision-ledger" },
+            @{ Path = "docs\archive\future-true-ux-restore\01-mock-review\83-future-true-ux-restore-mock-drill-lessons.md"; Status = "mock-drill-lessons" }
         )
 
         foreach ($docInfo in $docs) {

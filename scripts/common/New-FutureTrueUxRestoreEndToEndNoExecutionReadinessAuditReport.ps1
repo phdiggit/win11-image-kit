@@ -158,10 +158,10 @@ function New-FutureTrueUxRestoreEndToEndNoExecutionReadinessAuditReport {
     }
 
     $requiredDocs = @(
-        @{ Path = "docs/102-future-true-ux-restore-end-to-end-no-execution-readiness-audit.md"; Status = "end-to-end-no-execution-readiness-audit" },
-        @{ Path = "docs/103-future-true-ux-restore-state-name-separation-matrix.md"; Status = "state-name-separation-matrix" },
-        @{ Path = "docs/104-future-true-ux-restore-artifact-chain-consistency-index.md"; Status = "artifact-chain-consistency-index" },
-        @{ Path = "docs/105-future-true-ux-restore-no-execution-stop-line.md"; Status = "no-execution-stop-line" }
+        @{ Path = "docs/archive/future-true-ux-restore/06-no-execution-audit/102-future-true-ux-restore-end-to-end-no-execution-readiness-audit.md"; Status = "end-to-end-no-execution-readiness-audit" },
+        @{ Path = "docs/archive/future-true-ux-restore/06-no-execution-audit/103-future-true-ux-restore-state-name-separation-matrix.md"; Status = "state-name-separation-matrix" },
+        @{ Path = "docs/archive/future-true-ux-restore/06-no-execution-audit/104-future-true-ux-restore-artifact-chain-consistency-index.md"; Status = "artifact-chain-consistency-index" },
+        @{ Path = "docs/archive/future-true-ux-restore/06-no-execution-audit/105-future-true-ux-restore-no-execution-stop-line.md"; Status = "no-execution-stop-line" }
     )
     $missingDocs = @()
     $missingDocStatuses = @()
@@ -182,7 +182,7 @@ function New-FutureTrueUxRestoreEndToEndNoExecutionReadinessAuditReport {
     }
 
     $docRoot = Resolve-FutureTrueUxRestoreRepoPath -RepoRoot $RepoRoot -Path "docs"
-    $futureDocs = @(Get-ChildItem -LiteralPath $docRoot -Filter "*future-true-ux-restore*.md" | Where-Object { $_.Name -match '^\d+' })
+    $futureDocs = @(Get-ChildItem -LiteralPath $docRoot -Filter "*future-true-ux-restore*.md" -Recurse | Where-Object { $_.Name -match '^\d+' })
     $autoCloseMatches = @()
     $statePromotionMatches = @()
     $evidencePromotionMatches = @()

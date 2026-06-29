@@ -514,7 +514,7 @@
       "mode": "report-only",
       "required": true,
       "blocking": true,
-      "entrypoint": "docs/82-future-true-ux-restore-mock-decision-ledger.md",
+      "entrypoint": "docs/archive/future-true-ux-restore/01-mock-review/82-future-true-ux-restore-mock-decision-ledger.md",
       "evidence": "document",
       "notes": "Records mock review decisions while keeping execution blocked."
     },

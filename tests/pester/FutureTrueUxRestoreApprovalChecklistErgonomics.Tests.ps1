@@ -55,10 +55,10 @@ Describe "Future true UX restore approval checklist ergonomics" {
 
     It "keeps docs free of Issue 18 auto-close keywords" {
         foreach ($path in @(
-            "docs\88-future-true-ux-restore-maintainer-approval-checklist-ergonomics.md",
-            "docs\89-future-true-ux-restore-review-packet-readability-guide.md",
-            "docs\90-future-true-ux-restore-manual-decision-form-template.md",
-            "docs\91-future-true-ux-restore-approval-checklist-lessons.md"
+            "docs\archive\future-true-ux-restore\03-approval-checklist\88-future-true-ux-restore-maintainer-approval-checklist-ergonomics.md",
+            "docs\archive\future-true-ux-restore\03-approval-checklist\89-future-true-ux-restore-review-packet-readability-guide.md",
+            "docs\archive\future-true-ux-restore\03-approval-checklist\90-future-true-ux-restore-manual-decision-form-template.md",
+            "docs\archive\future-true-ux-restore\03-approval-checklist\91-future-true-ux-restore-approval-checklist-lessons.md"
         )) {
             $text = Get-Content -LiteralPath (Join-Path $script:RepoRoot $path) -Raw -Encoding UTF8
             Assert-KitNotMatch $text "(?i)\b(fixes|closes|resolves)\s+#18\b"

@@ -373,7 +373,7 @@
       "path": "docs/110-future-true-ux-archive-policy-reference-map.md",
       "category": "doc",
       "required": true,
-      "hash": "e3e8d35c88741f6ef8da5a8640e2ea0bca12b0b30e5d5842a411e9ef73c3d5e0",
+      "hash": "af212d063d9377f5b9863c63bee97714f699a00d33f55a31e5b0b6faab685d6c",
       "reason": "Future True UX archive policy and reference map documents archive blockers before any move."
     },
     {
@@ -408,7 +408,7 @@
       "path": "manifests/quality-gates.json",
       "category": "manifest",
       "required": true,
-      "hash": "e4d6e0164e3482cc16cb620b987a298105439215f0d551d8ca1fae1879189811",
+      "hash": "d6c96053242be4f3ca5f2c0f1bb840a4af4e54e05e551da13cf6296c543b2638",
       "reason": "Quality Gates include future true UX mock review drill validation."
     },
     {
@@ -464,7 +464,7 @@
       "path": "tests/pester/FutureTrueUxArchivePolicyReferenceMap.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "541c026c5a5d700b4027079f5bc7be4b51a0167620d1946c95ce0d90a116f49c",
+      "hash": "1f27aea7d041d6ae6abcec29ea888daa17965b95cfeeaa74a105a00f34be7391",
       "reason": "Future True UX archive policy tests guard categories, gate coverage, and no-move semantics."
     },
     {
@@ -2578,7 +2578,7 @@
       "path": "tests/pester/FutureTrueUxRestoreValidation.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "082de6b4064bef614566ebf90b3d06dee0a94d07993e1a02871bd2de1fdaf6e2",
+      "hash": "5fc4a24ff6de4fc7ca0648c290c85a24c3ac0cd88f16a3e208a141e8ae9de7b9",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
@@ -3411,7 +3411,7 @@
       "path": "tests/pester/FutureTrueUxRestoreAuthorizationStateMachine.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "153fc5e1584b7c8c621cf14b839141bf167d9e55962a8d75759ad506ce0e0762",
+      "hash": "7f60e5993d972c1109ee5971a436e7e15f47564df66ff8c512ee804f72dacf44",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
@@ -3457,28 +3457,28 @@
       "reason": "Build lock watches this file as a trusted repository input."
     },
     {
-      "path": "docs/80-future-true-ux-restore-mock-review-packet-drill.md",
+      "path": "docs/archive/future-true-ux-restore/01-mock-review/80-future-true-ux-restore-mock-review-packet-drill.md",
       "category": "doc",
       "required": true,
       "hash": "9f36d57d3e41d202001f786ff4a131bb9ce0fe6b3bbb642270876c3dbbfbe21e",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/81-future-true-ux-restore-mock-maintainer-review-transcript.md",
+      "path": "docs/archive/future-true-ux-restore/01-mock-review/81-future-true-ux-restore-mock-maintainer-review-transcript.md",
       "category": "doc",
       "required": true,
       "hash": "92d9641423196ce0ccf288a552d24a23311f49d51ccd5dbe7de4b283ade07a1d",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/82-future-true-ux-restore-mock-decision-ledger.md",
+      "path": "docs/archive/future-true-ux-restore/01-mock-review/82-future-true-ux-restore-mock-decision-ledger.md",
       "category": "doc",
       "required": true,
       "hash": "3c908dd169eba0d33a149202874ef4e3fb6a675fb03c51f1fe67517da5145838",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/83-future-true-ux-restore-mock-drill-lessons.md",
+      "path": "docs/archive/future-true-ux-restore/01-mock-review/83-future-true-ux-restore-mock-drill-lessons.md",
       "category": "doc",
       "required": true,
       "hash": "6662c0914132eb14ab8adc386a5d13bdb2aac0d187ec2723cc07daf5cc139e14",
@@ -3572,7 +3572,7 @@
       "path": "tests/pester/FutureTrueUxRestoreMockDecisionLedger.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "9e77eb1f35f600f8e5ccc816737ffafabf6db4fc5dc9d930f4ed50b7f875a2fd",
+      "hash": "bfec050bbbbe806a5b5b84d50bdf1bad404ed4c36b808de2320f02e64f8631bf",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
@@ -3586,39 +3586,39 @@
       "path": "tests/pester/FutureTrueUxRestoreMockReviewSafety.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "5923783cad24ce3bc6e3967e462328f19dad55271634b16fea431776f74c5379",
+      "hash": "1e8dd0da33ecf741a2c185d4922d7903ed3c14cea2fe1aeb111639161dc01c79",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "tests/pester/FutureTrueUxRestoreMockTranscript.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "25b6372ae57796d6a8f0ef621e8ad57a5ef3976fd5969a7b266d5fa8f6df6557",
+      "hash": "2673563eece6270a96fcc652fef3f6422fd11943cbe4c4507eb3356ebeb2030a",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/84-future-true-ux-restore-negative-review-drill-bundle.md",
+      "path": "docs/archive/future-true-ux-restore/02-negative-review/84-future-true-ux-restore-negative-review-drill-bundle.md",
       "category": "doc",
       "required": true,
       "hash": "d33a7185db9c55d140569095fc22652facaab7286a21f426be18a4aca625ba65",
       "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/85-future-true-ux-restore-negative-review-transcript.md",
+      "path": "docs/archive/future-true-ux-restore/02-negative-review/85-future-true-ux-restore-negative-review-transcript.md",
       "category": "doc",
       "required": true,
       "hash": "5f832c097fe1bc1a215068f21007d425b9e86735eadee861e322f93d236c292b",
       "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/86-future-true-ux-restore-negative-decision-ledger.md",
+      "path": "docs/archive/future-true-ux-restore/02-negative-review/86-future-true-ux-restore-negative-decision-ledger.md",
       "category": "doc",
       "required": true,
       "hash": "2db5a2a9977abc92d0afd6b7e48182c594e3e4ece5a2c08ffc57af66d02b67d0",
       "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/87-future-true-ux-restore-negative-drill-lessons.md",
+      "path": "docs/archive/future-true-ux-restore/02-negative-review/87-future-true-ux-restore-negative-drill-lessons.md",
       "category": "doc",
       "required": true,
       "hash": "a0132f112f913a5823334b038f40e34d70dea8bc44fd1db7f0b7a3dd7cca87e3",
@@ -3702,28 +3702,28 @@
       "reason": "Future true UX negative review drill artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/88-future-true-ux-restore-maintainer-approval-checklist-ergonomics.md",
+      "path": "docs/archive/future-true-ux-restore/03-approval-checklist/88-future-true-ux-restore-maintainer-approval-checklist-ergonomics.md",
       "category": "doc",
       "required": true,
       "hash": "c9b380d1e946eb5d6d0ff7c80d7416ac50ac17dd89a3da1dc95f3bf660003ccb",
       "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/89-future-true-ux-restore-review-packet-readability-guide.md",
+      "path": "docs/archive/future-true-ux-restore/03-approval-checklist/89-future-true-ux-restore-review-packet-readability-guide.md",
       "category": "doc",
       "required": true,
       "hash": "2364ba6b7d97b9ee35239563315932ca1ee8b5eef7de45e3f60502d8d5bd50e5",
       "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/90-future-true-ux-restore-manual-decision-form-template.md",
+      "path": "docs/archive/future-true-ux-restore/03-approval-checklist/90-future-true-ux-restore-manual-decision-form-template.md",
       "category": "doc",
       "required": true,
       "hash": "f6fe550e29238bf9d17882d8fa3787c8f8af1118f4c4d8dcc165ee43b4e69057",
       "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/91-future-true-ux-restore-approval-checklist-lessons.md",
+      "path": "docs/archive/future-true-ux-restore/03-approval-checklist/91-future-true-ux-restore-approval-checklist-lessons.md",
       "category": "doc",
       "required": true,
       "hash": "4d8252930bd98070068dd7cb71c646b8a7a5f5f69993709e99d57b93c9b22d25",
@@ -3789,39 +3789,39 @@
       "path": "tests/pester/FutureTrueUxRestoreApprovalChecklistErgonomics.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "59d5384dfb390c6b1fe5e0e296f0f70b7f7faafb2957fbb2c8fe1a80c7caa033",
+      "hash": "0282c147bd55f9e485aa089d5d1b034266959c76d77c855c781a27a57789d4f1",
       "reason": "Future true UX approval checklist ergonomics artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/92-future-true-ux-restore-integrated-authorization-packet-preview.md",
+      "path": "docs/archive/future-true-ux-restore/04-packet-preview/92-future-true-ux-restore-integrated-authorization-packet-preview.md",
       "category": "doc",
       "required": true,
       "hash": "4d32ed0eae0576122649f92d6f7298f2d54c9b6d410751c98817793d64086496",
       "reason": "Future true UX integrated packet preview artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/93-future-true-ux-restore-packet-preview-field-map.md",
+      "path": "docs/archive/future-true-ux-restore/04-packet-preview/93-future-true-ux-restore-packet-preview-field-map.md",
       "category": "doc",
       "required": true,
       "hash": "06813bc82d6aa91ca74a1ff78c7e0e94edda7aaa272a02dddcf66081879fe3c9",
       "reason": "Future true UX integrated packet preview artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/94-future-true-ux-restore-packet-preview-reviewer-reading-order.md",
+      "path": "docs/archive/future-true-ux-restore/04-packet-preview/94-future-true-ux-restore-packet-preview-reviewer-reading-order.md",
       "category": "doc",
       "required": true,
       "hash": "c997c00b3b35b9ed3a51fa8b552d8a3375a58d9ad1f2f2cecb1c7db0bf531f80",
       "reason": "Future true UX integrated packet preview artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/95-future-true-ux-restore-packet-preview-blocker-index.md",
+      "path": "docs/archive/future-true-ux-restore/04-packet-preview/95-future-true-ux-restore-packet-preview-blocker-index.md",
       "category": "doc",
       "required": true,
       "hash": "25928f1675da666fcf0ebd01fc834944ed3b67fa90ce0b421fd8d70cbd45175c",
       "reason": "Future true UX integrated packet preview artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/96-future-true-ux-restore-packet-preview-lessons.md",
+      "path": "docs/archive/future-true-ux-restore/04-packet-preview/96-future-true-ux-restore-packet-preview-lessons.md",
       "category": "doc",
       "required": true,
       "hash": "657e369afd58bf371df12dcf93f1daba03dc1536ae85ef20074f937b18f319d9",
@@ -3894,39 +3894,39 @@
       "path": "tests/pester/FutureTrueUxRestoreIntegratedPacketPreview.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "511b582c61737092de85b1fd29f1172424e16ac0fa45104b2fa91e91050bac3d",
+      "hash": "5e5ddfa87663511de90646b6987ae03665a0e20a499be7593634c9dbcb115fa1",
       "reason": "Future true UX integrated packet preview artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/97-future-true-ux-restore-human-authorization-handoff.md",
+      "path": "docs/archive/future-true-ux-restore/05-human-handoff/97-future-true-ux-restore-human-authorization-handoff.md",
       "category": "doc",
       "required": true,
       "hash": "c1853220a3bb3ccc09cb445eb66aee5a87a6c35cf9b12cb2cfe635325de3a917",
       "reason": "Future true UX human authorization handoff artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/98-future-true-ux-restore-human-handoff-artifact-index.md",
+      "path": "docs/archive/future-true-ux-restore/05-human-handoff/98-future-true-ux-restore-human-handoff-artifact-index.md",
       "category": "doc",
       "required": true,
       "hash": "1946c14c2b94cf44f38c0729d2bd3023cc59ccf2cd916908354a9071f1d34042",
       "reason": "Future true UX human authorization handoff artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/99-future-true-ux-restore-human-handoff-manual-decision-placeholder.md",
+      "path": "docs/archive/future-true-ux-restore/05-human-handoff/99-future-true-ux-restore-human-handoff-manual-decision-placeholder.md",
       "category": "doc",
       "required": true,
       "hash": "8437ad909aa0b2b2e968eb6cd14b578d78d0666bea616d001820b11fd7489b06",
       "reason": "Future true UX human authorization handoff artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/100-future-true-ux-restore-human-handoff-review-boundary.md",
+      "path": "docs/archive/future-true-ux-restore/05-human-handoff/100-future-true-ux-restore-human-handoff-review-boundary.md",
       "category": "doc",
       "required": true,
       "hash": "64df7a843d6bb28ca0b9159402f14b034c931eda0e81ab7c3d9e595b5962f1c2",
       "reason": "Future true UX human authorization handoff artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/101-future-true-ux-restore-human-handoff-lessons.md",
+      "path": "docs/archive/future-true-ux-restore/05-human-handoff/101-future-true-ux-restore-human-handoff-lessons.md",
       "category": "doc",
       "required": true,
       "hash": "c8885e1527eeafe5f84e8b6013eb438af109b38e10244b6de790d97f38d89fd7",
@@ -4006,32 +4006,32 @@
       "path": "tests/pester/FutureTrueUxRestoreHumanAuthorizationHandoff.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "4b99c9981d57c3b42369ec60a8356875739f1beb2d4f2d98e2728aef7f07850d",
+      "hash": "e7b7648a6ddee45edee141cd3e6e50694d38ef571c00d187f72766d06064932e",
       "reason": "Future true UX human authorization handoff artifact is a trusted report-only validation input."
     },
     {
-      "path": "docs/102-future-true-ux-restore-end-to-end-no-execution-readiness-audit.md",
+      "path": "docs/archive/future-true-ux-restore/06-no-execution-audit/102-future-true-ux-restore-end-to-end-no-execution-readiness-audit.md",
       "category": "doc",
       "required": true,
       "hash": "386adb5a3db0aad44a5528690ac0ff41baa995c72dca3387af9b59ffb9749956",
       "reason": "Future True UX Restore no-execution readiness audit documentation records report-only stop-line semantics."
     },
     {
-      "path": "docs/103-future-true-ux-restore-state-name-separation-matrix.md",
+      "path": "docs/archive/future-true-ux-restore/06-no-execution-audit/103-future-true-ux-restore-state-name-separation-matrix.md",
       "category": "doc",
       "required": true,
       "hash": "f506caa5e8a8d8e21ad0eab5f00d60ca65c07b1d4a0937fccc02a3cc499a49b8",
       "reason": "Future True UX Restore no-execution readiness audit documentation records report-only stop-line semantics."
     },
     {
-      "path": "docs/104-future-true-ux-restore-artifact-chain-consistency-index.md",
+      "path": "docs/archive/future-true-ux-restore/06-no-execution-audit/104-future-true-ux-restore-artifact-chain-consistency-index.md",
       "category": "doc",
       "required": true,
       "hash": "25d5588a82e837aa0d21cd44241d43422744b6f6a0e8f140a2bc76c77cdc8294",
       "reason": "Future True UX Restore no-execution readiness audit documentation records report-only stop-line semantics."
     },
     {
-      "path": "docs/105-future-true-ux-restore-no-execution-stop-line.md",
+      "path": "docs/archive/future-true-ux-restore/06-no-execution-audit/105-future-true-ux-restore-no-execution-stop-line.md",
       "category": "doc",
       "required": true,
       "hash": "40fe1be0d4fa2f375b43b31f09b46ca0614cb9b6f82002fcb01cd6e6315c4a6b",
@@ -4041,7 +4041,7 @@
       "path": "scripts/common/New-FutureTrueUxRestoreEndToEndNoExecutionReadinessAuditReport.ps1",
       "category": "script",
       "required": true,
-      "hash": "89ead8c4796d1a48a91b843166857ef61bbe2047499284f91ae4fbbfa0eb8ea0",
+      "hash": "c50d1b51eec620e534eb1a0b2d6a1b236c85eb5cefd2956eeb08b0e8ca3ceef7",
       "reason": "Future True UX Restore no-execution readiness audit report helper is a report-only validator input."
     },
     {
@@ -4181,15 +4181,36 @@
       "path": "docs/111-future-true-ux-archive-dry-run-plan.md",
       "category": "doc",
       "required": true,
-      "hash": "7fcbb4381af1e58f418485c0e88abe6665417e769d5af79a110a6afc8fd4a64f",
+      "hash": "9fe093c1bcb19546fe198ea0c597cef16783a2ce8ea0d7678a346b4423de96f9",
       "reason": "Future True UX archive dry-run plan documents proposed archive paths and no-move stop lines before any archive PR."
     },
     {
       "path": "tests/pester/FutureTrueUxArchiveDryRunPlan.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "4d1056803e46284cec2a20bc745abaa37df6c06f86299252c47c9af936e31ae5",
+      "hash": "2d8ee033666ac309bae2e9f09ef3b26c7335c235d804963e52e0c10318f857f8",
       "reason": "Future True UX archive dry-run plan tests guard no-move semantics, archive path scope, and true-execution stop lines."
+    },
+    {
+      "path": "docs/108-repo-documentation-script-governance-audit.md",
+      "category": "doc",
+      "required": true,
+      "hash": "2e4cbe07d0aa8f50365bae6f772463e30f9dbfec0bdb81a1702742e4f48c7ddd",
+      "reason": "Repository governance audit records docs/archive state and no-execution boundaries."
+    },
+    {
+      "path": "docs/README.md",
+      "category": "doc",
+      "required": true,
+      "hash": "f07271a32da03020b3712af8cea24649bc86ec193f234850571a8298906888aa",
+      "reason": "Canonical docs index separates current entrypoints from historical archive material."
+    },
+    {
+      "path": "tests/pester/DocsGovernanceArchive.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "e6bcf632c23aa0d8f6285076a89f34fe881d0c1c468135593407906b0f5250fd",
+      "reason": "Docs governance archive tests guard moved Future True UX docs, entrypoints, Build Lock paths, and no-execution semantics."
     }
   ],
   "watchGlobs": [

@@ -6,9 +6,9 @@ Issue reference: Roadmap Issue #19 governance task only. This document uses `Ref
 
 ## Purpose And Scope
 
-This map records how Future True UX Restore documents and validators are referenced before any archive move is attempted. It follows the repository governance audit and the Future True UX quality gate governance policy.
+This map records the current post-move location and reference classes for archived Future True UX Restore stage documents. It follows the repository governance audit, the Future True UX quality gate governance policy, and the archive dry-run plan.
 
-This is a map-first task. It does not move files into `docs/archive/`, delete files, demote gates, rename gate IDs, change workflow behavior, or authorize true UX restore planning.
+The docs governance implementation moved the superseded stage documents from root `docs/80` through `docs/105` into `docs/archive/future-true-ux-restore/`. This document does not demote gates, rename gate IDs, change workflow behavior, delete files, or authorize true UX restore planning.
 
 ## No True Execution Boundary
 
@@ -26,12 +26,13 @@ This task does not authorize UX restore, VM mutation, image servicing, package i
 
 ## Reference Classes
 
-Every future archive proposal must check these reference classes before moving a file:
+Every future archive restructuring proposal must check these reference classes before moving or renaming a file:
 
 | Reference class | Source to check | Required archive action |
 |---|---|---|
 | README reference | `README.md` | Update links and wording in the same PR. |
 | AGENTS reference | `AGENTS.md` and nested `AGENTS.md` files if any | Update rules only when the moved document remains policy-relevant. |
+| Docs index | `docs/README.md` | Keep canonical and archive entrypoints accurate. |
 | Quality Gates entrypoint | `manifests/quality-gates.json` | Update entrypoint and keep report-only safety semantics. |
 | Build Lock entry | `manifests/build-lock.json` | Update path and hash in the same PR. |
 | Pester explicit path assertion | `tests/pester/*.Tests.ps1` | Update literal path expectations and safety assertions in the same PR. |
@@ -40,48 +41,47 @@ Every future archive proposal must check these reference classes before moving a
 | Manifest/schema reference | `manifests/*.json`, `schemas/*.json` | Update manifest document lists and schema-linked fixtures. |
 | Docs cross-link | `docs/*.md` | Update source and target links atomically. |
 
-## Classification Of Docs 64-109
+## Classification Of Future True UX Docs
 
 | Category | Documents | Move policy |
 |---|---|---|
-| Canonical active | `docs/64-issue18-manual-closure-handoff.md`, `docs/65-future-true-ux-restore-execution-split.md`, `docs/66-future-true-ux-restore-authorization-intake.md`, `docs/67-future-true-ux-restore-evidence-model.md`, `docs/68-future-true-ux-restore-dry-run-plan.md`, `docs/106-future-true-ux-restore-final-stop-line-handoff.md`, `docs/107-future-true-ux-restore-stop-line-decision-matrix.md`, `docs/108-repo-documentation-script-governance-audit.md`, `docs/109-future-true-ux-quality-gate-governance.md` | Must stay in place. These are README-linked entrypoints, current governance anchors, or final stop-line controls. |
-| Active safety guardrail | `docs/69-future-true-ux-restore-current-user-dry-run-gate.md`, `docs/70-future-true-ux-restore-current-user-evidence-contract.md`, `docs/71-future-true-ux-restore-execute-gate-dual-approval.md`, `docs/72-future-true-ux-restore-default-user-dry-run-gate.md`, `docs/73-future-true-ux-restore-offline-image-dry-run-gate.md`, `docs/74-future-true-ux-restore-machine-dry-run-gate.md`, `docs/75-future-true-ux-restore-scope-guard-matrix.md`, `docs/76-future-true-ux-restore-unified-authorization-request.md`, `docs/77-future-true-ux-restore-maintainer-review-checkpoint.md`, `docs/78-future-true-ux-restore-evidence-packet-contract.md`, `docs/79-future-true-ux-restore-authorization-state-machine.md` | Keep active until later gates and tests preserve the same no-execution and evidence-boundary checks. |
-| Historical stage evidence / archive candidate | `docs/80-future-true-ux-restore-mock-review-packet-drill.md` through `docs/105-future-true-ux-restore-no-execution-stop-line.md` | Candidate only. Do not move yet. These files are still referenced by Build Lock, Pester, manifests, and in some cases report-builder logic. |
-| Must not move until references are updated | Every file in `docs/64` through `docs/109` | No move in this task. A later archive PR must update all reference classes atomically. |
-| Delete candidates | None | No deletion is safe in this task. Deletion would require a later PR proving the reference was removed and the safety invariant is preserved. |
+| Canonical active | `docs/64-issue18-manual-closure-handoff.md`, `docs/65-future-true-ux-restore-execution-split.md`, `docs/66-future-true-ux-restore-authorization-intake.md`, `docs/67-future-true-ux-restore-evidence-model.md`, `docs/68-future-true-ux-restore-dry-run-plan.md`, `docs/106-future-true-ux-restore-final-stop-line-handoff.md`, `docs/107-future-true-ux-restore-stop-line-decision-matrix.md`, `docs/108-repo-documentation-script-governance-audit.md`, `docs/109-future-true-ux-quality-gate-governance.md`, `docs/110-future-true-ux-archive-policy-reference-map.md`, `docs/111-future-true-ux-archive-dry-run-plan.md` | Must stay in root. These are README-linked entrypoints, current governance anchors, final stop-line controls, or archive governance records. |
+| Active safety guardrail | `docs/69-future-true-ux-restore-current-user-dry-run-gate.md` through `docs/79-future-true-ux-restore-authorization-state-machine.md` | Keep active until later gates and tests preserve the same no-execution and evidence-boundary checks. |
+| Archived historical stage evidence | `docs/archive/future-true-ux-restore/01-mock-review/` through `docs/archive/future-true-ux-restore/06-no-execution-audit/` | Historical reference only. These documents remain locked and tested but are no longer root planning entrypoints. |
+| Delete candidates | None | No deletion is safe in this governance task. Deletion would require a later PR proving the reference was removed and the safety invariant is preserved. |
 
-## Archive Candidate Reference Map
+## Archived Stage Reference Map
 
-Legend: yes means the class currently references the file. no means this map did not find that class reference during this task. Can move now is intentionally no for every row.
+Legend: yes means the class currently references the archived file. no means this map did not find that class reference during this task. Future restructuring should preserve the same reference classes unless a separate governance task explicitly demotes them.
 
-| Archive candidate | README | AGENTS | Quality Gates | Build Lock | Pester | Scripts | Manifest/schema | Docs cross-link | Can move now |
-|---|---|---|---|---|---|---|---|---|---|
-| `docs/80-future-true-ux-restore-mock-review-packet-drill.md` | no | no | no | yes | yes | no | yes | no | no |
-| `docs/81-future-true-ux-restore-mock-maintainer-review-transcript.md` | no | no | no | yes | yes | no | yes | no | no |
-| `docs/82-future-true-ux-restore-mock-decision-ledger.md` | no | no | yes | yes | yes | no | yes | no | no |
-| `docs/83-future-true-ux-restore-mock-drill-lessons.md` | no | no | no | yes | yes | no | yes | no | no |
-| `docs/84-future-true-ux-restore-negative-review-drill-bundle.md` | no | no | no | yes | yes | no | yes | no | no |
-| `docs/85-future-true-ux-restore-negative-review-transcript.md` | no | no | no | yes | yes | no | yes | no | no |
-| `docs/86-future-true-ux-restore-negative-decision-ledger.md` | no | no | no | yes | yes | no | yes | no | no |
-| `docs/87-future-true-ux-restore-negative-drill-lessons.md` | no | no | no | yes | yes | no | yes | no | no |
-| `docs/88-future-true-ux-restore-maintainer-approval-checklist-ergonomics.md` | no | no | no | yes | yes | no | yes | no | no |
-| `docs/89-future-true-ux-restore-review-packet-readability-guide.md` | no | no | no | yes | yes | no | yes | no | no |
-| `docs/90-future-true-ux-restore-manual-decision-form-template.md` | no | no | no | yes | yes | no | yes | no | no |
-| `docs/91-future-true-ux-restore-approval-checklist-lessons.md` | no | no | no | yes | yes | no | yes | no | no |
-| `docs/92-future-true-ux-restore-integrated-authorization-packet-preview.md` | no | no | no | yes | yes | no | yes | no | no |
-| `docs/93-future-true-ux-restore-packet-preview-field-map.md` | no | no | no | yes | yes | no | yes | no | no |
-| `docs/94-future-true-ux-restore-packet-preview-reviewer-reading-order.md` | no | no | no | yes | yes | no | yes | no | no |
-| `docs/95-future-true-ux-restore-packet-preview-blocker-index.md` | no | no | no | yes | yes | no | yes | no | no |
-| `docs/96-future-true-ux-restore-packet-preview-lessons.md` | no | no | no | yes | yes | no | yes | no | no |
-| `docs/97-future-true-ux-restore-human-authorization-handoff.md` | no | no | no | yes | yes | no | yes | no | no |
-| `docs/98-future-true-ux-restore-human-handoff-artifact-index.md` | no | no | no | yes | yes | no | yes | no | no |
-| `docs/99-future-true-ux-restore-human-handoff-manual-decision-placeholder.md` | no | no | no | yes | yes | no | yes | no | no |
-| `docs/100-future-true-ux-restore-human-handoff-review-boundary.md` | no | no | no | yes | yes | no | yes | no | no |
-| `docs/101-future-true-ux-restore-human-handoff-lessons.md` | no | no | no | yes | yes | no | yes | no | no |
-| `docs/102-future-true-ux-restore-end-to-end-no-execution-readiness-audit.md` | no | no | no | yes | yes | yes | yes | no | no |
-| `docs/103-future-true-ux-restore-state-name-separation-matrix.md` | no | no | no | yes | yes | yes | yes | no | no |
-| `docs/104-future-true-ux-restore-artifact-chain-consistency-index.md` | no | no | no | yes | yes | yes | yes | no | no |
-| `docs/105-future-true-ux-restore-no-execution-stop-line.md` | no | no | no | yes | yes | yes | yes | no | no |
+| Archived path | Former root path | Family | Quality Gates | Build Lock | Pester | Scripts | Manifest/schema | Future restructuring action |
+|---|---|---|---|---|---|---|---|---|
+| `docs/archive/future-true-ux-restore/01-mock-review/80-future-true-ux-restore-mock-review-packet-drill.md` | `docs/80-future-true-ux-restore-mock-review-packet-drill.md` | Mock review | no | yes | yes | no | yes | Update all references atomically if moved again. |
+| `docs/archive/future-true-ux-restore/01-mock-review/81-future-true-ux-restore-mock-maintainer-review-transcript.md` | `docs/81-future-true-ux-restore-mock-maintainer-review-transcript.md` | Mock review | no | yes | yes | no | yes | Update all references atomically if moved again. |
+| `docs/archive/future-true-ux-restore/01-mock-review/82-future-true-ux-restore-mock-decision-ledger.md` | `docs/82-future-true-ux-restore-mock-decision-ledger.md` | Mock review | yes | yes | yes | no | yes | Update Quality Gates, Build Lock, Pester, and manifests atomically if moved again. |
+| `docs/archive/future-true-ux-restore/01-mock-review/83-future-true-ux-restore-mock-drill-lessons.md` | `docs/83-future-true-ux-restore-mock-drill-lessons.md` | Mock review | no | yes | yes | no | yes | Update all references atomically if moved again. |
+| `docs/archive/future-true-ux-restore/02-negative-review/84-future-true-ux-restore-negative-review-drill-bundle.md` | `docs/84-future-true-ux-restore-negative-review-drill-bundle.md` | Negative review | no | yes | yes | no | yes | Update all references atomically if moved again. |
+| `docs/archive/future-true-ux-restore/02-negative-review/85-future-true-ux-restore-negative-review-transcript.md` | `docs/85-future-true-ux-restore-negative-review-transcript.md` | Negative review | no | yes | yes | no | yes | Update all references atomically if moved again. |
+| `docs/archive/future-true-ux-restore/02-negative-review/86-future-true-ux-restore-negative-decision-ledger.md` | `docs/86-future-true-ux-restore-negative-decision-ledger.md` | Negative review | no | yes | yes | no | yes | Update all references atomically if moved again. |
+| `docs/archive/future-true-ux-restore/02-negative-review/87-future-true-ux-restore-negative-drill-lessons.md` | `docs/87-future-true-ux-restore-negative-drill-lessons.md` | Negative review | no | yes | yes | no | yes | Update all references atomically if moved again. |
+| `docs/archive/future-true-ux-restore/03-approval-checklist/88-future-true-ux-restore-maintainer-approval-checklist-ergonomics.md` | `docs/88-future-true-ux-restore-maintainer-approval-checklist-ergonomics.md` | Approval checklist | no | yes | yes | no | yes | Update all references atomically if moved again. |
+| `docs/archive/future-true-ux-restore/03-approval-checklist/89-future-true-ux-restore-review-packet-readability-guide.md` | `docs/89-future-true-ux-restore-review-packet-readability-guide.md` | Approval checklist | no | yes | yes | no | yes | Update all references atomically if moved again. |
+| `docs/archive/future-true-ux-restore/03-approval-checklist/90-future-true-ux-restore-manual-decision-form-template.md` | `docs/90-future-true-ux-restore-manual-decision-form-template.md` | Approval checklist | no | yes | yes | no | yes | Update all references atomically if moved again. |
+| `docs/archive/future-true-ux-restore/03-approval-checklist/91-future-true-ux-restore-approval-checklist-lessons.md` | `docs/91-future-true-ux-restore-approval-checklist-lessons.md` | Approval checklist | no | yes | yes | no | yes | Update all references atomically if moved again. |
+| `docs/archive/future-true-ux-restore/04-packet-preview/92-future-true-ux-restore-integrated-authorization-packet-preview.md` | `docs/92-future-true-ux-restore-integrated-authorization-packet-preview.md` | Packet preview | no | yes | yes | no | yes | Update all references atomically if moved again. |
+| `docs/archive/future-true-ux-restore/04-packet-preview/93-future-true-ux-restore-packet-preview-field-map.md` | `docs/93-future-true-ux-restore-packet-preview-field-map.md` | Packet preview | no | yes | yes | no | yes | Update all references atomically if moved again. |
+| `docs/archive/future-true-ux-restore/04-packet-preview/94-future-true-ux-restore-packet-preview-reviewer-reading-order.md` | `docs/94-future-true-ux-restore-packet-preview-reviewer-reading-order.md` | Packet preview | no | yes | yes | no | yes | Update all references atomically if moved again. |
+| `docs/archive/future-true-ux-restore/04-packet-preview/95-future-true-ux-restore-packet-preview-blocker-index.md` | `docs/95-future-true-ux-restore-packet-preview-blocker-index.md` | Packet preview | no | yes | yes | no | yes | Update all references atomically if moved again. |
+| `docs/archive/future-true-ux-restore/04-packet-preview/96-future-true-ux-restore-packet-preview-lessons.md` | `docs/96-future-true-ux-restore-packet-preview-lessons.md` | Packet preview | no | yes | yes | no | yes | Update all references atomically if moved again. |
+| `docs/archive/future-true-ux-restore/05-human-handoff/97-future-true-ux-restore-human-authorization-handoff.md` | `docs/97-future-true-ux-restore-human-authorization-handoff.md` | Human handoff | no | yes | yes | no | yes | Update all references atomically if moved again. |
+| `docs/archive/future-true-ux-restore/05-human-handoff/98-future-true-ux-restore-human-handoff-artifact-index.md` | `docs/98-future-true-ux-restore-human-handoff-artifact-index.md` | Human handoff | no | yes | yes | no | yes | Update all references atomically if moved again. |
+| `docs/archive/future-true-ux-restore/05-human-handoff/99-future-true-ux-restore-human-handoff-manual-decision-placeholder.md` | `docs/99-future-true-ux-restore-human-handoff-manual-decision-placeholder.md` | Human handoff | no | yes | yes | no | yes | Update all references atomically if moved again. |
+| `docs/archive/future-true-ux-restore/05-human-handoff/100-future-true-ux-restore-human-handoff-review-boundary.md` | `docs/100-future-true-ux-restore-human-handoff-review-boundary.md` | Human handoff | no | yes | yes | no | yes | Update all references atomically if moved again. |
+| `docs/archive/future-true-ux-restore/05-human-handoff/101-future-true-ux-restore-human-handoff-lessons.md` | `docs/101-future-true-ux-restore-human-handoff-lessons.md` | Human handoff | no | yes | yes | no | yes | Update all references atomically if moved again. |
+| `docs/archive/future-true-ux-restore/06-no-execution-audit/102-future-true-ux-restore-end-to-end-no-execution-readiness-audit.md` | `docs/102-future-true-ux-restore-end-to-end-no-execution-readiness-audit.md` | No-execution audit | no | yes | yes | yes | yes | Update report helper, Build Lock, Pester, and manifests atomically if moved again. |
+| `docs/archive/future-true-ux-restore/06-no-execution-audit/103-future-true-ux-restore-state-name-separation-matrix.md` | `docs/103-future-true-ux-restore-state-name-separation-matrix.md` | No-execution audit | no | yes | yes | yes | yes | Update report helper, Build Lock, Pester, and manifests atomically if moved again. |
+| `docs/archive/future-true-ux-restore/06-no-execution-audit/104-future-true-ux-restore-artifact-chain-consistency-index.md` | `docs/104-future-true-ux-restore-artifact-chain-consistency-index.md` | No-execution audit | no | yes | yes | yes | yes | Update report helper, Build Lock, Pester, and manifests atomically if moved again. |
+| `docs/archive/future-true-ux-restore/06-no-execution-audit/105-future-true-ux-restore-no-execution-stop-line.md` | `docs/105-future-true-ux-restore-no-execution-stop-line.md` | No-execution audit | no | yes | yes | yes | yes | Update report helper, Build Lock, Pester, and manifests atomically if moved again. |
 
 ## Quality Gate Coverage
 
@@ -89,45 +89,45 @@ The archive map intentionally covers all current Future True UX quality gates fr
 
 | Gate ID | Current archive-policy coverage |
 |---|---|
-| `future-true-ux-restore-split` | Canonical active; do not move. |
-| `future-true-ux-restore-authorization` | Canonical or active safety guardrail; do not move referenced docs or validators. |
-| `future-true-ux-restore-evidence-model` | Canonical active; do not move. |
-| `future-true-ux-current-user-dry-run` | Active safety guardrail; do not move. |
-| `future-true-ux-scope-dry-run` | Active safety guardrail; do not move. |
-| `future-true-ux-scope-guard-matrix` | Active safety guardrail; do not move. |
-| `future-true-ux-execute-gate` | Active safety guardrail; do not move. |
-| `future-true-ux-authorization-review` | Active safety guardrail; do not move. |
-| `future-true-ux-evidence-packet` | Active safety guardrail; do not move. |
-| `future-true-ux-mock-review-drill` | Historical stage evidence; archive candidate only after references are updated. |
-| `future-true-ux-mock-decision-ledger` | Historical stage evidence; archive candidate only after references are updated. |
-| `future-true-ux-negative-review-drill` | Historical stage evidence; archive candidate only after references are updated. |
-| `future-true-ux-approval-checklist-ergonomics` | Historical stage evidence; archive candidate only after references are updated. |
-| `future-true-ux-integrated-packet-preview` | Historical stage evidence; archive candidate only after references are updated. |
-| `future-true-ux-human-authorization-handoff` | Historical stage evidence; archive candidate only after references are updated. |
-| `future-true-ux-end-to-end-no-execution-readiness-audit` | Historical stage evidence plus script references; archive candidate only after references are updated. |
-| `future-true-ux-final-stop-line-handoff` | Canonical active; do not move. |
+| `future-true-ux-restore-split` | Canonical active; keep in root. |
+| `future-true-ux-restore-authorization` | Canonical or active safety guardrail; keep referenced docs and validators active. |
+| `future-true-ux-restore-evidence-model` | Canonical active; keep in root. |
+| `future-true-ux-current-user-dry-run` | Active safety guardrail; keep in root. |
+| `future-true-ux-scope-dry-run` | Active safety guardrail; keep in root. |
+| `future-true-ux-scope-guard-matrix` | Active safety guardrail; keep in root. |
+| `future-true-ux-execute-gate` | Active safety guardrail; keep in root. |
+| `future-true-ux-authorization-review` | Active safety guardrail; keep in root. |
+| `future-true-ux-evidence-packet` | Active safety guardrail; keep in root. |
+| `future-true-ux-mock-review-drill` | Historical stage evidence; archived and still report-only. |
+| `future-true-ux-mock-decision-ledger` | Historical stage evidence; archived entrypoint and still report-only. |
+| `future-true-ux-negative-review-drill` | Historical stage evidence; archived and still report-only. |
+| `future-true-ux-approval-checklist-ergonomics` | Historical stage evidence; archived and still report-only. |
+| `future-true-ux-integrated-packet-preview` | Historical stage evidence; archived and still report-only. |
+| `future-true-ux-human-authorization-handoff` | Historical stage evidence; archived and still report-only. |
+| `future-true-ux-end-to-end-no-execution-readiness-audit` | Historical stage evidence plus script references; archived and still report-only. |
+| `future-true-ux-final-stop-line-handoff` | Canonical active; keep in root. |
 
-## Recommended Atomic Archive Procedure
+All Future True UX gates remain `layer=pr-fast`, `trigger=pull_request`, `mode=report-only`, `required=true`, and `blocking=true` unless a separate governance task explicitly authorizes demotion.
 
-1. Start from this reference map and re-run reference discovery on the current branch.
-2. Pick one narrow document family, such as mock review, negative review, packet preview, human handoff, or no-execution audit supporting docs.
-3. Prepare a dry-run move plan that lists old paths, proposed archive paths, and every reference class that must change.
-4. Update README, docs cross-links, Quality Gates, Build Lock, Pester tests, report builders, validators, and manifests in the same PR when applicable.
-5. Prove no gate changes from report-only, required, blocking, and pull-request semantics unless a separate governance task explicitly authorizes demotion.
-6. Prove no `execute-ready`, true execution, real restore evidence, or Issue auto-close wording was introduced.
-7. Only after the dry-run plan is accepted should a separate task card authorize actual file moves.
+## Current Archive Maintenance Procedure
 
-## Files That Must Not Move Yet
+1. Re-run reference discovery on the current branch before moving, renaming, deleting, or demoting any archived document.
+2. Update README, docs index, docs cross-links, Quality Gates, Build Lock, Pester tests, report builders, validators, and manifests in the same PR when applicable.
+3. Prove no gate changes from report-only, required, blocking, and pull-request semantics unless a separate governance task explicitly authorizes demotion.
+4. Prove no `execute-ready`, true execution, real restore evidence, or Issue auto-close wording was introduced.
+5. Run docs governance archive tests, Future True UX Pester coverage, Quality Gates validation, Build Lock validation, and `git -c core.quotepath=false diff --check`.
 
-Do not move any file in `docs/64` through `docs/109` until a later PR updates all affected reference classes. In particular:
+## Files That Must Remain Canonical
 
-- Quality Gate entrypoint docs: `docs/64`, `docs/65`, `docs/67`, `docs/71`, `docs/75`, `docs/78`, `docs/82`.
+Do not move these root files without a separate governance task and atomic reference update:
+
+- Quality Gate entrypoint docs: `docs/64`, `docs/65`, `docs/67`, `docs/71`, `docs/75`, `docs/78`.
 - README-linked docs: `docs/64`, `docs/65`, `docs/66`, `docs/67`, `docs/68`.
-- Script-referenced stop-line and no-execution docs: `docs/102`, `docs/103`, `docs/104`, `docs/105`, `docs/106`, `docs/107`.
-- Governance docs: `docs/108`, `docs/109`, and this document once it is added to Build Lock.
+- Final stop-line docs: `docs/106`, `docs/107`.
+- Governance docs: `docs/README.md`, `docs/108`, `docs/109`, `docs/110`, and `docs/111`.
 
 ## Next Governance Task
 
-Recommended next task: Future True UX Archive Dry-Run Plan.
+Recommended next task: Future True UX Validator Consolidation Audit.
 
-That task should propose the exact archive directory structure and a dry-run move plan. It should still avoid moving files unless the task card explicitly authorizes the move and the reference map proves the move is safe.
+That task should inspect whether the many `New-FutureTrueUxRestore*.ps1`, `Test-FutureTrueUxRestore*.ps1`, and related Pester fixtures can be consolidated without weakening final stop-line, no-execution, evidence-boundary, and no-auto-close protections.

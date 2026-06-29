@@ -62,11 +62,11 @@ Describe "Future true UX restore human authorization handoff" {
 
     It "keeps docs free of Issue 18 auto-close keywords" {
         foreach ($path in @(
-            "docs\97-future-true-ux-restore-human-authorization-handoff.md",
-            "docs\98-future-true-ux-restore-human-handoff-artifact-index.md",
-            "docs\99-future-true-ux-restore-human-handoff-manual-decision-placeholder.md",
-            "docs\100-future-true-ux-restore-human-handoff-review-boundary.md",
-            "docs\101-future-true-ux-restore-human-handoff-lessons.md"
+            "docs\archive\future-true-ux-restore\05-human-handoff\97-future-true-ux-restore-human-authorization-handoff.md",
+            "docs\archive\future-true-ux-restore\05-human-handoff\98-future-true-ux-restore-human-handoff-artifact-index.md",
+            "docs\archive\future-true-ux-restore\05-human-handoff\99-future-true-ux-restore-human-handoff-manual-decision-placeholder.md",
+            "docs\archive\future-true-ux-restore\05-human-handoff\100-future-true-ux-restore-human-handoff-review-boundary.md",
+            "docs\archive\future-true-ux-restore\05-human-handoff\101-future-true-ux-restore-human-handoff-lessons.md"
         )) {
             $text = Get-Content -LiteralPath (Join-Path $script:RepoRoot $path) -Raw -Encoding UTF8
             Assert-KitNotMatch $text "(?i)\b(fixes|closes|resolves)\s+#18\b"
