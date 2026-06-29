@@ -4176,6 +4176,20 @@
       "required": true,
       "hash": "f25a99ba915f7b887ce5e4514633c8c38aa7b06fac6816812ffc8bed2bd9db9e",
       "reason": "Future True UX Restore final stop-line handoff Pester coverage guards no-execution semantics."
+    },
+    {
+      "path": "docs/111-future-true-ux-archive-dry-run-plan.md",
+      "category": "doc",
+      "required": true,
+      "hash": "7fcbb4381af1e58f418485c0e88abe6665417e769d5af79a110a6afc8fd4a64f",
+      "reason": "Future True UX archive dry-run plan documents proposed archive paths and no-move stop lines before any archive PR."
+    },
+    {
+      "path": "tests/pester/FutureTrueUxArchiveDryRunPlan.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "4d1056803e46284cec2a20bc745abaa37df6c06f86299252c47c9af936e31ae5",
+      "reason": "Future True UX archive dry-run plan tests guard no-move semantics, archive path scope, and true-execution stop lines."
     }
   ],
   "watchGlobs": [
