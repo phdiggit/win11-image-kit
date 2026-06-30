@@ -34,11 +34,11 @@ Describe "Future true UX restore end-to-end no-execution readiness audit" {
             "default-user-dry-run",
             "offline-image-dry-run",
             "machine-dry-run",
-            "authorization-review",
-            "mock-review-drill"
+            "authorization-review"
         )) {
             Assert-KitEqual (@($report.requiredLayers) -contains $layer) $true
         }
+        Assert-KitEqual (@($report.requiredLayers) -contains "mock-review-drill") $false
         Assert-KitEqual @($report.missingLayers).Count 0
     }
 
@@ -61,7 +61,8 @@ Describe "Future true UX restore end-to-end no-execution readiness audit" {
             "negativeReviewDrill",
             "approvalChecklistErgonomics",
             "integratedPacketPreview",
-            "humanAuthorizationHandoff"
+            "humanAuthorizationHandoff",
+            "mockReviewDrill"
         )) {
             Assert-KitEqual ($manifest.PSObject.Properties.Name -contains $propertyName) $false
         }

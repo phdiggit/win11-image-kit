@@ -3,7 +3,7 @@
   "auditDecision": "audit-ready",
   "expectedDecision": "needs-rework",
   "omittedLayers": [
-    "mock-review-drill"
+    "authorization-review"
   ],
   "requiresRunnerStopLine": true,
   "hasRunnerStopLine": true,

@@ -1,36 +1,17 @@
-Describe "Future true UX restore mock review safety" {
+Describe "Future true UX restore mock review safety prune" {
     BeforeEach {
         $script:RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
-        . (Join-Path $script:RepoRoot "scripts\common\New-FutureTrueUxRestoreMockReviewDrillReport.ps1")
     }
 
-    It "blocks execute-ready, executed, completed, private path, auto-close, and cross-scope fixtures" {
-        $manifest = Get-Content -LiteralPath (Join-Path $script:RepoRoot "manifests\future-true-ux-restore-authorization.json") -Raw -Encoding UTF8 | ConvertFrom-Json
-        $cases = @(
-            @{ File = "negative-execute-ready.json"; Pattern = "execute-ready" },
-            @{ File = "negative-executed.json"; Pattern = "executed" },
-            @{ File = "negative-completed.json"; Pattern = "completed" },
-            @{ File = "negative-private-path.json"; Pattern = "private path" },
-            @{ File = "negative-auto-close-keyword.json"; Pattern = "auto-close" },
-            @{ File = "negative-cross-scope-packet.json"; Pattern = "scope guard" }
-        )
-
-        foreach ($case in $cases) {
-            $request = Get-Content -LiteralPath (Join-Path $script:RepoRoot "tests\fixtures\user-experience\future-true-restore\mock-review\$($case.File)") -Raw -Encoding UTF8 | ConvertFrom-Json
-            $report = New-FutureTrueUxRestoreMockReviewDrillReport -Manifest $manifest -Request $request -RepoRoot $script:RepoRoot
-
-            Assert-KitEqual $report.reviewDecision "blocked"
-            Assert-KitMatch ($report.blockedReasons -join "`n") ([regex]::Escape($case.Pattern))
-            Assert-KitEqual $report.authorizationApproved $false
-            Assert-KitEqual $report.executionApproved $false
-            Assert-KitEqual $report.executeReady $false
-            Assert-KitEqual $report.trueExecution $false
-            Assert-KitEqual $report.mutationCount 0
-        }
+    It "keeps mock review drill scripts and fixtures pruned without workflow changes" {
+        Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot "scripts\common\New-FutureTrueUxRestoreMockReviewDrillReport.ps1")) $false
+        Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot "tests\fixtures\user-experience\future-true-restore\mock-review")) $false
+        Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot "scripts\validate\Test-FutureTrueUxRestoreMockReviewDrill.ps1")) $true
+        Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot ".github\workflows\ci.yml")) $true
     }
 
-    It "keeps dangerous command names out of mock review scripts" {
+    It "keeps dangerous command names out of the compatibility validator" {
         $patterns = @(
             '\bSet-ItemProperty\b',
             '\bNew-ItemProperty\b',
@@ -52,16 +33,10 @@ Describe "Future true UX restore mock review safety" {
             '\bchoco\b',
             '\bmsiexec\b'
         )
-        $files = @(
-            "scripts\common\New-FutureTrueUxRestoreMockReviewDrillReport.ps1",
-            "scripts\validate\Test-FutureTrueUxRestoreMockReviewDrill.ps1"
-        )
+        $text = Get-Content -LiteralPath (Join-Path $script:RepoRoot "scripts\validate\Test-FutureTrueUxRestoreMockReviewDrill.ps1") -Raw -Encoding UTF8
 
-        foreach ($file in $files) {
-            $text = Get-Content -LiteralPath (Join-Path $script:RepoRoot $file) -Raw -Encoding UTF8
-            foreach ($pattern in $patterns) {
-                Assert-KitNotMatch $text $pattern
-            }
+        foreach ($pattern in $patterns) {
+            Assert-KitNotMatch $text $pattern
         }
     }
 
@@ -78,12 +53,6 @@ Describe "Future true UX restore mock review safety" {
 
         foreach ($issue in 14..18) {
             Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-$issue")) $false
-        }
-
-        $docs = @(Get-ChildItem -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap") -Filter "*.md" -Recurse | Where-Object { $_.FullName -match 'issue-(6|7|8|9|10|11|12|13)' })
-        foreach ($doc in $docs) {
-            $text = Get-Content -LiteralPath $doc.FullName -Raw -Encoding UTF8
-            Assert-KitNotMatch $text "(?i)\b(fixes|closes|resolves)\s+#(6|7|8|9|10|11|12|13)\b"
         }
     }
 }

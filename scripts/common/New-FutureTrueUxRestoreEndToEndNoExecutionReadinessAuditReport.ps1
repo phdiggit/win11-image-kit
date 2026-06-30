@@ -25,8 +25,7 @@ function New-FutureTrueUxRestoreEndToEndNoExecutionReadinessAuditReport {
         "default-user-dry-run",
         "offline-image-dry-run",
         "machine-dry-run",
-        "authorization-review",
-        "mock-review-drill"
+        "authorization-review"
     )
     $forbiddenStates = @("execute-ready", "executed", "completed", "issue-18-complete", "closure-ready")
     if ($null -ne $section) {
@@ -52,7 +51,6 @@ function New-FutureTrueUxRestoreEndToEndNoExecutionReadinessAuditReport {
         "offline-image-dry-run" = Get-FutureTrueUxRestoreValue -InputObject $Manifest -Name "offlineImageDryRun" -DefaultValue $null
         "machine-dry-run" = Get-FutureTrueUxRestoreValue -InputObject $Manifest -Name "machineDryRun" -DefaultValue $null
         "authorization-review" = Get-FutureTrueUxRestoreValue -InputObject $Manifest -Name "authorizationReview" -DefaultValue $null
-        "mock-review-drill" = Get-FutureTrueUxRestoreValue -InputObject $Manifest -Name "mockReviewDrill" -DefaultValue $null
     }
 
     $omittedLayers = @((Get-FutureTrueUxRestoreValue -InputObject $Request -Name "omittedLayers" -DefaultValue @()) | ForEach-Object { [string]$_ })
@@ -93,7 +91,6 @@ function New-FutureTrueUxRestoreEndToEndNoExecutionReadinessAuditReport {
         "future-true-ux-current-user-dry-run",
         "future-true-ux-scope-dry-run",
         "future-true-ux-authorization-review",
-        "future-true-ux-mock-review-drill",
         "future-true-ux-end-to-end-no-execution-readiness-audit"
     )
     $missingGateIds = @()

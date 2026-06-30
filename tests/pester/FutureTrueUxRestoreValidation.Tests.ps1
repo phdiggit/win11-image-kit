@@ -88,7 +88,7 @@ Describe "Future true UX restore validation runner" {
         Assert-KitEqual ($gateIds -contains "future-true-ux-scope-guard-matrix") $true
         Assert-KitEqual ($gateIds -contains "future-true-ux-execute-gate") $true
         Assert-KitEqual ($gateIds -contains "future-true-ux-authorization-review") $true
-        Assert-KitEqual ($gateIds -contains "future-true-ux-mock-review-drill") $true
+        Assert-KitEqual ($gateIds -contains "future-true-ux-mock-review-drill") $false
         Assert-KitEqual ($gateIds -contains "future-true-ux-mock-decision-ledger") $false
         Assert-KitEqual ($gateIds -contains "future-true-ux-evidence-packet") $true
         Assert-KitEqual ($gateIds -contains "future-true-ux-negative-review-drill") $false

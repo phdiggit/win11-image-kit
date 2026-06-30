@@ -387,18 +387,6 @@
       "notes": "Defines packet fields required for maintainer review without allowing execution approval or true UX mutation."
     },
     {
-      "id": "future-true-ux-mock-review-drill",
-      "displayName": "Future true UX mock review packet drill",
-      "layer": "pr-fast",
-      "trigger": "pull_request",
-      "mode": "report-only",
-      "required": true,
-      "blocking": true,
-      "entrypoint": "scripts/validate/Test-FutureTrueUxRestoreMockReviewDrill.ps1",
-      "evidence": "report",
-      "notes": "Runs a mock authorization review packet drill without allowing execute-ready or true mutation."
-    },
-    {
       "id": "future-true-ux-end-to-end-no-execution-readiness-audit",
       "displayName": "Future true UX end-to-end no-execution readiness audit",
       "layer": "pr-fast",

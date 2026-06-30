@@ -34,12 +34,6 @@ Describe "Future True UX validator entrypoint consolidation" {
                 parameters = @("ManifestPath", "ReportPath")
             },
             [pscustomobject][ordered]@{
-                gateId = "future-true-ux-mock-review-drill"
-                path = "scripts/validate/Test-FutureTrueUxRestoreMockReviewDrill.ps1"
-                reportType = "future-true-ux-restore-mock-review-drill-validation"
-                parameters = @("ManifestPath", "ReportPath")
-            },
-            [pscustomobject][ordered]@{
                 gateId = "future-true-ux-end-to-end-no-execution-readiness-audit"
                 path = "scripts/validate/Test-FutureTrueUxRestoreEndToEndNoExecutionReadinessAudit.ps1"
                 reportType = "future-true-ux-restore-end-to-end-no-execution-readiness-audit-validation"
@@ -56,14 +50,13 @@ Describe "Future True UX validator entrypoint consolidation" {
         $script:RepresentativeEntrypoints = @(
             "future-true-ux-restore-authorization",
             "future-true-ux-authorization-review",
-            "future-true-ux-mock-review-drill",
             "future-true-ux-end-to-end-no-execution-readiness-audit",
             "future-true-ux-final-stop-line-handoff"
         )
     }
 
     It "keeps validate quality gate entrypoints and semantics stable" {
-        Assert-KitEqual @($script:ValidatorEntrypoints).Count 7
+        Assert-KitEqual @($script:ValidatorEntrypoints).Count 6
 
         foreach ($expected in $script:ValidatorEntrypoints) {
             $gate = @($script:QualityGates.gates | Where-Object { $_.id -eq $expected.gateId })[0]
@@ -132,7 +125,8 @@ Describe "Future True UX validator entrypoint consolidation" {
             "scripts/common/FutureTrueUxRestore.ValidatorPrimitives.ps1",
             "tests/pester/FutureTrueUxPesterHelpers.ps1",
             "tests/pester/FutureTrueUxValidatorEntrypointConsolidation.Tests.ps1",
-            "tests/pester/FutureTrueUxValidatorScriptGovernance.Tests.ps1"
+            "tests/pester/FutureTrueUxValidatorScriptGovernance.Tests.ps1",
+            "scripts/validate/Test-FutureTrueUxRestoreMockReviewDrill.ps1"
         ) + @($script:ValidatorEntrypoints.path)
 
         foreach ($path in $expectedPaths) {

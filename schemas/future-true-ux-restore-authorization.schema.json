@@ -21,7 +21,6 @@
     "offlineImageDryRun",
     "machineDryRun",
     "authorizationReview",
-    "mockReviewDrill",
     "endToEndNoExecutionReadinessAudit",
     "finalStopLineHandoff"
   ],
@@ -96,9 +95,6 @@
     },
     "authorizationReview": {
       "$ref": "#/$defs/authorizationReview"
-    },
-    "mockReviewDrill": {
-      "$ref": "#/$defs/mockReviewDrill"
     },
     "endToEndNoExecutionReadinessAudit": {
       "$ref": "#/$defs/endToEndNoExecutionReadinessAudit"
@@ -517,107 +513,6 @@
       },
       "additionalProperties": false
     },
-    "mockDecision": {
-      "type": "string",
-      "enum": [
-        "authorization-review-ready",
-        "needs-more-evidence",
-        "rejected",
-        "blocked"
-      ]
-    },
-    "mockReviewDrill": {
-      "type": "object",
-      "required": [
-        "enabled",
-        "mode",
-        "defaultScope",
-        "authorizationApproved",
-        "executionApproved",
-        "executeReady",
-        "trueExecution",
-        "mutationCount",
-        "allowedMockDecisions",
-        "forbiddenMockDecisions"
-      ],
-      "properties": {
-        "enabled": {
-          "const": true
-        },
-        "mode": {
-          "const": "mock-review-drill"
-        },
-        "defaultScope": {
-          "const": "current-user"
-        },
-        "authorizationApproved": {
-          "const": false,
-          "default": false
-        },
-        "executionApproved": {
-          "const": false,
-          "default": false
-        },
-        "executeReady": {
-          "const": false,
-          "default": false
-        },
-        "trueExecution": {
-          "const": false,
-          "default": false
-        },
-        "mutationCount": {
-          "const": 0,
-          "default": 0
-        },
-        "allowedMockDecisions": {
-          "type": "array",
-          "minItems": 4,
-          "items": {
-            "$ref": "#/$defs/mockDecision"
-          },
-          "not": {
-            "contains": {
-              "enum": [
-                "execute-ready",
-                "executed",
-                "completed"
-              ]
-            }
-          }
-        },
-        "forbiddenMockDecisions": {
-          "type": "array",
-          "minItems": 3,
-          "allOf": [
-            {
-              "contains": {
-                "const": "execute-ready"
-              }
-            },
-            {
-              "contains": {
-                "const": "executed"
-              }
-            },
-            {
-              "contains": {
-                "const": "completed"
-              }
-            }
-          ],
-          "items": {
-            "type": "string"
-          }
-        }
-      },
-      "not": {
-        "required": [
-          "executed"
-        ]
-      },
-      "additionalProperties": false
-    },
     "evidencePacket": {
       "type": "object",
       "required": [
@@ -784,8 +679,7 @@
         "default-user-dry-run",
         "offline-image-dry-run",
         "machine-dry-run",
-        "authorization-review",
-        "mock-review-drill"
+        "authorization-review"
       ]
     },
     "endToEndNoExecutionForbiddenState": {
@@ -840,7 +734,7 @@
         },
         "requiredLayers": {
           "type": "array",
-          "minItems": 7,
+          "minItems": 6,
           "allOf": [
             {
               "contains": {
@@ -870,11 +764,6 @@
             {
               "contains": {
                 "const": "authorization-review"
-              }
-            },
-            {
-              "contains": {
-                "const": "mock-review-drill"
               }
             }
           ],
@@ -947,7 +836,6 @@
         "offline-image-dry-run",
         "machine-dry-run",
         "authorization-review",
-        "mock-review-drill",
         "end-to-end-no-execution-readiness-audit"
       ]
     },
@@ -1066,7 +954,7 @@
         },
         "requiredCompletedPreparationLayers": {
           "type": "array",
-          "minItems": 8,
+          "minItems": 7,
           "allOf": [
             {
               "contains": {
@@ -1096,11 +984,6 @@
             {
               "contains": {
                 "const": "authorization-review"
-              }
-            },
-            {
-              "contains": {
-                "const": "mock-review-drill"
               }
             },
             {

@@ -37,23 +37,13 @@ Describe "Future true UX restore authorization state machine" {
         Assert-KitEqual (@($schema.'$defs'.reviewDecision.enum) -contains "execute-ready") $false
     }
 
-    It "keeps mock review drill decisions blocked from execute-ready and completion" {
+    It "keeps mock review drill pruned from current manifest and schema" {
         $manifest = Get-Content -LiteralPath (Join-Path $script:RepoRoot "manifests\future-true-ux-restore-authorization.json") -Raw -Encoding UTF8 | ConvertFrom-Json
         $schema = Get-Content -LiteralPath (Join-Path $script:RepoRoot "schemas\future-true-ux-restore-authorization.schema.json") -Raw -Encoding UTF8 | ConvertFrom-Json
-        $section = $manifest.mockReviewDrill
 
-        Assert-KitEqual $section.enabled $true
-        Assert-KitEqual $section.mode "mock-review-drill"
-        Assert-KitEqual $section.defaultScope "current-user"
-        Assert-KitEqual $section.authorizationApproved $false
-        Assert-KitEqual $section.executionApproved $false
-        Assert-KitEqual $section.executeReady $false
-        Assert-KitEqual $section.trueExecution $false
-        Assert-KitEqual $section.mutationCount 0
-        foreach ($decision in @("execute-ready", "executed", "completed")) {
-            Assert-KitEqual (@($section.allowedMockDecisions) -contains $decision) $false
-            Assert-KitEqual (@($section.forbiddenMockDecisions) -contains $decision) $true
-        }
-        Assert-KitEqual ($null -ne $schema.'$defs'.mockReviewDrill) $true
+        Assert-KitEqual ($manifest.PSObject.Properties.Name -contains "mockReviewDrill") $false
+        Assert-KitEqual ($schema.'$defs'.PSObject.Properties.Name -contains "mockReviewDrill") $false
+        Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot "scripts\validate\Test-FutureTrueUxRestoreMockReviewDrill.ps1")) $true
+        Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot "scripts\common\New-FutureTrueUxRestoreMockReviewDrillReport.ps1")) $false
     }
 }

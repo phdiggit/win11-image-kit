@@ -6,7 +6,7 @@ Date: 2026-06-30
 
 ## Boundary
 
-This audit keeps Future True UX Restore in report-only governance. It does not authorize true execution, evidence promotion, Issue auto-close, execute-ready state drift, workflow changes, or quality gate demotion.
+This audit keeps Future True UX Restore in report-only governance. It does not authorize true execution, evidence promotion, Issue auto-close, execute-ready state drift, workflow changes, or quality gate demotion outside the deletion-first Issue #121 prune.
 
 The root `docs/` directory remains reserved for Chinese primary documents, current entrypoints, and `docs/README.md`. This governance record is archived under `docs/archive/future-true-ux-restore/00-governance/` with the other current Future True UX governance documents.
 
@@ -50,11 +50,10 @@ The shared helper `scripts/common/FutureTrueUxRestore.Guards.ps1` centralizes on
 | `future-true-ux-execute-gate` | `docs/archive/future-true-ux-restore/00-governance/71-future-true-ux-restore-execute-gate-dual-approval.md` | `report-only` | Document-only gate; no execute-ready promotion. |
 | `future-true-ux-authorization-review` | `scripts/validate/Test-FutureTrueUxRestoreAuthorizationReview.ps1` | `report-only` | Existing validator remains the gate entrypoint. |
 | `future-true-ux-evidence-packet` | `docs/archive/future-true-ux-restore/00-governance/78-future-true-ux-restore-evidence-packet-contract.md` | `report-only` | Document-only gate. |
-| `future-true-ux-mock-review-drill` | `scripts/validate/Test-FutureTrueUxRestoreMockReviewDrill.ps1` | `report-only` | Uses shared frozen execution state helper. |
 | `future-true-ux-end-to-end-no-execution-readiness-audit` | `scripts/validate/Test-FutureTrueUxRestoreEndToEndNoExecutionReadinessAudit.ps1` | `report-only` | Existing validator remains the gate entrypoint. |
 | `future-true-ux-final-stop-line-handoff` | `scripts/validate/Test-FutureTrueUxRestoreFinalStopLineHandoff.ps1` | `report-only` | Final stop-line remains protected. |
 
-Issue #121 deleted the former mock-decision-ledger, negative-review, approval-checklist, integrated-packet-preview, and human-authorization-handoff gates and entrypoints. They were preparation-only stage artifacts, not long-term operator entrypoints.
+Issue #121 deleted the former mock-review-drill, mock-decision-ledger, negative-review, approval-checklist, integrated-packet-preview, and human-authorization-handoff gates and entrypoints. They were preparation-only stage artifacts, not long-term operator entrypoints.
 
 ## Batch 2 Consolidation
 
@@ -65,7 +64,7 @@ Batch 2 originally moved repeated report-only guard logic into the shared helper
 - `scripts/common/New-FutureTrueUxRestoreEndToEndNoExecutionReadinessAuditReport.ps1` now uses shared frozen-state drift, document text, status marker, Issue auto-close, state-promotion, evidence-promotion, and dangerous-command helpers.
 - `scripts/common/New-FutureTrueUxRestoreFinalStopLineHandoffReport.ps1` now uses shared frozen-state drift, document text, status marker, Issue auto-close, and dangerous-command helpers.
 
-The negative-review, approval-checklist, integrated-packet-preview, and human-authorization-handoff report helpers were deleted under Issue #121 with their validators, fixtures, gates, and Build Lock entries. Their dedicated truthy, dangerous-vocabulary, and review-state-drift guard helpers were also removed because they no longer had current callers.
+The mock-review-drill, negative-review, approval-checklist, integrated-packet-preview, and human-authorization-handoff report helpers were deleted under Issue #121 with their fixtures, gates, and Build Lock entries. Their dedicated truthy, dangerous-vocabulary, and review-state-drift guard helpers were also removed because they no longer had current callers.
 
 `tests/pester/FutureTrueUxPesterHelpers.ps1` adds Pester-only assertions for governance document boundaries, Future True UX gate semantics, dangerous command scans, and Build Lock path checks. Existing governance tests call this helper instead of repeating the same frozen-state and gate checks.
 
@@ -78,19 +77,18 @@ Batch 3 keeps the public validator entrypoints in place and moves repeated entry
 - repo-relative UTF-8 JSON reads through the existing `Resolve-FutureTrueUxRestoreRepoPath` helper;
 - `-ReportPath` directory creation, UTF-8 JSON write, success output, and exit-code mapping.
 
-The consolidation now covers the seven Future True UX Restore validate entrypoints that remain long-term:
+The consolidation now covers the six Future True UX Restore validate entrypoints that remain long-term quality gate entrypoints:
 
 - `scripts/validate/Test-FutureTrueUxRestoreAuthorization.ps1`;
 - `scripts/validate/Test-FutureTrueUxRestoreCurrentUserDryRun.ps1`;
 - `scripts/validate/Test-FutureTrueUxRestoreScopeDryRun.ps1`;
 - `scripts/validate/Test-FutureTrueUxRestoreAuthorizationReview.ps1`;
-- `scripts/validate/Test-FutureTrueUxRestoreMockReviewDrill.ps1`;
 - `scripts/validate/Test-FutureTrueUxRestoreEndToEndNoExecutionReadinessAudit.ps1`;
 - `scripts/validate/Test-FutureTrueUxRestoreFinalStopLineHandoff.ps1`.
 
-No retained validator CLI parameter was renamed or removed. `ManifestPath`, `ReportPath`, and the existing fixture/baseline parameters remain on their original retained scripts. Deleted preparation-only validators no longer keep resident CLI compatibility.
+No retained validator CLI parameter was renamed or removed. `ManifestPath`, `ReportPath`, and the existing fixture/baseline parameters remain on their original retained scripts. Deleted preparation-only validators no longer keep resident CLI compatibility, except `scripts/validate/Test-FutureTrueUxRestoreMockReviewDrill.ps1`, which remains only as a workflow-compatible prune guard because `.github/workflows/ci.yml` is intentionally unchanged in the Issue #121 slice.
 
-`tests/pester/FutureTrueUxValidatorEntrypointConsolidation.Tests.ps1` locks the seven retained gate-to-entrypoint mappings, checks the shared primitive functions, verifies validate entrypoints do not keep inline report-write commands, smoke-runs representative validators into caller-provided `.tmp` reports, and keeps the consolidation surface tracked by Build Lock.
+`tests/pester/FutureTrueUxValidatorEntrypointConsolidation.Tests.ps1` locks the six retained gate-to-entrypoint mappings, checks the shared primitive functions, verifies validate entrypoints do not keep inline report-write commands, smoke-runs representative validators into caller-provided `.tmp` reports, and keeps the consolidation plus workflow-compatible prune guard surface tracked by Build Lock.
 
 ## Batch 4 Presentation Prune
 
@@ -102,7 +100,7 @@ The durable contract now lives in the retained validator/report entrypoints. No 
 
 Issue #121 pruned the resident Future True UX Restore archive stage docs under `docs/archive/future-true-ux-restore/01-mock-review/` and `docs/archive/future-true-ux-restore/06-no-execution-audit/`. The retained current stop-line references are `00-governance/106-future-true-ux-restore-final-stop-line-handoff.md` and `00-governance/107-future-true-ux-restore-stop-line-decision-matrix.md`.
 
-The `future-true-ux-mock-decision-ledger` document-only gate was removed with its archived document. Pester paths that remain in PR Fast now assert the deleted archive surface stays absent while the executable mock review report helper still emits blocked, false/zero execution state. The executable report-only mock review drill, end-to-end no-execution readiness audit, and final stop-line handoff gates remain in place.
+The `future-true-ux-mock-decision-ledger` document-only gate and `future-true-ux-mock-review-drill` executable gate were removed with their archived documents, report helper, and fixture family. Pester paths that remain in PR Fast now assert the deleted archive, helper, fixture, and gate surface stays absent while the workflow-compatible mock review validator emits only a blocked, false/zero prune report. The end-to-end no-execution readiness audit and final stop-line handoff gates remain in place.
 
 ## Script Surface Inventory
 
@@ -110,17 +108,17 @@ The `future-true-ux-mock-decision-ledger` document-only gate was removed with it
 |---|---|---|
 | `scripts/common/FutureTrueUxRestore.Guards.ps1` | Already consolidated. | Frozen execution state, scope names, dangerous vocabulary, Issue auto-close, review-state drift, evidence-promotion, document text, and status-marker helpers live here. |
 | `scripts/common/FutureTrueUxRestore.ValidatorPrimitives.ps1` | Already consolidated. | Validator repo root, JSON read, check/failure state, report write, and exit mapping are shared by validate entrypoints. |
-| `scripts/common/New-FutureTrueUxRestore*Report.ps1` | Current report helpers only. | Long-term authorization, dry-run, mock-review, no-execution, and final stop-line helpers remain. Preparation-only intermediate helpers were deleted under Issue #121. |
-| `scripts/validate/Test-FutureTrueUxRestore*.ps1` | Already consolidated at entrypoint layer. | Seven public validate entrypoints remain separate for gate stability and use validator primitives. |
+| `scripts/common/New-FutureTrueUxRestore*Report.ps1` | Current report helpers only. | Long-term authorization, dry-run, no-execution, and final stop-line helpers remain. Preparation-only intermediate helpers were deleted under Issue #121. |
+| `scripts/validate/Test-FutureTrueUxRestore*.ps1` | Already consolidated at entrypoint layer. | Six public quality gate validate entrypoints remain separate for gate stability and use validator primitives. The mock review drill validate path remains only as a workflow-compatible prune guard. |
 | `scripts/config/Show-FutureTrueUxRestore*.ps1` | Pruned under #121. | Future True UX display-only scripts are not long-term operator entrypoints. Use validator reports for report-only state. |
 | `tests/pester/FutureTrueUx*.Tests.ps1` | Shared assertions with readable gate tests. | `FutureTrueUxPesterHelpers.ps1` holds common governance, validator entrypoint, dangerous-command, and Build Lock assertions. Document-only stage tests were redirected away from deleted docs when their archived documents were pruned. |
-| `tests/fixtures/user-experience/future-true-restore/` | Current fixture families only. | Negative-review, approval-checklist, packet-preview, and human-authorization-handoff fixture families were deleted under Issue #121. |
+| `tests/fixtures/user-experience/future-true-restore/` | Current fixture families only. | Mock-review, negative-review, approval-checklist, packet-preview, and human-authorization-handoff fixture families were deleted under Issue #121. |
 
 ## Findings
 
 The script surface had deliberate duplication around frozen execution flags, supported scope names, Issue auto-close scans, state-promotion scans, evidence-promotion scans, document status checks, and blocked execution vocabulary. A helper extraction is safe because it only returns static values, text checks, or regex text, and because the quality gate manifest still points at the existing validators and documents.
 
-No retained validate entrypoint was renamed or merged. Batch 3 consolidates only shared validator entrypoint plumbing, while Batch 4 removes read-only Future True UX presentation scripts instead of keeping one-shot show/config entrypoints resident. Issue #121 removed preparation-only intermediate Future True UX gates, validators, helpers, fixtures, archived documents, and Build Lock entries; no retained quality gate trigger, layer, required/blocking setting, or report-only mode changed. No retained report schema field was removed or renamed.
+No retained validate entrypoint was renamed or merged. Batch 3 consolidates only shared validator entrypoint plumbing, while Batch 4 removes read-only Future True UX presentation scripts instead of keeping one-shot show/config entrypoints resident. Issue #121 removed preparation-only intermediate Future True UX gates, helpers, fixtures, archived documents, and Build Lock entries; no retained quality gate trigger, layer, required/blocking setting, or report-only mode changed. No retained report schema field was removed or renamed.
 
 The intentionally unconsolidated surface remains:
 
@@ -140,7 +138,8 @@ The Pester coverage in `tests/pester/FutureTrueUxValidatorScriptGovernance.Tests
 - validator entrypoints do not contain direct dangerous action commands;
 - the governance record contains `Refs #19` without close keywords;
 - frozen execution flags remain false/zero;
-- the seven retained validate entrypoints keep their public gate mappings and parameter names;
+- the six retained validate entrypoints keep their public gate mappings and parameter names;
+- the workflow-compatible mock review drill validator remains a prune guard, not a current quality gate;
 - representative validators write JSON only to caller-provided `.tmp` report paths;
 - Build Lock tracks this governance document, helper, changed report helpers, changed validate entrypoints, and the governance tests.
 
