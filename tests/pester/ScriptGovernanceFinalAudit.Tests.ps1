@@ -105,7 +105,7 @@ Describe "Script governance final audit stop-line" {
         }
     }
 
-    It "keeps public Future True UX validate and show/config entrypoints present" {
+    It "keeps public Future True UX validate entrypoints present" {
         $futureValidateEntrypoints = @(
             $script:QualityGates.gates |
                 Where-Object { $_.id -like "future-true-ux*" -and $_.entrypoint -like "scripts/validate/Test-FutureTrueUxRestore*.ps1" } |
@@ -115,16 +115,6 @@ Describe "Script governance final audit stop-line" {
 
         foreach ($entrypoint in $futureValidateEntrypoints) {
             Assert-FutureTrueUxValidatorEntrypointExists -RepoRoot $script:RepoRoot -RelativePath $entrypoint
-        }
-
-        foreach ($entrypoint in @(
-            "scripts/config/Show-FutureTrueUxRestoreAuthorizationPlan.ps1",
-            "scripts/config/Show-FutureTrueUxRestoreAuthorizationReviewPlan.ps1",
-            "scripts/config/Show-FutureTrueUxRestoreCurrentUserDryRunPlan.ps1",
-            "scripts/config/Show-FutureTrueUxRestoreMockReviewDrillPlan.ps1",
-            "scripts/config/Show-FutureTrueUxRestoreScopeDryRunPlan.ps1"
-        )) {
-            Assert-FutureTrueUxPresentationEntrypointExists -RepoRoot $script:RepoRoot -RelativePath $entrypoint
         }
     }
 

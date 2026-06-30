@@ -9,7 +9,7 @@
     "scope": "default-user",
     "targetIdentity": "default-user-template:redacted",
     "requestedMutationType": "future-default-user-ux-restore",
-    "dryRunCommandEnvelope": "scripts/config/Show-FutureTrueUxRestoreScopeDryRunPlan.ps1 -Scope default-user",
+    "dryRunCommandEnvelope": "scripts/validate/Test-FutureTrueUxRestoreScopeDryRun.ps1 -ReportPath logs/future-true-ux-scope.json",
     "rollbackPlan": "Restore from captured Default User template backup before any future mutation.",
     "beforeEvidence": "Redacted Default User UX baseline packet.",
     "afterEvidencePlaceholder": "Future after-state packet required before execution can be approved.",

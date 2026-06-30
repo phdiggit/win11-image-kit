@@ -8,7 +8,7 @@
     "scope": "machine",
     "targetIdentity": "machine:redacted-hardware-id",
     "requestedMutationType": "future-machine-ux-restore",
-    "dryRunCommandEnvelope": "scripts/config/Show-FutureTrueUxRestoreScopeDryRunPlan.ps1 -Scope machine",
+    "dryRunCommandEnvelope": "scripts/validate/Test-FutureTrueUxRestoreScopeDryRun.ps1 -ReportPath logs/future-true-ux-scope.json",
     "rollbackPlan": "Restore machine-level UX policy backup before any future mutation.",
     "beforeEvidence": "Redacted machine-level UX baseline packet.",
     "afterEvidencePlaceholder": "Future after-state packet required before execution can be approved.",

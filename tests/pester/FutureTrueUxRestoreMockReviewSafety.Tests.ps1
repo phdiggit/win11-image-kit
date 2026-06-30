@@ -54,8 +54,7 @@ Describe "Future true UX restore mock review safety" {
         )
         $files = @(
             "scripts\common\New-FutureTrueUxRestoreMockReviewDrillReport.ps1",
-            "scripts\validate\Test-FutureTrueUxRestoreMockReviewDrill.ps1",
-            "scripts\config\Show-FutureTrueUxRestoreMockReviewDrillPlan.ps1"
+            "scripts\validate\Test-FutureTrueUxRestoreMockReviewDrill.ps1"
         )
 
         foreach ($file in $files) {

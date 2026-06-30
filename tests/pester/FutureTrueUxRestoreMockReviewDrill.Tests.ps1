@@ -28,19 +28,6 @@ Describe "Future true UX restore mock review drill" {
         Assert-KitEqual $report.complete.mutationCount 0
     }
 
-    It "prints a mock-only plan" {
-        $output = & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $script:RepoRoot "scripts\config\Show-FutureTrueUxRestoreMockReviewDrillPlan.ps1") | Out-String
-
-        Assert-KitMatch $output "Mock drill only: true"
-        Assert-KitMatch $output "Scope: current-user"
-        Assert-KitMatch $output "Execution decision: not-approved"
-        Assert-KitMatch $output "ExecuteReady: false"
-        Assert-KitMatch $output "True execution: false"
-        Assert-KitMatch $output "Mutation count: 0"
-        Assert-KitMatch $output "Execution frozen: true"
-        Assert-KitMatch $output "execute-ready-blocked"
-    }
-
     It "allows a complete current-user mock packet to be review-ready only" {
         $manifest = Get-Content -LiteralPath (Join-Path $script:RepoRoot "manifests\future-true-ux-restore-authorization.json") -Raw -Encoding UTF8 | ConvertFrom-Json
         $request = Get-Content -LiteralPath (Join-Path $script:RepoRoot "tests\fixtures\user-experience\future-true-restore\mock-review\current-user-complete-packet.json") -Raw -Encoding UTF8 | ConvertFrom-Json

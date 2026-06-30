@@ -42,7 +42,7 @@ The dry-run plan does not:
 
 ## Output
 
-`scripts/config/Show-FutureTrueUxRestoreAuthorizationPlan.ps1` prints a human-readable plan and serializes the authorization report. The output is evidence of authorization intake only. It is not real UX restore evidence and does not authorize execution.
+`scripts/validate/Test-FutureTrueUxRestoreAuthorization.ps1 -ReportPath <path>` serializes the authorization report. The output is evidence of authorization intake only. It is not real UX restore evidence and does not authorize execution.
 
 ## Related Documents
 

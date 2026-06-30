@@ -24,19 +24,6 @@ Describe "Future true UX restore validation runner" {
         Assert-KitEqual $report.baseline.mutationCount 0
     }
 
-    It "prints a dry-run-only plan" {
-        $output = & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $script:RepoRoot "scripts\config\Show-FutureTrueUxRestoreAuthorizationPlan.ps1") | Out-String
-
-        Assert-KitMatch $output "Dry-run only: true"
-        Assert-KitMatch $output "Default deny: true"
-        Assert-KitMatch $output "True execution: false"
-        Assert-KitMatch $output "Mutation count: 0"
-        Assert-KitMatch $output "current-user"
-        Assert-KitMatch $output "default-user"
-        Assert-KitMatch $output "offline-image"
-        Assert-KitMatch $output "machine"
-    }
-
     It "keeps docs and gates synchronized for authorization intake" {
         foreach ($doc in @(
             "docs\archive\future-true-ux-restore\00-governance\66-future-true-ux-restore-authorization-intake.md",

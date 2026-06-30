@@ -28,8 +28,7 @@ Describe "Future true UX restore authorization review safety" {
         )
         $files = @(
             "scripts\common\New-FutureTrueUxRestoreAuthorizationReviewReport.ps1",
-            "scripts\validate\Test-FutureTrueUxRestoreAuthorizationReview.ps1",
-            "scripts\config\Show-FutureTrueUxRestoreAuthorizationReviewPlan.ps1"
+            "scripts\validate\Test-FutureTrueUxRestoreAuthorizationReview.ps1"
         )
 
         foreach ($file in $files) {
@@ -47,8 +46,7 @@ Describe "Future true UX restore authorization review safety" {
             "docs\archive\future-true-ux-restore\00-governance\78-future-true-ux-restore-evidence-packet-contract.md",
             "docs\archive\future-true-ux-restore\00-governance\79-future-true-ux-restore-authorization-state-machine.md",
             "scripts\common\New-FutureTrueUxRestoreAuthorizationReviewReport.ps1",
-            "scripts\validate\Test-FutureTrueUxRestoreAuthorizationReview.ps1",
-            "scripts\config\Show-FutureTrueUxRestoreAuthorizationReviewPlan.ps1"
+            "scripts\validate\Test-FutureTrueUxRestoreAuthorizationReview.ps1"
         )
 
         foreach ($path in $paths) {
