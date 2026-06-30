@@ -1,9 +1,0 @@
-{
-  "reportType": "confirmation-token",
-  "schemaVersion": 1,
-  "targetDiskNumber": 0,
-  "targetDiskSerial": "SAMPLE-DISK-SERIAL-001",
-  "token": "DISK-1-SERIAL-SAMPLE-DISK-SERIAL-002",
-  "genericToken": false,
-  "status": "blocked"
-}

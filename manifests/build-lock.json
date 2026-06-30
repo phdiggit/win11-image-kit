@@ -233,14 +233,14 @@
       "path": "tests/pester/BuildLockNormalization.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "21e834bf0cee3089e21129f83e61ce090b4000178ee56b189f2114f79fd68c50",
+      "hash": "c4f03078e1541dbe0d88f40faf4740fed189239c8670f1a25eb20a74d7d48a51",
       "reason": "Build Lock normalization tests guard Task 121 drift inventory, self-watch manual policy, and scoped updates."
     },
     {
       "path": "docs/archive/build-lock/121-build-lock-normalization.md",
       "category": "doc",
       "required": true,
-      "hash": "28dd2b538cf45e9b915684707c40affff4a90d0ace4f7c9e80971d8cbf747da9",
+      "hash": "7b06b5f3bceb6ae5501486d08a52e48ab91574692c0201d1fb99891149835c7e",
       "reason": "Build Lock normalization record documents line-ending drift, accepted content drift, and self-watch policy."
     },
     {
@@ -310,14 +310,14 @@
       "path": ".github/workflows/ci.yml",
       "category": "workflow",
       "required": true,
-      "hash": "af6c210d4008790b2512d85ccb82ab1ae84db0ce0457d0f7ff53380dcac3effe",
+      "hash": "11e116355bc7cc4f515130b0cc08423fb59d2a44b650d94c6ced45b68ee3614e",
       "reason": "PR Fast CI runs future true UX mock review drill validation and Pester coverage."
     },
     {
       "path": "README.md",
       "category": "doc",
       "required": true,
-      "hash": "78dafc99a192e907d0d3704db86536b73d27a0b97850247360452fa33c32ebd5",
+      "hash": "f42081421694b35d0a90438bf1421384712dc4e3d0d069cbf76974bc5e42d1e2",
       "reason": "README links Issue 18 UX restore intake and validation entrypoint."
     },
     {
@@ -373,14 +373,14 @@
       "path": "docs/archive/future-true-ux-restore/00-governance/109-future-true-ux-quality-gate-governance.md",
       "category": "doc",
       "required": true,
-      "hash": "38c576ab8dde99e2f418fe3e796e993ae0df3df7e90cc92e9a378e516f92ed0b",
+      "hash": "1e6290d6c08e2e5727b28e7d1690bfc22f8f5f6a6b2cfbd328ea33fe587f1df5",
       "reason": "Future True UX quality gate governance documents grouping, naming, and demotion policy."
     },
     {
       "path": "manifests/quality-gates.json",
       "category": "manifest",
       "required": true,
-      "hash": "5f5418e366014f0192813e5f0e0b7d62a4f91aac931a8a9464bf80b470c6527a",
+      "hash": "aef07b40369f383d003c573e19790d1c6fc36256843ae8286d56581e92325fbd",
       "reason": "Quality Gates include future true UX mock review drill validation."
     },
     {
@@ -429,7 +429,7 @@
       "path": "tests/pester/FutureTrueUxQualityGateGovernance.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "aa913ef34e99978dcf92117f8fa2ee79a17ad06f02bc7f35c1cd8f4971cdca44",
+      "hash": "fb2f4976e51f22d6250d087557b1eac8d1375e0916bc3b951608dd4d98a04ecc",
       "reason": "Future True UX quality gate governance tests guard grouping and report-only semantics."
     },
     {
@@ -562,7 +562,7 @@
       "path": "docs/07-定制范围与配置入口.md",
       "category": "doc",
       "required": true,
-      "hash": "c42646fc7981a435539250f6ed99bbec04a330556e4d31352cf9c7c58c0bd0ba",
+      "hash": "539be63c1843800da7217207f6f20b91fe13e320c803d1b9e028f2de21325c5a",
       "reason": "Configuration entry documentation describes opt-in effective configuration migration."
     },
     {
@@ -639,7 +639,7 @@
       "path": "scripts/config/Show-EvidenceChain.ps1",
       "category": "script",
       "required": true,
-      "hash": "38ce1ede1b501d833332ea161f354b6ed1eb2aea1248014fed687dec9497503d",
+      "hash": "808fcdfb8d7c562cb83bc7c88178abf01db73dd363fe46c26c7e0b1603ee0f13",
       "reason": "Evidence chain display shows input set and normalization summary."
     },
     {
@@ -681,7 +681,7 @@
       "path": "tests/fixtures/evidence-chain/sample-report-inputs/pester-summary.json",
       "category": "test",
       "required": true,
-      "hash": "bbddf5ab1438c8c6382e4aa9b4c147fc11cc0645909c773882a48a1d66a23a02",
+      "hash": "531ab1b05119a1d2795fb24d0ff092c339fdd8807401329b46b01a124d985d09",
       "reason": "Pester summary fixture backs Issue 16 producer adapter baseline."
     },
     {
@@ -958,17 +958,10 @@
       "reason": "Issue 17 controlled execution matrix, report, validation, and tests stay synchronized."
     },
     {
-      "path": "tests/fixtures/controlled-execution/sample-plan.json",
-      "category": "test",
-      "required": true,
-      "hash": "774de18aaa487c36b8945cc8fe57f1fb91f923b2e5400f824a606bff754b7e01",
-      "reason": "Controlled execution plan fixture backs report-only baseline tests."
-    },
-    {
       "path": "tests/fixtures/controlled-execution/sample-blocked-mutation.json",
       "category": "test",
       "required": true,
-      "hash": "e07019a344ed30b35893c0a2a1b94dcfc8124d4d3d9348bd4b141bfeec5771f8",
+      "hash": "c9acc1259f4b441ddd2e8e0dcddbf59dbca4bff566166dbd44e910774d2343be",
       "reason": "Controlled execution blocked mutation fixture proves validator failure behavior."
     },
     {
@@ -989,21 +982,21 @@
       "path": "tests/fixtures/controlled-execution/failure/network-download-action.json",
       "category": "test",
       "required": true,
-      "hash": "5ce267e89ef9c161266e48d36455066e152195f67c50c4dd5c669964bc2b371c",
+      "hash": "e43117f55c90d357641d6e4d6e58c53c55a08240f9e0cb20b2bbd943e6c7bc98",
       "reason": "Controlled execution failure fixture proves network actions are blocked."
     },
     {
       "path": "tests/fixtures/controlled-execution/failure/registry-mutation-action.json",
       "category": "test",
       "required": true,
-      "hash": "0822f33470eb07aa8111380a799efd25e0dac52568f3332b2536affa93c80a8a",
+      "hash": "11778e33fb020d22e97c3b9437eac18fb729b196d4152e11fd6edcef1c572d95",
       "reason": "Controlled execution failure fixture proves registry mutation is blocked."
     },
     {
       "path": "tests/fixtures/controlled-execution/failure/disk-mutation-action.json",
       "category": "test",
       "required": true,
-      "hash": "aa8e6bd06e39b5a419ad89b46010bab06c63eb950e537fbfc61ebf02468c0cb6",
+      "hash": "740c14f97991635afe3f35c76fe9d55bf255529d5d3c7954a3f1a03ea367ae9a",
       "reason": "Controlled execution failure fixture proves disk mutation is blocked."
     },
     {
@@ -1031,7 +1024,7 @@
       "path": "tests/pester/ControlledExecutionSafety.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "ecdcbb9dcbbee175d02e8ad5017145e239d2f299e4c98e7fe5427932360c25d7",
+      "hash": "4b05cb1e01abd4aa47c3d209aa0c349da1172df8d053aca409fa2a50cf753f0b",
       "reason": "Controlled execution safety tests guard scripts against executable native calls."
     },
     {
@@ -1119,20 +1112,6 @@
       "reason": "Disk identity serial mismatch fixture proves blocked planning."
     },
     {
-      "path": "tests/fixtures/controlled-execution/disk-identity/size-mismatch.json",
-      "category": "test",
-      "required": true,
-      "hash": "2dbda371e8a64a21cbfc352ba9e2e11ca63a6e4294b6f2f7c8dd05c4f8587b31",
-      "reason": "Disk identity size mismatch fixture proves blocked planning."
-    },
-    {
-      "path": "tests/fixtures/controlled-execution/disk-identity/disk-number-mismatch.json",
-      "category": "test",
-      "required": true,
-      "hash": "e429aa618588309a4eb225ca9390c5a0e832e8a97173e6716d20e116cc9e9396",
-      "reason": "Disk identity number mismatch fixture proves blocked planning."
-    },
-    {
       "path": "tests/fixtures/controlled-execution/confirmation-token/matched.json",
       "category": "test",
       "required": true,
@@ -1145,13 +1124,6 @@
       "required": true,
       "hash": "189b732ece4309ab333c4336cd60015f908df3a078043dfc75460ebb8862e1e1",
       "reason": "Generic token fixture proves blocked confirmation semantics."
-    },
-    {
-      "path": "tests/fixtures/controlled-execution/confirmation-token/serial-mismatch.json",
-      "category": "test",
-      "required": true,
-      "hash": "2d903d64ff7b60fb82d543aa3f0bffdc71d6e9be86cce59f180042e554d35932",
-      "reason": "Mismatched token fixture proves target identity enforcement."
     },
     {
       "path": "tests/fixtures/controlled-execution/wim-image/matched.json",
@@ -1168,32 +1140,11 @@
       "reason": "WIM hash mismatch fixture proves blocked planning."
     },
     {
-      "path": "tests/fixtures/controlled-execution/wim-image/index-mismatch.json",
-      "category": "test",
-      "required": true,
-      "hash": "4a49d812b559e655c100626147047119b7d8b13a8b3c3ecf6f27a2f84ad65619",
-      "reason": "WIM index mismatch fixture proves blocked planning."
-    },
-    {
-      "path": "tests/fixtures/controlled-execution/wim-image/local-private-path.json",
-      "category": "test",
-      "required": true,
-      "hash": "09a010ab72e88fca69ec6639bda1d172943ba72b4748fb84a807e3fc76219dfd",
-      "reason": "WIM local private path fixture proves path blocking."
-    },
-    {
       "path": "tests/fixtures/controlled-execution/winre-plan/planned.json",
       "category": "test",
       "required": true,
       "hash": "6e59c2386c9569d00925fd3d8e4c38d809489bce67a321ff0b75f0457955a1b1",
       "reason": "WinRE planned fixture backs baseline hardening validation."
-    },
-    {
-      "path": "tests/fixtures/controlled-execution/winre-plan/missing-recovery-volume.json",
-      "category": "test",
-      "required": true,
-      "hash": "bddddf94ed01d4f20f15bb12ae81b09d192385683b726cacfd6a64fedf4e4fcd",
-      "reason": "WinRE missing recovery fixture proves blocked planning."
     },
     {
       "path": "tests/fixtures/controlled-execution/winre-plan/wrong-gpt-type.json",
@@ -1215,41 +1166,6 @@
       "required": true,
       "hash": "1d698140287b253fb52a2a9635a1d93cea743c44ed8cd26846e81a99c2be49eb",
       "reason": "Native command captured exit code fixture proves blocked planning."
-    },
-    {
-      "path": "tests/pester/ControlledExecutionDiskIdentity.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "ac4332bbeed69e8ebdecf68fad7e8b401d61342a2feb7aa2548535f1fd4b1e8b",
-      "reason": "Disk identity Pester tests cover match and mismatch fixture semantics."
-    },
-    {
-      "path": "tests/pester/ControlledExecutionConfirmationToken.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "12264c215315771eefa92059521faa7ecc8bfd6775c65f7bf83b1322a0cfcde2",
-      "reason": "Confirmation token Pester tests cover generic and mismatched token blocking."
-    },
-    {
-      "path": "tests/pester/ControlledExecutionWimPlan.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "27d269b6e8374bf8a3de73aec77ecbdd964df41652c8b64b20284b69eb6b4cb3",
-      "reason": "WIM metadata Pester tests cover fixture-only hash, index, and path blocking."
-    },
-    {
-      "path": "tests/pester/ControlledExecutionWinREPlan.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "87d45e6816fc18d2f9a827a99faf21be91530fdec5f1f1ffb7b2ded1b9930e12",
-      "reason": "WinRE plan Pester tests cover logical volumes and recovery partition metadata."
-    },
-    {
-      "path": "tests/pester/ControlledExecutionNativeCommand.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "8a6740b26e9a02d548dcb8ab662063c6c435827df84efc662b4027bce106346a",
-      "reason": "Native command Pester tests cover not-run and not-captured envelopes."
     },
     {
       "path": "docs/03-WinPE捕获与还原.md",
@@ -1294,24 +1210,10 @@
       "reason": "Issue 17 WinPE plan entrypoint validates plan-only behavior and Execute blocking."
     },
     {
-      "path": "tests/fixtures/controlled-execution/authorization/execute-request-blocked.json",
-      "category": "test",
-      "required": true,
-      "hash": "dc0ec072bdf23440bcb9616509c72ae62f141494f5fc12c42b4b9162ba739ae9",
-      "reason": "Issue 17 authorization contract and tests keep true execution blocked."
-    },
-    {
       "path": "tests/fixtures/controlled-execution/authorization/matched.json",
       "category": "test",
       "required": true,
       "hash": "562e43fdf6468f378897a5b927501fc5bdf8fffdb5404c356558290dc3579201",
-      "reason": "Issue 17 authorization contract and tests keep true execution blocked."
-    },
-    {
-      "path": "tests/fixtures/controlled-execution/authorization/missing-disk-identity.json",
-      "category": "test",
-      "required": true,
-      "hash": "ebafb1d717f90358d188026b05125684c1b821cf8ae3122d30607c0f5a48773b",
       "reason": "Issue 17 authorization contract and tests keep true execution blocked."
     },
     {
@@ -1322,24 +1224,10 @@
       "reason": "Issue 17 authorization contract and tests keep true execution blocked."
     },
     {
-      "path": "tests/fixtures/controlled-execution/authorization/stale-runid.json",
-      "category": "test",
-      "required": true,
-      "hash": "ffe01f92cd6601e282fac8d8a07a46ff353756178f45f73ad5c762ef33aa2489",
-      "reason": "Issue 17 authorization contract and tests keep true execution blocked."
-    },
-    {
       "path": "tests/fixtures/controlled-execution/native-command-simulation/baseline-success.json",
       "category": "test",
       "required": true,
       "hash": "1ddf2805ea7cc167c16423c763f93cdd390689027cdad7f7dc635b6f561b5be7",
-      "reason": "Issue 17 native command simulation fixtures and tests keep command results fixture-only."
-    },
-    {
-      "path": "tests/fixtures/controlled-execution/native-command-simulation/bcdboot-failure.json",
-      "category": "test",
-      "required": true,
-      "hash": "bb91d279899624f3bbf9abb487b3660f1a2fc6c8ec58621b38e8e9bfacadffb0",
       "reason": "Issue 17 native command simulation fixtures and tests keep command results fixture-only."
     },
     {
@@ -1350,24 +1238,10 @@
       "reason": "Issue 17 native command simulation fixtures and tests keep command results fixture-only."
     },
     {
-      "path": "tests/fixtures/controlled-execution/native-command-simulation/diskpart-failure.json",
-      "category": "test",
-      "required": true,
-      "hash": "ae656c6c1ce7ea75ba0f2665c85d52b11d3bc33b3e09693d9a215123c1cd5ced",
-      "reason": "Issue 17 native command simulation fixtures and tests keep command results fixture-only."
-    },
-    {
       "path": "tests/fixtures/controlled-execution/native-command-simulation/diskpart-success.json",
       "category": "test",
       "required": true,
       "hash": "2ea6b4b2fb359b84c912259eaa39586900a731f8421440f1683472f43b09ae54",
-      "reason": "Issue 17 native command simulation fixtures and tests keep command results fixture-only."
-    },
-    {
-      "path": "tests/fixtures/controlled-execution/native-command-simulation/dism-apply-failure.json",
-      "category": "test",
-      "required": true,
-      "hash": "13b5498f19b3aafdeba3e3c6cdfbd1bb5db08a7f41a249b5727979530ac5d7e3",
       "reason": "Issue 17 native command simulation fixtures and tests keep command results fixture-only."
     },
     {
@@ -1390,34 +1264,6 @@
       "required": true,
       "hash": "b1931114f632edccb8259065387a15c26c11e48ab1e4f28c46fa3ec04533facb",
       "reason": "Issue 17 native command simulation fixtures and tests keep command results fixture-only."
-    },
-    {
-      "path": "tests/pester/ControlledExecutionAuthorization.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "f6926f1f943084088c79aaa102056507b3c00ba3a121729c6f2eaf44608e5342",
-      "reason": "Issue 17 authorization contract and tests keep true execution blocked."
-    },
-    {
-      "path": "tests/pester/ControlledExecutionExecutionSet.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "dfeca5dfb8eac2388029407cf937eeb9a6c9d6b4af7b779e27ffcb38fda2cff5",
-      "reason": "Issue 17 controlled execution matrix, report, validation, and tests stay synchronized."
-    },
-    {
-      "path": "tests/pester/ControlledExecutionNativeSimulation.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "0dee5d55dc6d3833425772e7b94c1de6c979d155aaa6212638994b3deaccc8da",
-      "reason": "Issue 17 native command simulation fixtures and tests keep command results fixture-only."
-    },
-    {
-      "path": "tests/pester/WinPEControlledExecutionPlan.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "5c3f9ff00f18e673712ebae85905aee686266019d35e3e8716f089504522eee5",
-      "reason": "Issue 17 WinPE plan entrypoint validates plan-only behavior and Execute blocking."
     },
     {
       "path": "tests/fixtures/user-experience/default-apps/unknown-progid.json",
@@ -1619,7 +1465,7 @@
       "path": "docs/04-部署后恢复.md",
       "category": "doc",
       "required": true,
-      "hash": "963ff77ef9bd4e602704187123139715630f8aa3cb32ad2aa4269197b445efa2",
+      "hash": "38d70ddf2958965e6f6ce37f6a1fec61da78ad0213ff1f38abac4be0d115901b",
       "reason": "Issue 18 UX restore documentation records report-only capability and safety boundaries."
     },
     {
@@ -2046,14 +1892,14 @@
       "path": "docs/archive/future-true-ux-restore/00-governance/65-future-true-ux-restore-execution-split.md",
       "category": "doc",
       "required": true,
-      "hash": "f34fbe1ea721978bfc98f37d712fe44aaf52688720a6a1909a2589d53abd5a75",
+      "hash": "3cb32d07e68410cb03139c7fd9ea4064a75bc83af92b5b3352cbd3e35c2cadb0",
       "reason": "Issue 18 future true UX restore split requires explicit authorization before mutation."
     },
     {
       "path": "docs/archive/future-true-ux-restore/00-governance/66-future-true-ux-restore-authorization-intake.md",
       "category": "doc",
       "required": true,
-      "hash": "3480235615e1a2df17b822100161cd32910012ddef97098e6d844c142e1786af",
+      "hash": "f1b08cdd3653ee7fbd97b547015b64aa866cca9da2b30858811cdd91e7dd9b99",
       "reason": "Future true UX restore authorization intake documentation and dry-run boundaries."
     },
     {
@@ -2193,7 +2039,7 @@
       "path": "tests/pester/FutureTrueUxRestoreValidation.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "5f7b4d33bf7f196a56b8994191697e7c2f97bbef19fc20ce781020989cf9703d",
+      "hash": "8b994fd45848c7cc90e87cab8e47f4f4714adc98b736efb6d4f7e5067bff2314",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
@@ -3208,7 +3054,7 @@
       "path": "tests/pester/FutureTrueUxRestoreMockReviewSafety.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "bdcdc5f26d12f177e4de7f989f74c960571669460ff7a5a9a186db78633d7ed1",
+      "hash": "a7b116e0e57b5fe3b12ea3b504d6b6345c740805e2d66722166a4a05897a161a",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
@@ -3222,42 +3068,42 @@
       "path": "docs/archive/future-true-ux-restore/06-no-execution-audit/102-future-true-ux-restore-end-to-end-no-execution-readiness-audit.md",
       "category": "doc",
       "required": true,
-      "hash": "5270e5ae570724a11f3a129f46a80f74562f30cd0708fbef6a69c5c3d3e74ee3",
+      "hash": "bc6ce1060a4b58f045cd8b5368cee0f75bf678c3f3aacc966c2a7e3966af006f",
       "reason": "Future True UX Restore no-execution readiness audit documentation records report-only stop-line semantics."
     },
     {
       "path": "docs/archive/future-true-ux-restore/06-no-execution-audit/103-future-true-ux-restore-state-name-separation-matrix.md",
       "category": "doc",
       "required": true,
-      "hash": "97e6f5c1b674c69e8ecde12bbe6acb43beb3d35555b15ed8ab93619d0376fb52",
+      "hash": "3619a1c1ca65708fa3b8f924b9d2c7be303e42e8a6e0e33eec529317982d798e",
       "reason": "Future True UX Restore no-execution readiness audit documentation records report-only stop-line semantics."
     },
     {
       "path": "docs/archive/future-true-ux-restore/06-no-execution-audit/104-future-true-ux-restore-artifact-chain-consistency-index.md",
       "category": "doc",
       "required": true,
-      "hash": "0c64db70901092f85de4d7a1af89af008fe3f948425bc8ab7dadce82b78b6c04",
+      "hash": "0253b5cc6c14a5edc591a9dea3298baa86fd4e8e2ab8745ef7b04fd6de5dadde",
       "reason": "Future True UX Restore no-execution readiness audit documentation records report-only stop-line semantics."
     },
     {
       "path": "docs/archive/future-true-ux-restore/06-no-execution-audit/105-future-true-ux-restore-no-execution-stop-line.md",
       "category": "doc",
       "required": true,
-      "hash": "e149304e02466fa43b5d8de2922318a04d8deee5ae419c01dfb82456e9400231",
+      "hash": "b1f43d781b2c36f858cb13d027c85a6fc4e7d4a73265616d1b44c61d4e1eb52e",
       "reason": "Future True UX Restore no-execution readiness audit documentation records report-only stop-line semantics."
     },
     {
       "path": "scripts/common/New-FutureTrueUxRestoreEndToEndNoExecutionReadinessAuditReport.ps1",
       "category": "script",
       "required": true,
-      "hash": "aaa78fad03406e05b614169ecde2b3901c57c5d865ef6752aa775b458404908e",
+      "hash": "0c352f5278c13c348a75c1c4c9e38958c9716e915f539bd7efb9bf5de34e09e0",
       "reason": "Future True UX Restore no-execution readiness audit report helper is a report-only validator input."
     },
     {
       "path": "scripts/validate/Test-FutureTrueUxRestoreEndToEndNoExecutionReadinessAudit.ps1",
       "category": "script",
       "required": true,
-      "hash": "88b55cc3bf8855d21a8762f2dd9485920c1d7c02e6b1a55344a49afbbf9b22af",
+      "hash": "cd9019b31a337dededd65a8ba89fb8cc079afc9a6ec9fd9d31f2a19e03058f6b",
       "reason": "Future True UX Restore no-execution readiness audit validation entrypoint is a PR-fast report-only gate."
     },
     {
@@ -3292,7 +3138,7 @@
       "path": "tests/fixtures/user-experience/future-true-restore/no-execution-readiness-audit/missing-layer.json",
       "category": "test",
       "required": true,
-      "hash": "34e85cf565e1f71bb07d9167ef468e571ad7771adf3289d0d41cb4defdb90358",
+      "hash": "bc8ba3a141ad90780067855ea9dfdec00020c350448c04dd67c633b3c6beb71c",
       "reason": "Future True UX Restore no-execution readiness audit fixture guards blocked and needs-rework outcomes."
     },
     {
@@ -3306,21 +3152,21 @@
       "path": "tests/fixtures/user-experience/future-true-restore/no-execution-readiness-audit/state-promotion-drift.json",
       "category": "test",
       "required": true,
-      "hash": "c3b43dafe14ccf2705f30dbd82bc720a4202180eef9447bd310ab9fc2b12f208",
+      "hash": "88ef92ccfb6df6639164eb6ec592a85d535c33249b82e871d1608656d8b2ad99",
       "reason": "Future True UX Restore no-execution readiness audit fixture guards blocked and needs-rework outcomes."
     },
     {
       "path": "tests/pester/FutureTrueUxRestoreEndToEndNoExecutionReadinessAudit.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "9ad4375fd0e8e3ab8e8768ea77e0c8b6ec03d13c0b56625eac707bbec230ef41",
+      "hash": "d2e2d09a464df076d17472ab81c9c4d582bf02d5161eb54e3b893e1f3114460f",
       "reason": "Future True UX Restore no-execution readiness audit Pester coverage guards no-execution semantics."
     },
     {
       "path": "docs/archive/future-true-ux-restore/00-governance/106-future-true-ux-restore-final-stop-line-handoff.md",
       "category": "doc",
       "required": true,
-      "hash": "93067dcd19e53187c2b344d990f14e4af6fc3c435825bd83640ca45d16589c6d",
+      "hash": "712498bec7d52d7c43c08be3eaa74cbcc1060ad87880f56c2e13a516bbe93d9b",
       "reason": "Future True UX Restore final stop-line handoff documentation records the human decision boundary."
     },
     {
@@ -3334,7 +3180,7 @@
       "path": "scripts/common/New-FutureTrueUxRestoreFinalStopLineHandoffReport.ps1",
       "category": "script",
       "required": true,
-      "hash": "f0b85a87963371333626412b1454c55d0e4e95b06e11fdc08c084a51ee9e28fc",
+      "hash": "4325d049a7a86883a3409abca215f3e0573aef407935d2bff6c00b4bb4decc74",
       "reason": "Future True UX Restore final stop-line handoff report helper is a report-only validator input."
     },
     {
@@ -3390,42 +3236,42 @@
       "path": "docs/archive/future-true-ux-restore/00-governance/108-repo-documentation-script-governance-audit.md",
       "category": "doc",
       "required": true,
-      "hash": "53a1b663dca4b99e3d7331e7b236fac994709a8dc7386f6dab8d264f33507698",
+      "hash": "b6d8067dee374bd4aab346ebad0157c95f96434bbe2fe527d7e6ffb27edcfa31",
       "reason": "Repository governance audit records docs/archive state and no-execution boundaries."
     },
     {
       "path": "docs/README.md",
       "category": "doc",
       "required": true,
-      "hash": "46a87b4d11f1efeac971b486a45f6fd563b8d35972b3d0e5e4a9c1f2c4447a1c",
+      "hash": "ae689eeece8ef3bbff96d80eee6cb694c6b32347f19e1f731ba2e3607745d5cb",
       "reason": "Canonical docs index separates current entrypoints from historical archive material."
     },
     {
       "path": "tests/pester/DocsGovernanceArchive.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "806103cdc1c7fa0729596af487182412b2ad0ad6f6dc590f2be6a27666824b8e",
+      "hash": "4ad7fe584c974ae61be8d6f40cf616679289a0f1f5d1bbdac00d4d88830489f8",
       "reason": "Docs governance archive tests guard moved Future True UX docs, entrypoints, Build Lock paths, and no-execution semantics."
     },
     {
       "path": "docs/archive/future-true-ux-restore/00-governance/112-future-true-ux-validator-script-governance.md",
       "category": "doc",
       "required": true,
-      "hash": "eb4db820e220e7e7d2af51bc57d8a962b417f5f00a4761d98b788c60f1acf9b4",
+      "hash": "047fbbc64d880f7150155f08df89a91b65610a50d6e8d5c53d791b8fecb82da2",
       "reason": "Future True UX validator and script governance audit records report-only entrypoints and consolidation boundaries."
     },
     {
       "path": "docs/archive/script-governance/122-script-governance-final-audit.md",
       "category": "doc",
       "required": true,
-      "hash": "ee10751c5278f3846d09d8a99e1086cb53cb608a3b0860e3aae5b228c08e3d8a",
+      "hash": "ff2ca6aa728e834ac6fc1b6a5fa449f47f7417ba68f460b36c29c390fa3dead0",
       "reason": "Script governance final audit records the stop-line decision, lifecycle rules, and anti-bloat contract."
     },
     {
       "path": "scripts/common/FutureTrueUxRestore.Guards.ps1",
       "category": "script",
       "required": true,
-      "hash": "5162a3fdcac10ab9ca94e3f1d32e5b0aa3d31683ad0f2d83607512a91e0eb189",
+      "hash": "d569aa49312b35614057a15ec97dc97512a91ad076f756ab4bffec95fbb48297",
       "reason": "Future True UX shared guard helper centralizes frozen execution state and report-only review matching."
     },
     {
@@ -3453,28 +3299,28 @@
       "path": "tests/pester/FutureTrueUxPresentationGovernance.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "471427b5e69920e1845e1129787ae68646c2b1b004f30650ad2904bdb1ce5ce0",
+      "hash": "015f6ee686b092a2305693d2bed6ed91d21fcd56e14e4bb1ff4f48008902cb2f",
       "reason": "Future True UX presentation governance tests guard read-only show/config entrypoints and helpers."
     },
     {
       "path": "tests/pester/FutureTrueUxValidatorEntrypointConsolidation.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "370b0b1ebbf0bf9fc748ffb75d739596631735089109c3327aa434f98411f794",
+      "hash": "366232582a924700ced02a4832fb0e8775359f9e6a0a6613b86c8f821be0cf5d",
       "reason": "Future True UX validator entrypoint consolidation tests guard public entrypoints, report schema, and report-only writes."
     },
     {
       "path": "tests/pester/FutureTrueUxValidatorScriptGovernance.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "708d92e2c6aae8c61eecdc603c91179caa3f874d2a8193a219b8cd419f38e89f",
+      "hash": "548d347317e7ecad64cb4c61c6474bdd45cc7328ca59057cb4a8c4ac74341342",
       "reason": "Future True UX validator script governance tests guard report-only entrypoints and consolidation boundaries."
     },
     {
       "path": "tests/pester/ScriptGovernanceFinalAudit.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "9bf939328a007250af510963bf2081a51c166b6a809a5036796d6f07c9b8fa56",
+      "hash": "7e196022dd5099dc3d4567f7a9a0dc353883a1a67e692c0a1219367acf8764f1",
       "reason": "Script governance final audit tests guard the stop-line record, lifecycle rules, gate semantics, and Build Lock scope."
     }
   ],
