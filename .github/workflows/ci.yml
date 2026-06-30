@@ -17,7 +17,7 @@ jobs:
   validate:
     name: Validate
     if: github.event_name == 'pull_request'
-    runs-on: [self-hosted, Windows, X64, win11-gh-runner]
+    runs-on: windows-latest
 
     steps:
       - name: Checkout
