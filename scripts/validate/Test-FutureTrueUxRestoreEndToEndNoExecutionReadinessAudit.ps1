@@ -20,7 +20,7 @@ Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($sectio
 Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($section.executeReady -eq $false) -Message "executeReady remains false"
 Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($section.trueExecution -eq $false) -Message "trueExecution remains false"
 Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition ($section.mutationCount -eq 0) -Message "mutationCount remains 0"
-Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition (@($section.requiredLayers) -contains "mock-review-drill") -Message "mock review drill is covered"
+Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition (-not (@($section.requiredLayers) -contains "mock-review-drill")) -Message "mock review drill is pruned from required layers"
 Add-FutureTrueUxRestoreValidatorCheck -State $validatorState -Condition (@($section.forbiddenStates) -contains "closure-ready") -Message "closure-ready is forbidden"
 
 $fixtureRoot = "tests/fixtures/user-experience/future-true-restore/no-execution-readiness-audit"

@@ -143,27 +143,6 @@
       "reviewerChecklist"
     ]
   },
-  "mockReviewDrill": {
-    "enabled": true,
-    "mode": "mock-review-drill",
-    "defaultScope": "current-user",
-    "authorizationApproved": false,
-    "executionApproved": false,
-    "executeReady": false,
-    "trueExecution": false,
-    "mutationCount": 0,
-    "allowedMockDecisions": [
-      "authorization-review-ready",
-      "needs-more-evidence",
-      "rejected",
-      "blocked"
-    ],
-    "forbiddenMockDecisions": [
-      "execute-ready",
-      "executed",
-      "completed"
-    ]
-  },
   "endToEndNoExecutionReadinessAudit": {
     "enabled": true,
     "mode": "end-to-end-no-execution-readiness-audit",
@@ -178,8 +157,7 @@
       "default-user-dry-run",
       "offline-image-dry-run",
       "machine-dry-run",
-      "authorization-review",
-      "mock-review-drill"
+      "authorization-review"
     ],
     "forbiddenStates": [
       "execute-ready",
@@ -217,7 +195,6 @@
       "offline-image-dry-run",
       "machine-dry-run",
       "authorization-review",
-      "mock-review-drill",
       "end-to-end-no-execution-readiness-audit"
     ],
     "requiredStopLineDocs": [

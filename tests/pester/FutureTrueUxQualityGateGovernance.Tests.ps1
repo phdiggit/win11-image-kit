@@ -16,8 +16,6 @@ Describe "Future True UX quality gate governance" {
             "future-true-ux-execute-gate",
             "future-true-ux-authorization-review",
             "future-true-ux-evidence-packet",
-            "future-true-ux-mock-review-drill",
-            "future-true-ux-mock-decision-ledger",
             "future-true-ux-end-to-end-no-execution-readiness-audit",
             "future-true-ux-final-stop-line-handoff"
         )

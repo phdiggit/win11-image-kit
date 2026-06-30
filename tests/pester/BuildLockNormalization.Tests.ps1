@@ -45,7 +45,7 @@ Describe "Build Lock normalization governance" {
 
     It "keeps every Future True UX gate report-only and blocking on pull requests" {
         $futureGates = @($script:QualityGates.gates | Where-Object { $_.id -like "future-true-ux*" })
-        Assert-KitEqual @($futureGates).Count 13
+        Assert-KitEqual @($futureGates).Count 11
 
         foreach ($gate in $futureGates) {
             Assert-FutureTrueUxQualityGateSemantics -Gate $gate -RepoRoot $script:RepoRoot

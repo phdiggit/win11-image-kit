@@ -26,14 +26,14 @@ No registry, DISM, Sysprep, WinPE, AppX, Defender, service, Junction, package in
 
 | Area | Current state | Decision |
 |---|---|---|
-| `scripts/common/` | Stable / stop broad governance | Core helpers and Future True UX guard, validator, and presentation primitives are reasonably consolidated. Keep existing shared helper families. Add new helpers only when a repeated pattern has at least two clear call sites and cannot be handled by an existing helper. |
+| `scripts/common/` | Stable / stop broad governance | Core helpers and Future True UX guard and validator primitives are reasonably consolidated. Keep existing shared helper families. Add new helpers only when a repeated pattern has at least two clear call sites and cannot be handled by an existing helper. |
 | `scripts/validate/` | Stable / lifecycle monitoring only | Public quality gate validators are separate on purpose, while Future True UX validator plumbing is consolidated behind shared primitives. Keep current public entrypoints for gate stability. |
-| `scripts/config/` | Stable / lifecycle monitoring only | Operator show/config scripts remain read-only previews. Future True UX presentation plumbing is already shared; public script names remain stable for users and tests. |
+| `scripts/config/` | Stable / lifecycle monitoring only | Operator show/config scripts remain read-only previews. Future True UX presentation-only scripts were pruned under #121; public operator script names remain stable for users and tests. |
 | `scripts/dev/` | Intentionally separate | Developer helpers are allowed only when they support a recurring workflow. `pr_body_tool.py` and run-artifact collection are recurring workflow helpers. One-time migration or normalization helpers must be deleted after use. |
 | `tests/pester/` | Needs lifecycle monitoring only | The suite is large but useful: issue-history tests protect completed-roadmap contracts, and Future True UX tests protect no-execution and no-auto-close boundaries. No broad deletion in this task. |
 | `tests/fixtures/` | Stable / intentionally separate | Controlled execution, evidence-chain, user-experience, and Future True UX fixtures encode separate positive and negative policy cases. Keep fixture families scoped to their validators. |
 | `manifests/build-lock.json` | Stable with documented manual self-watch | Current policy keeps Build Lock normalized with no failed mismatches and accepts only `manifests/build-lock.json` as the manual self-watch item. Updates must be scoped to files touched by a PR unless a dedicated normalization task says otherwise. |
-| `manifests/quality-gates.json` | Stable / do not touch | Future True UX gates remain `pr-fast`, `pull_request`, `report-only`, `required=true`, and `blocking=true`. No gate ID rename, demotion, removal, trigger change, or mode change in this task. |
+| `manifests/quality-gates.json` | Stable / deletion-first lifecycle | Retained Future True UX gates remain `pr-fast`, `pull_request`, `report-only`, `required=true`, and `blocking=true`. Preparation-only gates may be removed only when retained gates preserve the same safety invariant and docs, tests, and Build Lock are updated together. |
 | `docs/archive/` | Stable / lifecycle monitoring only | Archive records are complete enough to explain completed-roadmap, Future True UX, Build Lock, and script governance decisions. Add archive docs only for durable decisions or handoffs. |
 
 ## Ephemeral Script Deletion Audit
@@ -43,7 +43,7 @@ This audit applies the deletion-first rule for non-long-term scripts and script-
 | Area | Long-term entrypoints | Ephemeral / migration / governance-temporary review | Decision |
 |---|---|---|---|
 | `scripts/dev/` | `pr_body_tool.py` remains the recurring UTF-8 PR body workflow helper. `Collect-KitRunArtifacts.ps1` remains a recurring artifact collection helper for validation runs. | `update_build_lock_hashes.py` was created for the Task #121 Build Lock normalization pass and is not a recurring operator or CI entrypoint. Keeping it resident would make ordinary PRs more likely to absorb unrelated hash drift. | Delete `scripts/dev/update_build_lock_hashes.py` and remove its Build Lock entry. |
-| `scripts/config/` | `Show-CustomizationScope.ps1`, `Show-EffectiveConfiguration.ps1`, `Show-ControlledExecutionPlan.ps1`, `Show-EvidenceChain.ps1`, `Show-UserExperienceRestorePlan.ps1`, and `Show-FutureTrueUxRestore*Plan.ps1` remain public read-only preview entrypoints. | No one-time config/migration show script is present. Future one-shot display helpers should be replaced by docs or removed after the task. | Keep existing public show/config entrypoints. |
+| `scripts/config/` | `Show-CustomizationScope.ps1`, `Show-EffectiveConfiguration.ps1`, `Show-ControlledExecutionPlan.ps1`, `Show-EvidenceChain.ps1`, and `Show-UserExperienceRestorePlan.ps1` remain public read-only preview entrypoints. | Future True UX show/config plans were pruned under #121 because validator reports now carry the durable report-only contract. Future one-shot display helpers should be replaced by docs or removed after the task. | Keep current operator previews; do not keep Future True UX presentation-only scripts resident. |
 | `scripts/validate/` | `Test-ProjectConfig.ps1`, `Test-QualityGates.ps1`, `Test-BuildLock.ps1`, domain validators, and `Test-FutureTrueUxRestore*.ps1` remain quality gate or report contract entrypoints. | No standalone migration-only validator remains. Future temporary validators must either become a public gate with Build Lock coverage or be deleted when the migration ends. | Keep current validators; no deletion. |
 | `tests/pester/` | Current Pester files remain durable guardrails for quality gates, Build Lock policy, completed-roadmap contracts, Future True UX no-execution policy, and this final audit. | Pester files are not runtime scripts. No unreferenced one-shot Pester file is identified after deleting the Task #121 helper assertions. Future migration-only tests must be retired with the temporary script they protect. | Keep current Pester guardrails; update tests to assert the deleted helper does not remain resident. |
 
@@ -62,7 +62,7 @@ Current validator families:
 |---|---|---|
 | Project/config/static validators | `Test-ProjectConfig.ps1`, `Test-QualityGates.ps1`, `Test-BuildLock.ps1` | Canonical PR-fast guardrails. Keep public. |
 | Capability, context, effective configuration, ensure-state, evidence-chain, controlled execution, Sysprep, and UX validators | `Test-CapabilityRegistry.ps1`, `Test-ContextScope.ps1`, `Test-EffectiveConfiguration.ps1`, `Test-EnsureState.ps1`, `Test-EvidenceChain.ps1`, `Test-ControlledExecution.ps1`, `Test-SysprepReadiness.ps1`, `Test-UserExperienceRestore.ps1` | Domain validators are justified because each owns a separate manifest, report contract, or safety boundary. |
-| Future True UX validators | `Test-FutureTrueUxRestore*.ps1` | Public gate entrypoints remain stable. Shared validator plumbing lives in `FutureTrueUxRestore.ValidatorPrimitives.ps1`; stage-specific checks stay readable in their entrypoint scripts. |
+| Future True UX validators | `Test-FutureTrueUxRestore*.ps1` | Public gate entrypoints remain stable. Shared validator plumbing lives in `FutureTrueUxRestore.ValidatorPrimitives.ps1`; stage-specific checks stay readable in their entrypoint scripts. `Test-FutureTrueUxRestoreMockReviewDrill.ps1` remains only as a workflow-compatible prune check after the Issue #121 mock-review drill gate/helper/fixture prune. |
 
 No duplicate or obsolete public validator entrypoint is identified for deletion. The public entrypoint count is justified by quality gate stability, report type stability, and separate safety domains.
 
@@ -83,7 +83,7 @@ Retirement criteria for old validators:
 
 ## `tests/pester/` Lifecycle Status
 
-Current Future True UX governance tests are intentionally retained. They cover gate semantics, public validator entrypoints, public show/config entrypoints, no-execution fields, no auto-close wording, evidence-boundary wording, stage-specific negative fixtures, and dangerous-command scans.
+Current Future True UX governance tests are intentionally retained. They cover gate semantics, public validator entrypoints, no-execution fields, no auto-close wording, evidence-boundary wording, stage-specific negative fixtures, and dangerous-command scans.
 
 Issue 11-18 and completed-roadmap tests are still intentionally retained because they protect historical acceptance records, Build Lock references, manual closure handoffs, report-only policy, and README or archive path stability. They are not duplicate merely because their issue stage is complete.
 
@@ -116,7 +116,7 @@ Future tasks must follow this contract:
 - Quality gate changes must preserve IDs and report-only semantics unless explicitly approved.
 - Future True UX true-execution work must remain outside the current report-only chain.
 - Recurring developer helpers may stay in `scripts/dev/` only with documented usage boundaries and offline/local defaults.
-- Report-only validators and show/config scripts must not call real mutation entrypoints.
+- Report-only validators and retained show/config scripts must not call real mutation entrypoints.
 
 ## Stop-Line Decision
 
@@ -154,7 +154,7 @@ Every `future-true-ux*` gate remains:
 | `required` | `true` |
 | `blocking` | `true` |
 
-Every gate entrypoint must continue to exist. No quality gate ID, trigger, layer, mode, required flag, blocking flag, or report-only semantic changes in this task.
+Every retained gate entrypoint must continue to exist. No retained quality gate trigger, layer, mode, required flag, blocking flag, or report-only semantic changes are allowed by this audit. Workflow-compatible prune checks are not quality gate entrypoints.
 
 ## No True Execution
 

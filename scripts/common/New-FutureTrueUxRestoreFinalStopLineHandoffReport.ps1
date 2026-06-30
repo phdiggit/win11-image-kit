@@ -33,7 +33,6 @@ function New-FutureTrueUxRestoreFinalStopLineHandoffReport {
         "offline-image-dry-run",
         "machine-dry-run",
         "authorization-review",
-        "mock-review-drill",
         "end-to-end-no-execution-readiness-audit"
     )
     $requiredDocs = @(
@@ -67,7 +66,6 @@ function New-FutureTrueUxRestoreFinalStopLineHandoffReport {
         "offline-image-dry-run" = Get-FutureTrueUxRestoreValue -InputObject $Manifest -Name "offlineImageDryRun" -DefaultValue $null
         "machine-dry-run" = Get-FutureTrueUxRestoreValue -InputObject $Manifest -Name "machineDryRun" -DefaultValue $null
         "authorization-review" = Get-FutureTrueUxRestoreValue -InputObject $Manifest -Name "authorizationReview" -DefaultValue $null
-        "mock-review-drill" = Get-FutureTrueUxRestoreValue -InputObject $Manifest -Name "mockReviewDrill" -DefaultValue $null
         "end-to-end-no-execution-readiness-audit" = Get-FutureTrueUxRestoreValue -InputObject $Manifest -Name "endToEndNoExecutionReadinessAudit" -DefaultValue $null
     }
 

@@ -9,11 +9,7 @@ Describe "Future true UX restore authorization state machine" {
             @{ Path = "docs\archive\future-true-ux-restore\00-governance\76-future-true-ux-restore-unified-authorization-request.md"; Status = "authorization-request-draft" },
             @{ Path = "docs\archive\future-true-ux-restore\00-governance\77-future-true-ux-restore-maintainer-review-checkpoint.md"; Status = "review-checkpoint-draft" },
             @{ Path = "docs\archive\future-true-ux-restore\00-governance\78-future-true-ux-restore-evidence-packet-contract.md"; Status = "evidence-packet-draft" },
-            @{ Path = "docs\archive\future-true-ux-restore\00-governance\79-future-true-ux-restore-authorization-state-machine.md"; Status = "authorization-state-machine" },
-            @{ Path = "docs\archive\future-true-ux-restore\01-mock-review\80-future-true-ux-restore-mock-review-packet-drill.md"; Status = "mock-review-drill" },
-            @{ Path = "docs\archive\future-true-ux-restore\01-mock-review\81-future-true-ux-restore-mock-maintainer-review-transcript.md"; Status = "mock-review-transcript" },
-            @{ Path = "docs\archive\future-true-ux-restore\01-mock-review\82-future-true-ux-restore-mock-decision-ledger.md"; Status = "mock-decision-ledger" },
-            @{ Path = "docs\archive\future-true-ux-restore\01-mock-review\83-future-true-ux-restore-mock-drill-lessons.md"; Status = "mock-drill-lessons" }
+            @{ Path = "docs\archive\future-true-ux-restore\00-governance\79-future-true-ux-restore-authorization-state-machine.md"; Status = "authorization-state-machine" }
         )
 
         foreach ($docInfo in $docs) {
@@ -41,23 +37,13 @@ Describe "Future true UX restore authorization state machine" {
         Assert-KitEqual (@($schema.'$defs'.reviewDecision.enum) -contains "execute-ready") $false
     }
 
-    It "keeps mock review drill decisions blocked from execute-ready and completion" {
+    It "keeps mock review drill pruned from current manifest and schema" {
         $manifest = Get-Content -LiteralPath (Join-Path $script:RepoRoot "manifests\future-true-ux-restore-authorization.json") -Raw -Encoding UTF8 | ConvertFrom-Json
         $schema = Get-Content -LiteralPath (Join-Path $script:RepoRoot "schemas\future-true-ux-restore-authorization.schema.json") -Raw -Encoding UTF8 | ConvertFrom-Json
-        $section = $manifest.mockReviewDrill
 
-        Assert-KitEqual $section.enabled $true
-        Assert-KitEqual $section.mode "mock-review-drill"
-        Assert-KitEqual $section.defaultScope "current-user"
-        Assert-KitEqual $section.authorizationApproved $false
-        Assert-KitEqual $section.executionApproved $false
-        Assert-KitEqual $section.executeReady $false
-        Assert-KitEqual $section.trueExecution $false
-        Assert-KitEqual $section.mutationCount 0
-        foreach ($decision in @("execute-ready", "executed", "completed")) {
-            Assert-KitEqual (@($section.allowedMockDecisions) -contains $decision) $false
-            Assert-KitEqual (@($section.forbiddenMockDecisions) -contains $decision) $true
-        }
-        Assert-KitEqual ($null -ne $schema.'$defs'.mockReviewDrill) $true
+        Assert-KitEqual ($manifest.PSObject.Properties.Name -contains "mockReviewDrill") $false
+        Assert-KitEqual ($schema.'$defs'.PSObject.Properties.Name -contains "mockReviewDrill") $false
+        Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot "scripts\validate\Test-FutureTrueUxRestoreMockReviewDrill.ps1")) $true
+        Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot "scripts\common\New-FutureTrueUxRestoreMockReviewDrillReport.ps1")) $false
     }
 }

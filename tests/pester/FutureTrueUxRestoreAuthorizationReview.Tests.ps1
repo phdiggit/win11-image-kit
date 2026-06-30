@@ -26,18 +26,6 @@ Describe "Future true UX restore authorization review" {
         Assert-KitEqual $report.baseline.executeReady $false
     }
 
-    It "prints a review-only plan" {
-        $output = & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $script:RepoRoot "scripts\config\Show-FutureTrueUxRestoreAuthorizationReviewPlan.ps1") | Out-String
-
-        Assert-KitMatch $output "Review workflow only: true"
-        Assert-KitMatch $output "AuthorizationApproved: false"
-        Assert-KitMatch $output "ExecutionApproved: false"
-        Assert-KitMatch $output "ExecuteReady: false"
-        Assert-KitMatch $output "True execution: false"
-        Assert-KitMatch $output "Mutation count: 0"
-        Assert-KitMatch $output "execute-ready"
-    }
-
     It "allows complete packets to reach authorization-review-ready without execution" {
         $manifest = Get-Content -LiteralPath (Join-Path $script:RepoRoot "manifests\future-true-ux-restore-authorization.json") -Raw -Encoding UTF8 | ConvertFrom-Json
         foreach ($fileName in @(

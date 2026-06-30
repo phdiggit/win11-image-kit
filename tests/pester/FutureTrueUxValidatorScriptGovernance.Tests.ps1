@@ -24,7 +24,7 @@ Describe "Future True UX validator script governance" {
     }
 
     It "keeps every Future True UX gate report-only and on existing entrypoints" {
-        Assert-KitEqual @($script:FutureGates).Count 13
+        Assert-KitEqual @($script:FutureGates).Count 11
         foreach ($gate in $script:FutureGates) {
             Assert-FutureTrueUxQualityGateSemantics -Gate $gate -RepoRoot $script:RepoRoot
         }

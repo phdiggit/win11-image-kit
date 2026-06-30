@@ -41,7 +41,7 @@ Describe "Script governance final audit stop-line" {
             "Stable / lifecycle monitoring only",
             "Intentionally separate",
             "Needs lifecycle monitoring only",
-            "Stable / do not touch"
+            "Stable / deletion-first lifecycle"
         )) {
             Assert-KitMatch $script:Doc ([regex]::Escape($classification))
         }
@@ -98,33 +98,23 @@ Describe "Script governance final audit stop-line" {
 
     It "keeps every Future True UX quality gate report-only and blocking on pull requests" {
         $futureGates = @($script:QualityGates.gates | Where-Object { $_.id -like "future-true-ux*" })
-        Assert-KitEqual @($futureGates).Count 13
+        Assert-KitEqual @($futureGates).Count 11
 
         foreach ($gate in $futureGates) {
             Assert-FutureTrueUxQualityGateSemantics -Gate $gate -RepoRoot $script:RepoRoot
         }
     }
 
-    It "keeps public Future True UX validate and show/config entrypoints present" {
+    It "keeps public Future True UX validate entrypoints present" {
         $futureValidateEntrypoints = @(
             $script:QualityGates.gates |
                 Where-Object { $_.id -like "future-true-ux*" -and $_.entrypoint -like "scripts/validate/Test-FutureTrueUxRestore*.ps1" } |
                 ForEach-Object { $_.entrypoint }
         )
-        Assert-KitEqual $futureValidateEntrypoints.Count 7
+        Assert-KitEqual $futureValidateEntrypoints.Count 6
 
         foreach ($entrypoint in $futureValidateEntrypoints) {
             Assert-FutureTrueUxValidatorEntrypointExists -RepoRoot $script:RepoRoot -RelativePath $entrypoint
-        }
-
-        foreach ($entrypoint in @(
-            "scripts/config/Show-FutureTrueUxRestoreAuthorizationPlan.ps1",
-            "scripts/config/Show-FutureTrueUxRestoreAuthorizationReviewPlan.ps1",
-            "scripts/config/Show-FutureTrueUxRestoreCurrentUserDryRunPlan.ps1",
-            "scripts/config/Show-FutureTrueUxRestoreMockReviewDrillPlan.ps1",
-            "scripts/config/Show-FutureTrueUxRestoreScopeDryRunPlan.ps1"
-        )) {
-            Assert-FutureTrueUxPresentationEntrypointExists -RepoRoot $script:RepoRoot -RelativePath $entrypoint
         }
     }
 
