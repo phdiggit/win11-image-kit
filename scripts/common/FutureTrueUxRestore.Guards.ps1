@@ -94,46 +94,6 @@ function Get-FutureTrueUxRestoreFrozenStateMessages {
     @($messages)
 }
 
-function Test-FutureTrueUxRestoreTruthy {
-    param(
-        [AllowNull()]
-        $Value
-    )
-
-    if ($Value -eq $true) {
-        return $true
-    }
-
-    if ($Value -is [string]) {
-        return ($Value -match '^(?i:true|yes|1)$')
-    }
-
-    return $false
-}
-
-function Get-FutureTrueUxRestoreDangerousVocabularyPattern {
-    $terms = @(
-        "registry",
-        "hklm",
-        "hkcu",
-        "dism",
-        "appx",
-        "startlayout",
-        "defender",
-        "junction",
-        "service",
-        "sysprep",
-        "winget",
-        "choco",
-        "msiexec",
-        "invoke-webrequest",
-        "invoke-restmethod",
-        "install-module"
-    )
-
-    return "(?i)\b($($terms -join '|'))\b"
-}
-
 function Get-FutureTrueUxRestoreIssueAutoClosePattern {
     param(
         [int]$IssueNumber = 18
@@ -142,39 +102,17 @@ function Get-FutureTrueUxRestoreIssueAutoClosePattern {
     '(?i)\b({0}|{1}|{2})\s+#{3}\b' -f ("fix" + "es"), ("close" + "s"), ("resolve" + "s"), $IssueNumber
 }
 
-function Get-FutureTrueUxRestoreReviewStateDriftPattern {
-    param(
-        [switch]$IncludeClosure
-    )
-
-    $states = @("authorization-review-ready", "execute-ready", "approved to execute", "executed", "completed")
-    if ($IncludeClosure) {
-        $states += @("issue-18-complete", "closure-ready")
-    }
-
-    $escapedStates = @($states | ForEach-Object { [regex]::Escape($_) })
-    "(?i)\b($($escapedStates -join '|'))\b"
-}
-
 function Get-FutureTrueUxRestoreStatePromotionPattern {
-    '(?i)\b(handoff-ready-for-human-review|packet-preview-ready|approval-checklist-ready|authorization-review-ready)\b.*\b(is|becomes|promotes to|counts as)\b.*\b(authorization-review-ready|execute-ready|closure-ready)\b'
+    '(?i)\bauthorization-review-ready\b.*\b(is|becomes|promotes to|counts as)\b.*\b(execute-ready|closure-ready)\b'
 }
 
 function Get-FutureTrueUxRestoreEvidencePromotionPattern {
     param(
-        [ValidateSet("ApprovalChecklist", "ReviewMaterial", "NoExecutionAudit")]
-        [string]$Scope = "ReviewMaterial"
+        [ValidateSet("NoExecutionAudit")]
+        [string]$Scope = "NoExecutionAudit"
     )
 
-    if ($Scope -eq "ApprovalChecklist") {
-        return '(?i)\b(CI success|dry-run success|mock packet success|report-only success)\b.*\b(real UX evidence|true UX evidence|approval)\b'
-    }
-
-    if ($Scope -eq "NoExecutionAudit") {
-        return '(?i)\b(CI|dry-run|handler report|manual checklist|mock packet|negative drill|approval checklist|packet preview|handoff report)\b.*\b(is|counts as|promotes to|can be treated as)\b.*\b(true UX restore evidence|real restore evidence|real UX evidence)\b'
-    }
-
-    '(?i)\b(CI success|dry-run|handler report|manual checklist|mock packet|negative drill|approval checklist|packet preview|report-only)\b.*\b(can be treated as|treated as|counts as|promotes to|is approval|is real UX evidence|is true UX evidence)\b'
+    '(?i)\b(CI|dry-run|handler report|manual checklist|mock packet|report-only)\b.*\b(is|counts as|promotes to|can be treated as)\b.*\b(true UX restore evidence|real restore evidence|real UX evidence)\b'
 }
 
 function New-FutureTrueUxRestoreLiteralPattern {

@@ -40,30 +40,6 @@ Describe "Future True UX validator entrypoint consolidation" {
                 parameters = @("ManifestPath", "ReportPath")
             },
             [pscustomobject][ordered]@{
-                gateId = "future-true-ux-negative-review-drill"
-                path = "scripts/validate/Test-FutureTrueUxRestoreNegativeReviewDrill.ps1"
-                reportType = "future-true-ux-restore-negative-review-drill-validation"
-                parameters = @("ManifestPath", "FixtureRoot", "ReportPath")
-            },
-            [pscustomobject][ordered]@{
-                gateId = "future-true-ux-approval-checklist-ergonomics"
-                path = "scripts/validate/Test-FutureTrueUxRestoreApprovalChecklistErgonomics.ps1"
-                reportType = "future-true-ux-restore-approval-checklist-ergonomics-validation"
-                parameters = @("ManifestPath", "ReportPath")
-            },
-            [pscustomobject][ordered]@{
-                gateId = "future-true-ux-integrated-packet-preview"
-                path = "scripts/validate/Test-FutureTrueUxRestoreIntegratedPacketPreview.ps1"
-                reportType = "future-true-ux-restore-integrated-packet-preview-validation"
-                parameters = @("ManifestPath", "ReportPath")
-            },
-            [pscustomobject][ordered]@{
-                gateId = "future-true-ux-human-authorization-handoff"
-                path = "scripts/validate/Test-FutureTrueUxRestoreHumanAuthorizationHandoff.ps1"
-                reportType = "future-true-ux-restore-human-authorization-handoff-validation"
-                parameters = @("ManifestPath", "ReportPath")
-            },
-            [pscustomobject][ordered]@{
                 gateId = "future-true-ux-end-to-end-no-execution-readiness-audit"
                 path = "scripts/validate/Test-FutureTrueUxRestoreEndToEndNoExecutionReadinessAudit.ps1"
                 reportType = "future-true-ux-restore-end-to-end-no-execution-readiness-audit-validation"
@@ -81,14 +57,13 @@ Describe "Future True UX validator entrypoint consolidation" {
             "future-true-ux-restore-authorization",
             "future-true-ux-authorization-review",
             "future-true-ux-mock-review-drill",
-            "future-true-ux-negative-review-drill",
             "future-true-ux-end-to-end-no-execution-readiness-audit",
             "future-true-ux-final-stop-line-handoff"
         )
     }
 
     It "keeps validate quality gate entrypoints and semantics stable" {
-        Assert-KitEqual @($script:ValidatorEntrypoints).Count 11
+        Assert-KitEqual @($script:ValidatorEntrypoints).Count 7
 
         foreach ($expected in $script:ValidatorEntrypoints) {
             $gate = @($script:QualityGates.gates | Where-Object { $_.id -eq $expected.gateId })[0]

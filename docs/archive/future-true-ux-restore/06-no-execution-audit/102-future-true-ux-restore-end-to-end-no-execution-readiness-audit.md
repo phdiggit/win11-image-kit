@@ -22,14 +22,10 @@ This audit is a checkpoint for the Future True UX Restore preparation chain. It 
 - `machine-dry-run`
 - `authorization-review`
 - `mock-review-drill`
-- `negative-review-drill`
-- `approval-checklist-ergonomics`
-- `integrated-packet-preview`
-- `human-authorization-handoff`
 
 ## Evidence Boundary
 
-CI, dry-run output, handler reports, manual checklists, mock packets, negative drills, approval checklists, packet previews, and handoff reports are review material only. They are not true UX restore evidence and must not be promoted into real restore proof.
+CI, dry-run output, handler reports, manual checklists, and mock packets are review material only. They are not true UX restore evidence and must not be promoted into real restore proof. The former negative-review, approval-checklist, packet-preview, and human-handoff preparation stages were removed by Issue #121 and are no longer required readiness layers.
 
 ## Forbidden Current-Branch States
 

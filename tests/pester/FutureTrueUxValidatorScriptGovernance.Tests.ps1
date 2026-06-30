@@ -12,9 +12,6 @@ Describe "Future True UX validator script governance" {
         $script:ChangedReportHelpers = @(
             "scripts/common/New-FutureTrueUxRestoreAuthorizationReport.ps1",
             "scripts/common/New-FutureTrueUxRestoreAuthorizationReviewReport.ps1",
-            "scripts/common/New-FutureTrueUxRestoreApprovalChecklistErgonomicsReport.ps1",
-            "scripts/common/New-FutureTrueUxRestoreIntegratedPacketPreviewReport.ps1",
-            "scripts/common/New-FutureTrueUxRestoreHumanAuthorizationHandoffReport.ps1",
             "scripts/common/New-FutureTrueUxRestoreEndToEndNoExecutionReadinessAuditReport.ps1",
             "scripts/common/New-FutureTrueUxRestoreFinalStopLineHandoffReport.ps1"
         )
@@ -27,7 +24,7 @@ Describe "Future True UX validator script governance" {
     }
 
     It "keeps every Future True UX gate report-only and on existing entrypoints" {
-        Assert-KitEqual @($script:FutureGates).Count 17
+        Assert-KitEqual @($script:FutureGates).Count 13
         foreach ($gate in $script:FutureGates) {
             Assert-FutureTrueUxQualityGateSemantics -Gate $gate -RepoRoot $script:RepoRoot
         }
@@ -46,13 +43,11 @@ Describe "Future True UX validator script governance" {
         $guardContent = Get-Content -LiteralPath $guardPath -Raw -Encoding UTF8
         Assert-KitMatch $guardContent "function Get-FutureTrueUxRestoreFrozenFlagNames"
         Assert-KitMatch $guardContent "function New-FutureTrueUxRestoreFrozenExecutionState"
-        Assert-KitMatch $guardContent "function Test-FutureTrueUxRestoreTruthy"
-        Assert-KitMatch $guardContent "function Get-FutureTrueUxRestoreDangerousVocabularyPattern"
         Assert-KitMatch $guardContent "function Get-FutureTrueUxRestoreSupportedScopes"
         Assert-KitMatch $guardContent "function Get-FutureTrueUxRestoreFrozenStateDrift"
         Assert-KitMatch $guardContent "function Get-FutureTrueUxRestoreFrozenStateMessages"
         Assert-KitMatch $guardContent "function Get-FutureTrueUxRestoreIssueAutoClosePattern"
-        Assert-KitMatch $guardContent "function Get-FutureTrueUxRestoreReviewStateDriftPattern"
+        Assert-KitMatch $guardContent "function Get-FutureTrueUxRestoreStatePromotionPattern"
         Assert-KitMatch $guardContent "function Get-FutureTrueUxRestoreEvidencePromotionPattern"
         Assert-KitMatch $guardContent "function Get-FutureTrueUxRestoreDangerousCommandPatterns"
         Assert-KitMatch $guardContent "function Get-FutureTrueUxRestoreDocumentText"
@@ -69,24 +64,6 @@ Describe "Future True UX validator script governance" {
                 "Get-FutureTrueUxRestoreSupportedScopes",
                 "Get-FutureTrueUxRestoreFrozenStateMessages",
                 "Get-FutureTrueUxRestoreIssueAutoClosePattern"
-            )
-            "scripts/common/New-FutureTrueUxRestoreApprovalChecklistErgonomicsReport.ps1" = @(
-                "Get-FutureTrueUxRestoreSupportedScopes",
-                "Get-FutureTrueUxRestoreFrozenStateMessages",
-                "Get-FutureTrueUxRestoreReviewStateDriftPattern",
-                "Get-FutureTrueUxRestoreEvidencePromotionPattern"
-            )
-            "scripts/common/New-FutureTrueUxRestoreIntegratedPacketPreviewReport.ps1" = @(
-                "Get-FutureTrueUxRestoreSupportedScopes",
-                "Get-FutureTrueUxRestoreFrozenStateMessages",
-                "Get-FutureTrueUxRestoreReviewStateDriftPattern",
-                "Get-FutureTrueUxRestoreEvidencePromotionPattern"
-            )
-            "scripts/common/New-FutureTrueUxRestoreHumanAuthorizationHandoffReport.ps1" = @(
-                "Get-FutureTrueUxRestoreSupportedScopes",
-                "Get-FutureTrueUxRestoreFrozenStateMessages",
-                "Get-FutureTrueUxRestoreReviewStateDriftPattern",
-                "Get-FutureTrueUxRestoreEvidencePromotionPattern"
             )
             "scripts/common/New-FutureTrueUxRestoreEndToEndNoExecutionReadinessAuditReport.ps1" = @(
                 "Get-FutureTrueUxRestoreFrozenStateDrift",
@@ -117,13 +94,8 @@ Describe "Future True UX validator script governance" {
             "scripts/common/FutureTrueUxRestore.Guards.ps1",
             "scripts/common/New-FutureTrueUxRestoreAuthorizationReport.ps1",
             "scripts/common/New-FutureTrueUxRestoreAuthorizationReviewReport.ps1",
-            "scripts/common/New-FutureTrueUxRestoreApprovalChecklistErgonomicsReport.ps1",
-            "scripts/common/New-FutureTrueUxRestoreIntegratedPacketPreviewReport.ps1",
-            "scripts/common/New-FutureTrueUxRestoreHumanAuthorizationHandoffReport.ps1",
             "scripts/common/New-FutureTrueUxRestoreEndToEndNoExecutionReadinessAuditReport.ps1",
             "scripts/common/New-FutureTrueUxRestoreFinalStopLineHandoffReport.ps1",
-            "tests/pester/FutureTrueUxArchiveDryRunPlan.Tests.ps1",
-            "tests/pester/FutureTrueUxArchivePolicyReferenceMap.Tests.ps1",
             "tests/pester/FutureTrueUxQualityGateGovernance.Tests.ps1",
             "tests/pester/FutureTrueUxPesterHelpers.ps1",
             "tests/pester/FutureTrueUxValidatorScriptGovernance.Tests.ps1"

@@ -18,7 +18,7 @@ The current runner is reusable because this branch is docs, manifest, schema, fi
 
 ## Review Material Boundary
 
-CI output, dry-run output, handler reports, manual checklists, mock packets, negative drills, approval checklists, packet previews, and handoff reports remain review material only. They cannot be used as true UX restore evidence.
+CI output, dry-run output, handler reports, manual checklists, mock packets, report-only validators, and audits remain review material only. They cannot be used as true UX restore evidence.
 
 ## Forbidden Outputs
 

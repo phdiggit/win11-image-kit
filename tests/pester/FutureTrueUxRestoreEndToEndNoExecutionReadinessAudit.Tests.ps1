@@ -35,11 +35,7 @@ Describe "Future true UX restore end-to-end no-execution readiness audit" {
             "offline-image-dry-run",
             "machine-dry-run",
             "authorization-review",
-            "mock-review-drill",
-            "negative-review-drill",
-            "approval-checklist-ergonomics",
-            "integrated-packet-preview",
-            "human-authorization-handoff"
+            "mock-review-drill"
         )) {
             Assert-KitEqual (@($report.requiredLayers) -contains $layer) $true
         }
@@ -58,15 +54,18 @@ Describe "Future true UX restore end-to-end no-execution readiness audit" {
         Assert-KitEqual @($report.flagDrift).Count 0
     }
 
-    It "separates review states from authorization, execution, and closure states" {
+    It "keeps pruned intermediate stage modes out of the current manifest" {
         $manifest = Get-Content -LiteralPath (Join-Path $script:RepoRoot "manifests\future-true-ux-restore-authorization.json") -Raw -Encoding UTF8 | ConvertFrom-Json
 
-        Assert-KitEqual (@($manifest.approvalChecklistErgonomics.allowedChecklistDecisions) -contains "approval-checklist-ready") $true
-        Assert-KitEqual (@($manifest.approvalChecklistErgonomics.allowedChecklistDecisions) -contains "authorization-review-ready") $false
-        Assert-KitEqual (@($manifest.integratedPacketPreview.allowedPreviewDecisions) -contains "packet-preview-ready") $true
-        Assert-KitEqual (@($manifest.integratedPacketPreview.allowedPreviewDecisions) -contains "authorization-review-ready") $false
-        Assert-KitEqual (@($manifest.humanAuthorizationHandoff.allowedHandoffDecisions) -contains "handoff-ready-for-human-review") $true
-        Assert-KitEqual (@($manifest.humanAuthorizationHandoff.allowedHandoffDecisions) -contains "authorization-review-ready") $false
+        foreach ($propertyName in @(
+            "negativeReviewDrill",
+            "approvalChecklistErgonomics",
+            "integratedPacketPreview",
+            "humanAuthorizationHandoff"
+        )) {
+            Assert-KitEqual ($manifest.PSObject.Properties.Name -contains $propertyName) $false
+        }
+
         foreach ($state in @("execute-ready", "executed", "completed", "issue-18-complete", "closure-ready")) {
             Assert-KitEqual (@($manifest.endToEndNoExecutionReadinessAudit.forbiddenStates) -contains $state) $true
         }

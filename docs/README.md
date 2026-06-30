@@ -27,7 +27,7 @@ Issue #14-#18 的 completed-roadmap 文档和同名历史 Pester 已按 #121 从
 
 - `archive/completed-roadmap/issue-6/` through `archive/completed-roadmap/issue-13/`: retained completed roadmap documents that are still referenced by current manifests, Build Lock, tests, or operator docs.
 - `archive/future-true-ux-restore/00-governance/`: Future True UX Restore current governance, final stop-line, authorization, evidence, and dry-run guardrail documents.
-- `archive/future-true-ux-restore/01-mock-review/` through `archive/future-true-ux-restore/06-no-execution-audit/`: historical Future True UX Restore stage review material.
+- `archive/future-true-ux-restore/01-mock-review/` and `archive/future-true-ux-restore/06-no-execution-audit/`: retained Future True UX Restore review and stop-line material. Intermediate negative-review, approval-checklist, packet-preview, and human-handoff stage archives were deleted under #121.
 
 ## Future True UX Restore 起点
 

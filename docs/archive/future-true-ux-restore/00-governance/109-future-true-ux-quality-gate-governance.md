@@ -6,7 +6,7 @@ Issue reference: Roadmap Issue #19 governance task only. This document uses `Ref
 
 ## Scope
 
-This policy groups and names the Future True UX Restore quality gates after the repository governance audit. It keeps the current safety net intact while making `manifests/quality-gates.json` easier to read and audit.
+This policy groups and names the current Future True UX Restore quality gates after the repository governance audit and the Issue #121 deletion-first prune. It keeps only the long-term report-only safety net while making `manifests/quality-gates.json` easier to read and audit.
 
 This task does not authorize true UX restore, Issue #19 closure, workflow changes, or any real system mutation.
 
@@ -51,14 +51,10 @@ Any exception must be documented in this file before it is changed in `manifests
 | 9 | `future-true-ux-evidence-packet` | Evidence packet contract used by review and drill gates. |
 | 10 | `future-true-ux-mock-review-drill` | Positive mock review drill. |
 | 11 | `future-true-ux-mock-decision-ledger` | Mock decision record; kept beside the mock review drill. |
-| 12 | `future-true-ux-negative-review-drill` | Negative review drill for blocked or unsafe packet states. |
-| 13 | `future-true-ux-approval-checklist-ergonomics` | Maintainer approval checklist readability and decision safety. |
-| 14 | `future-true-ux-integrated-packet-preview` | Integrated packet preview consistency and blocker visibility. |
-| 15 | `future-true-ux-human-authorization-handoff` | Human authorization handoff packet safety. |
-| 16 | `future-true-ux-end-to-end-no-execution-readiness-audit` | End-to-end no-execution readiness audit. |
-| 17 | `future-true-ux-final-stop-line-handoff` | Final stop-line handoff and fresh-runner-boundary guard. |
+| 12 | `future-true-ux-end-to-end-no-execution-readiness-audit` | End-to-end no-execution readiness audit. |
+| 13 | `future-true-ux-final-stop-line-handoff` | Final stop-line handoff and fresh-runner-boundary guard. |
 
-The recommended high-level order is authorization intake, dry-run gates, authorization review, mock drill, negative drill, approval checklist, packet preview, human handoff, end-to-end readiness audit, and final stop-line. The additional split, evidence model, scope guard, execute gate, evidence packet, and mock decision gates are placed next to the phase they constrain.
+The recommended high-level order is authorization intake, dry-run gates, authorization review, retained mock drill, end-to-end readiness audit, and final stop-line. The additional split, evidence model, scope guard, execute gate, evidence packet, and mock decision gates are placed next to the phase they constrain. The former negative-review, approval-checklist, packet-preview, and human-handoff intermediate gates were removed by the Issue #121 prune because they were preparation-only stage gates, not long-term operator entrypoints.
 
 ## Naming Policy
 
@@ -82,7 +78,7 @@ A gate can be demoted from required PR-fast coverage to manual/archive only when
 4. The PR proves that `execute-ready`, real restore evidence, Issue auto-close language, and true execution remain blocked.
 5. The PR does not hide or remove final stop-line coverage.
 
-Historical drill, packet-preview, handoff, and audit gates remain required until an archive policy and reference map prove they are safe to demote.
+Preparation-only stage gates must not be kept resident only for historical traceability. Future demotions should still update Build Lock, tests, and docs atomically, but they do not need to preserve an archive reference map when Git history already carries the deleted stage details.
 
 ## Blocked Language And Execution Boundary
 
@@ -98,6 +94,4 @@ This governance task is limited to docs, `manifests/quality-gates.json`, Build L
 
 ## Next Governance Task
 
-Recommended next task: Future True UX Archive Policy & Reference Map.
-
-That task should map superseded stage documents and references before any archive move. It should not move files until README, Build Lock, Pester, Quality Gates, and report-builder references are ready to update atomically.
+Recommended next task: continue Issue #121 with the next deletion-first surface, while preserving final stop-line and no-true-execution coverage.

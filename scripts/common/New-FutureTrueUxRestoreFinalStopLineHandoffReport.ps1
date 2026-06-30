@@ -34,10 +34,6 @@ function New-FutureTrueUxRestoreFinalStopLineHandoffReport {
         "machine-dry-run",
         "authorization-review",
         "mock-review-drill",
-        "negative-review-drill",
-        "approval-checklist-ergonomics",
-        "integrated-packet-preview",
-        "human-authorization-handoff",
         "end-to-end-no-execution-readiness-audit"
     )
     $requiredDocs = @(
@@ -72,10 +68,6 @@ function New-FutureTrueUxRestoreFinalStopLineHandoffReport {
         "machine-dry-run" = Get-FutureTrueUxRestoreValue -InputObject $Manifest -Name "machineDryRun" -DefaultValue $null
         "authorization-review" = Get-FutureTrueUxRestoreValue -InputObject $Manifest -Name "authorizationReview" -DefaultValue $null
         "mock-review-drill" = Get-FutureTrueUxRestoreValue -InputObject $Manifest -Name "mockReviewDrill" -DefaultValue $null
-        "negative-review-drill" = Get-FutureTrueUxRestoreValue -InputObject $Manifest -Name "negativeReviewDrill" -DefaultValue $null
-        "approval-checklist-ergonomics" = Get-FutureTrueUxRestoreValue -InputObject $Manifest -Name "approvalChecklistErgonomics" -DefaultValue $null
-        "integrated-packet-preview" = Get-FutureTrueUxRestoreValue -InputObject $Manifest -Name "integratedPacketPreview" -DefaultValue $null
-        "human-authorization-handoff" = Get-FutureTrueUxRestoreValue -InputObject $Manifest -Name "humanAuthorizationHandoff" -DefaultValue $null
         "end-to-end-no-execution-readiness-audit" = Get-FutureTrueUxRestoreValue -InputObject $Manifest -Name "endToEndNoExecutionReadinessAudit" -DefaultValue $null
     }
 

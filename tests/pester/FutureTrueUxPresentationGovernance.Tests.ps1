@@ -38,7 +38,7 @@ Describe "Future True UX presentation script governance" {
 
     It "keeps every Future True UX gate report-only and on existing entrypoints" {
         $futureGates = @($script:QualityGates.gates | Where-Object { $_.id -like "future-true-ux*" })
-        Assert-KitEqual @($futureGates).Count 17
+        Assert-KitEqual @($futureGates).Count 13
 
         foreach ($gate in $futureGates) {
             Assert-FutureTrueUxQualityGateSemantics -Gate $gate -RepoRoot $script:RepoRoot

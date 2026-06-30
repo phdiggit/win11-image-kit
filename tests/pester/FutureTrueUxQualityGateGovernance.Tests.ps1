@@ -18,10 +18,6 @@ Describe "Future True UX quality gate governance" {
             "future-true-ux-evidence-packet",
             "future-true-ux-mock-review-drill",
             "future-true-ux-mock-decision-ledger",
-            "future-true-ux-negative-review-drill",
-            "future-true-ux-approval-checklist-ergonomics",
-            "future-true-ux-integrated-packet-preview",
-            "future-true-ux-human-authorization-handoff",
             "future-true-ux-end-to-end-no-execution-readiness-audit",
             "future-true-ux-final-stop-line-handoff"
         )

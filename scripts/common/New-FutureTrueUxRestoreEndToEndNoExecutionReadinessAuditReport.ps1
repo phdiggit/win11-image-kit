@@ -26,11 +26,7 @@ function New-FutureTrueUxRestoreEndToEndNoExecutionReadinessAuditReport {
         "offline-image-dry-run",
         "machine-dry-run",
         "authorization-review",
-        "mock-review-drill",
-        "negative-review-drill",
-        "approval-checklist-ergonomics",
-        "integrated-packet-preview",
-        "human-authorization-handoff"
+        "mock-review-drill"
     )
     $forbiddenStates = @("execute-ready", "executed", "completed", "issue-18-complete", "closure-ready")
     if ($null -ne $section) {
@@ -57,10 +53,6 @@ function New-FutureTrueUxRestoreEndToEndNoExecutionReadinessAuditReport {
         "machine-dry-run" = Get-FutureTrueUxRestoreValue -InputObject $Manifest -Name "machineDryRun" -DefaultValue $null
         "authorization-review" = Get-FutureTrueUxRestoreValue -InputObject $Manifest -Name "authorizationReview" -DefaultValue $null
         "mock-review-drill" = Get-FutureTrueUxRestoreValue -InputObject $Manifest -Name "mockReviewDrill" -DefaultValue $null
-        "negative-review-drill" = Get-FutureTrueUxRestoreValue -InputObject $Manifest -Name "negativeReviewDrill" -DefaultValue $null
-        "approval-checklist-ergonomics" = Get-FutureTrueUxRestoreValue -InputObject $Manifest -Name "approvalChecklistErgonomics" -DefaultValue $null
-        "integrated-packet-preview" = Get-FutureTrueUxRestoreValue -InputObject $Manifest -Name "integratedPacketPreview" -DefaultValue $null
-        "human-authorization-handoff" = Get-FutureTrueUxRestoreValue -InputObject $Manifest -Name "humanAuthorizationHandoff" -DefaultValue $null
     }
 
     $omittedLayers = @((Get-FutureTrueUxRestoreValue -InputObject $Request -Name "omittedLayers" -DefaultValue @()) | ForEach-Object { [string]$_ })
@@ -102,10 +94,6 @@ function New-FutureTrueUxRestoreEndToEndNoExecutionReadinessAuditReport {
         "future-true-ux-scope-dry-run",
         "future-true-ux-authorization-review",
         "future-true-ux-mock-review-drill",
-        "future-true-ux-negative-review-drill",
-        "future-true-ux-approval-checklist-ergonomics",
-        "future-true-ux-integrated-packet-preview",
-        "future-true-ux-human-authorization-handoff",
         "future-true-ux-end-to-end-no-execution-readiness-audit"
     )
     $missingGateIds = @()
