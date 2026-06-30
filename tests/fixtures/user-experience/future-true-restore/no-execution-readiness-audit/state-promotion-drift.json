@@ -5,7 +5,7 @@
   "requiresRunnerStopLine": true,
   "hasRunnerStopLine": true,
   "notes": [
-    "packet-preview-ready promotes to authorization-review-ready in this bad example"
+    "authorization-review-ready promotes to execute-ready in this bad example"
   ],
   "authorizationApproved": false,
   "executionApproved": false,

@@ -57,24 +57,6 @@ Describe "Future true UX restore validation runner" {
             "docs\archive\future-true-ux-restore\01-mock-review\81-future-true-ux-restore-mock-maintainer-review-transcript.md",
             "docs\archive\future-true-ux-restore\01-mock-review\82-future-true-ux-restore-mock-decision-ledger.md",
             "docs\archive\future-true-ux-restore\01-mock-review\83-future-true-ux-restore-mock-drill-lessons.md",
-            "docs\archive\future-true-ux-restore\02-negative-review\84-future-true-ux-restore-negative-review-drill-bundle.md",
-            "docs\archive\future-true-ux-restore\02-negative-review\85-future-true-ux-restore-negative-review-transcript.md",
-            "docs\archive\future-true-ux-restore\02-negative-review\86-future-true-ux-restore-negative-decision-ledger.md",
-            "docs\archive\future-true-ux-restore\02-negative-review\87-future-true-ux-restore-negative-drill-lessons.md",
-            "docs\archive\future-true-ux-restore\03-approval-checklist\88-future-true-ux-restore-maintainer-approval-checklist-ergonomics.md",
-            "docs\archive\future-true-ux-restore\03-approval-checklist\89-future-true-ux-restore-review-packet-readability-guide.md",
-            "docs\archive\future-true-ux-restore\03-approval-checklist\90-future-true-ux-restore-manual-decision-form-template.md",
-            "docs\archive\future-true-ux-restore\03-approval-checklist\91-future-true-ux-restore-approval-checklist-lessons.md",
-            "docs\archive\future-true-ux-restore\04-packet-preview\92-future-true-ux-restore-integrated-authorization-packet-preview.md",
-            "docs\archive\future-true-ux-restore\04-packet-preview\93-future-true-ux-restore-packet-preview-field-map.md",
-            "docs\archive\future-true-ux-restore\04-packet-preview\94-future-true-ux-restore-packet-preview-reviewer-reading-order.md",
-            "docs\archive\future-true-ux-restore\04-packet-preview\95-future-true-ux-restore-packet-preview-blocker-index.md",
-            "docs\archive\future-true-ux-restore\04-packet-preview\96-future-true-ux-restore-packet-preview-lessons.md",
-            "docs\archive\future-true-ux-restore\05-human-handoff\97-future-true-ux-restore-human-authorization-handoff.md",
-            "docs\archive\future-true-ux-restore\05-human-handoff\98-future-true-ux-restore-human-handoff-artifact-index.md",
-            "docs\archive\future-true-ux-restore\05-human-handoff\99-future-true-ux-restore-human-handoff-manual-decision-placeholder.md",
-            "docs\archive\future-true-ux-restore\05-human-handoff\100-future-true-ux-restore-human-handoff-review-boundary.md",
-            "docs\archive\future-true-ux-restore\05-human-handoff\101-future-true-ux-restore-human-handoff-lessons.md",
             "docs\archive\future-true-ux-restore\06-no-execution-audit\102-future-true-ux-restore-end-to-end-no-execution-readiness-audit.md",
             "docs\archive\future-true-ux-restore\06-no-execution-audit\103-future-true-ux-restore-state-name-separation-matrix.md",
             "docs\archive\future-true-ux-restore\06-no-execution-audit\104-future-true-ux-restore-artifact-chain-consistency-index.md",
@@ -103,24 +85,6 @@ Describe "Future true UX restore validation runner" {
         $doc81 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\01-mock-review\81-future-true-ux-restore-mock-maintainer-review-transcript.md") -Raw -Encoding UTF8
         $doc82 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\01-mock-review\82-future-true-ux-restore-mock-decision-ledger.md") -Raw -Encoding UTF8
         $doc83 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\01-mock-review\83-future-true-ux-restore-mock-drill-lessons.md") -Raw -Encoding UTF8
-        $doc84 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\02-negative-review\84-future-true-ux-restore-negative-review-drill-bundle.md") -Raw -Encoding UTF8
-        $doc85 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\02-negative-review\85-future-true-ux-restore-negative-review-transcript.md") -Raw -Encoding UTF8
-        $doc86 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\02-negative-review\86-future-true-ux-restore-negative-decision-ledger.md") -Raw -Encoding UTF8
-        $doc87 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\02-negative-review\87-future-true-ux-restore-negative-drill-lessons.md") -Raw -Encoding UTF8
-        $doc88 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\03-approval-checklist\88-future-true-ux-restore-maintainer-approval-checklist-ergonomics.md") -Raw -Encoding UTF8
-        $doc89 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\03-approval-checklist\89-future-true-ux-restore-review-packet-readability-guide.md") -Raw -Encoding UTF8
-        $doc90 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\03-approval-checklist\90-future-true-ux-restore-manual-decision-form-template.md") -Raw -Encoding UTF8
-        $doc91 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\03-approval-checklist\91-future-true-ux-restore-approval-checklist-lessons.md") -Raw -Encoding UTF8
-        $doc92 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\04-packet-preview\92-future-true-ux-restore-integrated-authorization-packet-preview.md") -Raw -Encoding UTF8
-        $doc93 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\04-packet-preview\93-future-true-ux-restore-packet-preview-field-map.md") -Raw -Encoding UTF8
-        $doc94 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\04-packet-preview\94-future-true-ux-restore-packet-preview-reviewer-reading-order.md") -Raw -Encoding UTF8
-        $doc95 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\04-packet-preview\95-future-true-ux-restore-packet-preview-blocker-index.md") -Raw -Encoding UTF8
-        $doc96 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\04-packet-preview\96-future-true-ux-restore-packet-preview-lessons.md") -Raw -Encoding UTF8
-        $doc97 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\05-human-handoff\97-future-true-ux-restore-human-authorization-handoff.md") -Raw -Encoding UTF8
-        $doc98 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\05-human-handoff\98-future-true-ux-restore-human-handoff-artifact-index.md") -Raw -Encoding UTF8
-        $doc99 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\05-human-handoff\99-future-true-ux-restore-human-handoff-manual-decision-placeholder.md") -Raw -Encoding UTF8
-        $doc100 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\05-human-handoff\100-future-true-ux-restore-human-handoff-review-boundary.md") -Raw -Encoding UTF8
-        $doc101 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\05-human-handoff\101-future-true-ux-restore-human-handoff-lessons.md") -Raw -Encoding UTF8
         $doc102 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\06-no-execution-audit\102-future-true-ux-restore-end-to-end-no-execution-readiness-audit.md") -Raw -Encoding UTF8
         $doc103 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\06-no-execution-audit\103-future-true-ux-restore-state-name-separation-matrix.md") -Raw -Encoding UTF8
         $doc104 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\06-no-execution-audit\104-future-true-ux-restore-artifact-chain-consistency-index.md") -Raw -Encoding UTF8
@@ -145,24 +109,6 @@ Describe "Future true UX restore validation runner" {
         Assert-KitMatch $doc81 'Status:\s*`mock-review-transcript`'
         Assert-KitMatch $doc82 'Status:\s*`mock-decision-ledger`'
         Assert-KitMatch $doc83 'Status:\s*`mock-drill-lessons`'
-        Assert-KitMatch $doc84 'Status:\s*`negative-review-drill`'
-        Assert-KitMatch $doc85 'Status:\s*`negative-review-transcript`'
-        Assert-KitMatch $doc86 'Status:\s*`negative-decision-ledger`'
-        Assert-KitMatch $doc87 'Status:\s*`negative-drill-lessons`'
-        Assert-KitMatch $doc88 'Status:\s*`approval-checklist-ergonomics`'
-        Assert-KitMatch $doc89 'Status:\s*`approval-checklist-readability-guide`'
-        Assert-KitMatch $doc90 'Status:\s*`approval-checklist-form-template`'
-        Assert-KitMatch $doc91 'Status:\s*`approval-checklist-lessons`'
-        Assert-KitMatch $doc92 'Status:\s*`integrated-packet-preview`'
-        Assert-KitMatch $doc93 'Status:\s*`integrated-packet-preview-field-map`'
-        Assert-KitMatch $doc94 'Status:\s*`integrated-packet-preview-reading-order`'
-        Assert-KitMatch $doc95 'Status:\s*`integrated-packet-preview-blocker-index`'
-        Assert-KitMatch $doc96 'Status:\s*`integrated-packet-preview-lessons`'
-        Assert-KitMatch $doc97 'Status:\s*`human-authorization-handoff`'
-        Assert-KitMatch $doc98 'Status:\s*`human-authorization-handoff-artifact-index`'
-        Assert-KitMatch $doc99 'Status:\s*`human-authorization-handoff-manual-decision-placeholder`'
-        Assert-KitMatch $doc100 'Status:\s*`human-authorization-handoff-review-boundary`'
-        Assert-KitMatch $doc101 'Status:\s*`human-authorization-handoff-lessons`'
         Assert-KitMatch $doc102 'Status:\s*`end-to-end-no-execution-readiness-audit`'
         Assert-KitMatch $doc103 'Status:\s*`state-name-separation-matrix`'
         Assert-KitMatch $doc104 'Status:\s*`artifact-chain-consistency-index`'
@@ -182,10 +128,10 @@ Describe "Future true UX restore validation runner" {
         Assert-KitEqual ($gateIds -contains "future-true-ux-mock-review-drill") $true
         Assert-KitEqual ($gateIds -contains "future-true-ux-mock-decision-ledger") $true
         Assert-KitEqual ($gateIds -contains "future-true-ux-evidence-packet") $true
-        Assert-KitEqual ($gateIds -contains "future-true-ux-negative-review-drill") $true
-        Assert-KitEqual ($gateIds -contains "future-true-ux-approval-checklist-ergonomics") $true
-        Assert-KitEqual ($gateIds -contains "future-true-ux-integrated-packet-preview") $true
-        Assert-KitEqual ($gateIds -contains "future-true-ux-human-authorization-handoff") $true
+        Assert-KitEqual ($gateIds -contains "future-true-ux-negative-review-drill") $false
+        Assert-KitEqual ($gateIds -contains "future-true-ux-approval-checklist-ergonomics") $false
+        Assert-KitEqual ($gateIds -contains "future-true-ux-integrated-packet-preview") $false
+        Assert-KitEqual ($gateIds -contains "future-true-ux-human-authorization-handoff") $false
         Assert-KitEqual ($gateIds -contains "future-true-ux-end-to-end-no-execution-readiness-audit") $true
         Assert-KitEqual ($gateIds -contains "future-true-ux-final-stop-line-handoff") $true
     }
@@ -215,24 +161,6 @@ Describe "Future true UX restore validation runner" {
             "docs\archive\future-true-ux-restore\01-mock-review\81-future-true-ux-restore-mock-maintainer-review-transcript.md",
             "docs\archive\future-true-ux-restore\01-mock-review\82-future-true-ux-restore-mock-decision-ledger.md",
             "docs\archive\future-true-ux-restore\01-mock-review\83-future-true-ux-restore-mock-drill-lessons.md",
-            "docs\archive\future-true-ux-restore\02-negative-review\84-future-true-ux-restore-negative-review-drill-bundle.md",
-            "docs\archive\future-true-ux-restore\02-negative-review\85-future-true-ux-restore-negative-review-transcript.md",
-            "docs\archive\future-true-ux-restore\02-negative-review\86-future-true-ux-restore-negative-decision-ledger.md",
-            "docs\archive\future-true-ux-restore\02-negative-review\87-future-true-ux-restore-negative-drill-lessons.md",
-            "docs\archive\future-true-ux-restore\03-approval-checklist\88-future-true-ux-restore-maintainer-approval-checklist-ergonomics.md",
-            "docs\archive\future-true-ux-restore\03-approval-checklist\89-future-true-ux-restore-review-packet-readability-guide.md",
-            "docs\archive\future-true-ux-restore\03-approval-checklist\90-future-true-ux-restore-manual-decision-form-template.md",
-            "docs\archive\future-true-ux-restore\03-approval-checklist\91-future-true-ux-restore-approval-checklist-lessons.md",
-            "docs\archive\future-true-ux-restore\04-packet-preview\92-future-true-ux-restore-integrated-authorization-packet-preview.md",
-            "docs\archive\future-true-ux-restore\04-packet-preview\93-future-true-ux-restore-packet-preview-field-map.md",
-            "docs\archive\future-true-ux-restore\04-packet-preview\94-future-true-ux-restore-packet-preview-reviewer-reading-order.md",
-            "docs\archive\future-true-ux-restore\04-packet-preview\95-future-true-ux-restore-packet-preview-blocker-index.md",
-            "docs\archive\future-true-ux-restore\04-packet-preview\96-future-true-ux-restore-packet-preview-lessons.md",
-            "docs\archive\future-true-ux-restore\05-human-handoff\97-future-true-ux-restore-human-authorization-handoff.md",
-            "docs\archive\future-true-ux-restore\05-human-handoff\98-future-true-ux-restore-human-handoff-artifact-index.md",
-            "docs\archive\future-true-ux-restore\05-human-handoff\99-future-true-ux-restore-human-handoff-manual-decision-placeholder.md",
-            "docs\archive\future-true-ux-restore\05-human-handoff\100-future-true-ux-restore-human-handoff-review-boundary.md",
-            "docs\archive\future-true-ux-restore\05-human-handoff\101-future-true-ux-restore-human-handoff-lessons.md",
             "docs\archive\future-true-ux-restore\06-no-execution-audit\102-future-true-ux-restore-end-to-end-no-execution-readiness-audit.md",
             "docs\archive\future-true-ux-restore\06-no-execution-audit\103-future-true-ux-restore-state-name-separation-matrix.md",
             "docs\archive\future-true-ux-restore\06-no-execution-audit\104-future-true-ux-restore-artifact-chain-consistency-index.md",

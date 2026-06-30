@@ -2,7 +2,7 @@
 
 Status: `final-stop-line-handoff`
 
-This document is the final stop-line for the current Future True UX Restore preparation chain. It records that the review, preview, handoff, and no-execution audit work is complete enough to pause. It does not authorize true UX restore, does not authorize execution, and does not prepare Issue #18 closure.
+This document is the final stop-line for the current Future True UX Restore preparation chain. It records that the retained report-only review and no-execution audit work is complete enough to pause. It does not authorize true UX restore, does not authorize execution, and does not prepare Issue #18 closure.
 
 ## Completed Preparation Chain
 
@@ -10,11 +10,9 @@ This document is the final stop-line for the current Future True UX Restore prep
 - Current-user, default-user, offline-image, and machine dry-run gates
 - Authorization review workflow
 - Mock review drill
-- Negative review drill
-- Maintainer approval checklist ergonomics
-- Integrated authorization packet preview
-- Human authorization handoff
 - End-to-end no-execution readiness audit
+
+Issue #121 deleted the former negative review, approval checklist, packet preview, and human handoff stages because they were preparation-only intermediate artifacts rather than long-term operator entrypoints.
 
 The task card mentions a runner baseline or snapshot gate drill only if that layer has already merged. It is not part of the current merged preparation chain, so this handoff treats any future runner or snapshot drill as a new high-risk planning chain with a fresh Runner Gate.
 
@@ -44,4 +42,4 @@ The branch remains frozen at:
 
 Stop here. The preparation artifacts are ready for maintainer review, and the next default action is to pause at the stop-line. Any future true restore planning must start as a new high-risk chain with a new Runner Gate and explicit human authorization.
 
-CI, dry-run output, mock packets, report-only validators, checklists, previews, handoff reports, and audits are review material only. They are not true UX restore evidence.
+CI, dry-run output, mock packets, report-only validators, manual checklists, and audits are review material only. They are not true UX restore evidence.

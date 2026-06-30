@@ -164,134 +164,6 @@
       "completed"
     ]
   },
-  "negativeReviewDrill": {
-    "enabled": true,
-    "mode": "negative-review-drill",
-    "defaultScope": "current-user",
-    "authorizationApproved": false,
-    "executionApproved": false,
-    "executeReady": false,
-    "trueExecution": false,
-    "mutationCount": 0,
-    "allowedNegativeDecisions": [
-      "blocked",
-      "needs-rework",
-      "rejected"
-    ],
-    "forbiddenNegativeDecisions": [
-      "authorization-review-ready",
-      "execute-ready",
-      "executed",
-      "completed"
-    ],
-    "requiredReasonCodes": [
-      "missing-maintainer-approval",
-      "scope-ambiguous-or-expanded",
-      "exit-code-not-ux-evidence",
-      "report-only-not-real-evidence",
-      "mock-only-not-real-evidence",
-      "stale-or-inconsistent-packet",
-      "missing-rollback-plan",
-      "high-risk-mutation-intent"
-    ]
-  },
-  "approvalChecklistErgonomics": {
-    "enabled": true,
-    "mode": "approval-checklist-ergonomics",
-    "defaultScope": "current-user",
-    "authorizationApproved": false,
-    "executionApproved": false,
-    "executeReady": false,
-    "trueExecution": false,
-    "mutationCount": 0,
-    "allowedChecklistDecisions": [
-      "approval-checklist-ready",
-      "needs-rework",
-      "blocked"
-    ],
-    "forbiddenChecklistDecisions": [
-      "authorization-review-ready",
-      "execute-ready",
-      "executed",
-      "completed"
-    ],
-    "requiredChecklistSections": [
-      "scope",
-      "target-identity-redaction",
-      "evidence-boundary",
-      "rollback-or-restore-plan",
-      "privacy-redaction",
-      "reviewer-decision",
-      "execution-boundary"
-    ]
-  },
-  "integratedPacketPreview": {
-    "enabled": true,
-    "mode": "integrated-packet-preview",
-    "defaultScope": "current-user",
-    "authorizationApproved": false,
-    "executionApproved": false,
-    "executeReady": false,
-    "trueExecution": false,
-    "mutationCount": 0,
-    "allowedPreviewDecisions": [
-      "packet-preview-ready",
-      "needs-rework",
-      "blocked"
-    ],
-    "forbiddenPreviewDecisions": [
-      "authorization-review-ready",
-      "execute-ready",
-      "executed",
-      "completed"
-    ],
-    "requiredPreviewSections": [
-      "scope",
-      "target-identity-redaction",
-      "evidence-boundary",
-      "approval-checklist-summary",
-      "negative-blocker-summary",
-      "rollback-or-restore-plan",
-      "execution-boundary",
-      "runner-gate-reminder"
-    ]
-  },
-  "humanAuthorizationHandoff": {
-    "enabled": true,
-    "mode": "human-authorization-handoff",
-    "defaultScope": "current-user",
-    "authorizationApproved": false,
-    "executionApproved": false,
-    "executeReady": false,
-    "trueExecution": false,
-    "mutationCount": 0,
-    "allowedHandoffDecisions": [
-      "handoff-ready-for-human-review",
-      "needs-rework",
-      "blocked"
-    ],
-    "forbiddenHandoffDecisions": [
-      "authorization-review-ready",
-      "execute-ready",
-      "executed",
-      "completed",
-      "issue-18-complete",
-      "closure-ready"
-    ],
-    "requiredHandoffSections": [
-      "scope",
-      "artifact-index",
-      "identity-redaction",
-      "evidence-boundary",
-      "approval-checklist-summary",
-      "negative-blocker-summary",
-      "integrated-preview-summary",
-      "rollback-or-restore-plan",
-      "runner-gate-reminder",
-      "manual-decision-placeholder",
-      "non-execution-statement"
-    ]
-  },
   "endToEndNoExecutionReadinessAudit": {
     "enabled": true,
     "mode": "end-to-end-no-execution-readiness-audit",
@@ -307,11 +179,7 @@
       "offline-image-dry-run",
       "machine-dry-run",
       "authorization-review",
-      "mock-review-drill",
-      "negative-review-drill",
-      "approval-checklist-ergonomics",
-      "integrated-packet-preview",
-      "human-authorization-handoff"
+      "mock-review-drill"
     ],
     "forbiddenStates": [
       "execute-ready",
@@ -350,10 +218,6 @@
       "machine-dry-run",
       "authorization-review",
       "mock-review-drill",
-      "negative-review-drill",
-      "approval-checklist-ergonomics",
-      "integrated-packet-preview",
-      "human-authorization-handoff",
       "end-to-end-no-execution-readiness-audit"
     ],
     "requiredStopLineDocs": [

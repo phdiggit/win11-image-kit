@@ -18,15 +18,11 @@ This index records the artifacts the no-execution audit checks for alignment.
 - `scripts/validate/Test-FutureTrueUxRestoreScopeDryRun.ps1`
 - `scripts/validate/Test-FutureTrueUxRestoreAuthorizationReview.ps1`
 - `scripts/validate/Test-FutureTrueUxRestoreMockReviewDrill.ps1`
-- `scripts/validate/Test-FutureTrueUxRestoreNegativeReviewDrill.ps1`
-- `scripts/validate/Test-FutureTrueUxRestoreApprovalChecklistErgonomics.ps1`
-- `scripts/validate/Test-FutureTrueUxRestoreIntegratedPacketPreview.ps1`
-- `scripts/validate/Test-FutureTrueUxRestoreHumanAuthorizationHandoff.ps1`
 - `scripts/validate/Test-FutureTrueUxRestoreEndToEndNoExecutionReadinessAudit.ps1`
 
 ## Review Documents
 
-Docs 66-105 are Future True UX Restore preparation artifacts. Docs 102-105 audit the full chain and keep the stop-line visible before human authorization or true execution.
+Docs 66-83 and 102-107 are the retained Future True UX Restore preparation and stop-line artifacts. Docs 84-101 and their intermediate stage validators were removed by Issue #121 because they were preparation-only review material, not long-term entrypoints.
 
 ## Consistency Rule
 

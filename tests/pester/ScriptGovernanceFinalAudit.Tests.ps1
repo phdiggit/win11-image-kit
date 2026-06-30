@@ -98,7 +98,7 @@ Describe "Script governance final audit stop-line" {
 
     It "keeps every Future True UX quality gate report-only and blocking on pull requests" {
         $futureGates = @($script:QualityGates.gates | Where-Object { $_.id -like "future-true-ux*" })
-        Assert-KitEqual @($futureGates).Count 17
+        Assert-KitEqual @($futureGates).Count 13
 
         foreach ($gate in $futureGates) {
             Assert-FutureTrueUxQualityGateSemantics -Gate $gate -RepoRoot $script:RepoRoot
@@ -111,7 +111,7 @@ Describe "Script governance final audit stop-line" {
                 Where-Object { $_.id -like "future-true-ux*" -and $_.entrypoint -like "scripts/validate/Test-FutureTrueUxRestore*.ps1" } |
                 ForEach-Object { $_.entrypoint }
         )
-        Assert-KitEqual $futureValidateEntrypoints.Count 11
+        Assert-KitEqual $futureValidateEntrypoints.Count 7
 
         foreach ($entrypoint in $futureValidateEntrypoints) {
             Assert-FutureTrueUxValidatorEntrypointExists -RepoRoot $script:RepoRoot -RelativePath $entrypoint
