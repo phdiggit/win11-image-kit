@@ -42,4 +42,6 @@ The branch remains frozen at:
 
 Stop here. The preparation artifacts are ready for maintainer review, and the next default action is to pause at the stop-line. Any future true restore planning must start as a new high-risk chain with a new Runner Gate and explicit human authorization.
 
+This remains the no-execution stop line: the chain stops at review readiness and stops before human authorization.
+
 CI, dry-run output, mock packets, report-only validators, manual checklists, and audits are review material only. They are not true UX restore evidence.

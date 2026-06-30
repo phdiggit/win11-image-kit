@@ -50,11 +50,10 @@ Any exception must be documented in this file before it is changed in `manifests
 | 8 | `future-true-ux-authorization-review` | Review workflow for authorization packets. |
 | 9 | `future-true-ux-evidence-packet` | Evidence packet contract used by review and drill gates. |
 | 10 | `future-true-ux-mock-review-drill` | Positive mock review drill. |
-| 11 | `future-true-ux-mock-decision-ledger` | Mock decision record; kept beside the mock review drill. |
-| 12 | `future-true-ux-end-to-end-no-execution-readiness-audit` | End-to-end no-execution readiness audit. |
-| 13 | `future-true-ux-final-stop-line-handoff` | Final stop-line handoff and fresh-runner-boundary guard. |
+| 11 | `future-true-ux-end-to-end-no-execution-readiness-audit` | End-to-end no-execution readiness audit. |
+| 12 | `future-true-ux-final-stop-line-handoff` | Final stop-line handoff and fresh-runner-boundary guard. |
 
-The recommended high-level order is authorization intake, dry-run gates, authorization review, retained mock drill, end-to-end readiness audit, and final stop-line. The additional split, evidence model, scope guard, execute gate, evidence packet, and mock decision gates are placed next to the phase they constrain. The former negative-review, approval-checklist, packet-preview, and human-handoff intermediate gates were removed by the Issue #121 prune because they were preparation-only stage gates, not long-term operator entrypoints.
+The recommended high-level order is authorization intake, dry-run gates, authorization review, retained mock drill, end-to-end readiness audit, and final stop-line. The additional split, evidence model, scope guard, execute gate, and evidence packet gates are placed next to the phase they constrain. The former mock decision ledger, negative-review, approval-checklist, packet-preview, and human-handoff intermediate gates were removed by the Issue #121 prune because they were preparation-only stage gates, not long-term operator entrypoints.
 
 ## Naming Policy
 

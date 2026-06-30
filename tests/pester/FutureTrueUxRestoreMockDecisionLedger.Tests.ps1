@@ -5,21 +5,14 @@ Describe "Future true UX restore mock decision ledger" {
         . (Join-Path $script:RepoRoot "scripts\common\New-FutureTrueUxRestoreMockReviewDrillReport.ps1")
     }
 
-    It "documents required mock ledger states and frozen execution flags" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\01-mock-review\82-future-true-ux-restore-mock-decision-ledger.md") -Raw -Encoding UTF8
+    It "keeps the mock decision ledger out of quality gates and archived docs" {
+        $qualityGates = Get-Content -LiteralPath (Join-Path $script:RepoRoot "manifests\quality-gates.json") -Raw -Encoding UTF8 | ConvertFrom-Json
 
-        Assert-KitMatch $doc 'Status:\s*`mock-decision-ledger`'
-        foreach ($stage in @("received", "packet-complete", "authorization-review-ready", "execute-ready-blocked", "true-execution-blocked")) {
-            Assert-KitMatch $doc ([regex]::Escape($stage))
-        }
-        Assert-KitMatch $doc "AuthorizationApproved=false"
-        Assert-KitMatch $doc "ExecutionApproved=false"
-        Assert-KitMatch $doc "ExecuteReady=false"
-        Assert-KitMatch $doc "trueExecution=false"
-        Assert-KitMatch $doc "mutationCount=0"
+        Assert-KitEqual (@($qualityGates.gates.id) -contains "future-true-ux-mock-decision-ledger") $false
+        Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\01-mock-review")) $false
     }
 
-    It "emits execute-ready-blocked without allowing execution" {
+    It "still emits execute-ready-blocked report data without allowing execution" {
         $ledger = @(New-FutureTrueUxRestoreMockDecisionLedger -Scope "current-user")
 
         Assert-KitEqual (@($ledger.stage) -contains "execute-ready-blocked") $true

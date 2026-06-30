@@ -40,14 +40,6 @@ Describe "Future true UX restore validation runner" {
             "docs\archive\future-true-ux-restore\00-governance\77-future-true-ux-restore-maintainer-review-checkpoint.md",
             "docs\archive\future-true-ux-restore\00-governance\78-future-true-ux-restore-evidence-packet-contract.md",
             "docs\archive\future-true-ux-restore\00-governance\79-future-true-ux-restore-authorization-state-machine.md",
-            "docs\archive\future-true-ux-restore\01-mock-review\80-future-true-ux-restore-mock-review-packet-drill.md",
-            "docs\archive\future-true-ux-restore\01-mock-review\81-future-true-ux-restore-mock-maintainer-review-transcript.md",
-            "docs\archive\future-true-ux-restore\01-mock-review\82-future-true-ux-restore-mock-decision-ledger.md",
-            "docs\archive\future-true-ux-restore\01-mock-review\83-future-true-ux-restore-mock-drill-lessons.md",
-            "docs\archive\future-true-ux-restore\06-no-execution-audit\102-future-true-ux-restore-end-to-end-no-execution-readiness-audit.md",
-            "docs\archive\future-true-ux-restore\06-no-execution-audit\103-future-true-ux-restore-state-name-separation-matrix.md",
-            "docs\archive\future-true-ux-restore\06-no-execution-audit\104-future-true-ux-restore-artifact-chain-consistency-index.md",
-            "docs\archive\future-true-ux-restore\06-no-execution-audit\105-future-true-ux-restore-no-execution-stop-line.md",
             "docs\archive\future-true-ux-restore\00-governance\106-future-true-ux-restore-final-stop-line-handoff.md",
             "docs\archive\future-true-ux-restore\00-governance\107-future-true-ux-restore-stop-line-decision-matrix.md"
         )) {
@@ -68,14 +60,6 @@ Describe "Future true UX restore validation runner" {
         $doc77 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\00-governance\77-future-true-ux-restore-maintainer-review-checkpoint.md") -Raw -Encoding UTF8
         $doc78 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\00-governance\78-future-true-ux-restore-evidence-packet-contract.md") -Raw -Encoding UTF8
         $doc79 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\00-governance\79-future-true-ux-restore-authorization-state-machine.md") -Raw -Encoding UTF8
-        $doc80 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\01-mock-review\80-future-true-ux-restore-mock-review-packet-drill.md") -Raw -Encoding UTF8
-        $doc81 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\01-mock-review\81-future-true-ux-restore-mock-maintainer-review-transcript.md") -Raw -Encoding UTF8
-        $doc82 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\01-mock-review\82-future-true-ux-restore-mock-decision-ledger.md") -Raw -Encoding UTF8
-        $doc83 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\01-mock-review\83-future-true-ux-restore-mock-drill-lessons.md") -Raw -Encoding UTF8
-        $doc102 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\06-no-execution-audit\102-future-true-ux-restore-end-to-end-no-execution-readiness-audit.md") -Raw -Encoding UTF8
-        $doc103 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\06-no-execution-audit\103-future-true-ux-restore-state-name-separation-matrix.md") -Raw -Encoding UTF8
-        $doc104 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\06-no-execution-audit\104-future-true-ux-restore-artifact-chain-consistency-index.md") -Raw -Encoding UTF8
-        $doc105 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\06-no-execution-audit\105-future-true-ux-restore-no-execution-stop-line.md") -Raw -Encoding UTF8
         $doc106 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\00-governance\106-future-true-ux-restore-final-stop-line-handoff.md") -Raw -Encoding UTF8
         $doc107 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\00-governance\107-future-true-ux-restore-stop-line-decision-matrix.md") -Raw -Encoding UTF8
         Assert-KitMatch $doc66 'Status:\s*`authorization-intake`'
@@ -92,14 +76,6 @@ Describe "Future true UX restore validation runner" {
         Assert-KitMatch $doc77 'Status:\s*`review-checkpoint-draft`'
         Assert-KitMatch $doc78 'Status:\s*`evidence-packet-draft`'
         Assert-KitMatch $doc79 'Status:\s*`authorization-state-machine`'
-        Assert-KitMatch $doc80 'Status:\s*`mock-review-drill`'
-        Assert-KitMatch $doc81 'Status:\s*`mock-review-transcript`'
-        Assert-KitMatch $doc82 'Status:\s*`mock-decision-ledger`'
-        Assert-KitMatch $doc83 'Status:\s*`mock-drill-lessons`'
-        Assert-KitMatch $doc102 'Status:\s*`end-to-end-no-execution-readiness-audit`'
-        Assert-KitMatch $doc103 'Status:\s*`state-name-separation-matrix`'
-        Assert-KitMatch $doc104 'Status:\s*`artifact-chain-consistency-index`'
-        Assert-KitMatch $doc105 'Status:\s*`no-execution-stop-line`'
         Assert-KitMatch $doc106 'Status:\s*`final-stop-line-handoff`'
         Assert-KitMatch $doc107 'Status:\s*`stop-line-decision-matrix`'
 
@@ -113,7 +89,7 @@ Describe "Future true UX restore validation runner" {
         Assert-KitEqual ($gateIds -contains "future-true-ux-execute-gate") $true
         Assert-KitEqual ($gateIds -contains "future-true-ux-authorization-review") $true
         Assert-KitEqual ($gateIds -contains "future-true-ux-mock-review-drill") $true
-        Assert-KitEqual ($gateIds -contains "future-true-ux-mock-decision-ledger") $true
+        Assert-KitEqual ($gateIds -contains "future-true-ux-mock-decision-ledger") $false
         Assert-KitEqual ($gateIds -contains "future-true-ux-evidence-packet") $true
         Assert-KitEqual ($gateIds -contains "future-true-ux-negative-review-drill") $false
         Assert-KitEqual ($gateIds -contains "future-true-ux-approval-checklist-ergonomics") $false
@@ -144,14 +120,6 @@ Describe "Future true UX restore validation runner" {
             "docs\archive\future-true-ux-restore\00-governance\77-future-true-ux-restore-maintainer-review-checkpoint.md",
             "docs\archive\future-true-ux-restore\00-governance\78-future-true-ux-restore-evidence-packet-contract.md",
             "docs\archive\future-true-ux-restore\00-governance\79-future-true-ux-restore-authorization-state-machine.md",
-            "docs\archive\future-true-ux-restore\01-mock-review\80-future-true-ux-restore-mock-review-packet-drill.md",
-            "docs\archive\future-true-ux-restore\01-mock-review\81-future-true-ux-restore-mock-maintainer-review-transcript.md",
-            "docs\archive\future-true-ux-restore\01-mock-review\82-future-true-ux-restore-mock-decision-ledger.md",
-            "docs\archive\future-true-ux-restore\01-mock-review\83-future-true-ux-restore-mock-drill-lessons.md",
-            "docs\archive\future-true-ux-restore\06-no-execution-audit\102-future-true-ux-restore-end-to-end-no-execution-readiness-audit.md",
-            "docs\archive\future-true-ux-restore\06-no-execution-audit\103-future-true-ux-restore-state-name-separation-matrix.md",
-            "docs\archive\future-true-ux-restore\06-no-execution-audit\104-future-true-ux-restore-artifact-chain-consistency-index.md",
-            "docs\archive\future-true-ux-restore\06-no-execution-audit\105-future-true-ux-restore-no-execution-stop-line.md",
             "docs\archive\future-true-ux-restore\00-governance\106-future-true-ux-restore-final-stop-line-handoff.md",
             "docs\archive\future-true-ux-restore\00-governance\107-future-true-ux-restore-stop-line-decision-matrix.md"
         )) {

@@ -66,16 +66,7 @@ Describe "Future true UX restore mock review safety" {
     }
 
     It "does not create Issue 18 completion summary or keep pruned Issue 14-18 completed-roadmap docs" {
-        foreach ($path in @(
-            "docs\archive\future-true-ux-restore\01-mock-review\80-future-true-ux-restore-mock-review-packet-drill.md",
-            "docs\archive\future-true-ux-restore\01-mock-review\81-future-true-ux-restore-mock-maintainer-review-transcript.md",
-            "docs\archive\future-true-ux-restore\01-mock-review\82-future-true-ux-restore-mock-decision-ledger.md",
-            "docs\archive\future-true-ux-restore\01-mock-review\83-future-true-ux-restore-mock-drill-lessons.md"
-        )) {
-            $text = Get-Content -LiteralPath (Join-Path $script:RepoRoot $path) -Raw -Encoding UTF8
-            Assert-KitNotMatch $text "(?i)\b(fixes|closes|resolves)\s+#18\b"
-            Assert-KitMatch $text "(?i)(mock|review|blocked|not execution approval|trueExecution=false)"
-        }
+        Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\01-mock-review")) $false
 
         foreach ($file in Get-ChildItem -LiteralPath (Join-Path $script:RepoRoot "docs") -Filter "*issue18*.md" -Recurse) {
             Assert-KitNotMatch $file.Name "completion-summary"

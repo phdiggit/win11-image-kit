@@ -107,10 +107,8 @@ function New-FutureTrueUxRestoreEndToEndNoExecutionReadinessAuditReport {
     }
 
     $requiredDocs = @(
-        @{ Path = "docs/archive/future-true-ux-restore/06-no-execution-audit/102-future-true-ux-restore-end-to-end-no-execution-readiness-audit.md"; Status = "end-to-end-no-execution-readiness-audit" },
-        @{ Path = "docs/archive/future-true-ux-restore/06-no-execution-audit/103-future-true-ux-restore-state-name-separation-matrix.md"; Status = "state-name-separation-matrix" },
-        @{ Path = "docs/archive/future-true-ux-restore/06-no-execution-audit/104-future-true-ux-restore-artifact-chain-consistency-index.md"; Status = "artifact-chain-consistency-index" },
-        @{ Path = "docs/archive/future-true-ux-restore/06-no-execution-audit/105-future-true-ux-restore-no-execution-stop-line.md"; Status = "no-execution-stop-line" }
+        @{ Path = "docs/archive/future-true-ux-restore/00-governance/106-future-true-ux-restore-final-stop-line-handoff.md"; Status = "final-stop-line-handoff" },
+        @{ Path = "docs/archive/future-true-ux-restore/00-governance/107-future-true-ux-restore-stop-line-decision-matrix.md"; Status = "stop-line-decision-matrix" }
     )
     $missingDocs = @()
     $missingDocStatuses = @()
@@ -124,10 +122,10 @@ function New-FutureTrueUxRestoreEndToEndNoExecutionReadinessAuditReport {
         }
     }
     if ($missingDocs.Count -gt 0) {
-        $needsReworkReasons += "missing audit docs: $($missingDocs -join ', ')"
+        $needsReworkReasons += "missing stop-line docs: $($missingDocs -join ', ')"
     }
     if ($missingDocStatuses.Count -gt 0) {
-        $needsReworkReasons += "missing audit doc status markers: $($missingDocStatuses -join ', ')"
+        $needsReworkReasons += "missing stop-line doc status markers: $($missingDocStatuses -join ', ')"
     }
 
     $docRoot = Resolve-FutureTrueUxRestoreRepoPath -RepoRoot $RepoRoot -Path "docs"

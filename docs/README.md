@@ -21,13 +21,13 @@
 - Future True UX Restore 质量门禁治理：[`archive/future-true-ux-restore/00-governance/109-future-true-ux-quality-gate-governance.md`](archive/future-true-ux-restore/00-governance/109-future-true-ux-quality-gate-governance.md)
 - Future True UX Restore validator 脚本治理：[`archive/future-true-ux-restore/00-governance/112-future-true-ux-validator-script-governance.md`](archive/future-true-ux-restore/00-governance/112-future-true-ux-validator-script-governance.md)
 
-Issue #14-#18 的 completed-roadmap 文档和同名历史 Pester 已按 #121 从常驻工作树删除；当前门禁入口以 manifest、validator、config/show 脚本和非 Issue 前缀 Pester 为准。
+Issue #14-#18 的 completed-roadmap 文档和同名历史 Pester 已按 #121 从常驻工作树删除；当前门禁入口以 manifest、validator/report-only gate 和非 Issue 前缀 Pester 为准。
 
 ## Archive Layout
 
 - `archive/completed-roadmap/issue-6/` through `archive/completed-roadmap/issue-13/`: retained completed roadmap documents that are still referenced by current manifests, Build Lock, tests, or operator docs.
 - `archive/future-true-ux-restore/00-governance/`: Future True UX Restore current governance, final stop-line, authorization, evidence, and dry-run guardrail documents.
-- `archive/future-true-ux-restore/01-mock-review/` and `archive/future-true-ux-restore/06-no-execution-audit/`: retained Future True UX Restore review and stop-line material. Intermediate negative-review, approval-checklist, packet-preview, and human-handoff stage archives were deleted under #121.
+- `archive/future-true-ux-restore/01-mock-review/` through `archive/future-true-ux-restore/06-no-execution-audit/`: pruned under #121. Current Future True UX Restore review and stop-line material is kept in `00-governance/` plus validator/report-only gates.
 
 ## Future True UX Restore 起点
 

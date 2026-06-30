@@ -233,8 +233,8 @@
       "path": "tests/pester/BuildLockNormalization.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "c4f03078e1541dbe0d88f40faf4740fed189239c8670f1a25eb20a74d7d48a51",
-      "reason": "Build Lock normalization tests guard Task 121 drift inventory, self-watch manual policy, and scoped updates."
+      "hash": "1401cdc5c5e8312ccfdc57a1eabb4536b9bc54a065894e8cd87e1e8a450c795f",
+      "reason": "Build Lock normalization tests guard current Future True UX gate count and policy."
     },
     {
       "path": "docs/archive/build-lock/121-build-lock-normalization.md",
@@ -373,15 +373,15 @@
       "path": "docs/archive/future-true-ux-restore/00-governance/109-future-true-ux-quality-gate-governance.md",
       "category": "doc",
       "required": true,
-      "hash": "1e6290d6c08e2e5727b28e7d1690bfc22f8f5f6a6b2cfbd328ea33fe587f1df5",
-      "reason": "Future True UX quality gate governance documents grouping, naming, and demotion policy."
+      "hash": "46dfe1ae4492544cd976bacadcf953fd806f5e3ec70674702b198324a64b16ea",
+      "reason": "Future True UX quality gate governance records the retained 12-gate report-only group."
     },
     {
       "path": "manifests/quality-gates.json",
       "category": "manifest",
       "required": true,
-      "hash": "aef07b40369f383d003c573e19790d1c6fc36256843ae8286d56581e92325fbd",
-      "reason": "Quality Gates include future true UX mock review drill validation."
+      "hash": "d40499e04ea528744c480075f7e6220710b0bc75d3d3d023bb8657143fecd6ff",
+      "reason": "Quality Gates include retained Future True UX report-only validation."
     },
     {
       "path": "schemas/quality-gates.schema.json",
@@ -429,8 +429,8 @@
       "path": "tests/pester/FutureTrueUxQualityGateGovernance.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "fb2f4976e51f22d6250d087557b1eac8d1375e0916bc3b951608dd4d98a04ecc",
-      "reason": "Future True UX quality gate governance tests guard grouping and report-only semantics."
+      "hash": "025b5b4e574af137cb9ba4a80125e85f4e99b3ae5e96419d5958c898663849e1",
+      "reason": "Future True UX quality gate governance tests guard retained gate order and semantics."
     },
     {
       "path": ".gitignore",
@@ -2032,8 +2032,8 @@
       "path": "tests/pester/FutureTrueUxRestoreValidation.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "2616433e37036902821c2055f964b8add574fd1a97054950e6bcf859a1335c6f",
-      "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
+      "hash": "7cd1d9145805f99e08ee8fa344cef42034fb76b3598a6df81644861b0d7f8ed7",
+      "reason": "Future True UX validation tests guard retained governance docs and pruned stage gates."
     },
     {
       "path": "docs/archive/future-true-ux-restore/00-governance/69-future-true-ux-restore-current-user-dry-run-gate.md",
@@ -2851,8 +2851,8 @@
       "path": "tests/pester/FutureTrueUxRestoreAuthorizationStateMachine.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "0bffecfc28a55dea0b76c4d7b0d537e9912e7020c8a374b07f0165a3493281e6",
-      "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
+      "hash": "a09089dc88aa30669743f2fad84690ede23b5a8fd9aaa622a31a0915d2866d48",
+      "reason": "Future True UX authorization state machine tests guard retained governance docs and blocked execution states."
     },
     {
       "path": "tests/pester/FutureTrueUxRestoreEvidencePacket.Tests.ps1",
@@ -2895,34 +2895,6 @@
       "required": true,
       "hash": "c55b20704965f573070b877edd9bf16599a0b06c7426ddba335327e96a8a765f",
       "reason": "Build lock watches this file as a trusted repository input."
-    },
-    {
-      "path": "docs/archive/future-true-ux-restore/01-mock-review/80-future-true-ux-restore-mock-review-packet-drill.md",
-      "category": "doc",
-      "required": true,
-      "hash": "9f36d57d3e41d202001f786ff4a131bb9ce0fe6b3bbb642270876c3dbbfbe21e",
-      "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
-    },
-    {
-      "path": "docs/archive/future-true-ux-restore/01-mock-review/81-future-true-ux-restore-mock-maintainer-review-transcript.md",
-      "category": "doc",
-      "required": true,
-      "hash": "92d9641423196ce0ccf288a552d24a23311f49d51ccd5dbe7de4b283ade07a1d",
-      "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
-    },
-    {
-      "path": "docs/archive/future-true-ux-restore/01-mock-review/82-future-true-ux-restore-mock-decision-ledger.md",
-      "category": "doc",
-      "required": true,
-      "hash": "3c908dd169eba0d33a149202874ef4e3fb6a675fb03c51f1fe67517da5145838",
-      "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
-    },
-    {
-      "path": "docs/archive/future-true-ux-restore/01-mock-review/83-future-true-ux-restore-mock-drill-lessons.md",
-      "category": "doc",
-      "required": true,
-      "hash": "6662c0914132eb14ab8adc386a5d13bdb2aac0d187ec2723cc07daf5cc139e14",
-      "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
       "path": "scripts/common/New-FutureTrueUxRestoreMockReviewDrillReport.ps1",
@@ -3005,8 +2977,8 @@
       "path": "tests/pester/FutureTrueUxRestoreMockDecisionLedger.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "2462f3930199060141818f976b5d08fd034c7466336965835aac21310e47d660",
-      "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
+      "hash": "a6ff670891b6b7680e1ca3d92d9d12ae3a86aa84f173803fd23c36982a751690",
+      "reason": "Future True UX mock decision ledger tests guard pruned docs and blocked report helper output."
     },
     {
       "path": "tests/pester/FutureTrueUxRestoreMockReviewDrill.Tests.ps1",
@@ -3019,50 +2991,22 @@
       "path": "tests/pester/FutureTrueUxRestoreMockReviewSafety.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "1b87349bdc65285c54ad4c5e5ebef5694065f23ce3001c05b6e0316f46134751",
-      "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
+      "hash": "0876ec1d19875b5f0f42bb581db690582d49822b9038a2396ad6949d4629068b",
+      "reason": "Future True UX mock review safety tests guard pruned archive docs and blocked mock review behavior."
     },
     {
       "path": "tests/pester/FutureTrueUxRestoreMockTranscript.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "fef2ffa55ede60bfdca42406614681eb2417e17728c7273c810033d9885a7f9d",
-      "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
-    },
-    {
-      "path": "docs/archive/future-true-ux-restore/06-no-execution-audit/102-future-true-ux-restore-end-to-end-no-execution-readiness-audit.md",
-      "category": "doc",
-      "required": true,
-      "hash": "bc6ce1060a4b58f045cd8b5368cee0f75bf678c3f3aacc966c2a7e3966af006f",
-      "reason": "Future True UX Restore no-execution readiness audit documentation records report-only stop-line semantics."
-    },
-    {
-      "path": "docs/archive/future-true-ux-restore/06-no-execution-audit/103-future-true-ux-restore-state-name-separation-matrix.md",
-      "category": "doc",
-      "required": true,
-      "hash": "3619a1c1ca65708fa3b8f924b9d2c7be303e42e8a6e0e33eec529317982d798e",
-      "reason": "Future True UX Restore no-execution readiness audit documentation records report-only stop-line semantics."
-    },
-    {
-      "path": "docs/archive/future-true-ux-restore/06-no-execution-audit/104-future-true-ux-restore-artifact-chain-consistency-index.md",
-      "category": "doc",
-      "required": true,
-      "hash": "0253b5cc6c14a5edc591a9dea3298baa86fd4e8e2ab8745ef7b04fd6de5dadde",
-      "reason": "Future True UX Restore no-execution readiness audit documentation records report-only stop-line semantics."
-    },
-    {
-      "path": "docs/archive/future-true-ux-restore/06-no-execution-audit/105-future-true-ux-restore-no-execution-stop-line.md",
-      "category": "doc",
-      "required": true,
-      "hash": "b1f43d781b2c36f858cb13d027c85a6fc4e7d4a73265616d1b44c61d4e1eb52e",
-      "reason": "Future True UX Restore no-execution readiness audit documentation records report-only stop-line semantics."
+      "hash": "3e252fd1f38a6394290d35082f992af965c4ce368786d030dfb804387da00a96",
+      "reason": "Future True UX mock transcript tests guard pruned docs and blocked transcript output."
     },
     {
       "path": "scripts/common/New-FutureTrueUxRestoreEndToEndNoExecutionReadinessAuditReport.ps1",
       "category": "script",
       "required": true,
-      "hash": "0c352f5278c13c348a75c1c4c9e38958c9716e915f539bd7efb9bf5de34e09e0",
-      "reason": "Future True UX Restore no-execution readiness audit report helper is a report-only validator input."
+      "hash": "f70b10f3bb4c668ebff652e400dc5daeac0d5e75a1b86bf27a76c351efdeadd8",
+      "reason": "Future True UX no-execution audit report helper checks retained stop-line docs."
     },
     {
       "path": "scripts/validate/Test-FutureTrueUxRestoreEndToEndNoExecutionReadinessAudit.ps1",
@@ -3131,8 +3075,8 @@
       "path": "docs/archive/future-true-ux-restore/00-governance/106-future-true-ux-restore-final-stop-line-handoff.md",
       "category": "doc",
       "required": true,
-      "hash": "712498bec7d52d7c43c08be3eaa74cbcc1060ad87880f56c2e13a516bbe93d9b",
-      "reason": "Future True UX Restore final stop-line handoff documentation records the human decision boundary."
+      "hash": "cf71ba67972f0c6f28cdcd8e2063d2a8241457f37227045c45441c63c76b817a",
+      "reason": "Future True UX final stop-line handoff records no-execution stop-line semantics."
     },
     {
       "path": "docs/archive/future-true-ux-restore/00-governance/107-future-true-ux-restore-stop-line-decision-matrix.md",
@@ -3201,36 +3145,36 @@
       "path": "docs/archive/future-true-ux-restore/00-governance/108-repo-documentation-script-governance-audit.md",
       "category": "doc",
       "required": true,
-      "hash": "bb23b367fb895cde34e7400a78376540ec756bfbb8e0caec0c962c201c4a757f",
-      "reason": "Repository governance audit records docs/archive state and no-execution boundaries."
+      "hash": "065ee92e35c1cb9a478a9bff2df4167f74d80467cdf5f758afbe0c596637011e",
+      "reason": "Repository governance audit records pruned Future True UX docs and no-execution boundaries."
     },
     {
       "path": "docs/README.md",
       "category": "doc",
       "required": true,
-      "hash": "ae689eeece8ef3bbff96d80eee6cb694c6b32347f19e1f731ba2e3607745d5cb",
-      "reason": "Canonical docs index separates current entrypoints from historical archive material."
+      "hash": "4a1bf55832e8123d0e7a6fb7bf660b209a98df13c957c81b10d91956898c2758",
+      "reason": "Canonical docs index points at retained Future True UX governance and report-only gates."
     },
     {
       "path": "tests/pester/DocsGovernanceArchive.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "4ad7fe584c974ae61be8d6f40cf616679289a0f1f5d1bbdac00d4d88830489f8",
-      "reason": "Docs governance archive tests guard moved Future True UX docs, entrypoints, Build Lock paths, and no-execution semantics."
+      "hash": "2b49a1da9edc09f76a9f533a19f666352e3beec67969148287afde282d584394",
+      "reason": "Docs governance archive tests guard pruned Future True UX docs, retained entrypoints, Build Lock paths, and no-execution semantics."
     },
     {
       "path": "docs/archive/future-true-ux-restore/00-governance/112-future-true-ux-validator-script-governance.md",
       "category": "doc",
       "required": true,
-      "hash": "1e7e78b3fbbc782da91bf59a6edd1d60491c1b94a9492be36fc96d180240c8a0",
-      "reason": "Future True UX validator and script governance audit records report-only entrypoints and consolidation boundaries."
+      "hash": "20b75382b4971c0b3ba4feab0495b031b5ba309e98392a8735b24253f1602ab7",
+      "reason": "Validator script governance records archive and doc-only gate pruning."
     },
     {
       "path": "docs/archive/script-governance/122-script-governance-final-audit.md",
       "category": "doc",
       "required": true,
-      "hash": "c046f4b6ca8f92412cf15efe2fc2a816c0dc8511d7ba28d856c6192963c657a5",
-      "reason": "Script governance final audit records the stop-line decision, lifecycle rules, and anti-bloat contract."
+      "hash": "e2d69d4e0d576b9796a2ead41eab299dedf5e0b52858cbdb6ce0375c4a45d31e",
+      "reason": "Script governance final audit records retained gate lifecycle boundaries."
     },
     {
       "path": "scripts/common/FutureTrueUxRestore.Guards.ps1",
@@ -3264,15 +3208,15 @@
       "path": "tests/pester/FutureTrueUxValidatorScriptGovernance.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "548d347317e7ecad64cb4c61c6474bdd45cc7328ca59057cb4a8c4ac74341342",
-      "reason": "Future True UX validator script governance tests guard report-only entrypoints and consolidation boundaries."
+      "hash": "b2e63e34263cbd8855a42ed4ca3dad0abadaef5dbe3c0b5388602c758cc095aa",
+      "reason": "Future True UX validator script governance tests guard retained gates and helper boundaries."
     },
     {
       "path": "tests/pester/ScriptGovernanceFinalAudit.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "64ae3604f515b5f16b8d8e3668b10332ab6f7ba9eafa94c6adf97ec4a59a141d",
-      "reason": "Script governance final audit tests guard the stop-line record, lifecycle rules, gate semantics, and Build Lock scope."
+      "hash": "bed510e0d5dc515c18e504a62d08de5f1d6965ad7ee42bd0c0deaa767c4c47c5",
+      "reason": "Script governance final audit tests guard retained Future True UX gate lifecycle and workflow references."
     }
   ],
   "watchGlobs": [

@@ -41,7 +41,7 @@ Describe "Script governance final audit stop-line" {
             "Stable / lifecycle monitoring only",
             "Intentionally separate",
             "Needs lifecycle monitoring only",
-            "Stable / do not touch"
+            "Stable / deletion-first lifecycle"
         )) {
             Assert-KitMatch $script:Doc ([regex]::Escape($classification))
         }
@@ -98,7 +98,7 @@ Describe "Script governance final audit stop-line" {
 
     It "keeps every Future True UX quality gate report-only and blocking on pull requests" {
         $futureGates = @($script:QualityGates.gates | Where-Object { $_.id -like "future-true-ux*" })
-        Assert-KitEqual @($futureGates).Count 13
+        Assert-KitEqual @($futureGates).Count 12
 
         foreach ($gate in $futureGates) {
             Assert-FutureTrueUxQualityGateSemantics -Gate $gate -RepoRoot $script:RepoRoot

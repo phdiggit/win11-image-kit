@@ -27,9 +27,9 @@ Frozen semantics for this governance task:
 | Canonical entry documents | `README.md`, `AGENTS.md`, `docs/codex-workflow.md`, `docs/codex-task-card-template.md`, `docs/00-*.md` through `docs/08-*.md` | Keep in place. These are project entry, operator workflow, and baseline runbook documents. Do not move without updating README, AGENTS, tests, and Build Lock together. |
 | Active roadmap and governance anchors | `docs/archive/completed-roadmap/issue-12/32-issue12-build-lock.md`, `docs/archive/future-true-ux-restore/00-governance/65-future-true-ux-restore-execution-split.md`, `docs/archive/future-true-ux-restore/00-governance/106-future-true-ux-restore-final-stop-line-handoff.md`, `docs/archive/future-true-ux-restore/00-governance/107-future-true-ux-restore-stop-line-decision-matrix.md` | Keep active. These define current Build Lock governance, Future True UX safety boundary, and final stop-line semantics. |
 | Archived completed-roadmap validation and gate documents | `docs/archive/completed-roadmap/issue-6/` through `docs/archive/completed-roadmap/issue-13/` | Keep only while current README, Quality Gates, Build Lock, Pester, or scripts still require them. Issue #14-#18 resident completed-roadmap files were deleted under #121 instead of kept as historical gate artifacts. |
-| Superseded Future True UX Restore stage documents | `docs/archive/future-true-ux-restore/01-mock-review/` and `docs/archive/future-true-ux-restore/06-no-execution-audit/` | Retained as the current lightweight report-only review and stop-line history. Issue #121 deleted the negative-review, approval-checklist, packet-preview, and human-handoff stage archives. |
-| Archived Future True UX stage families | Mock review and no-execution audit documents formerly in root `docs/80-*.md` through `docs/105-*.md` | Keep available under archive for review history. Do not treat archive content as a current true UX restore planning entrypoint. |
-| Delete candidates | Preparation-only Future True UX stages | Negative review, approval checklist, packet preview, and human handoff were deleted by Issue #121 together with their gates, validators, fixtures, and Build Lock entries. |
+| Superseded Future True UX Restore stage documents | `docs/archive/future-true-ux-restore/01-mock-review/` and `docs/archive/future-true-ux-restore/06-no-execution-audit/` | Deleted under Issue #121 after the mock drill, end-to-end audit, and final stop-line contracts were preserved by retained validator/report gates and `00-governance` stop-line documents. |
+| Archived Future True UX stage families | Mock review and no-execution audit documents formerly in root `docs/80-*.md` through `docs/105-*.md` | Removed from the resident worktree; Git history carries the deleted stage details. Do not treat deleted archive content as a current true UX restore planning entrypoint. |
+| Delete candidates | Preparation-only Future True UX stages | Mock decision ledger, negative review, approval checklist, packet preview, and human handoff were deleted by Issue #121 together with their gates, validators, fixtures, docs, and Build Lock entries. Pester paths that remain in PR Fast were redirected to retained report-only guardrails instead of stale documents. |
 | Must remain canonical in root | `README.md`, `AGENTS.md`, `docs/README.md`, `docs/codex-workflow.md`, `docs/codex-task-card-template.md`, `docs/00-*.md` through `docs/10-*.md`, `docs/vm-test-runbook.md` | These are root entrypoints, Chinese operator documents, workflow/template documents, or current runbook material. English roadmap, evidence, and Future True UX stage documents should stay under `docs/archive/` unless a later task explicitly promotes one back to root. |
 
 ## Script And Fixture Inventory
@@ -53,7 +53,7 @@ Frozen semantics for this governance task:
 Observed alignment:
 
 - Quality Gates contain current Future True UX gates as report-only guardrails; preparation-only intermediate gates were deleted by Issue #121.
-- Build Lock contains retained Future True UX documents, manifests, schemas, report builders, validators, fixtures, archived stage documents, and Pester tests for the current chain.
+- Build Lock contains retained Future True UX documents, manifests, schemas, report builders, validators, fixtures, and Pester tests for the current chain.
 - README points users to the Issue #18 report-only stage, manual handoff, execution split, authorization intake, evidence model, and dry-run plan.
 - Pester directly reads many Future True UX documents by path, including current root docs and archived stage docs.
 
@@ -63,9 +63,9 @@ Governance findings:
 |---|---|---|
 | Gate placement is scattered by issue chronology rather than one governance section | Future True UX gates appear after Issue #18 gates, among controlled-execution gates, and near later Issue #15/#16 entries in `manifests/quality-gates.json` | Follow-up PR should group Future True UX gates or add a manifest-level grouping convention without changing CI behavior. |
 | Gate naming style is mostly consistent but not uniform | Gate IDs mix `future-true-ux-restore-*`, `future-true-ux-*`, and scope-specific names | Follow-up should decide whether ID churn is worth it. If renamed, update Build Lock, Pester expectations, reports, and PR body notes together. |
-| Historical stage gates are reduced | Mock drill, end-to-end audit, and final stop-line remain required PR-fast gates; negative drill, checklist ergonomics, packet preview, and human handoff were removed | Continue deletion-first cleanup only when final stop-line and no-execution coverage stay intact. |
-| Build Lock points to retained archived stage docs by design | Retained `docs/archive/future-true-ux-restore/**` stage docs are locked and tested | Keep only current archive paths in Build Lock. Deleted stage coverage should remain available through Git history, not resident files. |
-| Tests protect retained archived stage docs | `FutureTrueUxRestore*.Tests.ps1` includes explicit path assertions for current retained Future True UX documents | Keep tests aligned with the retained current surface. Any later archive restructuring must update tests in the same PR. |
+| Historical stage gates are reduced | Mock drill, end-to-end audit, and final stop-line remain required PR-fast gates; mock decision ledger, negative drill, checklist ergonomics, packet preview, and human handoff were removed | Continue deletion-first cleanup only when final stop-line and no-execution coverage stay intact. |
+| Build Lock points only to retained current docs by design | Retained `docs/archive/future-true-ux-restore/00-governance/**` docs are locked and tested | Keep only current archive paths in Build Lock. Deleted stage coverage should remain available through Git history, not resident files. |
+| Tests protect retained current docs and deleted stage absence | `FutureTrueUxRestore*.Tests.ps1` and docs governance tests include explicit path assertions for current retained Future True UX documents and pruned stage absence | Keep tests aligned with the retained current surface. Any later archive restructuring must update tests in the same PR. |
 
 ## Boundary For Open Issues
 
@@ -84,10 +84,10 @@ This task does not edit or close GitHub issues. The following remain open unless
 ## Intentionally Left Untouched
 
 - `.github/workflows/ci.yml`
-- Existing quality gate ordering and required flags
+- Existing retained quality gate ordering and required flags
 - Existing Build Lock safety policy
 - Existing Future True UX manifests, schemas, validators, fixtures, and report builders
-- Any document deletion
+- Any true UX restore planning document promotion
 - Any true execution or system mutation path
 
 ## Next Recommended Governance Task

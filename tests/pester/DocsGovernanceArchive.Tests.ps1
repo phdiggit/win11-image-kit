@@ -3,22 +3,24 @@ Describe "Docs governance archive integrity" {
         $script:RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..\..")).Path
         . (Join-Path $script:RepoRoot "tests\pester\TestHelpers.ps1")
 
-        $items = @(
-            @{ Family = "01-mock-review"; File = "80-future-true-ux-restore-mock-review-packet-drill.md" },
-            @{ Family = "01-mock-review"; File = "81-future-true-ux-restore-mock-maintainer-review-transcript.md" },
-            @{ Family = "01-mock-review"; File = "82-future-true-ux-restore-mock-decision-ledger.md" },
-            @{ Family = "01-mock-review"; File = "83-future-true-ux-restore-mock-drill-lessons.md" },
-            @{ Family = "06-no-execution-audit"; File = "102-future-true-ux-restore-end-to-end-no-execution-readiness-audit.md" },
-            @{ Family = "06-no-execution-audit"; File = "103-future-true-ux-restore-state-name-separation-matrix.md" },
-            @{ Family = "06-no-execution-audit"; File = "104-future-true-ux-restore-artifact-chain-consistency-index.md" },
-            @{ Family = "06-no-execution-audit"; File = "105-future-true-ux-restore-no-execution-stop-line.md" }
+        $script:PrunedFutureTrueUxArchiveDirs = @(
+            "docs\archive\future-true-ux-restore\01-mock-review",
+            "docs\archive\future-true-ux-restore\02-negative-review",
+            "docs\archive\future-true-ux-restore\03-approval-checklist",
+            "docs\archive\future-true-ux-restore\04-packet-preview",
+            "docs\archive\future-true-ux-restore\05-human-handoff",
+            "docs\archive\future-true-ux-restore\06-no-execution-audit"
         )
-        $script:ArchiveMap = @($items | ForEach-Object {
-            @{
-                Old = Join-Path "docs" $_.File
-                New = Join-Path (Join-Path "docs\archive\future-true-ux-restore" $_.Family) $_.File
-            }
-        })
+        $script:PrunedFutureTrueUxStageFiles = @(
+            "80-future-true-ux-restore-mock-review-packet-drill.md",
+            "81-future-true-ux-restore-mock-maintainer-review-transcript.md",
+            "82-future-true-ux-restore-mock-decision-ledger.md",
+            "83-future-true-ux-restore-mock-drill-lessons.md",
+            "102-future-true-ux-restore-end-to-end-no-execution-readiness-audit.md",
+            "103-future-true-ux-restore-state-name-separation-matrix.md",
+            "104-future-true-ux-restore-artifact-chain-consistency-index.md",
+            "105-future-true-ux-restore-no-execution-stop-line.md"
+        )
     }
 
     It "has a canonical docs index and archive directories" {
@@ -26,9 +28,7 @@ Describe "Docs governance archive integrity" {
         foreach ($dir in @(
             "docs\archive\completed-roadmap\issue-6",
             "docs\archive\completed-roadmap\issue-13",
-            "docs\archive\future-true-ux-restore\00-governance",
-            "docs\archive\future-true-ux-restore\01-mock-review",
-            "docs\archive\future-true-ux-restore\06-no-execution-audit"
+            "docs\archive\future-true-ux-restore\00-governance"
         )) {
             Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot $dir)) $true
         }
@@ -37,20 +37,54 @@ Describe "Docs governance archive integrity" {
             "docs\archive\completed-roadmap\issue-15",
             "docs\archive\completed-roadmap\issue-16",
             "docs\archive\completed-roadmap\issue-17",
-            "docs\archive\completed-roadmap\issue-18",
-            "docs\archive\future-true-ux-restore\02-negative-review",
-            "docs\archive\future-true-ux-restore\03-approval-checklist",
-            "docs\archive\future-true-ux-restore\04-packet-preview",
-            "docs\archive\future-true-ux-restore\05-human-handoff"
-        )) {
+            "docs\archive\completed-roadmap\issue-18"
+        ) + $script:PrunedFutureTrueUxArchiveDirs) {
             Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot $dir)) $false
         }
     }
 
-    It "keeps retained Future True UX archive docs out of root and prunes intermediate stages" {
-        foreach ($item in $script:ArchiveMap) {
-            Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot $item.Old)) $false
-            Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot $item.New)) $true
+    It "keeps pruned Future True UX stage docs out of root and archive" {
+        $futureArchiveRoot = Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore"
+        foreach ($fileName in $script:PrunedFutureTrueUxStageFiles) {
+            Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot (Join-Path "docs" $fileName))) $false
+            $archiveMatches = @(Get-ChildItem -LiteralPath $futureArchiveRoot -Recurse -Filter $fileName -File)
+            Assert-KitEqual $archiveMatches.Count 0
+        }
+    }
+
+    It "does not leave Pester literal path references to deleted Future True UX stage docs" {
+        $pesterFiles = Get-ChildItem -LiteralPath (Join-Path $script:RepoRoot "tests\pester") -Filter "*.Tests.ps1"
+        $deletedRefs = @()
+        foreach ($file in $pesterFiles) {
+            if ($file.Name -eq "DocsGovernanceArchive.Tests.ps1") {
+                continue
+            }
+            $text = Get-Content -LiteralPath $file.FullName -Raw -Encoding UTF8
+            foreach ($fileName in $script:PrunedFutureTrueUxStageFiles) {
+                if ($text -match [regex]::Escape($fileName)) {
+                    $deletedRefs += "$($file.Name):$fileName"
+                }
+            }
+        }
+
+        Assert-KitEqual $deletedRefs.Count 0
+    }
+
+    It "does not keep deleted Future True UX stage gate entrypoints" {
+        $qualityGates = Get-Content -LiteralPath (Join-Path $script:RepoRoot "manifests\quality-gates.json") -Raw -Encoding UTF8 | ConvertFrom-Json
+        $entrypoints = @($qualityGates.gates.entrypoint)
+        foreach ($fileName in $script:PrunedFutureTrueUxStageFiles) {
+            $matchingEntrypoints = @($entrypoints | Where-Object { $_ -like "*$fileName" })
+            Assert-KitEqual $matchingEntrypoints.Count 0
+        }
+        foreach ($gateId in @(
+            "future-true-ux-mock-decision-ledger",
+            "future-true-ux-negative-review-drill",
+            "future-true-ux-approval-checklist-ergonomics",
+            "future-true-ux-integrated-packet-preview",
+            "future-true-ux-human-authorization-handoff"
+        )) {
+            Assert-KitEqual (@($qualityGates.gates.id) -contains $gateId) $false
         }
     }
 
@@ -106,21 +140,6 @@ Describe "Docs governance archive integrity" {
         foreach ($entry in @($buildLock.entries | Where-Object { $_.required -eq $true })) {
             Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot $entry.path)) $true
         }
-    }
-
-    It "does not leave Pester literal path references to missing moved docs" {
-        $pesterFiles = Get-ChildItem -LiteralPath (Join-Path $script:RepoRoot "tests\pester") -Filter "*.Tests.ps1"
-        $missingMovedRefs = @()
-        foreach ($file in $pesterFiles) {
-            $text = Get-Content -LiteralPath $file.FullName -Raw -Encoding UTF8
-            foreach ($item in $script:ArchiveMap) {
-                if ($text -match [regex]::Escape($item.Old) -and -not (Test-Path -LiteralPath (Join-Path $script:RepoRoot $item.Old))) {
-                    $missingMovedRefs += "$($file.Name):$($item.Old)"
-                }
-            }
-        }
-
-        Assert-KitEqual $missingMovedRefs.Count 0
     }
 
     It "keeps governance docs free of Issue 19 close keywords and true execution drift" {

@@ -5,15 +5,8 @@ Describe "Future true UX restore mock transcript" {
         . (Join-Path $script:RepoRoot "scripts\common\New-FutureTrueUxRestoreMockReviewDrillReport.ps1")
     }
 
-    It "documents mock maintainer review without execution approval" {
-        $doc = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\01-mock-review\81-future-true-ux-restore-mock-maintainer-review-transcript.md") -Raw -Encoding UTF8
-
-        Assert-KitMatch $doc 'Status:\s*`mock-review-transcript`'
-        Assert-KitMatch $doc "maintainer-reviewer-fixture"
-        Assert-KitMatch $doc "authorization-review-ready"
-        Assert-KitMatch $doc "not-approved"
-        Assert-KitMatch $doc "Review-ready is not execution approval"
-        Assert-KitNotMatch $doc "(?i)\b(fixes|closes|resolves)\s+#18\b"
+    It "keeps mock transcript archive docs pruned from the resident worktree" {
+        Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\01-mock-review")) $false
     }
 
     It "emits a transcript with complete checklist and not-approved execution decision" {
