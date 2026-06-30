@@ -143,11 +143,26 @@ Describe "Script governance final audit stop-line" {
         }
     }
 
-    It "does not broaden the workflow boundary" {
+    It "keeps PR Fast workflow free of deleted historical Pester references" {
         $workflowPath = Join-Path $script:RepoRoot ".github\workflows\ci.yml"
-        $workflowHash = (Get-FileHash -Algorithm SHA256 -LiteralPath $workflowPath).Hash.ToLowerInvariant()
+        $workflow = Get-Content -LiteralPath $workflowPath -Raw -Encoding UTF8
 
-        Assert-KitEqual $workflowHash "2e709f3b39858cb0c026734f9fd2dd57e6868e68395e789c579d198458705835"
-        Assert-KitMatch $script:Doc 'does not change `\.github/workflows/ci\.yml`'
+        Assert-KitMatch $script:Doc 'CI repair in this PR may remove `\.github/workflows/ci\.yml` PR Fast Pester references to files deleted by this same PR'
+        Assert-KitMatch $script:Doc "does not change workflow triggers, runner choice, quality gate semantics, or execution behavior"
+
+        $workflowPesterPaths = @(
+            [regex]::Matches($workflow, '"(tests/pester/[^"]+\.Tests\.ps1)"') |
+                ForEach-Object { $_.Groups[1].Value }
+        )
+        $missingWorkflowPesterPaths = @(
+            $workflowPesterPaths |
+                Where-Object { -not (Test-Path -LiteralPath (Join-Path $script:RepoRoot ($_ -replace '/', '\'))) }
+        )
+
+        Assert-KitEqual $missingWorkflowPesterPaths.Count 0
+        Assert-KitEqual ([regex]::IsMatch($workflow, 'tests/pester/(Issue1[4-8].*|EvidenceChainClosePrep)\.Tests\.ps1')) $false
+
+        Assert-KitMatch $workflow "QualityGateSchema\.Tests\.ps1"
+        Assert-KitMatch $workflow "FutureTrueUxRestoreMockReviewSafety\.Tests\.ps1"
     }
 }

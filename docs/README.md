@@ -16,17 +16,16 @@
 ## 当前仍被门禁引用的归档入口
 
 - Build Lock 策略：[`archive/completed-roadmap/issue-12/32-issue12-build-lock.md`](archive/completed-roadmap/issue-12/32-issue12-build-lock.md)
-- Quality Gates 策略：[`archive/completed-roadmap/issue-14/40-issue14-quality-gates.md`](archive/completed-roadmap/issue-14/40-issue14-quality-gates.md)
-- Evidence Chain 策略：[`archive/completed-roadmap/issue-16/48-issue16-evidence-chain-report.md`](archive/completed-roadmap/issue-16/48-issue16-evidence-chain-report.md)
-- Controlled Execution intake：[`archive/completed-roadmap/issue-17/52-issue17-controlled-execution-intake.md`](archive/completed-roadmap/issue-17/52-issue17-controlled-execution-intake.md)
-- Issue #18 report-only UX restore intake：[`archive/completed-roadmap/issue-18/58-issue18-user-experience-restore-intake.md`](archive/completed-roadmap/issue-18/58-issue18-user-experience-restore-intake.md)
-- Issue #18 manual closure handoff：[`archive/completed-roadmap/issue-18/64-issue18-manual-closure-handoff.md`](archive/completed-roadmap/issue-18/64-issue18-manual-closure-handoff.md)
+- Future True UX Restore 最终 stop-line：[`archive/future-true-ux-restore/00-governance/106-future-true-ux-restore-final-stop-line-handoff.md`](archive/future-true-ux-restore/00-governance/106-future-true-ux-restore-final-stop-line-handoff.md)
+- Future True UX Restore 决策矩阵：[`archive/future-true-ux-restore/00-governance/107-future-true-ux-restore-stop-line-decision-matrix.md`](archive/future-true-ux-restore/00-governance/107-future-true-ux-restore-stop-line-decision-matrix.md)
+- Future True UX Restore 质量门禁治理：[`archive/future-true-ux-restore/00-governance/109-future-true-ux-quality-gate-governance.md`](archive/future-true-ux-restore/00-governance/109-future-true-ux-quality-gate-governance.md)
+- Future True UX Restore validator 脚本治理：[`archive/future-true-ux-restore/00-governance/112-future-true-ux-validator-script-governance.md`](archive/future-true-ux-restore/00-governance/112-future-true-ux-validator-script-governance.md)
 
-这些文件虽然位于 archive，但仍可能是 Quality Gates、Build Lock、Pester 或 README 的当前引用目标。迁移路径不等于降低安全等级。
+Issue #14-#18 的 completed-roadmap 文档和同名历史 Pester 已按 #121 从常驻工作树删除；当前门禁入口以 manifest、validator、config/show 脚本和非 Issue 前缀 Pester 为准。
 
 ## Archive Layout
 
-- `archive/completed-roadmap/issue-6/` through `archive/completed-roadmap/issue-18/`: completed roadmap stage documents, close-prep records, and main-validation evidence.
+- `archive/completed-roadmap/issue-6/` through `archive/completed-roadmap/issue-13/`: retained completed roadmap documents that are still referenced by current manifests, Build Lock, tests, or operator docs.
 - `archive/future-true-ux-restore/00-governance/`: Future True UX Restore current governance, final stop-line, authorization, evidence, and dry-run guardrail documents.
 - `archive/future-true-ux-restore/01-mock-review/` through `archive/future-true-ux-restore/06-no-execution-audit/`: historical Future True UX Restore stage review material.
 

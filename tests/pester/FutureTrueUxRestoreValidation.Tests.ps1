@@ -190,12 +190,13 @@ Describe "Future true UX restore validation runner" {
         Assert-KitEqual ($gateIds -contains "future-true-ux-final-stop-line-handoff") $true
     }
 
-    It "keeps Issue 18 ready state frozen and avoids completion summary wording" {
-        $doc64 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-18\64-issue18-manual-closure-handoff.md") -Raw -Encoding UTF8
+    It "keeps Issue 18 stop-line state frozen without resident completed-roadmap docs" {
         $doc65 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\00-governance\65-future-true-ux-restore-execution-split.md") -Raw -Encoding UTF8
-        Assert-KitMatch $doc64 "not an Issue #18 completion summary"
+        $doc106 = Get-Content -LiteralPath (Join-Path $script:RepoRoot "docs\archive\future-true-ux-restore\00-governance\106-future-true-ux-restore-final-stop-line-handoff.md") -Raw -Encoding UTF8
         Assert-KitMatch $doc65 'Status:\s*`future-split`'
-        foreach ($file in Get-ChildItem -LiteralPath (Join-Path $script:RepoRoot "docs") -Filter "*issue18*.md") {
+        Assert-KitMatch $doc106 'Status:\s*`final-stop-line-handoff`'
+        Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-18")) $false
+        foreach ($file in Get-ChildItem -LiteralPath (Join-Path $script:RepoRoot "docs") -Filter "*issue18*.md" -Recurse) {
             Assert-KitNotMatch $file.Name "completion-summary"
         }
         foreach ($path in @(

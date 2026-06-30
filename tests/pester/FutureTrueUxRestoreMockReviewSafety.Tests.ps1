@@ -66,7 +66,7 @@ Describe "Future true UX restore mock review safety" {
         }
     }
 
-    It "does not create Issue 18 completion summary or weaken archived Issue 6-17 closure docs" {
+    It "does not create Issue 18 completion summary or keep pruned Issue 14-18 completed-roadmap docs" {
         foreach ($path in @(
             "docs\archive\future-true-ux-restore\01-mock-review\80-future-true-ux-restore-mock-review-packet-drill.md",
             "docs\archive\future-true-ux-restore\01-mock-review\81-future-true-ux-restore-mock-maintainer-review-transcript.md",
@@ -82,14 +82,18 @@ Describe "Future true UX restore mock review safety" {
             Assert-KitNotMatch $file.Name "completion-summary"
         }
 
-        foreach ($issue in 6..17) {
+        foreach ($issue in 6..13) {
             Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-$issue")) $true
         }
 
-        $docs = @(Get-ChildItem -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap") -Filter "*.md" -Recurse | Where-Object { $_.FullName -match 'issue-(6|7|8|9|10|11|12|13|14|15|16|17)' })
+        foreach ($issue in 14..18) {
+            Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap\issue-$issue")) $false
+        }
+
+        $docs = @(Get-ChildItem -LiteralPath (Join-Path $script:RepoRoot "docs\archive\completed-roadmap") -Filter "*.md" -Recurse | Where-Object { $_.FullName -match 'issue-(6|7|8|9|10|11|12|13)' })
         foreach ($doc in $docs) {
             $text = Get-Content -LiteralPath $doc.FullName -Raw -Encoding UTF8
-            Assert-KitNotMatch $text "(?i)\b(fixes|closes|resolves)\s+#(6|7|8|9|10|11|12|13|14|15|16|17)\b"
+            Assert-KitNotMatch $text "(?i)\b(fixes|closes|resolves)\s+#(6|7|8|9|10|11|12|13)\b"
         }
     }
 }

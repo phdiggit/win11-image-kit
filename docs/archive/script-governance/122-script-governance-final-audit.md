@@ -8,7 +8,7 @@ Date: 2026-06-30
 
 ## Boundary
 
-This is the final broad script governance audit after the Build Lock normalization pass. It is report-only lifecycle governance. It does not introduce new feature behavior, does not change `.github/workflows/ci.yml`, does not change quality gate IDs or semantics, and does not authorize true UX restore.
+This is the final broad script governance audit after the Build Lock normalization pass. It is report-only lifecycle governance. It does not introduce new feature behavior, does not change quality gate IDs or semantics, and does not authorize true UX restore. CI repair in this PR may remove `.github/workflows/ci.yml` PR Fast Pester references to files deleted by this same PR; it must not change workflow triggers, runner choice, quality gate semantics, or execution behavior.
 
 Frozen execution state for this audit:
 
@@ -136,6 +136,7 @@ This task may update `manifests/build-lock.json` only for files changed by this 
 - `tests/pester/ScriptGovernanceFinalAudit.Tests.ps1`;
 - `docs/archive/build-lock/121-build-lock-normalization.md`;
 - `tests/pester/BuildLockNormalization.Tests.ps1`;
+- `.github/workflows/ci.yml` stale PR Fast Pester references to files deleted by this PR;
 - `scripts/dev/update_build_lock_hashes.py` deletion;
 - `manifests/build-lock.json` metadata for those entries.
 
@@ -157,4 +158,4 @@ Every gate entrypoint must continue to exist. No quality gate ID, trigger, layer
 
 ## No True Execution
 
-This final audit is documentation, Pester coverage, Build Lock metadata, and deletion of the one-time Build Lock normalization helper. It does not change workflow YAML. It does not perform or authorize any true UX restore or system mutation.
+This final audit is documentation, Pester coverage, Build Lock metadata, deletion of the one-time Build Lock normalization helper, and CI repair for stale PR Fast Pester references to files deleted by this PR. It does not change workflow triggers, runner choice, quality gate semantics, or execution behavior. It does not perform or authorize any true UX restore or system mutation.

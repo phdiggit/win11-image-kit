@@ -38,7 +38,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts\validate\Test-BuildL
 |---|---:|---|---|---|
 | line-ending-only drift | `85` | `README.md`, `manifests/capability-registry.json`, `tests/pester/Issue12BuildLock.Tests.ps1` | LF 规范化后的当前内容 hash 与旧 Build Lock hash 相同；当前 Windows checkout 为 CRLF 字节 | 更新为当前 Windows 验证基准 hash，不批量重写文件 |
 | accepted content drift | `33` | `scripts/validate/Test-FutureTrueUxRestoreAuthorization.ps1`, `docs/README.md`, `docs/archive/future-true-ux-restore/00-governance/112-future-true-ux-validator-script-governance.md` | 前序已接受 PR 对内容做过真实修改，Build Lock 未在对应 PR 中吸收无关 drift | 更新 hash，治理记录解释来源 |
-| completed-roadmap docs | `7` | `docs/archive/completed-roadmap/issue-14/42-issue14-close-preparation.md` | 已归档完成态证据文档的 hash stale 或 EOL drift | 更新 hash |
+| completed-roadmap docs | `7` | 已在后续 #121 prune batch 中删除的完成态文档 | 已归档完成态证据文档的 hash stale 或 EOL drift | 当时更新 hash；后续删除批次不再保留 resident entry |
 | Future True UX governance docs | `4` | `docs/archive/future-true-ux-restore/00-governance/111-future-true-ux-archive-dry-run-plan.md` | 文档迁移和治理 PR 后的 hash stale 或 EOL drift | 更新 hash |
 | README/docs index | `3` | `README.md`, `docs/README.md` | 当前入口文档或 docs index 的 EOL/content drift | 更新 hash |
 | manifests | `3` | `manifests/capability-registry.json`, `manifests/quality-gates.json`, `manifests/future-true-ux-restore-authorization.json` | 受前序治理 PR 或 EOL drift 影响 | 更新 hash，不改 schema/语义 |
