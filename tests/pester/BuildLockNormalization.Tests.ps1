@@ -34,10 +34,9 @@ Describe "Build Lock normalization governance" {
         Assert-KitEqual (@($script:BuildLock.entries.path) -contains "manifests/build-lock.json") $false
     }
 
-    It "tracks the normalization doc, test, and helper in Build Lock" {
+    It "tracks the normalization doc and test in Build Lock" {
         foreach ($path in @(
             "docs/archive/build-lock/121-build-lock-normalization.md",
-            "scripts/dev/update_build_lock_hashes.py",
             "tests/pester/BuildLockNormalization.Tests.ps1"
         )) {
             Assert-FutureTrueUxBuildLockTracksPath -BuildLock $script:BuildLock -Path $path
@@ -69,15 +68,11 @@ Describe "Build Lock normalization governance" {
         }
     }
 
-    It "keeps the Build Lock helper scoped, dry-run first, and offline" {
+    It "does not keep the one-time Build Lock normalization helper resident" {
         $helperPath = Join-Path $script:RepoRoot "scripts\dev\update_build_lock_hashes.py"
-        $helper = Get-Content -LiteralPath $helperPath -Raw -Encoding UTF8
-
-        foreach ($needle in @("--paths", "--from-report", "--dry-run", "--write", "--allow-many", "--max-updates")) {
-            Assert-KitMatch $helper ([regex]::Escape($needle))
-        }
-
-        Assert-KitMatch $helper "dry-run is the default"
-        Assert-KitNotMatch $helper "(?i)\b(requests|urllib|socket|subprocess|Invoke-WebRequest|Invoke-RestMethod|Start-Process)\b"
+        Assert-KitEqual (Test-Path -LiteralPath $helperPath) $false
+        Assert-KitEqual (@($script:BuildLock.entries.path) -contains "scripts/dev/update_build_lock_hashes.py") $false
+        Assert-KitMatch $script:Doc "one-time helper"
+        Assert-KitMatch $script:Doc "must not remain resident"
     }
 }

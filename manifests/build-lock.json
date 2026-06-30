@@ -125,13 +125,6 @@
       "reason": "Build lock validate entrypoint writes explicit reports and exit codes."
     },
     {
-      "path": "scripts/dev/update_build_lock_hashes.py",
-      "category": "script",
-      "required": true,
-      "hash": "cc42fc4f0f1bfc6f43fd5e07a8eb3dd8524297822e449548c4da8df3c3ac89fc",
-      "reason": "Build Lock developer helper updates selected existing hash entries in dry-run-first mode."
-    },
-    {
       "path": "manifests/software.json",
       "category": "manifest",
       "required": true,
@@ -240,14 +233,14 @@
       "path": "tests/pester/BuildLockNormalization.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "003a8ee38d0902e36adae14fea5eb90481b836719c21c00e5260d3127c311976",
+      "hash": "8733922d77ea6dc90e19a154d11eafe6383fd34a640143d6d35afed43f2d3c8c",
       "reason": "Build Lock normalization tests guard Task 121 drift inventory, self-watch manual policy, and scoped updates."
     },
     {
       "path": "docs/archive/build-lock/121-build-lock-normalization.md",
       "category": "doc",
       "required": true,
-      "hash": "5a5d38fe2d3a253a317e09b58a8d18bc776bd9a10b71b2dc97b6668b376c2785",
+      "hash": "cea83c28db89096e5df067f30cf0fee3451da8f9eed363a4aeef24301f16eb61",
       "reason": "Build Lock normalization record documents line-ending drift, accepted content drift, and self-watch policy."
     },
     {
@@ -4248,6 +4241,13 @@
       "reason": "Future True UX validator and script governance audit records report-only entrypoints and consolidation boundaries."
     },
     {
+      "path": "docs/archive/script-governance/122-script-governance-final-audit.md",
+      "category": "doc",
+      "required": true,
+      "hash": "c08a4b2aa34c50132e464487d90679789e5541596fa676de9bdaa3b0c440a90d",
+      "reason": "Script governance final audit records the stop-line decision, lifecycle rules, and anti-bloat contract."
+    },
+    {
       "path": "scripts/common/FutureTrueUxRestore.Guards.ps1",
       "category": "script",
       "required": true,
@@ -4295,6 +4295,13 @@
       "required": true,
       "hash": "8ae39f1ac4fbd614439bc85cbb24b2bb4e73bbdbaf6d71a309dd550e397af7ac",
       "reason": "Future True UX validator script governance tests guard report-only entrypoints and consolidation boundaries."
+    },
+    {
+      "path": "tests/pester/ScriptGovernanceFinalAudit.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "a1b462c0856ba8f41f97aaa34ae54bc544281e6da7bd42fc86e81d516bcf0954",
+      "reason": "Script governance final audit tests guard the stop-line record, lifecycle rules, gate semantics, and Build Lock scope."
     }
   ],
   "watchGlobs": [

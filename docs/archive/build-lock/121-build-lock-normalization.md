@@ -80,13 +80,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts\validate\Test-BuildL
 
 ## Future guardrails
 
-新增 `scripts/dev/update_build_lock_hashes.py`，默认 dry-run，只更新显式选择的 existing entries。它支持：
-
-- `--paths`：只更新指定路径；
-- `--from-report`：从 Build Lock report 选择 failed 且存在的 entry；
-- `--dry-run`：只报告；
-- `--write`：写入；
-- `--max-updates` 与 `--allow-many`：普通任务默认限制大面积更新，只有专门 normalization PR 才显式放开。
+Task #121 used a temporary selected-path Build Lock hash refresh helper during the dedicated normalization pass. The helper was a one-time normalization tool and must not remain resident after the final script-governance stop-line. Future Build Lock updates should be made narrowly inside the task that changes the locked file, or handled by a new dedicated normalization task with an explicit audit record.
 
 新增 `tests/pester/BuildLockNormalization.Tests.ps1`，覆盖：
 
@@ -96,7 +90,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts\validate\Test-BuildL
 - Future True UX 质量门语义保持不变；
 - `.github/workflows/ci.yml` hash 固定为当前基线；
 - 未新增 `.gitattributes` broad policy；
-- helper 保持 selected-path、dry-run、no-network 的窄工具边界。
+- the one-time helper does not remain resident after the final script-governance audit.
 
 ## No true execution
 
