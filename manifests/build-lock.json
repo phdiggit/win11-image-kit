@@ -233,7 +233,7 @@
       "path": "tests/pester/BuildLockNormalization.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "8733922d77ea6dc90e19a154d11eafe6383fd34a640143d6d35afed43f2d3c8c",
+      "hash": "6c4877a4bc14de4e3aecb5dd44d79ad71cb2447d786382b6c0c4c6357ef770c0",
       "reason": "Build Lock normalization tests guard Task 121 drift inventory, self-watch manual policy, and scoped updates."
     },
     {
@@ -310,7 +310,7 @@
       "path": ".github/workflows/ci.yml",
       "category": "workflow",
       "required": true,
-      "hash": "2e709f3b39858cb0c026734f9fd2dd57e6868e68395e789c579d198458705835",
+      "hash": "af6c210d4008790b2512d85ccb82ab1ae84db0ce0457d0f7ff53380dcac3effe",
       "reason": "PR Fast CI runs future true UX mock review drill validation and Pester coverage."
     },
     {
@@ -3859,7 +3859,7 @@
       "path": "docs/archive/script-governance/122-script-governance-final-audit.md",
       "category": "doc",
       "required": true,
-      "hash": "c08a4b2aa34c50132e464487d90679789e5541596fa676de9bdaa3b0c440a90d",
+      "hash": "ee10751c5278f3846d09d8a99e1086cb53cb608a3b0860e3aae5b228c08e3d8a",
       "reason": "Script governance final audit records the stop-line decision, lifecycle rules, and anti-bloat contract."
     },
     {
@@ -3915,7 +3915,7 @@
       "path": "tests/pester/ScriptGovernanceFinalAudit.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "a1b462c0856ba8f41f97aaa34ae54bc544281e6da7bd42fc86e81d516bcf0954",
+      "hash": "f79ba8abfcf87239b8074d45bccb5fbb3e782f980267994162a738df5ee57886",
       "reason": "Script governance final audit tests guard the stop-line record, lifecycle rules, gate semantics, and Build Lock scope."
     }
   ],

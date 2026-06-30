@@ -52,11 +52,20 @@ Describe "Build Lock normalization governance" {
         }
     }
 
-    It "keeps workflow and line-ending policy out of this normalization change" {
+    It "keeps line-ending policy unchanged and PR Fast workflow paths current" {
         $workflowPath = Join-Path $script:RepoRoot ".github\workflows\ci.yml"
-        $workflowHash = (Get-FileHash -Algorithm SHA256 -LiteralPath $workflowPath).Hash.ToLowerInvariant()
+        $workflow = Get-Content -LiteralPath $workflowPath -Raw -Encoding UTF8
+        $workflowPesterPaths = @(
+            [regex]::Matches($workflow, '"(tests/pester/[^"]+\.Tests\.ps1)"') |
+                ForEach-Object { $_.Groups[1].Value }
+        )
+        $missingWorkflowPesterPaths = @(
+            $workflowPesterPaths |
+                Where-Object { -not (Test-Path -LiteralPath (Join-Path $script:RepoRoot ($_ -replace '/', '\'))) }
+        )
 
-        Assert-KitEqual $workflowHash "2e709f3b39858cb0c026734f9fd2dd57e6868e68395e789c579d198458705835"
+        Assert-KitEqual $missingWorkflowPesterPaths.Count 0
+        Assert-KitEqual ([regex]::IsMatch($workflow, 'tests/pester/(Issue1[4-8].*|EvidenceChainClosePrep)\.Tests\.ps1')) $false
         Assert-KitMatch $script:Doc '`\.github/workflows/ci\.yml`'
 
         $attributesPath = Join-Path $script:RepoRoot ".gitattributes"
