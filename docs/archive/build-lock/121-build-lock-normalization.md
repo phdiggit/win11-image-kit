@@ -37,13 +37,13 @@ powershell -NoProfile -ExecutionPolicy Bypass -File scripts\validate\Test-BuildL
 | 分组 | 数量 | 示例 | 判断 | 决策 |
 |---|---:|---|---|---|
 | line-ending-only drift | `85` | `README.md`, `manifests/capability-registry.json`, `tests/pester/Issue12BuildLock.Tests.ps1` | LF 规范化后的当前内容 hash 与旧 Build Lock hash 相同；当前 Windows checkout 为 CRLF 字节 | 更新为当前 Windows 验证基准 hash，不批量重写文件 |
-| accepted content drift | `33` | `scripts/validate/Test-FutureTrueUxRestoreAuthorization.ps1`, `docs/README.md`, `docs/archive/future-true-ux-restore/00-governance/112-future-true-ux-validator-script-governance.md` | 前序已接受 PR 对内容做过真实修改，Build Lock 未在对应 PR 中吸收无关 drift | 更新 hash，治理记录解释来源 |
+| accepted content drift | `33` | `scripts/validate/Test-FutureTrueUxRestoreAuthorization.ps1`, `docs/README.md`, 后续 #121 prune 已删除的 Future True UX validator 治理文档 | 前序已接受 PR 对内容做过真实修改，Build Lock 未在对应 PR 中吸收无关 drift | 更新 hash，治理记录解释来源 |
 | completed-roadmap docs | `7` | 已在后续 #121 prune batch 中删除的完成态文档 | 已归档完成态证据文档的 hash stale 或 EOL drift | 当时更新 hash；后续删除批次不再保留 resident entry |
 | Future True UX governance docs | `4` | pre-#121 Future True UX governance docs | 文档迁移和治理 PR 后的 hash stale 或 EOL drift | 更新 hash |
 | README/docs index | `3` | `README.md`, `docs/README.md` | 当前入口文档或 docs index 的 EOL/content drift | 更新 hash |
 | manifests | `3` | `manifests/capability-registry.json`, `manifests/quality-gates.json`, `manifests/future-true-ux-restore-authorization.json` | 受前序治理 PR 或 EOL drift 影响 | 更新 hash，不改 schema/语义 |
 | scripts | `29` | `scripts/common/New-FutureTrueUxRestoreMockReviewDrillReport.ps1` | Future True UX report-only helper 与 validator/presentation helper 的 accepted content drift | 更新 hash，不改脚本行为 |
-| Pester tests | `72` | `tests/pester/FutureTrueUxValidatorScriptGovernance.Tests.ps1` | Issue 12-18 与 Future True UX 治理测试在前序 PR 后 hash stale 或 EOL drift | 更新 hash |
+| Pester tests | `72` | 后续 #121 prune 已删除的 Future True UX validator 治理测试 | Issue 12-18 与 Future True UX 治理测试在前序 PR 后 hash stale 或 EOL drift | 更新 hash |
 | controlled-execution fixtures | `5` | `tests/fixtures/controlled-execution/failure/registry-mutation-action.json` | fixture EOL drift | 更新 hash |
 
 ## 行尾和编码决策

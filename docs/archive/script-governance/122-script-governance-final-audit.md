@@ -30,7 +30,7 @@ No registry, DISM, Sysprep, WinPE, AppX, Defender, service, Junction, package in
 | `scripts/validate/` | Stable / lifecycle monitoring only | Public quality gate validators are separate on purpose, while Future True UX validator plumbing is consolidated behind shared primitives. Keep current public entrypoints for gate stability. |
 | `scripts/config/` | Stable / lifecycle monitoring only | Operator show/config scripts remain read-only previews. Future True UX presentation-only scripts were pruned under #121; public operator script names remain stable for users and tests. |
 | `scripts/dev/` | Intentionally separate | Developer helpers are allowed only when they support a recurring workflow. `pr_body_tool.py` and run-artifact collection are recurring workflow helpers. One-time migration or normalization helpers must be deleted after use. |
-| `tests/pester/` | Needs lifecycle monitoring only | The suite is large but useful: issue-history tests protect completed-roadmap contracts, and Future True UX tests protect no-execution and no-auto-close boundaries. No broad deletion in this task. |
+| `tests/pester/` | Needs lifecycle monitoring only | The suite is large but useful: issue-history tests protect completed-roadmap contracts, and Future True UX tests protect no-execution and no-auto-close boundaries. Validator-specific governance tests were later pruned under #121 after current quality gate and final stop-line tests kept the durable contract. |
 | `tests/fixtures/` | Stable / intentionally separate | Controlled execution, evidence-chain, user-experience, and Future True UX fixtures encode separate positive and negative policy cases. Keep fixture families scoped to their validators. |
 | `manifests/build-lock.json` | Stable with documented manual self-watch | Current policy keeps Build Lock normalized with no failed mismatches and accepts only `manifests/build-lock.json` as the manual self-watch item. Updates must be scoped to files touched by a PR unless a dedicated normalization task says otherwise. |
 | `manifests/quality-gates.json` | Stable / deletion-first lifecycle | Retained Future True UX gates remain `pr-fast`, `pull_request`, `report-only`, `required=true`, and `blocking=true`. Preparation-only gates may be removed only when retained gates preserve the same safety invariant and docs, tests, and Build Lock are updated together. |
@@ -83,11 +83,11 @@ Retirement criteria for old validators:
 
 ## `tests/pester/` Lifecycle Status
 
-Current Future True UX governance tests are intentionally retained. They cover gate semantics, public validator entrypoints, no-execution fields, no auto-close wording, evidence-boundary wording, stage-specific negative fixtures, and dangerous-command scans.
+Current Future True UX governance tests are intentionally retained only where they guard active no-execution, no-auto-close, quality gate, and final stop-line boundaries. Validator-specific consolidation tests were pruned under #121 because they guarded a completed refactor rather than current operator behavior.
 
 Issue 11-18 and completed-roadmap tests are still intentionally retained because they protect historical acceptance records, Build Lock references, manual closure handoffs, report-only policy, and README or archive path stability. They are not duplicate merely because their issue stage is complete.
 
-No obvious duplicate Pester file is safe to delete in this final audit. Later retirement candidates should be documented before deletion, especially if an issue-specific test becomes fully covered by a stronger current governance test.
+Later retirement candidates should be documented before deletion, especially if an issue-specific test becomes fully covered by a stronger current governance test. Under #121, completed-refactor validator governance tests are valid retirement candidates when retained quality gate checks still prove entrypoints exist.
 
 Lifecycle rule for adding new Pester tests:
 
