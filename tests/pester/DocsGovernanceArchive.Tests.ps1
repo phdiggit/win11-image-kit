@@ -43,7 +43,7 @@ Describe "Docs governance archive integrity" {
         Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot "docs\README.md")) $true
         foreach ($dir in @(
             "docs\archive\completed-roadmap\issue-6",
-            "docs\archive\completed-roadmap\issue-18",
+            "docs\archive\completed-roadmap\issue-13",
             "docs\archive\future-true-ux-restore\00-governance",
             "docs\archive\future-true-ux-restore\01-mock-review",
             "docs\archive\future-true-ux-restore\02-negative-review",
@@ -53,6 +53,15 @@ Describe "Docs governance archive integrity" {
             "docs\archive\future-true-ux-restore\06-no-execution-audit"
         )) {
             Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot $dir)) $true
+        }
+        foreach ($dir in @(
+            "docs\archive\completed-roadmap\issue-14",
+            "docs\archive\completed-roadmap\issue-15",
+            "docs\archive\completed-roadmap\issue-16",
+            "docs\archive\completed-roadmap\issue-17",
+            "docs\archive\completed-roadmap\issue-18"
+        )) {
+            Assert-KitEqual (Test-Path -LiteralPath (Join-Path $script:RepoRoot $dir)) $false
         }
     }
 

@@ -90,4 +90,4 @@ All true mutation is denied by default. The safe baseline decision is `blocked`,
 - [Future True UX Restore Execution Split](65-future-true-ux-restore-execution-split.md)
 - [Future True UX Restore Evidence Model](67-future-true-ux-restore-evidence-model.md)
 - [Future True UX Restore Dry-run Execution Plan](68-future-true-ux-restore-dry-run-plan.md)
-- [Issue #18 Manual Closure Handoff](64-issue18-manual-closure-handoff.md)
+- [Future True UX Restore Final Stop-Line Handoff](106-future-true-ux-restore-final-stop-line-handoff.md)

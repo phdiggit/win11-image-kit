@@ -240,7 +240,7 @@
       "path": "docs/archive/build-lock/121-build-lock-normalization.md",
       "category": "doc",
       "required": true,
-      "hash": "cea83c28db89096e5df067f30cf0fee3451da8f9eed363a4aeef24301f16eb61",
+      "hash": "1791f2e7634d572d9f4f8f7e14cf784cf337b82a08feed0f538dffe45827315e",
       "reason": "Build Lock normalization record documents line-ending drift, accepted content drift, and self-watch policy."
     },
     {
@@ -317,7 +317,7 @@
       "path": "README.md",
       "category": "doc",
       "required": true,
-      "hash": "f5f7bca2dadf4561077986349aaaca8f048d407d48f6d5f99bfb0ff48e4513e5",
+      "hash": "78dafc99a192e907d0d3704db86536b73d27a0b97850247360452fa33c32ebd5",
       "reason": "README links Issue 18 UX restore intake and validation entrypoint."
     },
     {
@@ -370,13 +370,6 @@
       "reason": "PSScriptAnalyzer settings define the local analyzer baseline for quality gates."
     },
     {
-      "path": "docs/archive/completed-roadmap/issue-14/40-issue14-quality-gates.md",
-      "category": "doc",
-      "required": true,
-      "hash": "676ef94ed6be54969352c550e78efbd11462791399ef3f007544653417635a03",
-      "reason": "Issue 14 quality gates runbook records accepted readiness and verified main evidence."
-    },
-    {
       "path": "docs/archive/future-true-ux-restore/00-governance/109-future-true-ux-quality-gate-governance.md",
       "category": "doc",
       "required": true,
@@ -387,42 +380,14 @@
       "path": "docs/archive/future-true-ux-restore/00-governance/110-future-true-ux-archive-policy-reference-map.md",
       "category": "doc",
       "required": true,
-      "hash": "a66ca2089d1321ed597e70496321e21b8b6212f2418dd20597363b6d8c8db6f2",
+      "hash": "8cde061f5fcc29246c58f75c6045ac8cd75a6c2a740098c084de456342c0621f",
       "reason": "Future True UX archive policy and reference map documents archive blockers before any move."
-    },
-    {
-      "path": "tests/pester/Issue14QualityGates.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "f1e6d13669e0df95a8f7a46b916f0689ce2a6e5310f81db939082ce4d00ae526",
-      "reason": "Issue 14 quality gate tests guard docs, README, Build Lock, and no auto-close wording."
-    },
-    {
-      "path": "tests/pester/Issue14CiPolicy.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "91f92e84bfe3f8abeab9c75c59db8ff95a5182de5b9efe5841494f0c2732e269",
-      "reason": "Issue 14 CI policy tests guard PR fast and Full Validate split plus no-mutation workflow policy."
-    },
-    {
-      "path": "tests/pester/Issue14PesterInventory.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "6b91355507cef57d7ffc8c96f5ab4c6a97a1176ccf4b17fb08ac8f5d533b2d8d",
-      "reason": "Issue 14 Pester inventory tests guard fast-path issue test coverage."
-    },
-    {
-      "path": "tests/pester/Issue14AnalyzerPolicy.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "36578abcd9758d1a58ed1654ca01373ffa57650289c29329886dffdfa12f7cfa",
-      "reason": "Issue 14 analyzer policy tests guard PSScriptAnalyzer settings and non-blocking workflow behavior."
     },
     {
       "path": "manifests/quality-gates.json",
       "category": "manifest",
       "required": true,
-      "hash": "8556908aa907f8b7a19981866807428f970db3fb65e30f98dd89178cc0441d9f",
+      "hash": "90da447b1345bfa29995be5f4a404df8c2489f907cd9de060392810608bef292",
       "reason": "Quality Gates include future true UX mock review drill validation."
     },
     {
@@ -482,53 +447,11 @@
       "reason": "Future True UX archive policy tests guard categories, gate coverage, and no-move semantics."
     },
     {
-      "path": "tests/pester/Issue14QualityGateAcceptance.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "5aae9c2e10728e819b42c427ec245281cc16f8d55ef418d4f193add3ae9f32a4",
-      "reason": "Issue 14 acceptance tests guard pending and ready status without unsafe claims."
-    },
-    {
-      "path": "docs/archive/completed-roadmap/issue-14/41-issue14-quality-gates-acceptance.md",
-      "category": "doc",
-      "required": true,
-      "hash": "1b816ec815e10c943c8b54f46bddb4a03d74cce656813bb9c355b27a8fe4881f",
-      "reason": "Issue 14 acceptance records accepted-ready-for-manual-closure status after main evidence backfill."
-    },
-    {
-      "path": "docs/archive/completed-roadmap/issue-14/42-issue14-close-preparation.md",
-      "category": "doc",
-      "required": true,
-      "hash": "d0cb1ff3d37955422c3745e9913d4cb76e4d4a7acd3b35267d09ffa33a0220c2",
-      "reason": "Issue 14 close-preparation records ready-for-manual-closure after verified main evidence."
-    },
-    {
-      "path": "docs/archive/completed-roadmap/issue-14/43-issue14-main-validation-evidence.md",
-      "category": "doc",
-      "required": true,
-      "hash": "2d1d03362ee00203e95ba57f4f9e53dc2465b6db8e089747971783f3c9c37a40",
-      "reason": "Issue 14 main-validation evidence records post-PR 73 Full Validate success."
-    },
-    {
       "path": ".gitignore",
       "category": "config",
       "required": true,
       "hash": "6f285f77eff0a0d4e23edb723cb21f11af35b4e15734afbad64f6af2c7ca0341",
       "reason": "Issue 15 local private override file must remain untracked."
-    },
-    {
-      "path": "docs/archive/completed-roadmap/issue-15/44-issue15-layered-configuration.md",
-      "category": "doc",
-      "required": true,
-      "hash": "5310a16b91af4861887a235c1177ea28cfd640d0c9e85d42d7ddb9645bb68b9b",
-      "reason": "Issue 15 layered configuration design records consumer integration and close-prep links."
-    },
-    {
-      "path": "docs/archive/completed-roadmap/issue-15/45-issue15-layered-configuration-acceptance.md",
-      "category": "doc",
-      "required": true,
-      "hash": "0835173ac0ad8174e14a5e40e51b98fe88b6113a551d310371d472144f0d9fbf",
-      "reason": "Issue 15 acceptance records accepted-pending-main-validation status."
     },
     {
       "path": "manifests/paths.local.example.json",
@@ -601,13 +524,6 @@
       "reason": "Issue 15 effective configuration validation entrypoint writes failedCount=0 reports for selected or all stacks."
     },
     {
-      "path": "tests/pester/Issue15LayeredConfiguration.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "ea26d2fa1dff49ab7b33603aacc2defefc58fc2963ec231a8d55c57fe5f6d76f",
-      "reason": "Issue 15 guardrail tests cover intake, wiring, Build Lock, and no auto-close wording."
-    },
-    {
       "path": "tests/pester/EffectiveConfigurationSchema.Tests.ps1",
       "category": "test",
       "required": true,
@@ -657,46 +573,11 @@
       "reason": "Issue 15 CLI override tests guard highest-precedence path override source attribution."
     },
     {
-      "path": "tests/pester/Issue15LayeredConfigurationAcceptance.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "ba4f08f8d13067633c9c71366ad5bf4a0bafd6d73f28d66b93e21f05e5b8358c",
-      "reason": "Issue 15 acceptance tests guard accepted-pending-main-validation and wiring."
-    },
-    {
-      "path": "tests/pester/Issue14ClosePrep.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "9df75a6c495f4647dd3ce0f58066d989f9546f73840a9b5fdc87965d681a55fd",
-      "reason": "Issue 14 close-preparation tests guard candidate and ready semantics."
-    },
-    {
-      "path": "tests/pester/Issue14MainValidationEvidence.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "fef79e40d05e60b7eb0950dd37f84b9cc9422ae9a37de422194aabaecf9826a3",
-      "reason": "Issue 14 main-evidence tests validate pending and ready evidence details."
-    },
-    {
       "path": "docs/07-定制范围与配置入口.md",
       "category": "doc",
       "required": true,
-      "hash": "13b1fe3cfbc60cdb65928ebac87952f9f692f5e61c025d973bfe22e2d57f5449",
+      "hash": "c42646fc7981a435539250f6ed99bbec04a330556e4d31352cf9c7c58c0bd0ba",
       "reason": "Configuration entry documentation describes opt-in effective configuration migration."
-    },
-    {
-      "path": "docs/archive/completed-roadmap/issue-15/46-issue15-close-preparation.md",
-      "category": "doc",
-      "required": true,
-      "hash": "1342c3fc2003f090cfa8ff0a952d82c81e249a87120d0edcf716a9df8de97f86",
-      "reason": "Issue 15 close-prep candidate is a manual closure input."
-    },
-    {
-      "path": "docs/archive/completed-roadmap/issue-15/47-issue15-main-validation-evidence.md",
-      "category": "doc",
-      "required": true,
-      "hash": "526682ff178924300badda935ecde4fbf23d4541abd55666e222dea516a28191",
-      "reason": "Issue 15 main validation evidence scaffold must remain pending until real main evidence exists."
     },
     {
       "path": "manifests/customization-scope.json",
@@ -732,27 +613,6 @@
       "required": true,
       "hash": "a0313802be7a331cbb61bdbc662cef0688ad47476bcae8817bdd3727fec14cd8",
       "reason": "Consumer integration tests guard Show-CustomizationScope default compatibility and opt-in effective configuration display."
-    },
-    {
-      "path": "tests/pester/Issue15ClosePrep.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "b2c1e281347c71331bd9c2edb2dce89daa87f292d2da72c7a448b36a60f0a465",
-      "reason": "Issue 15 close-prep tests guard candidate-only closure semantics."
-    },
-    {
-      "path": "tests/pester/Issue15MainValidationEvidence.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "e6b63a09c36e4c02a66850431dbb79825fc9be7fa17f3b725e683ef495cebd74",
-      "reason": "Issue 15 main evidence tests guard pending-only evidence scaffold."
-    },
-    {
-      "path": "docs/archive/completed-roadmap/issue-16/48-issue16-evidence-chain-report.md",
-      "category": "doc",
-      "required": true,
-      "hash": "4342989847dcd850063d63a352f5df94103cec608a99485c3f030f7d85f09901",
-      "reason": "Issue 16 evidence chain design records producer adapter and close-prep scaffold scope."
     },
     {
       "path": "manifests/evidence-chain.json",
@@ -793,7 +653,7 @@
       "path": "scripts/config/Show-EvidenceChain.ps1",
       "category": "script",
       "required": true,
-      "hash": "ed8f7f6d29fae02aa594bceb397be5a5027c1a08a2a24c91b0774164ab0e7111",
+      "hash": "38ce1ede1b501d833332ea161f354b6ed1eb2aea1248014fed687dec9497503d",
       "reason": "Evidence chain display shows input set and normalization summary."
     },
     {
@@ -835,7 +695,7 @@
       "path": "tests/fixtures/evidence-chain/sample-report-inputs/pester-summary.json",
       "category": "test",
       "required": true,
-      "hash": "e7bbfed46382e992706857ae60540813a5d00b0d05b663933f162be4667322cc",
+      "hash": "bbddf5ab1438c8c6382e4aa9b4c147fc11cc0645909c773882a48a1d66a23a02",
       "reason": "Pester summary fixture backs Issue 16 producer adapter baseline."
     },
     {
@@ -865,20 +725,6 @@
       "required": true,
       "hash": "ab10a7f4466b16909dddb11e015ae6a5ec581b8fe0c0bbb6141defb519d83d21",
       "reason": "Evidence chain safety tests guard adapter scripts against dangerous commands."
-    },
-    {
-      "path": "tests/pester/Issue16EvidenceChain.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "9f6f0d279cdd08a98cad23126d828b4ea0b69fb82870b2c53f164a965b1d0ef3",
-      "reason": "Issue 16 evidence chain tests guard baseline document and no auto-close boundaries."
-    },
-    {
-      "path": "docs/archive/completed-roadmap/issue-16/49-issue16-evidence-chain-acceptance.md",
-      "category": "doc",
-      "required": true,
-      "hash": "467fbc80f331f6f0b4312c8e587e66fd6b386f1f05de3a606e6fa7243ff06c68",
-      "reason": "Issue 16 acceptance records accepted-pending-main-validation state."
     },
     {
       "path": "schemas/evidence-artifact-index.schema.json",
@@ -956,27 +802,6 @@
       "required": true,
       "hash": "d842dc575fb5551c0fae0fd942db59e89fd50847da4552a047a271975356c078",
       "reason": "Evidence chain producer normalization tests guard report-only producers."
-    },
-    {
-      "path": "tests/pester/Issue16EvidenceChainAcceptance.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "e2489d0c31338c98a89414f10410bc5150dded6b8986873529a3a2a08dc02d10",
-      "reason": "Issue 16 acceptance tests guard accepted-pending-main-validation state."
-    },
-    {
-      "path": "docs/archive/completed-roadmap/issue-16/50-issue16-close-preparation.md",
-      "category": "doc",
-      "required": true,
-      "hash": "270fa3924f5597130d4ab6df324f497e6050305ab792d3e223b19660a1ea8705",
-      "reason": "Issue 16 close-preparation candidate records manual closure boundaries."
-    },
-    {
-      "path": "docs/archive/completed-roadmap/issue-16/51-issue16-main-validation-evidence.md",
-      "category": "doc",
-      "required": true,
-      "hash": "2a3942cf495201f755f1e7032c54701235b3405c0aefd28e9ba0793de1e0a502",
-      "reason": "Issue 16 main validation evidence scaffold remains pending until real main evidence exists."
     },
     {
       "path": "manifests/evidence-report-inputs.json",
@@ -1084,13 +909,6 @@
       "reason": "Sample report input index fixture backs PR Fast evidence chain tests."
     },
     {
-      "path": "tests/pester/EvidenceChainClosePrep.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "81532e063cf209392b7410e8771d005b3c520c82d3c8d282f5d131c56e53f6ee",
-      "reason": "Evidence chain close-prep tests guard Quality Gates and Build Lock wiring."
-    },
-    {
       "path": "tests/pester/EvidenceChainInputIndex.Tests.ps1",
       "category": "test",
       "required": true,
@@ -1103,34 +921,6 @@
       "required": true,
       "hash": "f3275208d3d0d747a6b4795c90996a9163b73ed878975474292125df71664016",
       "reason": "Evidence chain producer adapter tests guard failure-path normalization."
-    },
-    {
-      "path": "tests/pester/Issue16ClosePrep.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "4d22de1c02e006e10faecdbac58511f9d4721de131ebcc3f5ad23cd130ad4777",
-      "reason": "Issue 16 close-prep tests guard candidate-only manual closure boundaries."
-    },
-    {
-      "path": "tests/pester/Issue16MainValidationEvidence.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "6d81f8ab51020a1a5efb31ac6e8dfe162075e3cabe604eb8d48453e145dddd36",
-      "reason": "Issue 16 main evidence tests guard pending-only scaffold fields."
-    },
-    {
-      "path": "docs/archive/completed-roadmap/issue-17/52-issue17-controlled-execution-intake.md",
-      "category": "doc",
-      "required": true,
-      "hash": "9218b1f91f1e0c9627c67d4b85ab3f39963c2623d2fc06453370caffa8e3901f",
-      "reason": "Issue 17 controlled execution matrix, report, validation, and tests stay synchronized."
-    },
-    {
-      "path": "docs/archive/completed-roadmap/issue-17/53-issue17-controlled-execution-acceptance.md",
-      "category": "doc",
-      "required": true,
-      "hash": "d47d0f42e8bfda28837533c7acddfb4aaffc001cda2be83194c5230eaabf4d12",
-      "reason": "Issue 17 acceptance consolidation stays synchronized with close-prep and pending main evidence scaffolds."
     },
     {
       "path": "manifests/controlled-execution.json",
@@ -1185,14 +975,14 @@
       "path": "tests/fixtures/controlled-execution/sample-plan.json",
       "category": "test",
       "required": true,
-      "hash": "2954d3bc13a34bea0effb86454a66c92b2a67ef3126b21fd69ab9e054198a985",
+      "hash": "774de18aaa487c36b8945cc8fe57f1fb91f923b2e5400f824a606bff754b7e01",
       "reason": "Controlled execution plan fixture backs report-only baseline tests."
     },
     {
       "path": "tests/fixtures/controlled-execution/sample-blocked-mutation.json",
       "category": "test",
       "required": true,
-      "hash": "a5cd370836f194ffc20928e7d5c04d8d088b0264afb04fb10d324c78c217532b",
+      "hash": "e07019a344ed30b35893c0a2a1b94dcfc8124d4d3d9348bd4b141bfeec5771f8",
       "reason": "Controlled execution blocked mutation fixture proves validator failure behavior."
     },
     {
@@ -1213,36 +1003,22 @@
       "path": "tests/fixtures/controlled-execution/failure/network-download-action.json",
       "category": "test",
       "required": true,
-      "hash": "e1a0926c65eb3648bbf0b90c345bedd8079a6ded0980be79f248c0e07fa67593",
+      "hash": "5ce267e89ef9c161266e48d36455066e152195f67c50c4dd5c669964bc2b371c",
       "reason": "Controlled execution failure fixture proves network actions are blocked."
     },
     {
       "path": "tests/fixtures/controlled-execution/failure/registry-mutation-action.json",
       "category": "test",
       "required": true,
-      "hash": "aabaf4bd58c3a37732f2c57e1c3c8dae5deb4181e2380699fda0cffd22cceef8",
+      "hash": "0822f33470eb07aa8111380a799efd25e0dac52568f3332b2536affa93c80a8a",
       "reason": "Controlled execution failure fixture proves registry mutation is blocked."
     },
     {
       "path": "tests/fixtures/controlled-execution/failure/disk-mutation-action.json",
       "category": "test",
       "required": true,
-      "hash": "342b072625b65e6a5268d92788635c1153fffffeb4739429519cfe78b2b19f5f",
+      "hash": "aa8e6bd06e39b5a419ad89b46010bab06c63eb950e537fbfc61ebf02468c0cb6",
       "reason": "Controlled execution failure fixture proves disk mutation is blocked."
-    },
-    {
-      "path": "tests/pester/Issue17ControlledExecution.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "36c533cf17a669f62757c6013d585d362be57260bdf7ff66da3f0b20817afb17",
-      "reason": "Issue 17 intake tests guard auto-close boundaries across all Issue 17 docs."
-    },
-    {
-      "path": "tests/pester/Issue17ControlledExecutionAcceptance.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "91e778b7a5fb895775e1375af4a26faff4e47ae03f3efd4ed5b360092766919d",
-      "reason": "Issue 17 acceptance tests guard accepted-pending-main-validation state."
     },
     {
       "path": "tests/pester/ControlledExecutionSchema.Tests.ps1",
@@ -1271,13 +1047,6 @@
       "required": true,
       "hash": "ecdcbb9dcbbee175d02e8ad5017145e239d2f299e4c98e7fe5427932360c25d7",
       "reason": "Controlled execution safety tests guard scripts against executable native calls."
-    },
-    {
-      "path": "docs/archive/completed-roadmap/issue-17/54-issue17-controlled-execution-safety-hardening.md",
-      "category": "doc",
-      "required": true,
-      "hash": "07edccdaee5f50b59914cbc2b7ea4d44b1b54e10d54e3333b841c85def69f95a",
-      "reason": "Issue 17 safety hardening remains accepted while real execution evidence stays pending."
     },
     {
       "path": "schemas/winpe-disk-identity.schema.json",
@@ -1497,25 +1266,11 @@
       "reason": "Native command Pester tests cover not-run and not-captured envelopes."
     },
     {
-      "path": "tests/pester/Issue17ControlledExecutionHardening.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "40d43f9444e1b8e1dd49ad6cb46b49496d5372eef6692ed3e343d22a7c9d0297",
-      "reason": "Issue 17 hardening tests guard candidate and pending scaffold boundaries."
-    },
-    {
       "path": "docs/03-WinPE捕获与还原.md",
       "category": "doc",
       "required": true,
       "hash": "a7f058dc1e4925a55aea16ac5f4bf25efe25fbea6beaf0fe08563836efed8efe",
       "reason": "WinPE documentation records the controlled execution plan-only boundary."
-    },
-    {
-      "path": "docs/archive/completed-roadmap/issue-17/55-issue17-controlled-execution-authorization.md",
-      "category": "doc",
-      "required": true,
-      "hash": "d299a45419b87262308877c1898a01fce530d9f577a9c4b287fbaf14a654b744",
-      "reason": "Issue 17 authorization and simulation acceptance remains pending main validation."
     },
     {
       "path": "schemas/controlled-execution-authorization.schema.json",
@@ -1672,13 +1427,6 @@
       "reason": "Issue 17 native command simulation fixtures and tests keep command results fixture-only."
     },
     {
-      "path": "tests/pester/Issue17ControlledExecutionAuthorization.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "d1b2ec42bb1d9962d3cea5a78cb10edd60ea729765584d28a4414c51908f3ce3",
-      "reason": "Issue 17 authorization tests guard accepted-pending-main-validation state."
-    },
-    {
       "path": "tests/pester/WinPEControlledExecutionPlan.Tests.ps1",
       "category": "test",
       "required": true,
@@ -1686,46 +1434,11 @@
       "reason": "Issue 17 WinPE plan entrypoint validates plan-only behavior and Execute blocking."
     },
     {
-      "path": "docs/archive/completed-roadmap/issue-17/56-issue17-close-preparation.md",
-      "category": "doc",
-      "required": true,
-      "hash": "bc00718a762645e2d843ee88ec70209257806e551e578f3606a19419fb7bbd4b",
-      "reason": "Issue 17 close-prep candidate records manual review scope without final readiness."
-    },
-    {
-      "path": "docs/archive/completed-roadmap/issue-17/57-issue17-main-validation-evidence.md",
-      "category": "doc",
-      "required": true,
-      "hash": "4ba31f66dd6c56fa5114c3b1684a3c90ec270de3d2b375ed18532c536b9f77df",
-      "reason": "Issue 17 main validation evidence scaffold remains pending until real main or workflow evidence exists."
-    },
-    {
-      "path": "tests/pester/Issue17ClosePrep.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "ab2642e419f7d3807e5c31ce4f238763323c0343302ceaf1afb08acbae301024",
-      "reason": "Issue 17 close-prep tests guard candidate-only manual closure boundaries."
-    },
-    {
-      "path": "tests/pester/Issue17MainValidationEvidence.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "7a53b63ea04d49fa4ff7232954f6f4a3ce530b6f724dc3648a64b542ecb9adc2",
-      "reason": "Issue 17 main evidence tests guard pending-only scaffold fields."
-    },
-    {
       "path": "tests/fixtures/user-experience/default-apps/unknown-progid.json",
       "category": "test",
       "required": true,
       "hash": "67b7616b5dd6f73ce5d8d59162c31e549f5ef2a7e9dd7132cbc7e6f43921fc86",
       "reason": "Issue 18 default apps failure fixture records missing capability."
-    },
-    {
-      "path": "docs/archive/completed-roadmap/issue-18/59-issue18-user-experience-restore-acceptance.md",
-      "category": "doc",
-      "required": true,
-      "hash": "bfc4e3c939f20bfc9c743cb22dc852f5547a37ee35086a86c2636daf97e62218",
-      "reason": "Issue 18 acceptance scaffold records report-only fixture coverage and safety boundaries."
     },
     {
       "path": "tests/fixtures/user-experience/local-private-path.json",
@@ -1812,20 +1525,6 @@
       "reason": "Issue 18 baseline Windows 11 24H2 context fixture."
     },
     {
-      "path": "docs/archive/completed-roadmap/issue-18/58-issue18-user-experience-restore-intake.md",
-      "category": "doc",
-      "required": true,
-      "hash": "1d4625b746763a6f48332a58c0a15d4bc2df7715f88f91806db7d8b031786214",
-      "reason": "Issue 18 intake records real Issue and Roadmap scope for UX restore planning."
-    },
-    {
-      "path": "tests/pester/Issue18UserExperienceRestoreAcceptance.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "25de77982d0b8e1d09bd554efcc8565649c8a32845f26c0747e62259ce9e66de",
-      "reason": "Issue 18 acceptance tests guard QG and Build Lock wiring."
-    },
-    {
       "path": "tests/pester/UserExperienceRestoreSchema.Tests.ps1",
       "category": "test",
       "required": true,
@@ -1882,13 +1581,6 @@
       "reason": "Issue 18 extended Start menu fixture covers ordered pins."
     },
     {
-      "path": "tests/pester/Issue18UserExperienceRestore.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "95d98dcbf0cdd8e5fcd769b4c26fe4a2e89b03d1f25a12d5521bfb5d60c3168a",
-      "reason": "Issue 18 intake tests guard source recording and no close-prep docs."
-    },
-    {
       "path": "tests/pester/UserExperienceStartMenuPlan.Tests.ps1",
       "category": "test",
       "required": true,
@@ -1941,7 +1633,7 @@
       "path": "docs/04-部署后恢复.md",
       "category": "doc",
       "required": true,
-      "hash": "9346ca69fcaaa044e5d4c3739c31c2ded2b47de6802b2e67888ff92d8532fc09",
+      "hash": "963ff77ef9bd4e602704187123139715630f8aa3cb32ad2aa4269197b445efa2",
       "reason": "Issue 18 UX restore documentation records report-only capability and safety boundaries."
     },
     {
@@ -1950,13 +1642,6 @@
       "required": true,
       "hash": "5bd36dab4413b55b42669b91404e8b53f078aea1ee5cf7f092edd3360955a5b7",
       "reason": "Issue 18 UX restore documentation records report-only capability and safety boundaries."
-    },
-    {
-      "path": "docs/archive/completed-roadmap/issue-18/60-issue18-user-experience-capability-matrix.md",
-      "category": "doc",
-      "required": true,
-      "hash": "fa15d3e35c6ae51b15cc02503eaee6bcfdd445c111abeda5b02e117db4e7212d",
-      "reason": "Issue 18 capability matrix runbook documents version-aware UX restore boundaries and verification evidence."
     },
     {
       "path": "schemas/user-experience-capability-matrix.schema.json",
@@ -2134,13 +1819,6 @@
       "reason": "Issue 18 verification fixture covers manual checklist and future real evidence semantics."
     },
     {
-      "path": "tests/pester/Issue18UserExperienceCapabilityMatrix.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "b92f417fc9cd4670678bf2352db470423f81fd426b6552d7804b5382688c523b",
-      "reason": "Issue 18 capability matrix tests guard support status and build awareness."
-    },
-    {
       "path": "tests/pester/UserExperienceCapabilityMatrix.Tests.ps1",
       "category": "test",
       "required": true,
@@ -2195,13 +1873,6 @@
       "required": true,
       "hash": "83969951546bc3913d4fc2c2828ca2417726593a99c107d92f31c4b800b99c92",
       "reason": "Issue 18 Start menu template metadata records source Windows, scope, and target app contract without profile writes."
-    },
-    {
-      "path": "docs/archive/completed-roadmap/issue-18/61-issue18-restore-handler-integration.md",
-      "category": "doc",
-      "required": true,
-      "hash": "f4daa1c4237679e6dc87b635ef31449181a0bec25f232521d96f9ef36eb9c009",
-      "reason": "Issue 18 restore handler integration runbook documents report-only handler wiring and non-goals."
     },
     {
       "path": "schemas/user-experience-handler-plan.schema.json",
@@ -2351,13 +2022,6 @@
       "reason": "Issue 18 handler fixture covers planned, manual, blocked, scope, and requested-apply cases."
     },
     {
-      "path": "tests/pester/Issue18RestoreHandlerIntegration.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "f0ee1a846971fda710b277616a1eefa0588c5c13dfa9463ac7d122705c4c00c7",
-      "reason": "Issue 18 handler Pester tests guard report-only adapters and safety boundaries."
-    },
-    {
       "path": "tests/pester/UserExperienceDefaultAppHandler.Tests.ps1",
       "category": "test",
       "required": true,
@@ -2393,66 +2057,17 @@
       "reason": "Issue 18 handler Pester tests guard report-only adapters and safety boundaries."
     },
     {
-      "path": "docs/archive/completed-roadmap/issue-18/62-issue18-close-preparation.md",
-      "category": "doc",
-      "required": true,
-      "hash": "6bdb001531f1a95920827aada53703ea2a7d4daf8f04421b372bff710b8d38ca",
-      "reason": "Issue 18 acceptance consolidation and close-prep scaffold input."
-    },
-    {
-      "path": "docs/archive/completed-roadmap/issue-18/63-issue18-main-validation-evidence.md",
-      "category": "doc",
-      "required": true,
-      "hash": "150dcc9c8e14cf6f93c4e64f7a4e4c66c40c0a993fea107a4833e7523d6d9e3a",
-      "reason": "Issue 18 acceptance consolidation and close-prep scaffold input."
-    },
-    {
-      "path": "tests/pester/Issue18ClosePrep.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "137136fd829844e4acbe94912afa932c77482b0cb9af9600c9dcdb9b024af448",
-      "reason": "Issue 18 acceptance consolidation and close-prep scaffold input."
-    },
-    {
-      "path": "tests/pester/Issue18MainValidationEvidence.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "162dfc96cd0ee1ba6d94df6c8d234769ca2fe3dd341e500a90fee09c2582d5f9",
-      "reason": "Issue 18 acceptance consolidation and close-prep scaffold input."
-    },
-    {
-      "path": "docs/archive/completed-roadmap/issue-18/64-issue18-manual-closure-handoff.md",
-      "category": "doc",
-      "required": true,
-      "hash": "dfe3e893e1c2e68e2166fa5d30a697638b60a9bf624e9deeee263a4fa2e248f7",
-      "reason": "Issue 18 manual closure handoff keeps ready state scoped and non-closing."
-    },
-    {
       "path": "docs/archive/future-true-ux-restore/00-governance/65-future-true-ux-restore-execution-split.md",
       "category": "doc",
       "required": true,
-      "hash": "47e627dfacf3457c995addfe3cc9428ff3e5129c0c34a5d468ded2493def5a6d",
+      "hash": "f34fbe1ea721978bfc98f37d712fe44aaf52688720a6a1909a2589d53abd5a75",
       "reason": "Issue 18 future true UX restore split requires explicit authorization before mutation."
-    },
-    {
-      "path": "tests/pester/Issue18ManualClosureHandoff.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "e4fef293e19d468752f4c699c7cfdf81bbf18e54fe9dd6672ce4bc9e4b443fd4",
-      "reason": "Issue 18 handoff tests guard no auto-close, no completion summary, and build-lock wiring."
-    },
-    {
-      "path": "tests/pester/Issue18FutureTrueUxRestoreSplit.Tests.ps1",
-      "category": "test",
-      "required": true,
-      "hash": "de4660f4c8a38716637ba3fe7f996208b41addcaa3dd0a929dcc803c2d52eaf4",
-      "reason": "Issue 18 future split tests guard explicit authorization and no true UX mutation."
     },
     {
       "path": "docs/archive/future-true-ux-restore/00-governance/66-future-true-ux-restore-authorization-intake.md",
       "category": "doc",
       "required": true,
-      "hash": "b933c33a935dbe6a1e125f36b21d906e5f6cb5283400095dc3e4af0d47f1f4ba",
+      "hash": "3480235615e1a2df17b822100161cd32910012ddef97098e6d844c142e1786af",
       "reason": "Future true UX restore authorization intake documentation and dry-run boundaries."
     },
     {
@@ -2592,7 +2207,7 @@
       "path": "tests/pester/FutureTrueUxRestoreValidation.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "b725bc8d9bfc2620ceaddf47b2c9808e8f3b03c255a96ced3fe2cf6f481b629b",
+      "hash": "cb6ade338cec4c1230e57ae03175b679a7cb59fda19647a054e085ae9dee5d15",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
@@ -3607,7 +3222,7 @@
       "path": "tests/pester/FutureTrueUxRestoreMockReviewSafety.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "225fe8d942eb9272d89ea2888e722994484deff300c85a47effbf904f633983d",
+      "hash": "bdcdc5f26d12f177e4de7f989f74c960571669460ff7a5a9a186db78633d7ed1",
       "reason": "Future true UX mock review drill artifact is a trusted report-only validation input."
     },
     {
@@ -4216,21 +3831,21 @@
       "path": "docs/archive/future-true-ux-restore/00-governance/108-repo-documentation-script-governance-audit.md",
       "category": "doc",
       "required": true,
-      "hash": "5e594be1d1c06425c4ef2d9eca6aabbaa56302b73b8853c9f5f4f059246ccc6e",
+      "hash": "38f22b5dfbb8e89c53d15277d344f859aedf0e3504749304dbdd54f41d0f6b33",
       "reason": "Repository governance audit records docs/archive state and no-execution boundaries."
     },
     {
       "path": "docs/README.md",
       "category": "doc",
       "required": true,
-      "hash": "2be141741454470ef6620561e3b7681150ae1ef8ea35fe1e65749d5e1902ae18",
+      "hash": "68a6d3ae53226bceb397c02720e1f6e8ace8a722f981b267821de8c1f020fcd6",
       "reason": "Canonical docs index separates current entrypoints from historical archive material."
     },
     {
       "path": "tests/pester/DocsGovernanceArchive.Tests.ps1",
       "category": "test",
       "required": true,
-      "hash": "4f203ed6c826de3f8234388c8462ec14e3e0ada5da0c7e2fdc131a8528b91470",
+      "hash": "e72e414cc55af919f3cd3f354745ed9ba2660bfe3e43eb98966f443a626c3b1c",
       "reason": "Docs governance archive tests guard moved Future True UX docs, entrypoints, Build Lock paths, and no-execution semantics."
     },
     {
@@ -4316,8 +3931,6 @@
     ".github/workflows/ci.yml",
     "tests/pester/*EnsureState*.Tests.ps1",
     "docs/*issue13*.md",
-    "tests/pester/Issue14*.Tests.ps1",
-    "docs/*issue14*.md",
     "PSScriptAnalyzerSettings.psd1",
     "manifests/quality-gates.json",
     "schemas/quality-gates.schema.json",
@@ -4326,15 +3939,12 @@
     "tests/pester/*QualityGate*.Tests.ps1",
     "profiles/*.json",
     "hardware/*.json",
-    "docs/*issue15*.md",
     "scripts/common/*EffectiveConfiguration*.ps1",
     "scripts/config/*EffectiveConfiguration*.ps1",
     "scripts/validate/*EffectiveConfiguration*.ps1",
     "tests/pester/*EffectiveConfiguration*.Tests.ps1",
-    "tests/pester/Issue15*.Tests.ps1",
     "manifests/evidence-chain.json",
     "schemas/evidence-chain*.json",
-    "docs/*issue16*.md",
     "scripts/common/*EvidenceChain*.ps1",
     "scripts/config/*EvidenceChain*.ps1",
     "scripts/validate/*EvidenceChain*.ps1",
@@ -4344,8 +3954,6 @@
     "schemas/evidence-artifact-index.schema.json",
     "scripts/common/*EvidenceArtifact*.ps1",
     "scripts/common/*EvidenceRedaction*.ps1",
-    "tests/pester/Issue16*.Tests.ps1",
-    "docs/*issue17*.md",
     "manifests/controlled-execution.json",
     "schemas/controlled-execution*.json",
     "scripts/common/*ControlledExecution*.ps1",
@@ -4354,7 +3962,6 @@
     "tests/fixtures/controlled-execution/*.json",
     "tests/fixtures/controlled-execution/failure/*.json",
     "tests/pester/*ControlledExecution*.Tests.ps1",
-    "tests/pester/Issue17*.Tests.ps1",
     "schemas/winpe-disk-identity.schema.json",
     "schemas/confirmation-token.schema.json",
     "schemas/wim-image-metadata.schema.json",
@@ -4375,7 +3982,6 @@
     "tests/fixtures/controlled-execution/authorization/*.json",
     "tests/fixtures/controlled-execution/native-command-simulation/*.json",
     "schemas/native-command-simulation.schema.json",
-    "docs/*issue18*.md",
     "manifests/user-experience-restore.json",
     "schemas/user-experience-restore*.json",
     "scripts/common/*UserExperience*.ps1",
@@ -4383,9 +3989,6 @@
     "scripts/validate/*UserExperience*.ps1",
     "tests/fixtures/user-experience/**/*.json",
     "tests/pester/*UserExperience*.Tests.ps1",
-    "tests/pester/Issue18*.Tests.ps1",
-    "tests/pester/Issue18*.Tests.ps1",
-    "tests/pester/Issue18*.Tests.ps1",
     "tests/pester/FutureTrueUxRestore*.Tests.ps1",
     "docs/*future-true-ux-restore*.md"
   ],

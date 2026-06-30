@@ -84,6 +84,8 @@ The following remain forbidden until a future task explicitly authorizes them:
 
 ## Related Documents
 
-- [Issue #18 Manual Closure Handoff](64-issue18-manual-closure-handoff.md)
-- [Issue #18 Close Preparation](62-issue18-close-preparation.md)
-- [Issue #18 Main Validation Evidence](63-issue18-main-validation-evidence.md)
+- [Future True UX Restore Authorization Intake](66-future-true-ux-restore-authorization-intake.md)
+- [Future True UX Restore Evidence Model](67-future-true-ux-restore-evidence-model.md)
+- [Future True UX Restore Dry-run Plan](68-future-true-ux-restore-dry-run-plan.md)
+- [Future True UX Restore Final Stop-Line Handoff](106-future-true-ux-restore-final-stop-line-handoff.md)
+- [Future True UX Restore Stop-Line Decision Matrix](107-future-true-ux-restore-stop-line-decision-matrix.md)

@@ -32,9 +32,9 @@ Describe "Repository governance audit" {
         Assert-KitNotMatch $script:Doc "trueExecution\s*=\s*true"
     }
 
-    It "reports but does not require workflow, quality gate, or build lock edits" {
+    It "reports workflow, quality gate, and Build Lock boundaries" {
         Assert-KitMatch $script:Doc 'does not modify `.github/workflows/ci.yml`'
         Assert-KitMatch $script:Doc "Existing quality gate ordering and required flags"
-        Assert-KitMatch $script:Doc "Existing Build Lock entries and hashes"
+        Assert-KitMatch $script:Doc "Existing Build Lock safety policy"
     }
 }

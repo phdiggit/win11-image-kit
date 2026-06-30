@@ -99,30 +99,6 @@
       "notes": "Guards Validate versus Full Validate split and no-mutation workflow policy."
     },
     {
-      "id": "safety-boundary",
-      "displayName": "Safety boundary",
-      "layer": "pr-fast",
-      "trigger": "pull_request",
-      "mode": "static",
-      "required": true,
-      "blocking": true,
-      "entrypoint": "docs/archive/completed-roadmap/issue-14/40-issue14-quality-gates.md",
-      "evidence": "document",
-      "notes": "Documents that real build, mutation, network, signing, and registry/profile/hive writes are out of scope."
-    },
-    {
-      "id": "issue14-acceptance",
-      "displayName": "Issue 14 acceptance scaffold",
-      "layer": "pr-fast",
-      "trigger": "pull_request",
-      "mode": "report-only",
-      "required": true,
-      "blocking": true,
-      "entrypoint": "docs/archive/completed-roadmap/issue-14/41-issue14-quality-gates-acceptance.md",
-      "evidence": "document",
-      "notes": "Provides the in-acceptance scaffold without close-prep or main-evidence claims."
-    },
-    {
       "id": "effective-configuration",
       "displayName": "Effective configuration validation",
       "layer": "pr-fast",
@@ -169,30 +145,6 @@
       "entrypoint": "scripts/validate/Test-UserExperienceRestore.ps1",
       "evidence": "report",
       "notes": "Validates Issue 18 version-aware default app and Start menu restore planning without registry, profile, taskbar, default app, or Start menu mutation."
-    },
-    {
-      "id": "issue18-intake",
-      "displayName": "Issue 18 user experience restore intake",
-      "layer": "pr-fast",
-      "trigger": "pull_request",
-      "mode": "report-only",
-      "required": true,
-      "blocking": true,
-      "entrypoint": "docs/archive/completed-roadmap/issue-18/58-issue18-user-experience-restore-intake.md",
-      "evidence": "document",
-      "notes": "Records real Issue 18 and Roadmap 19 source while keeping this stage intake and report-only."
-    },
-    {
-      "id": "issue18-acceptance",
-      "displayName": "Issue 18 user experience restore acceptance",
-      "layer": "pr-fast",
-      "trigger": "pull_request",
-      "mode": "report-only",
-      "required": true,
-      "blocking": true,
-      "entrypoint": "docs/archive/completed-roadmap/issue-18/59-issue18-user-experience-restore-acceptance.md",
-      "evidence": "document",
-      "notes": "Records in-acceptance fixture coverage without close-prep, main-evidence, completion summary, or real UX restore claims."
     },
     {
       "id": "user-experience-default-apps-plan",
@@ -267,18 +219,6 @@
       "notes": "Validates command-exit-code and false user-configuration success claims remain blocked in report-only planning."
     },
     {
-      "id": "issue18-capability-matrix",
-      "displayName": "Issue 18 capability matrix documentation",
-      "layer": "pr-fast",
-      "trigger": "pull_request",
-      "mode": "report-only",
-      "required": true,
-      "blocking": true,
-      "entrypoint": "docs/archive/completed-roadmap/issue-18/60-issue18-user-experience-capability-matrix.md",
-      "evidence": "document",
-      "notes": "Documents Issue 18 capability matrix, scope semantics, template metadata, and verification evidence boundaries without close-prep."
-    },
-    {
       "id": "user-experience-restore-handler",
       "displayName": "User experience restore handler validation",
       "layer": "pr-fast",
@@ -337,54 +277,6 @@
       "entrypoint": "tests/pester/UserExperienceManualChecklist.Tests.ps1",
       "evidence": "pester",
       "notes": "Validates manual checklist output is not success evidence."
-    },
-    {
-      "id": "issue18-restore-handler-integration",
-      "displayName": "Issue 18 restore handler integration documentation",
-      "layer": "pr-fast",
-      "trigger": "pull_request",
-      "mode": "report-only",
-      "required": true,
-      "blocking": true,
-      "entrypoint": "docs/archive/completed-roadmap/issue-18/61-issue18-restore-handler-integration.md",
-      "evidence": "document",
-      "notes": "Documents Restore-UserExperience handler integration ready for manual closure of the current report-only stage without completion summary or true execution."
-    },
-    {
-      "id": "issue18-close-prep",
-      "displayName": "Issue 18 close-prep readiness",
-      "layer": "pr-fast",
-      "trigger": "pull_request",
-      "mode": "report-only",
-      "required": true,
-      "blocking": true,
-      "entrypoint": "docs/archive/completed-roadmap/issue-18/62-issue18-close-preparation.md",
-      "evidence": "document",
-      "notes": "Records manual closure readiness for the current report-only / handler-adapter stage; PR Fast CI, fixtures, handler reports, and manual checklist are not real UX restore evidence."
-    },
-    {
-      "id": "issue18-main-evidence-scaffold",
-      "displayName": "Issue 18 main evidence",
-      "layer": "pr-fast",
-      "trigger": "pull_request",
-      "mode": "report-only",
-      "required": true,
-      "blocking": true,
-      "entrypoint": "docs/archive/completed-roadmap/issue-18/63-issue18-main-validation-evidence.md",
-      "evidence": "document",
-      "notes": "Records post-PR #96 main/workflow Full Validate success evidence for current report-only / handler-adapter stage readiness."
-    },
-    {
-      "id": "issue18-manual-closure-handoff",
-      "displayName": "Issue 18 manual closure handoff",
-      "layer": "pr-fast",
-      "trigger": "pull_request",
-      "mode": "report-only",
-      "required": true,
-      "blocking": true,
-      "entrypoint": "docs/archive/completed-roadmap/issue-18/64-issue18-manual-closure-handoff.md",
-      "evidence": "document",
-      "notes": "Provides manual closure handoff only; no completion summary, no auto-close, no real UX restore execution."
     },
     {
       "id": "future-true-ux-restore-split",
@@ -699,90 +591,6 @@
       "notes": "Validates the WinPE plan entrypoint emits JSON, defaults plan-only, and blocks Execute without native command execution."
     },
     {
-      "id": "issue17-intake",
-      "displayName": "Issue 17 intake",
-      "layer": "pr-fast",
-      "trigger": "pull_request",
-      "mode": "report-only",
-      "required": true,
-      "blocking": true,
-      "entrypoint": "docs/archive/completed-roadmap/issue-17/52-issue17-controlled-execution-intake.md",
-      "evidence": "document",
-      "notes": "Records real Issue 17 and Roadmap intake without close-prep or auto-close."
-    },
-    {
-      "id": "issue17-acceptance",
-      "displayName": "Issue 17 acceptance scaffold",
-      "layer": "pr-fast",
-      "trigger": "pull_request",
-      "mode": "report-only",
-      "required": true,
-      "blocking": true,
-      "entrypoint": "docs/archive/completed-roadmap/issue-17/53-issue17-controlled-execution-acceptance.md",
-      "evidence": "document",
-      "notes": "Records accepted-ready-for-manual-closure dry-run coverage for the current planning/simulation stage without true execution."
-    },
-    {
-      "id": "issue17-close-prep",
-      "displayName": "Issue 17 close-prep candidate",
-      "layer": "pr-fast",
-      "trigger": "pull_request",
-      "mode": "report-only",
-      "required": true,
-      "blocking": true,
-      "entrypoint": "docs/archive/completed-roadmap/issue-17/56-issue17-close-preparation.md",
-      "evidence": "document",
-      "notes": "Records manual closure readiness for the current planning/simulation stage; PR Fast CI and simulation are not main/workflow or real lifecycle evidence."
-    },
-    {
-      "id": "issue17-main-evidence-scaffold",
-      "displayName": "Issue 17 main evidence scaffold",
-      "layer": "pr-fast",
-      "trigger": "pull_request",
-      "mode": "report-only",
-      "required": true,
-      "blocking": true,
-      "entrypoint": "docs/archive/completed-roadmap/issue-17/57-issue17-main-validation-evidence.md",
-      "evidence": "document",
-      "notes": "Records post-PR #89 main push Full Validate success for manual closure review while keeping true execution out of scope."
-    },
-    {
-      "id": "issue16-acceptance",
-      "displayName": "Issue 16 acceptance",
-      "layer": "pr-fast",
-      "trigger": "pull_request",
-      "mode": "report-only",
-      "required": true,
-      "blocking": true,
-      "entrypoint": "docs/archive/completed-roadmap/issue-16/49-issue16-evidence-chain-acceptance.md",
-      "evidence": "document",
-      "notes": "Records accepted-ready-for-manual-closure without automatic closure."
-    },
-    {
-      "id": "issue16-close-prep",
-      "displayName": "Issue 16 ready close-prep",
-      "layer": "pr-fast",
-      "trigger": "pull_request",
-      "mode": "manual",
-      "required": true,
-      "blocking": true,
-      "entrypoint": "docs/archive/completed-roadmap/issue-16/50-issue16-close-preparation.md",
-      "evidence": "document",
-      "notes": "Provides manual closure readiness only; PR Fast CI is not main evidence."
-    },
-    {
-      "id": "issue16-main-evidence-scaffold",
-      "displayName": "Issue 16 main evidence",
-      "layer": "pr-fast",
-      "trigger": "pull_request",
-      "mode": "report-only",
-      "required": true,
-      "blocking": true,
-      "entrypoint": "docs/archive/completed-roadmap/issue-16/51-issue16-main-validation-evidence.md",
-      "evidence": "document",
-      "notes": "Records real post-PR #84 main push Full Validate evidence for manual closure review."
-    },
-    {
       "id": "effective-configuration-consumer-integration",
       "displayName": "Effective configuration consumer integration",
       "layer": "pr-fast",
@@ -793,42 +601,6 @@
       "entrypoint": "tests/pester/EffectiveConfigurationConsumerIntegration.Tests.ps1",
       "evidence": "pester",
       "notes": "Validates Show-CustomizationScope default compatibility and opt-in effective configuration source-layer display."
-    },
-    {
-      "id": "issue15-acceptance",
-      "displayName": "Issue 15 accepted ready for manual closure",
-      "layer": "pr-fast",
-      "trigger": "pull_request",
-      "mode": "report-only",
-      "required": true,
-      "blocking": true,
-      "entrypoint": "docs/archive/completed-roadmap/issue-15/45-issue15-layered-configuration-acceptance.md",
-      "evidence": "document",
-      "notes": "Documents functional acceptance after post-merge main/workflow validation evidence is recorded."
-    },
-    {
-      "id": "issue15-close-prep",
-      "displayName": "Issue 15 ready close-prep",
-      "layer": "pr-fast",
-      "trigger": "pull_request",
-      "mode": "manual",
-      "required": true,
-      "blocking": true,
-      "entrypoint": "docs/archive/completed-roadmap/issue-15/46-issue15-close-preparation.md",
-      "evidence": "document",
-      "notes": "Provides manual closure readiness only; PR Fast CI is not main evidence."
-    },
-    {
-      "id": "issue15-main-evidence",
-      "displayName": "Issue 15 main evidence",
-      "layer": "pr-fast",
-      "trigger": "pull_request",
-      "mode": "report-only",
-      "required": true,
-      "blocking": true,
-      "entrypoint": "docs/archive/completed-roadmap/issue-15/47-issue15-main-validation-evidence.md",
-      "evidence": "document",
-      "notes": "Records real main push or workflow_dispatch Full Validate evidence for manual closure review."
     }
   ]
 }

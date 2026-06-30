@@ -54,20 +54,7 @@ Write-Host ("Producer normalization: normalized={0}; missing={1}; mismatch={2}; 
     $report.producerNormalization.disallowedManualCount, `
     $report.producerNormalization.disallowedNotCapturedCount, `
     $report.producerNormalization.inputPolicyViolationCount)
-$mainEvidencePath = Join-Path $repoRoot "docs\archive\completed-roadmap\issue-16\51-issue16-main-validation-evidence.md"
-$mainEvidenceStatus = $null
-if (Test-Path -LiteralPath $mainEvidencePath) {
-    $mainEvidenceText = Get-Content -LiteralPath $mainEvidencePath -Raw -Encoding UTF8
-    $statusMatch = [regex]::Match($mainEvidenceText, 'Status:\s*`([^`]+)`')
-    if ($statusMatch.Success) {
-        $mainEvidenceStatus = $statusMatch.Groups[1].Value
-    }
-}
-if ($mainEvidenceStatus -eq "ready-for-manual-closure") {
-    Write-Host "Close-prep readiness: ready for maintainer manual closure; main/workflow evidence recorded"
-} else {
-    Write-Host "Close-prep readiness: candidate only; pending main/workflow evidence"
-}
+Write-Host "Readiness source: scripts/validate/Test-EvidenceChain.ps1 and current evidence manifests"
 
 foreach ($stage in @($report.stages)) {
     Write-Host ("- {0}: {1} (runId={2}, producers={3}, passed={4}, failed={5}, manual={6}, not-captured={7})" -f `
