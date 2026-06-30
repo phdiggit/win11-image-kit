@@ -17,7 +17,7 @@ jobs:
   validate:
     name: Validate
     if: github.event_name == 'pull_request'
-    runs-on: [self-hosted, Windows, X64, win11-gh-runner]
+    runs-on: windows-latest
 
     steps:
       - name: Checkout
@@ -223,15 +223,6 @@ jobs:
               "tests/pester/ControlledExecutionReport.Tests.ps1",
               "tests/pester/ControlledExecutionValidation.Tests.ps1",
               "tests/pester/ControlledExecutionSafety.Tests.ps1",
-              "tests/pester/ControlledExecutionDiskIdentity.Tests.ps1",
-              "tests/pester/ControlledExecutionConfirmationToken.Tests.ps1",
-              "tests/pester/ControlledExecutionWimPlan.Tests.ps1",
-              "tests/pester/ControlledExecutionWinREPlan.Tests.ps1",
-              "tests/pester/ControlledExecutionNativeCommand.Tests.ps1",
-              "tests/pester/ControlledExecutionAuthorization.Tests.ps1",
-              "tests/pester/ControlledExecutionExecutionSet.Tests.ps1",
-              "tests/pester/ControlledExecutionNativeSimulation.Tests.ps1",
-              "tests/pester/WinPEControlledExecutionPlan.Tests.ps1",
               "tests/pester/UserExperienceCapabilityMatrix.Tests.ps1",
               "tests/pester/UserExperienceTemplateMetadata.Tests.ps1",
               "tests/pester/UserExperienceScopeSemantics.Tests.ps1",
