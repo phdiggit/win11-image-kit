@@ -19,7 +19,6 @@
 - Future True UX Restore 最终 stop-line：[`archive/future-true-ux-restore/00-governance/106-future-true-ux-restore-final-stop-line-handoff.md`](archive/future-true-ux-restore/00-governance/106-future-true-ux-restore-final-stop-line-handoff.md)
 - Future True UX Restore 决策矩阵：[`archive/future-true-ux-restore/00-governance/107-future-true-ux-restore-stop-line-decision-matrix.md`](archive/future-true-ux-restore/00-governance/107-future-true-ux-restore-stop-line-decision-matrix.md)
 - Future True UX Restore 质量门禁治理：[`archive/future-true-ux-restore/00-governance/109-future-true-ux-quality-gate-governance.md`](archive/future-true-ux-restore/00-governance/109-future-true-ux-quality-gate-governance.md)
-- Future True UX Restore validator 脚本治理：[`archive/future-true-ux-restore/00-governance/112-future-true-ux-validator-script-governance.md`](archive/future-true-ux-restore/00-governance/112-future-true-ux-validator-script-governance.md)
 
 Issue #14-#18 的 completed-roadmap 文档和同名历史 Pester 已按 #121 从常驻工作树删除；当前门禁入口以 manifest、validator/report-only gate 和非 Issue 前缀 Pester 为准。
 
@@ -36,6 +35,5 @@ Future True UX Restore 的后续规划从以下归档治理入口开始：
 - [`archive/future-true-ux-restore/00-governance/106-future-true-ux-restore-final-stop-line-handoff.md`](archive/future-true-ux-restore/00-governance/106-future-true-ux-restore-final-stop-line-handoff.md)
 - [`archive/future-true-ux-restore/00-governance/107-future-true-ux-restore-stop-line-decision-matrix.md`](archive/future-true-ux-restore/00-governance/107-future-true-ux-restore-stop-line-decision-matrix.md)
 - [`archive/future-true-ux-restore/00-governance/109-future-true-ux-quality-gate-governance.md`](archive/future-true-ux-restore/00-governance/109-future-true-ux-quality-gate-governance.md)
-- [`archive/future-true-ux-restore/00-governance/112-future-true-ux-validator-script-governance.md`](archive/future-true-ux-restore/00-governance/112-future-true-ux-validator-script-governance.md)
 
 Archive 内容不授权真实执行、真实证据提升、Issue 自动关闭、注册表写入、AppX 修改、Defender 修改、Start menu 或 taskbar 修改、Sysprep、DISM、WinPE 执行、服务变更、镜像服务、下载、安装或 VM mutation。
