@@ -4248,6 +4248,13 @@
       "reason": "Future True UX validator and script governance audit records report-only entrypoints and consolidation boundaries."
     },
     {
+      "path": "docs/archive/script-governance/122-script-governance-final-audit.md",
+      "category": "doc",
+      "required": true,
+      "hash": "4d21923a9d62e2f09e5212f059af34c5d0fcd0e7179988cdbcb8c1b6d3e74146",
+      "reason": "Script governance final audit records the stop-line decision, lifecycle rules, and anti-bloat contract."
+    },
+    {
       "path": "scripts/common/FutureTrueUxRestore.Guards.ps1",
       "category": "script",
       "required": true,
@@ -4295,6 +4302,13 @@
       "required": true,
       "hash": "8ae39f1ac4fbd614439bc85cbb24b2bb4e73bbdbaf6d71a309dd550e397af7ac",
       "reason": "Future True UX validator script governance tests guard report-only entrypoints and consolidation boundaries."
+    },
+    {
+      "path": "tests/pester/ScriptGovernanceFinalAudit.Tests.ps1",
+      "category": "test",
+      "required": true,
+      "hash": "161c66a1d176dfab098d63f33968ec0e32ead7c7a54ec8328446c2d394b5eb21",
+      "reason": "Script governance final audit tests guard the stop-line record, lifecycle rules, gate semantics, and Build Lock scope."
     }
   ],
   "watchGlobs": [
